@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { Header } from "./header";
 
 interface ColorStop {
   color: string;
@@ -91,6 +92,53 @@ export function GradientGenerator() {
     { color: "#764ba2", position: 100, id: 2 },
   ]);
   const [copied, setCopied] = useState(false);
+  const [apiGradients, setApiGradients] = useState<PresetGradient[]>([]);
+  const [gradientPage, setGradientPage] = useState(1);
+  const [loadingGradients, setLoadingGradients] = useState(false);
+  const [hasMoreGradients, setHasMoreGradients] = useState(true);
+  const gradientLoaderRef = useRef<HTMLDivElement>(null);
+
+  const fetchGradients = useCallback(async (pageNum: number, append: boolean) => {
+    setLoadingGradients(true);
+    try {
+      const res = await fetch(`/api/gradients?page=${pageNum}&limit=12`);
+      const data = await res.json();
+      const mapped: PresetGradient[] = data.gradients.map((g: { name: string; colors: string[]; positions: number[] }) => ({
+        name: g.name,
+        colors: g.colors,
+        positions: g.positions,
+      }));
+      setApiGradients((prev) => append ? [...prev, ...mapped] : mapped);
+      setHasMoreGradients(data.pagination.hasNext);
+    } catch {
+      // silently fail
+    } finally {
+      setLoadingGradients(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => fetchGradients(1, false), 0);
+    return () => clearTimeout(timer);
+  }, [fetchGradients]);
+
+  const loadMoreGradients = useCallback(() => {
+    if (!hasMoreGradients || loadingGradients) return;
+    const next = gradientPage + 1;
+    setGradientPage(next);
+    fetchGradients(next, true);
+  }, [hasMoreGradients, loadingGradients, gradientPage, fetchGradients]);
+
+  useEffect(() => {
+    const loader = gradientLoaderRef.current;
+    if (!loader) return;
+    const observer = new IntersectionObserver(
+      (entries) => { if (entries[0].isIntersecting) loadMoreGradients(); },
+      { threshold: 0.1 }
+    );
+    observer.observe(loader);
+    return () => observer.disconnect();
+  }, [loadMoreGradients]);
 
   const cssOutput = generateCss(gradientType, angle, stops);
   const gradientStyle = generateGradientStyle(gradientType, angle, stops);
@@ -161,38 +209,10 @@ export function GradientGenerator() {
 
   return (
     <div className="min-h-screen bg-[#160b05] text-white">
-      {/* Header */}
-      <div className="fixed left-0 right-0 top-0 z-50 px-6 pt-6 lg:px-8">
-        <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="mx-auto flex max-w-[1560px] items-center justify-between rounded-full border border-white/18 bg-white/8 px-5 py-3 backdrop-blur-xl"
-        >
-          <Link href="/" className="flex items-center">
-            <img src="/hueflow.svg" alt="HueFlow" width={100} height={20} />
-          </Link>
-          <nav className="hidden items-center gap-5 text-sm text-white/70 md:flex">
-            <Link href="/generator">Generator</Link>
-            <Link href="/explore">Explore</Link>
-            <Link href="/trends">Trends</Link>
-            <Link href="/tools/picker">Picker</Link>
-            <Link href="/tools/gradient">Gradient</Link>
-            <Link href="/tools/contrast">Contrast</Link>
-            <Link href="/tools/tailwind">Tailwind</Link>
-            <Link href="/blog">Blog</Link>
-          </nav>
-          <Link
-            href="/generator"
-            className="rounded-full bg-white px-5 py-3 text-base font-semibold text-[#22130d]"
-          >
-            Try Demo
-          </Link>
-        </motion.header>
-      </div>
+      <Header />
 
       {/* Content */}
-      <div className="mx-auto max-w-5xl px-6 pt-28 pb-20">
+      <div className="mx-auto max-w-5xl px-4 pt-24 pb-20 sm:px-6 sm:pt-40">
         {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -309,7 +329,7 @@ export function GradientGenerator() {
 
             <div className="space-y-3">
               {stops.map((stop) => (
-                <div key={stop.id} className="flex items-center gap-3">
+                <div key={stop.id} className="flex flex-wrap items-center gap-2 sm:flex-nowrap sm:gap-3">
                   <div className="relative">
                     <input
                       type="color"
@@ -327,7 +347,7 @@ export function GradientGenerator() {
                         updateStop(stop.id, { color: val });
                       }
                     }}
-                    className="w-[90px] rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs font-mono text-white/90 outline-none focus:border-white/30"
+                    className="w-[75px] rounded-lg border border-white/10 bg-white/5 px-2 py-2 text-xs font-mono text-white/90 outline-none focus:border-white/30 sm:w-[90px] sm:px-3"
                     maxLength={7}
                   />
                   <input
@@ -406,9 +426,12 @@ export function GradientGenerator() {
         >
           <h2 className="mb-6 text-center text-2xl font-bold">Preset Gradients</h2>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {PRESETS.map((preset) => (
-              <button
-                key={preset.name}
+            {apiGradients.map((preset, i) => (
+              <motion.button
+                key={`${preset.name}-${i}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: (i % 12) * 0.04 }}
                 onClick={() => loadPreset(preset)}
                 className={`${cardClass} group cursor-pointer text-left transition-all hover:scale-[1.02] hover:border-white/20`}
               >
@@ -420,9 +443,14 @@ export function GradientGenerator() {
                 <p className="mt-1 text-xs text-white/40">
                   {preset.colors.join(" → ")}
                 </p>
-              </button>
+              </motion.button>
             ))}
           </div>
+          {hasMoreGradients && (
+            <div ref={gradientLoaderRef} className="flex justify-center py-12">
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white/60" />
+            </div>
+          )}
         </motion.div>
       </div>
     </div>

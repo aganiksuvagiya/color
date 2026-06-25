@@ -421,6 +421,9 @@ export function getProgrammaticColorSitemapPaths(limit = 120) {
     `/color-meanings/${color.slug}`,
   ]);
 
-  const hexPaths = getPopularHexSamples(40).map((slug) => `/colors/${slug}`);
+  const hexPaths = getPopularHexSamples(40).flatMap((slug) => [
+    `/colors/${slug}`,
+    `/color-meanings/${slug}`,
+  ]);
   return [...namedPaths, ...hexPaths];
 }

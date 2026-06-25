@@ -1,208 +1,108 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { Header } from "./header";
 
-type ColorItem = { name: string; hex: string; category: string };
-
-const COLORS: ColorItem[] = [
-  // Red
-  { name: "Coral", hex: "#FF7F50", category: "Red" },
-  { name: "Salmon", hex: "#FA8072", category: "Red" },
-  { name: "Crimson", hex: "#DC143C", category: "Red" },
-  { name: "Tomato", hex: "#FF6347", category: "Red" },
-  { name: "Fire Brick", hex: "#B22222", category: "Red" },
-  { name: "Indian Red", hex: "#CD5C5C", category: "Red" },
-  { name: "Dark Red", hex: "#8B0000", category: "Red" },
-  { name: "Red", hex: "#FF0000", category: "Red" },
-  { name: "Scarlet", hex: "#FF2400", category: "Red" },
-  // Orange
-  { name: "Orange", hex: "#FFA500", category: "Orange" },
-  { name: "Dark Orange", hex: "#FF8C00", category: "Orange" },
-  { name: "Orange Red", hex: "#FF4500", category: "Orange" },
-  { name: "Peach", hex: "#FFCBA4", category: "Orange" },
-  { name: "Tangerine", hex: "#FF9966", category: "Orange" },
-  { name: "Apricot", hex: "#FBCEB1", category: "Orange" },
-  { name: "Burnt Orange", hex: "#CC5500", category: "Orange" },
-  // Brown
-  { name: "Chocolate", hex: "#D2691E", category: "Brown" },
-  { name: "Sienna", hex: "#A0522D", category: "Brown" },
-  { name: "Saddle Brown", hex: "#8B4513", category: "Brown" },
-  { name: "Peru", hex: "#CD853F", category: "Brown" },
-  { name: "Sandy Brown", hex: "#F4A460", category: "Brown" },
-  { name: "Maroon", hex: "#800000", category: "Brown" },
-  { name: "Tan", hex: "#D2B48C", category: "Brown" },
-  { name: "Rosy Brown", hex: "#BC8F8F", category: "Brown" },
-  { name: "Burlywood", hex: "#DEB887", category: "Brown" },
-  // Yellow
-  { name: "Gold", hex: "#FFD700", category: "Yellow" },
-  { name: "Khaki", hex: "#F0E68C", category: "Yellow" },
-  { name: "Yellow", hex: "#FFFF00", category: "Yellow" },
-  { name: "Lemon Chiffon", hex: "#FFFACD", category: "Yellow" },
-  { name: "Light Goldenrod", hex: "#FAFAD2", category: "Yellow" },
-  { name: "Moccasin", hex: "#FFE4B5", category: "Yellow" },
-  { name: "Papaya Whip", hex: "#FFEFD5", category: "Yellow" },
-  { name: "Dark Goldenrod", hex: "#B8860B", category: "Yellow" },
-  { name: "Amber", hex: "#FFBF00", category: "Yellow" },
-  // Green
-  { name: "Lime Green", hex: "#32CD32", category: "Green" },
-  { name: "Sea Green", hex: "#2E8B57", category: "Green" },
-  { name: "Forest Green", hex: "#228B22", category: "Green" },
-  { name: "Green", hex: "#008000", category: "Green" },
-  { name: "Dark Green", hex: "#006400", category: "Green" },
-  { name: "Olive", hex: "#808000", category: "Green" },
-  { name: "Spring Green", hex: "#00FF7F", category: "Green" },
-  { name: "Medium Sea Green", hex: "#3CB371", category: "Green" },
-  { name: "Emerald", hex: "#50C878", category: "Green" },
-  { name: "Mint", hex: "#98FF98", category: "Green" },
-  // Cyan
-  { name: "Teal", hex: "#008080", category: "Cyan" },
-  { name: "Cyan", hex: "#00FFFF", category: "Cyan" },
-  { name: "Aquamarine", hex: "#7FFFD4", category: "Cyan" },
-  { name: "Turquoise", hex: "#40E0D0", category: "Cyan" },
-  { name: "Dark Cyan", hex: "#008B8B", category: "Cyan" },
-  { name: "Medium Turquoise", hex: "#48D1CC", category: "Cyan" },
-  { name: "Pale Turquoise", hex: "#AFEEEE", category: "Cyan" },
-  // Blue
-  { name: "Sky Blue", hex: "#87CEEB", category: "Blue" },
-  { name: "Royal Blue", hex: "#4169E1", category: "Blue" },
-  { name: "Navy", hex: "#000080", category: "Blue" },
-  { name: "Steel Blue", hex: "#4682B4", category: "Blue" },
-  { name: "Dodger Blue", hex: "#1E90FF", category: "Blue" },
-  { name: "Cornflower Blue", hex: "#6495ED", category: "Blue" },
-  { name: "Deep Sky Blue", hex: "#00BFFF", category: "Blue" },
-  { name: "Midnight Blue", hex: "#191970", category: "Blue" },
-  { name: "Powder Blue", hex: "#B0E0E6", category: "Blue" },
-  { name: "Cobalt", hex: "#0047AB", category: "Blue" },
-  // Purple
-  { name: "Indigo", hex: "#4B0082", category: "Purple" },
-  { name: "Orchid", hex: "#DA70D6", category: "Purple" },
-  { name: "Lavender", hex: "#E6E6FA", category: "Purple" },
-  { name: "Purple", hex: "#800080", category: "Purple" },
-  { name: "Medium Purple", hex: "#9370DB", category: "Purple" },
-  { name: "Blue Violet", hex: "#8A2BE2", category: "Purple" },
-  { name: "Dark Violet", hex: "#9400D3", category: "Purple" },
-  { name: "Plum", hex: "#DDA0DD", category: "Purple" },
-  { name: "Thistle", hex: "#D8BFD8", category: "Purple" },
-  { name: "Mauve", hex: "#E0B0FF", category: "Purple" },
-  // Pink
-  { name: "Hot Pink", hex: "#FF69B4", category: "Pink" },
-  { name: "Deep Pink", hex: "#FF1493", category: "Pink" },
-  { name: "Pink", hex: "#FFC0CB", category: "Pink" },
-  { name: "Light Pink", hex: "#FFB6C1", category: "Pink" },
-  { name: "Pale Violet Red", hex: "#DB7093", category: "Pink" },
-  { name: "Medium Violet Red", hex: "#C71585", category: "Pink" },
-  { name: "Fuchsia", hex: "#FF00FF", category: "Pink" },
-  { name: "Rose", hex: "#FF007F", category: "Pink" },
-  // White
-  { name: "White", hex: "#FFFFFF", category: "White" },
-  { name: "Snow", hex: "#FFFAFA", category: "White" },
-  { name: "Ivory", hex: "#FFFFF0", category: "White" },
-  { name: "Seashell", hex: "#FFF5EE", category: "White" },
-  { name: "Linen", hex: "#FAF0E6", category: "White" },
-  { name: "Floral White", hex: "#FFFAF0", category: "White" },
-  { name: "Alice Blue", hex: "#F0F8FF", category: "White" },
-  // Gray
-  { name: "Silver", hex: "#C0C0C0", category: "Gray" },
-  { name: "Slate Gray", hex: "#708090", category: "Gray" },
-  { name: "Gray", hex: "#808080", category: "Gray" },
-  { name: "Dark Gray", hex: "#A9A9A9", category: "Gray" },
-  { name: "Dim Gray", hex: "#696969", category: "Gray" },
-  { name: "Light Gray", hex: "#D3D3D3", category: "Gray" },
-  { name: "Gainsboro", hex: "#DCDCDC", category: "Gray" },
-  { name: "Ash", hex: "#B2BEB5", category: "Gray" },
-  // Black
-  { name: "Black", hex: "#000000", category: "Black" },
-  { name: "Jet", hex: "#343434", category: "Black" },
-  { name: "Onyx", hex: "#353839", category: "Black" },
-  { name: "Charcoal", hex: "#36454F", category: "Black" },
-  { name: "Ebony", hex: "#555D50", category: "Black" },
-];
+type ColorItem = {
+  name: string;
+  hex: string;
+  category: string;
+  hsl?: { h: number; s: number; l: number };
+  rgb?: { r: number; g: number; b: number };
+};
 
 const CATEGORIES = [
-  "All",
-  "Red",
-  "Orange",
-  "Brown",
-  "Yellow",
-  "Green",
-  "Cyan",
-  "Blue",
-  "Purple",
-  "Pink",
-  "White",
-  "Gray",
-  "Black",
+  "All", "Red", "Orange", "Brown", "Yellow", "Green",
+  "Cyan", "Blue", "Purple", "Pink", "White", "Gray", "Black",
 ];
+
+const BATCH_SIZE = 24;
 
 export function ExploreColors() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
+  const [colors, setColors] = useState<ColorItem[]>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const loaderRef = useRef<HTMLDivElement>(null);
+  const searchTimeout = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const filtered = COLORS.filter((c) => {
-    const matchesSearch =
-      c.name.toLowerCase().includes(search.toLowerCase()) ||
-      c.hex.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory =
-      activeCategory === "All" || c.category === activeCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const fetchColors = useCallback(async (pageNum: number, category: string, query: string, append: boolean) => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams({
+        page: String(pageNum),
+        limit: String(BATCH_SIZE),
+      });
+      if (category !== "All") params.set("category", category);
+      if (query) params.set("search", query);
+
+      const res = await fetch(`/api/colors?${params}`);
+      const data = await res.json();
+
+      setColors((prev) => append ? [...prev, ...data.colors] : data.colors);
+      setHasMore(data.pagination.hasNext);
+    } catch {
+      // silently fail
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    clearTimeout(searchTimeout.current);
+    searchTimeout.current = setTimeout(() => {
+      setPage(1);
+      fetchColors(1, activeCategory, search, false);
+    }, search ? 300 : 0);
+    return () => clearTimeout(searchTimeout.current);
+  }, [search, activeCategory, fetchColors]);
+
+  const loadMore = useCallback(() => {
+    if (!hasMore || loading) return;
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchColors(nextPage, activeCategory, search, true);
+  }, [hasMore, loading, page, activeCategory, search, fetchColors]);
+
+  useEffect(() => {
+    const loader = loaderRef.current;
+    if (!loader) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) loadMore();
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(loader);
+    return () => observer.disconnect();
+  }, [loadMore]);
 
   const handleCopy = async (hex: string) => {
     try {
       await navigator.clipboard.writeText(hex);
-      setCopiedHex(hex);
-      setTimeout(() => setCopiedHex(null), 1500);
     } catch {
-      // Fallback for older browsers
       const textarea = document.createElement("textarea");
       textarea.value = hex;
       document.body.appendChild(textarea);
       textarea.select();
       document.execCommand("copy");
       document.body.removeChild(textarea);
-      setCopiedHex(hex);
-      setTimeout(() => setCopiedHex(null), 1500);
     }
+    setCopiedHex(hex);
+    setTimeout(() => setCopiedHex(null), 1500);
   };
 
   return (
     <div className="min-h-screen bg-[#160b05] text-white">
-      {/* Header */}
-      <div className="fixed left-0 right-0 top-0 z-50 px-6 pt-6 lg:px-8">
-        <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="mx-auto flex max-w-[1560px] items-center justify-between rounded-full border border-white/18 bg-white/8 px-5 py-3 backdrop-blur-xl"
-        >
-          <Link href="/" className="flex items-center">
-            <img src="/hueflow.svg" alt="HueFlow" width={100} height={20} />
-          </Link>
-          <nav className="hidden items-center gap-5 text-sm text-white/70 md:flex">
-            <Link href="/generator">Generator</Link>
-            <Link href="/explore">Explore</Link>
-            <Link href="/trends">Trends</Link>
-            <Link href="/tools/picker">Picker</Link>
-            <Link href="/tools/gradient">Gradient</Link>
-            <Link href="/tools/contrast">Contrast</Link>
-            <Link href="/tools/tailwind">Tailwind</Link>
-            <Link href="/blog">Blog</Link>
-          </nav>
-          <Link
-            href="/generator"
-            className="rounded-full bg-white px-5 py-3 text-base font-semibold text-[#22130d]"
-          >
-            Try Demo
-          </Link>
-        </motion.header>
-      </div>
+      <Header />
 
-      {/* Content */}
-      <main className="mx-auto max-w-[1560px] px-6 pt-28 pb-20 lg:px-8">
-        {/* Title */}
+      <main className="mx-auto max-w-[1560px] px-4 pt-24 pb-20 sm:px-6 sm:pt-40 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -218,7 +118,6 @@ export function ExploreColors() {
           </p>
         </motion.div>
 
-        {/* Search */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -249,7 +148,6 @@ export function ExploreColors() {
           </div>
         </motion.div>
 
-        {/* Category Filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -271,34 +169,27 @@ export function ExploreColors() {
           ))}
         </motion.div>
 
-        {/* Color count */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.5 }}
           className="mb-6 text-center text-sm text-white/40"
         >
-          {filtered.length} color{filtered.length !== 1 ? "s" : ""} found
+          {colors.length} color{colors.length !== 1 ? "s" : ""} loaded · scroll for more
         </motion.p>
 
-        {/* Color Grid */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6"
-        >
-          {filtered.map((color, i) => (
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          {colors.map((color, i) => (
             <motion.button
-              key={color.hex + color.name}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: Math.min(i * 0.02, 0.6) }}
+              key={color.hex + i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: (i % BATCH_SIZE) * 0.04 }}
               onClick={() => handleCopy(color.hex)}
-              className="group relative cursor-pointer rounded-2xl border border-white/10 bg-gradient-to-b from-white/8 to-white/3 p-3 text-left backdrop-blur-xl transition-all hover:border-white/20 hover:from-white/12 hover:to-white/6"
+              className="group relative cursor-pointer rounded-2xl border border-white/10 bg-linear-to-b from-white/8 to-white/3 p-3 text-left backdrop-blur-xl transition-all hover:border-white/20 hover:from-white/12 hover:to-white/6"
             >
               <div
-                className="mb-3 aspect-[4/3] w-full rounded-xl"
+                className="mb-3 aspect-4/3 w-full rounded-xl"
                 style={{ backgroundColor: color.hex }}
               />
               <p className="truncate text-sm font-medium text-white">
@@ -308,7 +199,6 @@ export function ExploreColors() {
                 {color.hex}
               </p>
 
-              {/* Copied feedback */}
               {copiedHex === color.hex && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -323,10 +213,15 @@ export function ExploreColors() {
               )}
             </motion.button>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Empty state */}
-        {filtered.length === 0 && (
+        {hasMore && (
+          <div ref={loaderRef} className="flex justify-center py-12">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white/60" />
+          </div>
+        )}
+
+        {!loading && colors.length === 0 && (
           <div className="py-20 text-center">
             <p className="text-lg text-white/40">
               No colors match your search.

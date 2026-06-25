@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { Header } from "../header";
 import { generateFromPrompt, generateRandomPalette, getContrastText } from "@/lib/color-utils";
 import { deletePalette, getSavedPalettes, savePalette, type SavedPalette } from "@/lib/storage";
 import { encodePalette, decodePalette } from "@/lib/share-utils";
@@ -186,33 +187,9 @@ export function GeneratorPage() {
         </>
       )}
 
-      <div className="fixed left-0 right-0 top-0 z-50 px-6 pt-6 lg:px-8">
-        <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className={`mx-auto flex max-w-[1560px] items-center justify-between rounded-full border px-5 py-3 backdrop-blur-xl ${lightMode ? "border-black/10 bg-black/5" : "border-white/18 bg-white/8"}`}
-        >
-          <Link href="/" className="flex items-center">
-            <img src={lightMode ? "/hueflow_dark.svg" : "/hueflow.svg"} alt="HueFlow" width={100} height={20} />
-          </Link>
-          <nav className={`hidden items-center gap-5 text-sm md:flex ${lightMode ? "text-black/50" : "text-white/70"}`}>
-            <Link href="/generator">Generator</Link>
-            <Link href="/explore">Explore</Link>
-            <Link href="/trends">Trends</Link>
-            <Link href="/tools/picker">Picker</Link>
-            <Link href="/tools/gradient">Gradient</Link>
-            <Link href="/tools/contrast">Contrast</Link>
-            <Link href="/tools/tailwind">Tailwind</Link>
-            <Link href="/blog">Blog</Link>
-          </nav>
-          <Link href="/" className={`rounded-full border px-5 py-2.5 text-sm font-medium transition-colors ${lightMode ? "border-black/10 text-black/50 hover:bg-black/5" : "border-white/15 text-white/60 hover:bg-white/8"}`}>
-            ← Home
-          </Link>
-        </motion.header>
-      </div>
+      <Header />
 
-      <div className="relative mx-auto max-w-5xl px-6 pb-20 pt-32">
+      <div className="relative mx-auto max-w-5xl px-4 pb-20 pt-24 sm:px-6 sm:pt-40">
 
         <div className="mb-6 text-center">
           <motion.h1

@@ -1,8 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion, useMotionTemplate, useMotionValue, useSpring, useTransform, type Variants } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { Header } from "./header";
 
 type DemoPalette = {
   label: string;
@@ -228,51 +229,9 @@ const stagger: Variants = {
   },
 };
 
-function MagneticButton({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 220, damping: 18 });
-  const springY = useSpring(y, { stiffness: 220, damping: 18 });
-
-  return (
-    <motion.button
-      onMouseMove={(event) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        const dx = event.clientX - rect.left - rect.width / 2;
-        const dy = event.clientY - rect.top - rect.height / 2;
-        x.set((dx / rect.width) * 18);
-        y.set((dy / rect.height) * 18);
-      }}
-      onMouseLeave={() => {
-        x.set(0);
-        y.set(0);
-      }}
-      style={{ x: springX, y: springY }}
-      className={className}
-    >
-      {children}
-    </motion.button>
-  );
-}
-
-
 export function HueFlowHomePage() {
   const [activePalette, setActivePalette] = useState(0);
   const [openFaq, setOpenFaq] = useState(0);
-
-  const pointerX = useMotionValue(0.5);
-  const pointerY = useMotionValue(0.2);
-  const springX = useSpring(pointerX, { stiffness: 80, damping: 18 });
-  const springY = useSpring(pointerY, { stiffness: 80, damping: 18 });
-  const glowX = useTransform(springX, (value) => `${value * 100}%`);
-  const glowY = useTransform(springY, (value) => `${value * 100}%`);
-  const glow = useMotionTemplate`radial-gradient(circle at ${glowX} ${glowY}, rgba(255, 130, 30, 0.09), transparent 18%), radial-gradient(circle at calc(${glowX} - 18%) calc(${glowY} + 12%), rgba(255, 95, 31, 0.09), transparent 09%)`;
 
   const rotatePalette = useCallback(() => {
     setActivePalette((current) => (current + 1) % palettes.length);
@@ -286,44 +245,12 @@ export function HueFlowHomePage() {
   const palette = palettes[activePalette];
 
   return (
-    <main
-      className="relative overflow-hidden bg-[#160b05] text-white"
-      onMouseMove={(event) => {
-        pointerX.set(event.clientX / window.innerWidth);
-        pointerY.set(event.clientY / window.innerHeight);
-      }}
-    >
-      <motion.div className="pointer-events-none absolute inset-0 opacity-80" style={{ background: glow }} />
+    <main className="relative overflow-hidden bg-[#160b05] text-white">
+      <div className="pointer-events-none absolute inset-0 opacity-80" style={{ background: "radial-gradient(circle at 50% 20%, rgba(255, 130, 30, 0.09), transparent 18%), radial-gradient(circle at 32% 32%, rgba(255, 95, 31, 0.09), transparent 9%)" }} />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(0,0,0,0.95),transparent_18%),radial-gradient(circle_at_88%_0%,rgba(255,106,44,0.34),transparent_30%),radial-gradient(circle_at_18%_88%,rgba(255,111,26,0.44),transparent_28%),linear-gradient(135deg,#8e430f_0%,#5f2605_34%,#3d1707_60%,#ff6a2b_100%)]" />
       <div className="noise absolute inset-0 opacity-30" />
 
-      <div className="fixed left-0 right-0 top-0 z-50 px-6 pt-6 lg:px-8">
-        <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="mx-auto flex max-w-[1560px] items-center justify-between rounded-full border border-white/18 bg-white/8 px-5 py-3 backdrop-blur-xl"
-        >
-          <div className="flex items-center">
-            <img src="/hueflow.svg" alt="HueFlow" width={100} height={20} />
-          </div>
-          <nav className="hidden items-center gap-5 text-sm text-white/70 md:flex">
-            <Link href="/generator">Generator</Link>
-            <Link href="/explore">Explore</Link>
-            <Link href="/trends">Trends</Link>
-            <Link href="/tools/picker">Picker</Link>
-            <Link href="/tools/gradient">Gradient</Link>
-            <Link href="/tools/contrast">Contrast</Link>
-            <Link href="/tools/tailwind">Tailwind</Link>
-            <Link href="/blog">Blog</Link>
-          </nav>
-          <Link href="/generator">
-            <MagneticButton className="rounded-full bg-white px-5 py-3 text-base font-semibold text-[#22130d]">
-              Try Demo
-            </MagneticButton>
-          </Link>
-        </motion.header>
-      </div>
+      <Header isHome />
 
       <div className="relative mx-auto max-w-[1560px] px-6 pb-24 pt-20 lg:px-8">
         <section className="relative mx-auto max-w-[1560px] pt-12 lg:pt-16">
@@ -426,13 +353,13 @@ export function HueFlowHomePage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-5 gap-[2px] px-[2px] pb-[2px]">
+                  <div className="grid grid-cols-3 gap-[2px] px-[2px] pb-[2px] sm:grid-cols-5">
                     {palette.colors.map((color, i) => (
                       <motion.div
                         key={`card-${i}`}
                         animate={{ backgroundColor: color.hex }}
                         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: i * 0.06 }}
-                        className={`flex min-h-[380px] flex-col justify-between p-5 ${i === 0 ? "rounded-bl-[20px]" : ""} ${i === 4 ? "rounded-br-[20px]" : ""}`}
+                        className={`flex min-h-[200px] flex-col justify-between p-4 sm:min-h-[380px] sm:p-5 ${i === 0 ? "rounded-bl-[20px]" : ""} ${i === 4 ? "rounded-br-[20px]" : ""}`}
                       >
                         <AnimatePresence mode="wait">
                           <motion.div
@@ -473,7 +400,7 @@ export function HueFlowHomePage() {
             <motion.p variants={fadeUp} className="text-center text-sm font-semibold uppercase tracking-[0.34em] text-white/62">
               Why this direction works
             </motion.p>
-            <motion.h2 variants={fadeUp} className="mx-auto mt-4 max-w-3xl text-center [text-wrap:balance] font-display text-[2.8rem] font-semibold leading-[0.98] tracking-[-0.06em] text-white sm:text-[3.2rem] lg:text-[3.375rem]">
+            <motion.h2 variants={fadeUp} className="mx-auto mt-4 max-w-3xl text-center [text-wrap:balance] font-display text-[1.8rem] font-semibold leading-[0.98] tracking-[-0.06em] text-white sm:text-[2.8rem] lg:text-[3.375rem]">
               More emotional. More premium. More memorable.
             </motion.h2>
             <motion.p variants={fadeUp} className="mt-6 max-w-xl text-lg leading-9 text-white/74">
@@ -530,7 +457,7 @@ export function HueFlowHomePage() {
             </motion.div>
             <motion.h2
               variants={fadeUp}
-              className="mx-auto mt-6 max-w-5xl text-center [text-wrap:balance] font-display text-[2.9rem] font-semibold leading-[1.1] tracking-[-0.08em] text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.2)] sm:text-[3.25rem] lg:text-[3.375rem]"
+              className="mx-auto mt-6 max-w-5xl text-center [text-wrap:balance] font-display text-[1.8rem] font-semibold leading-[1.1] tracking-[-0.08em] text-white drop-shadow-[0_8px_22px_rgba(0,0,0,0.2)] sm:text-[2.8rem] lg:text-[3.375rem]"
             >
               Everything needed to generate better product palettes
             </motion.h2>
@@ -586,7 +513,7 @@ export function HueFlowHomePage() {
               className="rounded-[34px] border border-white/10 bg-black/20 p-8 backdrop-blur-xl"
             >
               <p className="text-center text-sm font-semibold uppercase tracking-[0.34em] text-white/62">Use cases</p>
-              <h2 className="mx-auto mt-4 max-w-3xl text-center [text-wrap:balance] font-display text-[2.8rem] font-semibold leading-[0.98] tracking-[-0.06em] text-white sm:text-[3.2rem] lg:text-[3.375rem]">
+              <h2 className="mx-auto mt-4 max-w-3xl text-center [text-wrap:balance] font-display text-[1.8rem] font-semibold leading-[0.98] tracking-[-0.06em] text-white sm:text-[2.8rem] lg:text-[3.375rem]">
                 A homepage with more depth and more reasons to stay.
               </h2>
               <p className="mt-6 max-w-2xl text-lg leading-9 text-white/72">
@@ -623,7 +550,7 @@ export function HueFlowHomePage() {
             <motion.p variants={fadeUp} className="text-center text-sm font-semibold uppercase tracking-[0.34em] text-white/62">
               Workflow
             </motion.p>
-            <motion.h2 variants={fadeUp} className="mx-auto mt-4 max-w-3xl text-center [text-wrap:balance] font-display text-[2.8rem] font-semibold leading-[0.98] tracking-[-0.06em] text-white sm:text-[3.2rem] lg:text-[3.375rem]">
+            <motion.h2 variants={fadeUp} className="mx-auto mt-4 max-w-3xl text-center [text-wrap:balance] font-display text-[1.8rem] font-semibold leading-[0.98] tracking-[-0.06em] text-white sm:text-[2.8rem] lg:text-[3.375rem]">
               A cleaner journey from inspiration to implementation
             </motion.h2>
           </motion.div>
@@ -663,7 +590,7 @@ export function HueFlowHomePage() {
             <motion.p variants={fadeUp} className="text-center text-sm font-semibold uppercase tracking-[0.34em] text-white/62">
               Testimonials
             </motion.p>
-            <motion.h2 variants={fadeUp} className="mx-auto mt-4 max-w-3xl text-center [text-wrap:balance] font-display text-[2.8rem] font-semibold leading-[0.98] tracking-[-0.06em] text-white sm:text-[3.2rem] lg:text-[3.375rem]">
+            <motion.h2 variants={fadeUp} className="mx-auto mt-4 max-w-3xl text-center [text-wrap:balance] font-display text-[1.8rem] font-semibold leading-[0.98] tracking-[-0.06em] text-white sm:text-[2.8rem] lg:text-[3.375rem]">
               Feedback that makes the product feel trusted
             </motion.h2>
           </motion.div>
@@ -697,7 +624,7 @@ export function HueFlowHomePage() {
             <motion.p variants={fadeUp} className="text-center text-sm font-semibold uppercase tracking-[0.34em] text-white/62">
               FAQ
             </motion.p>
-            <motion.h2 variants={fadeUp} className="mx-auto mt-4 max-w-3xl text-center [text-wrap:balance] font-display text-[2.8rem] font-semibold leading-[0.98] tracking-[-0.06em] text-white sm:text-[3.2rem] lg:text-[3.375rem]">
+            <motion.h2 variants={fadeUp} className="mx-auto mt-4 max-w-3xl text-center [text-wrap:balance] font-display text-[1.8rem] font-semibold leading-[0.98] tracking-[-0.06em] text-white sm:text-[2.8rem] lg:text-[3.375rem]">
               A few things users usually want to know
             </motion.h2>
           </motion.div>

@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import { Header } from "./header";
 
 const tailwindColors: Record<string, Record<string, string>> = {
   slate: { "50": "#f8fafc", "100": "#f1f5f9", "200": "#e2e8f0", "300": "#cbd5e1", "400": "#94a3b8", "500": "#64748b", "600": "#475569", "700": "#334155", "800": "#1e293b", "900": "#0f172a", "950": "#020617" },
@@ -55,35 +56,10 @@ export function TailwindColors() {
 
   return (
     <div className="min-h-screen bg-[#160b05] text-white">
-      {/* Header */}
-      <div className="fixed left-0 right-0 top-0 z-50 px-6 pt-6 lg:px-8">
-        <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="mx-auto flex max-w-[1560px] items-center justify-between rounded-full border border-white/18 bg-white/8 px-5 py-3 backdrop-blur-xl"
-        >
-          <Link href="/" className="flex items-center">
-            <img src="/hueflow.svg" alt="HueFlow" width={100} height={20} />
-          </Link>
-          <nav className="hidden items-center gap-5 text-sm text-white/70 md:flex">
-            <Link href="/generator">Generator</Link>
-            <Link href="/explore">Explore</Link>
-            <Link href="/trends">Trends</Link>
-            <Link href="/tools/picker">Picker</Link>
-            <Link href="/tools/gradient">Gradient</Link>
-            <Link href="/tools/contrast">Contrast</Link>
-            <Link href="/tools/tailwind">Tailwind</Link>
-            <Link href="/blog">Blog</Link>
-          </nav>
-          <Link href="/generator" className="rounded-full bg-white px-5 py-3 text-base font-semibold text-[#22130d]">
-            Try Demo
-          </Link>
-        </motion.header>
-      </div>
+      <Header />
 
       {/* Content */}
-      <div className="mx-auto max-w-6xl px-6 pt-28 pb-20">
+      <div className="mx-auto max-w-6xl px-4 pt-24 pb-20 sm:px-6 sm:pt-40">
         {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -134,17 +110,17 @@ export function TailwindColors() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.05 * Math.min(familyIndex, 10) }}
-              className="group flex items-stretch gap-4 rounded-xl border border-white/6 bg-white/[0.02] p-3 transition-colors hover:bg-white/[0.04]"
+              className="group flex flex-col gap-2 rounded-xl border border-white/6 bg-white/[0.02] p-3 transition-colors hover:bg-white/[0.04] sm:flex-row sm:items-stretch sm:gap-4"
             >
               {/* Color Name */}
-              <div className="flex w-24 shrink-0 items-center">
+              <div className="flex shrink-0 items-center sm:w-24">
                 <span className="text-sm font-medium capitalize text-white/80">
                   {name}
                 </span>
               </div>
 
               {/* Shades */}
-              <div className="flex flex-1 gap-1">
+              <div className="grid grid-cols-6 gap-1 sm:flex sm:flex-1">
                 {shadeKeys.map((shade) => {
                   const hex = shades[shade];
                   const swatchKey = `${name}-${shade}`;

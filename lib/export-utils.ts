@@ -64,6 +64,22 @@ export function exportAsFigmaTokens(palette: Palette): string {
   return JSON.stringify({ color: tokens }, null, 2);
 }
 
+export function exportAsKotlin(palette: Palette): string {
+  const lines = palette.colors.map((c) => {
+    const hex = c.hex.slice(1).toUpperCase();
+    return `    val ${c.role} = Color(0xFF${hex})`;
+  });
+  return `// ${palette.label}\nimport androidx.compose.ui.graphics.Color\n\nobject AppColors {\n${lines.join("\n")}\n}`;
+}
+
+export function exportAsFlutter(palette: Palette): string {
+  const lines = palette.colors.map((c) => {
+    const hex = c.hex.slice(1).toUpperCase();
+    return `  static const ${c.role} = Color(0xFF${hex});`;
+  });
+  return `// ${palette.label}\nimport 'package:flutter/material.dart';\n\nclass AppColors {\n${lines.join("\n")}\n}`;
+}
+
 export function generatePngDataUrl(palette: Palette): string {
   const canvas = document.createElement("canvas");
   const w = 500;

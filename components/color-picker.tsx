@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useCallback, useEffect } from "react";
-import Link from "next/link";
+import { Header } from "./header";
 import { hexToHsl, hslToHex, isValidHex } from "@/lib/color-utils";
 import { findClosestColorName } from "@/lib/color-names";
 
@@ -88,32 +88,7 @@ export function ColorPicker() {
 
   return (
     <div className="min-h-screen bg-[#160b05] text-white">
-      {/* Header */}
-      <div className="fixed left-0 right-0 top-0 z-50 px-6 pt-6 lg:px-8">
-        <motion.header
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="mx-auto flex max-w-[1560px] items-center justify-between rounded-full border border-white/18 bg-white/8 px-5 py-3 backdrop-blur-xl"
-        >
-          <Link href="/" className="flex items-center">
-            <img src="/hueflow.svg" alt="HueFlow" width={100} height={20} />
-          </Link>
-          <nav className="hidden items-center gap-5 text-sm text-white/70 md:flex">
-            <Link href="/generator">Generator</Link>
-            <Link href="/explore">Explore</Link>
-            <Link href="/trends">Trends</Link>
-            <Link href="/tools/picker">Picker</Link>
-            <Link href="/tools/gradient">Gradient</Link>
-            <Link href="/tools/contrast">Contrast</Link>
-            <Link href="/tools/tailwind">Tailwind</Link>
-            <Link href="/blog">Blog</Link>
-          </nav>
-          <Link href="/generator" className="rounded-full bg-white px-5 py-3 text-base font-semibold text-[#22130d]">
-            Try Demo
-          </Link>
-        </motion.header>
-      </div>
+      <Header />
 
       {/* Toast */}
       {toast && (
@@ -128,7 +103,7 @@ export function ColorPicker() {
       )}
 
       {/* Content */}
-      <main className="mx-auto max-w-5xl px-6 pt-28 pb-20">
+      <main className="mx-auto max-w-5xl px-4 pt-24 pb-20 sm:px-6 sm:pt-40">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
