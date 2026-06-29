@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     default: "HueFlow | Colors, Palettes, Gradients, and Brand Color Strategy",
     template: `%s | ${siteConfig.name}`,
   },
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: ["/favicon.svg"],
+    apple: [{ url: "/favicon.svg" }],
+  },
   description:
     "Build premium brand palettes, semantic color systems, accessible scales, answer-first color guides, and programmatic content with HueFlow.",
   keywords: [
