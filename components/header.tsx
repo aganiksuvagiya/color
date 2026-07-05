@@ -42,7 +42,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="mx-auto flex max-w-[1560px] items-center justify-between rounded-full border border-white/18 bg-[#160b05]/60 px-4 py-2.5 backdrop-blur-xl sm:px-5 sm:py-3"
+        className="mx-auto flex max-w-[1560px] items-center justify-between rounded-full border border-white/18 bg-[#160b05]/80 px-4 py-2.5 backdrop-blur-md sm:px-5 sm:py-3"
       >
         <Link href="/" className="flex items-center">
           <img src="/hueflow.svg" alt="HueFlow" width={100} height={20} />
@@ -74,7 +74,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute left-1/2 top-full mt-3 w-56 -translate-x-1/2 rounded-xl border border-white/15 bg-[#160b05]/95 p-2 backdrop-blur-xl"
+                  className="absolute left-1/2 top-full mt-3 w-56 -translate-x-1/2 rounded-xl border border-white/15 bg-[#160b05]/95 p-2"
                 >
                   {TOOL_LINKS.map((link) => (
                     <Link
@@ -140,7 +140,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="mx-auto mt-2 max-h-[70vh] max-w-[1560px] overflow-y-auto rounded-2xl border border-white/18 bg-[#160b05]/95 p-3 backdrop-blur-xl md:hidden"
+            className="mx-auto mt-2 max-h-[70vh] max-w-[1560px] overflow-y-auto rounded-2xl border border-white/18 bg-[#160b05]/95 p-3 md:hidden"
           >
             <nav className="flex flex-col gap-0.5">
               {MAIN_LINKS.map((link) => (

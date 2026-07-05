@@ -3,12 +3,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
 import { Header } from "./header";
+import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { isValidHex } from "@/lib/color-utils";
 import {
   getContrastRatio,
   getWcagLevel,
   suggestAccessibleColor,
 } from "@/lib/accessibility";
+import { toolPageContent } from "@/lib/seo/tool-pages";
 
 type TargetLevel = "AA" | "AAA";
 
@@ -377,6 +379,8 @@ export function ContrastFixer() {
             </svg>
             Swap Colors
           </button>
+
+          <ToolPageSections config={toolPageContent["contrast-fixer"]} />
         </motion.div>
       </div>
     </main>

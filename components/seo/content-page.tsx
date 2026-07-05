@@ -92,34 +92,62 @@ export function ContentPageView({
             <p className="mt-4 text-base leading-8 text-slate-200">{entry.expertSummary.body}</p>
           </section>
 
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className="grid gap-6 xl:grid-cols-[1.02fr_0.98fr]">
             <section className="rounded-[2rem] border border-black/8 bg-white p-7 shadow-[0_20px_50px_rgba(15,23,42,0.04)]">
-              <h2 className="text-2xl font-semibold tracking-tight">Definitions</h2>
-              <div className="mt-5 space-y-4">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">Definitions</p>
+                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">Core ideas in plain English</h2>
+                </div>
+                <div className="hidden h-px flex-1 bg-slate-200 sm:block" />
+              </div>
+
+              <div className="mt-6 space-y-4">
                 {entry.definitions.map((item) => (
-                  <div key={item.term} className="rounded-[1.5rem] border border-black/8 bg-slate-50 p-5">
-                    <h3 className="text-lg font-semibold text-slate-950">{item.term}</h3>
-                    <p className="mt-3 text-sm leading-7 text-slate-700">{item.definition}</p>
+                  <div key={item.term} className="rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-5">
+                    <h3 className="text-xl font-semibold leading-7 text-slate-950">{item.term}</h3>
+                    <p className="mt-3 max-w-2xl text-base leading-8 text-slate-700">{item.definition}</p>
                   </div>
                 ))}
               </div>
             </section>
+
             <section className="rounded-[2rem] border border-black/8 bg-white p-7 shadow-[0_20px_50px_rgba(15,23,42,0.04)]">
-              <h2 className="text-2xl font-semibold tracking-tight">Pros and cons</h2>
-              <div className="mt-5 grid gap-4 md:grid-cols-2">
-                <div className="rounded-[1.5rem] border border-emerald-200 bg-emerald-50 p-5">
-                  <h3 className="text-lg font-semibold text-emerald-900">Pros</h3>
-                  <ul className="mt-3 space-y-3 text-sm leading-7 text-emerald-950">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">Tradeoffs</p>
+                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-950">Pros and cons</h2>
+                </div>
+                <div className="hidden h-px flex-1 bg-slate-200 sm:block" />
+              </div>
+
+              <div className="mt-6 space-y-5">
+                <div className="rounded-[1.5rem] border border-emerald-200 bg-emerald-50/70 p-5">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-8 min-w-8 items-center justify-center rounded-full bg-emerald-600 text-sm font-semibold text-white">+</span>
+                    <h3 className="text-lg font-semibold text-emerald-950">Pros</h3>
+                  </div>
+                  <ul className="mt-4 space-y-3 text-base leading-8 text-emerald-950">
                     {entry.prosCons.pros.map((item) => (
-                      <li key={item}>{item}</li>
+                      <li key={item} className="flex gap-3">
+                        <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
+                        <span>{item}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
-                <div className="rounded-[1.5rem] border border-amber-200 bg-amber-50 p-5">
-                  <h3 className="text-lg font-semibold text-amber-900">Cons</h3>
-                  <ul className="mt-3 space-y-3 text-sm leading-7 text-amber-950">
+
+                <div className="rounded-[1.5rem] border border-amber-200 bg-amber-50/70 p-5">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-8 min-w-8 items-center justify-center rounded-full bg-amber-500 text-sm font-semibold text-white">-</span>
+                    <h3 className="text-lg font-semibold text-amber-950">Cons</h3>
+                  </div>
+                  <ul className="mt-4 space-y-3 text-base leading-8 text-amber-950">
                     {entry.prosCons.cons.map((item) => (
-                      <li key={item}>{item}</li>
+                      <li key={item} className="flex gap-3">
+                        <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
+                        <span>{item}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -216,7 +244,7 @@ export function ContentPageView({
           </section>
         </article>
 
-        <aside className="space-y-6">
+        <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
           <div className="rounded-[2rem] border border-black/8 bg-white p-6 shadow-[0_20px_50px_rgba(15,23,42,0.04)]">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">AI retrieval format</p>
             <ul className="mt-4 space-y-3 text-sm leading-7 text-slate-700">

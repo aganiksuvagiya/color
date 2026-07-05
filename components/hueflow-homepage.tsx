@@ -199,24 +199,14 @@ const footerLinks: { heading: string; links: { label: string; href: string }[] }
     { label: "Blog", href: "/blog" },
     { label: "Color Theory", href: "/blog" },
   ]},
-  { heading: "Company", links: [
-    { label: "About", href: "#" },
-    { label: "Contact", href: "#" },
-  ]},
-  { heading: "Social", links: [
-    { label: "Dribbble", href: "#" },
-    { label: "X", href: "#" },
-    { label: "LinkedIn", href: "#" },
-  ]},
 ];
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 34, filter: "blur(16px)" },
+  hidden: { opacity: 0, y: 34 },
   show: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
@@ -389,13 +379,13 @@ export function HueFlowHomePage() {
           </motion.div>
         </section>
 
-        <section className="mx-auto mt-24 grid max-w-[1560px] gap-8 lg:grid-cols-[0.95fr_1.05fr]" id="why">
+        <section className="defer-offscreen mx-auto mt-24 grid max-w-[1560px] gap-8 lg:grid-cols-[0.95fr_1.05fr]" id="why">
           <motion.div
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.25 }}
             variants={stagger}
-            className="rounded-[34px] border border-white/14 bg-black/16 p-8 backdrop-blur-xl"
+            className="rounded-[34px] border border-white/14 bg-[#2a140a]/70 p-8"
           >
             <motion.p variants={fadeUp} className="text-center text-sm font-semibold uppercase tracking-[0.34em] text-white/62">
               Why this direction works
@@ -416,7 +406,7 @@ export function HueFlowHomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ delay: index * 0.08, duration: 0.65 }}
-                className="rounded-[30px] border border-white/10 bg-black/20 p-7 backdrop-blur-xl"
+                className="rounded-[30px] border border-white/10 bg-[#2a140a]/75 p-7"
               >
                 <h3 className="text-3xl font-semibold tracking-[-0.05em] text-white">{section.title}</h3>
                 <p className="mt-4 max-w-2xl text-lg leading-8 text-white/72">{section.body}</p>
@@ -425,13 +415,13 @@ export function HueFlowHomePage() {
           </div>
         </section>
 
-        <section className="mx-auto mt-20 max-w-[1560px]">
+        <section className="defer-offscreen mx-auto mt-20 max-w-[1560px]">
           <motion.div
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
             variants={stagger}
-            className="grid gap-5 rounded-[32px] border border-white/10 bg-black/20 p-6 backdrop-blur-xl sm:grid-cols-2 xl:grid-cols-4"
+            className="grid gap-5 rounded-[32px] border border-white/10 bg-[#2a140a]/75 p-6 sm:grid-cols-2 xl:grid-cols-4"
           >
             {stats.map((stat) => (
               <motion.div key={stat.label} variants={fadeUp} className="rounded-[26px] border border-white/10 bg-black/12 p-6">
@@ -442,7 +432,7 @@ export function HueFlowHomePage() {
           </motion.div>
         </section>
 
-        <section className="mx-auto mt-24 max-w-[1560px]" id="features">
+        <section className="defer-offscreen mx-auto mt-24 max-w-[1560px]" id="features">
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -489,7 +479,7 @@ export function HueFlowHomePage() {
                 variants={fadeUp}
                 whileHover={{ y: -6, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 240, damping: 22 }}
-                className="group rounded-[24px] border border-white/10 bg-gradient-to-b from-white/10 to-white/[0.03] p-6 backdrop-blur-xl transition-colors hover:border-white/20"
+                className="group rounded-[24px] border border-white/10 bg-gradient-to-b from-white/10 to-white/[0.03] p-6 transition-colors hover:border-white/20"
               >
                 <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/80 transition-transform group-hover:scale-110">
                   {feature.icon}
@@ -503,14 +493,14 @@ export function HueFlowHomePage() {
           </motion.div>
         </section>
 
-        <section className="mx-auto mt-24 max-w-[1560px]">
+        <section className="defer-offscreen mx-auto mt-24 max-w-[1560px]">
           <div className="grid gap-8 lg:grid-cols-[1.04fr_0.96fr]">
             <motion.div
               initial={{ opacity: 0, x: -24 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.7 }}
-              className="rounded-[34px] border border-white/10 bg-black/20 p-8 backdrop-blur-xl"
+              className="rounded-[34px] border border-white/10 bg-[#2a140a]/75 p-8"
             >
               <p className="text-center text-sm font-semibold uppercase tracking-[0.34em] text-white/62">Use cases</p>
               <h2 className="mx-auto mt-4 max-w-3xl text-center [text-wrap:balance] font-display text-[1.8rem] font-semibold leading-[0.98] tracking-[-0.06em] text-white sm:text-[2.8rem] lg:text-[3.375rem]">
@@ -529,7 +519,7 @@ export function HueFlowHomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ delay: index * 0.08, duration: 0.65 }}
-                  className="rounded-[28px] border border-white/14 bg-black/12 p-7 backdrop-blur-xl"
+                  className="rounded-[28px] border border-white/14 bg-[#2a140a]/65 p-7"
                 >
                   <h3 className="text-3xl font-semibold tracking-[-0.05em] text-white">{item.title}</h3>
                   <p className="mt-4 text-lg leading-8 text-white/70">{item.body}</p>
@@ -539,7 +529,7 @@ export function HueFlowHomePage() {
           </div>
         </section>
 
-        <section className="mx-auto mt-24 max-w-[1560px]">
+        <section className="defer-offscreen mx-auto mt-24 max-w-[1560px]">
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -568,7 +558,7 @@ export function HueFlowHomePage() {
                 variants={fadeUp}
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 240, damping: 22 }}
-                className="rounded-[30px] border border-white/10 bg-black/20 p-7 backdrop-blur-xl"
+                className="rounded-[30px] border border-white/10 bg-[#2a140a]/75 p-7"
               >
                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white/56">{card.eyebrow}</p>
                 <h3 className="mt-5 text-3xl font-semibold tracking-[-0.05em] text-white">{card.title}</h3>
@@ -579,7 +569,7 @@ export function HueFlowHomePage() {
         </section>
 
 
-        <section className="mx-auto mt-24 max-w-[1560px] overflow-hidden">
+        <section className="defer-offscreen mx-auto mt-24 max-w-[1560px] overflow-hidden">
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -600,7 +590,7 @@ export function HueFlowHomePage() {
               {[...testimonials, ...testimonials].map((testimonial, index) => (
                 <motion.article
                   key={`${testimonial.name}-${index}`}
-                  className="w-[360px] rounded-[28px] border border-white/10 bg-black/20 p-7 backdrop-blur-xl"
+                  className="w-[360px] rounded-[28px] border border-white/10 bg-[#2a140a]/75 p-7"
                 >
                   <p className="text-lg leading-8 text-white/80">&ldquo;{testimonial.quote}&rdquo;</p>
                   <div className="mt-8">
@@ -613,7 +603,7 @@ export function HueFlowHomePage() {
           </div>
         </section>
 
-        <section className="mx-auto mt-24 max-w-[1560px]">
+        <section className="defer-offscreen mx-auto mt-24 max-w-[1560px]">
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -640,7 +630,7 @@ export function HueFlowHomePage() {
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ delay: index * 0.08, duration: 0.6 }}
                   onClick={() => setOpenFaq(isOpen ? -1 : index)}
-                  className="rounded-[28px] border border-white/10 bg-black/20 p-7 text-left backdrop-blur-xl"
+                  className="rounded-[28px] border border-white/10 bg-[#2a140a]/75 p-7 text-left"
                 >
                   <div className="flex items-center justify-between gap-6">
                     <h3 className="text-2xl font-semibold tracking-[-0.05em] text-white">{faq.question}</h3>
@@ -666,7 +656,7 @@ export function HueFlowHomePage() {
           </div>
         </section>
 
-        <footer className="mx-auto mt-24 max-w-[1560px] rounded-[34px] border border-white/10 bg-black/20 p-8 backdrop-blur-xl">
+        <footer className="defer-offscreen mx-auto mt-24 max-w-[1560px] rounded-[34px] border border-white/10 bg-[#2a140a]/75 p-8">
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
               <div className="flex items-center">
@@ -676,7 +666,7 @@ export function HueFlowHomePage() {
                 A premium color generator for teams that want product-ready palettes, more exploration, and cleaner handoff.
               </p>
             </div>
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-8 sm:grid-cols-3">
               {footerLinks.map((group) => (
                 <div key={group.heading}>
                   <h3 className="text-sm font-semibold uppercase tracking-[0.24em] text-white/54">{group.heading}</h3>

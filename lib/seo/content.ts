@@ -870,6 +870,154 @@ const guides: ContentEntry[] = [
       { title: "What colors increase conversions?", href: "/guides/conversion-color-strategy" },
     ],
   },
+  {
+    slug: "homepage-color-mistakes-hurting-conversions",
+    title: "Homepage Color Mistakes That Hurt Conversions",
+    description: "A practical guide to the color mistakes that quietly make US homepages feel cheap, confusing, or hard to trust.",
+    answer:
+      "Most homepage color mistakes do not fail because the hue is ugly. They fail because the page loses hierarchy, trust, or readability. The strongest homepages usually use fewer colors, clearer contrast, and one obvious conversion path.",
+    intent: "informational",
+    keywords: [
+      "homepage color mistakes",
+      "website color mistakes",
+      "colors hurting conversions",
+      "landing page color mistakes",
+      "homepage color strategy",
+    ],
+    sections: [
+      {
+        title: "Too many accents create indecision",
+        body: "When every badge, icon, button, and section uses a different accent, users stop knowing what matters. A homepage should feel directed, not noisy. One primary accent and one support accent is usually enough for most US startup and service pages.",
+      },
+      {
+        title: "Low contrast makes a page feel unfinished",
+        body: "Many founders think the problem is branding when the real issue is readability. Pale gray text, washed-out orange buttons, and soft gradients behind headlines often make the page feel less credible before users even read the offer.",
+      },
+      {
+        title: "Color without category fit hurts trust",
+        body: "A playful neon palette may work for a creator tool, but it can weaken confidence for legal, healthcare, insurance, or fintech pages. Users judge whether a color system feels appropriate within seconds, especially in trust-heavy American markets.",
+      },
+      {
+        title: "Good homepages repeat color roles consistently",
+        body: "Strong pages repeat the same meaning: one color for primary action, one for positive states, one neutral family for reading surfaces, and restrained support colors for emphasis. That consistency makes the brand feel deliberate instead of improvised.",
+      },
+    ],
+    faq: [
+      {
+        question: "What is the biggest homepage color mistake?",
+        answer: "The biggest mistake is usually weak hierarchy. If the CTA, headline, and supporting sections all compete visually, users feel friction before they feel interest.",
+      },
+      {
+        question: "How many colors should a homepage use?",
+        answer: "Most high-performing homepages work best with one primary brand hue, one accent, and a disciplined neutral system. More than that often needs very careful art direction.",
+      },
+    ],
+    definitions: [
+      {
+        term: "Homepage color hierarchy",
+        definition: "The order in which colors tell users what to read, trust, click, and ignore on a homepage.",
+      },
+      {
+        term: "Conversion-focused palette",
+        definition: "A restrained color system built to improve clarity, trust, CTA visibility, and reading comfort instead of just looking trendy.",
+      },
+    ],
+    prosCons: {
+      pros: [
+        "Helps users find the main CTA faster.",
+        "Makes the page feel more trustworthy and intentional.",
+        "Improves readability across hero, pricing, and feature sections.",
+      ],
+      cons: [
+        "A very restrained palette can feel flat if the copy and layout are weak.",
+        "Trend-heavy brands may feel less expressive if every accent is over-disciplined.",
+      ],
+    },
+    comparisonRows: [
+      { label: "Disciplined system", bestFor: "SaaS, agencies, healthcare, service brands", strengths: "Clear hierarchy and trust", watchouts: "Needs strong copy to avoid feeling plain" },
+      { label: "Accent-heavy system", bestFor: "Creator tools, launches, DTC campaigns", strengths: "Energy and attention", watchouts: "Can look chaotic or cheap fast" },
+    ],
+    relatedLinks: [
+      { title: "What colors increase conversions?", href: "/guides/conversion-color-strategy" },
+      { title: "Best CTA color FAQ", href: "/faqs/cta-colors" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Startup website color strategy", href: "/guides/startup-website-color-strategy" },
+    ],
+  },
+  {
+    slug: "best-colors-for-healthcare-websites-usa",
+    title: "Best Colors for Healthcare Websites in the USA",
+    description: "How US healthcare websites can use color to build trust, reduce anxiety, and keep booking or inquiry flows clear.",
+    answer:
+      "The best colors for healthcare websites in the USA are usually blue, teal, soft green, and calm neutrals. These colors work because they feel credible, readable, and reassuring without adding visual stress during important decisions.",
+    intent: "informational",
+    keywords: [
+      "best colors for healthcare websites",
+      "healthcare website colors usa",
+      "medical website color palette",
+      "doctor website color strategy",
+      "hospital website colors",
+    ],
+    sections: [
+      {
+        title: "Why blue still wins",
+        body: "Blue remains the safest healthcare default because it signals stability and professionalism. For hospitals, clinics, telehealth products, and insurance-adjacent services, that immediate sense of order matters more than novelty.",
+      },
+      {
+        title: "Teal and green reduce emotional friction",
+        body: "Teal and softer greens often help healthcare brands feel more human and less institutional. They are especially useful for wellness, pediatrics, mental health, dental, and patient-experience-led brands that want calm without losing trust.",
+      },
+      {
+        title: "Warm colors should stay secondary",
+        body: "Orange, coral, or warm yellow can work in small moments such as highlights or scheduling cues, but they should not dominate the reading experience. In healthcare, too much heat can feel promotional when users want reassurance.",
+      },
+      {
+        title: "Accessibility matters more in healthcare than trendiness",
+        body: "Healthcare sites often serve older users, stressed users, and mobile visitors making important decisions fast. Clear contrast, obvious buttons, and calmer surface colors usually matter more than trying to look visually disruptive.",
+      },
+    ],
+    faq: [
+      {
+        question: "What color builds trust for medical websites?",
+        answer: "Blue is usually the strongest trust color for medical and healthcare websites because it feels organized, stable, and familiar.",
+      },
+      {
+        question: "Can healthcare websites use green?",
+        answer: "Yes. Green works well when the brand wants to feel restorative, supportive, or wellness-oriented, especially when paired with strong neutrals and accessible text contrast.",
+      },
+    ],
+    definitions: [
+      {
+        term: "Healthcare trust colors",
+        definition: "Colors that help medical websites feel credible, calm, and easy to trust during important patient decisions.",
+      },
+      {
+        term: "Patient-friendly palette",
+        definition: "A color system designed to reduce stress, preserve readability, and keep booking or inquiry paths visually clear.",
+      },
+    ],
+    prosCons: {
+      pros: [
+        "Blue and teal make healthcare brands feel stable and reassuring.",
+        "Soft green can add warmth without losing professionalism.",
+        "Calmer palettes usually support better reading and mobile usability.",
+      ],
+      cons: [
+        "Overusing blue can make a healthcare brand feel generic.",
+        "Warm accents can feel too promotional if they dominate the page.",
+      ],
+    },
+    comparisonRows: [
+      { label: "Blue", bestFor: "Hospitals, clinics, telehealth, insurance-adjacent services", strengths: "Trust and clarity", watchouts: "Can feel generic if unsupported" },
+      { label: "Teal/green", bestFor: "Wellness, dental, mental health, modern care brands", strengths: "Calm and human warmth", watchouts: "Needs strong contrast and structure" },
+    ],
+    relatedLinks: [
+      { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
+      { title: "Blue color meaning", href: "/colors/blue" },
+      { title: "Green color meaning", href: "/colors/green" },
+      { title: "Accessible success states", href: "/accessibility/accessible-success-states" },
+    ],
+  },
 ];
 
 const explainers: ContentEntry[] = [

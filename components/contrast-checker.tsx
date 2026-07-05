@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Header } from "./header";
+import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { isValidHex } from "@/lib/color-utils";
 import { getContrastRatio, getWcagLevel } from "@/lib/accessibility";
 import { findClosestColorName } from "@/lib/color-names";
+import { toolPageContent } from "@/lib/seo/tool-pages";
 
 export function ContrastChecker() {
   const [fg, setFg] = useState("#FFFFFF");
@@ -73,6 +75,8 @@ export function ContrastChecker() {
             ⇅ Swap Colors
           </button>
         </motion.div>
+
+        <ToolPageSections config={toolPageContent.contrast} />
       </div>
     </main>
   );

@@ -3,6 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback, useMemo, useId } from "react";
 import { Header } from "./header";
+import { ToolPageSections } from "@/components/seo/tool-page-sections";
+import { toolPageContent } from "@/lib/seo/tool-pages";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -603,6 +605,8 @@ export function ColorAnimationGenerator() {
               </pre>
             </motion.section>
           </div>
+
+          <ToolPageSections config={toolPageContent.animation} />
         </div>
       </main>
     </div>

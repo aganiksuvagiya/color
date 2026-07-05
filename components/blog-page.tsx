@@ -1,66 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Header } from "./header";
 
-const articles = [
-  {
-    title: "Understanding Color Harmony",
-    excerpt: "Learn how complementary, analogous, and triadic color relationships create visually pleasing palettes for product design.",
-    category: "Theory",
-    readTime: "5 min",
-  },
-  {
-    title: "WCAG Contrast Requirements Explained",
-    excerpt: "A practical guide to meeting AA and AAA contrast ratios so your interface is accessible to all users.",
-    category: "Accessibility",
-    readTime: "4 min",
-  },
-  {
-    title: "Building a Design Token System",
-    excerpt: "How to structure color tokens for scalable design systems that work across platforms and teams.",
-    category: "Systems",
-    readTime: "7 min",
-  },
-  {
-    title: "Color Psychology in UI Design",
-    excerpt: "Why blue feels trustworthy, red creates urgency, and how to use color psychology to influence user behavior.",
-    category: "Psychology",
-    readTime: "6 min",
-  },
-  {
-    title: "Dark Mode Color Strategies",
-    excerpt: "Best practices for adapting your color palette to dark mode without losing brand identity or readability.",
-    category: "Design",
-    readTime: "5 min",
-  },
-  {
-    title: "Designing for Color Blindness",
-    excerpt: "8% of males have some form of color vision deficiency. Here's how to design palettes that work for everyone.",
-    category: "Accessibility",
-    readTime: "4 min",
-  },
-  {
-    title: "From Hex to HSL: Color Formats Explained",
-    excerpt: "Understanding when to use hex, RGB, HSL, and other color formats in your development workflow.",
-    category: "Technical",
-    readTime: "3 min",
-  },
-  {
-    title: "Semantic Colors for Product Teams",
-    excerpt: "Why naming colors by role (primary, success, warning) beats naming by hue (blue, green, orange) in production systems.",
-    category: "Systems",
-    readTime: "5 min",
-  },
-];
+import { Header } from "./header";
+import { blogPageContent } from "@/lib/seo/tool-pages";
 
 const categoryColors: Record<string, string> = {
-  Theory: "bg-indigo-500/20 text-indigo-400",
-  Accessibility: "bg-emerald-500/20 text-emerald-400",
-  Systems: "bg-amber-500/20 text-amber-400",
-  Psychology: "bg-pink-500/20 text-pink-400",
-  Design: "bg-purple-500/20 text-purple-400",
-  Technical: "bg-sky-500/20 text-sky-400",
+  Guides: "bg-indigo-500/20 text-indigo-300",
+  Explainers: "bg-emerald-500/20 text-emerald-300",
+  Comparisons: "bg-amber-500/20 text-amber-300",
+  "Best Colors": "bg-pink-500/20 text-pink-300",
 };
 
 export function BlogPage() {
@@ -71,32 +21,96 @@ export function BlogPage() {
 
       <Header />
 
-      <div className="relative mx-auto max-w-4xl px-4 pb-20 pt-24 sm:px-6 sm:pt-40">
+      <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-24 sm:px-6 sm:pt-40">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mx-auto max-w-4xl text-center"
+        >
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300">Answer-first resource library</p>
+          <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">{blogPageContent.title}</h1>
+          <p className="mx-auto mt-4 max-w-3xl text-lg text-white/60">{blogPageContent.description}</p>
+        </motion.div>
 
-        <div className="mb-10 text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Color Theory & Resources</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-white/50">Guides to help you build better color systems for your products.</p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.05 }}
+          className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-6"
+        >
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange-300">Direct answer</p>
+          <p className="mt-3 max-w-4xl text-sm leading-7 text-white/72">{blogPageContent.answer}</p>
+        </motion.div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          {articles.map((article, idx) => (
-            <motion.article
-              key={article.title}
+        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {blogPageContent.featuredArticles.map((article, idx) => (
+            <motion.div
+              key={article.href}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
-              className="group rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl transition-colors hover:bg-white/8"
             >
-              <div className="mb-3 flex items-center gap-2">
-                <span className={`rounded-md px-2 py-0.5 text-[10px] font-bold ${categoryColors[article.category] || "bg-white/10 text-white/50"}`}>
-                  {article.category}
-                </span>
-                <span className="text-[10px] text-white/25">{article.readTime} read</span>
-              </div>
-              <h2 className="mb-2 text-base font-semibold text-white group-hover:text-white/90">{article.title}</h2>
-              <p className="text-sm leading-6 text-white/50">{article.excerpt}</p>
-            </motion.article>
+              <Link
+                href={article.href}
+                className="group block h-full rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl transition-colors hover:bg-white/8"
+              >
+                <div className="mb-3 flex items-center gap-2">
+                  <span className={`rounded-md px-2 py-0.5 text-[10px] font-bold ${categoryColors[article.category] || "bg-white/10 text-white/60"}`}>
+                    {article.category}
+                  </span>
+                  <span className="text-[10px] text-white/25">{article.readTime} read</span>
+                </div>
+                <h2 className="text-base font-semibold text-white group-hover:text-white/90">{article.title}</h2>
+                <p className="mt-3 text-sm leading-6 text-white/55">{article.excerpt}</p>
+                <p className="mt-5 text-sm font-medium text-orange-300">Open resource</p>
+              </Link>
+            </motion.div>
           ))}
+        </div>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          {blogPageContent.sections.map((section, idx) => (
+            <motion.section
+              key={section.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + idx * 0.05 }}
+              className="rounded-2xl border border-white/10 bg-white/5 p-6"
+            >
+              <h2 className="text-xl font-semibold text-white">{section.title}</h2>
+              <p className="mt-3 text-sm leading-7 text-white/65">{section.body}</p>
+            </motion.section>
+          ))}
+        </div>
+
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
+            <h2 className="text-xl font-semibold text-white">FAQ</h2>
+            <div className="mt-5 space-y-4">
+              {blogPageContent.faq.map((item) => (
+                <div key={item.question} className="rounded-xl bg-black/20 p-4">
+                  <h3 className="text-base font-semibold text-white">{item.question}</h3>
+                  <p className="mt-2 text-sm leading-7 text-white/65">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
+            <h2 className="text-xl font-semibold text-white">Explore next</h2>
+            <div className="mt-5 space-y-3">
+              {blogPageContent.relatedLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/72 transition-colors hover:bg-black/30 hover:text-white"
+                >
+                  {link.title}
+                </Link>
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </main>

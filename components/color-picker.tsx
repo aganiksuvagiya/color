@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import { useState, useCallback, useEffect } from "react";
 import { Header } from "./header";
+import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { hexToHsl, hslToHex, isValidHex } from "@/lib/color-utils";
 import { findClosestColorName } from "@/lib/color-names";
+import { toolPageContent } from "@/lib/seo/tool-pages";
 
 function hexToRgb(hex: string): { r: number; g: number; b: number } {
   const r = parseInt(hex.slice(1, 3), 16);
@@ -222,6 +224,8 @@ export function ColorPicker() {
               ))}
             </div>
           </div>
+
+          <ToolPageSections config={toolPageContent.picker} />
         </motion.div>
       </main>
     </div>

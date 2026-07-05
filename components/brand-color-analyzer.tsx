@@ -3,7 +3,9 @@
 import { motion } from "framer-motion";
 import { useState, useRef, useCallback } from "react";
 import { Header } from "./header";
+import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { findClosestColorName } from "@/lib/color-names";
+import { toolPageContent } from "@/lib/seo/tool-pages";
 
 type ExtractedColor = { hex: string; name: string; percent: number };
 
@@ -295,6 +297,8 @@ export function BrandColorAnalyzer() {
             </div>
           </motion.div>
         )}
+
+        <ToolPageSections config={toolPageContent["brand-analyzer"]} />
       </div>
     </main>
   );

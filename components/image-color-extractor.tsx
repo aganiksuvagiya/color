@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import { useState, useRef, useCallback } from "react";
 import { Header } from "./header";
+import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { extractColorsFromImageData } from "@/lib/image-colors";
 import type { Palette } from "@/lib/types";
+import { toolPageContent } from "@/lib/seo/tool-pages";
 
 export function ImageColorExtractor() {
   const [palette, setPalette] = useState<Palette | null>(null);
@@ -192,6 +194,8 @@ export function ImageColorExtractor() {
             </div>
           </motion.div>
         )}
+
+        <ToolPageSections config={toolPageContent["image-colors"]} />
       </div>
     </main>
   );

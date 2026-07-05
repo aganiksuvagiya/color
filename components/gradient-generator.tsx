@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Header } from "./header";
+import { ToolPageSections } from "@/components/seo/tool-page-sections";
+import { toolPageContent } from "@/lib/seo/tool-pages";
 
 interface ColorStop {
   color: string;
@@ -452,6 +454,8 @@ export function GradientGenerator() {
             </div>
           )}
         </motion.div>
+
+        <ToolPageSections config={toolPageContent.gradient} />
       </div>
     </div>
   );

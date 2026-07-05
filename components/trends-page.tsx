@@ -1,72 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Header } from "./header";
 import { encodePalette } from "@/lib/share-utils";
-import type { Palette } from "@/lib/types";
+import { dayIndex, generateTrendingPalettes } from "@/lib/trending";
 
 type Category = "all" | "saas" | "ecommerce" | "mobile" | "branding";
-
-const trendingPalettes: (Palette & { category: Category })[] = [
-  { label: "Indigo SaaS", category: "saas", colors: [
-    { name: "Ink", hex: "#0f172a", role: "neutral", text: "light" },
-    { name: "Indigo", hex: "#4F46E5", role: "primary", text: "light" },
-    { name: "Emerald", hex: "#10B981", role: "success", text: "dark" },
-    { name: "Amber", hex: "#F59E0B", role: "warning", text: "dark" },
-    { name: "Sky", hex: "#0EA5E9", role: "accent", text: "dark" },
-  ]},
-  { label: "Warm Commerce", category: "ecommerce", colors: [
-    { name: "Charcoal", hex: "#1C1917", role: "neutral", text: "light" },
-    { name: "Terracotta", hex: "#C2410C", role: "primary", text: "light" },
-    { name: "Sage", hex: "#65A30D", role: "success", text: "dark" },
-    { name: "Gold", hex: "#D97706", role: "warning", text: "dark" },
-    { name: "Rose", hex: "#E11D48", role: "accent", text: "light" },
-  ]},
-  { label: "Clean Mobile", category: "mobile", colors: [
-    { name: "Slate", hex: "#1E293B", role: "neutral", text: "light" },
-    { name: "Blue", hex: "#3B82F6", role: "primary", text: "light" },
-    { name: "Green", hex: "#22C55E", role: "success", text: "dark" },
-    { name: "Orange", hex: "#FB923C", role: "warning", text: "dark" },
-    { name: "Purple", hex: "#A855F7", role: "accent", text: "light" },
-  ]},
-  { label: "Luxury Brand", category: "branding", colors: [
-    { name: "Obsidian", hex: "#0C0A09", role: "neutral", text: "light" },
-    { name: "Gold", hex: "#B45309", role: "primary", text: "light" },
-    { name: "Forest", hex: "#166534", role: "success", text: "light" },
-    { name: "Bronze", hex: "#92400E", role: "warning", text: "light" },
-    { name: "Plum", hex: "#7E22CE", role: "accent", text: "light" },
-  ]},
-  { label: "Neon Dashboard", category: "saas", colors: [
-    { name: "Void", hex: "#09090B", role: "neutral", text: "light" },
-    { name: "Violet", hex: "#7C3AED", role: "primary", text: "light" },
-    { name: "Cyan", hex: "#06B6D4", role: "success", text: "dark" },
-    { name: "Yellow", hex: "#EAB308", role: "warning", text: "dark" },
-    { name: "Pink", hex: "#EC4899", role: "accent", text: "light" },
-  ]},
-  { label: "Earth Store", category: "ecommerce", colors: [
-    { name: "Bark", hex: "#1C1210", role: "neutral", text: "light" },
-    { name: "Clay", hex: "#9A3412", role: "primary", text: "light" },
-    { name: "Moss", hex: "#3F6212", role: "success", text: "light" },
-    { name: "Sand", hex: "#CA8A04", role: "warning", text: "dark" },
-    { name: "Rust", hex: "#DC2626", role: "accent", text: "light" },
-  ]},
-  { label: "Pastel Mobile", category: "mobile", colors: [
-    { name: "Smoke", hex: "#18181B", role: "neutral", text: "light" },
-    { name: "Periwinkle", hex: "#818CF8", role: "primary", text: "dark" },
-    { name: "Mint", hex: "#6EE7B7", role: "success", text: "dark" },
-    { name: "Peach", hex: "#FCD34D", role: "warning", text: "dark" },
-    { name: "Lavender", hex: "#C084FC", role: "accent", text: "dark" },
-  ]},
-  { label: "Studio Brand", category: "branding", colors: [
-    { name: "Carbon", hex: "#171717", role: "neutral", text: "light" },
-    { name: "Crimson", hex: "#BE123C", role: "primary", text: "light" },
-    { name: "Olive", hex: "#4D7C0F", role: "success", text: "light" },
-    { name: "Copper", hex: "#B45309", role: "warning", text: "light" },
-    { name: "Teal", hex: "#0D9488", role: "accent", text: "light" },
-  ]},
-];
 
 const categories: { key: Category; label: string }[] = [
   { key: "all", label: "All" },
@@ -78,6 +19,8 @@ const categories: { key: Category; label: string }[] = [
 
 export function TrendsPage() {
   const [active, setActive] = useState<Category>("all");
+  const [seed, setSeed] = useState(dayIndex);
+  const trendingPalettes = useMemo(() => generateTrendingPalettes(seed), [seed]);
 
   const filtered = active === "all" ? trendingPalettes : trendingPalettes.filter((p) => p.category === active);
 
@@ -95,7 +38,7 @@ export function TrendsPage() {
           <p className="mx-auto mt-4 max-w-2xl text-lg text-white/50">Curated color systems for modern products.</p>
         </div>
 
-        <div className="mb-6 flex flex-wrap justify-center gap-2">
+        <div className="mb-6 flex flex-wrap items-center justify-center gap-2">
           {categories.map((cat) => (
             <button
               key={cat.key}
@@ -105,12 +48,22 @@ export function TrendsPage() {
               {cat.label}
             </button>
           ))}
+          <button
+            onClick={() => setSeed(Date.now())}
+            className="ml-1 flex items-center gap-1.5 rounded-xl border border-white/10 px-4 py-2 text-sm font-medium text-white/60 transition-colors hover:bg-white/8 hover:text-white"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+              <path d="M21 4v5h-5" />
+            </svg>
+            Shuffle
+          </button>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           {filtered.map((palette, idx) => (
             <motion.div
-              key={palette.label}
+              key={`${palette.label}-${idx}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}

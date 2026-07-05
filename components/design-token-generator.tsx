@@ -3,6 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
 import { Header } from "./header";
+import { ToolPageSections } from "@/components/seo/tool-page-sections";
+import { toolPageContent } from "@/lib/seo/tool-pages";
 
 type ColorEntry = { name: string; hex: string };
 
@@ -298,6 +300,8 @@ export function DesignTokenGenerator() {
             </AnimatePresence>
           </motion.div>
         </motion.div>
+
+        <ToolPageSections config={toolPageContent["design-tokens"]} />
       </div>
     </main>
   );
