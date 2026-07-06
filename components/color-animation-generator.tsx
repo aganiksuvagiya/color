@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useCallback, useMemo, useId } from "react";
+import { useState, useCallback, useMemo, useId, useEffect, useRef } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { toolPageContent } from "@/lib/seo/tool-pages";
@@ -191,6 +191,50 @@ export function ColorAnimationGenerator() {
   const [direction, setDirection] = useState<Direction>("alternate");
   const [easing, setEasing] = useState<Easing>("ease-in-out");
   const [copied, setCopied] = useState(false);
+
+  /* More animations — infinite scroll */
+  const [morePresets, setMorePresets] = useState<PresetAnimation[]>([]);
+  const [morePage, setMorePage] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMorePresets, setHasMorePresets] = useState(true);
+  const moreLoaderRef = useRef<HTMLDivElement>(null);
+
+  const fetchMorePresets = useCallback(async (pageNum: number, append: boolean) => {
+    setLoadingMore(true);
+    try {
+      const res = await fetch(`/api/animation-presets?page=${pageNum}&limit=8`);
+      const data = await res.json();
+      setMorePresets((prev) => (append ? [...prev, ...data.presets] : data.presets));
+      setHasMorePresets(data.pagination.hasNext);
+    } catch {
+      // silently fail
+    } finally {
+      setLoadingMore(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => fetchMorePresets(1, false), 0);
+    return () => clearTimeout(timer);
+  }, [fetchMorePresets]);
+
+  const loadMorePresets = useCallback(() => {
+    if (!hasMorePresets || loadingMore) return;
+    const next = morePage + 1;
+    setMorePage(next);
+    fetchMorePresets(next, true);
+  }, [hasMorePresets, loadingMore, morePage, fetchMorePresets]);
+
+  useEffect(() => {
+    const loader = moreLoaderRef.current;
+    if (!loader) return;
+    const observer = new IntersectionObserver(
+      (entries) => { if (entries[0].isIntersecting) loadMorePresets(); },
+      { threshold: 0.1 }
+    );
+    observer.observe(loader);
+    return () => observer.disconnect();
+  }, [loadMorePresets]);
 
   /* Colour management */
   const addColor = useCallback(() => {
@@ -605,7 +649,45 @@ export function ColorAnimationGenerator() {
               </pre>
             </motion.section>
           </div>
+        </div>
 
+        {/* More animations — infinite scroll */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mt-12"
+        >
+          <h2 className="mb-6 text-center text-2xl font-bold">More Animations</h2>
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+            {morePresets.map((preset, i) => (
+              <motion.button
+                key={`${preset.name}-${i}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: (i % 8) * 0.04 }}
+                onClick={() => { applyPreset(preset); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                className="group cursor-pointer rounded-xl border border-white/10 bg-white/5 p-4 text-left transition-all hover:scale-[1.02] hover:border-white/20"
+              >
+                <div
+                  className="mb-3 h-16 w-full rounded-lg"
+                  style={{ background: `linear-gradient(135deg, ${preset.colors.join(", ")})` }}
+                />
+                <p className="text-sm font-semibold text-white/90">{preset.name}</p>
+                <p className="mt-0.5 text-xs text-white/40">
+                  {preset.type === "gradient-shift" ? "Gradient Shift" : preset.type === "color-pulse" ? "Color Pulse" : "Hue Rotate"}
+                </p>
+              </motion.button>
+            ))}
+          </div>
+          {hasMorePresets && (
+            <div ref={moreLoaderRef} className="flex justify-center py-12">
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-white/60" />
+            </div>
+          )}
+        </motion.section>
+
+        <div className="mt-12">
           <ToolPageSections config={toolPageContent.animation} />
         </div>
       </main>

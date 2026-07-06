@@ -83,11 +83,12 @@ export function BrandColorAnalyzer() {
   const extractColors = useCallback((imageSrc: string) => {
     const img = new Image();
     img.crossOrigin = "anonymous";
-    img.onload = () => {
+
+    const runExtraction = () => {
       const canvas = canvasRef.current!;
-      const scale = Math.min(1, 400 / img.width);
-      canvas.width = img.width * scale;
-      canvas.height = img.height * scale;
+      const scale = Math.min(1, 400 / img.naturalWidth);
+      canvas.width = img.naturalWidth * scale;
+      canvas.height = img.naturalHeight * scale;
       const ctx = canvas.getContext("2d")!;
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -136,6 +137,17 @@ export function BrandColorAnalyzer() {
 
       setColors(deduped);
       setLoading(false);
+    };
+
+    img.onload = () => {
+      // decode() guarantees the full image is decoded and ready to read pixel
+      // data from — onload alone can fire before decode finishes for large
+      // screenshots, which was causing extraction to run on partial/blank data.
+      if (img.decode) {
+        img.decode().then(runExtraction).catch(runExtraction);
+      } else {
+        runExtraction();
+      }
     };
     img.onerror = () => {
       setError("Failed to process screenshot");
@@ -231,7 +243,21 @@ export function BrandColorAnalyzer() {
           )}
         </motion.div>
 
-        {colors.length > 0 && (
+        {loading && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-white/10 bg-white/5 py-20 text-center"
+          >
+            <svg className="h-8 w-8 animate-spin text-white/60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10" opacity="0.25" />
+              <path d="M12 2a10 10 0 0 1 10 10" />
+            </svg>
+            <p className="text-sm text-white/50">Capturing screenshot and extracting colors…</p>
+          </motion.div>
+        )}
+
+        {!loading && colors.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
 
             <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_1fr]">

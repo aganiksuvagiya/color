@@ -20,6 +20,7 @@ const TOOL_LINKS = [
   { href: "/tools/contrast-fixer", label: "Contrast Fixer" },
   { href: "/tools/animation", label: "Animation Generator" },
   { href: "/tools/image-colors", label: "Image Colors" },
+  { href: "/tools/collage", label: "Collage Creator" },
 ];
 
 export function Header({ isHome = false }: { isHome?: boolean } = {}) {
@@ -92,6 +93,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
           </div>
 
           <Link href="/blog" className="transition-colors hover:text-white">Blog</Link>
+          <Link href="/profile" className="transition-colors hover:text-white">Profile</Link>
         </nav>
         <div className="flex items-center gap-3">
           {isHome ? (
@@ -175,6 +177,13 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                 className="rounded-lg px-4 py-2.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/8 hover:text-white"
               >
                 Blog
+              </Link>
+              <Link
+                href="/profile"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg px-4 py-2.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/8 hover:text-white"
+              >
+                Profile
               </Link>
 
               <Link

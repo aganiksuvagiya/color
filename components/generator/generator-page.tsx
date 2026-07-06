@@ -5,11 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Header } from "../header";
 import { generateFromPrompt, generateRandomPalette, getContrastText } from "@/lib/color-utils";
+import { withExtraColors } from "@/lib/shades";
 import { deletePalette, getSavedPalettes, savePalette, type SavedPalette } from "@/lib/storage";
 import { encodePalette, decodePalette } from "@/lib/share-utils";
 import type { Palette } from "@/lib/types";
 import { PromptBar } from "./prompt-bar";
 import { PaletteDisplay } from "./palette-display";
+import { PaletteVariations } from "./palette-variations";
 import { ExportPanel } from "./export-panel";
 import { SavedPalettes } from "./saved-palettes";
 import { AccessibilityPanel } from "./accessibility-panel";
@@ -20,6 +22,8 @@ import { ImageUpload } from "./image-upload";
 import { HarmonyPicker } from "./harmony-picker";
 
 const MAX_HISTORY = 30;
+const BASE_COLOR_COUNT = 5;
+const MAX_COLOR_COUNT = 10;
 
 export function GeneratorPage() {
   const [palette, setPalette] = useState<Palette | null>(null);
@@ -31,6 +35,7 @@ export function GeneratorPage() {
   const [lockedIndices, setLockedIndices] = useState<Set<number>>(new Set());
   const [lightMode, setLightMode] = useState(false);
   const [comparePalette, setComparePalette] = useState<Palette | null>(null);
+  const [colorCount, setColorCount] = useState(BASE_COLOR_COUNT);
 
   const historyRef = useRef<Palette[]>([]);
   const historyIndexRef = useRef(-1);
@@ -102,13 +107,13 @@ export function GeneratorPage() {
 
   function handleGenerate(prompt: string) {
     setError(null);
-    setAndTrack(generateFromPrompt(prompt));
+    setAndTrack(withExtraColors(generateFromPrompt(prompt), colorCount - BASE_COLOR_COUNT));
   }
 
   function handleRandom() {
     setError(null);
     if (!palette || lockedIndices.size === 0) {
-      setAndTrack(generateRandomPalette());
+      setAndTrack(withExtraColors(generateRandomPalette(), colorCount - BASE_COLOR_COUNT));
       return;
     }
     const newPalette = generateRandomPalette();
@@ -116,7 +121,15 @@ export function GeneratorPage() {
       label: newPalette.label,
       colors: newPalette.colors.map((c, i) => lockedIndices.has(i) ? palette.colors[i] : c),
     };
-    setAndTrack(merged);
+    setAndTrack(withExtraColors(merged, colorCount - BASE_COLOR_COUNT));
+  }
+
+  function handleColorCountChange(n: number) {
+    setColorCount(n);
+    if (palette) {
+      const base = { ...palette, colors: palette.colors.slice(0, BASE_COLOR_COUNT) };
+      setAndTrack(withExtraColors(base, n - BASE_COLOR_COUNT));
+    }
   }
 
   function handlePaletteSet(p: Palette) {
@@ -221,6 +234,23 @@ export function GeneratorPage() {
         <div className="space-y-4">
           <PromptBar onGenerate={handleGenerate} onRandom={handleRandom} isLoading={false} />
 
+          <div className="flex items-center justify-center gap-3">
+            <span className={`text-xs ${textMuted}`}>Colors:</span>
+            <div className="flex items-center gap-1">
+              {Array.from({ length: MAX_COLOR_COUNT - BASE_COLOR_COUNT + 1 }, (_, i) => BASE_COLOR_COUNT + i).map((n) => (
+                <button
+                  key={n}
+                  onClick={() => handleColorCountChange(n)}
+                  className={`h-7 w-7 rounded-lg text-xs font-medium transition-colors ${
+                    colorCount === n ? "bg-white text-[#160b05]" : `${cardBg} ${textMuted} hover:text-white`
+                  }`}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="grid gap-3 sm:grid-cols-2">
             <ImageUpload onExtract={handlePaletteSet} />
             <HarmonyPicker onGenerate={handlePaletteSet} />
@@ -303,6 +333,7 @@ export function GeneratorPage() {
                 </div>
 
                 <AccessibilityPanel palette={palette} />
+                <PaletteVariations palette={palette} />
                 <UIPreview palette={palette} />
                 <ColorBlindPanel palette={palette} />
                 <GradientPanel palette={palette} />

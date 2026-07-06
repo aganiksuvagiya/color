@@ -10,13 +10,20 @@ import {
   exportAsSwift,
   exportAsAndroid,
   exportAsFigmaTokens,
+  exportAsSvg,
+  exportAsGpl,
   generatePngDataUrl,
+  generateAseBlob,
+  generatePdfBlob,
 } from "@/lib/export-utils";
 import type { Palette } from "@/lib/types";
 
-type Format = "tailwind" | "css" | "json" | "scss" | "swift" | "android" | "figma" | "png";
+type Format = "tailwind" | "css" | "json" | "scss" | "swift" | "android" | "figma" | "svg" | "gpl" | "png" | "ase" | "pdf";
 
 type Props = { palette: Palette };
+
+const DOWNLOAD_FORMATS = ["png", "ase", "pdf"] as const;
+type DownloadFormat = (typeof DOWNLOAD_FORMATS)[number];
 
 const tabs: { key: Format; label: string }[] = [
   { key: "tailwind", label: "Tailwind" },
@@ -24,26 +31,38 @@ const tabs: { key: Format; label: string }[] = [
   { key: "scss", label: "SCSS" },
   { key: "json", label: "JSON" },
   { key: "figma", label: "Figma" },
+  { key: "svg", label: "SVG" },
+  { key: "gpl", label: "GPL" },
   { key: "swift", label: "Swift" },
   { key: "android", label: "Android" },
   { key: "png", label: "PNG" },
+  { key: "ase", label: "ASE" },
+  { key: "pdf", label: "PDF" },
 ];
 
-const formatters: Record<Exclude<Format, "png">, (p: Palette) => string> = {
+type PreviewFormat = Exclude<Format, DownloadFormat>;
+
+const formatters: Record<PreviewFormat, (p: Palette) => string> = {
   tailwind: exportAsTailwind,
   css: exportAsCssVariables,
   scss: exportAsScss,
   json: exportAsJson,
   figma: exportAsFigmaTokens,
+  svg: exportAsSvg,
+  gpl: exportAsGpl,
   swift: exportAsSwift,
   android: exportAsAndroid,
 };
+
+function isDownloadFormat(format: Format): format is DownloadFormat {
+  return (DOWNLOAD_FORMATS as readonly string[]).includes(format);
+}
 
 export function ExportPanel({ palette }: Props) {
   const [format, setFormat] = useState<Format>("tailwind");
   const [copied, setCopied] = useState(false);
 
-  const output = format !== "png" ? formatters[format](palette) : "";
+  const output = !isDownloadFormat(format) ? formatters[format](palette) : "";
 
   async function handleCopy() {
     await navigator.clipboard.writeText(output);
@@ -51,12 +70,25 @@ export function ExportPanel({ palette }: Props) {
     setTimeout(() => setCopied(false), 2000);
   }
 
-  function handleDownloadPng() {
-    const dataUrl = generatePngDataUrl(palette);
+  function downloadFile(href: string, extension: string) {
     const link = document.createElement("a");
-    link.download = `${palette.label.replace(/\s+/g, "-").toLowerCase()}-palette.png`;
-    link.href = dataUrl;
+    link.download = `${palette.label.replace(/\s+/g, "-").toLowerCase()}-palette.${extension}`;
+    link.href = href;
     link.click();
+  }
+
+  function handleDownload() {
+    if (format === "png") {
+      downloadFile(generatePngDataUrl(palette), "png");
+    } else if (format === "ase") {
+      const url = URL.createObjectURL(generateAseBlob(palette));
+      downloadFile(url, "ase");
+      URL.revokeObjectURL(url);
+    } else if (format === "pdf") {
+      const url = URL.createObjectURL(generatePdfBlob(palette));
+      downloadFile(url, "pdf");
+      URL.revokeObjectURL(url);
+    }
   }
 
   return (
@@ -83,7 +115,7 @@ export function ExportPanel({ palette }: Props) {
           ))}
         </div>
 
-        {format !== "png" ? (
+        {!isDownloadFormat(format) ? (
           <button
             onClick={handleCopy}
             className="flex items-center gap-1.5 rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/60 transition-colors hover:bg-white/12"
@@ -92,7 +124,7 @@ export function ExportPanel({ palette }: Props) {
           </button>
         ) : (
           <button
-            onClick={handleDownloadPng}
+            onClick={handleDownload}
             className="flex items-center gap-1.5 rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/60 transition-colors hover:bg-white/12"
           >
             Download
@@ -101,9 +133,9 @@ export function ExportPanel({ palette }: Props) {
       </div>
 
       <AnimatePresence mode="wait">
-        {format === "png" ? (
+        {isDownloadFormat(format) ? (
           <motion.div
-            key="png"
+            key={format}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

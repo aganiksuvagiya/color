@@ -6,6 +6,7 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { toolPageContent } from "@/lib/seo/tool-pages";
+import { deleteGradient, getSavedGradients, saveGradient, type SavedGradient } from "@/lib/storage";
 
 interface ColorStop {
   color: string;
@@ -98,7 +99,18 @@ export function GradientGenerator() {
   const [gradientPage, setGradientPage] = useState(1);
   const [loadingGradients, setLoadingGradients] = useState(false);
   const [hasMoreGradients, setHasMoreGradients] = useState(true);
+  const [savedGradients, setSavedGradients] = useState<SavedGradient[]>([]);
+  const [gradientsMounted, setGradientsMounted] = useState(false);
+  const [saveMessage, setSaveMessage] = useState<string | null>(null);
   const gradientLoaderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const loadSavedGradients = () => {
+      setSavedGradients(getSavedGradients());
+      setGradientsMounted(true);
+    };
+    loadSavedGradients();
+  }, []);
 
   const fetchGradients = useCallback(async (pageNum: number, append: boolean) => {
     setLoadingGradients(true);
@@ -205,6 +217,26 @@ export function GradientGenerator() {
       setTimeout(() => setCopied(false), 2000);
     }
   }, [cssOutput]);
+
+  const handleSaveGradient = useCallback(() => {
+    const saved = saveGradient({
+      name: `${gradientType[0].toUpperCase()}${gradientType.slice(1)} ${angle}°`,
+      css: cssOutput,
+      preview: gradientStyle,
+    });
+    setSavedGradients((prev) => [saved, ...prev]);
+    setSaveMessage("Saved!");
+    setTimeout(() => setSaveMessage(null), 2000);
+  }, [gradientType, angle, cssOutput, gradientStyle]);
+
+  const handleDeleteGradient = useCallback((id: string) => {
+    deleteGradient(id);
+    setSavedGradients((prev) => prev.filter((g) => g.id !== id));
+  }, []);
+
+  const handleCopyGradientCss = useCallback(async (css: string) => {
+    await navigator.clipboard.writeText(css);
+  }, []);
 
   const cardClass =
     "rounded-2xl border border-white/10 bg-gradient-to-b from-white/8 to-white/3 p-5 shadow-lg shadow-black/10 backdrop-blur-xl";
@@ -402,16 +434,27 @@ export function GradientGenerator() {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white/50">
               CSS Code
             </h3>
-            <button
-              onClick={copyCSS}
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
-                copied
-                  ? "bg-green-500/20 text-green-400"
-                  : "bg-white/8 text-white/70 hover:bg-white/15"
-              }`}
-            >
-              {copied ? "Copied!" : "Copy CSS"}
-            </button>
+            <div className="flex items-center gap-2">
+              {saveMessage && (
+                <span className="text-xs font-medium text-emerald-400">{saveMessage}</span>
+              )}
+              <button
+                onClick={handleSaveGradient}
+                className="rounded-lg bg-white/8 px-4 py-2 text-sm font-medium text-white/70 transition-all hover:bg-white/15"
+              >
+                Save Gradient
+              </button>
+              <button
+                onClick={copyCSS}
+                className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+                  copied
+                    ? "bg-green-500/20 text-green-400"
+                    : "bg-white/8 text-white/70 hover:bg-white/15"
+                }`}
+              >
+                {copied ? "Copied!" : "Copy CSS"}
+              </button>
+            </div>
           </div>
           <div className="rounded-xl bg-black/30 p-4">
             <code className="block break-all font-mono text-sm text-white/80">
@@ -419,6 +462,40 @@ export function GradientGenerator() {
             </code>
           </div>
         </motion.div>
+
+        {/* Saved Gradients */}
+        {gradientsMounted && savedGradients.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.55 }}
+            className="mb-12"
+          >
+            <h2 className="mb-6 text-center text-2xl font-bold">Saved Gradients</h2>
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {savedGradients.map((g) => (
+                <div key={g.id} className={`${cardClass} text-left`}>
+                  <div className="mb-3 h-24 w-full cursor-pointer rounded-xl" style={{ background: g.preview }} onClick={() => handleCopyGradientCss(g.css)} />
+                  <p className="text-sm font-semibold text-white/90">{g.name}</p>
+                  <div className="mt-3 flex gap-2">
+                    <button
+                      onClick={() => handleCopyGradientCss(g.css)}
+                      className="flex-1 rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/60 transition-all hover:bg-white/14"
+                    >
+                      Copy CSS
+                    </button>
+                    <button
+                      onClick={() => handleDeleteGradient(g.id)}
+                      className="rounded-lg bg-white/5 px-3 py-1.5 text-xs font-medium text-red-400/50 transition-all hover:bg-red-500/10 hover:text-red-400"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {/* Preset Gradients */}
         <motion.div

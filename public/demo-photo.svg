@@ -1,0 +1,52 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2b1055"/>
+      <stop offset="35%" stop-color="#7c3aed"/>
+      <stop offset="60%" stop-color="#f0653e"/>
+      <stop offset="80%" stop-color="#ffb347"/>
+      <stop offset="100%" stop-color="#ffe082"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff4c2"/>
+      <stop offset="55%" stop-color="#ffcf5c"/>
+      <stop offset="100%" stop-color="#ff8a3d"/>
+    </radialGradient>
+    <linearGradient id="mtnFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5b3a6e"/>
+      <stop offset="100%" stop-color="#3a2350"/>
+    </linearGradient>
+    <linearGradient id="mtnMid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3f2360"/>
+      <stop offset="100%" stop-color="#241338"/>
+    </linearGradient>
+    <linearGradient id="mtnNear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1b0f2e"/>
+      <stop offset="100%" stop-color="#0d0718"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff9d5c"/>
+      <stop offset="45%" stop-color="#c2528f"/>
+      <stop offset="100%" stop-color="#3c1f5c"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="620" cy="330" r="120" fill="url(#sun)"/>
+
+  <ellipse cx="220" cy="470" rx="260" ry="26" fill="#f9a4d1" opacity="0.55"/>
+  <ellipse cx="900" cy="410" rx="200" ry="18" fill="#ffd9a0" opacity="0.5"/>
+
+  <path d="M0,560 L120,430 L240,520 L360,400 L500,540 L620,440 L760,540 L900,420 L1040,530 L1200,460 L1200,620 L0,620 Z" fill="url(#mtnFar)"/>
+  <path d="M0,610 L160,500 L320,600 L470,480 L640,610 L800,500 L980,610 L1200,520 L1200,680 L0,680 Z" fill="url(#mtnMid)"/>
+  <path d="M0,670 L140,590 L300,680 L480,580 L660,680 L840,590 L1020,680 L1200,600 L1200,720 L0,720 Z" fill="url(#mtnNear)"/>
+
+  <rect x="0" y="700" width="1200" height="100" fill="url(#water)"/>
+  <rect x="590" y="700" width="60" height="100" fill="#ffcf7a" opacity="0.35"/>
+
+  <circle cx="150" cy="140" r="3" fill="#ffffff" opacity="0.8"/>
+  <circle cx="260" cy="90" r="2" fill="#ffffff" opacity="0.7"/>
+  <circle cx="980" cy="120" r="2.5" fill="#ffffff" opacity="0.7"/>
+  <circle cx="1080" cy="180" r="2" fill="#ffffff" opacity="0.6"/>
+  <circle cx="80" cy="220" r="2" fill="#ffffff" opacity="0.6"/>
+</svg>
