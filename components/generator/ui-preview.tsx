@@ -33,7 +33,7 @@ export function UIPreview({ palette }: Props) {
           </div>
         </div>
 
-        <div className="grid gap-3 p-4 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 p-4 sm:grid-cols-3">
           <div className="rounded-lg bg-white/10 p-3">
             <p className="text-[10px] uppercase tracking-wider text-white/40">Revenue</p>
             <p className="mt-1 text-lg font-bold text-white">$12,450</p>

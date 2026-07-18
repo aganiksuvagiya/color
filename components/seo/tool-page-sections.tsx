@@ -11,7 +11,7 @@ export function ToolPageSections({ config }: { config: ToolPageSeoConfig }) {
         <p className="mt-4 text-sm text-white/45">{config.audience}</p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
           <h2 className="text-xl font-semibold text-white">Best use cases</h2>
           <ul className="mt-4 space-y-3 text-sm leading-7 text-white/72">
@@ -34,7 +34,7 @@ export function ToolPageSections({ config }: { config: ToolPageSeoConfig }) {
 
       <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
         <h2 className="text-xl font-semibold text-white">SEO, GEO, and LLM retrieval notes</h2>
-        <div className="mt-4 grid gap-4 md:grid-cols-3">
+        <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="rounded-xl bg-black/20 p-4">
             <p className="text-sm font-medium text-white">SEO</p>
             <p className="mt-2 text-sm leading-6 text-white/60">
@@ -70,7 +70,7 @@ export function ToolPageSections({ config }: { config: ToolPageSeoConfig }) {
 
       <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
         <h2 className="text-xl font-semibold text-white">Related pages</h2>
-        <div className="mt-5 grid gap-3 md:grid-cols-2">
+        <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2">
           {config.relatedLinks.map((link) => (
             <Link
               key={link.href}

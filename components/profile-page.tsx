@@ -128,7 +128,7 @@ export function ProfilePage() {
           palettes.length === 0 ? (
             <div className={`${cardClass} text-center text-white/30`}>No saved palettes yet. Save one from the generator.</div>
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {palettes.map((p) => (
                 <div key={p.id} className={cardClass}>
                   <div className="mb-3 flex items-center justify-between">
@@ -203,7 +203,7 @@ export function ProfilePage() {
                 {collectionPalettes.length === 0 ? (
                   <div className={`${cardClass} text-center text-white/30`}>No palettes in this collection yet. Add some from the Palettes tab.</div>
                 ) : (
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     {collectionPalettes.map((p) => (
                       <div key={p.id} className={cardClass}>
                         <p className="mb-3 text-sm font-medium text-white/70">{p.label}</p>
@@ -229,7 +229,7 @@ export function ProfilePage() {
                 )}
               </div>
             ) : (
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {collections.map((c) => (
                   <button key={c.id} onClick={() => setActiveCollectionId(c.id)} className={`${cardClass} text-left transition-colors hover:border-white/20`}>
                     <p className="text-sm font-semibold text-white/80">{c.name}</p>
@@ -242,7 +242,7 @@ export function ProfilePage() {
         ) : gradients.length === 0 ? (
           <div className={`${cardClass} text-center text-white/30`}>No saved gradients yet. Save one from the gradient generator.</div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {gradients.map((g) => (
               <div key={g.id} className={cardClass}>
                 <div className="mb-3 h-20 w-full rounded-xl" style={{ background: g.preview }} />

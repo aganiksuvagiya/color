@@ -7,6 +7,8 @@ import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { toolPageContent } from "@/lib/seo/tool-pages";
 
 type ColorEntry = { name: string; hex: string };
+type TypographyToken = { name: string; sizePx: number };
+type SpacingToken = { name: string; valuePx: number };
 
 type Format =
   | "CSS Variables"
@@ -35,6 +37,39 @@ const DEFAULT_COLORS: ColorEntry[] = [
   { name: "accent", hex: "#F59E0B" },
 ];
 
+const SCALE_RATIOS = [
+  { label: "1.125 — Minor Second", value: 1.125 },
+  { label: "1.2 — Minor Third", value: 1.2 },
+  { label: "1.25 — Major Third", value: 1.25 },
+  { label: "1.333 — Perfect Fourth", value: 1.333 },
+  { label: "1.5 — Perfect Fifth", value: 1.5 },
+  { label: "1.618 — Golden Ratio", value: 1.618 },
+];
+
+const TYPE_STEPS = [
+  { name: "xs", power: -2 },
+  { name: "sm", power: -1 },
+  { name: "base", power: 0 },
+  { name: "lg", power: 1 },
+  { name: "xl", power: 2 },
+  { name: "2xl", power: 3 },
+  { name: "3xl", power: 4 },
+  { name: "4xl", power: 5 },
+];
+
+const SPACING_MULTIPLIERS = [0, 1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64];
+
+function generateTypeScale(baseSize: number, ratio: number): TypographyToken[] {
+  return TYPE_STEPS.map((s) => ({
+    name: s.name,
+    sizePx: Math.round(baseSize * Math.pow(ratio, s.power) * 100) / 100,
+  }));
+}
+
+function generateSpacingScale(baseUnit: number): SpacingToken[] {
+  return SPACING_MULTIPLIERS.map((m) => ({ name: String(m), valuePx: m * baseUnit }));
+}
+
 function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
   const match = hex.replace("#", "").match(/^([0-9a-fA-F]{6})$/);
   if (!match) return null;
@@ -53,37 +88,65 @@ function camelCase(name: string): string {
   return slugify(name).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
 }
 
-function generateOutput(colors: ColorEntry[], format: Format): string {
-  const valid = colors.filter((c) => c.name.trim() && /^#[0-9a-fA-F]{6}$/.test(c.hex));
+function pascalCase(name: string): string {
+  const camel = camelCase(name);
+  return camel.charAt(0).toUpperCase() + camel.slice(1);
+}
+
+function generateOutput(
+  colors: ColorEntry[],
+  typography: TypographyToken[],
+  fontFamily: string,
+  spacing: SpacingToken[],
+  format: Format,
+): string {
+  const validColors = colors.filter((c) => c.name.trim() && /^#[0-9a-fA-F]{6}$/.test(c.hex));
 
   switch (format) {
     case "CSS Variables": {
-      const vars = valid.map((c) => `  --color-${slugify(c.name)}: ${c.hex};`).join("\n");
-      return `:root {\n${vars}\n}`;
+      const colorVars = validColors.map((c) => `  --color-${slugify(c.name)}: ${c.hex};`).join("\n");
+      const fontVar = `  --font-family: ${fontFamily};`;
+      const typeVars = typography.map((t) => `  --text-${t.name}: ${t.sizePx}px;`).join("\n");
+      const spaceVars = spacing.map((s) => `  --space-${s.name}: ${s.valuePx}px;`).join("\n");
+      return `:root {\n${colorVars}\n\n${fontVar}\n${typeVars}\n\n${spaceVars}\n}`;
     }
     case "SCSS": {
-      return valid.map((c) => `$color-${slugify(c.name)}: ${c.hex};`).join("\n");
+      const colorVars = validColors.map((c) => `$color-${slugify(c.name)}: ${c.hex};`).join("\n");
+      const fontVar = `$font-family: ${fontFamily};`;
+      const typeVars = typography.map((t) => `$text-${t.name}: ${t.sizePx}px;`).join("\n");
+      const spaceVars = spacing.map((s) => `$space-${s.name}: ${s.valuePx}px;`).join("\n");
+      return `${colorVars}\n\n${fontVar}\n${typeVars}\n\n${spaceVars}`;
     }
     case "Tailwind": {
-      const entries = valid.map((c) => `        '${slugify(c.name)}': '${c.hex}',`).join("\n");
-      return `module.exports = {\n  theme: {\n    extend: {\n      colors: {\n${entries}\n      },\n    },\n  },\n};`;
+      const colorEntries = validColors.map((c) => `        '${slugify(c.name)}': '${c.hex}',`).join("\n");
+      const fontSizeEntries = typography.map((t) => `        '${t.name}': '${t.sizePx}px',`).join("\n");
+      const spacingEntries = spacing.map((s) => `        '${s.name}': '${s.valuePx}px',`).join("\n");
+      const fontFamilyList = fontFamily
+        .split(",")
+        .map((f) => `'${f.trim().replace(/^['"]|['"]$/g, "")}'`)
+        .join(", ");
+      return `module.exports = {\n  theme: {\n    extend: {\n      fontFamily: {\n        sans: [${fontFamilyList}],\n      },\n      colors: {\n${colorEntries}\n      },\n      fontSize: {\n${fontSizeEntries}\n      },\n      spacing: {\n${spacingEntries}\n      },\n    },\n  },\n};`;
     }
     case "JSON": {
-      const obj: Record<string, string> = {};
-      valid.forEach((c) => {
-        obj[slugify(c.name)] = c.hex;
-      });
-      return JSON.stringify(obj, null, 2);
+      const color: Record<string, string> = {};
+      validColors.forEach((c) => { color[slugify(c.name)] = c.hex; });
+      const fontSize: Record<string, string> = {};
+      typography.forEach((t) => { fontSize[t.name] = `${t.sizePx}px`; });
+      const spacingObj: Record<string, string> = {};
+      spacing.forEach((s) => { spacingObj[s.name] = `${s.valuePx}px`; });
+      return JSON.stringify({ color, typography: { fontFamily, fontSize }, spacing: spacingObj }, null, 2);
     }
     case "Figma Tokens": {
-      const obj: Record<string, { value: string; type: string }> = {};
-      valid.forEach((c) => {
-        obj[slugify(c.name)] = { value: c.hex, type: "color" };
-      });
-      return JSON.stringify({ color: obj }, null, 2);
+      const color: Record<string, { value: string; type: string }> = {};
+      validColors.forEach((c) => { color[slugify(c.name)] = { value: c.hex, type: "color" }; });
+      const fontSizes: Record<string, { value: string; type: string }> = {};
+      typography.forEach((t) => { fontSizes[t.name] = { value: `${t.sizePx}`, type: "fontSizes" }; });
+      const spacingObj: Record<string, { value: string; type: string }> = {};
+      spacing.forEach((s) => { spacingObj[s.name] = { value: `${s.valuePx}`, type: "spacing" }; });
+      return JSON.stringify({ color, fontSizes, spacing: spacingObj }, null, 2);
     }
     case "Swift": {
-      return valid
+      const colorLines = validColors
         .map((c) => {
           const rgb = hexToRgb(c.hex);
           if (!rgb) return "";
@@ -91,22 +154,25 @@ function generateOutput(colors: ColorEntry[], format: Format): string {
         })
         .filter(Boolean)
         .join("\n");
+      const typeLines = typography.map((t) => `static let fontSize${pascalCase(t.name)}: CGFloat = ${t.sizePx}`).join("\n");
+      const spaceLines = spacing.map((s) => `static let spacing${s.name}: CGFloat = ${s.valuePx}`).join("\n");
+      return `${colorLines}\n\n${typeLines}\n\n${spaceLines}`;
     }
     case "Kotlin": {
-      return valid
-        .map((c) => {
-          const raw = c.hex.replace("#", "").toUpperCase();
-          return `val ${camelCase(c.name)} = Color(0xFF${raw})`;
-        })
+      const colorLines = validColors
+        .map((c) => `val ${camelCase(c.name)} = Color(0xFF${c.hex.replace("#", "").toUpperCase()})`)
         .join("\n");
+      const typeLines = typography.map((t) => `val FontSize${pascalCase(t.name)} = ${t.sizePx}.sp`).join("\n");
+      const spaceLines = spacing.map((s) => `val Spacing${s.name} = ${s.valuePx}.dp`).join("\n");
+      return `${colorLines}\n\n${typeLines}\n\n${spaceLines}`;
     }
     case "Flutter": {
-      return valid
-        .map((c) => {
-          const raw = c.hex.replace("#", "").toUpperCase();
-          return `static const ${camelCase(c.name)} = Color(0xFF${raw});`;
-        })
+      const colorLines = validColors
+        .map((c) => `static const ${camelCase(c.name)} = Color(0xFF${c.hex.replace("#", "").toUpperCase()});`)
         .join("\n");
+      const typeLines = typography.map((t) => `static const double fontSize${pascalCase(t.name)} = ${t.sizePx};`).join("\n");
+      const spaceLines = spacing.map((s) => `static const double spacing${s.name} = ${s.valuePx};`).join("\n");
+      return `${colorLines}\n\n${typeLines}\n\n${spaceLines}`;
     }
     default:
       return "";
@@ -115,10 +181,20 @@ function generateOutput(colors: ColorEntry[], format: Format): string {
 
 export function DesignTokenGenerator() {
   const [colors, setColors] = useState<ColorEntry[]>(DEFAULT_COLORS);
+  const [fontFamily, setFontFamily] = useState("'Inter', sans-serif");
+  const [baseFontSize, setBaseFontSize] = useState(16);
+  const [scaleRatio, setScaleRatio] = useState(1.25);
+  const [spacingUnit, setSpacingUnit] = useState(4);
   const [format, setFormat] = useState<Format>("CSS Variables");
   const [copied, setCopied] = useState(false);
 
-  const output = useMemo(() => generateOutput(colors, format), [colors, format]);
+  const typography = useMemo(() => generateTypeScale(baseFontSize, scaleRatio), [baseFontSize, scaleRatio]);
+  const spacing = useMemo(() => generateSpacingScale(spacingUnit), [spacingUnit]);
+
+  const output = useMemo(
+    () => generateOutput(colors, typography, fontFamily, spacing, format),
+    [colors, typography, fontFamily, spacing, format],
+  );
 
   const updateColor = (index: number, field: keyof ColorEntry, value: string) => {
     setColors((prev) => prev.map((c, i) => (i === index ? { ...c, [field]: value } : c)));
@@ -154,9 +230,9 @@ export function DesignTokenGenerator() {
           transition={{ duration: 0.6 }}
           className="mb-10 text-center"
         >
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Design Token Generator</h1>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Design System Generator</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-white/50">
-            Export your colors as design tokens for any platform or framework.
+            Export colors, typography, and spacing as design tokens for any platform or framework.
           </p>
         </motion.div>
 
@@ -234,6 +310,95 @@ export function DesignTokenGenerator() {
                 Add Color
               </button>
             )}
+          </div>
+
+          {/* Typography scale */}
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6">
+            <h2 className="mb-4 text-sm font-medium text-white/60">Typography Scale</h2>
+
+            <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <div>
+                <label className="mb-1.5 block text-xs text-white/40">Font family</label>
+                <input
+                  type="text"
+                  value={fontFamily}
+                  onChange={(e) => setFontFamily(e.target.value)}
+                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none focus:border-white/20"
+                />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-xs text-white/40">Base size (px)</label>
+                <input
+                  type="number"
+                  min={10}
+                  max={32}
+                  value={baseFontSize}
+                  onChange={(e) => setBaseFontSize(Number(e.target.value) || 16)}
+                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none focus:border-white/20"
+                />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-xs text-white/40">Scale ratio</label>
+                <select
+                  value={scaleRatio}
+                  onChange={(e) => setScaleRatio(Number(e.target.value))}
+                  className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none focus:border-white/20"
+                >
+                  {SCALE_RATIOS.map((r) => (
+                    <option key={r.value} value={r.value} className="bg-[#160b05]">
+                      {r.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              {typography.map((t) => (
+                <div key={t.name} className="flex items-center gap-4">
+                  <span className="w-10 shrink-0 font-mono text-xs text-white/40">{t.name}</span>
+                  <span className="w-16 shrink-0 font-mono text-xs text-white/30">{t.sizePx}px</span>
+                  <span
+                    className="truncate text-white/85"
+                    style={{ fontSize: `${Math.min(t.sizePx, 40)}px`, fontFamily }}
+                  >
+                    Aa
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Spacing scale */}
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="text-sm font-medium text-white/60">Spacing Scale</h2>
+              <div className="flex items-center gap-2">
+                <label className="text-xs text-white/40">Base unit</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={16}
+                  value={spacingUnit}
+                  onChange={(e) => setSpacingUnit(Number(e.target.value) || 4)}
+                  className="w-16 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-sm text-white outline-none focus:border-white/20"
+                />
+                <span className="text-xs text-white/40">px</span>
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              {spacing.map((s) => (
+                <div key={s.name} className="flex items-center gap-3">
+                  <span className="w-6 shrink-0 font-mono text-xs text-white/40">{s.name}</span>
+                  <span className="w-12 shrink-0 font-mono text-xs text-white/30">{s.valuePx}px</span>
+                  <div
+                    className="h-3 rounded bg-white/25"
+                    style={{ width: `${Math.max(s.valuePx, 2)}px` }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Format selector */}

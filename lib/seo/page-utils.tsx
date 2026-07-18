@@ -130,6 +130,8 @@ function getAllCollections() {
     bestColorsFor: getCollection("bestColorsFor"),
     faqs: getCollection("faqs"),
     resources: getCollection("resources"),
+    developer: getCollection("developer"),
+    colorPsychology: getCollection("colorPsychology"),
   };
 }
 

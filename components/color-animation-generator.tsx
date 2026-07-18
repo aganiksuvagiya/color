@@ -192,6 +192,93 @@ export function ColorAnimationGenerator() {
   const [easing, setEasing] = useState<Easing>("ease-in-out");
   const [copied, setCopied] = useState(false);
 
+  /* Preset preview modal */
+  const [previewPreset, setPreviewPreset] = useState<PresetAnimation | null>(null);
+  const [previewColors, setPreviewColors] = useState<ColorStop[]>([]);
+  const [previewType, setPreviewType] = useState<AnimationType>("gradient-shift");
+  const [previewDuration, setPreviewDuration] = useState(4);
+  const [previewDirection, setPreviewDirection] = useState<Direction>("alternate");
+  const [previewEasing, setPreviewEasing] = useState<Easing>("ease-in-out");
+  const [previewCopied, setPreviewCopied] = useState(false);
+  const previewAnimName = `${animName}_modal`;
+
+  useEffect(() => {
+    if (!previewPreset) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPreviewPreset(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [previewPreset]);
+
+  const openPreview = useCallback((preset: PresetAnimation) => {
+    nextId = preset.colors.length + 1;
+    setPreviewColors(preset.colors.map((c, i) => ({ id: i + 1, color: c })));
+    setPreviewType(preset.type);
+    setPreviewDuration(preset.duration);
+    setPreviewDirection(preset.direction);
+    setPreviewEasing(preset.easing);
+    setPreviewPreset(preset);
+  }, []);
+
+  const addPreviewColor = useCallback(() => {
+    setPreviewColors((prev) => {
+      if (prev.length >= 6) return prev;
+      const random = `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0")}`;
+      return [...prev, { id: nextId++, color: random }];
+    });
+  }, []);
+
+  const removePreviewColor = useCallback((id: number) => {
+    setPreviewColors((prev) => (prev.length <= 2 ? prev : prev.filter((c) => c.id !== id)));
+  }, []);
+
+  const updatePreviewColor = useCallback((id: number, hex: string) => {
+    setPreviewColors((prev) => prev.map((c) => (c.id === id ? { ...c, color: hex } : c)));
+  }, []);
+
+  const previewHexColors = useMemo(() => previewColors.map((c) => c.color), [previewColors]);
+
+  const previewModalStyleTag = useMemo(() => {
+    if (!previewPreset) return "";
+    const { keyframes, elementCss } = buildKeyframesAndStyle(
+      previewAnimName,
+      previewType,
+      previewHexColors,
+      previewDuration,
+      previewDirection,
+      previewEasing,
+    );
+    const scopedCss = elementCss.replace(".animated-element", `#preview-modal-${uid}`);
+    return `${keyframes}\n${scopedCss}`;
+  }, [previewPreset, previewAnimName, previewType, previewHexColors, previewDuration, previewDirection, previewEasing, uid]);
+
+  const handleUsePreview = useCallback(() => {
+    nextId = previewColors.length + 1;
+    setColors(previewColors.map((c, i) => ({ id: i + 1, color: c.color })));
+    setAnimType(previewType);
+    setDuration(previewDuration);
+    setDirection(previewDirection);
+    setEasing(previewEasing);
+    setPreviewPreset(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [previewColors, previewType, previewDuration, previewDirection, previewEasing]);
+
+  const handleCopyPreviewCss = useCallback(() => {
+    const { keyframes, elementCss } = buildKeyframesAndStyle(
+      previewAnimName,
+      previewType,
+      previewHexColors,
+      previewDuration,
+      previewDirection,
+      previewEasing,
+    );
+    navigator.clipboard.writeText(`${keyframes}\n\n${elementCss}`).then(() => {
+      setPreviewCopied(true);
+      setTimeout(() => setPreviewCopied(false), 2000);
+    });
+  }, [previewAnimName, previewType, previewHexColors, previewDuration, previewDirection, previewEasing]);
+
   /* More animations — infinite scroll */
   const [morePresets, setMorePresets] = useState<PresetAnimation[]>([]);
   const [morePage, setMorePage] = useState(1);
@@ -257,7 +344,7 @@ export function ColorAnimationGenerator() {
     setColors((prev) => prev.map((c) => (c.id === id ? { ...c, color: hex } : c)));
   }, []);
 
-  /* Apply preset */
+  /* Apply preset directly (top Presets grid — no modal) */
   const applyPreset = useCallback((preset: PresetAnimation) => {
     nextId = preset.colors.length + 1;
     setColors(preset.colors.map((c, i) => ({ id: i + 1, color: c })));
@@ -380,7 +467,7 @@ export function ColorAnimationGenerator() {
           </div>
         </motion.section>
 
-        <div className="grid gap-8 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Left column – controls */}
           <div className="space-y-6">
             {/* Color stops */}
@@ -659,14 +746,14 @@ export function ColorAnimationGenerator() {
           className="mt-12"
         >
           <h2 className="mb-6 text-center text-2xl font-bold">More Animations</h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
             {morePresets.map((preset, i) => (
               <motion.button
                 key={`${preset.name}-${i}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: (i % 8) * 0.04 }}
-                onClick={() => { applyPreset(preset); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                onClick={() => openPreview(preset)}
                 className="group cursor-pointer rounded-xl border border-white/10 bg-white/5 p-4 text-left transition-all hover:scale-[1.02] hover:border-white/20"
               >
                 <div
@@ -691,6 +778,181 @@ export function ColorAnimationGenerator() {
           <ToolPageSections config={toolPageContent.animation} />
         </div>
       </main>
+
+      <AnimatePresence>
+        {previewPreset && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+            onClick={() => setPreviewPreset(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.97 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-white/10 bg-gradient-to-b from-white/8 to-white/3 p-5 shadow-lg shadow-black/10 backdrop-blur-xl"
+            >
+              <div className="mb-5 flex items-start justify-between gap-3">
+                <p className="text-lg font-semibold text-white">{previewPreset.name}</p>
+                <button
+                  onClick={() => setPreviewPreset(null)}
+                  className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-white/50 transition-colors hover:text-white/80"
+                  aria-label="Close preview"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <style>{previewModalStyleTag}</style>
+              <div id={`preview-modal-${uid}`} className="mb-5 aspect-video w-full rounded-xl" />
+
+              <div className="mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                {/* Color Stops */}
+                <div>
+                  <div className="mb-3 flex items-center justify-between">
+                    <h3 className="text-xs font-semibold uppercase tracking-wider text-white/50">
+                      Color Stops
+                    </h3>
+                    <button
+                      onClick={addPreviewColor}
+                      disabled={previewColors.length >= 6}
+                      className="rounded-lg bg-white/8 px-2.5 py-1 text-xs font-medium text-white/70 transition-all hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-30"
+                    >
+                      + Add
+                    </button>
+                  </div>
+                  <div className="space-y-2.5">
+                    {previewColors.map((stop) => (
+                      <div key={stop.id} className="flex items-center gap-2">
+                        <input
+                          type="color"
+                          value={stop.color}
+                          onChange={(e) => updatePreviewColor(stop.id, e.target.value)}
+                          className="h-8 w-8 cursor-pointer appearance-none rounded-lg border border-white/10 bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
+                        />
+                        <input
+                          type="text"
+                          value={stop.color}
+                          maxLength={7}
+                          onChange={(e) => {
+                            const v = e.target.value;
+                            if (/^#[0-9A-Fa-f]{0,6}$/.test(v)) updatePreviewColor(stop.id, v);
+                          }}
+                          className="w-[85px] rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-xs font-mono text-white/90 outline-none focus:border-white/30"
+                        />
+                        {previewColors.length > 2 && (
+                          <button
+                            onClick={() => removePreviewColor(stop.id)}
+                            className="ml-auto flex h-6 w-6 items-center justify-center rounded-lg text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
+                            aria-label="Remove color"
+                          >
+                            ✕
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Animation Type + Controls */}
+                <div>
+                  <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/50">
+                    Animation Type
+                  </h3>
+                  <div className="mb-4 grid grid-cols-3 gap-2">
+                    {ANIMATION_TYPES.map((t) => (
+                      <button
+                        key={t.value}
+                        onClick={() => setPreviewType(t.value)}
+                        className={`rounded-xl border px-2 py-2 text-xs font-medium transition-all ${
+                          previewType === t.value
+                            ? "border-white/30 bg-white/15 text-white"
+                            : "border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:text-white/80"
+                        }`}
+                      >
+                        {t.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="mb-4">
+                    <div className="mb-2 flex items-center justify-between text-xs">
+                      <span className="text-white/60">Duration</span>
+                      <span className="font-mono text-white/80">{previewDuration}s</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={1}
+                      max={10}
+                      step={0.5}
+                      value={previewDuration}
+                      onChange={(e) => setPreviewDuration(parseFloat(e.target.value))}
+                      className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-white [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <span className="mb-2 block text-xs text-white/60">Direction</span>
+                    <div className="flex gap-2">
+                      {DIRECTIONS.map((d) => (
+                        <button
+                          key={d.value}
+                          onClick={() => setPreviewDirection(d.value)}
+                          className={`rounded-lg border px-2.5 py-1 text-xs font-medium transition-all ${
+                            previewDirection === d.value
+                              ? "border-white/30 bg-white/15 text-white"
+                              : "border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:text-white/80"
+                          }`}
+                        >
+                          {d.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="mb-2 block text-xs text-white/60">Easing</span>
+                    <div className="flex gap-2">
+                      {EASINGS.map((e) => (
+                        <button
+                          key={e.value}
+                          onClick={() => setPreviewEasing(e.value)}
+                          className={`rounded-lg border px-2.5 py-1 text-xs font-medium transition-all ${
+                            previewEasing === e.value
+                              ? "border-white/30 bg-white/15 text-white"
+                              : "border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:text-white/80"
+                          }`}
+                        >
+                          {e.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={handleUsePreview}
+                  className="flex-1 rounded-xl bg-gradient-to-b from-white to-white/90 px-4 py-2.5 text-sm font-semibold text-[#160b05] transition-all hover:shadow-lg hover:shadow-white/15"
+                >
+                  Use this animation
+                </button>
+                <button
+                  onClick={handleCopyPreviewCss}
+                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/70 transition-colors hover:border-white/20 hover:text-white"
+                >
+                  {previewCopied ? "Copied!" : "Copy CSS"}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -162,7 +162,7 @@ export function ImageColorExtractor() {
           </p>
         </motion.div>
 
-        <div className="grid gap-5 lg:grid-cols-[340px_1fr]">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[340px_1fr]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

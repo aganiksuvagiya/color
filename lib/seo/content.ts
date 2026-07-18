@@ -116,6 +116,8 @@ const colors: ContentEntry[] = [
       { title: "Blue gradients", href: "/gradients/ocean-depth" },
       { title: "Blue accessibility guide", href: "/accessibility/color-contrast" },
       { title: "Blue in Tailwind", href: "/tailwind/blue" },
+      { title: "Blue CSS guide", href: "/css-colors/blue" },
+      { title: "Blue color meaning", href: "/color-meanings/blue" },
     ],
   },
   {
@@ -140,6 +142,8 @@ const colors: ContentEntry[] = [
       { title: "Green gradients", href: "/gradients/mint-horizon" },
       { title: "Accessible success colors", href: "/accessibility/accessible-success-states" },
       { title: "Green CSS colors", href: "/css-colors/green" },
+      { title: "Green in Tailwind", href: "/tailwind/green" },
+      { title: "Green color meaning", href: "/color-meanings/green" },
     ],
   },
   {
@@ -164,6 +168,7 @@ const colors: ContentEntry[] = [
       { title: "Retail brand colors", href: "/brand-colors/retail" },
       { title: "Red gradients", href: "/gradients/sunset-burst" },
       { title: "Marketing urgency colors", href: "/marketing-colors" },
+      { title: "Red color meaning", href: "/color-meanings/red" },
     ],
   },
   {
@@ -188,6 +193,7 @@ const colors: ContentEntry[] = [
       { title: "Purple Tailwind classes", href: "/tailwind/purple" },
       { title: "Purple meaning guide", href: "/color-meanings/purple" },
       { title: "Purple gradients", href: "/gradients/violet-aurora" },
+      { title: "Purple CSS guide", href: "/css-colors/purple" },
     ],
   },
   {
@@ -212,6 +218,8 @@ const colors: ContentEntry[] = [
       { title: "Luxury ecommerce palettes", href: "/palettes/luxury-editorial-noir" },
       { title: "Black CSS colors", href: "/css-colors/black" },
       { title: "Premium gradients", href: "/gradients/midnight-metal" },
+      { title: "Black in Tailwind", href: "/tailwind/black" },
+      { title: "Black color meaning", href: "/color-meanings/black" },
     ],
   },
   {
@@ -236,6 +244,9 @@ const colors: ContentEntry[] = [
       { title: "Orange gradients", href: "/gradients/apricot-launch" },
       { title: "Orange in web design", href: "/web-design" },
       { title: "Orange accessibility rules", href: "/accessibility/color-contrast" },
+      { title: "Orange in Tailwind", href: "/tailwind/orange" },
+      { title: "Orange CSS guide", href: "/css-colors/orange" },
+      { title: "Orange color meaning", href: "/color-meanings/orange" },
     ],
   },
 ];
@@ -594,10 +605,17 @@ const brandColorEntries: ContentEntry[] = [
   },
 ];
 
-const colorMeaningEntries: ContentEntry[] = colors.map((entry) => ({
-  ...entry,
-  title: `${entry.slug[0].toUpperCase()}${entry.slug.slice(1)} Color Meaning`,
-}));
+const colorMeaningEntries: ContentEntry[] = colors.map((entry) => {
+  const cap = `${entry.slug[0].toUpperCase()}${entry.slug.slice(1)}`;
+  return {
+    ...entry,
+    title: `${cap} Color Meaning`,
+    relatedLinks: [
+      { title: `${cap} color page`, href: `/colors/${entry.slug}` },
+      ...entry.relatedLinks.filter((l) => !l.href.startsWith(`/color-meanings/${entry.slug}`)),
+    ],
+  };
+});
 
 const combinations: ContentEntry[] = [
   {
@@ -673,6 +691,332 @@ const combinations: ContentEntry[] = [
       { title: "Sunset burst gradient", href: "/gradients/sunset-burst" },
     ],
   },
+  {
+    slug: "blue-and-orange",
+    title: "Blue and Orange Color Combination",
+    description: "A high-contrast complementary pairing for CTAs, sports brands, and tech products that need energy without losing trust.",
+    answer:
+      "Blue and orange work as one of the strongest complementary pairings because they sit opposite each other on the color wheel — blue carries trust while orange carries action, which makes it a natural pattern for a trustworthy product with an energetic call to action.",
+    intent: "informational",
+    keywords: ["blue and orange color palette", "complementary color combination", "cta color pairing"],
+    sections: [
+      { title: "Why the contrast works", body: "As true complements, blue and orange create the strongest possible visual separation without using black or white, which is why the pairing shows up constantly in CTA buttons on trust-led backgrounds." },
+      { title: "Where to use it", body: "Keep blue as the dominant system color and reserve orange for a single action per screen — the pairing loses its power if both hues compete for attention." },
+      { title: "Risk", body: "Used in equal amounts, the pairing can feel like a sports jersey rather than a product. Let one hue lead." },
+    ],
+    faq: [
+      { question: "Is blue and orange good for a SaaS product?", answer: "Yes, when blue carries the interface and orange is reserved for primary actions — it reads as trustworthy with a clear, energetic call to action." },
+      { question: "Why do blue and orange contrast so well?", answer: "They sit directly opposite each other on the color wheel, so pairing them creates the maximum contrast available between two hues." },
+    ],
+    comparisonRows: [
+      { label: "Blue dominant", bestFor: "SaaS, fintech dashboards", strengths: "Trust with a clear action color", watchouts: "Orange must stay sparse or it reads as noise" },
+      { label: "Orange dominant", bestFor: "Sports, DTC energy brands", strengths: "High energy, strong recall", watchouts: "Loses institutional trust if overused" },
+    ],
+    relatedLinks: [
+      { title: "Blue color meaning", href: "/colors/blue" },
+      { title: "Orange color meaning", href: "/colors/orange" },
+      { title: "DTC energy palette", href: "/palettes/dtc-energy-stack" },
+    ],
+  },
+  {
+    slug: "purple-and-gold",
+    title: "Purple and Gold Color Combination",
+    description: "A regal, premium combination for luxury, education, and awards-driven brands.",
+    answer:
+      "Purple and gold read as premium and ceremonial because both hues carry historical associations with royalty and achievement, which makes the pairing effective for luxury goods, universities, and award or membership programs.",
+    intent: "informational",
+    keywords: ["purple and gold color combination", "luxury brand colors", "royal color palette"],
+    sections: [
+      { title: "The royalty association", body: "Purple and gold together carry centuries of royal and ceremonial association, which is why the combination reads as premium almost immediately, without any other design signal." },
+      { title: "Where it works", body: "Universities, award programs, premium loyalty tiers, and luxury goods all lean on this pairing because it signals status without needing extra ornamentation." },
+      { title: "Keeping it modern", body: "A deep, muted purple with a restrained gold accent reads as contemporary luxury; a bright violet with shiny gold reads as costume rather than premium." },
+    ],
+    faq: [
+      { question: "Is purple and gold outdated?", answer: "Not if the purple is deep and muted rather than bright violet, and the gold is used sparingly as an accent rather than as a dominant fill." },
+      { question: "What brands use purple and gold?", answer: "Universities, award and loyalty programs, and luxury goods brands use it most consistently, since both audiences respond to its ceremonial associations." },
+    ],
+    relatedLinks: [
+      { title: "Purple color meaning", href: "/colors/purple" },
+      { title: "Creative orbit palette", href: "/palettes/creative-orbit" },
+      { title: "Luxury editorial noir palette", href: "/palettes/luxury-editorial-noir" },
+    ],
+  },
+  {
+    slug: "black-and-orange",
+    title: "Black and Orange Color Combination",
+    description: "A bold, high-energy combination for sports, seasonal campaigns, and industrial or streetwear brands.",
+    answer:
+      "Black and orange create a bold, high-visibility combination because orange is one of the most attention-grabbing hues against a dark ground, which makes the pairing common for sports teams, industrial/safety branding, and seasonal campaigns.",
+    intent: "informational",
+    keywords: ["black and orange color combination", "bold brand colors", "sports team colors"],
+    sections: [
+      { title: "Why it grabs attention", body: "Orange against black is one of the highest-visibility color pairings available, which is why it shows up in safety signage as often as in sports branding." },
+      { title: "Best use cases", body: "Sports teams, streetwear, industrial and safety-adjacent brands, and autumn or Halloween-season campaigns all lean on this combination for its immediate, bold recognition." },
+      { title: "Balance matters", body: "Large areas of pure orange on black can feel harsh for long reading sessions — reserve saturated orange for accents and let black or a dark neutral carry most of the surface." },
+    ],
+    faq: [
+      { question: "Is black and orange good for a full website?", answer: "It works best as an accent system rather than the entire palette — use black as the dominant surface and orange for a small number of high-priority actions." },
+      { question: "What industries use black and orange?", answer: "Sports, industrial and safety branding, streetwear, and seasonal campaigns are the most consistent users of this pairing." },
+    ],
+    relatedLinks: [
+      { title: "Black color meaning", href: "/colors/black" },
+      { title: "Orange color meaning", href: "/colors/orange" },
+      { title: "Apricot launch gradient", href: "/gradients/apricot-launch" },
+    ],
+  },
+  {
+    slug: "green-and-purple",
+    title: "Green and Purple Color Combination",
+    description: "An unusual, creative pairing for wellness-meets-luxury brands and imaginative product experiences.",
+    answer:
+      "Green and purple work well together as an analogous-adjacent pairing that feels more original than blue-based combinations, making it a strong fit for brands that want to signal both growth and creativity without defaulting to a common palette.",
+    intent: "informational",
+    keywords: ["green and purple color combination", "creative brand palette", "unusual color pairing"],
+    sections: [
+      { title: "Why it feels distinctive", body: "Fewer brands default to green and purple together than to blue-based pairings, which makes the combination feel more original and memorable in a crowded category." },
+      { title: "Where to use it", body: "Wellness brands with a creative or premium angle, imaginative product experiences, and youth-oriented education products all benefit from the pairing's unusual energy." },
+      { title: "Balance note", body: "Keep one hue clearly dominant — an even 50/50 split between green and purple tends to read as chaotic rather than intentional." },
+    ],
+    faq: [
+      { question: "Is green and purple a good brand combination?", answer: "Yes, especially for brands that want to stand out from common blue-led palettes while still keeping a natural, non-aggressive feel." },
+      { question: "Does green and purple work for wellness brands?", answer: "It works well when the brand wants to combine wellness (green) with a premium or creative angle (purple) rather than a purely calming, clinical feel." },
+    ],
+    relatedLinks: [
+      { title: "Green color meaning", href: "/colors/green" },
+      { title: "Purple color meaning", href: "/colors/purple" },
+      { title: "Creative orbit palette", href: "/palettes/creative-orbit" },
+    ],
+  },
+  {
+    slug: "purple-and-black",
+    title: "Purple and Black Color Combination",
+    description: "A dramatic, premium combination for gaming, nightlife, and luxury digital products.",
+    answer:
+      "Purple and black create a dramatic, premium combination because black adds authority while purple adds a creative or mysterious edge, making the pairing especially common in gaming, nightlife, and premium digital products.",
+    intent: "informational",
+    keywords: ["purple and black color combination", "dark theme brand colors", "gaming brand colors"],
+    sections: [
+      { title: "Why it feels premium", body: "Black provides the authority and depth, while purple adds just enough color to avoid the flatness of black-and-white alone — the result reads as intentional rather than simply dark." },
+      { title: "Best use cases", body: "Gaming brands, nightlife and events, and dark-mode-first digital products all use this combination to feel premium without leaning on the more common gold accent." },
+      { title: "Accessibility note", body: "Purple text on black can fail contrast at smaller sizes — lighten the purple significantly for body copy and reserve the deepest tones for large display use." },
+    ],
+    faq: [
+      { question: "Is purple and black good for dark mode?", answer: "Yes — it's one of the more distinctive dark-mode color pairs, but body text needs a notably lighter purple than the deep tone used for large surfaces or logos." },
+      { question: "What brands use purple and black?", answer: "Gaming, nightlife, events, and premium dark-mode digital products use this pairing most consistently." },
+    ],
+    relatedLinks: [
+      { title: "Purple color meaning", href: "/colors/purple" },
+      { title: "Black color meaning", href: "/colors/black" },
+      { title: "Midnight metal gradient", href: "/gradients/midnight-metal" },
+    ],
+  },
+  {
+    slug: "blue-and-black",
+    title: "Blue and Black Color Combination",
+    description: "A stable, institutional combination for enterprise software, finance, and professional service brands.",
+    answer:
+      "Blue and black together create one of the most institutional-feeling color combinations available, which makes it a common default for enterprise software, financial services, and B2B brands that need to signal stability above all else.",
+    intent: "informational",
+    keywords: ["blue and black color combination", "enterprise brand colors", "professional color palette"],
+    sections: [
+      { title: "Why it feels institutional", body: "Both hues independently signal trust and authority, so combining them produces a palette that feels stable and serious with very little additional design effort." },
+      { title: "Best use cases", body: "Enterprise software, financial services, legal and professional services, and B2B products where reliability matters more than distinctiveness fit this pairing well." },
+      { title: "Risk", body: "The combination is common enough that it can feel generic without a differentiated accent color carrying the brand's actual personality." },
+    ],
+    faq: [
+      { question: "Is blue and black too generic for a startup?", answer: "It can be, unless paired with a distinctive accent color — on its own, blue and black is one of the most common enterprise palettes available." },
+      { question: "Does blue and black work for dark mode?", answer: "Yes, it's a natural fit — use black as the surface and blue for primary actions and accents." },
+    ],
+    relatedLinks: [
+      { title: "Blue color meaning", href: "/colors/blue" },
+      { title: "Black color meaning", href: "/colors/black" },
+      { title: "SaaS trust spectrum palette", href: "/palettes/saas-trust-spectrum" },
+    ],
+  },
+  {
+    slug: "green-and-black",
+    title: "Green and Black Color Combination",
+    description: "A grounded, premium-natural combination for sustainability, finance growth, and outdoor brands.",
+    answer:
+      "Green and black combine natural, growth-oriented meaning with the authority of black, making the pairing effective for sustainability brands, financial growth products, and outdoor or premium-natural goods that want to feel serious rather than purely eco-friendly.",
+    intent: "informational",
+    keywords: ["green and black color combination", "sustainable brand colors", "finance growth colors"],
+    sections: [
+      { title: "Why it works", body: "Black keeps the palette from feeling soft or purely decorative, while green supplies the growth and nature association — together they read as serious rather than merely eco-themed." },
+      { title: "Best use cases", body: "Sustainability brands that want to be taken seriously, financial growth and investing products, and premium outdoor goods all fit this combination well." },
+      { title: "Design note", body: "Use a deep, slightly muted green rather than a bright kelly green to keep the pairing feeling premium instead of purely seasonal." },
+    ],
+    faq: [
+      { question: "Is green and black good for a finance app?", answer: "Yes, especially for investing or savings products where green's growth association pairs naturally with black's sense of stability and authority." },
+      { question: "Does green and black feel too dark for a wellness brand?", answer: "It can if overused — pair it with a lighter neutral surface and reserve the black for accents or a dark-mode variant rather than the entire experience." },
+    ],
+    relatedLinks: [
+      { title: "Green color meaning", href: "/colors/green" },
+      { title: "Black color meaning", href: "/colors/black" },
+      { title: "Fintech growth grid palette", href: "/palettes/fintech-growth-grid" },
+    ],
+  },
+  {
+    slug: "red-and-purple",
+    title: "Red and Purple Color Combination",
+    description: "An intense, expressive combination for entertainment, beauty, and bold creative brands.",
+    answer:
+      "Red and purple create an intense, expressive combination that works well for entertainment, beauty, and creative brands that want energy and drama without the coldness of blue-based palettes.",
+    intent: "informational",
+    keywords: ["red and purple color combination", "bold creative brand colors", "entertainment brand palette"],
+    sections: [
+      { title: "Why it feels expressive", body: "Red supplies urgency and heat, purple supplies creativity and drama — together they produce a palette with more emotional intensity than either color alone." },
+      { title: "Best use cases", body: "Entertainment and events, beauty and cosmetics, and bold creative or youth brands benefit from the combination's high energy." },
+      { title: "Balance matters", body: "Two highly saturated warm-leaning hues together can overwhelm — use one as a clear base and the other strictly as an accent." },
+    ],
+    faq: [
+      { question: "Is red and purple too aggressive for a website?", answer: "It can be at full saturation across an entire page — the pairing works best as one dominant hue with the other used sparingly as an accent." },
+      { question: "What brands use red and purple together?", answer: "Beauty, entertainment, events, and bold creative brands use this combination most often for its high emotional intensity." },
+    ],
+    relatedLinks: [
+      { title: "Red color meaning", href: "/colors/red" },
+      { title: "Purple color meaning", href: "/colors/purple" },
+      { title: "Sunset burst gradient", href: "/gradients/sunset-burst" },
+    ],
+  },
+  {
+    slug: "red-and-orange",
+    title: "Red and Orange Color Combination",
+    description: "A maximum-urgency combination for flash sales, food brands, and high-energy campaigns.",
+    answer:
+      "Red and orange together create one of the highest-urgency color combinations available, which makes it effective for flash sales, food and appetite-driven brands, and short-duration high-energy campaigns — but risky as a full-time brand palette.",
+    intent: "informational",
+    keywords: ["red and orange color combination", "urgency color palette", "food brand colors"],
+    sections: [
+      { title: "Why it feels urgent", body: "Both hues independently signal urgency and appetite, so combining them produces one of the most attention-demanding palettes available without any other design device." },
+      { title: "Best use cases", body: "Flash sales, food and restaurant brands, and short-duration promotional campaigns all benefit from the pairing's immediate energy." },
+      { title: "Fatigue risk", body: "Sustained exposure to red-and-orange interfaces creates visual fatigue faster than cooler palettes — it's better suited to a campaign moment than a full-time product UI." },
+    ],
+    faq: [
+      { question: "Is red and orange good for a permanent brand identity?", answer: "It works better for campaigns and food/appetite brands than for a full-time software product, where the intensity can tire users over repeated sessions." },
+      { question: "Why do food brands use red and orange so often?", answer: "Both hues are associated with appetite and warmth, and the combination's urgency also encourages faster purchase decisions." },
+    ],
+    relatedLinks: [
+      { title: "Red color meaning", href: "/colors/red" },
+      { title: "Orange color meaning", href: "/colors/orange" },
+      { title: "Apricot launch gradient", href: "/gradients/apricot-launch" },
+    ],
+  },
+  {
+    slug: "purple-and-orange",
+    title: "Purple and Orange Color Combination",
+    description: "A playful, high-energy split-complementary pairing for youth brands, events, and creative products.",
+    answer:
+      "Purple and orange work as a split-complementary pairing that feels playful and energetic rather than corporate, making it effective for youth-oriented brands, events, and creative products that want to stand out from more conventional blue-led palettes.",
+    intent: "informational",
+    keywords: ["purple and orange color combination", "playful brand colors", "creative youth brand palette"],
+    sections: [
+      { title: "Why it feels playful", body: "The combination is distinctive enough that it rarely reads as corporate, which is exactly why youth brands and creative products reach for it over more conventional pairings." },
+      { title: "Best use cases", body: "Youth-oriented products, events and festivals, and creative or entertainment brands benefit most from the pairing's energetic, non-conformist feel." },
+      { title: "Design note", body: "A muted purple with a bright orange accent reads as intentional design; two equally saturated tones can feel chaotic without a clear hierarchy." },
+    ],
+    faq: [
+      { question: "Is purple and orange good for a serious B2B brand?", answer: "Generally no — the combination reads as playful and creative, which fits youth, events, and entertainment brands far better than enterprise or financial products." },
+      { question: "How do I keep purple and orange from feeling chaotic?", answer: "Let one color dominate the surface area and use the other strictly as an accent, rather than splitting the palette evenly between the two." },
+    ],
+    relatedLinks: [
+      { title: "Purple color meaning", href: "/colors/purple" },
+      { title: "Orange color meaning", href: "/colors/orange" },
+      { title: "Creative orbit palette", href: "/palettes/creative-orbit" },
+    ],
+  },
+  {
+    slug: "blue-and-red",
+    title: "Blue and Red Color Combination",
+    description: "A high-contrast trust-plus-urgency pairing for political, sports, and alert-driven interfaces.",
+    answer:
+      "Blue and red combine trust with urgency, which makes the pairing effective for contexts that need both credibility and immediate attention, such as sports teams, alert systems, and civic or political brands — but it needs a clear hierarchy so the two don't compete.",
+    intent: "informational",
+    keywords: ["blue and red color combination", "trust and urgency colors", "sports team color palette"],
+    sections: [
+      { title: "Why the pairing works", body: "Blue supplies credibility while red supplies urgency, so the combination fits situations that need both at once, like a civic brand or a product with time-sensitive alerts." },
+      { title: "Best use cases", body: "Sports teams, civic and political branding, and interfaces where blue carries the base UI and red is reserved for alerts or critical states fit this pairing well." },
+      { title: "Hierarchy matters", body: "Let blue dominate the surface and use red only for the specific moments that need urgency — status alerts, errors, or a single call to action — or the two hues will fight for attention." },
+    ],
+    faq: [
+      { question: "Can blue and red work in the same UI without clashing?", answer: "Yes, if blue carries the base interface and red is reserved specifically for alerts, errors, or one high-priority action rather than general decoration." },
+      { question: "Why do sports teams use blue and red together?", answer: "The pairing reads as both trustworthy and energetic, which suits a team identity that needs to feel credible and exciting at the same time." },
+    ],
+    relatedLinks: [
+      { title: "Blue color meaning", href: "/colors/blue" },
+      { title: "Red color meaning", href: "/colors/red" },
+      { title: "Color contrast guide", href: "/accessibility/color-contrast" },
+    ],
+  },
+  {
+    slug: "blue-and-purple",
+    title: "Blue and Purple Color Combination",
+    description: "A calm, premium-tech combination for SaaS, creative tools, and subscription products.",
+    answer:
+      "Blue and purple create a calm but distinctive combination that keeps blue's trust while adding purple's creative or premium edge, which is why it's common among SaaS and creative-tool brands that want to feel more original than a blue-only system.",
+    intent: "informational",
+    keywords: ["blue and purple color combination", "saas brand colors", "premium tech palette"],
+    sections: [
+      { title: "Why it works", body: "Blue and purple sit close together on the color wheel, so the pairing feels cohesive rather than clashing, while still reading as more distinctive than blue alone." },
+      { title: "Best use cases", body: "SaaS products, creative and productivity tools, and subscription brands that want trust with a slightly more premium or original feel benefit from this combination." },
+      { title: "Design note", body: "Because the hues are close together, contrast between them can be subtle — pair with a light or dark neutral surface to keep hierarchy clear." },
+    ],
+    faq: [
+      { question: "Is blue and purple too similar to work as a combination?", answer: "They're close on the color wheel, which makes them harmonious rather than high-contrast — pair with a neutral surface color to keep the hierarchy readable." },
+      { question: "Why do SaaS brands use blue and purple together?", answer: "It keeps blue's trust signal while adding a more distinctive, premium edge than an all-blue system, without introducing a jarring contrast." },
+    ],
+    relatedLinks: [
+      { title: "Blue color meaning", href: "/colors/blue" },
+      { title: "Purple color meaning", href: "/colors/purple" },
+      { title: "SaaS trust spectrum palette", href: "/palettes/saas-trust-spectrum" },
+    ],
+  },
+  {
+    slug: "green-and-red",
+    title: "Green and Red Color Combination",
+    description: "A high-recognition but high-risk pairing best known from status systems and seasonal branding.",
+    answer:
+      "Green and red are instantly recognizable together because of their strong status-color and seasonal associations, but the pairing is high-risk for general product use since it directly overlaps with the most common colorblind confusion pattern.",
+    intent: "informational",
+    keywords: ["green and red color combination", "status color palette", "seasonal brand colors"],
+    sections: [
+      { title: "Where it comes from", body: "Green and red are the default success/error status pairing in most software, and the default seasonal (holiday) color pairing in retail — both give it instant, near-universal recognition." },
+      { title: "The accessibility problem", body: "Red-green color blindness is the most common form of color vision deficiency, so relying on green-versus-red alone to communicate meaning will fail for a meaningful share of users without icons or labels." },
+      { title: "Safer use", body: "If using both, differentiate status or meaning with shape, icon, or label in addition to color — never rely on the red/green distinction alone." },
+    ],
+    faq: [
+      { question: "Is green and red bad for accessibility?", answer: "It's risky when used to communicate meaning (like success vs. error) without a supporting icon or label, because it overlaps with the most common form of color blindness." },
+      { question: "When is green and red still safe to use?", answer: "Purely decorative or seasonal use (like holiday branding) is lower-risk than using the pair to communicate status, where a colorblind user needs an alternative signal." },
+    ],
+    relatedLinks: [
+      { title: "Green color meaning", href: "/colors/green" },
+      { title: "Red color meaning", href: "/colors/red" },
+      { title: "Color contrast guide", href: "/accessibility/color-contrast" },
+    ],
+  },
+  {
+    slug: "green-and-orange",
+    title: "Green and Orange Color Combination",
+    description: "A warm-meets-natural analogous pairing for outdoor, food, and wellness-with-energy brands.",
+    answer:
+      "Green and orange sit next to each other on the color wheel, producing an analogous pairing that feels natural and energetic at once, which fits outdoor brands, food products, and wellness brands that want warmth rather than a purely calm feel.",
+    intent: "informational",
+    keywords: ["green and orange color combination", "outdoor brand colors", "natural energetic palette"],
+    sections: [
+      { title: "Why it feels natural", body: "As neighboring hues on the color wheel, green and orange read as harmonious rather than clashing, evoking natural, harvest-like associations without any other design cue." },
+      { title: "Best use cases", body: "Outdoor and adventure brands, food and beverage products, and wellness brands that want energy alongside their natural positioning fit this pairing well." },
+      { title: "Design note", body: "Because both are warm-leaning and mid-saturation, the pairing can lack contrast for text — add a dark neutral for body copy rather than relying on the two hues alone." },
+    ],
+    faq: [
+      { question: "Is green and orange good for a food brand?", answer: "Yes — it reads as natural and appetizing at once, which fits fresh food, produce, and harvest-themed branding particularly well." },
+      { question: "Does green and orange work for text contrast?", answer: "Not reliably on its own — add a dark neutral for body text, since both hues are mid-saturation and don't provide strong contrast against each other." },
+    ],
+    relatedLinks: [
+      { title: "Green color meaning", href: "/colors/green" },
+      { title: "Orange color meaning", href: "/colors/orange" },
+      { title: "Apricot launch gradient", href: "/gradients/apricot-launch" },
+    ],
+  },
 ];
 
 const accessibilityEntries: ContentEntry[] = [
@@ -744,6 +1088,7 @@ const tailwindEntries: ContentEntry[] = ["blue", "green", "purple", "orange", "b
   relatedLinks: [
     { title: `${color[0].toUpperCase()}${color.slice(1)} color page`, href: `/colors/${color}` },
     { title: `${color[0].toUpperCase()}${color.slice(1)} CSS guide`, href: `/css-colors/${color}` },
+    { title: `${color[0].toUpperCase()}${color.slice(1)} color meaning`, href: `/color-meanings/${color}` },
     { title: "Color contrast guide", href: "/accessibility/color-contrast" },
   ],
 }));
@@ -768,6 +1113,7 @@ const cssColorEntries: ContentEntry[] = ["blue", "green", "purple", "orange", "b
   relatedLinks: [
     { title: `${color[0].toUpperCase()}${color.slice(1)} Tailwind guide`, href: `/tailwind/${color}` },
     { title: `${color[0].toUpperCase()}${color.slice(1)} color meaning`, href: `/color-meanings/${color}` },
+    { title: `${color[0].toUpperCase()}${color.slice(1)} color page`, href: `/colors/${color}` },
     { title: "Accessibility guide", href: "/accessibility/color-contrast" },
   ],
 }));
@@ -1273,6 +1619,173 @@ const resources: ContentEntry[] = [
   },
 ];
 
+const developerEntries: ContentEntry[] = [
+  {
+    slug: "design-tokens",
+    title: "Design Tokens for Color, Typography, and Spacing",
+    description: "How to structure design tokens so a color system, type scale, and spacing scale stay in sync across web, iOS, and Android.",
+    answer:
+      "Design tokens work best when color, typography, and spacing are generated from one shared scale rather than hand-picked per platform. A token set should export cleanly to CSS variables, Tailwind config, and native platform constants from a single source of truth.",
+    intent: "informational",
+    keywords: ["design tokens", "design token generator", "color typography spacing tokens"],
+    sections: [
+      { title: "Why one source of truth matters", body: "When color, type, and spacing are each maintained separately per platform, they drift. A shared token definition keeps a Swift app and a Tailwind site visually identical without manual re-entry." },
+      { title: "Naming tokens by role, not hue", body: "Name tokens `primary` or `surface-warning` instead of `blue-500`. Role-based names survive a rebrand; hue-based names don't." },
+      { title: "Exporting to multiple platforms", body: "A token generator should output CSS variables, SCSS, Tailwind config, JSON, Figma Tokens format, and platform constants (Swift, Kotlin, Flutter) from the same input, not five separately maintained files." },
+    ],
+    faq: [
+      { question: "What are design tokens?", answer: "Design tokens are named, platform-independent values for color, typography, and spacing that get compiled into each platform's native format (CSS variables, Tailwind config, Swift constants, and so on)." },
+      { question: "Should tokens be named by color or by role?", answer: "By role. A token named `primary` can be repainted during a rebrand without renaming every reference; a token named `blue-500` cannot." },
+    ],
+    relatedLinks: [
+      { title: "Design token generator tool", href: "/tools/design-tokens" },
+      { title: "CSS custom properties guide", href: "/developer/css-custom-properties" },
+      { title: "Figma variables guide", href: "/developer/figma-variables" },
+      { title: "Tailwind color guide", href: "/tailwind" },
+    ],
+  },
+  {
+    slug: "css-custom-properties",
+    title: "CSS Custom Properties for Color Systems",
+    description: "Using CSS variables to build a themeable, maintainable color system instead of hard-coded hex values.",
+    answer:
+      "CSS custom properties let a color system be defined once and reused everywhere, which makes light/dark theming and rebrands a matter of changing a handful of variable declarations instead of every component.",
+    intent: "informational",
+    keywords: ["css custom properties", "css variables color", "css color tokens"],
+    sections: [
+      { title: "Define once, reference everywhere", body: "Declare `--color-primary` and `--color-surface` at the `:root` level, then reference them in components. Rebrands and dark mode become variable reassignments, not find-and-replace." },
+      { title: "Scoping for themes", body: "Redefine the same variable names under a `[data-theme=\"dark\"]` selector rather than creating parallel `--color-primary-dark` variables — components then need no theme-awareness of their own." },
+      { title: "Pairing with a build-time generator", body: "Generate the variable block from a token source (see Design Tokens) so the CSS file and the Figma/Swift exports never drift out of sync." },
+    ],
+    faq: [
+      { question: "Why use CSS variables instead of Sass variables?", answer: "CSS custom properties are available at runtime, which lets a theme change (e.g. dark mode) happen with a single class toggle instead of a rebuild." },
+      { question: "How many color variables should a system have?", answer: "Enough to cover primary, neutral surfaces, and semantic states (success/warning/critical) — usually 8–15 for a small product, not one variable per shade." },
+    ],
+    relatedLinks: [
+      { title: "Design tokens guide", href: "/developer/design-tokens" },
+      { title: "CSS colors hub", href: "/css-colors" },
+      { title: "Accessibility contrast guide", href: "/accessibility/color-contrast" },
+    ],
+  },
+  {
+    slug: "figma-variables",
+    title: "Figma Variables for Color Handoff",
+    description: "Structuring Figma variables so designer-defined colors map directly onto developer design tokens with no manual translation step.",
+    answer:
+      "Figma variables close the gap between design and code when they're named to match the token names developers actually use in CSS or Tailwind — the handoff works best when both sides read the same vocabulary.",
+    intent: "informational",
+    keywords: ["figma variables", "figma design tokens", "figma to css handoff"],
+    sections: [
+      { title: "Match names across design and code", body: "If Figma calls it `primary/600` and CSS calls it `--color-primary-dark`, someone has to translate manually on every change. Use the same role-based name in both places." },
+      { title: "Modes for theming", body: "Figma's variable modes map directly onto CSS custom-property theme overrides — a light/dark mode pair in Figma should produce exactly the light/dark override block in code." },
+      { title: "Exporting for engineering", body: "Export variables as Figma Tokens JSON so a build step can generate CSS, Tailwind, and native constants from the same file designers edit." },
+    ],
+    faq: [
+      { question: "Can Figma variables export directly to CSS?", answer: "Not natively — export as Figma Tokens JSON and run it through a token build step (or HueFlow's design token generator) to produce CSS, Tailwind, and platform constants." },
+      { question: "Should every color in a design use a variable?", answer: "Yes for anything reused more than once. One-off decorative colors don't need a token, but every semantic and brand color should." },
+    ],
+    relatedLinks: [
+      { title: "Design tokens guide", href: "/developer/design-tokens" },
+      { title: "Design token generator tool", href: "/tools/design-tokens" },
+      { title: "CSS custom properties guide", href: "/developer/css-custom-properties" },
+    ],
+  },
+  {
+    slug: "platform-color-constants",
+    title: "Color Constants for Swift, Kotlin, and Flutter",
+    description: "Keeping iOS, Android, and Flutter color constants in sync with the web color system instead of hand-copied hex values per platform.",
+    answer:
+      "Native app color constants drift from the web system when each platform team hand-copies hex values. Generating Swift, Kotlin, and Flutter constants from the same token source as the web CSS keeps every platform visually identical.",
+    intent: "informational",
+    keywords: ["swift color constants", "android xml colors", "flutter color constants", "kotlin color"],
+    sections: [
+      { title: "The drift problem", body: "A hex value updated on the website rarely gets propagated to the iOS and Android codebases at the same time, so apps quietly fall out of sync with the brand." },
+      { title: "One export, three platforms", body: "Generate `UIColor` constants for Swift, `Color(0xFF...)` values for Kotlin, and `Color(0xFF...)` for Flutter from the same source list used to build the CSS variables." },
+      { title: "Keeping names consistent", body: "Use the same role name (`primary`, `success`) across Swift, Kotlin, Flutter, and CSS so a designer's change request maps to one search-and-replace across all four, not four separate lookups." },
+    ],
+    faq: [
+      { question: "Do Swift and Android color formats differ?", answer: "Yes — Swift typically uses `UIColor(red:green:blue:alpha:)` with 0–1 floats, while Android/Kotlin and Flutter use 0xFF-prefixed ARGB hex integers. A generator should output both from the same hex source." },
+      { question: "Should mobile apps use the same color names as the website?", answer: "Yes — matching role names across platforms is what actually prevents visual drift between the app and the web product." },
+    ],
+    relatedLinks: [
+      { title: "Design tokens guide", href: "/developer/design-tokens" },
+      { title: "Design token generator tool", href: "/tools/design-tokens" },
+    ],
+  },
+];
+
+const colorPsychologyEntries: ContentEntry[] = [
+  {
+    slug: "warm-vs-cool-colors",
+    title: "Warm vs. Cool Colors: Psychology and When to Use Each",
+    description: "The practical difference between warm and cool color psychology, and which one fits a given product or campaign.",
+    answer:
+      "Warm colors (red, orange, yellow) read as energetic and urgent; cool colors (blue, green, purple) read as calm and trustworthy. The choice usually comes down to whether the moment needs action or confidence.",
+    intent: "informational",
+    keywords: ["warm vs cool colors", "warm color psychology", "cool color psychology"],
+    sections: [
+      { title: "What warm colors signal", body: "Warm hues draw the eye faster and read as energetic, urgent, or appetizing — useful for calls to action, food, and limited-time offers, risky as a full-page base color." },
+      { title: "What cool colors signal", body: "Cool hues read as calm, stable, and trustworthy — the default choice for finance, healthcare, and productivity products where confidence matters more than urgency." },
+      { title: "Mixing temperatures deliberately", body: "Most strong systems use a cool base with one warm accent for action moments, rather than committing entirely to one temperature." },
+    ],
+    faq: [
+      { question: "Are warm colors always better for calls to action?", answer: "Usually, because they create contrast against a cooler base and draw the eye — but the effect depends on having a cooler base to contrast against, not on the warm color alone." },
+      { question: "Can a brand mix warm and cool as equals?", answer: "It's possible but risky — most successful systems pick one temperature as the base and use the other sparingly as accent, rather than splitting evenly." },
+    ],
+    relatedLinks: [
+      { title: "Color psychology in marketing", href: "/color-psychology/color-psychology-in-marketing" },
+      { title: "Blue color meaning", href: "/color-meanings/blue" },
+      { title: "Orange color meaning", href: "/color-meanings/orange" },
+    ],
+  },
+  {
+    slug: "color-psychology-in-marketing",
+    title: "Color Psychology in Marketing",
+    description: "How color choice affects perceived urgency, trust, and price sensitivity across marketing campaigns.",
+    answer:
+      "In marketing, color psychology mostly affects perceived urgency and trust rather than the product itself — the same offer can read as a scam in one palette and premium in another purely from color choice.",
+    intent: "informational",
+    keywords: ["color psychology marketing", "color psychology advertising", "best colors for marketing"],
+    sections: [
+      { title: "Urgency signals", body: "Red and orange increase perceived urgency, which is why sale banners lean on them — but overuse trains an audience to ignore every banner equally." },
+      { title: "Trust signals", body: "Blue is the most consistent trust signal across categories, which is why it dominates finance and B2B marketing specifically." },
+      { title: "Price perception", body: "Black and gold read as premium and can support higher perceived pricing; bright saturated colors read as accessible and mass-market." },
+    ],
+    faq: [
+      { question: "Does color psychology actually affect sales?", answer: "It affects perception (urgency, trust, price tier) more directly than it affects raw conversion rate, which depends more on offer clarity and audience fit." },
+      { question: "What color sells the most?", answer: "There's no universal answer — the right color depends on whether the offer needs to feel urgent, trustworthy, or premium." },
+    ],
+    relatedLinks: [
+      { title: "Warm vs cool colors", href: "/color-psychology/warm-vs-cool-colors" },
+      { title: "Marketing colors hub", href: "/marketing-colors" },
+      { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
+    ],
+  },
+  {
+    slug: "color-psychology-in-ui-design",
+    title: "Color Psychology in UI and Product Design",
+    description: "How color choice in interfaces affects perceived state, hierarchy, and user trust in a product.",
+    answer:
+      "In UI design, color psychology mostly governs state recognition — users expect red to mean error, green to mean success, and a strong primary color to mean the main action, regardless of brand.",
+    intent: "informational",
+    keywords: ["color psychology ui design", "ui color meaning", "product design color psychology"],
+    sections: [
+      { title: "Semantic color expectations", body: "Breaking the red-error, green-success convention to fit a brand palette usually confuses users faster than it reinforces brand identity." },
+      { title: "Hierarchy through saturation", body: "A single strong, saturated primary color against muted neutrals reads as \"the main action\" more reliably than color alone without contrast in saturation." },
+      { title: "Trust in enterprise software", body: "Enterprise and B2B products lean cooler and more muted than consumer apps because the audience associates restraint with reliability." },
+    ],
+    faq: [
+      { question: "Can a brand's primary color also be its error color?", answer: "It's risky — reusing the brand color for both primary actions and errors removes the visual distinction users rely on to recognize a problem at a glance." },
+      { question: "Why do enterprise products use more muted colors?", answer: "Muted, cooler palettes read as stable and professional, which matches what enterprise buyers expect from software they depend on daily." },
+    ],
+    relatedLinks: [
+      { title: "Warm vs cool colors", href: "/color-psychology/warm-vs-cool-colors" },
+      { title: "Accessibility contrast guide", href: "/accessibility/color-contrast" },
+      { title: "Design tokens guide", href: "/developer/design-tokens" },
+    ],
+  },
+];
+
 export const hubs: HubPage[] = [
   {
     slug: "colors",
@@ -1466,6 +1979,26 @@ export const hubs: HubPage[] = [
     goals: ["Support strategic credibility", "Attract partnerships", "Document operating system"],
     featuredLinks: resources.map((entry) => ({ title: entry.title, href: `/resources/${entry.slug}` })),
   },
+  {
+    slug: "developer",
+    path: "/developer",
+    title: "Developer",
+    description: "Design tokens, CSS custom properties, Figma variables, and platform color constants for engineering teams.",
+    answer:
+      "The Developer hub documents how to take a HueFlow color system to production: design tokens, CSS custom properties, Figma variable handoff, and native color constants for Swift, Kotlin, and Flutter.",
+    goals: ["Own developer-intent color searches", "Support the design token generator tool", "Bridge design and engineering handoff"],
+    featuredLinks: developerEntries.map((entry) => ({ title: entry.title, href: `/developer/${entry.slug}` })),
+  },
+  {
+    slug: "color-psychology",
+    path: "/color-psychology",
+    title: "Color Psychology",
+    description: "How color affects perception, trust, urgency, and decision-making across marketing and product design.",
+    answer:
+      "Color Psychology pages explain the mechanisms behind color meaning — warm vs. cool, marketing perception, and UI state recognition — separately from the per-color meaning pages in Color Meanings.",
+    goals: ["Own broad color-psychology search intent", "Support color-meanings and marketing-colors", "Feed the conversion-strategy guide"],
+    featuredLinks: colorPsychologyEntries.map((entry) => ({ title: entry.title, href: `/color-psychology/${entry.slug}` })),
+  },
 ];
 
 export const routeCollections = {
@@ -1484,6 +2017,8 @@ export const routeCollections = {
   bestColorsFor,
   faqs,
   resources,
+  developer: developerEntries,
+  colorPsychology: colorPsychologyEntries,
 };
 
 export function getHubByPath(path: string) {

@@ -18,7 +18,7 @@ export function HubPageView({ hub }: { hub: HubPage }) {
               </Link>
             ))}
           </div>
-          <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+          <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-orange-700">SEO + GEO + AEO Hub</p>
               <h1 className="mt-4 max-w-4xl font-display text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -54,7 +54,7 @@ export function HubPageView({ hub }: { hub: HubPage }) {
             View full architecture
           </Link>
         </div>
-        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {hub.featuredLinks.map((item) => (
             <Link
               key={item.href}

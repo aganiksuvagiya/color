@@ -43,7 +43,7 @@ export function BlogPage() {
           <p className="mt-3 max-w-4xl text-sm leading-7 text-white/72">{blogPageContent.answer}</p>
         </motion.div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {blogPageContent.featuredArticles.map((article, idx) => (
             <motion.div
               key={article.href}
@@ -69,7 +69,7 @@ export function BlogPage() {
           ))}
         </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
           {blogPageContent.sections.map((section, idx) => (
             <motion.section
               key={section.title}
@@ -84,7 +84,7 @@ export function BlogPage() {
           ))}
         </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
             <h2 className="text-xl font-semibold text-white">FAQ</h2>
             <div className="mt-5 space-y-4">

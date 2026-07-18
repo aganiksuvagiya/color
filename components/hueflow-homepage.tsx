@@ -379,7 +379,7 @@ export function HueFlowHomePage() {
           </motion.div>
         </section>
 
-        <section className="defer-offscreen mx-auto mt-24 grid max-w-[1560px] gap-8 lg:grid-cols-[0.95fr_1.05fr]" id="why">
+        <section className="defer-offscreen mx-auto mt-24 grid grid-cols-1 max-w-[1560px] gap-8 lg:grid-cols-[0.95fr_1.05fr]" id="why">
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -421,7 +421,7 @@ export function HueFlowHomePage() {
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
             variants={stagger}
-            className="grid gap-5 rounded-[32px] border border-white/10 bg-[#2a140a]/75 p-6 sm:grid-cols-2 xl:grid-cols-4"
+            className="grid grid-cols-1 gap-5 rounded-[32px] border border-white/10 bg-[#2a140a]/75 p-6 sm:grid-cols-2 xl:grid-cols-4"
           >
             {stats.map((stat) => (
               <motion.div key={stat.label} variants={fadeUp} className="rounded-[26px] border border-white/10 bg-black/12 p-6">
@@ -471,7 +471,7 @@ export function HueFlowHomePage() {
             whileInView="show"
             viewport={{ once: true, amount: 0.05 }}
             variants={stagger}
-            className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
+            className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3"
           >
             {features.map((feature) => (
               <motion.div
@@ -494,7 +494,7 @@ export function HueFlowHomePage() {
         </section>
 
         <section className="defer-offscreen mx-auto mt-24 max-w-[1560px]">
-          <div className="grid gap-8 lg:grid-cols-[1.04fr_0.96fr]">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.04fr_0.96fr]">
             <motion.div
               initial={{ opacity: 0, x: -24 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -550,7 +550,7 @@ export function HueFlowHomePage() {
             whileInView="show"
             viewport={{ once: true, amount: 0.05 }}
             variants={stagger}
-            className="mt-10 grid gap-5 lg:grid-cols-3"
+            className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-3"
           >
             {workflowCards.map((card) => (
               <motion.article
@@ -657,7 +657,7 @@ export function HueFlowHomePage() {
         </section>
 
         <footer className="defer-offscreen mx-auto mt-24 max-w-[1560px] rounded-[34px] border border-white/10 bg-[#2a140a]/75 p-8">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
               <div className="flex items-center">
                 <img src="/hueflow.svg" alt="HueFlow" width={120} height={24} />
@@ -666,7 +666,7 @@ export function HueFlowHomePage() {
                 A premium color generator for teams that want product-ready palettes, more exploration, and cleaner handoff.
               </p>
             </div>
-            <div className="grid gap-8 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
               {footerLinks.map((group) => (
                 <div key={group.heading}>
                   <h3 className="text-sm font-semibold uppercase tracking-[0.24em] text-white/54">{group.heading}</h3>

@@ -140,7 +140,7 @@ export function ContrastFixer() {
           </div>
 
           {/* Color Inputs */}
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {/* Foreground */}
             <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
               <label className="mb-2 block text-xs text-white/40">

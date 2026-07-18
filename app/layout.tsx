@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { StructuredData } from "@/components/seo/structured-data";
+import { PromoBanner } from "@/components/promo-banner";
 import { buildOrganizationSchema, buildSoftwareApplicationSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/seo/site-config";
 
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <StructuredData data={buildOrganizationSchema()} />
         <StructuredData data={buildSoftwareApplicationSchema()} />
         {children}
+        <PromoBanner />
       </body>
     </html>
   );

@@ -154,6 +154,23 @@ export function GeneratorPage() {
     });
   }
 
+  function handleReorderColors(from: number, to: number) {
+    if (!palette || from === to) return;
+
+    const colors = [...palette.colors];
+    const [moved] = colors.splice(from, 1);
+    colors.splice(to, 0, moved);
+
+    const lockFlags = palette.colors.map((_, i) => lockedIndices.has(i));
+    const [movedLock] = lockFlags.splice(from, 1);
+    lockFlags.splice(to, 0, movedLock);
+    const nextLocked = new Set<number>();
+    lockFlags.forEach((locked, i) => { if (locked) nextLocked.add(i); });
+    setLockedIndices(nextLocked);
+
+    setAndTrack({ ...palette, colors });
+  }
+
   function handleSave() {
     if (!palette) return;
     savePalette(palette);
@@ -251,7 +268,7 @@ export function GeneratorPage() {
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <ImageUpload onExtract={handlePaletteSet} />
             <HarmonyPicker onGenerate={handlePaletteSet} />
           </div>
@@ -283,6 +300,7 @@ export function GeneratorPage() {
                   lockedIndices={lockedIndices}
                   onColorChange={handleColorChange}
                   onToggleLock={handleToggleLock}
+                  onReorder={handleReorderColors}
                 />
 
                 {comparePalette && comparePalette !== palette && (

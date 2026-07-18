@@ -53,6 +53,8 @@ export const staticPages = [
   page("/faqs", "weekly", 0.82),
   page("/resources", "weekly", 0.78),
   page("/blog", "weekly", 0.8),
+  page("/developer", "weekly", 0.84),
+  page("/color-psychology", "weekly", 0.8),
 ];
 
 export const sitemapFiles = [
@@ -107,6 +109,8 @@ export const guidesSitemap = dynamicEntries(
     ...routeCollections.faqs.map((entry) => `/faqs/${entry.slug}`),
     ...routeCollections.resources.map((entry) => `/resources/${entry.slug}`),
     ...routeCollections.accessibility.map((entry) => `/accessibility/${entry.slug}`),
+    ...routeCollections.developer.map((entry) => `/developer/${entry.slug}`),
+    ...routeCollections.colorPsychology.map((entry) => `/color-psychology/${entry.slug}`),
   ],
   "weekly",
   0.78,

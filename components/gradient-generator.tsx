@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Header } from "./header";
@@ -102,7 +102,67 @@ export function GradientGenerator() {
   const [savedGradients, setSavedGradients] = useState<SavedGradient[]>([]);
   const [gradientsMounted, setGradientsMounted] = useState(false);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
+  const [previewPreset, setPreviewPreset] = useState<PresetGradient | null>(null);
+  const [previewType, setPreviewType] = useState<GradientType>("linear");
+  const [previewAngle, setPreviewAngle] = useState(135);
+  const [previewStops, setPreviewStops] = useState<ColorStop[]>([]);
+  const [previewCopied, setPreviewCopied] = useState(false);
   const gradientLoaderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!previewPreset) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setPreviewPreset(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [previewPreset]);
+
+  const openPreview = useCallback((preset: PresetGradient) => {
+    setPreviewType("linear");
+    setPreviewAngle(135);
+    setPreviewStops(
+      preset.colors.map((color, i) => ({
+        color,
+        position: preset.positions
+          ? preset.positions[i]
+          : Math.round((i / (preset.colors.length - 1)) * 100),
+        id: nextId++,
+      }))
+    );
+    setPreviewPreset(preset);
+  }, []);
+
+  const updatePreviewStop = useCallback((id: number, updates: Partial<ColorStop>) => {
+    setPreviewStops((prev) => prev.map((s) => (s.id === id ? { ...s, ...updates } : s)));
+  }, []);
+
+  const removePreviewStop = useCallback((id: number) => {
+    setPreviewStops((prev) => (prev.length <= 2 ? prev : prev.filter((s) => s.id !== id)));
+  }, []);
+
+  const addPreviewStop = useCallback(() => {
+    setPreviewStops((prev) => {
+      if (prev.length >= 5) return prev;
+      const newColor = RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)];
+      return [...prev, { color: newColor, position: 50, id: nextId++ }];
+    });
+  }, []);
+
+  const randomizePreview = useCallback(() => {
+    const count = Math.random() < 0.5 ? 2 : 3;
+    const shuffled = [...RANDOM_COLORS].sort(() => Math.random() - 0.5);
+    const newStops: ColorStop[] = [];
+    for (let i = 0; i < count; i++) {
+      newStops.push({
+        color: shuffled[i],
+        position: Math.round((i / (count - 1)) * 100),
+        id: nextId++,
+      });
+    }
+    setPreviewStops(newStops);
+    setPreviewAngle(Math.floor(Math.random() * 360));
+  }, []);
 
   useEffect(() => {
     const loadSavedGradients = () => {
@@ -238,6 +298,20 @@ export function GradientGenerator() {
     await navigator.clipboard.writeText(css);
   }, []);
 
+  const handleUsePreview = useCallback(() => {
+    setGradientType(previewType);
+    setAngle(previewAngle);
+    setStops(previewStops);
+    setPreviewPreset(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [previewType, previewAngle, previewStops]);
+
+  const handleCopyPreviewCss = useCallback(async () => {
+    await navigator.clipboard.writeText(generateCss(previewType, previewAngle, previewStops));
+    setPreviewCopied(true);
+    setTimeout(() => setPreviewCopied(false), 2000);
+  }, [previewType, previewAngle, previewStops]);
+
   const cardClass =
     "rounded-2xl border border-white/10 bg-gradient-to-b from-white/8 to-white/3 p-5 shadow-lg shadow-black/10 backdrop-blur-xl";
 
@@ -280,7 +354,7 @@ export function GradientGenerator() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mb-8 grid gap-6 md:grid-cols-2"
+          className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2"
         >
           {/* Gradient Type + Angle */}
           <div className={cardClass}>
@@ -390,7 +464,7 @@ export function GradientGenerator() {
                     max={100}
                     value={stop.position}
                     onChange={(e) => updateStop(stop.id, { position: Number(e.target.value) })}
-                    className="flex-1 accent-white"
+                    className="min-w-0 flex-1 accent-white"
                   />
                   <span className="w-10 text-right text-xs text-white/50">
                     {stop.position}%
@@ -472,7 +546,7 @@ export function GradientGenerator() {
             className="mb-12"
           >
             <h2 className="mb-6 text-center text-2xl font-bold">Saved Gradients</h2>
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {savedGradients.map((g) => (
                 <div key={g.id} className={`${cardClass} text-left`}>
                   <div className="mb-3 h-24 w-full cursor-pointer rounded-xl" style={{ background: g.preview }} onClick={() => handleCopyGradientCss(g.css)} />
@@ -504,14 +578,14 @@ export function GradientGenerator() {
           transition={{ duration: 0.5, delay: 0.6 }}
         >
           <h2 className="mb-6 text-center text-2xl font-bold">Preset Gradients</h2>
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {apiGradients.map((preset, i) => (
               <motion.button
                 key={`${preset.name}-${i}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: (i % 12) * 0.04 }}
-                onClick={() => loadPreset(preset)}
+                onClick={() => openPreview(preset)}
                 className={`${cardClass} group cursor-pointer text-left transition-all hover:scale-[1.02] hover:border-white/20`}
               >
                 <div
@@ -534,6 +608,180 @@ export function GradientGenerator() {
 
         <ToolPageSections config={toolPageContent.gradient} />
       </div>
+
+      <AnimatePresence>
+        {previewPreset && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+            onClick={() => setPreviewPreset(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.97 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              className={`${cardClass} max-h-[90vh] w-full max-w-2xl overflow-y-auto`}
+            >
+              <div
+                className="mb-4 h-48 w-full rounded-xl sm:h-64"
+                style={{ background: generateGradientStyle(previewType, previewAngle, previewStops) }}
+              />
+              <div className="mb-5 flex items-start justify-between gap-3">
+                <p className="text-lg font-semibold text-white">{previewPreset.name}</p>
+                <button
+                  onClick={() => setPreviewPreset(null)}
+                  className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-white/50 transition-colors hover:text-white/80"
+                  aria-label="Close preview"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                {/* Gradient Type + Angle */}
+                <div>
+                  <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/50">
+                    Gradient Type
+                  </h3>
+                  <div className="mb-4 flex gap-2">
+                    {(["linear", "radial", "conic"] as GradientType[]).map((type) => (
+                      <button
+                        key={type}
+                        onClick={() => setPreviewType(type)}
+                        className={`rounded-xl px-3 py-2 text-xs font-medium capitalize transition-all ${
+                          previewType === type
+                            ? "bg-white text-[#160b05] shadow-lg"
+                            : "bg-white/8 text-white/70 hover:bg-white/15"
+                        }`}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
+
+                  {(previewType === "linear" || previewType === "conic") && (
+                    <>
+                      <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-white/50">
+                        Angle: {previewAngle}°
+                      </h3>
+                      <input
+                        type="range"
+                        min={0}
+                        max={360}
+                        value={previewAngle}
+                        onChange={(e) => setPreviewAngle(Number(e.target.value))}
+                        className="mb-3 w-full accent-white"
+                      />
+                      {previewType === "linear" && (
+                        <div className="flex flex-wrap gap-2">
+                          {ANGLE_PRESETS.map((a) => (
+                            <button
+                              key={a}
+                              onClick={() => setPreviewAngle(a)}
+                              className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-all ${
+                                previewAngle === a
+                                  ? "bg-white text-[#160b05]"
+                                  : "bg-white/8 text-white/60 hover:bg-white/15"
+                              }`}
+                            >
+                              {a}°
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+
+                {/* Color Stops */}
+                <div>
+                  <div className="mb-3 flex items-center justify-between">
+                    <h3 className="text-xs font-semibold uppercase tracking-wider text-white/50">
+                      Color Stops
+                    </h3>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={randomizePreview}
+                        className="rounded-lg bg-white/8 px-2.5 py-1 text-xs font-medium text-white/70 transition-all hover:bg-white/15"
+                      >
+                        Randomize
+                      </button>
+                      {previewStops.length < 5 && (
+                        <button
+                          onClick={addPreviewStop}
+                          className="rounded-lg bg-white/8 px-2.5 py-1 text-xs font-medium text-white/70 transition-all hover:bg-white/15"
+                        >
+                          + Add
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    {previewStops.map((stop) => (
+                      <div key={stop.id} className="flex flex-wrap items-center gap-2">
+                        <input
+                          type="color"
+                          value={stop.color}
+                          onChange={(e) => updatePreviewStop(stop.id, { color: e.target.value })}
+                          className="h-8 w-8 cursor-pointer appearance-none rounded-lg border border-white/10 bg-transparent [&::-webkit-color-swatch-wrapper]:p-0.5 [&::-webkit-color-swatch]:rounded-md [&::-webkit-color-swatch]:border-none"
+                        />
+                        <input
+                          type="text"
+                          value={stop.color}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            if (/^#[0-9A-Fa-f]{0,6}$/.test(val)) updatePreviewStop(stop.id, { color: val });
+                          }}
+                          className="w-[75px] rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-xs font-mono text-white/90 outline-none focus:border-white/30"
+                          maxLength={7}
+                        />
+                        <input
+                          type="range"
+                          min={0}
+                          max={100}
+                          value={stop.position}
+                          onChange={(e) => updatePreviewStop(stop.id, { position: Number(e.target.value) })}
+                          className="min-w-0 flex-1 accent-white"
+                        />
+                        <span className="w-9 text-right text-xs text-white/50">{stop.position}%</span>
+                        {previewStops.length > 2 && (
+                          <button
+                            onClick={() => removePreviewStop(stop.id)}
+                            className="flex h-6 w-6 items-center justify-center rounded-lg text-white/40 transition-colors hover:bg-white/10 hover:text-white/80"
+                            aria-label="Remove stop"
+                          >
+                            ✕
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={handleUsePreview}
+                  className="flex-1 rounded-xl bg-gradient-to-b from-white to-white/90 px-4 py-2.5 text-sm font-semibold text-[#160b05] transition-all hover:shadow-lg hover:shadow-white/15"
+                >
+                  Use this gradient
+                </button>
+                <button
+                  onClick={handleCopyPreviewCss}
+                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white/70 transition-colors hover:border-white/20 hover:text-white"
+                >
+                  {previewCopied ? "Copied!" : "Copy CSS"}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

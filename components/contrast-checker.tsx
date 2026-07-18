@@ -32,7 +32,7 @@ export function ContrastChecker() {
         </div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
               <label className="mb-2 block text-xs text-white/40">Foreground (text)</label>
               <div className="flex items-center gap-3">

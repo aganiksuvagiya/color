@@ -20,6 +20,12 @@ export async function GET() {
     `${siteConfig.domain}/guides`,
     `${siteConfig.domain}/comparisons`,
     `${siteConfig.domain}/best-colors-for`,
+    `${siteConfig.domain}/developer`,
+    `${siteConfig.domain}/color-psychology`,
+    `${siteConfig.domain}/tailwind`,
+    `${siteConfig.domain}/css-colors`,
+    `${siteConfig.domain}/faqs`,
+    `${siteConfig.domain}/resources`,
     "",
     "## Retrieval notes",
     "- Pages begin with a 40-60 word direct answer for answer engines and AI overviews.",
@@ -39,6 +45,7 @@ export async function GET() {
     `${siteConfig.domain}/sitemap-gradients.xml`,
     `${siteConfig.domain}/sitemap-brand-colors.xml`,
     `${siteConfig.domain}/sitemap-guides.xml`,
+    `${siteConfig.domain}/sitemap-blog.xml`,
     "",
   ];
 

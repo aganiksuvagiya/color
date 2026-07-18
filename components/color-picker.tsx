@@ -122,7 +122,7 @@ export function ColorPicker() {
           </div>
 
           {/* Picker + Info */}
-          <div className="mb-8 grid gap-6 md:grid-cols-2">
+          <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* Color Preview */}
             <div className={cardClass}>
               <div

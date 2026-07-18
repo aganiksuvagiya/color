@@ -222,7 +222,7 @@ export function BrandColorAnalyzer() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleAnalyze()}
-              placeholder="Enter website URL (e.g. pinterest.com)"
+              placeholder="Enter website URL (e.g. thepdftools.site)"
               className="flex-1 rounded-xl border border-white/10 bg-white/5 px-5 py-3.5 text-base text-white placeholder-white/30 outline-none transition-colors focus:border-white/25 focus:bg-white/8"
             />
             <button
@@ -260,7 +260,7 @@ export function BrandColorAnalyzer() {
         {!loading && colors.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
 
-            <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_1fr]">
+            <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1fr]">
               {screenshotSrc && (
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
                   <p className="mb-2 text-xs font-medium text-white/40">Screenshot of {analyzedUrl}</p>

@@ -60,7 +60,7 @@ export function TrendsPage() {
           </button>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {filtered.map((palette, idx) => (
             <motion.div
               key={`${palette.label}-${idx}`}

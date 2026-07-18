@@ -35,7 +35,7 @@ export function SavedPalettes({ palettes, onLoad, onDelete }: Props) {
         </div>
         <p className="text-sm font-medium text-white/50">Saved palettes ({palettes.length})</p>
       </div>
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <AnimatePresence>
           {palettes.map((p) => (
             <motion.div

@@ -10,10 +10,14 @@ type Breadcrumb = {
 const relatedGroups = [
   { label: "Related colors", match: "/colors/" },
   { label: "Related color meanings", match: "/color-meanings/" },
+  { label: "Related color psychology", match: "/color-psychology/" },
   { label: "Related palettes", match: "/palettes/" },
   { label: "Related gradients", match: "/gradients/" },
   { label: "Related accessibility guides", match: "/accessibility/" },
   { label: "Related branding guides", match: "/brand-colors/" },
+  { label: "Tailwind guides", match: "/tailwind/" },
+  { label: "CSS guides", match: "/css-colors/" },
+  { label: "Developer guides", match: "/developer/" },
   { label: "Related articles", match: "/" },
 ] as const;
 
@@ -63,9 +67,9 @@ export function ContentPageView({
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl gap-10 px-6 py-12 lg:grid-cols-[1fr_300px] lg:px-8">
+      <section className="mx-auto grid grid-cols-1 max-w-6xl gap-10 px-6 py-12 lg:grid-cols-[1fr_300px] lg:px-8">
         <article className="space-y-10">
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             <div className="rounded-[1.75rem] border border-black/8 bg-white p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Key takeaways</p>
               <ul className="mt-3 space-y-3 text-sm leading-7 text-slate-800">
@@ -92,7 +96,7 @@ export function ContentPageView({
             <p className="mt-4 text-base leading-8 text-slate-200">{entry.expertSummary.body}</p>
           </section>
 
-          <div className="grid gap-6 xl:grid-cols-[1.02fr_0.98fr]">
+          <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1.02fr_0.98fr]">
             <section className="rounded-[2rem] border border-black/8 bg-white p-7 shadow-[0_20px_50px_rgba(15,23,42,0.04)]">
               <div className="flex items-center justify-between gap-4">
                 <div>
@@ -209,7 +213,7 @@ export function ContentPageView({
           {entry.examples ? (
             <section className="rounded-[2rem] border border-black/8 bg-slate-950 p-7 text-white shadow-[0_24px_80px_rgba(15,23,42,0.12)]">
               <h2 className="text-2xl font-semibold tracking-tight">Examples</h2>
-              <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
                 {entry.examples.map((example) => (
                   <div key={example.title} className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
                     <h3 className="text-lg font-semibold">{example.title}</h3>

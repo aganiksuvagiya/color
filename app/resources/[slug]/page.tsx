@@ -64,7 +64,7 @@ export default async function ResourceDetailPage({ params }: { params: Promise<{
         </section>
 
         <section className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div className="rounded-[2rem] border border-black/8 bg-white p-7 shadow-[0_24px_60px_rgba(15,23,42,0.05)]">
               <h2 className="text-2xl font-semibold tracking-tight">Implementation plan</h2>
               <ol className="mt-5 space-y-3 text-sm leading-7 text-slate-700">
@@ -121,7 +121,7 @@ export default async function ResourceDetailPage({ params }: { params: Promise<{
         <section className="mx-auto max-w-7xl px-6 py-4 lg:px-8">
           <div className="rounded-[2rem] border border-black/8 bg-slate-950 p-7 text-white shadow-[0_30px_90px_rgba(15,23,42,0.14)]">
             <h2 className="text-2xl font-semibold tracking-tight">100 content clusters for US organic demand</h2>
-            <div className="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
               {clusterIdeas.map((idea) => (
                 <div key={idea} className="rounded-[1.25rem] border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
                   {idea}
@@ -132,7 +132,7 @@ export default async function ResourceDetailPage({ params }: { params: Promise<{
         </section>
 
         <section className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div className="rounded-[2rem] border border-black/8 bg-white p-7 shadow-[0_24px_60px_rgba(15,23,42,0.05)]">
               <h2 className="text-2xl font-semibold tracking-tight">Programmatic SEO plan</h2>
               <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-700">
@@ -152,7 +152,7 @@ export default async function ResourceDetailPage({ params }: { params: Promise<{
               </ul>
             </div>
           </div>
-          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+          <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div className="rounded-[2rem] border border-black/8 bg-white p-7 shadow-[0_24px_60px_rgba(15,23,42,0.05)]">
               <h2 className="text-2xl font-semibold tracking-tight">Missing SEO issues addressed</h2>
               <ul className="mt-5 space-y-3 text-sm leading-7 text-slate-700">
