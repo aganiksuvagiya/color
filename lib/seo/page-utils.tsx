@@ -150,8 +150,12 @@ function findCollectionEntry<K extends keyof ReturnType<typeof getAllCollections
   }
 
   if (key === "brandColors") {
+    const resolved = findResolvedEntry("brandColors", slug);
+    if (resolved) {
+      return resolved;
+    }
     const entry = buildProgrammaticBrandColorEntry(slug);
-    return entry ? findResolvedEntry("brandColors", slug) ?? resolveContentEntry(entry) : undefined;
+    return entry ? resolveContentEntry(entry) : undefined;
   }
 
   return findResolvedEntry(key, slug);
