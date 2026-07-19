@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Header } from "./header";
 
@@ -246,8 +247,7 @@ export function HueFlowHomePage() {
         <section className="relative mx-auto max-w-[1560px] pt-12 lg:pt-16">
           <motion.div
             initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.3 }}
+            animate="show"
             variants={stagger}
             className="text-center"
           >
@@ -660,7 +660,7 @@ export function HueFlowHomePage() {
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
               <div className="flex items-center">
-                <img src="/hueflow.svg" alt="HueFlow" width={120} height={24} />
+                <Image src="/hueflow.svg" alt="HueFlow" width={120} height={24} />
               </div>
               <p className="mt-5 max-w-md text-lg leading-8 text-white/68">
                 A premium color generator for teams that want product-ready palettes, more exploration, and cleaner handoff.

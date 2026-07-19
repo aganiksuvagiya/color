@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef } from "react";
 
@@ -46,7 +47,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
         className="mx-auto flex max-w-[1560px] items-center justify-between rounded-full border border-white/18 bg-[#160b05]/80 px-4 py-2.5 backdrop-blur-md sm:px-5 sm:py-3"
       >
         <Link href="/" className="flex items-center">
-          <img src="/hueflow.svg" alt="HueFlow" width={100} height={20} />
+          <Image src="/hueflow.svg" alt="HueFlow" width={100} height={20} priority />
         </Link>
         <nav className="hidden items-center gap-5 text-base text-white/70 md:flex">
           {MAIN_LINKS.map((link) => (

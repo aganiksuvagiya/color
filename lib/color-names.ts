@@ -43,6 +43,15 @@ const NAMED_COLORS: [string, string][] = [
   ["#696969", "Dim Gray"], ["#A9A9A9", "Dark Gray"], ["#D3D3D3", "Light Gray"],
   ["#DCDCDC", "Gainsboro"], ["#F5F5F5", "White Smoke"],
   ["#2F4F4F", "Dark Slate Gray"], ["#708090", "Slate Gray"],
+  ["#A52A2A", "Brown"], ["#8B0000", "Dark Red"], ["#ADD8E6", "Light Blue"],
+  ["#9ACD32", "Yellow Green"], ["#7CFC00", "Lawn Green"], ["#7FFFD4", "Aquamarine"],
+  ["#B0E0E6", "Powder Blue"], ["#D8BFD8", "Thistle"], ["#00FF7F", "Spring Green"],
+  ["#008B8B", "Dark Cyan"], ["#9932CC", "Dark Orchid"], ["#483D8B", "Dark Slate Blue"],
+  ["#FFFAF0", "Floral White"], ["#F8F8FF", "Ghost White"], ["#FFF0F5", "Lavender Blush"],
+  ["#E0FFFF", "Light Cyan"], ["#FFA07A", "Light Salmon"], ["#778899", "Light Slate Gray"],
+  ["#BA55D3", "Medium Orchid"], ["#FFE4B5", "Moccasin"], ["#EEE8AA", "Pale Goldenrod"],
+  ["#98FB98", "Pale Green"], ["#AFEEEE", "Pale Turquoise"], ["#FFEFD5", "Papaya Whip"],
+  ["#CD853F", "Peru"], ["#663399", "Rebecca Purple"], ["#FFEBCD", "Blanched Almond"],
 ];
 
 function slugifyColorName(name: string): string {

@@ -148,7 +148,7 @@ const colors: ContentEntry[] = [
   },
   {
     slug: "red",
-    title: "Red Color Meaning for Urgency, Energy, and Promotional Campaigns",
+    title: "Red Color Meaning for Urgency, Energy, and Promotions",
     description: "Understand when red creates urgency and when it introduces too much visual stress on landing pages and apps.",
     answer:
       "Red is strongest when you need urgency, intensity, or immediate attention. It works for promotions, alerts, and bold retail campaigns, but it should be used selectively because it increases visual tension quickly.",
@@ -173,7 +173,7 @@ const colors: ContentEntry[] = [
   },
   {
     slug: "purple",
-    title: "Purple Color Meaning for Creativity, Premium Positioning, and Innovation",
+    title: "Purple Color Meaning for Creativity and Premium Brands",
     description: "Use purple when a brand needs creativity, premium energy, and a differentiated tech identity.",
     answer:
       "Purple is useful when a brand wants to feel imaginative, premium, or slightly unconventional. It often works for creative tools, beauty brands, and innovation-led products that need more distinction than blue.",
@@ -198,7 +198,7 @@ const colors: ContentEntry[] = [
   },
   {
     slug: "black",
-    title: "Black Color Meaning for Luxury, Contrast, and Editorial Design",
+    title: "Black Color Meaning for Luxury and Editorial Design",
     description: "A guide to using black for premium positioning, bold contrast, and minimal brand systems.",
     answer:
       "Black communicates authority, luxury, and precision. It works especially well for premium ecommerce, editorial experiences, and minimalist interfaces where contrast and restraint drive the brand feel.",

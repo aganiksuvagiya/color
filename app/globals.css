@@ -164,3 +164,24 @@ body::selection {
     transform: translate3d(22px, -26px, 0) scale(1.08);
   }
 }
+
+.gradient-text-animated {
+  background-size: 200% auto;
+  animation: gradientShift 4s ease-in-out infinite;
+}
+
+.gradient-text-animated:hover {
+  animation-duration: 1.2s;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
