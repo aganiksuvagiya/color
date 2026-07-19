@@ -34,6 +34,7 @@ export const staticPages = [
   page("/tools/contrast-fixer", "monthly", 0.76),
   page("/tools/design-tokens", "monthly", 0.76),
   page("/tools/image-colors", "monthly", 0.76),
+  page("/tools/image-recolor", "monthly", 0.76),
   page("/tools/collage", "monthly", 0.76),
   page("/colors", "weekly", 0.92),
   page("/palettes", "weekly", 0.92),

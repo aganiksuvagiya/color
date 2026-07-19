@@ -8,7 +8,8 @@ export type ToolPageSeoConfig = {
     | "image-colors"
     | "brand-analyzer"
     | "animation"
-    | "contrast-fixer";
+    | "contrast-fixer"
+    | "image-recolor";
   path: string;
   title: string;
   description: string;
@@ -158,6 +159,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Tailwind color guide", href: "/tailwind" },
       { title: "CSS colors guide", href: "/css-colors" },
       { title: "Design token generator", href: "/tools/design-tokens" },
+      { title: "SVG image recolor", href: "/tools/image-recolor" },
     ],
   },
   tailwind: {
@@ -292,6 +294,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       },
     ],
     relatedLinks: [
+      { title: "SVG image recolor", href: "/tools/image-recolor" },
       { title: "Gradient generator", href: "/tools/gradient" },
       { title: "Brand color analyzer", href: "/tools/brand-analyzer" },
       { title: "Palettes hub", href: "/palettes" },
@@ -342,6 +345,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Best colors for SaaS websites", href: "/best-colors-for/saas-websites" },
       { title: "SaaS vs fintech brand colors", href: "/comparisons/saas-vs-fintech-brand-colors" },
       { title: "Image color extractor", href: "/tools/image-colors" },
+      { title: "SVG image recolor", href: "/tools/image-recolor" },
     ],
   },
   animation: {
@@ -434,6 +438,52 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Accessibility hub", href: "/accessibility" },
       { title: "Color contrast guide", href: "/accessibility/color-contrast" },
       { title: "Accessible success states", href: "/accessibility/accessible-success-states" },
+    ],
+  },
+  "image-recolor": {
+    slug: "image-recolor",
+    path: "/tools/image-recolor",
+    title: "SVG Image Recolor",
+    description:
+      "Upload an SVG icon or illustration, swap any of its colors, preview the result instantly, and export your recolored file.",
+    keywords: [
+      "svg color changer",
+      "recolor svg online",
+      "change svg colors",
+      "svg icon recolor tool",
+      "image recolor tool",
+    ],
+    answer:
+      "HueFlow's SVG Image Recolor lets teams swap any fill or stroke color inside an SVG icon or illustration and instantly preview and export the recolored file, without editing code by hand.",
+    audience: "Designers and developers adapting icons, logos, and illustrations to match a brand palette.",
+    useCases: [
+      "Match a stock SVG icon set to a brand color palette",
+      "Preview how an illustration looks in different brand colors before implementation",
+      "Quickly export a recolored SVG without opening a design tool",
+    ],
+    howToSteps: [
+      "Upload an SVG file or try the demo illustration.",
+      "Review the list of colors detected inside the SVG.",
+      "Click any color swatch and choose its replacement.",
+      "Preview the recolored result and download the updated SVG file.",
+    ],
+    faq: [
+      {
+        question: "Does this work with raster images like JPG or PNG?",
+        answer:
+          "No, this tool works with SVG files only. SVGs store colors as separate values that can be swapped directly, while raster photos require much more complex color-region detection.",
+      },
+      {
+        question: "Will recoloring break my SVG file?",
+        answer:
+          "No. The tool only replaces matching color values inside the file and leaves the underlying shapes, paths, and structure untouched.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Image color extractor", href: "/tools/image-colors" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Brand color analyzer", href: "/tools/brand-analyzer" },
+      { title: "Palettes hub", href: "/palettes" },
     ],
   },
 };

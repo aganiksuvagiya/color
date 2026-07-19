@@ -21,6 +21,7 @@ const TOOL_LINKS = [
   { href: "/tools/contrast-fixer", label: "Contrast Fixer" },
   { href: "/tools/animation", label: "Animation Generator" },
   { href: "/tools/image-colors", label: "Image Colors" },
+  { href: "/tools/image-recolor", label: "Image Recolor" },
   { href: "/tools/collage", label: "Collage Creator" },
 ];
 
