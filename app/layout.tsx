@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 import { StructuredData } from "@/components/seo/structured-data";
 import { PromoBanner } from "@/components/promo-banner";
 import { buildOrganizationSchema, buildSoftwareApplicationSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/seo/site-config";
+
+const GA_MEASUREMENT_ID = "G-5KWENXMSVQ";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.domain),
@@ -56,6 +59,18 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         <StructuredData data={buildOrganizationSchema()} />
         <StructuredData data={buildSoftwareApplicationSchema()} />
         {children}

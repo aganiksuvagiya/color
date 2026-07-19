@@ -30,6 +30,21 @@ export function buildSoftwareApplicationSchema() {
     operatingSystem: "Web",
     url: siteConfig.domain,
     description: siteConfig.description,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    featureList: [
+      "AI-assisted color palette generator",
+      "WCAG contrast checker and accessibility auto-fix",
+      "Colorblind simulation",
+      "Gradient generator (linear, radial, conic)",
+      "Color animation / CSS keyframe generator",
+      "Image and website color extraction",
+      "Design token generator (color, typography, spacing)",
+      "Tailwind and CSS color export",
+    ],
   };
 }
 

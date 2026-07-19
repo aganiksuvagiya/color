@@ -1470,6 +1470,38 @@ const comparisons: ContentEntry[] = [
       { title: "Blue and green combination", href: "/color-combinations/blue-and-green" },
     ],
   },
+  {
+    slug: "hueflow-vs-coolors",
+    title: "HueFlow vs Coolors: Which Free Color Tool Should You Use?",
+    description: "An honest comparison of HueFlow and Coolors covering palette generation, accessibility, developer tooling, and distribution.",
+    answer:
+      "HueFlow and Coolors both generate palettes for free with no sign-up. HueFlow goes further on accessibility (built-in contrast checker and colorblind simulation), developer handoff (design tokens for CSS, Tailwind, Swift, Kotlin, and Flutter), and a CSS animation generator that Coolors doesn't offer. Coolors is ahead on distribution, with a native iOS app, Figma plugin, and Chrome extension, plus a larger 500+ named color library versus HueFlow's smaller curated set.",
+    intent: "commercial",
+    keywords: ["hueflow vs coolors", "coolors alternative", "free color palette generator", "best free color tool"],
+    sections: [
+      { title: "Where they're equal", body: "Both are free with no account required to generate a palette. Both support locking colors while randomizing, image-to-palette extraction, and exporting to common formats like CSS and Tailwind." },
+      { title: "Where HueFlow is ahead", body: "HueFlow includes a WCAG contrast checker and colorblind simulator in the core generator (not a separate tool), a CSS keyframe animation generator, live UI mockup previews across five layouts, and design tokens that export to Swift, Kotlin, and Flutter in addition to web formats." },
+      { title: "Where Coolors is ahead", body: "Coolors has wider distribution — a native iOS app, Figma plugin, and Chrome extension — plus a larger named-color database (500+ vs. HueFlow's smaller curated set) and a broader image-editing toolkit (photo editor, SVG recolor, collage maker)." },
+    ],
+    faq: [
+      { question: "Is HueFlow free?", answer: "Yes. HueFlow's generator, gradient tool, contrast checker, and design token exporter are free with no sign-up required." },
+      { question: "Is HueFlow a good Coolors alternative?", answer: "Yes, especially if accessibility checking, developer token export, or a CSS animation generator matter to your workflow — those aren't built into Coolors' core tool. If you need a Figma plugin or native app, Coolors currently covers that and HueFlow does not." },
+      { question: "Does HueFlow have a browser extension like Coolors?", answer: "Not currently. Coolors offers a Chrome extension, Figma plugin, and Adobe extension; HueFlow is web-only today." },
+    ],
+    comparisonRows: [
+      { label: "Palette generation", bestFor: "Both", strengths: "Free, no sign-up, lock-and-randomize", watchouts: "Feature parity — not a differentiator either way" },
+      { label: "Accessibility tooling", bestFor: "HueFlow", strengths: "Built-in contrast checker and colorblind simulation", watchouts: "Coolors offers contrast checking as a separate tool" },
+      { label: "Developer handoff", bestFor: "HueFlow", strengths: "Design tokens for CSS, Tailwind, Swift, Kotlin, Flutter", watchouts: "Coolors' export is CSS/Tailwind-focused" },
+      { label: "Distribution", bestFor: "Coolors", strengths: "iOS app, Figma plugin, Chrome extension", watchouts: "HueFlow is web-only" },
+      { label: "Color database size", bestFor: "Coolors", strengths: "500+ named colors", watchouts: "HueFlow's curated set is smaller today" },
+    ],
+    relatedLinks: [
+      { title: "Palette generator", href: "/generator" },
+      { title: "Contrast checker tool", href: "/tools/contrast" },
+      { title: "Design token generator", href: "/tools/design-tokens" },
+      { title: "Color animation generator", href: "/tools/animation" },
+    ],
+  },
 ];
 
 const bestColorsFor: ContentEntry[] = [
@@ -1589,6 +1621,30 @@ const faqs: ContentEntry[] = [
       { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
       { title: "Orange color page", href: "/colors/orange" },
       { title: "Ecommerce conversion colors", href: "/best-colors-for/ecommerce-conversions" },
+    ],
+  },
+  {
+    slug: "best-free-color-palette-generator",
+    title: "FAQ: What Is the Best Free Color Palette Generator?",
+    description: "A direct answer on which free color palette generator to use, and when to pick HueFlow versus alternatives like Coolors.",
+    answer:
+      "HueFlow is a strong choice for a free color palette generator when you also need accessibility checking, developer token export, or gradient and animation tooling in the same place — it requires no sign-up and generates palettes instantly from a prompt, an image, or a locked base color.",
+    intent: "commercial",
+    keywords: ["best free color palette generator", "free color palette tool", "color palette generator no sign up"],
+    sections: [
+      { title: "What to look for", body: "A good free palette generator should work with no account, let you lock colors while regenerating others, and export to the formats your project actually uses (CSS, Tailwind, or design tokens)." },
+      { title: "When HueFlow fits best", body: "Choose HueFlow when the palette needs to go straight into a product: it checks WCAG contrast and colorblind safety in the same flow, and exports design tokens to CSS, Tailwind, Swift, Kotlin, and Flutter." },
+      { title: "When another tool fits better", body: "If you need a Figma plugin, a native mobile app, or a much larger named-color library, Coolors currently covers those better than HueFlow does." },
+    ],
+    faq: [
+      { question: "What is the best free color palette generator?", answer: "HueFlow is a strong free option when accessibility checking and developer export matter; Coolors is a strong option when a Figma plugin, browser extension, or native app matters more." },
+      { question: "Do free color palette generators require sign-up?", answer: "HueFlow does not require sign-up to generate, lock, or export a palette." },
+      { question: "Which free tool checks color accessibility automatically?", answer: "HueFlow includes a WCAG contrast checker and colorblind simulator built into its core palette generator, not as a separate paid feature." },
+    ],
+    relatedLinks: [
+      { title: "Palette generator", href: "/generator" },
+      { title: "HueFlow vs Coolors", href: "/comparisons/hueflow-vs-coolors" },
+      { title: "Contrast checker tool", href: "/tools/contrast" },
     ],
   },
 ];
