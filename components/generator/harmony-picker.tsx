@@ -13,6 +13,8 @@ const modes: { key: HarmonyMode; label: string }[] = [
   { key: "analogous", label: "Analogous" },
   { key: "triadic", label: "Triadic" },
   { key: "split-complementary", label: "Split-comp" },
+  { key: "tetradic", label: "Tetradic" },
+  { key: "monochromatic", label: "Monochromatic" },
 ];
 
 export function HarmonyPicker({ onGenerate }: Props) {

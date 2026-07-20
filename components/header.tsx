@@ -22,6 +22,9 @@ const TOOL_LINKS = [
   { href: "/tools/animation", label: "Animation Generator" },
   { href: "/tools/image-colors", label: "Image Colors" },
   { href: "/tools/image-recolor", label: "Image Recolor" },
+  { href: "/tools/palette-visualizer", label: "Palette Visualizer" },
+  { href: "/tools/color-harmony", label: "Color Harmony" },
+  { href: "/tools/color-mixer", label: "Color Mixer" },
   { href: "/tools/collage", label: "Collage Creator" },
 ];
 
@@ -77,7 +80,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute left-1/2 top-full mt-3 w-56 -translate-x-1/2 rounded-xl border border-white/15 bg-[#160b05]/95 p-2"
+                  className="absolute left-1/2 top-full mt-3 grid w-96 -translate-x-1/2 grid-cols-2 gap-1 rounded-xl border border-white/15 bg-[#160b05]/95 p-2"
                 >
                   {TOOL_LINKS.map((link) => (
                     <Link

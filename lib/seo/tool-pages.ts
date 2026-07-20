@@ -9,7 +9,10 @@ export type ToolPageSeoConfig = {
     | "brand-analyzer"
     | "animation"
     | "contrast-fixer"
-    | "image-recolor";
+    | "image-recolor"
+    | "palette-visualizer"
+    | "color-harmony"
+    | "color-mixer";
   path: string;
   title: string;
   description: string;
@@ -35,6 +38,10 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "color contrast ratio checker",
       "accessible text contrast tool",
       "website color accessibility checker",
+      "contrast checker free online",
+      "aa vs aaa contrast checker",
+      "text background contrast checker",
+      "wcag 2.1 contrast ratio tool",
     ],
     answer:
       "HueFlow's Contrast Checker helps teams test foreground and background colors against WCAG rules so buttons, text, dashboards, and landing pages stay readable for US web audiences.",
@@ -81,6 +88,10 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "linear gradient generator",
       "marketing gradient tool",
       "ui gradient builder",
+      "css gradient code generator",
+      "gradient color picker",
+      "free gradient generator online",
+      "gradient generator for buttons",
     ],
     answer:
       "HueFlow's Gradient Generator helps teams build production-ready CSS gradients for hero sections, product UI, and brand campaigns without manually writing gradient syntax.",
@@ -113,6 +124,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Ocean depth gradient", href: "/gradients/ocean-depth" },
       { title: "Color animation generator", href: "/tools/animation" },
       { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
+      { title: "Color mixer", href: "/tools/color-mixer" },
     ],
   },
   picker: {
@@ -127,6 +139,10 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "hsl color picker",
       "rgb color converter",
       "website color picker tool",
+      "online color picker free",
+      "hex to rgb converter",
+      "color shades and tints generator",
+      "pick a color online",
     ],
     answer:
       "HueFlow's Color Picker helps teams inspect a color, convert it into usable formats, and generate supporting shades or tints for consistent product and brand systems.",
@@ -160,6 +176,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "CSS colors guide", href: "/css-colors" },
       { title: "Design token generator", href: "/tools/design-tokens" },
       { title: "SVG image recolor", href: "/tools/image-recolor" },
+      { title: "Palette visualizer", href: "/tools/palette-visualizer" },
+      { title: "Color harmony generator", href: "/tools/color-harmony" },
+      { title: "Color mixer", href: "/tools/color-mixer" },
     ],
   },
   tailwind: {
@@ -174,6 +193,10 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "tailwind colors hex",
       "tailwind shade scale",
       "tailwind palette browser",
+      "tailwind css color codes",
+      "tailwind color names list",
+      "tailwind default color palette",
+      "tailwind 500 shade hex",
     ],
     answer:
       "HueFlow's Tailwind CSS Colors page helps teams browse Tailwind shades quickly, compare scale values, and copy production-ready color references for component systems.",
@@ -220,6 +243,10 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "css variables generator",
       "figma tokens color tool",
       "tailwind token export",
+      "design system token generator",
+      "css custom properties generator",
+      "design tokens json export",
+      "color tokens for figma",
     ],
     answer:
       "HueFlow's Design Token Generator helps teams convert named color roles into implementation-ready token formats for web, mobile, and design system handoff.",
@@ -266,6 +293,10 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "photo palette generator",
       "brand palette from image",
       "dominant color extractor",
+      "get color palette from photo online",
+      "image to color palette free",
+      "color picker from image upload",
+      "extract hex codes from picture",
     ],
     answer:
       "HueFlow's Image Color Extractor helps teams turn photos, screenshots, and inspiration boards into usable color palettes for websites, brand systems, and UI work.",
@@ -313,6 +344,10 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "competitor brand color analysis",
       "extract colors from website",
       "brand palette audit tool",
+      "get brand colors from url",
+      "competitor color palette tool",
+      "website screenshot color extractor",
+      "brand color audit checker",
     ],
     answer:
       "HueFlow's Brand Color Analyzer helps teams inspect real websites, identify dominant brand colors, and benchmark palette choices for redesigns, audits, or category research.",
@@ -360,6 +395,10 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "animated gradient css",
       "hero background animation",
       "ui color animation tool",
+      "animated background generator css",
+      "gradient keyframe generator",
+      "css color transition generator",
+      "moving gradient background css",
     ],
     answer:
       "HueFlow's Color Animation Generator helps teams create animated gradients and color effects that make landing pages, product demos, and premium interfaces feel more alive.",
@@ -406,6 +445,10 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "wcag color suggestion tool",
       "fix low contrast colors",
       "brand color accessibility tool",
+      "auto fix color contrast",
+      "improve contrast without changing brand color",
+      "accessible color suggestions tool",
+      "wcag aa color fix generator",
     ],
     answer:
       "HueFlow's Smart Contrast Fixer helps teams repair low-contrast color combinations without throwing away the original brand direction or interface feel.",
@@ -452,6 +495,10 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "change svg colors",
       "svg icon recolor tool",
       "image recolor tool",
+      "edit svg colors online free",
+      "svg fill color editor",
+      "recolor icon svg",
+      "change color of svg file",
     ],
     answer:
       "HueFlow's SVG Image Recolor lets teams swap any fill or stroke color inside an SVG icon or illustration and instantly preview and export the recolored file, without editing code by hand.",
@@ -484,6 +531,158 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Color picker", href: "/tools/picker" },
       { title: "Brand color analyzer", href: "/tools/brand-analyzer" },
       { title: "Palettes hub", href: "/palettes" },
+      { title: "Palette visualizer", href: "/tools/palette-visualizer" },
+    ],
+  },
+  "palette-visualizer": {
+    slug: "palette-visualizer",
+    path: "/tools/palette-visualizer",
+    title: "Palette Visualizer",
+    description:
+      "Apply a color palette to a real website layout with a nav, hero, feature cards, and footer to see how it feels before you commit to it.",
+    keywords: [
+      "palette visualizer",
+      "color palette visualizer",
+      "preview color palette on website",
+      "color palette mockup tool",
+      "see palette in ui",
+      "website color preview tool",
+      "visualize color palette online",
+      "color scheme visualizer",
+      "test color palette on design",
+      "color palette preview tool free",
+      "apply color palette to website mockup",
+    ],
+    answer:
+      "HueFlow's Palette Visualizer applies a 5-color palette to a realistic website layout, including navigation, hero, feature cards, and footer, so teams can judge a palette in context instead of guessing from flat swatches.",
+    audience: "Designers, founders, and marketers deciding on a color direction before implementation.",
+    useCases: [
+      "Check whether a generated palette actually works on a real layout, not just as swatches",
+      "Compare a primary, accent, and neutral combination in context before handing it to engineering",
+      "Spot accessibility or contrast issues on buttons and badges early",
+    ],
+    howToSteps: [
+      "Start from a randomly generated palette or set your own primary, accent, and neutral colors.",
+      "Click any swatch to change its color and watch the mockup update instantly.",
+      "Review how the palette reads across navigation, buttons, cards, and badges.",
+      "Use the randomize button to compare alternative directions quickly.",
+    ],
+    faq: [
+      {
+        question: "Why preview a palette on a mockup instead of just swatches?",
+        answer:
+          "Flat swatches do not show how colors behave next to real text, spacing, and UI states. A mockup reveals problems like low contrast or clashing accents before a team invests in implementation.",
+      },
+      {
+        question: "Can I use my own palette instead of a random one?",
+        answer:
+          "Yes. Click any color swatch to open a color picker and set the exact hex value for that role.",
+      },
+    ],
+    relatedLinks: [
+      { title: "SVG image recolor", href: "/tools/image-recolor" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Palettes hub", href: "/palettes" },
+      { title: "Palette generator", href: "/generator" },
+    ],
+  },
+  "color-harmony": {
+    slug: "color-harmony",
+    path: "/tools/color-harmony",
+    title: "Color Harmony Generator",
+    description:
+      "Generate complementary, analogous, triadic, tetradic, split-complementary, and monochromatic color palettes from a single base color.",
+    keywords: [
+      "color harmony generator",
+      "complementary colors",
+      "analogous colors",
+      "triadic colors",
+      "tetradic colors",
+      "split complementary colors",
+      "monochromatic colors",
+      "color harmony tool",
+      "color wheel harmony generator",
+    ],
+    answer:
+      "HueFlow's Color Harmony Generator builds a full palette from one base color using proven color-wheel relationships like complementary, analogous, triadic, tetradic, split-complementary, and monochromatic harmony.",
+    audience: "Designers and developers who have one brand color and need a full, harmonious palette around it.",
+    useCases: [
+      "Expand a single brand color into a complete 5-color palette",
+      "Compare harmony types to see which relationship fits a brand's personality",
+      "Generate a safe monochromatic scale when a client wants a minimal, low-risk palette",
+    ],
+    howToSteps: [
+      "Enter or pick your base color using the color input.",
+      "Choose a harmony type: complementary, analogous, triadic, tetradic, split-complementary, or monochromatic.",
+      "Review the generated 5-color palette and its role labels.",
+      "Copy any hex value directly from the palette.",
+    ],
+    faq: [
+      {
+        question: "What is color harmony?",
+        answer:
+          "Color harmony refers to combinations of colors that are considered visually pleasing based on their position relative to each other on the color wheel, such as complementary or analogous relationships.",
+      },
+      {
+        question: "Which harmony type should I use for a brand palette?",
+        answer:
+          "Analogous and monochromatic harmonies tend to feel safest for brand systems, while complementary and triadic harmonies work well when a product needs strong visual contrast or energy.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Palette generator", href: "/generator" },
+      { title: "Color mixer", href: "/tools/color-mixer" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Palette visualizer", href: "/tools/palette-visualizer" },
+    ],
+  },
+  "color-mixer": {
+    slug: "color-mixer",
+    path: "/tools/color-mixer",
+    title: "Color Mixer",
+    description:
+      "Blend two colors together and generate a smooth 9-step color scale between them, with a one-click midpoint mix.",
+    keywords: [
+      "color mixer",
+      "color blender",
+      "blend two colors",
+      "color mixer tool",
+      "color interpolator",
+      "color scale generator",
+      "mix colors online",
+      "color gradient between two colors",
+    ],
+    answer:
+      "HueFlow's Color Mixer blends any two colors and generates a smooth 9-step scale between them, so designers can find the exact midpoint or transition tone without manual trial and error.",
+    audience: "Designers building gradients, transition states, or in-between shades for a UI or brand system.",
+    useCases: [
+      "Find the exact midpoint color between a brand color and a neutral",
+      "Generate a smooth transition scale for a gradient or hover state",
+      "Blend two brand colors to create a new supporting tone",
+    ],
+    howToSteps: [
+      "Pick or enter Color A and Color B using the color inputs.",
+      "Review the generated 9-step blended scale between the two colors.",
+      "Check the highlighted midpoint mix for the exact 50/50 blend.",
+      "Click any step in the scale to copy its hex value.",
+    ],
+    faq: [
+      {
+        question: "How does the color mixer blend colors?",
+        answer:
+          "It linearly interpolates the red, green, and blue channels between the two colors, producing a smooth, predictable scale rather than an artistic or perceptual blend.",
+      },
+      {
+        question: "Can I use this to build a gradient?",
+        answer:
+          "Yes. The generated steps work well as gradient stops, or you can take the midpoint mix as a single new supporting color.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Color harmony generator", href: "/tools/color-harmony" },
+      { title: "Gradient generator", href: "/tools/gradient" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Palette generator", href: "/generator" },
     ],
   },
 };
