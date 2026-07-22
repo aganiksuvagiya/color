@@ -38,6 +38,28 @@ export function hslToHex(h: number, s: number, l: number): string {
   return `#${f(0)}${f(8)}${f(4)}`;
 }
 
+const TAILWIND_STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
+const TAILWIND_LIGHTNESS_CURVE = [97, 94, 87, 78, 68, 58, 48, 39, 32, 26, 17];
+
+export function generateTailwindScale(hex: string): { step: number; hex: string }[] {
+  const { h, s, l } = hexToHsl(hex);
+
+  let closestIndex = 0;
+  let closestDiff = Infinity;
+  TAILWIND_LIGHTNESS_CURVE.forEach((target, i) => {
+    const diff = Math.abs(target - l);
+    if (diff < closestDiff) {
+      closestDiff = diff;
+      closestIndex = i;
+    }
+  });
+
+  return TAILWIND_STEPS.map((step, i) => ({
+    step,
+    hex: i === closestIndex ? hex.toLowerCase() : hslToHex(h, s, TAILWIND_LIGHTNESS_CURVE[i]),
+  }));
+}
+
 export function getContrastText(hex: string): "light" | "dark" {
   const r = parseInt(hex.slice(1, 3), 16) / 255;
   const g = parseInt(hex.slice(3, 5), 16) / 255;

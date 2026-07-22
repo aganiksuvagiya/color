@@ -185,6 +185,7 @@ export function SvgImageRecolor() {
                         }`}
                         style={{ backgroundColor: current }}
                         title={`${findClosestColorName(current)} ${current}`}
+                        aria-label={`Select ${findClosestColorName(current)} ${current}`}
                       >
                         {colorMap[hex] && (
                           <span className="absolute right-0.5 top-0.5 h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.4)]" />
@@ -202,6 +203,7 @@ export function SvgImageRecolor() {
                     >
                       <input
                         type="color"
+                        aria-label="Replacement color"
                         value={colorMap[selectedColor] ?? selectedColor}
                         onChange={(e) => setReplacement(selectedColor, e.target.value)}
                         className="absolute inset-0 h-full w-full cursor-pointer opacity-0"

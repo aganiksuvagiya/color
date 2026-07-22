@@ -74,6 +74,7 @@ export function ColorMixerTool() {
               <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/15" style={{ backgroundColor: isValidHex(input.value) ? input.value : "#333" }}>
                 <input
                   type="color"
+                  aria-label={input.label}
                   value={isValidHex(input.value) ? input.value : "#888888"}
                   onChange={(e) => input.setValue(e.target.value)}
                   className="absolute inset-0 h-full w-full cursor-pointer opacity-0"

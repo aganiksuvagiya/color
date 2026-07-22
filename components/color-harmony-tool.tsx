@@ -48,6 +48,7 @@ export function ColorHarmonyTool() {
             <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border border-white/15" style={{ backgroundColor: isValidHex(baseColor) ? baseColor : "#333" }}>
               <input
                 type="color"
+                aria-label="Base color"
                 value={isValidHex(baseColor) ? baseColor : "#4F46E5"}
                 onChange={(e) => setBaseColor(e.target.value)}
                 className="absolute inset-0 h-full w-full cursor-pointer opacity-0"

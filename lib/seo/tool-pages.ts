@@ -12,7 +12,10 @@ export type ToolPageSeoConfig = {
     | "image-recolor"
     | "palette-visualizer"
     | "color-harmony"
-    | "color-mixer";
+    | "color-mixer"
+    | "colorblind-simulator"
+    | "tailwind-scale"
+    | "color-psychology-explorer";
   path: string;
   title: string;
   description: string;
@@ -74,6 +77,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Color contrast guide", href: "/accessibility/color-contrast" },
       { title: "Smart contrast fixer", href: "/tools/contrast-fixer" },
       { title: "Blue color page", href: "/colors/blue" },
+      { title: "Color blind simulator", href: "/tools/colorblind-simulator" },
     ],
   },
   gradient: {
@@ -229,6 +233,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Blue in Tailwind", href: "/tailwind/blue" },
       { title: "Color picker", href: "/tools/picker" },
       { title: "Design token generator", href: "/tools/design-tokens" },
+      { title: "Tailwind color scale generator", href: "/tools/tailwind-scale" },
     ],
   },
   "design-tokens": {
@@ -683,6 +688,151 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Gradient generator", href: "/tools/gradient" },
       { title: "Color picker", href: "/tools/picker" },
       { title: "Palette generator", href: "/generator" },
+    ],
+  },
+  "colorblind-simulator": {
+    slug: "colorblind-simulator",
+    path: "/tools/colorblind-simulator",
+    title: "Color Blind Simulator",
+    description:
+      "Preview any palette under protanopia, deuteranopia, and tritanopia to catch colors that become indistinguishable for color-blind users.",
+    keywords: [
+      "color blind simulator",
+      "color blindness simulator online",
+      "protanopia simulator",
+      "deuteranopia simulator",
+      "tritanopia simulator",
+      "colorblind accessibility checker",
+      "simulate color blindness palette",
+      "color vision deficiency checker",
+    ],
+    answer:
+      "HueFlow's Color Blind Simulator shows how a palette looks under protanopia, deuteranopia, and tritanopia, helping teams catch colors that read as identical to color-blind users before shipping a design.",
+    audience: "Designers and product teams validating accessibility for users with color vision deficiencies.",
+    useCases: [
+      "Check whether success and warning states stay distinguishable for color-blind users",
+      "Validate a data-visualization or chart palette before implementation",
+      "Compare a palette across all three common color-blindness types at once",
+    ],
+    howToSteps: [
+      "Start from the default palette or set your own colors using the color inputs.",
+      "Review the palette under Normal vision as a baseline.",
+      "Compare the Protanopia, Deuteranopia, and Tritanopia rows to the baseline.",
+      "Adjust any colors that become too similar under a given condition.",
+    ],
+    faq: [
+      {
+        question: "What percentage of people are affected by color blindness?",
+        answer:
+          "Roughly 8% of men and 0.5% of women of Northern European descent have some form of red-green color blindness, making protanopia and deuteranopia the most common types to design for.",
+      },
+      {
+        question: "Should I rely on color alone to show status?",
+        answer:
+          "No. Even with a color-blind-safe palette, pair color with icons, labels, or patterns so status is never communicated by color alone.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Smart contrast fixer", href: "/tools/contrast-fixer" },
+      { title: "Accessibility hub", href: "/accessibility" },
+      { title: "Palette generator", href: "/generator" },
+    ],
+  },
+  "tailwind-scale": {
+    slug: "tailwind-scale",
+    path: "/tools/tailwind-scale",
+    title: "Tailwind Color Scale Generator",
+    description:
+      "Turn any hex color into a full Tailwind-style 50-950 shade scale, with a one-click copy as a ready-to-paste config object.",
+    keywords: [
+      "tailwind color scale generator",
+      "tailwind shades from hex",
+      "generate tailwind color palette from color",
+      "tailwind 50 to 950 scale",
+      "custom tailwind color palette generator",
+      "hex to tailwind shades",
+      "tailwind config color generator",
+    ],
+    answer:
+      "HueFlow's Tailwind Color Scale Generator takes any hex color and produces a full 50-950 Tailwind-style shade scale, so teams can drop a brand color straight into a Tailwind config without hand-tuning each step.",
+    audience: "Frontend developers and designers building a custom brand color into a Tailwind design system.",
+    useCases: [
+      "Turn a single brand hex value into a full Tailwind-compatible shade scale",
+      "Generate consistent light and dark steps for a new accent or semantic color",
+      "Copy a ready-to-paste Tailwind config object for a custom color",
+    ],
+    howToSteps: [
+      "Enter or pick your base hex color.",
+      "Review the generated 50 through 950 shade scale.",
+      "Click any step to copy its hex value, or use Copy as Tailwind config for the full object.",
+      "Paste the result into your tailwind.config.js theme colors.",
+    ],
+    faq: [
+      {
+        question: "How is the scale generated from one color?",
+        answer:
+          "The base color's hue and saturation are preserved across all steps, while lightness follows a curve modeled on Tailwind's own default palettes, so the result looks consistent with Tailwind's built-in colors.",
+      },
+      {
+        question: "Which step matches my original color exactly?",
+        answer:
+          "The step closest to your base color's actual lightness keeps your exact hex value; every other step is generated around it.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Tailwind CSS colors", href: "/tools/tailwind" },
+      { title: "Design token generator", href: "/tools/design-tokens" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color harmony generator", href: "/tools/color-harmony" },
+    ],
+  },
+  "color-psychology-explorer": {
+    slug: "color-psychology-explorer",
+    path: "/tools/color-psychology-explorer",
+    title: "Color Psychology Explorer",
+    description:
+      "Pick any color and instantly see what it signals psychologically, which industries use it best, and real use cases for branding and UI.",
+    keywords: [
+      "color psychology explorer",
+      "color psychology tool",
+      "what does this color mean",
+      "color meaning by hex",
+      "color psychology in branding",
+      "explore color meaning online",
+      "color emotion checker",
+    ],
+    answer:
+      "HueFlow's Color Psychology Explorer takes any color and instantly shows what it signals psychologically, which industries commonly use it, and concrete use cases, turning static color-meaning content into an interactive lookup.",
+    audience: "Designers, marketers, and founders deciding what a color choice communicates before committing to it.",
+    useCases: [
+      "Check what a candidate brand color signals before finalizing a logo or palette",
+      "Compare the psychology of several color options side by side",
+      "Explain a color choice to stakeholders with concrete industry examples",
+    ],
+    howToSteps: [
+      "Pick a color using the color input or one of the quick-pick swatches.",
+      "Review the psychology summary for that color's hue family.",
+      "Check which industries commonly use that hue and why.",
+      "Open the full color guide for deeper detail on that specific color.",
+    ],
+    faq: [
+      {
+        question: "Is color psychology scientifically proven?",
+        answer:
+          "Color associations are shaped by culture and context more than universal biology, but consistent patterns exist within a given market, which is why the same hue families recur across similar industries.",
+      },
+      {
+        question: "Should I choose a color based on psychology alone?",
+        answer:
+          "No. Psychology is one input alongside brand differentiation, accessibility, and category conventions. A color that fits the psychology but looks identical to every competitor can still be a weak choice.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Color psychology hub", href: "/color-psychology" },
+      { title: "Color meanings hub", href: "/color-meanings" },
+      { title: "Color harmony generator", href: "/tools/color-harmony" },
+      { title: "Colors hub", href: "/colors" },
     ],
   },
 };

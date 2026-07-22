@@ -25,6 +25,9 @@ const TOOL_LINKS = [
   { href: "/tools/palette-visualizer", label: "Palette Visualizer" },
   { href: "/tools/color-harmony", label: "Color Harmony" },
   { href: "/tools/color-mixer", label: "Color Mixer" },
+  { href: "/tools/colorblind-simulator", label: "Color Blind Simulator" },
+  { href: "/tools/tailwind-scale", label: "Tailwind Scale Generator" },
+  { href: "/tools/color-psychology-explorer", label: "Color Psychology Explorer" },
   { href: "/tools/collage", label: "Collage Creator" },
 ];
 

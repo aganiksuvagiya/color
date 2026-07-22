@@ -5,12 +5,13 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Header } from "./header";
 import { encodePalette } from "@/lib/share-utils";
-import { dayIndex, generateTrendingPalettes } from "@/lib/trending";
+import { dayIndex, generateTrendingPalettes, getCuratedTrendPalettes } from "@/lib/trending";
 
-type Category = "all" | "saas" | "ecommerce" | "mobile" | "branding";
+type Category = "all" | "saas" | "ecommerce" | "mobile" | "branding" | "2026";
 
 const categories: { key: Category; label: string }[] = [
   { key: "all", label: "All" },
+  { key: "2026", label: "2026 Trends" },
   { key: "saas", label: "SaaS" },
   { key: "ecommerce", label: "E-commerce" },
   { key: "mobile", label: "Mobile" },
@@ -20,7 +21,10 @@ const categories: { key: Category; label: string }[] = [
 export function TrendsPage() {
   const [active, setActive] = useState<Category>("all");
   const [seed, setSeed] = useState(dayIndex);
-  const trendingPalettes = useMemo(() => generateTrendingPalettes(seed), [seed]);
+  const trendingPalettes = useMemo(
+    () => [...getCuratedTrendPalettes(), ...generateTrendingPalettes(seed)],
+    [seed],
+  );
 
   const filtered = active === "all" ? trendingPalettes : trendingPalettes.filter((p) => p.category === active);
 

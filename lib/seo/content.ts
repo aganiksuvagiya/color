@@ -2053,7 +2053,10 @@ export const hubs: HubPage[] = [
     answer:
       "Color Psychology pages explain the mechanisms behind color meaning — warm vs. cool, marketing perception, and UI state recognition — separately from the per-color meaning pages in Color Meanings.",
     goals: ["Own broad color-psychology search intent", "Support color-meanings and marketing-colors", "Feed the conversion-strategy guide"],
-    featuredLinks: colorPsychologyEntries.map((entry) => ({ title: entry.title, href: `/color-psychology/${entry.slug}` })),
+    featuredLinks: [
+      ...colorPsychologyEntries.map((entry) => ({ title: entry.title, href: `/color-psychology/${entry.slug}` })),
+      { title: "Color Psychology Explorer (interactive tool)", href: "/tools/color-psychology-explorer" },
+    ],
   },
 ];
 

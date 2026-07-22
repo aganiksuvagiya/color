@@ -82,6 +82,7 @@ export function PaletteVisualizer() {
               <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-lg border border-white/15" style={{ backgroundColor: color.hex }}>
                 <input
                   type="color"
+                  aria-label={`${ROLE_LABELS[color.role]} color`}
                   value={color.hex}
                   onChange={(e) => setRoleColor(color.role, e.target.value)}
                   className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
