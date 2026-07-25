@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 
 import { StructuredData } from "@/components/seo/structured-data";
+import { Footer } from "@/components/footer";
 import { PromoBanner } from "@/components/promo-banner";
 import { buildOrganizationSchema, buildSoftwareApplicationSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/seo/site-config";
@@ -66,6 +67,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"
         />
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1726872213486410"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -77,6 +83,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <StructuredData data={buildOrganizationSchema()} />
         <StructuredData data={buildSoftwareApplicationSchema()} />
         {children}
+        <Footer />
         <PromoBanner />
       </body>
     </html>

@@ -62,6 +62,10 @@ export const staticPages = [
   page("/blog", "weekly", 0.8),
   page("/developer", "weekly", 0.84),
   page("/color-psychology", "weekly", 0.8),
+  page("/about", "monthly", 0.5),
+  page("/contact", "monthly", 0.5),
+  page("/privacy", "monthly", 0.3),
+  page("/terms", "monthly", 0.3),
 ];
 
 export const sitemapFiles = [
