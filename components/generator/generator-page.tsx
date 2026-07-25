@@ -25,6 +25,17 @@ const MAX_HISTORY = 30;
 const BASE_COLOR_COUNT = 5;
 const MAX_COLOR_COUNT = 10;
 
+type PanelTab = "accessibility" | "variations" | "preview" | "colorblind" | "gradient" | "export";
+
+const PANEL_TABS: { key: PanelTab; label: string }[] = [
+  { key: "accessibility", label: "Accessibility" },
+  { key: "variations", label: "Variations" },
+  { key: "preview", label: "UI Preview" },
+  { key: "colorblind", label: "Color Blind" },
+  { key: "gradient", label: "Gradient" },
+  { key: "export", label: "Export" },
+];
+
 export function GeneratorPage() {
   const [palette, setPalette] = useState<Palette | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -36,6 +47,7 @@ export function GeneratorPage() {
   const [lightMode, setLightMode] = useState(false);
   const [comparePalette, setComparePalette] = useState<Palette | null>(null);
   const [colorCount, setColorCount] = useState(BASE_COLOR_COUNT);
+  const [activeTab, setActiveTab] = useState<PanelTab>("accessibility");
 
   const historyRef = useRef<Palette[]>([]);
   const historyIndexRef = useRef(-1);
@@ -350,12 +362,40 @@ export function GeneratorPage() {
                   </AnimatePresence>
                 </div>
 
-                <AccessibilityPanel palette={palette} />
-                <PaletteVariations palette={palette} />
-                <UIPreview palette={palette} />
-                <ColorBlindPanel palette={palette} />
-                <GradientPanel palette={palette} />
-                <ExportPanel palette={palette} />
+                <div>
+                  <div className="mb-3 flex flex-wrap items-center justify-center gap-1.5">
+                    {PANEL_TABS.map((tab) => (
+                      <button
+                        key={tab.key}
+                        onClick={() => setActiveTab(tab.key)}
+                        className={`rounded-xl px-4 py-2 text-xs font-medium transition-colors ${
+                          activeTab === tab.key
+                            ? lightMode ? "bg-black text-white" : "bg-white text-[#160b05]"
+                            : `border ${cardBg} ${textMuted} ${lightMode ? "hover:text-black" : "hover:text-white"}`
+                        }`}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeTab}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {activeTab === "accessibility" && <AccessibilityPanel palette={palette} />}
+                      {activeTab === "variations" && <PaletteVariations palette={palette} />}
+                      {activeTab === "preview" && <UIPreview palette={palette} />}
+                      {activeTab === "colorblind" && <ColorBlindPanel palette={palette} />}
+                      {activeTab === "gradient" && <GradientPanel palette={palette} />}
+                      {activeTab === "export" && <ExportPanel palette={palette} />}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
