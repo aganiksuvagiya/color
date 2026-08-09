@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Header } from "@/components/header";
 import { generateFromPrompt, generateRandomPalette, getContrastText } from "@/lib/color-utils";
 import { withExtraColors } from "@/lib/shades";
@@ -23,6 +23,7 @@ import { InsightsPanel } from "./insights-panel";
 const MAX_HISTORY = 30;
 const BASE_COLOR_COUNT = 5;
 const MAX_COLOR_COUNT = 10;
+const EMPTY_SUBSCRIBE = () => () => {};
 
 type PanelTab = "accessibility" | "variations" | "preview" | "colorblind" | "gradient" | "export" | "saved" | "tools" | "insights";
 
@@ -51,9 +52,9 @@ const MOOD_CHIPS = [
 ];
 
 export function GeneratorPage() {
+  const mounted = useSyncExternalStore(EMPTY_SUBSCRIBE, () => true, () => false);
   const [palette, setPalette] = useState<Palette | null>(null);
-  const [saved, setSaved] = useState<SavedPalette[]>([]);
-  const [mounted, setMounted] = useState(false);
+  const [savedVersion, setSavedVersion] = useState(0);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
   const [shareMessage, setShareMessage] = useState<string | null>(null);
   const [lockedIndices, setLockedIndices] = useState<Set<number>>(new Set());
@@ -68,21 +69,19 @@ export function GeneratorPage() {
 
   const historyRef = useRef<Palette[]>([]);
   const historyIndexRef = useRef(-1);
-
-  useEffect(() => {
-    setSaved(getSavedPalettes());
-    setMounted(true);
+  const initialPalette = useMemo(() => {
+    if (!mounted) return null;
     const params = new URLSearchParams(window.location.search);
-    const shared = decodePalette(params);
-    if (shared) {
-      setPalette(shared);
-      pushHistory(shared);
-    } else {
-      const p = generateRandomPalette();
-      setPalette(p);
-      pushHistory(p);
-    }
-  }, []);
+    return decodePalette(params) ?? generateRandomPalette();
+  }, [mounted]);
+  const activePalette = palette ?? initialPalette;
+  void savedVersion;
+  const saved = mounted ? getSavedPalettes() : [];
+
+  if (activePalette && historyIndexRef.current === -1) {
+    historyRef.current = [activePalette];
+    historyIndexRef.current = 0;
+  }
 
   function pushHistory(p: Palette) {
     const idx = historyIndexRef.current;
@@ -139,47 +138,47 @@ export function GeneratorPage() {
   }
 
   function handleGenerate(prompt: string) {
-    const count = palette?.colors.length ?? BASE_COLOR_COUNT;
+    const count = activePalette?.colors.length ?? BASE_COLOR_COUNT;
     freshGeneration(withExtraColors(generateFromPrompt(prompt), count - BASE_COLOR_COUNT));
     setPromptOpen(false);
     setPromptText("");
   }
 
   function handleRandom() {
-    const count = palette?.colors.length ?? BASE_COLOR_COUNT;
-    if (!palette || lockedIndices.size === 0) {
+    const count = activePalette?.colors.length ?? BASE_COLOR_COUNT;
+    if (!activePalette || lockedIndices.size === 0) {
       freshGeneration(withExtraColors(generateRandomPalette(), count - BASE_COLOR_COUNT));
       return;
     }
     const next = generateRandomPalette();
     const merged: Palette = {
       label: next.label,
-      colors: next.colors.map((c, i) => lockedIndices.has(i) ? palette.colors[i] : c),
+      colors: next.colors.map((c, i) => lockedIndices.has(i) ? activePalette.colors[i] : c),
     };
     freshGeneration(withExtraColors(merged, count - BASE_COLOR_COUNT));
   }
 
   function handleAddColor() {
-    if (!palette || palette.colors.length >= MAX_COLOR_COUNT) return;
-    setAndTrack(withExtraColors(palette, 1));
+    if (!activePalette || activePalette.colors.length >= MAX_COLOR_COUNT) return;
+    setAndTrack(withExtraColors(activePalette, 1));
   }
 
   function handleDeleteColor(index: number) {
-    if (!palette || palette.colors.length <= 2) return;
-    const colors = palette.colors.filter((_, i) => i !== index);
+    if (!activePalette || activePalette.colors.length <= 2) return;
+    const colors = activePalette.colors.filter((_, i) => i !== index);
     setLockedIndices(prev => {
       const next = new Set<number>();
       prev.forEach(i => { if (i < index) next.add(i); else if (i > index) next.add(i - 1); });
       return next;
     });
-    setAndTrack({ ...palette, colors });
+    setAndTrack({ ...activePalette, colors });
   }
 
   function handleColorChange(index: number, hex: string) {
-    if (!palette) return;
+    if (!activePalette) return;
     const updated = {
-      ...palette,
-      colors: palette.colors.map((c, i) =>
+      ...activePalette,
+      colors: activePalette.colors.map((c, i) =>
         i === index ? { ...c, hex, text: getContrastText(hex) } : c
       ),
     };
@@ -188,15 +187,15 @@ export function GeneratorPage() {
   }
 
   function handleRenameColor(index: number, name: string) {
-    if (!palette) return;
-    const updated = { ...palette, colors: palette.colors.map((c, i) => i === index ? { ...c, name } : c) };
+    if (!activePalette) return;
+    const updated = { ...activePalette, colors: activePalette.colors.map((c, i) => i === index ? { ...c, name } : c) };
     setPalette(updated);
     updateUrl(updated);
   }
 
   function handleRenamePalette(name: string) {
-    if (!palette || !name.trim()) return;
-    const updated = { ...palette, label: name.trim() };
+    if (!activePalette || !name.trim()) return;
+    const updated = { ...activePalette, label: name.trim() };
     setPalette(updated);
     updateUrl(updated);
   }
@@ -210,38 +209,38 @@ export function GeneratorPage() {
   }
 
   function handleReorderColors(from: number, to: number) {
-    if (!palette || from === to) return;
-    const colors = [...palette.colors];
+    if (!activePalette || from === to) return;
+    const colors = [...activePalette.colors];
     const [moved] = colors.splice(from, 1);
     colors.splice(to, 0, moved);
-    const lockFlags = palette.colors.map((_, i) => lockedIndices.has(i));
+    const lockFlags = activePalette.colors.map((_, i) => lockedIndices.has(i));
     const [movedLock] = lockFlags.splice(from, 1);
     lockFlags.splice(to, 0, movedLock);
     const nextLocked = new Set<number>();
     lockFlags.forEach((locked, i) => { if (locked) nextLocked.add(i); });
     setLockedIndices(nextLocked);
-    setAndTrack({ ...palette, colors });
+    setAndTrack({ ...activePalette, colors });
   }
 
   function handleSave() {
-    if (!palette) return;
-    savePalette(palette);
-    setSaved(getSavedPalettes());
+    if (!activePalette) return;
+    savePalette(activePalette);
+    setSavedVersion(version => version + 1);
     setSaveMessage("Saved!");
     setTimeout(() => setSaveMessage(null), 2000);
   }
 
   async function handleShare() {
-    if (!palette) return;
-    const url = `${window.location.origin}/generator${encodePalette(palette)}`;
+    if (!activePalette) return;
+    const url = `${window.location.origin}/generator${encodePalette(activePalette)}`;
     await navigator.clipboard.writeText(url);
     setShareMessage("Link copied!");
     setTimeout(() => setShareMessage(null), 2000);
   }
 
   async function handleCopyAll() {
-    if (!palette) return;
-    const text = palette.colors.map(c => c.hex.toUpperCase()).join(", ");
+    if (!activePalette) return;
+    const text = activePalette.colors.map(c => c.hex.toUpperCase()).join(", ");
     await navigator.clipboard.writeText(text);
     setShareMessage("All hex copied!");
     setTimeout(() => setShareMessage(null), 2000);
@@ -254,7 +253,7 @@ export function GeneratorPage() {
 
   function handleDeleteSaved(id: string) {
     deletePalette(id);
-    setSaved(getSavedPalettes());
+    setSavedVersion(version => version + 1);
   }
 
   function togglePanel(panel: PanelTab) {
@@ -262,7 +261,7 @@ export function GeneratorPage() {
   }
 
   function startEditLabel() {
-    setLabelValue(palette?.label ?? "");
+    setLabelValue(activePalette?.label ?? "");
     setEditingLabel(true);
     setTimeout(() => labelInputRef.current?.select(), 10);
   }
@@ -299,9 +298,9 @@ export function GeneratorPage() {
         </AnimatePresence>
 
         {/* Swatches */}
-        {palette && mounted && (
+        {activePalette && mounted && (
           <PaletteDisplay
-            palette={palette}
+            palette={activePalette}
             lockedIndices={lockedIndices}
             displayFormat={viewFormat}
             generationKey={generationKey}
@@ -316,7 +315,7 @@ export function GeneratorPage() {
 
         {/* Side panel — full-screen fixed overlay */}
         <AnimatePresence>
-          {activePanel && palette && (
+          {activePanel && activePalette && (
             <>
               {/* Backdrop */}
               <motion.div
@@ -349,12 +348,12 @@ export function GeneratorPage() {
                   </button>
                 </div>
                 <div className="flex-1 overflow-y-auto p-4">
-                  {activePanel === "accessibility" && <AccessibilityPanel palette={palette} />}
-                  {activePanel === "variations" && <PaletteVariations palette={palette} />}
-                  {activePanel === "preview" && <UIPreview palette={palette} />}
-                  {activePanel === "colorblind" && <ColorBlindPanel palette={palette} />}
-                  {activePanel === "gradient" && <GradientPanel palette={palette} />}
-                  {activePanel === "export" && <ExportPanel palette={palette} />}
+                  {activePanel === "accessibility" && <AccessibilityPanel palette={activePalette} />}
+                  {activePanel === "variations" && <PaletteVariations palette={activePalette} />}
+                  {activePanel === "preview" && <UIPreview palette={activePalette} />}
+                  {activePanel === "colorblind" && <ColorBlindPanel palette={activePalette} />}
+                  {activePanel === "gradient" && <GradientPanel palette={activePalette} />}
+                  {activePanel === "export" && <ExportPanel palette={activePalette} />}
                   {activePanel === "saved" && mounted && (
                     <SavedPalettes palettes={saved} onLoad={handleLoad} onDelete={handleDeleteSaved} />
                   )}
@@ -364,7 +363,7 @@ export function GeneratorPage() {
                       <HarmonyPicker onGenerate={(p) => { freshGeneration(p); }} />
                     </div>
                   )}
-                  {activePanel === "insights" && <InsightsPanel palette={palette} />}
+                  {activePanel === "insights" && <InsightsPanel palette={activePalette} />}
                 </div>
               </motion.div>
             </>
@@ -383,7 +382,7 @@ export function GeneratorPage() {
             <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><polyline points="16 3 21 3 21 8" /><line x1="4" y1="20" x2="21" y2="3" /><polyline points="21 16 21 21 16 21" /><line x1="15" y1="15" x2="21" y2="21" /><line x1="4" y1="4" x2="9" y2="9" /></svg>
             <span className="text-xs">Shuffle</span>
           </button>
-          {palette && palette.colors.length < MAX_COLOR_COUNT && (
+          {activePalette && activePalette.colors.length < MAX_COLOR_COUNT && (
             <button onClick={handleAddColor} className={iconBtn} title="Add Color"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M12 5v14M5 12h14" /></svg></button>
           )}
           <button onClick={() => setPromptOpen(p => !p)} className={`${iconBtn} gap-1.5 w-auto px-2 ${promptOpen ? "text-white bg-white/10" : ""}`} title="Generate">
@@ -445,7 +444,7 @@ export function GeneratorPage() {
               className="rounded-lg px-2 py-1 text-[11px] font-medium text-white/30 transition-all hover:bg-white/8 hover:text-white/65 max-w-[140px] truncate"
               title="Rename palette"
             >
-              {palette?.label ?? ""}
+              {activePalette?.label ?? ""}
             </button>
           )}
         </div>
@@ -466,7 +465,7 @@ export function GeneratorPage() {
             <kbd className="hidden lg:inline rounded border border-white/12 bg-white/5 px-1 py-0.5 font-mono text-[9px] text-white/25">Space</kbd>
           </button>
 
-          {palette && palette.colors.length < MAX_COLOR_COUNT && (
+          {activePalette && activePalette.colors.length < MAX_COLOR_COUNT && (
             <button onClick={handleAddColor} className={tbBtn()} title="Add a color">
               <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                 <path d="M12 5v14M5 12h14" />
