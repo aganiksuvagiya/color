@@ -42,11 +42,20 @@ export function buildPageMetadata({
       siteName: siteConfig.name,
       type: "article",
       locale: siteConfig.locale,
+      images: [
+        {
+          url: `${siteConfig.domain}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} — ${title}`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [`${siteConfig.domain}/opengraph-image`],
     },
   };
 }

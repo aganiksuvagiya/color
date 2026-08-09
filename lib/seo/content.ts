@@ -12,6 +12,7 @@ type LinkItem = {
   title: string;
   href: string;
   label?: string;
+  paletteColors?: string[];
 };
 
 type ExampleItem = {
@@ -77,6 +78,7 @@ export type ContentEntry = {
   entityRelations?: EntityRelation[];
   aiSections?: AiSection[];
   citationBlocks?: string[];
+  paletteColors?: string[];
 };
 
 export type HubPage = {
@@ -92,6 +94,7 @@ export type HubPage = {
 const colors: ContentEntry[] = [
   {
     slug: "blue",
+    paletteColors: ["#1E3A8A", "#2563EB", "#3B82F6", "#93C5FD", "#DBEAFE"],
     title: "Blue Color Meaning for Brands, SaaS, and Trust",
     description: "Learn when blue improves trust, conversions, and product clarity across SaaS, fintech, and healthcare brands.",
     answer:
@@ -122,6 +125,7 @@ const colors: ContentEntry[] = [
   },
   {
     slug: "green",
+    paletteColors: ["#14532D", "#16A34A", "#22C55E", "#86EFAC", "#DCFCE7"],
     title: "Green Color Meaning for Growth, Wellness, and Conversion",
     description: "How green signals growth, balance, wellness, and positive progress across product and marketing funnels.",
     answer:
@@ -148,6 +152,7 @@ const colors: ContentEntry[] = [
   },
   {
     slug: "red",
+    paletteColors: ["#7F1D1D", "#DC2626", "#EF4444", "#FCA5A5", "#FEE2E2"],
     title: "Red Color Meaning for Urgency, Energy, and Promotions",
     description: "Understand when red creates urgency and when it introduces too much visual stress on landing pages and apps.",
     answer:
@@ -173,6 +178,7 @@ const colors: ContentEntry[] = [
   },
   {
     slug: "purple",
+    paletteColors: ["#3B0764", "#7C3AED", "#A855F7", "#D8B4FE", "#F3E8FF"],
     title: "Purple Color Meaning for Creativity and Premium Brands",
     description: "Use purple when a brand needs creativity, premium energy, and a differentiated tech identity.",
     answer:
@@ -198,6 +204,7 @@ const colors: ContentEntry[] = [
   },
   {
     slug: "black",
+    paletteColors: ["#000000", "#111827", "#374151", "#6B7280", "#D1D5DB"],
     title: "Black Color Meaning for Luxury and Editorial Design",
     description: "A guide to using black for premium positioning, bold contrast, and minimal brand systems.",
     answer:
@@ -224,6 +231,7 @@ const colors: ContentEntry[] = [
   },
   {
     slug: "orange",
+    paletteColors: ["#7C2D12", "#EA580C", "#F97316", "#FDBA74", "#FFF7ED"],
     title: "Orange Color Meaning for Action, Optimism, and Friendly CTAs",
     description: "How orange helps brands feel energetic, approachable, and action-oriented without the intensity of red.",
     answer:
@@ -249,6 +257,306 @@ const colors: ContentEntry[] = [
       { title: "Orange color meaning", href: "/color-meanings/orange" },
     ],
   },
+  {
+    slug: "yellow",
+    paletteColors: ["#713F12", "#CA8A04", "#EAB308", "#FDE047", "#FEF9C3"],
+    title: "Yellow Color Meaning for Optimism, Attention, and Caution",
+    description: "When and how to use yellow in brand design, UI, and marketing — covering energy, warnings, and high-visibility use cases.",
+    answer: "Yellow signals optimism, attention, and warmth. It works best for highlights, warnings, and high-energy marketing moments. In UI, yellow should be used sparingly as an accent because it can be hard to read at small sizes against white backgrounds.",
+    intent: "informational",
+    keywords: ["yellow color meaning", "yellow in web design", "yellow branding", "yellow accessibility"],
+    keyTakeaways: [
+      "Yellow grabs attention faster than almost any other color.",
+      "It works best as an accent or highlight — not as a primary background for text.",
+      "In UI, use yellow for warnings, progress indicators, and promotional badges.",
+      "Warm yellows (amber, gold) feel premium; cool yellows feel energetic and playful.",
+    ],
+    quickFacts: [
+      { label: "Primary Intent", value: "Informational" },
+      { label: "Core Entity", value: "Yellow Color Meaning" },
+      { label: "Main Focus", value: "yellow color meaning" },
+      { label: "Semantic Links", value: "Orange color meaning • Brand colors • Contrast checker" },
+    ],
+    sections: [
+      { title: "When yellow works", body: "Yellow is most effective when used for attention-grabbing CTAs, promotional labels, and energetic brand identities where urgency or optimism is needed." },
+      { title: "Accessibility considerations", body: "Yellow on white fails WCAG contrast at most text sizes. Use dark text on yellow backgrounds and always check contrast ratios before shipping." },
+      { title: "Yellow in branding", body: "Brands like McDonald's, Snapchat, and IKEA use yellow to signal energy, friendliness, and warmth. Gold and amber variants work well for premium positioning." },
+      { title: "Pairing yellow", body: "Yellow pairs well with black for maximum contrast, with navy for a classic combination, and with soft gray for a modern, airy system." },
+    ],
+    faq: [
+      { question: "What does yellow mean in design?", answer: "Yellow typically communicates optimism, energy, caution, and warmth. Its effect depends on saturation and pairing context." },
+      { question: "Is yellow good for CTAs?", answer: "Yes, especially for promotional buttons on dark backgrounds where contrast is sufficient. Avoid thin text on bright yellow." },
+    ],
+    relatedLinks: [
+      { title: "Orange color meaning", href: "/colors/orange" },
+      { title: "Tailwind yellow", href: "/tailwind/yellow" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Yellow color meaning", href: "/color-meanings/yellow" },
+      { title: "Apricot launch gradient", href: "/gradients/apricot-launch" },
+    ],
+  },
+  {
+    slug: "pink",
+    paletteColors: ["#831843", "#DB2777", "#EC4899", "#F9A8D4", "#FCE7F3"],
+    title: "Pink Color Meaning for Brands, Beauty, and Emotional Appeal",
+    description: "How pink communicates warmth, femininity, playfulness, and care across beauty, lifestyle, and consumer brands.",
+    answer: "Pink signals warmth, care, playfulness, and approachability. Hot pink creates urgency and excitement; blush pink conveys softness and luxury. It performs well for beauty, wellness, lifestyle, and consumer brands targeting emotional connection.",
+    intent: "informational",
+    keywords: ["pink color meaning", "pink branding", "pink in web design", "hot pink meaning"],
+    keyTakeaways: [
+      "Hot pink creates energy and youthful urgency; blush pink signals luxury and softness.",
+      "Pink is increasingly gender-neutral in modern brand design.",
+      "It pairs well with gold, black, or white for premium positioning.",
+      "In UI, pink accents stand out strongly — use them for highlights, not base surfaces.",
+    ],
+    quickFacts: [
+      { label: "Primary Intent", value: "Informational" },
+      { label: "Core Entity", value: "Pink Color Meaning" },
+      { label: "Main Focus", value: "pink color meaning" },
+      { label: "Semantic Links", value: "Red color meaning • Beauty brand colors • Rose gold gradient" },
+    ],
+    sections: [
+      { title: "Pink in beauty and lifestyle", body: "Pink dominates beauty, skincare, and wellness branding because it signals care, warmth, and approachability — core emotional attributes in those categories." },
+      { title: "Hot pink vs blush pink", body: "Hot pink is bold and attention-grabbing, ideal for playful or youthful brands. Blush pink is muted and refined, suited to luxury or wellness positioning." },
+      { title: "Pink in tech and software", body: "Pink is increasingly used in tech as a differentiator. Products targeting creative professionals, founders, and modern audiences often use pink to signal confidence and originality." },
+    ],
+    faq: [
+      { question: "What does pink mean in branding?", answer: "Pink typically signals warmth, care, playfulness, or femininity, depending on the shade. Modern brands use it more broadly to signal creativity and confidence." },
+      { question: "Can pink work for professional brands?", answer: "Yes. Blush pink and dusty rose feel elevated and refined. Many fintech, legal, and SaaS brands now use pink to stand out without sacrificing credibility." },
+    ],
+    relatedLinks: [
+      { title: "Red color meaning", href: "/colors/red" },
+      { title: "Rose gold bloom gradient", href: "/gradients/rose-gold-bloom" },
+      { title: "Pink color meaning", href: "/color-meanings/pink" },
+      { title: "Luxury brand color strategy", href: "/guides/luxury-brand-color-strategy" },
+    ],
+  },
+  {
+    slug: "teal",
+    paletteColors: ["#134E4A", "#0F766E", "#14B8A6", "#5EEAD4", "#CCFBF1"],
+    title: "Teal Color Meaning for Trust, Calm, and Modern Brands",
+    description: "How teal blends blue trust with green freshness for healthcare, SaaS, and wellness brand design.",
+    answer: "Teal blends the trust of blue with the calm of green, making it a strong choice for healthcare, wellness, SaaS, and sustainability brands. It feels modern, clean, and credible without the formality of navy.",
+    intent: "informational",
+    keywords: ["teal color meaning", "teal branding", "teal in web design", "teal hex color"],
+    keyTakeaways: [
+      "Teal works best for brands that need trust without being overly formal.",
+      "It's a top choice for healthcare, wellness, and B2B SaaS interfaces.",
+      "Deep teal reads as professional; lighter teal reads as fresh and modern.",
+      "It pairs well with white, slate, and warm neutrals like sand or cream.",
+    ],
+    quickFacts: [
+      { label: "Primary Intent", value: "Informational" },
+      { label: "Core Entity", value: "Teal Color Meaning" },
+      { label: "Main Focus", value: "teal color meaning" },
+      { label: "Semantic Links", value: "Blue color meaning • Green color meaning • Healthcare brand colors" },
+    ],
+    sections: [
+      { title: "Teal in healthcare and wellness", body: "Teal is one of the most common colors in healthcare UI because it feels clean, calm, and trustworthy — while being slightly warmer and more approachable than pure blue." },
+      { title: "Teal in SaaS", body: "Many B2B SaaS products use teal as a primary or accent color because it stands out against blue-dominated competitors while still signaling professionalism." },
+      { title: "Shades of teal", body: "Teal ranges from dark forest teal (#134E4A) to bright aqua (#14B8A6) to pale mint (#CCFBF1). Darker shades work for backgrounds; brighter shades for interactive accents." },
+    ],
+    faq: [
+      { question: "What is the teal color hex code?", answer: "Common teal hex codes include #008080 (CSS teal), #14B8A6 (Tailwind teal-500), and #0F766E (Tailwind teal-700)." },
+      { question: "Is teal a good color for websites?", answer: "Yes. Teal works well for hero sections, navigation accents, and CTA buttons — especially for health, wellness, and tech brands." },
+    ],
+    relatedLinks: [
+      { title: "Blue color meaning", href: "/colors/blue" },
+      { title: "Green color meaning", href: "/colors/green" },
+      { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
+      { title: "Mint horizon gradient", href: "/gradients/mint-horizon" },
+      { title: "Teal color meaning", href: "/color-meanings/teal" },
+    ],
+  },
+  {
+    slug: "gray",
+    paletteColors: ["#111827", "#374151", "#6B7280", "#D1D5DB", "#F9FAFB"],
+    title: "Gray Color Meaning for Neutral, Professional, and Scalable Design",
+    description: "How gray builds neutral, scalable design systems for product UI, enterprise software, and editorial brands.",
+    answer: "Gray is the backbone of most design systems. It provides neutral surfaces, text hierarchy, and borders without competing with accent colors. Warm grays feel approachable; cool grays feel technical and precise.",
+    intent: "informational",
+    keywords: ["gray color meaning", "grey color meaning", "gray in web design", "gray ui design", "neutral color palette"],
+    keyTakeaways: [
+      "Gray is essential for backgrounds, text hierarchy, and component borders in UI systems.",
+      "Warm grays feel softer and more editorial; cool grays feel precise and technical.",
+      "A 9-shade gray scale is the foundation of most design tokens.",
+      "Gray text on white backgrounds must be tested for WCAG contrast at every text size.",
+    ],
+    quickFacts: [
+      { label: "Primary Intent", value: "Informational" },
+      { label: "Core Entity", value: "Gray Color Meaning" },
+      { label: "Main Focus", value: "gray color in design" },
+      { label: "Semantic Links", value: "Black color meaning • White color • Design system colors" },
+    ],
+    sections: [
+      { title: "Gray in UI systems", body: "Most design systems use 9–11 shades of gray for backgrounds, cards, borders, placeholder text, and disabled states. A consistent gray scale prevents visual noise and creates hierarchy without color." },
+      { title: "Warm vs cool gray", body: "Warm grays (with a hint of beige or brown) feel editorial and human. Cool grays (with a blue or green tint) feel technical and structured, common in enterprise and developer tools." },
+      { title: "Gray and accessibility", body: "Mid-range gray text (#6B7280) fails WCAG AA on white. Always verify that body text, labels, and captions use dark enough gray values for the background." },
+    ],
+    faq: [
+      { question: "What is the best gray for web design?", answer: "Tailwind's slate and gray scales are widely used. For body text, #374151 or darker on white is usually WCAG-safe. For backgrounds, #F9FAFB or #F3F4F6 work well." },
+      { question: "What is the difference between gray and grey?", answer: "They are the same color. 'Gray' is the standard American spelling; 'grey' is the British spelling. Both refer to the same neutral hue." },
+    ],
+    relatedLinks: [
+      { title: "Black color meaning", href: "/colors/black" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Dark mode color guide", href: "/guides/dark-mode-color-guide" },
+      { title: "Tailwind gray", href: "/tailwind/gray" },
+      { title: "Gray color meaning", href: "/color-meanings/gray" },
+    ],
+  },
+  {
+    slug: "white",
+    paletteColors: ["#FFFFFF", "#F9FAFB", "#F3F4F6", "#E5E7EB", "#D1D5DB"],
+    title: "White Color Meaning for Clarity, Minimalism, and Clean Design",
+    description: "How white creates space, clarity, and premium simplicity in product design, branding, and marketing.",
+    answer: "White signals purity, clarity, simplicity, and space. It is the most common background choice in digital product design because it maximizes readability and lets other design elements breathe. Pure white can feel clinical; off-white and cream feel warmer and more refined.",
+    intent: "informational",
+    keywords: ["white color meaning", "white in web design", "white space design", "minimalist color palette"],
+    keyTakeaways: [
+      "White maximizes text readability and makes UI feel open and approachable.",
+      "Pure white (#FFFFFF) can feel clinical — off-white (#FAFAF9, #F5F5F4) is often warmer and more premium.",
+      "White space (negative space) is a design principle that relies on white and light backgrounds to create hierarchy.",
+      "White backgrounds pair with any accent color, making them ideal for flexible design systems.",
+    ],
+    quickFacts: [
+      { label: "Primary Intent", value: "Informational" },
+      { label: "Core Entity", value: "White Color Meaning" },
+      { label: "Main Focus", value: "white color meaning" },
+      { label: "Semantic Links", value: "Black color meaning • Gray color • Minimalist design" },
+    ],
+    sections: [
+      { title: "White in product design", body: "Most SaaS, fintech, and productivity tools default to white backgrounds because they feel clean, trustworthy, and allow content to take center stage." },
+      { title: "White in luxury branding", body: "Premium brands often use white with generous spacing to signal exclusivity. Apple, Chanel, and Aesop all rely on white to create a sense of refinement and restraint." },
+      { title: "Off-white and cream", body: "Slightly warm white tones like #FAFAF9 or #FDF6EC feel less sterile than pure white and work well for editorial, wellness, and lifestyle brands." },
+    ],
+    faq: [
+      { question: "What does white mean in design?", answer: "White typically signals clarity, simplicity, purity, and space. It creates a neutral canvas that lets other colors and content stand out." },
+      { question: "Is pure white or off-white better for websites?", answer: "Off-white (#FAFAF9, #F5F5F4) often looks more refined and easier on the eyes for long reading sessions. Pure white is better for high-contrast, clinical, or data-heavy interfaces." },
+    ],
+    relatedLinks: [
+      { title: "Black color meaning", href: "/colors/black" },
+      { title: "Gray color meaning", href: "/colors/gray" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "White color meaning", href: "/color-meanings/white" },
+    ],
+  },
+  {
+    slug: "brown",
+    paletteColors: ["#3E1A02", "#7C3A1E", "#B45309", "#D4A76A", "#F5DEB3"],
+    title: "Brown Color Meaning for Warmth, Earthiness, and Natural Brands",
+    description: "How brown signals warmth, reliability, and natural authenticity for food, lifestyle, and sustainability brands.",
+    answer: "Brown communicates warmth, naturalness, reliability, and groundedness. It is a strong choice for food, coffee, outdoor, sustainability, and artisan brands where earthy authenticity matters. Rich brown tones can also feel luxurious and premium when paired with gold or cream.",
+    intent: "informational",
+    keywords: ["brown color meaning", "brown branding", "brown in web design", "earthy color palette"],
+    keyTakeaways: [
+      "Brown signals warmth, naturalness, and reliability — core signals for food and lifestyle brands.",
+      "Dark brown works well as a neutral alternative to black in earthy design systems.",
+      "Lighter warm browns (tan, caramel) work well for backgrounds, card surfaces, and editorial layouts.",
+      "Brown pairs best with cream, white, green, and gold.",
+    ],
+    quickFacts: [
+      { label: "Primary Intent", value: "Informational" },
+      { label: "Core Entity", value: "Brown Color Meaning" },
+      { label: "Main Focus", value: "brown color meaning" },
+      { label: "Semantic Links", value: "Orange color meaning • Earthy palettes • Wellness brands" },
+    ],
+    sections: [
+      { title: "Brown in food and coffee brands", body: "Brown is the default color for coffee, chocolate, and artisan food brands because it directly references the product category and signals warmth, richness, and quality." },
+      { title: "Brown in sustainability and outdoors", body: "Earth tones including brown, tan, and terracotta are frequently used for eco-friendly and outdoor brands to signal natural materials, sustainability, and groundedness." },
+      { title: "Brown as a neutral", body: "Dark brown can replace black in design systems that want a warmer, more approachable tone. It works especially well for editorial and lifestyle brands targeting a warmer aesthetic." },
+    ],
+    faq: [
+      { question: "What does brown mean in branding?", answer: "Brown signals warmth, naturalness, reliability, and earthiness. It is commonly used in food, coffee, outdoor, and artisan brands." },
+      { question: "Is brown a good color for websites?", answer: "Yes, for the right industries. Warm browns and tans work well as background and surface colors for food, wellness, and sustainability brands." },
+    ],
+    relatedLinks: [
+      { title: "Orange color meaning", href: "/colors/orange" },
+      { title: "Wellness nature calm palette", href: "/palettes/wellness-nature-calm" },
+      { title: "Brown color meaning", href: "/color-meanings/brown" },
+      { title: "Forest canopy gradient", href: "/gradients/forest-canopy" },
+    ],
+  },
+  {
+    slug: "azure",
+    title: "Azure Color — Hex #F0FFFF Meaning, Uses, and Palettes",
+    description: "Azure is a very light cyan-blue color (hex #F0FFFF) used for clean backgrounds, healthcare UIs, and calming digital experiences. Learn when and how to use azure in web design.",
+    answer:
+      "Azure (#F0FFFF) is a pale, almost-white cyan-blue that signals openness, clarity, and calm. It works best as a soft background tint, a card surface, or a light overlay in healthcare, wellness, SaaS, and clean UI designs. As a dominant or text color it is too light to pass contrast requirements.",
+    intent: "informational",
+    keywords: [
+      "azure color",
+      "azure color meaning",
+      "azure hex code",
+      "azure color code",
+      "#F0FFFF color",
+      "azure color palette",
+      "azure color in web design",
+      "light blue color hex",
+    ],
+    sections: [
+      {
+        title: "What azure communicates",
+        body: "Azure sits between white and pale cyan on the color spectrum. It communicates openness, spaciousness, and calm — similar to a clear sky or clean water. In UI design it rarely carries strong emotional weight, which makes it useful as a neutral surface color that does not compete with primary brand colors.",
+      },
+      {
+        title: "Best uses for azure in UI design",
+        body: "Use azure as a background tint on cards, sidebars, or data panels where you want a subtle color distinction without a strong hue. Healthcare portals, wellness apps, and SaaS dashboards use it to introduce lightness and airiness without going fully white. Avoid it for text or interactive elements — it is too light to maintain WCAG contrast against white backgrounds.",
+      },
+      {
+        title: "Azure vs. light blue vs. sky blue",
+        body: "Azure (#F0FFFF) is nearly white with a cyan undertone. Light blue (#ADD8E6) is more distinctly blue. Sky blue (#87CEEB) is the most saturated of the three. For backgrounds, azure is the safest because it causes the least interference with content. For fills and accents, light blue or sky blue provide more visible color.",
+      },
+      {
+        title: "Palettes that work with azure",
+        body: "Azure pairs well with deeper blues (#1D4ED8 or #2563EB) for contrast, soft teals for a cohesive cool palette, and neutral grays for enterprise or healthcare layouts. It also works with warm whites to add subtle temperature to an otherwise cold palette.",
+      },
+    ],
+    faq: [
+      {
+        question: "What is the azure color hex code?",
+        answer: "The standard azure hex code is #F0FFFF. It is a very pale, almost-white cyan-blue named after the azure color of a clear sky.",
+      },
+      {
+        question: "Is azure blue or green?",
+        answer: "Azure is a very light blue with a slight cyan (blue-green) undertone. It is classified as a blue-family color but sits close to white on the lightness scale.",
+      },
+      {
+        question: "Can I use azure as a background color?",
+        answer: "Yes — azure works well as a subtle background tint on cards or panels. Just ensure any text placed on an azure background uses a dark enough color to meet WCAG AA contrast (4.5:1 for body text).",
+      },
+      {
+        question: "What industries use azure most?",
+        answer: "Healthcare, telehealth, wellness, SaaS, and clean-tech brands use azure as a surface color because it feels clinical, calm, and spacious without the starkness of pure white.",
+      },
+    ],
+    definitions: [
+      {
+        term: "Azure",
+        definition: "A very pale cyan-blue color (#F0FFFF) named after the color of a clear sky. In web design it is used primarily as a light background or surface tint.",
+      },
+    ],
+    prosCons: {
+      pros: [
+        "Subtle, non-distracting background color that adds lightness",
+        "Works well in healthcare and wellness UIs for a calm, airy feel",
+        "Pairs easily with deeper blues and teals for hierarchy",
+      ],
+      cons: [
+        "Too light for text or interactive elements — contrast fails on white",
+        "Can look washed out on low-quality or uncalibrated screens",
+        "Rarely works as a brand primary — not distinctive enough alone",
+      ],
+    },
+    relatedLinks: [
+      { title: "Blue color meaning", href: "/colors/blue" },
+      { title: "Teal color meaning", href: "/colors/teal" },
+      { title: "Healthcare website color guide", href: "/best-colors-for/best-colors-for-healthcare-websites-usa" },
+      { title: "Color contrast checker", href: "/tools/contrast" },
+      { title: "WCAG contrast guide", href: "/accessibility/color-contrast" },
+      { title: "Cool color palettes", href: "/palettes/fintech-growth-grid" },
+    ],
+  },
 ];
 
 const palettes: ContentEntry[] = [
@@ -269,6 +577,7 @@ const palettes: ContentEntry[] = [
       { question: "What is the best color palette for SaaS websites?", answer: "A blue-led palette with accessible neutrals is the strongest default because it improves trust and keeps product hierarchy clear." },
       { question: "What accent color fits blue SaaS branding?", answer: "Mint, teal, or soft amber usually add contrast without weakening trust." },
     ],
+    paletteColors: ["#1E3A5F", "#2563EB", "#94A3B8", "#F1F5F9", "#10B981"],
     relatedLinks: [
       { title: "Blue color meaning", href: "/colors/blue" },
       { title: "Fintech brand colors", href: "/brand-colors/fintech" },
@@ -292,6 +601,7 @@ const palettes: ContentEntry[] = [
       { question: "What color palette works for fintech brands?", answer: "Blue and green usually work best because they combine trust, clarity, and growth signals in one system." },
       { question: "Should fintech use black instead?", answer: "Black can help premium positioning, but most fintech products still need blue or green to support trust and financial progress." },
     ],
+    paletteColors: ["#1E3A5F", "#1D4ED8", "#059669", "#ECFDF5", "#D97706"],
     relatedLinks: [
       { title: "Green color meaning", href: "/colors/green" },
       { title: "Fintech brand colors", href: "/brand-colors/fintech" },
@@ -315,6 +625,7 @@ const palettes: ContentEntry[] = [
       { question: "What colors feel luxurious?", answer: "Black, ivory, deep jewel tones, and metallic-inspired accents usually feel most premium." },
       { question: "Should luxury websites use bright colors?", answer: "Usually only as selective accents because too much saturation can reduce the perception of refinement." },
     ],
+    paletteColors: ["#0A0A0A", "#1C1C1C", "#B8962E", "#F5F0E8", "#FFFFFF"],
     relatedLinks: [
       { title: "Black color meaning", href: "/colors/black" },
       { title: "Black and gold combination", href: "/color-combinations/black-and-gold" },
@@ -338,6 +649,7 @@ const palettes: ContentEntry[] = [
       { question: "What is a good palette for AI products?", answer: "A distinct but usable palette often starts with purple, indigo, or deep blue, balanced by soft neutrals." },
       { question: "Can colorful palettes still be accessible?", answer: "Yes, as long as text, buttons, and states use tested contrast ratios rather than relying on brightness alone." },
     ],
+    paletteColors: ["#5B21B6", "#A855F7", "#EC4899", "#F59E0B", "#1F2937"],
     relatedLinks: [
       { title: "Purple color meaning", href: "/colors/purple" },
       { title: "Violet aurora gradient", href: "/gradients/violet-aurora" },
@@ -345,7 +657,81 @@ const palettes: ContentEntry[] = [
     ],
   },
   {
+    slug: "wellness-nature-calm",
+    title: "Wellness Nature Calm Palette",
+    description: "A soft green, sage, and warm cream palette for wellness brands, health apps, and mindfulness products.",
+    answer:
+      "The Wellness Nature Calm palette works for health and wellness brands because it uses muted greens and warm creams that feel restorative without being clinical. It builds trust without medical coldness.",
+    intent: "commercial",
+    keywords: ["wellness color palette", "health app colors", "green wellness palette", "mindfulness brand colors"],
+    sections: [
+      { title: "Restorative without clinical", body: "Muted sage and warm cream feel human and approachable, unlike stark hospital whites and blues." },
+      { title: "Product use cases", body: "Ideal for meditation apps, supplement brands, yoga studios, mental health platforms, and organic food brands." },
+      { title: "Pairing with typography", body: "Use warm charcoal or dark green for text instead of black to keep the palette cohesive and soft." },
+    ],
+    faq: [
+      { question: "What palette works for wellness brands?", answer: "Soft greens, sage, warm creams, and muted teal usually feel most restorative and trustworthy for wellness." },
+      { question: "Can wellness brands use bold colors?", answer: "Sparingly. A single energetic accent like bright green or coral can add life without breaking the calm feel." },
+    ],
+    paletteColors: ["#4A7C59", "#87B99A", "#D4C5A9", "#F2EAD3", "#3D2B1F"],
+    relatedLinks: [
+      { title: "Green color meaning", href: "/colors/green" },
+      { title: "Mint horizon gradient", href: "/gradients/mint-horizon" },
+      { title: "Healthcare website colors guide", href: "/guides/best-colors-for-healthcare-websites-usa" },
+    ],
+  },
+  {
+    slug: "startup-bold-modern",
+    title: "Startup Bold Modern Palette",
+    description: "A high-energy palette for startup landing pages that need memorability, product energy, and modern credibility.",
+    answer:
+      "The Startup Bold Modern palette combines a confident dark neutral base with a vibrant action accent and a clean supporting hue. It gives early-stage brands a polished, energetic look without feeling unserious.",
+    intent: "commercial",
+    keywords: ["startup color palette", "bold startup colors", "modern brand palette", "launch page colors"],
+    sections: [
+      { title: "First impression", body: "A bold palette immediately communicates confidence and direction, which is critical for startups building credibility fast." },
+      { title: "Hero section role", body: "Use the bold accent on the headline CTA, badge, and hero illustration. Keep body copy and form elements on clean, neutral surfaces." },
+      { title: "Scaling into product", body: "As the product grows, the palette can evolve by adding semantic roles for states and data without replacing the core brand hues." },
+    ],
+    faq: [
+      { question: "What palette works for a startup website?", answer: "A modern dark base with one bold accent and a clean secondary creates credibility and energy at the same time." },
+      { question: "Should startups use trendy colors?", answer: "Trend-adjacent colors can help with early visibility, but the palette should still feel coherent in pitch decks, ads, and product UI." },
+    ],
+    paletteColors: ["#111827", "#6366F1", "#F59E0B", "#E5E7EB", "#FFFFFF"],
+    relatedLinks: [
+      { title: "Startup website color strategy", href: "/guides/startup-website-color-strategy" },
+      { title: "Violet aurora gradient", href: "/gradients/violet-aurora" },
+      { title: "Creative orbit palette", href: "/palettes/creative-orbit" },
+    ],
+  },
+  {
+    slug: "dark-mode-pro",
+    paletteColors: ["#0D1117", "#161B22", "#21262D", "#388BFD", "#3FB950"],
+    title: "Dark Mode Pro Palette",
+    description: "A professional dark UI palette for developer tools, dashboards, and data-heavy SaaS products.",
+    answer:
+      "The Dark Mode Pro palette gives developer tools and data-heavy apps a polished dark foundation with enough surface layering and accent contrast to stay usable across long work sessions.",
+    intent: "commercial",
+    keywords: ["dark mode palette", "dark ui palette", "developer tool colors", "dark dashboard colors"],
+    sections: [
+      { title: "Surface layering", body: "Use three to four dark tones for background, surface, raised card, and border to create depth without relying on borders alone." },
+      { title: "Accent at rest and active", body: "A single electric accent — blue, green, or orange — handles primary actions, active states, and focus rings across the whole product." },
+      { title: "Data and chart colors", body: "For dashboards, add four to six categorical colors that remain distinct even for users with common forms of color blindness." },
+    ],
+    faq: [
+      { question: "What is the best dark mode palette for SaaS?", answer: "A layered dark neutral system with one electric accent and semantic state colors typically works best for dense product UI." },
+      { question: "Should developer tools always use dark mode?", answer: "Dark mode is strongly preferred by most developers and power users, so dark-first design is usually the right call." },
+    ],
+    relatedLinks: [
+      { title: "Dark mode color guide", href: "/guides/dark-mode-color-guide" },
+      { title: "Midnight metal gradient", href: "/gradients/midnight-metal" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "SaaS product UI color guide", href: "/guides/saas-product-ui-color-guide" },
+    ],
+  },
+  {
     slug: "dtc-energy-stack",
+    paletteColors: ["#1A1A1A", "#F15B2A", "#FFFFFF", "#E8E8E8", "#D4380D"],
     title: "DTC Energy Stack Palette",
     description: "A high-conversion palette for ecommerce and DTC brands using warm action colors with grounded neutrals.",
     answer:
@@ -372,6 +758,7 @@ const palettes: ContentEntry[] = [
 const gradients: ContentEntry[] = [
   {
     slug: "ocean-depth",
+    paletteColors: ["#0C2E6E", "#1351B4", "#1E8FD8", "#38C4E8", "#A8E6F0"],
     title: "Ocean Depth Gradient",
     description: "A blue-to-cyan gradient for SaaS hero sections, trust-heavy product pages, and fintech marketing sites.",
     answer:
@@ -395,6 +782,7 @@ const gradients: ContentEntry[] = [
   },
   {
     slug: "sunset-burst",
+    paletteColors: ["#C2410C", "#EA580C", "#F97316", "#FB923C", "#FED7AA"],
     title: "Sunset Burst Gradient",
     description: "A warm orange-to-red gradient for commerce, launch pages, promotions, and energetic creator brands.",
     answer:
@@ -418,6 +806,7 @@ const gradients: ContentEntry[] = [
   },
   {
     slug: "violet-aurora",
+    paletteColors: ["#2E1065", "#4C1D95", "#7C3AED", "#A855F7", "#DDD6FE"],
     title: "Violet Aurora Gradient",
     description: "A purple-to-indigo gradient for AI products, creative tooling, and innovation-led landing pages.",
     answer:
@@ -441,6 +830,7 @@ const gradients: ContentEntry[] = [
   },
   {
     slug: "mint-horizon",
+    paletteColors: ["#064E3B", "#059669", "#34D399", "#6EE7B7", "#A7F3D0"],
     title: "Mint Horizon Gradient",
     description: "A green-to-cyan gradient for health apps, wellness brands, and optimistic product states.",
     answer:
@@ -464,6 +854,7 @@ const gradients: ContentEntry[] = [
   },
   {
     slug: "midnight-metal",
+    paletteColors: ["#111111", "#1C1C1C", "#2D2D2D", "#6B7280", "#9CA3AF"],
     title: "Midnight Metal Gradient",
     description: "A charcoal-to-steel gradient for premium brands, dark product themes, and editorial surfaces.",
     answer:
@@ -486,7 +877,80 @@ const gradients: ContentEntry[] = [
     ],
   },
   {
+    slug: "rose-gold-bloom",
+    paletteColors: ["#9D174D", "#BE185D", "#EC4899", "#F9A8D4", "#B45309"],
+    title: "Rose Gold Bloom Gradient",
+    description: "A blush-to-gold gradient for beauty, fashion, and lifestyle brands that want warmth and luxury.",
+    answer:
+      "Rose Gold Bloom is ideal for beauty, fashion, and premium lifestyle brands because it blends soft blush warmth with gold richness. It feels feminine, elevated, and inviting without being aggressive.",
+    intent: "commercial",
+    keywords: ["rose gold gradient", "beauty brand gradient", "pink gold gradient", "luxury blush gradient"],
+    sections: [
+      { title: "Best brand fit", body: "Beauty, skincare, jewelry, wedding, and lifestyle brands benefit most from this warm, premium gradient." },
+      { title: "Usage guidance", body: "Use it in hero backgrounds, product card overlays, and campaign imagery rather than dense reading surfaces." },
+      { title: "Text contrast", body: "Dark plum or deep brown text works better than black on blush-gold gradients, keeping the palette cohesive." },
+    ],
+    faq: [
+      { question: "What gradient works for beauty brands?", answer: "Blush, rose gold, and peach gradients usually feel most appropriate for beauty and skincare because they feel warm, elegant, and inviting." },
+      { question: "Can rose gold feel professional?", answer: "Yes, especially when paired with restrained typography and clean white space. The key is not overusing the warmth." },
+    ],
+    relatedLinks: [
+      { title: "Luxury editorial noir palette", href: "/palettes/luxury-editorial-noir" },
+      { title: "Orange color meaning", href: "/colors/orange" },
+      { title: "Luxury brand color strategy", href: "/guides/luxury-brand-color-strategy" },
+    ],
+  },
+  {
+    slug: "forest-canopy",
+    paletteColors: ["#14532D", "#166534", "#16A34A", "#059669", "#0D9488"],
+    title: "Forest Canopy Gradient",
+    description: "A deep green-to-teal gradient for sustainability, outdoor, and nature-oriented brand experiences.",
+    answer:
+      "Forest Canopy is a strong gradient for sustainability brands, outdoor products, and eco-conscious companies because it blends deep forest greens with fresher teal tones. It feels grounded and trustworthy.",
+    intent: "commercial",
+    keywords: ["green sustainability gradient", "eco brand gradient", "forest green gradient", "nature gradient"],
+    sections: [
+      { title: "Sustainability signal", body: "This gradient communicates environmental commitment and natural values, especially useful for certified organic, recycled, or eco-friendly products." },
+      { title: "Outdoor and adventure brands", body: "Deep greens and teals map naturally to the outdoors, making them effective for hiking, travel, and outdoor gear brands." },
+      { title: "Product integration", body: "Pair with earthy neutrals and warm creams to keep the system from feeling overly cool or corporate." },
+    ],
+    faq: [
+      { question: "What gradient works for sustainability brands?", answer: "Deep green to teal gradients communicate environmental trust while feeling modern and product-forward." },
+      { question: "Can green gradients work for tech brands?", answer: "Yes, especially for climate tech, agritech, and wellness tech where the green signal aligns with the brand mission." },
+    ],
+    relatedLinks: [
+      { title: "Green color meaning", href: "/colors/green" },
+      { title: "Wellness nature calm palette", href: "/palettes/wellness-nature-calm" },
+      { title: "Healthcare website colors guide", href: "/guides/best-colors-for-healthcare-websites-usa" },
+    ],
+  },
+  {
+    slug: "deep-space-blue",
+    paletteColors: ["#0A1628", "#0F2A5C", "#1D4ED8", "#3B82F6", "#93C5FD"],
+    title: "Deep Space Blue Gradient",
+    description: "A dark navy-to-electric blue gradient for fintech, enterprise, and data-driven product hero sections.",
+    answer:
+      "Deep Space Blue combines the authority of dark navy with the energy of electric blue. It is a strong choice for hero sections, feature banners, and data-product landing pages that need to feel intelligent and modern.",
+    intent: "commercial",
+    keywords: ["dark blue gradient", "enterprise gradient", "navy electric blue gradient", "fintech hero gradient"],
+    sections: [
+      { title: "Enterprise credibility", body: "Dark navy signals seriousness and authority, while the electric blue lift adds forward momentum without losing institutional weight." },
+      { title: "Data product use cases", body: "Works well for analytics dashboards, security products, financial platforms, and B2B software that needs strong visual presence." },
+      { title: "Typography rules", body: "Light text with strong weight reads cleanly against this gradient. Avoid thin fonts in smaller sizes." },
+    ],
+    faq: [
+      { question: "What is the best gradient for enterprise websites?", answer: "Dark navy gradients with a clean blue highlight usually perform best because they feel sophisticated and technically capable." },
+      { question: "Can dark gradients work on mobile?", answer: "Yes, but reduce the saturation on the electric highlights slightly since they can feel more intense on OLED mobile screens." },
+    ],
+    relatedLinks: [
+      { title: "SaaS trust spectrum palette", href: "/palettes/saas-trust-spectrum" },
+      { title: "Blue color meaning", href: "/colors/blue" },
+      { title: "SaaS product UI color guide", href: "/guides/saas-product-ui-color-guide" },
+    ],
+  },
+  {
     slug: "apricot-launch",
+    paletteColors: ["#FFEDD5", "#FED7AA", "#FB923C", "#F97316", "#EA580C"],
     title: "Apricot Launch Gradient",
     description: "A peach-to-orange gradient for onboarding, startups, and friendly high-action product moments.",
     answer:
@@ -1068,22 +1532,24 @@ const accessibilityEntries: ContentEntry[] = [
   },
 ];
 
-const tailwindEntries: ContentEntry[] = ["blue", "green", "purple", "orange", "black"].map((color) => ({
+const tailwindEntries: ContentEntry[] = ["blue", "green", "purple", "orange", "black", "red", "yellow", "gray", "slate", "indigo", "sky", "pink", "teal"].map((color) => ({
   slug: color,
-  title: `Tailwind ${color[0].toUpperCase()}${color.slice(1)} Color Guide`,
-  description: `Use Tailwind ${color} classes for consistent UI hierarchy, accessible components, and brand-aligned design tokens.`,
+  title: `Tailwind ${color[0].toUpperCase()}${color.slice(1)} Color Classes and Scale Guide`,
+  description: `All Tailwind CSS ${color} color classes — 50 to 950 — with usage tips for UI components, accessible contrast, and design tokens.`,
   answer:
-    `Tailwind ${color} utilities work best when they are assigned to specific semantic roles such as primary actions, accents, or states. Teams get better consistency when they map each scale to one purpose instead of styling ad hoc.`,
+    `Tailwind ${color} utilities work best when assigned to specific semantic roles such as primary, accent, or state colors. Map each shade once and reuse it consistently across components for cleaner, more accessible UIs.`,
   intent: "informational",
-  keywords: [`tailwind ${color}`, `${color} tailwind classes`, `${color} ui palette`],
+  keywords: [`tailwind ${color}`, `tailwind ${color} colors`, `${color} tailwind classes`, `tailwind css ${color}`, `${color} color tailwind`],
   sections: [
-    { title: "Semantic mapping", body: `Use Tailwind ${color} shades for a defined role like primary, accent, or support instead of mixing them across unrelated components.` },
-    { title: "Scale guidance", body: "Keep lighter shades for backgrounds, mid shades for fills, and darker shades for text or borders where contrast matters." },
-    { title: "Team workflow", body: "Mirror your Tailwind color choices in tokens and documentation so marketing and product share the same language." },
+    { title: "How to use the scale", body: `Tailwind ${color}-50 to ${color}-100 are best for backgrounds and surfaces. ${color}-400 to ${color}-600 work well for fills and interactive elements. ${color}-700 to ${color}-950 suit text and borders where contrast is critical.` },
+    { title: "Semantic token mapping", body: `Assign --color-primary to your chosen ${color} shade and reuse that token. Avoid picking a different ${color} shade for each component — it makes theming harder and breaks visual consistency.` },
+    { title: "Accessibility", body: `Test your Tailwind ${color} text shades against their backgrounds with a contrast checker. Dark text on ${color}-50 usually passes WCAG AA, but mid-range shades like ${color}-400 on white often fail.` },
+    { title: "Team workflow", body: "Document which shades map to which semantic roles in your design system. This prevents drift between design files and shipped components." },
   ],
   faq: [
-    { question: `How should teams use Tailwind ${color}?`, answer: "Map the scale to specific UI jobs and test contrast on every interactive state before shipping." },
-    { question: `Can Tailwind ${color} work for branding?`, answer: "Yes, especially when the utility scale is aligned to a broader design-token system." },
+    { question: `What Tailwind ${color} shade should I use for buttons?`, answer: `${color}-500 or ${color}-600 usually works best for filled buttons. Pair with white text and verify WCAG AA contrast before shipping.` },
+    { question: `Can Tailwind ${color} work for branding?`, answer: "Yes, especially when you map it to a semantic token and align it with your design system rather than using it ad hoc." },
+    { question: `What is the darkest Tailwind ${color} class?`, answer: `${color}-950 is the darkest shade in the Tailwind ${color} scale, suitable for text and borders on light backgrounds.` },
   ],
   relatedLinks: [
     { title: `${color[0].toUpperCase()}${color.slice(1)} color page`, href: `/colors/${color}` },
@@ -1291,11 +1757,107 @@ const guides: ContentEntry[] = [
     ],
   },
   {
-    slug: "best-colors-for-healthcare-websites-usa",
-    title: "Best Colors for Healthcare Websites in the USA",
-    description: "How US healthcare websites can use color to build trust, reduce anxiety, and keep booking or inquiry flows clear.",
+    slug: "ecommerce-color-strategy",
+    title: "Best Colors for Ecommerce Websites",
+    description: "A guide to choosing ecommerce colors that drive trust, improve product appeal, and increase purchase intent.",
     answer:
-      "The best colors for healthcare websites in the USA are usually blue, teal, soft green, and calm neutrals. These colors work because they feel credible, readable, and reassuring without adding visual stress during important decisions.",
+      "The best ecommerce colors combine trust-building neutrals with one clear action color for CTAs. Blue or dark navy anchors credibility while orange, coral, or warm red drives purchase momentum without feeling aggressive.",
+    intent: "informational",
+    keywords: ["best colors for ecommerce", "ecommerce website colors", "online store color palette", "best cta color for ecommerce"],
+    sections: [
+      { title: "Product page colors", body: "Keep product pages clean with neutral backgrounds so product imagery gets the visual attention it deserves. One action color handles add-to-cart clearly." },
+      { title: "Trust at checkout", body: "Checkout flows convert better when they feel calm. Use blue or deep neutral with a clear green confirmation state." },
+      { title: "Category page hierarchy", body: "Use color to guide users through categories, filters, and featured sections without creating visual overload." },
+    ],
+    faq: [
+      { question: "What is the best color for an ecommerce website?", answer: "A neutral base with one warm action color for CTAs typically works best because it keeps product imagery prominent and purchase paths obvious." },
+      { question: "What color increases online sales?", answer: "Orange and warm red can increase urgency-driven conversions, while blue supports higher-ticket trust-based purchases." },
+    ],
+    relatedLinks: [
+      { title: "DTC energy stack palette", href: "/palettes/dtc-energy-stack" },
+      { title: "Orange color meaning", href: "/colors/orange" },
+      { title: "Conversion color strategy guide", href: "/guides/conversion-color-strategy" },
+      { title: "Marketing colors", href: "/marketing-colors" },
+    ],
+  },
+  {
+    slug: "dark-mode-color-guide",
+    title: "How to Choose Colors for Dark Mode Interfaces",
+    description: "A practical guide to selecting background, surface, text, and accent colors for dark mode product design.",
+    answer:
+      "Dark mode works best when backgrounds are dark but not pure black, surfaces are layered with subtle contrast, and accents stay vibrant enough to guide attention without causing eye strain. Pure white text on pure black is rarely the right choice.",
+    intent: "informational",
+    keywords: ["dark mode color guide", "dark ui colors", "best dark mode palette", "dark theme design colors"],
+    sections: [
+      { title: "Background vs surface", body: "Use slightly different dark shades for backgrounds and cards so users understand depth and hierarchy without relying on borders alone." },
+      { title: "Accent vibrancy in dark UI", body: "Accents need to be brighter or more saturated in dark mode to maintain visual weight. A color that reads fine on light will disappear on dark backgrounds." },
+      { title: "Text contrast rules", body: "Avoid pure white on pure black. Slightly off-white text on a very dark neutral reduces harsh contrast and feels more polished." },
+    ],
+    faq: [
+      { question: "What colors work best for dark mode?", answer: "Deep charcoal or near-black backgrounds, layered surface grays, bright or saturated accent colors, and off-white text usually work best." },
+      { question: "Should dark mode use pure black backgrounds?", answer: "Rarely. Pure black creates harsh contrast. Most polished dark UIs use very dark gray or slightly tinted dark neutrals." },
+    ],
+    relatedLinks: [
+      { title: "Color playground", href: "/tools/playground" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Midnight metal gradient", href: "/gradients/midnight-metal" },
+      { title: "Luxury editorial noir palette", href: "/palettes/luxury-editorial-noir" },
+    ],
+  },
+  {
+    slug: "mobile-app-color-guide",
+    title: "Best Colors for Mobile App Design",
+    description: "How to choose a color palette that works across iOS and Android apps — considering thumb reach, contrast, and system defaults.",
+    answer:
+      "Mobile apps need colors that perform across different screen sizes, ambient light conditions, and OS themes. High-contrast accents, accessible text, and a limited palette with clear role assignments work best.",
+    intent: "informational",
+    keywords: ["mobile app color palette", "ios app colors", "android app colors", "best colors for apps"],
+    sections: [
+      { title: "Screen variety matters", body: "Mobile screens vary widely in color accuracy. Colors that look vibrant in design tools may appear washed out or too saturated on real devices." },
+      { title: "One accent, clear hierarchy", body: "Apps with one clear action color perform better than those with four or five competing hues fighting for attention across small screens." },
+      { title: "System color integration", body: "iOS and Android have their own system color scales. Your palette needs to coexist with those defaults for modals, alerts, and toggles." },
+    ],
+    faq: [
+      { question: "What is the best color palette for mobile apps?", answer: "A focused palette with one primary, one accent, a neutral family, and semantic colors for success, warning, and error usually works best." },
+      { question: "Should mobile apps use dark or light mode?", answer: "Both. Supporting both modes is now expected. Design with light mode first, then map each color role to a dark equivalent." },
+    ],
+    relatedLinks: [
+      { title: "Color playground", href: "/tools/playground" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Design token generator", href: "/tools/design-tokens" },
+      { title: "Dark mode color guide", href: "/guides/dark-mode-color-guide" },
+    ],
+  },
+  {
+    slug: "saas-product-ui-color-guide",
+    title: "SaaS Product UI Color Guide",
+    description: "How to build a color system for SaaS product interfaces — dashboards, onboarding flows, and data-heavy screens.",
+    answer:
+      "SaaS product UIs need structured color systems, not just brand palettes. The strongest systems assign every color a role: primary actions, success states, warnings, errors, and neutral surfaces each need their own disciplined range.",
+    intent: "informational",
+    keywords: ["saas ui colors", "product ui color system", "dashboard color palette", "saas design tokens"],
+    sections: [
+      { title: "Semantic color roles", body: "Every state in a SaaS product needs a color — not just a brand color, but a role-specific shade for primary, success, warning, danger, and neutral contexts." },
+      { title: "Data visualization colors", body: "Charts and tables need color scales that work together, stay accessible, and still feel like part of the same brand system." },
+      { title: "Empty and loading states", body: "Use subtle, low-saturation colors for loading skeletons and empty states so they feel calm rather than jarring." },
+    ],
+    faq: [
+      { question: "How many colors does a SaaS UI need?", answer: "A well-structured SaaS UI needs at minimum: one primary, one success, one warning, one danger, and a neutral scale. Extras should be added only as needed." },
+      { question: "Should SaaS products use dark mode?", answer: "Yes, especially for developer tools, dashboards, and pro applications where users spend long sessions." },
+    ],
+    relatedLinks: [
+      { title: "SaaS trust spectrum palette", href: "/palettes/saas-trust-spectrum" },
+      { title: "Design token generator", href: "/tools/design-tokens" },
+      { title: "Accessibility checker", href: "/tools/contrast" },
+      { title: "Startup website color strategy", href: "/guides/startup-website-color-strategy" },
+    ],
+  },
+  {
+    slug: "best-colors-for-healthcare-websites-usa",
+    title: "Best Colors for Healthcare Websites in the USA (2025 Guide)",
+    description: "The best colors for healthcare websites — blue, teal, soft green, and calm neutrals — with guidance on palettes for hospitals, clinics, telehealth, dental, and wellness brands.",
+    answer:
+      "The best colors for healthcare websites in the USA are blue, teal, soft green, and calm neutrals like white and light gray. Blue signals trust and clinical stability. Teal and green add warmth without losing professionalism. Warm colors like orange or red should stay as small accents only.",
     intent: "informational",
     keywords: [
       "best colors for healthcare websites",
@@ -1303,33 +1865,57 @@ const guides: ContentEntry[] = [
       "medical website color palette",
       "doctor website color strategy",
       "hospital website colors",
+      "color palette for healthcare website",
+      "telehealth website colors",
+      "dental website color scheme",
+      "clinic website color guide",
     ],
     sections: [
       {
-        title: "Why blue still wins",
-        body: "Blue remains the safest healthcare default because it signals stability and professionalism. For hospitals, clinics, telehealth products, and insurance-adjacent services, that immediate sense of order matters more than novelty.",
+        title: "Why blue still leads healthcare design",
+        body: "Blue remains the safest healthcare default because it signals stability, clinical professionalism, and trustworthiness. Hospitals, clinics, telehealth platforms, and insurance-adjacent services benefit most — patients feel the site is organized and safe before reading a single word.",
       },
       {
         title: "Teal and green reduce emotional friction",
-        body: "Teal and softer greens often help healthcare brands feel more human and less institutional. They are especially useful for wellness, pediatrics, mental health, dental, and patient-experience-led brands that want calm without losing trust.",
+        body: "Teal and softer greens help healthcare brands feel more human and less institutional. They work especially well for wellness, pediatrics, mental health, dental, and patient-experience brands that want calm reassurance without a cold corporate feel.",
+      },
+      {
+        title: "White and light gray as foundation colors",
+        body: "Clean white and light gray (#F8FAFC or similar) create the neutral foundation most healthcare UIs need. They support readability for long-form content — procedure descriptions, FAQs, insurance details — and give brand colors room to breathe without crowding the reading experience.",
       },
       {
         title: "Warm colors should stay secondary",
-        body: "Orange, coral, or warm yellow can work in small moments such as highlights or scheduling cues, but they should not dominate the reading experience. In healthcare, too much heat can feel promotional when users want reassurance.",
+        body: "Orange, coral, or warm yellow can highlight scheduling CTAs or progress indicators, but should never dominate. In healthcare, too much warmth reads as promotional — which conflicts with the reassurance users need during important decisions.",
       },
       {
         title: "Accessibility matters more in healthcare than trendiness",
-        body: "Healthcare sites often serve older users, stressed users, and mobile visitors making important decisions fast. Clear contrast, obvious buttons, and calmer surface colors usually matter more than trying to look visually disruptive.",
+        body: "Healthcare sites often serve older users, stressed visitors, and people on mobile making urgent decisions. WCAG AA contrast (4.5:1 for body text) is a baseline requirement, not a stretch goal. Buttons must be clear, states must be obvious, and form fields must be easy to read under any lighting condition.",
+      },
+      {
+        title: "Telehealth and mental health need extra calm",
+        body: "Telehealth and mental health platforms benefit from muted palettes — desaturated teal, soft navy, or sage green — over bright primaries. The color system itself should signal that this is a safe, private space rather than a high-energy product.",
       },
     ],
     faq: [
       {
         question: "What color builds trust for medical websites?",
-        answer: "Blue is usually the strongest trust color for medical and healthcare websites because it feels organized, stable, and familiar.",
+        answer: "Blue is the strongest trust color for medical and healthcare websites. It feels organized, stable, and professional — all qualities patients look for when choosing a provider or making health decisions online.",
       },
       {
         question: "Can healthcare websites use green?",
-        answer: "Yes. Green works well when the brand wants to feel restorative, supportive, or wellness-oriented, especially when paired with strong neutrals and accessible text contrast.",
+        answer: "Yes. Green works well for wellness, dental, pediatric, and mental health brands that want to feel restorative and supportive. Pair it with strong neutrals and verify WCAG contrast on all text elements.",
+      },
+      {
+        question: "What is the best color palette for a doctor's website?",
+        answer: "A clean blue or teal primary, white or light gray background, and dark neutral text usually works best. Add one warm accent color for CTAs like 'Book Appointment' to draw attention without creating anxiety.",
+      },
+      {
+        question: "Should hospital websites use dark mode?",
+        answer: "Most hospital and clinic websites are better served by a clean light theme. Dark mode can work for patient portals or apps used at night, but standard marketing and booking pages benefit from the clarity and legibility of light backgrounds.",
+      },
+      {
+        question: "What colors should healthcare websites avoid?",
+        answer: "Avoid high-saturation red as a primary color (it reads as emergency or danger), aggressive orange as a dominant tone, and dark or low-contrast background colors that slow reading during stressful decision-making.",
       },
     ],
     definitions: [
@@ -1356,12 +1942,18 @@ const guides: ContentEntry[] = [
     comparisonRows: [
       { label: "Blue", bestFor: "Hospitals, clinics, telehealth, insurance-adjacent services", strengths: "Trust and clarity", watchouts: "Can feel generic if unsupported" },
       { label: "Teal/green", bestFor: "Wellness, dental, mental health, modern care brands", strengths: "Calm and human warmth", watchouts: "Needs strong contrast and structure" },
+      { label: "White/light gray", bestFor: "All healthcare sites as a neutral base", strengths: "Clean, readable, professional", watchouts: "Needs strong brand accent to avoid feeling plain" },
+      { label: "Warm accent (orange/coral)", bestFor: "CTAs, scheduling, highlights only", strengths: "Draws attention to key actions", watchouts: "Too much warmth reads as promotional or unsafe" },
     ],
     relatedLinks: [
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
       { title: "Blue color meaning", href: "/colors/blue" },
       { title: "Green color meaning", href: "/colors/green" },
+      { title: "Teal color meaning", href: "/colors/teal" },
       { title: "Accessible success states", href: "/accessibility/accessible-success-states" },
+      { title: "WCAG color contrast guide", href: "/accessibility/color-contrast" },
+      { title: "Why blue builds trust", href: "/explainers/why-blue-builds-trust" },
+      { title: "Color contrast checker tool", href: "/tools/contrast" },
     ],
   },
 ];
@@ -1861,7 +2453,7 @@ export const hubs: HubPage[] = [
     answer:
       "Palette pages help HueFlow win commercial search intent by showing how colors work together in real categories like SaaS, fintech, luxury ecommerce, and AI products.",
     goals: ["Own industry palette intent", "Support best-for and brand-color pages", "Drive tool adoption"],
-    featuredLinks: palettes.map((entry) => ({ title: entry.title, href: `/palettes/${entry.slug}` })),
+    featuredLinks: palettes.map((entry) => ({ title: entry.title, href: `/palettes/${entry.slug}`, paletteColors: entry.paletteColors })),
   },
   {
     slug: "gradients",
@@ -1871,7 +2463,7 @@ export const hubs: HubPage[] = [
     answer:
       "Gradient pages convert design and AI-search demand by tying each gradient to a clear category, color family, and UI use case rather than treating gradients as isolated visuals.",
     goals: ["Capture gradient generator intent", "Link gradients to colors and palettes", "Support web design pages"],
-    featuredLinks: gradients.map((entry) => ({ title: entry.title, href: `/gradients/${entry.slug}` })),
+    featuredLinks: gradients.map((entry) => ({ title: entry.title, href: `/gradients/${entry.slug}`, paletteColors: entry.paletteColors })),
   },
   {
     slug: "brand-colors",
@@ -1944,10 +2536,10 @@ export const hubs: HubPage[] = [
   {
     slug: "tailwind",
     path: "/tailwind",
-    title: "Tailwind Colors",
-    description: "Tailwind color documentation for UI scales, design tokens, accessibility, and semantic implementation.",
+    title: "Tailwind CSS Colors — Complete Color Scale Reference",
+    description: "Browse every Tailwind CSS color — blue, green, red, gray, slate, indigo, purple, orange, pink, teal, sky, yellow, and black — with class names, scale guidance, accessibility tips, and semantic token examples.",
     answer:
-      "Tailwind pages target implementation intent by translating design choices into classes, scales, and semantic mappings that developers can use immediately.",
+      "Tailwind CSS includes a full color palette from 50 (lightest) to 950 (darkest) for each hue. Each guide covers which shades to use for backgrounds, fills, text, borders, and interactive states — plus how to map them to semantic design tokens for consistent, accessible UIs.",
     goals: ["Own dev-intent searches", "Support tool adoption", "Link CSS and accessibility content"],
     featuredLinks: tailwindEntries.map((entry) => ({ title: entry.title, href: `/tailwind/${entry.slug}` })),
   },

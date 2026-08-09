@@ -30,8 +30,8 @@ export function AccessibilityPanel({ palette }: Props) {
             </tr>
           </thead>
           <tbody>
-            {palette.colors.map((color) => (
-              <tr key={color.role} className="border-t border-white/5">
+            {palette.colors.map((color, i) => (
+              <tr key={`${color.role}-${i}`} className="border-t border-white/5">
                 <td className="flex items-center gap-2 py-2 pr-4">
                   <div className="h-4 w-4 rounded" style={{ backgroundColor: color.hex }} />
                   <span className="text-white/60">{color.role}</span>

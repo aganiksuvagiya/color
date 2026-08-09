@@ -28,7 +28,7 @@ export function PaletteDisplay({ palette, lockedIndices, onColorChange, onToggle
 
       <motion.div
         layout
-        className="grid grid-cols-1 overflow-hidden rounded-xl sm:grid-cols-3 lg:grid-cols-5"
+        className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5"
       >
         {palette.colors.map((color, i) => (
           <ColorCard

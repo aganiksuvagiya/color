@@ -9,7 +9,6 @@ import { withExtraColors } from "@/lib/shades";
 import { deletePalette, getSavedPalettes, savePalette, type SavedPalette } from "@/lib/storage";
 import { encodePalette, decodePalette } from "@/lib/share-utils";
 import type { Palette } from "@/lib/types";
-import { PromptBar } from "./prompt-bar";
 import { PaletteDisplay } from "./palette-display";
 import { PaletteVariations } from "./palette-variations";
 import { ExportPanel } from "./export-panel";
@@ -61,6 +60,10 @@ export function GeneratorPage() {
       if (shared) {
         setPalette(shared);
         pushHistory(shared);
+      } else {
+        const defaultPalette = withExtraColors(generateRandomPalette(), BASE_COLOR_COUNT - BASE_COLOR_COUNT);
+        setPalette(defaultPalette);
+        pushHistory(defaultPalette);
       }
     };
     loadData();
@@ -233,45 +236,46 @@ export function GeneratorPage() {
 
       <div className="relative mx-auto max-w-5xl px-4 pb-20 pt-24 sm:px-6 sm:pt-40">
 
-        <div className="mb-6 text-center">
-          <motion.h1
+        <div className="mb-8 text-center">
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className={`text-4xl font-bold tracking-tight sm:text-5xl ${lightMode ? "text-black" : "text-white"}`}
+            className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/6 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white/55 backdrop-blur-xl mb-5"
           >
-            Generate your palette
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" className="text-[#F15B2A]"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" fill="currentColor" /></svg>
+            Color Generator
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className={`font-display text-[2.6rem] font-semibold leading-[1.06] tracking-[-0.06em] sm:text-[3.4rem] ${lightMode ? "text-black" : "text-white"}`}
+          >
+            Generate colors that <span className="text-[#F97A45]">connect.</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className={`mx-auto mt-4 max-w-2xl text-lg ${textMuted}`}
+            transition={{ duration: 0.5, delay: 0.12 }}
+            className={`mx-auto mt-4 max-w-xl text-lg leading-7 ${textMuted}`}
           >
-            Describe a mood, brand, or industry and get a production-ready color system.
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className={`mt-2 text-[11px] ${textFaint}`}
-          >
-            Space/R = random · S = save · C = share · ⌘Z = undo · ⌘⇧Z = redo
+            Describe a mood, brand or industry and create a production-ready color system in seconds.
           </motion.p>
         </div>
 
         <div className="space-y-4">
-          <PromptBar onGenerate={handleGenerate} onRandom={handleRandom} isLoading={false} />
-
           <div className="flex items-center justify-center gap-3">
-            <span className={`text-xs ${textMuted}`}>Colors:</span>
-            <div className="flex items-center gap-1">
+            <span className={`text-xs font-medium ${textMuted}`}>Colors</span>
+            <div className="flex items-center gap-1 rounded-2xl border border-white/10 bg-white/4 p-1">
               {Array.from({ length: MAX_COLOR_COUNT - BASE_COLOR_COUNT + 1 }, (_, i) => BASE_COLOR_COUNT + i).map((n) => (
                 <button
                   key={n}
                   onClick={() => handleColorCountChange(n)}
-                  className={`h-7 w-7 rounded-lg text-xs font-medium transition-colors ${
-                    colorCount === n ? "bg-white text-[#160b05]" : `${cardBg} ${textMuted} hover:text-white`
+                  className={`h-7 w-7 rounded-xl text-xs font-semibold transition-all ${
+                    colorCount === n
+                      ? "bg-[#F15B2A] text-white shadow-[0_2px_8px_rgba(241,91,42,0.4)]"
+                      : `${textMuted} hover:text-white`
                   }`}
                 >
                   {n}
@@ -340,22 +344,24 @@ export function GeneratorPage() {
                 )}
 
                 <div className="flex flex-wrap items-center justify-center gap-2">
-                  <button onClick={undo} className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs font-medium text-white/50 transition-all hover:border-white/20 hover:bg-white/10 hover:text-white/70">↩ Undo</button>
-                  <button onClick={redo} className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs font-medium text-white/50 transition-all hover:border-white/20 hover:bg-white/10 hover:text-white/70">↪ Redo</button>
-                  <button onClick={handleSave} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-xs font-medium text-white/50 transition-all hover:border-white/20 hover:bg-white/10 hover:text-white/70">
-                    <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" /><path d="M17 21v-8H7v8M7 3v5h8" /></svg>
-                    Save
-                  </button>
-                  <button onClick={handleShare} className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-xs font-medium text-white/50 transition-all hover:border-white/20 hover:bg-white/10 hover:text-white/70">
-                    <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" /></svg>
-                    Share
-                  </button>
-                  <button onClick={handleCompare} className="rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-xs font-medium text-white/50 transition-all hover:border-white/20 hover:bg-white/10 hover:text-white/70">
-                    {comparePalette ? "✕ Close Compare" : "⇔ Compare"}
-                  </button>
+                  {[
+                    { label: "Undo", icon: <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M3 7v6h6" /><path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13" /></svg>, onClick: undo },
+                    { label: "Redo", icon: <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M21 7v6h-6" /><path d="M3 17a9 9 0 019-9 9 9 0 016 2.3L21 13" /></svg>, onClick: redo },
+                    { label: "Save", icon: <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" /><path d="M17 21v-8H7v8M7 3v5h8" /></svg>, onClick: handleSave },
+                    { label: "Share", icon: <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" /></svg>, onClick: handleShare },
+                    { label: comparePalette ? "Close Compare" : "Compare", icon: <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" /></svg>, onClick: handleCompare },
+                  ].map(({ label, icon, onClick }) => (
+                    <button
+                      key={label}
+                      onClick={onClick}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/5 px-4 py-2 text-xs font-medium text-white/55 transition-all hover:border-white/22 hover:bg-white/10 hover:text-white"
+                    >
+                      {icon}{label}
+                    </button>
+                  ))}
                   <AnimatePresence>
                     {(saveMessage || shareMessage) && (
-                      <motion.span initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} className="rounded-lg bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400">
+                      <motion.span initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400">
                         {saveMessage || shareMessage}
                       </motion.span>
                     )}
@@ -363,15 +369,15 @@ export function GeneratorPage() {
                 </div>
 
                 <div>
-                  <div className="mb-3 flex flex-wrap items-center justify-center gap-1.5">
+                  <div className="mb-4 flex flex-wrap items-center justify-center gap-1.5 rounded-2xl border border-white/10 bg-white/4 p-1.5">
                     {PANEL_TABS.map((tab) => (
                       <button
                         key={tab.key}
                         onClick={() => setActiveTab(tab.key)}
-                        className={`rounded-xl px-4 py-2 text-xs font-medium transition-colors ${
+                        className={`rounded-xl px-4 py-2 text-xs font-semibold transition-all ${
                           activeTab === tab.key
-                            ? lightMode ? "bg-black text-white" : "bg-white text-[#160b05]"
-                            : `border ${cardBg} ${textMuted} ${lightMode ? "hover:text-black" : "hover:text-white"}`
+                            ? "bg-[#F15B2A] text-white shadow-[0_2px_10px_rgba(241,91,42,0.35)]"
+                            : `${textMuted} hover:text-white`
                         }`}
                       >
                         {tab.label}

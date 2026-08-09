@@ -48,7 +48,7 @@ const FOOTER_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#160b05] text-white">
+    <footer className="border-t border-white/10 bg-[#14100d] text-white">
       <div className="mx-auto max-w-[1560px] px-6 py-14 sm:px-8">
         <div className="flex flex-col gap-12 md:flex-row md:justify-between">
           <div className="max-w-xs">

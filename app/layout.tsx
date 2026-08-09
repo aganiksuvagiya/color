@@ -5,7 +5,7 @@ import "./globals.css";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Footer } from "@/components/footer";
 import { PromoBanner } from "@/components/promo-banner";
-import { buildOrganizationSchema, buildSoftwareApplicationSchema } from "@/lib/seo/schema";
+import { buildOrganizationSchema, buildSoftwareApplicationSchema, buildWebSiteSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/seo/site-config";
 
 const GA_MEASUREMENT_ID = "G-5KWENXMSVQ";
@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   description:
     "Build premium brand palettes, semantic color systems, accessible scales, answer-first color guides, and programmatic content with HueFlow.",
   keywords: [
+    "HueFlow",
+    "HueFlow color tool",
+    "HueFlow palette generator",
     "AI color generator",
     "color palette generator",
     "brand colors",
@@ -80,6 +83,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             gtag('config', '${GA_MEASUREMENT_ID}');
           `}
         </Script>
+        <StructuredData data={buildWebSiteSchema()} />
         <StructuredData data={buildOrganizationSchema()} />
         <StructuredData data={buildSoftwareApplicationSchema()} />
         {children}

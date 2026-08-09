@@ -25,6 +25,8 @@ export const staticPages = [
   page("/generator", "weekly", 0.95),
   page("/explore", "weekly", 0.82),
   page("/trends", "weekly", 0.82),
+  page("/tools", "monthly", 0.88),
+  page("/tools/playground", "monthly", 0.8),
   page("/tools/picker", "monthly", 0.76),
   page("/tools/gradient", "monthly", 0.8),
   page("/tools/contrast", "monthly", 0.8),

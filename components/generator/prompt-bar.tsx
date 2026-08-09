@@ -48,23 +48,29 @@ export function PromptBar({ onGenerate, onRandom, isLoading }: Props) {
             type="button"
             onClick={onRandom}
             disabled={isLoading}
-            className="rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white/60 transition-all hover:border-white/20 hover:bg-white/10 hover:text-white/80 disabled:opacity-40"
+            className="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/6 px-5 py-2.5 text-sm font-medium text-white/65 transition-all hover:border-white/22 hover:bg-white/10 hover:text-white disabled:opacity-40"
           >
-            🎲 Random
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="16 3 21 3 21 8" /><line x1="4" y1="20" x2="21" y2="3" /><polyline points="21 16 21 21 16 21" /><line x1="15" y1="15" x2="21" y2="21" /><line x1="4" y1="4" x2="9" y2="9" />
+            </svg>
+            Randomize
           </button>
 
           <button
             type="submit"
             disabled={isLoading || !prompt.trim()}
-            className="flex items-center gap-2 rounded-xl bg-gradient-to-b from-white to-white/90 px-6 py-2.5 text-sm font-semibold text-[#160b05] shadow-md shadow-white/10 transition-all hover:shadow-lg hover:shadow-white/15 disabled:opacity-40"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#F15B2A] to-[#C94B1A] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(241,91,42,0.35)] transition-all hover:shadow-[0_8px_24px_rgba(241,91,42,0.45)] hover:scale-[1.02] disabled:opacity-40"
           >
             {isLoading ? (
               <>
-                <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-[#160b05]/20 border-t-[#160b05]" />
+                <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
                 Generating
               </>
             ) : (
-              "Generate ✨"
+              <>
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" fill="currentColor" /></svg>
+                Generate
+              </>
             )}
           </button>
         </div>

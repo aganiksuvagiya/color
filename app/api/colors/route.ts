@@ -52,11 +52,28 @@ function generateBatch(page: number, limit: number, category?: string): Generate
   const rand = seededRandom(page * 7919 + 104729);
   let attempts = 0;
 
-  while (colors.length < limit && attempts < limit * 20) {
+  while (colors.length < limit && attempts < limit * 30) {
     attempts++;
-    const h = Math.floor(rand() * 360);
-    const s = Math.floor(rand() * 80) + 20;
-    const l = Math.floor(rand() * 70) + 15;
+
+    let h: number, s: number, l: number;
+
+    if (category === "White") {
+      h = Math.floor(rand() * 360);
+      s = Math.floor(rand() * 15);
+      l = Math.floor(rand() * 8) + 92; // 92–99
+    } else if (category === "Black") {
+      h = Math.floor(rand() * 360);
+      s = Math.floor(rand() * 20);
+      l = Math.floor(rand() * 8) + 1;  // 1–8
+    } else if (category === "Gray") {
+      h = Math.floor(rand() * 360);
+      s = Math.floor(rand() * 10) + 1;  // 1–10
+      l = Math.floor(rand() * 60) + 15; // 15–74
+    } else {
+      h = Math.floor(rand() * 360);
+      s = Math.floor(rand() * 80) + 20;
+      l = Math.floor(rand() * 70) + 15;
+    }
 
     const hex = hslToHex(h, s, l);
     const cat = getCategory(h, s, l);
