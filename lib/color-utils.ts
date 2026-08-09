@@ -79,6 +79,18 @@ function randomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+function wrapHue(hue: number): number {
+  return ((hue % 360) + 360) % 360;
+}
+
+function shiftHue(hue: number, delta: number): number {
+  return wrapHue(hue + delta);
+}
+
 function makeColor(name: string, role: SemanticRole, h: number, s: number, l: number): PaletteColor {
   const hex = hslToHex(h, s, l);
   return { name, hex, role, text: getContrastText(hex) };
@@ -86,13 +98,36 @@ function makeColor(name: string, role: SemanticRole, h: number, s: number, l: nu
 
 export function generateRandomPalette(): Palette {
   const baseHue = randomInt(0, 360);
+  const family = randomInt(0, 3);
+
+  const baseSat = randomInt(26, 42);
+  const brandSat = clamp(baseSat + randomInt(26, 40), 58, 82);
+  const brandLight = randomInt(44, 56);
+
+  let supportHue = shiftHue(baseHue, randomInt(16, 38));
+  let accentHue = shiftHue(baseHue, randomInt(138, 182));
+  let warmHue = shiftHue(baseHue, randomInt(48, 76));
+
+  if (family === 1) {
+    supportHue = shiftHue(baseHue, randomInt(-36, -18));
+    accentHue = shiftHue(baseHue, randomInt(150, 188));
+    warmHue = shiftHue(baseHue, randomInt(62, 88));
+  } else if (family === 2) {
+    supportHue = shiftHue(baseHue, randomInt(82, 108));
+    accentHue = shiftHue(baseHue, randomInt(168, 198));
+    warmHue = shiftHue(baseHue, randomInt(34, 52));
+  } else if (family === 3) {
+    supportHue = shiftHue(baseHue, randomInt(24, 44));
+    accentHue = shiftHue(baseHue, randomInt(-150, -118));
+    warmHue = shiftHue(baseHue, randomInt(54, 84));
+  }
 
   const colors: PaletteColor[] = [
-    makeColor("Deep Base", "neutral", baseHue, randomInt(8, 15), randomInt(6, 12)),
-    makeColor("Brand", "primary", baseHue, randomInt(55, 85), randomInt(45, 60)),
-    makeColor("Growth", "success", randomInt(110, 155), randomInt(55, 80), randomInt(42, 55)),
-    makeColor("Alert", "warning", randomInt(30, 48), randomInt(80, 95), randomInt(55, 65)),
-    makeColor("Pop", "accent", (baseHue + randomInt(120, 200)) % 360, randomInt(55, 80), randomInt(50, 65)),
+    makeColor("Deep Base", "neutral", baseHue, randomInt(24, 40), randomInt(17, 25)),
+    makeColor("Brand", "primary", shiftHue(baseHue, randomInt(-6, 6)), brandSat, brandLight),
+    makeColor("Growth", "success", supportHue, randomInt(42, 62), randomInt(42, 52)),
+    makeColor("Alert", "warning", warmHue, randomInt(72, 88), randomInt(58, 66)),
+    makeColor("Pop", "accent", accentHue, randomInt(58, 76), randomInt(50, 60)),
   ];
 
   const labels = [

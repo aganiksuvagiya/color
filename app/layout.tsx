@@ -3,8 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 
 import { StructuredData } from "@/components/seo/structured-data";
-import { Footer } from "@/components/footer";
-import { PromoBanner } from "@/components/promo-banner";
+import { ConditionalFooter } from "@/components/conditional-footer";
 import { buildOrganizationSchema, buildSoftwareApplicationSchema, buildWebSiteSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/seo/site-config";
 
@@ -87,8 +86,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <StructuredData data={buildOrganizationSchema()} />
         <StructuredData data={buildSoftwareApplicationSchema()} />
         {children}
-        <Footer />
-        <PromoBanner />
+        <ConditionalFooter />
       </body>
     </html>
   );
