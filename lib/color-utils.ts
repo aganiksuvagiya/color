@@ -96,6 +96,57 @@ function makeColor(name: string, role: SemanticRole, h: number, s: number, l: nu
   return { name, hex, role, text: getContrastText(hex) };
 }
 
+// ── Human-curated color name pools ──────────────────────────────────────────
+
+const NAME_POOLS: Record<string, string[]> = {
+  red:    ["Crimson Dusk","Ember Glow","Dragon Blood","Scarlet Mist","Brick Lane","Rust Sunset","Cardinal","Vermillion","Rose Flame","Pomegranate"],
+  orange: ["Amber Harvest","Copper Glaze","Bronze Dawn","Saffron Smoke","Burnt Sienna","Terracotta","Fox Tail","Cinnamon","Marmalade","Tangerine"],
+  yellow: ["Honey Light","Gold Leaf","Solar Flare","Tuscan Sun","Buttercup","Goldenrod","Champagne","Citrine","Wheat Field","Lemon Drop"],
+  lime:   ["Chartreuse Haze","Lime Frost","Fern Mist","Willow","Avocado","Sage Smoke","Moss Landing","Lichen","Verdant","Olive Glaze"],
+  green:  ["Fern Valley","Jade Mist","Forest Breath","Shamrock","Spearmint","Celadon","Bottle Glass","Clover Field","Viridian","Old Growth"],
+  teal:   ["Ocean Drift","Seafoam","Tidal Glass","Lagoon","Arctic Melt","Glacier","Marine Layer","Aquamarine","Patina","Jade Tide"],
+  blue:   ["Cobalt Haze","Denim Sky","Steel Reserve","Prussian","Indigo Wash","Oxford","Wedgwood","Sapphire","Blueprint","Storm Blue"],
+  purple: ["Violet Dusk","Grape Frost","Thistle","Mauve Smoke","Byzantium","Amethyst","Lavender Storm","Wisteria","Iris Field","Mulberry"],
+  pink:   ["Blush Hour","Rose Quartz","Carnation","Orchid Smoke","Dusty Mauve","Fuchsia Dream","Raspberry Glaze","Peony","Flamingo","Petal"],
+};
+
+const NAMES_DARK    = ["Obsidian","Void","Onyx","Abyss","Midnight","Sable","Charcoal","Deep Space","Carbon","Iron"];
+const NAMES_LIGHT   = ["Cloud Drift","Bone","Parchment","Ivory Veil","Linen","Pearl Mist","Alabaster","Ghost White","Cream","Whisper"];
+const NAMES_NEUTRAL = ["Ash","Slate","Stone","Cement","Dusk","Smoke","Fog","Mineral","Pewter","Graphite"];
+
+function hueBucket(h: number): string {
+  if (h < 15 || h >= 345) return "red";
+  if (h < 45)  return "orange";
+  if (h < 65)  return "yellow";
+  if (h < 90)  return "lime";
+  if (h < 155) return "green";
+  if (h < 195) return "teal";
+  if (h < 250) return "blue";
+  if (h < 290) return "purple";
+  return "pink";
+}
+
+export function getColorName(hex: string): string {
+  const { h, s, l } = hexToHsl(hex);
+  if (l < 16) return NAMES_DARK[randomInt(0, NAMES_DARK.length - 1)];
+  if (l > 82) return NAMES_LIGHT[randomInt(0, NAMES_LIGHT.length - 1)];
+  if (s < 14) return NAMES_NEUTRAL[randomInt(0, NAMES_NEUTRAL.length - 1)];
+  const pool = NAME_POOLS[hueBucket(h)];
+  return pool[randomInt(0, pool.length - 1)];
+}
+
+// ── Palette labels ───────────────────────────────────────────────────────────
+
+const PALETTE_LABELS = [
+  "Studio Midnight","Iron & Ember","Dark Matter","Eclipse Edit","Shadow Workshop",
+  "Golden Hour Kit","Terracotta Sessions","Sunday Warm","Copper & Sage","Desert Studio",
+  "Nordic Blue","Coastal Edit","Pacific Dusk","Winter Glass","Blue Hour",
+  "Sunday Paper","Morning Linen","Soft Minimalist","Open Sky","Fresh Canvas",
+  "Electric Summer","Neon Garden","Vivid Tokyo","Bold Tropics","Color Rush",
+  "Clay & Stone","Forest Floor","Earth Collective","Terrain","Soil & Bloom",
+  "Concrete Jungle","Urban Matter","The Essentials","Base Camp","Gray District",
+];
+
 export function generateRandomPalette(): Palette {
   const baseHue = randomInt(0, 360);
   const family = randomInt(0, 3);
@@ -122,24 +173,38 @@ export function generateRandomPalette(): Palette {
     warmHue = shiftHue(baseHue, randomInt(54, 84));
   }
 
+  const baseH = baseHue, brandH = shiftHue(baseHue, randomInt(-6, 6));
   const colors: PaletteColor[] = [
-    makeColor("Deep Base", "neutral", baseHue, randomInt(24, 40), randomInt(17, 25)),
-    makeColor("Brand", "primary", shiftHue(baseHue, randomInt(-6, 6)), brandSat, brandLight),
-    makeColor("Growth", "success", supportHue, randomInt(42, 62), randomInt(42, 52)),
-    makeColor("Alert", "warning", warmHue, randomInt(72, 88), randomInt(58, 66)),
-    makeColor("Pop", "accent", accentHue, randomInt(58, 76), randomInt(50, 60)),
+    makeColor(getColorName(hslToHex(baseH, randomInt(24,40), randomInt(17,25))), "neutral", baseH, randomInt(24,40), randomInt(17,25)),
+    makeColor(getColorName(hslToHex(brandH, brandSat, brandLight)), "primary", brandH, brandSat, brandLight),
+    makeColor(getColorName(hslToHex(supportHue, randomInt(42,62), randomInt(42,52))), "success", supportHue, randomInt(42,62), randomInt(42,52)),
+    makeColor(getColorName(hslToHex(warmHue, randomInt(72,88), randomInt(58,66))), "warning", warmHue, randomInt(72,88), randomInt(58,66)),
+    makeColor(getColorName(hslToHex(accentHue, randomInt(58,76), randomInt(50,60))), "accent", accentHue, randomInt(58,76), randomInt(50,60)),
   ];
 
-  const labels = [
-    "Bold digital brand",
-    "Modern product palette",
-    "Creative studio tones",
-    "Fresh interface kit",
-    "Vibrant app system",
-    "Clean design tokens",
+  return { label: PALETTE_LABELS[randomInt(0, PALETTE_LABELS.length - 1)], colors };
+}
+
+export function generateFromColor(seedHex: string): Palette {
+  const { h, s, l } = hexToHsl(seedHex);
+  const primaryH = h;
+  const primaryS = clamp(s < 20 ? s + 30 : s, 45, 88);
+  const primaryL = clamp(l < 35 ? 45 : l > 65 ? 55 : l, 38, 62);
+
+  const neutralH = primaryH;
+  const supportH = shiftHue(primaryH, 120);
+  const warmH = shiftHue(primaryH, 38);
+  const accentH = shiftHue(primaryH, 180);
+
+  const colors: PaletteColor[] = [
+    makeColor(getColorName(hslToHex(neutralH, clamp(s * 0.4, 8, 28), randomInt(14, 22))), "neutral", neutralH, clamp(s * 0.4, 8, 28), randomInt(14, 22)),
+    makeColor(getColorName(seedHex), "primary", primaryH, primaryS, primaryL),
+    makeColor(getColorName(hslToHex(supportH, randomInt(45, 62), randomInt(42, 52))), "success", supportH, randomInt(45, 62), randomInt(42, 52)),
+    makeColor(getColorName(hslToHex(warmH, randomInt(72, 88), randomInt(58, 66))), "warning", warmH, randomInt(72, 88), randomInt(58, 66)),
+    makeColor(getColorName(hslToHex(accentH, randomInt(55, 75), randomInt(50, 60))), "accent", accentH, randomInt(55, 75), randomInt(50, 60)),
   ];
 
-  return { label: labels[randomInt(0, labels.length - 1)], colors };
+  return { label: PALETTE_LABELS[randomInt(0, PALETTE_LABELS.length - 1)], colors };
 }
 
 type MoodProfile = {
@@ -157,94 +222,94 @@ type MoodProfile = {
 
 const moodProfiles: Record<string, MoodProfile> = {
   luxury: {
-    label: "Luxury brand",
+    label: "Gilded Atelier",
     primaryHue: [35, 50], primarySat: [40, 65], primaryLight: [40, 55],
     accentHue: [280, 320], neutralLight: [5, 12], neutralSat: [5, 15],
-    primaryName: "Golden Hour", accentName: "Royal Plum", neutralName: "Onyx",
+    primaryName: "Gold Dust", accentName: "Violet Dusk", neutralName: "Obsidian",
   },
   skincare: {
-    label: "Skincare line",
+    label: "Ritual Beauty",
     primaryHue: [15, 35], primarySat: [45, 70], primaryLight: [55, 70],
     accentHue: [330, 355], neutralLight: [6, 14], neutralSat: [8, 18],
-    primaryName: "Warm Peach", accentName: "Soft Rose", neutralName: "Charcoal",
+    primaryName: "Peach Velvet", accentName: "Rose Quartz", neutralName: "Ash",
   },
   fintech: {
-    label: "Fintech app",
+    label: "Capital Dark",
     primaryHue: [220, 255], primarySat: [65, 90], primaryLight: [45, 60],
     accentHue: [170, 195], neutralLight: [5, 12], neutralSat: [10, 20],
-    primaryName: "Deep Indigo", accentName: "Teal Mint", neutralName: "Slate",
+    primaryName: "Cobalt Haze", accentName: "Tidal Glass", neutralName: "Void",
   },
   saas: {
-    label: "SaaS platform",
+    label: "Product Studio",
     primaryHue: [250, 275], primarySat: [55, 80], primaryLight: [50, 62],
     accentHue: [15, 35], neutralLight: [6, 14], neutralSat: [5, 12],
-    primaryName: "Vivid Purple", accentName: "Warm Coral", neutralName: "Dark Ink",
+    primaryName: "Amethyst", accentName: "Ember Glow", neutralName: "Carbon",
   },
   editorial: {
-    label: "Editorial design",
+    label: "Ink & Paper",
     primaryHue: [0, 15], primarySat: [60, 85], primaryLight: [40, 55],
     accentHue: [35, 55], neutralLight: [4, 10], neutralSat: [5, 12],
-    primaryName: "Crimson Red", accentName: "Burnt Gold", neutralName: "Rich Black",
+    primaryName: "Vermillion", accentName: "Amber Harvest", neutralName: "Midnight",
   },
   health: {
-    label: "Health & wellness",
+    label: "Calm Practice",
     primaryHue: [155, 180], primarySat: [40, 65], primaryLight: [42, 58],
     accentHue: [200, 225], neutralLight: [8, 16], neutralSat: [5, 10],
-    primaryName: "Calm Sage", accentName: "Sky Blue", neutralName: "Deep Forest",
+    primaryName: "Sage Mist", accentName: "Ocean Drift", neutralName: "Stone",
   },
   food: {
-    label: "Food & restaurant",
+    label: "Kitchen Table",
     primaryHue: [10, 30], primarySat: [70, 90], primaryLight: [45, 58],
     accentHue: [42, 60], neutralLight: [6, 14], neutralSat: [10, 20],
-    primaryName: "Tomato Red", accentName: "Mustard Gold", neutralName: "Espresso",
+    primaryName: "Brick Lane", accentName: "Honey Light", neutralName: "Espresso",
   },
   gaming: {
-    label: "Gaming studio",
+    label: "Void Protocol",
     primaryHue: [260, 290], primarySat: [70, 95], primaryLight: [45, 58],
     accentHue: [50, 70], neutralLight: [4, 10], neutralSat: [8, 16],
-    primaryName: "Neon Violet", accentName: "Electric Yellow", neutralName: "Void Black",
+    primaryName: "Grape Frost", accentName: "Solar Flare", neutralName: "Abyss",
   },
   nature: {
-    label: "Nature & outdoor",
+    label: "Old Growth",
     primaryHue: [85, 130], primarySat: [35, 60], primaryLight: [35, 50],
     accentHue: [25, 45], neutralLight: [8, 16], neutralSat: [8, 18],
-    primaryName: "Forest Green", accentName: "Earth Brown", neutralName: "Bark",
+    primaryName: "Fern Valley", accentName: "Fox Tail", neutralName: "Cement",
   },
   fashion: {
-    label: "Fashion brand",
+    label: "Maison Edit",
     primaryHue: [330, 355], primarySat: [50, 75], primaryLight: [45, 60],
     accentHue: [15, 40], neutralLight: [5, 12], neutralSat: [3, 10],
-    primaryName: "Blush Pink", accentName: "Warm Sand", neutralName: "Jet Black",
+    primaryName: "Blush Hour", accentName: "Terracotta", neutralName: "Sable",
   },
   minimal: {
-    label: "Minimal design",
+    label: "White Room",
     primaryHue: [210, 230], primarySat: [15, 35], primaryLight: [40, 55],
     accentHue: [195, 215], neutralLight: [6, 14], neutralSat: [3, 8],
-    primaryName: "Muted Steel", accentName: "Cool Gray", neutralName: "Near Black",
+    primaryName: "Mineral", accentName: "Fog", neutralName: "Iron",
   },
   playful: {
-    label: "Playful brand",
+    label: "Candy Workshop",
     primaryHue: [170, 200], primarySat: [65, 90], primaryLight: [50, 62],
     accentHue: [310, 340], neutralLight: [8, 16], neutralSat: [5, 12],
-    primaryName: "Bright Cyan", accentName: "Hot Pink", neutralName: "Deep Navy",
+    primaryName: "Aquamarine", accentName: "Fuchsia Dream", neutralName: "Denim Sky",
   },
   corporate: {
-    label: "Corporate identity",
+    label: "The Boardroom",
     primaryHue: [205, 225], primarySat: [50, 75], primaryLight: [38, 52],
     accentHue: [35, 55], neutralLight: [6, 14], neutralSat: [5, 12],
-    primaryName: "Trust Blue", accentName: "Warm Amber", neutralName: "Graphite",
+    primaryName: "Oxford", accentName: "Bronze Dawn", neutralName: "Graphite",
   },
   ecommerce: {
-    label: "E-commerce store",
+    label: "Conversion Kit",
     primaryHue: [15, 35], primarySat: [70, 90], primaryLight: [50, 62],
     accentHue: [195, 220], neutralLight: [5, 12], neutralSat: [5, 15],
-    primaryName: "Action Orange", accentName: "Cool Steel", neutralName: "Dark Slate",
+    primaryName: "Copper Glaze", accentName: "Blueprint", neutralName: "Slate",
   },
   education: {
-    label: "Education platform",
+    label: "Campus Blue",
     primaryHue: [200, 230], primarySat: [55, 80], primaryLight: [48, 60],
     accentHue: [40, 60], neutralLight: [8, 16], neutralSat: [5, 10],
-    primaryName: "Scholar Blue", accentName: "Pencil Gold", neutralName: "Chalkboard",
+    primaryName: "Wedgwood", accentName: "Gold Leaf", neutralName: "Cement",
   },
 };
 
@@ -286,11 +351,14 @@ function randRange(range: [number, number]): number {
 export function generateFromPrompt(prompt: string): Palette {
   const profile = findMoodProfile(prompt);
 
+  const successH = randomInt(120, 155), successS = randomInt(50, 75), successL = randomInt(40, 55);
+  const warningH = randomInt(32, 48), warningS = randomInt(75, 95), warningL = randomInt(52, 62);
+
   const colors: PaletteColor[] = [
     makeColor(profile.neutralName, "neutral", randRange(profile.primaryHue), randRange(profile.neutralSat), randRange(profile.neutralLight)),
     makeColor(profile.primaryName, "primary", randRange(profile.primaryHue), randRange(profile.primarySat), randRange(profile.primaryLight)),
-    makeColor("Fresh Green", "success", randomInt(120, 155), randomInt(50, 75), randomInt(40, 55)),
-    makeColor("Warm Amber", "warning", randomInt(32, 48), randomInt(75, 95), randomInt(52, 62)),
+    makeColor(getColorName(hslToHex(successH, successS, successL)), "success", successH, successS, successL),
+    makeColor(getColorName(hslToHex(warningH, warningS, warningL)), "warning", warningH, warningS, warningL),
     makeColor(profile.accentName, "accent", randRange(profile.accentHue), randomInt(50, 80), randomInt(48, 62)),
   ];
 

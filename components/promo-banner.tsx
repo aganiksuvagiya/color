@@ -47,7 +47,7 @@ export function PromoBanner() {
                   the<span className="text-indigo-400">pdf</span>
                 </p>
                 <p className="mt-1 text-xs leading-relaxed text-white/50">
-                  Free online PDF tools — merge, compress, convert &amp; edit. No upload, no signup.
+                  Free online PDF tools - merge, compress, convert &amp; edit. No upload, no signup.
                 </p>
                 <p className="mt-2 text-[10px] uppercase tracking-wider text-white/25">Sponsored</p>
               </div>

@@ -6,7 +6,7 @@ import { buildPageMetadata } from "@/lib/seo/page-utils";
 export const metadata: Metadata = buildPageMetadata({
   title: "About",
   description:
-    "HueFlow is a color platform for designers, developers, and marketers — palettes, gradients, accessibility tools, and brand color guidance in one place.",
+    "HueFlow is a color platform for designers, developers, and marketers - palettes, gradients, accessibility tools, and brand color guidance in one place.",
   path: "/about",
 });
 
@@ -15,7 +15,7 @@ export default function AboutPage() {
     <StaticPage title="About HueFlow">
       <p>
         HueFlow is a color platform built for the people who work with color
-        every day — designers, developers, and marketers. It brings palettes,
+        every day - designers, developers, and marketers. It brings palettes,
         gradients, brand color references, accessibility tooling, and practical
         color guidance together in one place, so you can go from &quot;what
         color should this be?&quot; to implementation-ready values in minutes.
@@ -44,7 +44,7 @@ export default function AboutPage() {
 
       <h2>Why We Built It</h2>
       <p>
-        Color decisions are scattered across too many tabs — one site for
+        Color decisions are scattered across too many tabs - one site for
         palettes, another for contrast checks, another for brand references,
         and a blog post somewhere explaining why blue feels trustworthy.
         HueFlow&apos;s goal is to close those tabs: one consistent place where
@@ -61,7 +61,7 @@ export default function AboutPage() {
       <h2>Get in Touch</h2>
       <p>
         Have feedback, found a bug, or want to suggest a feature? We&apos;d
-        love to hear from you — visit the <a href="/contact">contact page</a>.
+        love to hear from you - visit the <a href="/contact">contact page</a>.
       </p>
     </StaticPage>
   );

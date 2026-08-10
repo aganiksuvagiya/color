@@ -21,6 +21,6 @@ export default async function FaqDetailPage({ params }: { params: Promise<{ slug
     hubName: "FAQs",
     hubHref: "/faqs",
     pathPrefix: "/faqs",
-    answerLabel: "Snippet-ready answer",
+    answerLabel: "Quick answer",
   });
 }

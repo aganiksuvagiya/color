@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     shortcut: ["/favicon.svg"],
   },
   description:
-    "Build premium brand palettes, semantic color systems, accessible scales, answer-first color guides, and programmatic content with HueFlow.",
+    "Build premium brand palettes, semantic color systems, accessible scales, color guides, and programmatic content with HueFlow.",
   keywords: [
     "HueFlow",
     "HueFlow color tool",

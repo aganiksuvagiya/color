@@ -28,7 +28,7 @@ export default function PlaygroundPage() {
             <span className="text-[#F97A45]">see it live.</span>
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-lg text-white/50">
-            Adjust hue, saturation, lightness and contrast — watch the UI preview update in real time.
+            Adjust hue, saturation, lightness and contrast - watch the UI preview update in real time.
           </p>
         </div>
 

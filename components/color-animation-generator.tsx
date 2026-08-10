@@ -279,7 +279,7 @@ export function ColorAnimationGenerator() {
     });
   }, [previewAnimName, previewType, previewHexColors, previewDuration, previewDirection, previewEasing]);
 
-  /* More animations — infinite scroll */
+  /* More animations - infinite scroll */
   const [morePresets, setMorePresets] = useState<PresetAnimation[]>([]);
   const [morePage, setMorePage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -344,7 +344,7 @@ export function ColorAnimationGenerator() {
     setColors((prev) => prev.map((c) => (c.id === id ? { ...c, color: hex } : c)));
   }, []);
 
-  /* Apply preset directly (top Presets grid — no modal) */
+  /* Apply preset directly (top Presets grid - no modal) */
   const applyPreset = useCallback((preset: PresetAnimation) => {
     nextId = preset.colors.length + 1;
     setColors(preset.colors.map((c, i) => ({ id: i + 1, color: c })));
@@ -738,7 +738,7 @@ export function ColorAnimationGenerator() {
           </div>
         </div>
 
-        {/* More animations — infinite scroll */}
+        {/* More animations - infinite scroll */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

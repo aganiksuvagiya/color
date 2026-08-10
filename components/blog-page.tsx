@@ -28,7 +28,7 @@ export function BlogPage() {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-4xl text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300">Answer-first resource library</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300">Color resource library</p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">{blogPageContent.title}</h1>
           <p className="mx-auto mt-4 max-w-3xl text-lg text-white/60">{blogPageContent.description}</p>
         </motion.div>

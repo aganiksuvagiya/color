@@ -6,7 +6,7 @@ import { buildPageMetadata } from "@/lib/seo/page-utils";
 export const metadata: Metadata = buildPageMetadata({
   title: "Contact",
   description:
-    "Get in touch with the HueFlow team — feedback, bug reports, feature requests, and general questions.",
+    "Get in touch with the HueFlow team - feedback, bug reports, feature requests, and general questions.",
   path: "/contact",
 });
 
@@ -18,7 +18,7 @@ export default function ContactPage() {
       <p>
         We&apos;d love to hear from you. Whether you&apos;ve found a bug, have
         a feature request, want to report a content issue, or just have a
-        question about colors — drop us a line.
+        question about colors - drop us a line.
       </p>
 
       <h2>Email</h2>
@@ -40,7 +40,7 @@ export default function ContactPage() {
         </li>
         <li>
           <strong>Feature requests:</strong> what you&apos;re trying to
-          accomplish — context helps us build the right thing.
+          accomplish - context helps us build the right thing.
         </li>
       </ul>
 

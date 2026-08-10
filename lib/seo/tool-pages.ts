@@ -841,7 +841,7 @@ export const blogPageContent = {
   path: "/blog",
   title: "Color Strategy Resources",
   description:
-    "Explore answer-first color strategy resources covering accessibility, conversion, Tailwind, branding, trust, and palette decisions for websites and apps.",
+    "Explore color strategy resources covering accessibility, conversion, Tailwind, branding, trust, and palette decisions for websites and apps.",
   keywords: [
     "color strategy resources",
     "color psychology blog",
@@ -916,9 +916,9 @@ export const blogPageContent = {
         "Most color content on the web stops at inspiration. This library is designed to help teams make implementation decisions around accessibility, conversion, trust, category fit, and reusable design systems.",
     },
     {
-      title: "Built for SEO, GEO, and AEO",
+      title: "Built for quick decisions",
       body:
-        "Pages are structured for search engines and answer engines with direct summaries, semantically grouped topics, strong internal linking, and content blocks that AI systems can cite more easily.",
+        "Every page leads with a direct answer, groups related guidance into scannable sections, and connects to implementation resources - so you get from question to action without friction.",
     },
     {
       title: "Best use cases",

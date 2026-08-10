@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { siteConfig } from "@/lib/seo/site-config";
 
 export const runtime = "edge";
-export const alt = `${siteConfig.name} — Colors, Palettes, Gradients, and Brand Color Strategy`;
+export const alt = `${siteConfig.name} - Colors, Palettes, Gradients, and Brand Color Strategy`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

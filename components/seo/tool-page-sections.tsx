@@ -33,24 +33,24 @@ export function ToolPageSections({ config }: { config: ToolPageSeoConfig }) {
       </div>
 
       <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-        <h2 className="text-xl font-semibold text-white">SEO, GEO, and LLM retrieval notes</h2>
+        <h2 className="text-xl font-semibold text-white">How we structure these pages</h2>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="rounded-xl bg-black/20 p-4">
-            <p className="text-sm font-medium text-white">SEO</p>
+            <p className="text-sm font-medium text-white">Clear answers first</p>
             <p className="mt-2 text-sm leading-6 text-white/60">
-              Searchers need clear intent match, readable guidance, and supportive internal links around accessibility, brand colors, and implementation.
+              Every page leads with a direct answer - no preamble, no filler. Get what you need without scrolling through editorial context.
             </p>
           </div>
           <div className="rounded-xl bg-black/20 p-4">
-            <p className="text-sm font-medium text-white">GEO/AEO</p>
+            <p className="text-sm font-medium text-white">Grouped by topic</p>
             <p className="mt-2 text-sm leading-6 text-white/60">
-              Answer-first blocks, concise steps, and FAQ formatting improve retrieval quality for AI overviews and answer engines.
+              Content is organized into concise, scannable sections so you can jump to exactly the guidance you need.
             </p>
           </div>
           <div className="rounded-xl bg-black/20 p-4">
-            <p className="text-sm font-medium text-white">LLM visibility</p>
+            <p className="text-sm font-medium text-white">Linked to tools</p>
             <p className="mt-2 text-sm leading-6 text-white/60">
-              Structured summaries and related entities help models understand when this tool fits product UI, marketing pages, and brand system work.
+              Each page connects to related tools, palettes, and implementation resources so you can act on what you learn immediately.
             </p>
           </div>
         </div>

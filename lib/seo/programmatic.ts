@@ -228,24 +228,37 @@ export function buildProgrammaticColorEntry(slug: string): ContentEntry | null {
   const wcagLevel = getWcagLevel(contrastOnWhite);
   const { h, s, l } = hexToHsl(descriptor.hex);
   const textColor = getContrastText(descriptor.hex);
+
+  // Compute RGB for richer meta
+  const rVal = parseInt(descriptor.hex.slice(1, 3), 16);
+  const gVal = parseInt(descriptor.hex.slice(3, 5), 16);
+  const bVal = parseInt(descriptor.hex.slice(5, 7), 16);
+  const rgbStr = `rgb(${rVal}, ${gVal}, ${bVal})`;
+  const hslStr = `hsl(${h}, ${s}%, ${l}%)`;
+
+  const displayHex = descriptor.hex.toUpperCase();
+  const colorLabel = descriptor.mode === "hex" ? displayHex : descriptor.displayName;
   const titlePrefix = descriptor.mode === "hex" ? `${descriptor.hex.toLowerCase()} Color` : `${descriptor.displayName} Color`;
 
   return {
     slug,
-    title: `${titlePrefix} Meaning, Palettes, Branding, and Accessibility`,
-    description: `${titlePrefix} guide covering psychology, brand fit, accessibility, related palettes, gradients, and implementation ideas for HueFlow users targeting SEO, GEO, AEO, and LLMO visibility.`,
+    title: `${colorLabel} Color ${displayHex} - Hex, RGB, HSL, Shades & Palettes`,
+    description: `${descriptor.displayName} (${displayHex}) - hex, RGB (${rgbStr}), HSL (${hslStr}). Explore shades, tints, complementary colors, accessibility contrast, and palette ideas for ${descriptor.displayName.toLowerCase()}.`,
     answer: `${titlePrefix} works best when a team needs ${descriptor.psychology} and wants a shade that connects naturally to ${descriptor.branding}. It is most effective when paired with accessible contrast, a clear palette role, and related gradients, branding guides, and UI implementation patterns.`,
     intent: "informational",
     keywords: [
-      `${descriptor.displayName.toLowerCase()} color meaning`,
+      `${descriptor.displayName.toLowerCase()} color`,
+      `${descriptor.displayName.toLowerCase()} hex code`,
       `${descriptor.hex.toLowerCase()} color`,
-      `${descriptor.hueLabel.toLowerCase()} brand color`,
-      `${descriptor.hueLabel.toLowerCase()} palette`,
+      `${descriptor.displayName.toLowerCase()} rgb`,
+      `${descriptor.displayName.toLowerCase()} hsl`,
+      `${descriptor.hueLabel.toLowerCase()} color palette`,
+      `${descriptor.displayName.toLowerCase()} shades`,
     ],
     sections: [
       {
         title: "Why it matters",
-        body: `${titlePrefix} matters because it shapes trust, emotional tone, and interface clarity at the same time. In Google Search and AI systems, pages about this color perform better when they connect psychology, branding, gradients, accessibility, and implementation in one place.`,
+        body: `${titlePrefix} matters because it shapes trust, emotional tone, and interface clarity all at once. Understanding a color fully means looking at psychology, branding, gradients, accessibility, and implementation together - not in isolation.`,
       },
       {
         title: "Best use cases",
@@ -389,7 +402,7 @@ export function buildProgrammaticBrandColorEntry(slug: string): ContentEntry | n
     slug,
     title: `Best Brand Colors for ${profile.title}`,
     description: `Programmatic ${profile.title.toLowerCase()} brand color guide connecting trust, accessibility, palettes, gradients, psychology, and conversion patterns for HueFlow.`,
-    answer: `The best brand colors for ${profile.title.toLowerCase()} usually combine shades that support ${profile.focus}. The strongest systems connect individual colors to palettes, gradients, accessibility, psychology, and UI implementation so the brand works in search, AI retrieval, product surfaces, and conversion pages.`,
+    answer: `The best brand colors for ${profile.title.toLowerCase()} usually combine shades that support ${profile.focus}. The strongest brand systems connect individual colors to palettes, gradients, accessibility, psychology, and UI implementation so the brand stays consistent across every surface.`,
     intent: "commercial",
     keywords: [
       `${profile.title.toLowerCase()} brand colors`,

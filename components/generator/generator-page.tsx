@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useSearchParams } from "next/navigation";
 import { Header } from "@/components/header";
 import { generateFromPrompt, generateRandomPalette, getContrastText } from "@/lib/color-utils";
 import { withExtraColors } from "@/lib/shades";
@@ -34,7 +35,7 @@ const PANEL_LABELS: Record<PanelTab, string> = {
   colorblind: "Color Blind",
   gradient: "Gradient",
   export: "Export",
-  saved: "Saved Palettes",
+  saved: "Library",
   tools: "More Tools",
   insights: "Insights",
 };
@@ -65,15 +66,16 @@ export function GeneratorPage() {
   const [generationKey, setGenerationKey] = useState(0);
   const [editingLabel, setEditingLabel] = useState(false);
   const [labelValue, setLabelValue] = useState("");
+  const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const labelInputRef = useRef<HTMLInputElement>(null);
 
   const historyRef = useRef<Palette[]>([]);
   const historyIndexRef = useRef(-1);
+  const searchParams = useSearchParams();
   const initialPalette = useMemo(() => {
     if (!mounted) return null;
-    const params = new URLSearchParams(window.location.search);
-    return decodePalette(params) ?? generateRandomPalette();
-  }, [mounted]);
+    return decodePalette(searchParams) ?? generateRandomPalette();
+  }, [mounted, searchParams]);
   const activePalette = palette ?? initialPalette;
   void savedVersion;
   const saved = mounted ? getSavedPalettes() : [];
@@ -115,7 +117,8 @@ export function GeneratorPage() {
       if (e.key === "c" && !e.metaKey && !e.ctrlKey) { handleShare(); }
       if (e.key === "z" && (e.metaKey || e.ctrlKey) && !e.shiftKey) { e.preventDefault(); undo(); }
       if (e.key === "z" && (e.metaKey || e.ctrlKey) && e.shiftKey) { e.preventDefault(); redo(); }
-      if (e.key === "Escape") { setPromptOpen(false); setActivePanel(null); setEditingLabel(false); }
+      if (e.key === "Escape") { setPromptOpen(false); setActivePanel(null); setEditingLabel(false); setShortcutsOpen(false); }
+      if (e.key === "?") { setShortcutsOpen(prev => !prev); }
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -313,7 +316,7 @@ export function GeneratorPage() {
         )}
 
 
-        {/* Side panel — full-screen fixed overlay */}
+        {/* Side panel - full-screen fixed overlay */}
         <AnimatePresence>
           {activePanel && activePalette && (
             <>
@@ -371,7 +374,7 @@ export function GeneratorPage() {
         </AnimatePresence>
       </div>
 
-      {/* ── Mobile toolbar (< sm) — 2 rows ── */}
+      {/* ── Mobile toolbar (< sm) - 2 rows ── */}
       <div className="flex sm:hidden shrink-0 flex-col border-t border-white/8 bg-[#100804]">
         {/* Row 1: main actions */}
         <div className="flex h-12 items-center justify-around px-2 border-b border-white/6">
@@ -402,7 +405,7 @@ export function GeneratorPage() {
           <button onClick={() => togglePanel("accessibility")} className={`${iconBtn} text-[10px] font-bold w-auto px-2 ${activePanel === "accessibility" ? "text-white bg-white/10" : ""}`}>A11y</button>
           <button onClick={() => togglePanel("tools")} className={`${iconBtn} ${activePanel === "tools" ? "text-white bg-white/10" : ""}`} title="Tools"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" /></svg></button>
           <button onClick={() => togglePanel("export")} className={`${iconBtn} ${activePanel === "export" ? "text-white bg-white/10" : ""}`} title="Export"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg></button>
-          <button onClick={() => togglePanel("saved")} className={`${iconBtn} ${activePanel === "saved" ? "text-white bg-white/10" : ""}`} title="Saved"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" /></svg></button>
+          <button onClick={() => togglePanel("saved")} className={`${iconBtn} ${activePanel === "saved" ? "text-white bg-white/10" : ""}`} title="Library"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" /></svg></button>
           <button onClick={handleShare} className={iconBtn} title="Share"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" /></svg></button>
         </div>
       </div>
@@ -523,7 +526,7 @@ export function GeneratorPage() {
             <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
             </svg>
-            {saved.length > 0 ? `Saved (${saved.length})` : "Saved"}
+            {saved.length > 0 ? `Library (${saved.length})` : "Library"}
           </button>
 
           <div className="mx-0.5 hidden lg:block h-5 w-px bg-white/10" />
@@ -640,6 +643,58 @@ export function GeneratorPage() {
                   </button>
                 ))}
               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Keyboard Shortcuts Modal */}
+      <AnimatePresence>
+        {shortcutsOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[90] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+            onClick={() => setShortcutsOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-sm rounded-2xl border border-white/12 bg-[#1a1008] p-6 shadow-2xl mx-4"
+            >
+              <div className="mb-5 flex items-center justify-between">
+                <h2 className="text-base font-semibold text-white">Keyboard Shortcuts</h2>
+                <button onClick={() => setShortcutsOpen(false)} className="text-white/35 hover:text-white/70">
+                  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="space-y-2.5">
+                {[
+                  { keys: ["Space", "R"], label: "Shuffle palette" },
+                  { keys: ["S"], label: "Save palette" },
+                  { keys: ["C"], label: "Copy share link" },
+                  { keys: ["⌘Z"], label: "Undo" },
+                  { keys: ["⌘⇧Z"], label: "Redo" },
+                  { keys: ["Esc"], label: "Close panel / dialog" },
+                  { keys: ["?"], label: "Show this guide" },
+                ].map(({ keys, label }) => (
+                  <div key={label} className="flex items-center justify-between">
+                    <span className="text-sm text-white/55">{label}</span>
+                    <div className="flex gap-1">
+                      {keys.map((k) => (
+                        <kbd key={k} className="rounded-md border border-white/15 bg-white/8 px-2 py-0.5 font-mono text-[11px] text-white/70">{k}</kbd>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-5 text-[11px] text-white/25 text-center">Press <kbd className="rounded border border-white/10 bg-white/5 px-1 font-mono text-[10px]">?</kbd> anytime to toggle</p>
             </motion.div>
           </motion.div>
         )}

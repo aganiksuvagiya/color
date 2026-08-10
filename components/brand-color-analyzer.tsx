@@ -141,7 +141,7 @@ export function BrandColorAnalyzer() {
 
     img.onload = () => {
       // decode() guarantees the full image is decoded and ready to read pixel
-      // data from — onload alone can fire before decode finishes for large
+      // data from - onload alone can fire before decode finishes for large
       // screenshots, which was causing extraction to run on partial/blank data.
       if (img.decode) {
         img.decode().then(runExtraction).catch(runExtraction);
@@ -206,7 +206,7 @@ export function BrandColorAnalyzer() {
         >
           <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">Brand Color Analyzer</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-white/50">
-            Enter any website URL — we screenshot it and extract the actual visible brand colors.
+            Enter any website URL - we screenshot it and extract the actual visible brand colors.
           </p>
         </motion.div>
 

@@ -126,45 +126,89 @@ export function ProfilePage() {
 
         {!mounted ? null : tab === "palettes" ? (
           palettes.length === 0 ? (
-            <div className={`${cardClass} text-center text-white/30`}>No saved palettes yet. Save one from the generator.</div>
+            <div className="flex flex-col items-center justify-center py-20 text-center">
+              <div className="mb-4 flex gap-2">
+                {["#C94B1A","#7FBE6B","#F4B93F","#F15B2A","#241008"].map((c) => (
+                  <div key={c} className="h-10 w-10 rounded-full border border-white/10" style={{ backgroundColor: c }} />
+                ))}
+              </div>
+              <p className="text-base font-medium text-white/40">No saved palettes yet</p>
+              <p className="mt-1 text-sm text-white/25">Save one from the generator to see it here.</p>
+              <Link href="/generator" className="mt-5 rounded-xl bg-[#F15B2A]/80 px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#F15B2A] transition-colors">
+                Open Generator →
+              </Link>
+            </div>
           ) : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               {palettes.map((p) => (
-                <div key={p.id} className={cardClass}>
-                  <div className="mb-3 flex items-center justify-between">
-                    <p className="text-sm font-medium text-white/70">{p.label}</p>
-                    <p className="text-[10px] text-white/25">{new Date(p.savedAt).toLocaleDateString()}</p>
-                  </div>
-                  <div className="mb-3 flex h-12 gap-1 overflow-hidden rounded-lg">
+                <div key={p.id} className="group rounded-2xl border border-white/10 bg-white/4 overflow-hidden transition-all hover:border-white/18 hover:bg-white/6">
+                  {/* Color showcase strip */}
+                  <div className="flex h-28">
                     {p.colors.map((c, i) => (
-                      <div key={i} className="flex-1" style={{ backgroundColor: c.hex }} />
+                      <div
+                        key={i}
+                        className="relative flex-1 flex flex-col justify-end pb-2 px-1 overflow-hidden transition-all group/swatch"
+                        style={{ backgroundColor: c.hex }}
+                      >
+                        <span
+                          className="text-[9px] font-mono leading-tight truncate opacity-0 group-hover/swatch:opacity-100 transition-opacity"
+                          style={{ color: c.text === "light" ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.6)" }}
+                        >
+                          {c.hex.toUpperCase()}
+                        </span>
+                      </div>
                     ))}
                   </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Link
-                      href={`/generator${encodePalette(p)}`}
-                      className="rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/60 transition-colors hover:bg-white/14"
-                    >
-                      Open in Generator
-                    </Link>
-                    {collections.length > 0 && (
-                      <select
-                        onChange={(e) => { if (e.target.value) handleAddToCollection(e.target.value, p.id); e.target.value = ""; }}
-                        defaultValue=""
-                        className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-xs text-white/60"
+
+                  {/* Info + actions */}
+                  <div className="p-4">
+                    <div className="mb-1 flex items-start justify-between gap-2">
+                      <p className="text-sm font-semibold text-white leading-tight">{p.label}</p>
+                      <p className="shrink-0 text-[10px] text-white/25 mt-0.5">{new Date(p.savedAt).toLocaleDateString()}</p>
+                    </div>
+
+                    {/* Color name pills */}
+                    <div className="mb-3 flex flex-wrap gap-1">
+                      {p.colors.map((c, i) => (
+                        <span key={i} className="flex items-center gap-1 rounded-full border border-white/8 bg-white/4 px-2 py-0.5 text-[10px] text-white/45">
+                          <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: c.hex }} />
+                          {c.name}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Link
+                        href={`/generator${encodePalette(p)}`}
+                        className="rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/70 transition-colors hover:bg-white/15 hover:text-white"
                       >
-                        <option value="" disabled>Add to collection</option>
-                        {collections.map((c) => (
-                          <option key={c.id} value={c.id} className="bg-[#160b05]">{c.name}</option>
-                        ))}
-                      </select>
-                    )}
-                    <button
-                      onClick={() => handleDeletePalette(p.id)}
-                      className="rounded-lg bg-white/5 px-3 py-1.5 text-xs font-medium text-red-400/50 transition-colors hover:bg-red-500/10 hover:text-red-400"
-                    >
-                      Delete
-                    </button>
+                        Open in Generator
+                      </Link>
+                      <button
+                        onClick={() => { navigator.clipboard.writeText(`${window.location.origin}/generator${encodePalette(p)}`); }}
+                        className="rounded-lg bg-white/5 px-3 py-1.5 text-xs font-medium text-white/50 transition-colors hover:bg-white/10 hover:text-white/80"
+                      >
+                        Copy link
+                      </button>
+                      {collections.length > 0 && (
+                        <select
+                          onChange={(e) => { if (e.target.value) handleAddToCollection(e.target.value, p.id); e.target.value = ""; }}
+                          defaultValue=""
+                          className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-xs text-white/50"
+                        >
+                          <option value="" disabled>Add to collection</option>
+                          {collections.map((c) => (
+                            <option key={c.id} value={c.id} className="bg-[#160b05]">{c.name}</option>
+                          ))}
+                        </select>
+                      )}
+                      <button
+                        onClick={() => handleDeletePalette(p.id)}
+                        className="ml-auto rounded-lg px-3 py-1.5 text-xs font-medium text-red-400/40 transition-colors hover:bg-red-500/10 hover:text-red-400"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

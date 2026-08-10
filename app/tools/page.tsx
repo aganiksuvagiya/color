@@ -4,14 +4,14 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Color Tools | HueFlow",
-  description: "Free color tools for designers and developers — color mixer, contrast checker, gradient generator, image color extractor, and more.",
+  description: "Free color tools for designers and developers - color mixer, contrast checker, gradient generator, image color extractor, and more.",
 };
 
 const tools = [
   {
     href: "/tools/playground",
     title: "Color Playground",
-    description: "Adjust hue, saturation, lightness and contrast — see a live UI preview update in real time.",
+    description: "Adjust hue, saturation, lightness and contrast - see a live UI preview update in real time.",
     icon: (
       <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
         <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>

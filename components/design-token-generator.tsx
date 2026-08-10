@@ -38,12 +38,12 @@ const DEFAULT_COLORS: ColorEntry[] = [
 ];
 
 const SCALE_RATIOS = [
-  { label: "1.125 — Minor Second", value: 1.125 },
-  { label: "1.2 — Minor Third", value: 1.2 },
-  { label: "1.25 — Major Third", value: 1.25 },
-  { label: "1.333 — Perfect Fourth", value: 1.333 },
-  { label: "1.5 — Perfect Fifth", value: 1.5 },
-  { label: "1.618 — Golden Ratio", value: 1.618 },
+  { label: "1.125 - Minor Second", value: 1.125 },
+  { label: "1.2 - Minor Third", value: 1.2 },
+  { label: "1.25 - Major Third", value: 1.25 },
+  { label: "1.333 - Perfect Fourth", value: 1.333 },
+  { label: "1.5 - Perfect Fifth", value: 1.5 },
+  { label: "1.618 - Golden Ratio", value: 1.618 },
 ];
 
 const TYPE_STEPS = [

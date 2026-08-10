@@ -8,7 +8,7 @@ export const runtime = "nodejs";
 const NAV_TIMEOUT_MS = 25000;
 const POST_LOAD_SETTLE_MS = 1500;
 
-// Common markers left on Cloudflare (and similar) bot-challenge pages —
+// Common markers left on Cloudflare (and similar) bot-challenge pages -
 // checked so we return a clear error instead of silently extracting colors
 // from the block page instead of the real site.
 const CHALLENGE_MARKERS = [
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     try {
       await page.goto(targetUrl, { waitUntil: "networkidle2", timeout: NAV_TIMEOUT_MS });
     } catch (navErr) {
-      // Some sites never go fully idle (polling widgets, analytics beacons) —
+      // Some sites never go fully idle (polling widgets, analytics beacons) -
       // fall back to whatever loaded within the timeout instead of failing outright.
       if (!(navErr instanceof Error && navErr.name === "TimeoutError")) throw navErr;
     }

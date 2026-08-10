@@ -38,7 +38,7 @@ export default function NotFound() {
             </p>
             <h1 className="mt-3 font-display text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">This page doesn&apos;t exist</h1>
             <p className="mx-auto mt-4 max-w-md text-white/50">
-              That color isn&apos;t in the palette. The page may have moved or been renamed — here are some places to start instead.
+              That color isn&apos;t in the palette. The page may have moved or been renamed - here are some places to start instead.
             </p>
           </motion.div>
 

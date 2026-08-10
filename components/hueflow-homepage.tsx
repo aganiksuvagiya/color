@@ -14,13 +14,13 @@ import type { Palette } from "@/lib/types";
 // client; "Generate new palette" swaps in real generateRandomPalette() output
 // after mount, driven entirely by user interaction.
 const DEFAULT_HERO_PALETTE: Palette = {
-  label: "HueFlow starter system",
+  label: "Terracotta Sessions",
   colors: [
-    { name: "Deep Base", hex: "#241008", role: "neutral", text: "light" },
-    { name: "Brand", hex: "#C94B1A", role: "primary", text: "light" },
-    { name: "Growth", hex: "#7FBE6B", role: "success", text: "dark" },
-    { name: "Alert", hex: "#F4B93F", role: "warning", text: "dark" },
-    { name: "Pop", hex: "#F15B2A", role: "accent", text: "light" },
+    { name: "Carbon", hex: "#241008", role: "neutral", text: "light" },
+    { name: "Brick Lane", hex: "#C94B1A", role: "primary", text: "light" },
+    { name: "Fern Valley", hex: "#7FBE6B", role: "success", text: "dark" },
+    { name: "Honey Light", hex: "#F4B93F", role: "warning", text: "dark" },
+    { name: "Ember Glow", hex: "#F15B2A", role: "accent", text: "light" },
   ],
 };
 
@@ -50,7 +50,7 @@ const benefits = [
   },
   {
     title: "Export-ready output",
-    body: "Take colors straight into Tailwind config, CSS variables, design tokens, or a shareable link — no manual cleanup.",
+    body: "Take colors straight into Tailwind config, CSS variables, design tokens, or a shareable link - no manual cleanup.",
   },
   {
     title: "A full tool set, free",
@@ -93,7 +93,7 @@ const stories: { href: string; title: string }[] = [
 ];
 
 const faqs = [
-  { question: "What is HueFlow?", answer: "HueFlow is a color generator and toolkit for building complete, product-ready color systems — not just random swatches." },
+  { question: "What is HueFlow?", answer: "HueFlow is a color generator and toolkit for building complete, product-ready color systems - not just random swatches." },
   { question: "How does the palette generator work?", answer: "Generate a random system, or describe a mood, brand, or industry and HueFlow builds primary, neutral, success, warning, and accent colors around it." },
   { question: "Can I generate palettes from an image?", answer: "Yes. The image color extractor pulls a working palette directly from any photo you upload." },
   { question: "Can I check WCAG contrast?", answer: "Yes. The contrast checker and accessibility panel flag any color pairing that fails WCAG AA or AAA." },
@@ -704,7 +704,7 @@ export function HueFlowHomePage() {
                     Build the palette<br />your project deserves.
                   </h2>
                   <p className="mt-5 max-w-sm text-base leading-7 text-white/55">
-                    Generate, refine, and export a complete color system — free, fast, and ready to ship.
+                    Generate, refine, and export a complete color system - free, fast, and ready to ship.
                   </p>
                   <div className="mt-8 flex flex-wrap gap-3">
                     <Link
@@ -725,7 +725,7 @@ export function HueFlowHomePage() {
                 </div>
               </div>
 
-              {/* Right: animated color mosaic — uses live palette */}
+              {/* Right: animated color mosaic - uses live palette */}
               <div className="hidden lg:grid grid-cols-5 grid-rows-4 gap-2 p-6">
                 {Array.from({ length: 20 }, (_, i) => {
                   const colIndex = i % 5;

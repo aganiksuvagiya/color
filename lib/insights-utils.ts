@@ -172,32 +172,41 @@ export function getPaletteStory(palette: Palette): string {
   const hasDark = hslColors.some(c => c.l < 22);
   const hasWarm = hslColors.some(c => c.h < 60 || c.h > 330);
   const hasCool = hslColors.some(c => c.h >= 150 && c.h <= 280);
+  const hasLight = hslColors.some(c => c.l > 78);
   const dominant = hslColors.reduce((a, b) => a.s > b.s ? a : b);
-
-  let tone: string;
-  if (avgSat > 65 && hasDark) tone = "bold and high-contrast";
-  else if (avgSat > 65) tone = "vibrant and expressive";
-  else if (avgSat < 25) tone = "refined and understated";
-  else tone = "balanced and approachable";
-
-  let character: string;
   const h = dominant.h;
-  if (h < 30 || h > 340) character = "conveys passion, urgency, and action";
-  else if (h < 60) character = "radiates warmth, creativity, and optimism";
-  else if (h < 150) character = "feels grounded, natural, and trustworthy";
-  else if (h < 200) character = "projects calm confidence and clarity";
-  else if (h < 265) character = "communicates trust, depth, and reliability";
-  else if (h < 300) character = "evokes luxury, imagination, and distinction";
-  else character = "suggests warmth, energy, and innovation";
 
-  let useCase: string;
-  if (hasDark && avgSat > 55) useCase = "Ideal for tech products, premium brands, and bold digital experiences.";
-  else if (hasWarm && avgSat > 55) useCase = "A strong fit for consumer apps, food brands, and high-energy campaigns.";
-  else if (hasCool && avgLight > 50) useCase = "Well-suited for SaaS dashboards, healthcare, and professional services.";
-  else if (avgSat < 30) useCase = "Perfect for editorial design, luxury goods, and minimal interfaces.";
-  else useCase = "Versatile across marketing, e-commerce, and brand identity work.";
+  // Mood buckets
+  const isBold = avgSat > 65 && hasDark;
+  const isVibrant = avgSat > 65 && !hasDark;
+  const isMinimal = avgSat < 22;
+  const isWarm = hasWarm && avgSat > 40;
+  const isCool = hasCool && avgLight > 48;
+  const isEarthy = h >= 20 && h <= 90 && avgSat > 30 && avgSat < 62;
 
-  return `This palette is ${tone} — it ${character}. ${useCase}`;
+  if (isBold) {
+    return `Dark base, saturated accents - this palette doesn't ask for attention, it commands it. Built for brands that mean business: tech, premium fashion, anything that needs to feel expensive and deliberate. The contrast is doing the work here.`;
+  }
+  if (isVibrant) {
+    const warmNote = hasWarm ? " The warm tones push it toward energy and appetite - great for consumer products and campaigns." : " The cool edge keeps it from feeling chaotic - it's expressive without losing structure.";
+    return `Unapologetically saturated. This palette has range - it can anchor a landing page or carry an entire brand identity without going flat.${warmNote}`;
+  }
+  if (isMinimal) {
+    const lightNote = hasLight ? " The near-whites hold the composition open; nothing feels crowded." : " The midtones give it texture without noise.";
+    return `Quiet confidence. This palette strips color back to its essentials - the kind of restraint that signals taste rather than timidity.${lightNote} Ideal for editorial work, luxury goods, or any design where silence is the loudest statement.`;
+  }
+  if (isEarthy) {
+    return `Rooted in the natural spectrum - ochres, siennas, organic greens. This palette feels hand-mixed rather than algorithmically generated. It carries warmth without being loud, depth without being dark. Strong fit for food, wellness, and brands that want to feel handcrafted.`;
+  }
+  if (isCool) {
+    return `Clean, considered, professional. The cool hues push this toward clarity and focus - the kind of palette a fintech company or a healthcare brand would trust. Pairs well with generous whitespace and minimal UI patterns.`;
+  }
+  if (isWarm) {
+    return `There's heat in this palette - warm primaries with enough variation to keep it interesting. It reads as welcoming and high-energy without tipping into chaos. A natural fit for hospitality, food, and direct-to-consumer brands that need to feel human.`;
+  }
+
+  // Fallback: balanced
+  return `A well-considered range - enough contrast to be functional, enough variety to carry a full brand system. This palette works across contexts: marketing, product, editorial. It's the kind of foundation a design system is built on.`;
 }
 
 // ── Font Pairings ───────────────────────────────────────────────────────────

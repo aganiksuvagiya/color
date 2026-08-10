@@ -4,6 +4,7 @@ import { findClosestColorName } from "@/lib/color-names";
 import type { ResolvedContentEntry } from "@/lib/seo/content";
 import { CopyHexButton } from "@/components/seo/copy-hex-button";
 import { PaletteColorStrip } from "@/components/seo/palette-color-strip";
+import { Header } from "@/components/header";
 
 function hexToHslValues(hex: string) {
   const r = parseInt(hex.slice(1, 3), 16) / 255;
@@ -106,6 +107,8 @@ export function ContentPageView({
       {/* Background gradients matching homepage */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(0,0,0,0.95),transparent_18%),radial-gradient(circle_at_88%_0%,rgba(255,106,44,0.18),transparent_30%),linear-gradient(135deg,#1a0e06_0%,#160b05_50%,#1a0e06_100%)]" />
       <div className="noise absolute inset-0 opacity-20" />
+
+      <Header />
 
       {/* Hero section */}
       <section className="relative border-b border-white/8">
@@ -272,17 +275,19 @@ export function ContentPageView({
           </div>
 
           {/* AI sections */}
-          <section className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
-            <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">AI-friendly sections</h2>
-            <div className="mt-6 grid gap-4">
-              {entry.aiSections.map((section) => (
-                <div key={section.title} className="rounded-xl border border-white/8 bg-white/4 p-5">
-                  <h3 className="font-semibold text-white">{section.title}</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/60">{section.body}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          {entry.aiSections.length > 0 && (
+            <section className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
+              <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">More detail</h2>
+              <div className="mt-6 grid gap-4">
+                {entry.aiSections.map((section) => (
+                  <div key={section.title} className="rounded-xl border border-white/8 bg-white/4 p-5">
+                    <h3 className="font-semibold text-white">{section.title}</h3>
+                    <p className="mt-2 text-sm leading-7 text-white/60">{section.body}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Content sections */}
           <div className="space-y-5">
@@ -341,16 +346,18 @@ export function ContentPageView({
           ) : null}
 
           {/* Citation blocks */}
-          <section className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
-            <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">Citation-worthy blocks</h2>
-            <div className="mt-6 space-y-4">
-              {entry.citationBlocks.map((block) => (
-                <blockquote key={block} className="rounded-xl border-l-2 border-[#F15B2A] bg-white/4 px-5 py-4 text-sm leading-7 text-white/70">
-                  {block}
-                </blockquote>
-              ))}
-            </div>
-          </section>
+          {entry.citationBlocks.length > 0 && (
+            <section className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
+              <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">Key quotes</h2>
+              <div className="mt-6 space-y-4">
+                {entry.citationBlocks.map((block) => (
+                  <blockquote key={block} className="rounded-xl border-l-2 border-[#F15B2A] bg-white/4 px-5 py-4 text-sm leading-7 text-white/70">
+                    {block}
+                  </blockquote>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* FAQ */}
           <section className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
@@ -368,31 +375,23 @@ export function ContentPageView({
 
         {/* Sidebar */}
         <aside className="space-y-5 lg:sticky lg:top-6 lg:self-start">
-          <div className="rounded-2xl border border-white/10 bg-white/4 p-6 backdrop-blur-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">AI retrieval format</p>
-            <ul className="mt-4 space-y-3 text-sm leading-7 text-white/60">
-              <li className="flex gap-2"><span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-[#F15B2A]" />40-60 word answer block above the fold</li>
-              <li className="flex gap-2"><span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-[#F15B2A]" />Clear entity title and direct question match</li>
-              <li className="flex gap-2"><span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-[#F15B2A]" />Definitions, FAQ, pros and cons, and comparison sections for citations</li>
-              <li className="flex gap-2"><span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-[#F15B2A]" />Related pages with explicit semantic anchors</li>
-            </ul>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/4 p-6 backdrop-blur-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">Entity relationships</p>
-            <div className="mt-4 space-y-3">
-              {entry.entityRelations.map((relation) => (
-                <div key={`${relation.entity}-${relation.connectedTo}`} className="rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-white/70">
-                  <span className="font-semibold text-white">{relation.entity}</span>{" "}
-                  <span className="text-white/40">{relation.relationship}</span>{" "}
-                  <span className="font-semibold text-white">{relation.connectedTo}</span>
-                </div>
-              ))}
+          {entry.entityRelations.length > 0 && (
+            <div className="rounded-2xl border border-white/10 bg-white/4 p-6 backdrop-blur-sm">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">Related concepts</p>
+              <div className="mt-4 space-y-3">
+                {entry.entityRelations.map((relation) => (
+                  <div key={`${relation.entity}-${relation.connectedTo}`} className="rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-white/70">
+                    <span className="font-semibold text-white">{relation.entity}</span>{" "}
+                    <span className="text-white/40">{relation.relationship}</span>{" "}
+                    <span className="font-semibold text-white">{relation.connectedTo}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="rounded-2xl border border-white/10 bg-white/4 p-6 backdrop-blur-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">Internal links</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">See also</p>
             <div className="mt-4 space-y-5">
               {groupedLinks.map((group) => (
                 <div key={group.label}>

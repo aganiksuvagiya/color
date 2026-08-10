@@ -47,7 +47,7 @@ export function buildPageMetadata({
           url: `${siteConfig.domain}/opengraph-image`,
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name} — ${title}`,
+          alt: `${siteConfig.name} - ${title}`,
         },
       ],
     },
@@ -146,8 +146,14 @@ function getAllCollections() {
 
 function findCollectionEntry<K extends keyof ReturnType<typeof getAllCollections>>(key: K, slug: string) {
   if (key === "colors") {
-    const entry = buildProgrammaticColorEntry(slug);
-    return entry ? findResolvedEntry("colors", slug) ?? resolveContentEntry(entry) : undefined;
+    const programmatic = buildProgrammaticColorEntry(slug);
+    if (!programmatic) return undefined;
+    const resolved = findResolvedEntry("colors", slug);
+    // Always use programmatic title/description (has hex, RGB, HSL) but keep resolved content sections if they exist
+    const merged = resolved
+      ? resolveContentEntry({ ...programmatic, sections: (resolved as { sections?: unknown[] }).sections ?? programmatic.sections })
+      : resolveContentEntry(programmatic);
+    return merged;
   }
 
   if (key === "colorMeanings") {

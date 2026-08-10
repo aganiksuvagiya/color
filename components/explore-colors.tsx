@@ -3,7 +3,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Header } from "./header";
+import { generateFromColor } from "@/lib/color-utils";
+import { encodePalette } from "@/lib/share-utils";
 
 type ColorItem = {
   name: string;
@@ -53,6 +56,7 @@ function isLight(hex: string) {
 }
 
 export function ExploreColors() {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [copied, setCopied] = useState<CopiedState>(null);
@@ -107,6 +111,11 @@ export function ExploreColors() {
     observer.observe(loader);
     return () => observer.disconnect();
   }, [loadMore]);
+
+  const handleGenerate = useCallback((hex: string) => {
+    const palette = generateFromColor(hex);
+    router.push(`/generator${encodePalette(palette)}`);
+  }, [router]);
 
   const handleCopy = async (text: string, hex: string, type: "hex" | "rgb" | "hsl") => {
     try {
@@ -194,7 +203,7 @@ export function ExploreColors() {
 
         {/* Sidebar + content layout */}
         <div className="flex gap-8">
-          {/* Category sidebar — desktop */}
+          {/* Category sidebar - desktop */}
           <motion.aside
             initial={{ opacity: 0, x: -12 }}
             animate={{ opacity: 1, x: 0 }}
@@ -263,6 +272,7 @@ export function ExploreColors() {
                     index={i}
                     copied={copied}
                     onCopy={handleCopy}
+                    onGenerate={handleGenerate}
                   />
                 ))}
               </div>
@@ -278,6 +288,7 @@ export function ExploreColors() {
                     index={i}
                     copied={copied}
                     onCopy={handleCopy}
+                    onGenerate={handleGenerate}
                   />
                 ))}
               </div>
@@ -316,11 +327,13 @@ function GridCard({
   index,
   copied,
   onCopy,
+  onGenerate,
 }: {
   color: ColorItem;
   index: number;
   copied: CopiedState;
   onCopy: (text: string, hex: string, type: "hex" | "rgb" | "hsl") => void;
+  onGenerate: (hex: string) => void;
 }) {
   const light = isLight(color.hex);
   const isCopied = (type: "hex" | "rgb" | "hsl") => copied?.hex === color.hex && copied.type === type;
@@ -392,6 +405,12 @@ function GridCard({
               >
                 View page →
               </Link>
+              <button
+                onClick={() => onGenerate(color.hex)}
+                className="w-full rounded-lg bg-[#F15B2A]/80 px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#F15B2A] transition-colors text-center"
+              >
+                Generate palette ✦
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
@@ -407,11 +426,13 @@ function ListRow({
   index,
   copied,
   onCopy,
+  onGenerate,
 }: {
   color: ColorItem;
   index: number;
   copied: CopiedState;
   onCopy: (text: string, hex: string, type: "hex" | "rgb" | "hsl") => void;
+  onGenerate: (hex: string) => void;
 }) {
   const isCopied = (type: "hex" | "rgb" | "hsl") => copied?.hex === color.hex && copied.type === type;
 
@@ -487,6 +508,13 @@ function ListRow({
             >
               →
             </Link>
+            <button
+              onClick={() => onGenerate(color.hex)}
+              className="rounded-lg bg-[#F15B2A]/70 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-[#F15B2A] transition-colors"
+              title="Generate palette from this color"
+            >
+              ✦ Palette
+            </button>
           </>
         )}
       </div>
