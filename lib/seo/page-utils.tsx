@@ -151,7 +151,7 @@ function findCollectionEntry<K extends keyof ReturnType<typeof getAllCollections
     const resolved = findResolvedEntry("colors", slug);
     // Always use programmatic title/description (has hex, RGB, HSL) but keep resolved content sections if they exist
     const merged = resolved
-      ? resolveContentEntry({ ...programmatic, sections: (resolved as { sections?: unknown[] }).sections ?? programmatic.sections })
+      ? resolveContentEntry({ ...programmatic, sections: (resolved as { sections?: ResolvedContentEntry["sections"] }).sections ?? programmatic.sections })
       : resolveContentEntry(programmatic);
     return merged;
   }
