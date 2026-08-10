@@ -7,7 +7,7 @@ export const metadata: Metadata = buildPageMetadata({
   description: "Color strategy guides for designers and developers - palettes, accessibility, brand colors, and more.",
   path: "/guides",
 });
-export const revalidate = 86400;
+export const revalidate = false;
 
 export default function GuidesPage() {
   return renderHub("/guides");

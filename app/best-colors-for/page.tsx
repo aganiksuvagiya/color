@@ -7,7 +7,7 @@ export const metadata: Metadata = buildPageMetadata({
   description: "High-intent pages answering the best colors for SaaS, fintech, ecommerce, AI, and more.",
   path: "/best-colors-for",
 });
-export const revalidate = 86400;
+export const revalidate = false;
 
 export default function BestColorsForPage() {
   return renderHub("/best-colors-for");

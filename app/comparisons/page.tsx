@@ -7,7 +7,7 @@ export const metadata: Metadata = buildPageMetadata({
   description: "Comparison pages for color strategies, industries, and trust or conversion tradeoffs.",
   path: "/comparisons",
 });
-export const revalidate = 86400;
+export const revalidate = false;
 
 export default function ComparisonsPage() {
   return renderHub("/comparisons");

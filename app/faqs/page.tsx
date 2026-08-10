@@ -7,7 +7,7 @@ export const metadata: Metadata = buildPageMetadata({
   description: "Short answer pages optimized for featured snippets, AI overviews, and conversational citations.",
   path: "/faqs",
 });
-export const revalidate = 86400;
+export const revalidate = false;
 
 export default function FaqsPage() {
   return renderHub("/faqs");

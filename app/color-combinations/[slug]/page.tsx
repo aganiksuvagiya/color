@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { buildCollectionMetadata, renderCollectionPage, staticParamsFor } from "@/lib/seo/page-utils";
 
-export const revalidate = 86400;
+export const revalidate = false;
 
 export function generateStaticParams() {
   return staticParamsFor("colorCombinations");

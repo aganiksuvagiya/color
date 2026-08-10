@@ -7,7 +7,7 @@ export const metadata: Metadata = buildPageMetadata({
   description: "Short, citation-friendly explainers for color strategy, trust, and conversion questions.",
   path: "/explainers",
 });
-export const revalidate = 86400;
+export const revalidate = false;
 
 export default function ExplainersPage() {
   return renderHub("/explainers");

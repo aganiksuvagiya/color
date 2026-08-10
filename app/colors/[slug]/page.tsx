@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { buildCollectionMetadata, renderCollectionPage } from "@/lib/seo/page-utils";
 import { getProgrammaticColorStaticParams } from "@/lib/seo/programmatic";
 
-export const revalidate = 86400;
+export const revalidate = false;
 export const dynamicParams = true;
 
 export function generateStaticParams() {
