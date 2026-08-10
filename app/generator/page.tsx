@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { GeneratorPage } from "@/components/generator/generator-page";
 import type { Metadata } from "next";
 
@@ -28,5 +29,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <GeneratorPage />;
+  return (
+    <Suspense>
+      <GeneratorPage />
+    </Suspense>
+  );
 }
