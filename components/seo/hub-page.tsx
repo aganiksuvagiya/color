@@ -27,7 +27,7 @@ export function HubPageView({ hub }: { hub: HubPage }) {
 
             {hub.goals.length > 0 && (
               <div className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/40">What you'll find</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/40">What you&apos;ll find</p>
                 <ul className="mt-5 space-y-3 text-sm text-white/70">
                   {hub.goals.map((goal) => (
                     <li key={goal} className="rounded-xl border border-white/8 bg-white/4 px-4 py-3">
