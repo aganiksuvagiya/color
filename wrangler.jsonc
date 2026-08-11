@@ -21,5 +21,11 @@
   },
   "observability": {
     "enabled": true
-  }
+  },
+  "routes": [
+    {
+      "pattern": "hueflow.site",
+      "custom_domain": true
+    }
+  ]
 }
