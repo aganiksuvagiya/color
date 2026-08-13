@@ -6,7 +6,8 @@ import { useSearchParams } from "next/navigation";
 import { Header } from "@/components/header";
 import { generateFromPrompt, generateRandomPalette, getContrastText } from "@/lib/color-utils";
 import { withExtraColors } from "@/lib/shades";
-import { deletePalette, getSavedPalettes, savePalette, type SavedPalette } from "@/lib/storage";
+import { type SavedPalette } from "@/lib/storage";
+import { usePaletteStorage } from "@/hooks/use-palette-storage";
 import { encodePalette, decodePalette } from "@/lib/share-utils";
 import type { Palette } from "@/lib/types";
 import { PaletteDisplay } from "./palette-display";
@@ -77,8 +78,14 @@ export function GeneratorPage() {
     return decodePalette(searchParams) ?? generateRandomPalette();
   }, [mounted, searchParams]);
   const activePalette = palette ?? initialPalette;
-  void savedVersion;
-  const saved = mounted ? getSavedPalettes() : [];
+
+  const { savePalette, getPalettes, deletePalette } = usePaletteStorage();
+  const [saved, setSaved] = useState<SavedPalette[]>([]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    getPalettes().then(setSaved);
+  }, [mounted, savedVersion, getPalettes]);
 
   if (activePalette && historyIndexRef.current === -1) {
     historyRef.current = [activePalette];
@@ -225,9 +232,9 @@ export function GeneratorPage() {
     setAndTrack({ ...activePalette, colors });
   }
 
-  function handleSave() {
+  async function handleSave() {
     if (!activePalette) return;
-    savePalette(activePalette);
+    await savePalette(activePalette);
     setSavedVersion(version => version + 1);
     setSaveMessage("Saved!");
     setTimeout(() => setSaveMessage(null), 2000);
@@ -254,8 +261,8 @@ export function GeneratorPage() {
     setActivePanel(null);
   }
 
-  function handleDeleteSaved(id: string) {
-    deletePalette(id);
+  async function handleDeleteSaved(id: string) {
+    await deletePalette(id);
     setSavedVersion(version => version + 1);
   }
 

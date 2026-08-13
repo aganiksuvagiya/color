@@ -1,50 +1,42 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
+import { useSession, signOut, signIn } from "next-auth/react";
 import { Header } from "./header";
 import { encodePalette } from "@/lib/share-utils";
 import {
-  addPaletteToCollection,
-  createCollection,
-  deleteCollection,
   deleteGradient,
-  deletePalette,
-  getCollections,
   getSavedGradients,
-  getSavedPalettes,
-  removePaletteFromCollection,
-  type Collection,
   type SavedGradient,
   type SavedPalette,
 } from "@/lib/storage";
+import { usePaletteStorage } from "@/hooks/use-palette-storage";
 
-type Tab = "palettes" | "collections" | "gradients";
+type Tab = "palettes" | "gradients";
 
 export function ProfilePage() {
+  const { data: session } = useSession();
   const [tab, setTab] = useState<Tab>("palettes");
   const [palettes, setPalettes] = useState<SavedPalette[]>([]);
-  const [collections, setCollections] = useState<Collection[]>([]);
   const [gradients, setGradients] = useState<SavedGradient[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [activeCollectionId, setActiveCollectionId] = useState<string | null>(null);
-  const [newCollectionName, setNewCollectionName] = useState("");
-  const [collectionNameError, setCollectionNameError] = useState<string | null>(null);
+  const [signOutModal, setSignOutModal] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const { getPalettes, deletePalette } = usePaletteStorage();
 
   useEffect(() => {
-    const loadProfile = () => {
-      setPalettes(getSavedPalettes());
-      setCollections(getCollections());
-      setGradients(getSavedGradients());
-      setMounted(true);
-    };
-    loadProfile();
-  }, []);
+    getPalettes().then(setPalettes);
+    setGradients(getSavedGradients());
+    setMounted(true);
+  }, [getPalettes]);
 
-  function handleDeletePalette(id: string) {
-    deletePalette(id);
-    setPalettes(getSavedPalettes());
+  async function handleDeletePalette(id: string) {
+    await deletePalette(id);
+    setPalettes(await getPalettes());
   }
 
   function handleDeleteGradient(id: string) {
@@ -52,264 +44,419 @@ export function ProfilePage() {
     setGradients(getSavedGradients());
   }
 
-  function handleCreateCollection() {
-    const name = newCollectionName.trim();
-    if (!name) {
-      setCollectionNameError("Enter a name before creating a collection.");
-      return;
-    }
-    setCollectionNameError(null);
-    createCollection(name);
-    setCollections(getCollections());
-    setNewCollectionName("");
+  function handleCopyLink(p: SavedPalette) {
+    navigator.clipboard.writeText(`${window.location.origin}/generator${encodePalette(p)}`);
+    setCopiedId(p.id);
+    setTimeout(() => setCopiedId(null), 2000);
   }
 
-  function handleDeleteCollection(id: string) {
-    deleteCollection(id);
-    setCollections(getCollections());
-    if (activeCollectionId === id) setActiveCollectionId(null);
-  }
-
-  function handleAddToCollection(collectionId: string, paletteId: string) {
-    addPaletteToCollection(collectionId, paletteId);
-    setCollections(getCollections());
-  }
-
-  function handleRemoveFromCollection(collectionId: string, paletteId: string) {
-    removePaletteFromCollection(collectionId, paletteId);
-    setCollections(getCollections());
-  }
-
-  const activeCollection = collections.find((c) => c.id === activeCollectionId) ?? null;
-  const collectionPalettes = activeCollection
-    ? palettes.filter((p) => activeCollection.paletteIds.includes(p.id))
-    : [];
-
-  const cardClass = "rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl";
+  const user = session?.user;
+  const initials = user?.name?.split(" ").map((n) => n[0]).join("").toUpperCase() ?? "?";
 
   return (
     <main className="relative min-h-screen bg-[#160b05] text-white">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(0,0,0,0.95),transparent_18%),radial-gradient(circle_at_88%_0%,rgba(255,106,44,0.2),transparent_30%),linear-gradient(135deg,#1a0e06_0%,#160b05_50%,#1a0e06_100%)]" />
-      <div className="noise absolute inset-0 opacity-20" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_-10%,rgba(249,115,22,0.18),transparent_55%)]" />
       <Header />
 
-      <div className="relative mx-auto max-w-5xl px-4 pb-20 pt-24 sm:px-6 sm:pt-40">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8 text-center"
-        >
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Your Profile</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-white/50">
-            Everything you&apos;ve saved, stored locally in this browser.
-          </p>
-        </motion.div>
+      <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-24 sm:px-6 sm:pt-32">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
 
-        <div className="mb-8 flex justify-center gap-2">
-          {([
-            { key: "palettes", label: `Palettes (${palettes.length})` },
-            { key: "collections", label: `Collections (${collections.length})` },
-            { key: "gradients", label: `Gradients (${gradients.length})` },
-          ] as { key: Tab; label: string }[]).map((t) => (
-            <button
-              key={t.key}
-              onClick={() => setTab(t.key)}
-              className={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
-                tab === t.key ? "bg-white/15 text-white" : "text-white/40 hover:text-white/60"
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
+          {/* ── Sidebar ── */}
+          <aside className="w-full shrink-0 lg:w-56 xl:w-64">
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#1c0d06]/80 backdrop-blur-xl">
 
-        {!mounted ? null : tab === "palettes" ? (
-          palettes.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
-              <div className="mb-4 flex gap-2">
-                {["#C94B1A","#7FBE6B","#F4B93F","#F15B2A","#241008"].map((c) => (
-                  <div key={c} className="h-10 w-10 rounded-full border border-white/10" style={{ backgroundColor: c }} />
-                ))}
+              {/* Avatar header */}
+              <div className="relative px-5 pb-4 pt-6 text-center">
+                <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-orange-500/10 to-transparent" />
+                <div className="relative mx-auto mb-3 inline-block">
+                  {user?.image ? (
+                    <Image
+                      src={user.image}
+                      alt="avatar"
+                      width={72}
+                      height={72}
+                      className="rounded-full ring-2 ring-orange-500/30 ring-offset-2 ring-offset-[#1c0d06]"
+                    />
+                  ) : (
+                    <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full bg-gradient-to-br from-orange-400 to-orange-600 text-2xl font-bold text-white ring-2 ring-orange-500/30 ring-offset-2 ring-offset-[#1c0d06]">
+                      {initials}
+                    </div>
+                  )}
+                  <span className="absolute bottom-0.5 right-0.5 h-3 w-3 rounded-full border-2 border-[#1c0d06] bg-green-400" />
+                </div>
+                <p className="text-sm font-semibold text-white leading-tight">{user?.name ?? "Guest"}</p>
+                <p className="mt-0.5 break-all text-[11px] leading-tight text-white/35">
+                  {user?.email ?? "Not signed in"}
+                </p>
+                <span className="mt-2.5 inline-flex items-center gap-1.5 rounded-full border border-orange-500/25 bg-orange-500/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-orange-400">
+                  <span className="h-1 w-1 rounded-full bg-orange-400" />
+                  Free Member
+                </span>
               </div>
-              <p className="text-base font-medium text-white/40">No saved palettes yet</p>
-              <p className="mt-1 text-sm text-white/25">Save one from the generator to see it here.</p>
-              <Link href="/generator" className="mt-5 rounded-xl bg-[#F15B2A]/80 px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#F15B2A] transition-colors">
-                Open Generator →
-              </Link>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              {palettes.map((p) => (
-                <div key={p.id} className="group rounded-2xl border border-white/10 bg-white/4 overflow-hidden transition-all hover:border-white/18 hover:bg-white/6">
-                  {/* Color showcase strip */}
-                  <div className="flex h-28">
-                    {p.colors.map((c, i) => (
-                      <div
-                        key={i}
-                        className="relative flex-1 flex flex-col justify-end pb-2 px-1 overflow-hidden transition-all group/swatch"
-                        style={{ backgroundColor: c.hex }}
-                      >
-                        <span
-                          className="text-[9px] font-mono leading-tight truncate opacity-0 group-hover/swatch:opacity-100 transition-opacity"
-                          style={{ color: c.text === "light" ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.6)" }}
-                        >
-                          {c.hex.toUpperCase()}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
 
-                  {/* Info + actions */}
-                  <div className="p-4">
-                    <div className="mb-1 flex items-start justify-between gap-2">
-                      <p className="text-sm font-semibold text-white leading-tight">{p.label}</p>
-                      <p className="shrink-0 text-[10px] text-white/25 mt-0.5">{new Date(p.savedAt).toLocaleDateString()}</p>
-                    </div>
-
-                    {/* Color name pills */}
-                    <div className="mb-3 flex flex-wrap gap-1">
-                      {p.colors.map((c, i) => (
-                        <span key={i} className="flex items-center gap-1 rounded-full border border-white/8 bg-white/4 px-2 py-0.5 text-[10px] text-white/45">
-                          <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: c.hex }} />
-                          {c.name}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Link
-                        href={`/generator${encodePalette(p)}`}
-                        className="rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/70 transition-colors hover:bg-white/15 hover:text-white"
-                      >
-                        Open in Generator
-                      </Link>
-                      <button
-                        onClick={() => { navigator.clipboard.writeText(`${window.location.origin}/generator${encodePalette(p)}`); }}
-                        className="rounded-lg bg-white/5 px-3 py-1.5 text-xs font-medium text-white/50 transition-colors hover:bg-white/10 hover:text-white/80"
-                      >
-                        Copy link
-                      </button>
-                      {collections.length > 0 && (
-                        <select
-                          onChange={(e) => { if (e.target.value) handleAddToCollection(e.target.value, p.id); e.target.value = ""; }}
-                          defaultValue=""
-                          className="rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-xs text-white/50"
-                        >
-                          <option value="" disabled>Add to collection</option>
-                          {collections.map((c) => (
-                            <option key={c.id} value={c.id} className="bg-[#160b05]">{c.name}</option>
-                          ))}
-                        </select>
-                      )}
-                      <button
-                        onClick={() => handleDeletePalette(p.id)}
-                        className="ml-auto rounded-lg px-3 py-1.5 text-xs font-medium text-red-400/40 transition-colors hover:bg-red-500/10 hover:text-red-400"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
+              {/* Stats */}
+              <div className="mx-4 mb-4 grid grid-cols-2 gap-2">
+                <div className="rounded-xl bg-white/4 px-3 py-2.5 text-center">
+                  <p className="text-lg font-bold tabular-nums text-white">
+                    {mounted ? palettes.length : "–"}
+                  </p>
+                  <p className="mt-0.5 text-[10px] text-white/35">Palettes</p>
                 </div>
-              ))}
-            </div>
-          )
-        ) : tab === "collections" ? (
-          <div>
-            <div className="mb-2 flex gap-2">
-              <input
-                value={newCollectionName}
-                onChange={(e) => { setNewCollectionName(e.target.value); if (collectionNameError) setCollectionNameError(null); }}
-                onKeyDown={(e) => e.key === "Enter" && handleCreateCollection()}
-                placeholder="New collection name"
-                className={`flex-1 rounded-xl border bg-white/5 px-4 py-2.5 text-sm text-white outline-none ${
-                  collectionNameError ? "border-red-500/50 focus:border-red-500/70" : "border-white/10 focus:border-white/30"
-                }`}
-              />
-              <button
-                onClick={handleCreateCollection}
-                className="rounded-xl bg-white/8 px-4 py-2.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/15"
-              >
-                Create
-              </button>
-            </div>
-            <p className="mb-4 h-4 text-xs text-red-400">{collectionNameError}</p>
-
-            {collections.length === 0 ? (
-              <div className={`${cardClass} text-center text-white/30`}>No collections yet. Create one above.</div>
-            ) : activeCollection ? (
-              <div>
-                <button onClick={() => setActiveCollectionId(null)} className="mb-4 text-xs text-white/40 hover:text-white/70">← Back to collections</button>
-                <div className="mb-4 flex items-center justify-between">
-                  <p className="text-lg font-semibold">{activeCollection.name}</p>
-                  <button onClick={() => handleDeleteCollection(activeCollection.id)} className="text-xs text-red-400/60 hover:text-red-400">Delete collection</button>
+                <div className="rounded-xl bg-white/4 px-3 py-2.5 text-center">
+                  <p className="text-lg font-bold tabular-nums text-white">
+                    {mounted ? gradients.length : "–"}
+                  </p>
+                  <p className="mt-0.5 text-[10px] text-white/35">Gradients</p>
                 </div>
-                {collectionPalettes.length === 0 ? (
-                  <div className={`${cardClass} text-center text-white/30`}>No palettes in this collection yet. Add some from the Palettes tab.</div>
+              </div>
+
+              <div className="mx-4 border-t border-white/8" />
+
+              {/* Nav */}
+              <nav className="flex flex-col gap-0.5 p-2">
+                {(
+                  [
+                    { key: "palettes", label: "Saved Palettes", count: palettes.length },
+                    { key: "gradients", label: "Saved Gradients", count: gradients.length },
+                  ] as const
+                ).map((item) => (
+                  <button
+                    key={item.key}
+                    onClick={() => setTab(item.key)}
+                    className={`flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition-all ${
+                      tab === item.key
+                        ? "bg-orange-500/15 text-orange-300"
+                        : "text-white/45 hover:bg-white/5 hover:text-white/75"
+                    }`}
+                  >
+                    {item.key === "palettes" ? (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1" />
+                        <rect x="14" y="3" width="7" height="7" rx="1" />
+                        <rect x="3" y="14" width="7" height="7" rx="1" />
+                        <rect x="14" y="14" width="7" height="7" rx="1" />
+                      </svg>
+                    ) : (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 2a10 10 0 010 20" />
+                      </svg>
+                    )}
+                    {item.label}
+                    <span className={`ml-auto text-[11px] font-semibold tabular-nums ${tab === item.key ? "text-orange-400" : "text-white/20"}`}>
+                      {mounted ? item.count : ""}
+                    </span>
+                  </button>
+                ))}
+              </nav>
+
+              <div className="mx-4 border-t border-white/8" />
+
+              {/* Actions */}
+              <div className="flex flex-col gap-2 p-3">
+                <Link
+                  href="/generator"
+                  className="flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                  Generate Palette
+                </Link>
+                {user ? (
+                  <button
+                    onClick={() => setSignOutModal(true)}
+                    className="rounded-xl border border-white/8 px-4 py-2.5 text-sm font-medium text-white/35 transition-colors hover:border-red-500/25 hover:text-red-400/80"
+                  >
+                    Sign out
+                  </button>
                 ) : (
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    {collectionPalettes.map((p) => (
-                      <div key={p.id} className={cardClass}>
-                        <p className="mb-3 text-sm font-medium text-white/70">{p.label}</p>
-                        <div className="mb-3 flex h-12 gap-1 overflow-hidden rounded-lg">
-                          {p.colors.map((c, i) => (
-                            <div key={i} className="flex-1" style={{ backgroundColor: c.hex }} />
-                          ))}
-                        </div>
-                        <div className="flex gap-2">
-                          <Link href={`/generator${encodePalette(p)}`} className="rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/60 hover:bg-white/14">
-                            Open
-                          </Link>
-                          <button
-                            onClick={() => handleRemoveFromCollection(activeCollection.id, p.id)}
-                            className="rounded-lg bg-white/5 px-3 py-1.5 text-xs font-medium text-white/40 hover:bg-white/10"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                  <button
+                    onClick={() => signIn("google")}
+                    className="rounded-xl border border-white/8 px-4 py-2.5 text-sm font-medium text-white/45 transition-colors hover:bg-white/5 hover:text-white"
+                  >
+                    Sign in with Google
+                  </button>
                 )}
               </div>
-            ) : (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {collections.map((c) => (
-                  <button key={c.id} onClick={() => setActiveCollectionId(c.id)} className={`${cardClass} text-left transition-colors hover:border-white/20`}>
-                    <p className="text-sm font-semibold text-white/80">{c.name}</p>
-                    <p className="mt-1 text-xs text-white/40">{c.paletteIds.length} palette{c.paletteIds.length === 1 ? "" : "s"}</p>
-                  </button>
-                ))}
-              </div>
-            )}
+            </div>
+          </aside>
+
+          {/* ── Main content ── */}
+          <div className="min-w-0 flex-1">
+
+            {/* Header */}
+            <div className="mb-5">
+              <p className="mb-1 text-[11px] font-semibold uppercase tracking-widest text-orange-400/60">
+                My Library
+              </p>
+              <h1 className="text-2xl font-bold text-white">
+                {tab === "palettes" ? "Saved Palettes" : "Saved Gradients"}
+              </h1>
+            </div>
+
+            {/* Tab switcher */}
+            <div className="mb-5 flex w-fit items-center gap-1 rounded-xl border border-white/8 bg-white/3 p-1">
+              {(["palettes", "gradients"] as Tab[]).map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setTab(t)}
+                  className={`relative rounded-lg px-4 py-1.5 text-sm font-medium capitalize transition-colors ${
+                    tab === t ? "text-white" : "text-white/40 hover:text-white/65"
+                  }`}
+                >
+                  {tab === t && (
+                    <motion.span
+                      layoutId="tab-bg"
+                      className="absolute inset-0 rounded-lg bg-white/10"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.35 }}
+                    />
+                  )}
+                  <span className="relative">{t}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Content with animated transitions */}
+            <AnimatePresence mode="wait">
+              {!mounted ? (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center justify-center py-24 text-sm text-white/20"
+                >
+                  Loading...
+                </motion.div>
+              ) : tab === "palettes" ? (
+                <motion.div
+                  key="palettes"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  {palettes.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-24 text-center">
+                      <div className="mb-4 flex gap-2">
+                        {["#C94B1A", "#7FBE6B", "#F4B93F", "#F15B2A", "#241008"].map((c) => (
+                          <div key={c} className="h-8 w-8 rounded-full border border-white/10" style={{ backgroundColor: c }} />
+                        ))}
+                      </div>
+                      <p className="text-sm font-medium text-white/40">No saved palettes yet</p>
+                      <p className="mt-1 text-xs text-white/22">Save one from the generator to see it here.</p>
+                      <Link
+                        href="/generator"
+                        className="mt-5 inline-flex items-center gap-2 rounded-xl bg-orange-500/80 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-500"
+                      >
+                        Open Generator
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                          <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      {palettes.map((p) => (
+                        <motion.div
+                          key={p.id}
+                          layout
+                          exit={{ opacity: 0, scale: 0.97 }}
+                          className="group overflow-hidden rounded-2xl border border-white/10 bg-[#1c0d06]/60 transition-all duration-200 hover:border-white/16"
+                        >
+                          {/* Color swatch strip — click individual color to copy hex */}
+                          <div className="flex h-28">
+                            {p.colors.map((c, i) => (
+                              <div
+                                key={i}
+                                className="relative flex-1 cursor-pointer overflow-hidden"
+                                style={{ backgroundColor: c.hex }}
+                                title={`Click to copy ${c.hex}`}
+                                onClick={() => navigator.clipboard.writeText(c.hex)}
+                              >
+                                <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
+                                  <span
+                                    className="text-[8px] font-mono font-bold"
+                                    style={{ color: c.text === "light" ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.7)" }}
+                                  >
+                                    {c.hex.toUpperCase()}
+                                  </span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Card footer */}
+                          <div className="px-4 py-3.5">
+                            <div className="mb-3 flex items-center justify-between gap-2">
+                              <p className="truncate text-sm font-semibold leading-tight text-white">{p.label}</p>
+                              <p className="shrink-0 tabular-nums text-[10px] text-white/22">
+                                {new Date(p.savedAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "2-digit" })}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Link
+                                href={`/generator${encodePalette(p)}`}
+                                className="flex items-center gap-1.5 rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/65 transition-colors hover:bg-white/13 hover:text-white"
+                              >
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
+                                </svg>
+                                Open
+                              </Link>
+                              <button
+                                onClick={() => handleCopyLink(p)}
+                                className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                                  copiedId === p.id
+                                    ? "bg-green-500/15 text-green-400"
+                                    : "bg-white/5 text-white/45 hover:bg-white/10 hover:text-white/70"
+                                }`}
+                              >
+                                {copiedId === p.id ? (
+                                  <>
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                                      <path d="M20 6L9 17l-5-5" />
+                                    </svg>
+                                    Copied
+                                  </>
+                                ) : (
+                                  <>
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                                      <rect x="9" y="9" width="13" height="13" rx="2" />
+                                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                                    </svg>
+                                    Copy link
+                                  </>
+                                )}
+                              </button>
+                              <button
+                                onClick={() => handleDeletePalette(p.id)}
+                                className="ml-auto rounded-lg p-1.5 text-white/25 transition-colors hover:bg-red-500/10 hover:text-red-400"
+                                title="Delete"
+                              >
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <polyline points="3 6 5 6 21 6" />
+                                  <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="gradients"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  {gradients.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-24 text-center">
+                      <div className="mb-4 h-12 w-32 rounded-xl bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 opacity-50" />
+                      <p className="text-sm font-medium text-white/40">No saved gradients yet</p>
+                      <p className="mt-1 text-xs text-white/22">Save one from the gradient generator.</p>
+                      <Link
+                        href="/tools/gradient"
+                        className="mt-5 inline-flex items-center gap-2 rounded-xl bg-orange-500/80 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-500"
+                      >
+                        Gradient Generator
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                          <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                      {gradients.map((g) => (
+                        <div
+                          key={g.id}
+                          className="overflow-hidden rounded-2xl border border-white/10 bg-[#1c0d06]/60 transition-all duration-200 hover:border-white/16"
+                        >
+                          <div className="h-24 w-full" style={{ background: g.preview }} />
+                          <div className="p-3.5">
+                            <p className="mb-3 truncate text-sm font-medium text-white/70">{g.name}</p>
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => navigator.clipboard.writeText(g.css)}
+                                className="flex-1 rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/55 transition-colors hover:bg-white/13 hover:text-white"
+                              >
+                                Copy CSS
+                              </button>
+                              <button
+                                onClick={() => handleDeleteGradient(g.id)}
+                                className="rounded-lg p-1.5 text-white/25 transition-colors hover:bg-red-500/10 hover:text-red-400"
+                                title="Delete"
+                              >
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <polyline points="3 6 5 6 21 6" />
+                                  <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-        ) : gradients.length === 0 ? (
-          <div className={`${cardClass} text-center text-white/30`}>No saved gradients yet. Save one from the gradient generator.</div>
-        ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {gradients.map((g) => (
-              <div key={g.id} className={cardClass}>
-                <div className="mb-3 h-20 w-full rounded-xl" style={{ background: g.preview }} />
-                <p className="mb-3 text-sm font-medium text-white/70">{g.name}</p>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => navigator.clipboard.writeText(g.css)}
-                    className="flex-1 rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/60 hover:bg-white/14"
-                  >
-                    Copy CSS
-                  </button>
-                  <button
-                    onClick={() => handleDeleteGradient(g.id)}
-                    className="rounded-lg bg-white/5 px-3 py-1.5 text-xs font-medium text-red-400/50 hover:bg-red-500/10 hover:text-red-400"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        </div>
       </div>
+
+      {/* Centered sign-out confirmation modal */}
+      <AnimatePresence>
+        {signOutModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center px-4"
+            onClick={() => setSignOutModal(false)}
+          >
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 8 }}
+              transition={{ duration: 0.15 }}
+              className="relative w-full max-w-sm rounded-2xl border border-white/15 bg-[#1a0e06]/98 p-6 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-red-500/15">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-red-400">
+                  <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                </svg>
+              </div>
+              <h3 className="mt-3 text-center text-base font-semibold text-white">Sign out?</h3>
+              <p className="mt-1.5 text-center text-sm text-white/45">
+                Are you sure you want to sign out of your account?
+              </p>
+              <div className="mt-5 flex gap-3">
+                <button
+                  onClick={() => setSignOutModal(false)}
+                  className="flex-1 rounded-xl border border-white/10 py-2.5 text-sm font-medium text-white/50 transition-colors hover:text-white/80"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => { setSignOutModal(false); signOut(); }}
+                  className="flex-1 rounded-xl bg-red-500 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-600"
+                >
+                  Sign out
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

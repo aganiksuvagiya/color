@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Header } from "./header";
 import { ColorPlayground } from "./color-playground";
@@ -102,13 +102,13 @@ const faqs = [
 ];
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 34 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
 const stagger: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
 };
 
 function ToolCard({ tool }: { tool: (typeof tools)[number] }) {
@@ -148,13 +148,25 @@ export function HueFlowHomePage() {
     []
   );
 
-  function handleGenerate() {
+  const handleGenerate = useCallback(() => {
     const fresh = generateRandomPalette();
     setHeroPalette((prev) => ({
       label: fresh.label,
       colors: fresh.colors.map((c, i) => (locked.has(i) ? prev.colors[i] : c)),
     }));
-  }
+  }, [locked]);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.code !== "Space") return;
+      const tag = (e.target as HTMLElement).tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      e.preventDefault();
+      handleGenerate();
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [handleGenerate]);
 
   function toggleLock(index: number) {
     setLocked((prev) => {
@@ -191,8 +203,8 @@ export function HueFlowHomePage() {
 
   return (
     <main className="relative overflow-hidden bg-[#14100d] text-white">
-      <div className="pointer-events-none absolute inset-0 opacity-60" style={{ background: "radial-gradient(circle at 50% 20%, rgba(255, 130, 30, 0.06), transparent 18%), radial-gradient(circle at 32% 32%, rgba(255, 95, 31, 0.05), transparent 9%)" }} />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(0,0,0,0.96),transparent_18%),radial-gradient(circle_at_88%_0%,rgba(255,106,44,0.14),transparent_30%),radial-gradient(circle_at_18%_88%,rgba(255,111,26,0.16),transparent_28%),linear-gradient(135deg,#211008_0%,#181009_34%,#150f0c_60%,#241209_100%)]" />
+      <div className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse at 60% 0%, rgba(249,115,22,0.22), transparent 50%), radial-gradient(ellipse at 10% 60%, rgba(201,75,26,0.12), transparent 40%)" }} />
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,#1e0e06_0%,#160b04_40%,#1a0d06_100%)]" />
       <div className="noise absolute inset-0 opacity-20" />
 
       <Header isHome />
@@ -200,8 +212,8 @@ export function HueFlowHomePage() {
       <div className="relative mx-auto max-w-[1560px] px-6 pb-24 pt-20 lg:px-8">
         {/* HERO */}
         <section className="relative mx-auto max-w-[1560px] pt-12 lg:pt-16">
-          <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
-            <motion.div initial="hidden" animate="show" variants={stagger} className="text-center lg:text-left">
+          <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-[1.1fr_0.9fr] md:gap-8">
+            <motion.div initial="hidden" animate="show" variants={stagger} className="text-center md:text-left">
               <motion.div variants={fadeUp} className="inline-flex items-center gap-2 rounded-full border border-white/18 bg-white/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/70 backdrop-blur-xl">
                 <svg width="14" height="14" fill="none" viewBox="0 0 24 24" className="text-[#F15B2A]"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" fill="currentColor" /></svg>
                 The complete color platform
@@ -218,7 +230,7 @@ export function HueFlowHomePage() {
                 Generate beautiful palettes, explore color combinations, and build visual systems for websites, apps, and brands.
               </motion.p>
 
-              <motion.div variants={fadeUp} className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
+              <motion.div variants={fadeUp} className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:justify-start">
                 <Link
                   href="/generator"
                   className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#F15B2A] to-[#C94B1A] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(241,91,42,0.35)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
@@ -234,47 +246,71 @@ export function HueFlowHomePage() {
                 </Link>
               </motion.div>
 
-              <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/55 lg:justify-start">
-                {["Free to use", "No sign up", "Works everywhere"].map((item) => (
+              <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-white/55 md:justify-start">
+                {["Free to use", "Save your palettes", "Works everywhere"].map((item) => (
                   <span key={item} className="inline-flex items-center gap-1.5">
                     <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className="text-white/40"><circle cx="12" cy="12" r="10" /><path d="M9 12l2 2 4-4" /></svg>
                     {item}
                   </span>
                 ))}
               </motion.div>
+
+              {/* Mobile palette strip — hidden on md+ where the right panel shows */}
+              <motion.div variants={fadeUp} className="mt-8 md:hidden">
+                <div className="flex h-16 overflow-hidden rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+                  {heroPalette.colors.map((c) => (
+                    <motion.div
+                      key={c.hex}
+                      animate={{ backgroundColor: c.hex }}
+                      transition={{ duration: 0.6 }}
+                      className="flex-1"
+                    />
+                  ))}
+                </div>
+                <div className="mt-2 flex">
+                  {heroPalette.colors.map((c) => (
+                    <p key={c.hex} className="flex-1 text-center font-mono text-[9px] text-white/30">{c.hex.toUpperCase()}</p>
+                  ))}
+                </div>
+              </motion.div>
             </motion.div>
 
             {/* Decorative layered palette visual */}
             <motion.div
               initial={{ opacity: 0, scale: 0.94 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-              className="relative mx-auto hidden aspect-[4/3] w-full max-w-lg lg:block"
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="relative mx-auto hidden aspect-[4/3] w-full max-w-md md:block"
             >
               <div
                 className="pointer-events-none absolute -inset-16 rounded-full opacity-60 blur-3xl"
                 style={{ background: "radial-gradient(circle, rgba(241,91,42,0.28), transparent 65%)" }}
               />
 
+              {/* Palette label + shuffle */}
+              <div className="absolute -top-8 left-0 right-0 z-20 flex items-center justify-between px-1">
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-white/35">{heroPalette.label}</p>
+                <button
+                  onClick={handleGenerate}
+                  className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/6 px-3 py-1.5 text-[11px] font-semibold text-white/55 backdrop-blur-md transition-colors hover:border-white/25 hover:text-white outline-none"
+                >
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/>
+                  </svg>
+                  Shuffle
+                </button>
+              </div>
+
               <div className="absolute inset-0 z-10 flex h-full w-full overflow-hidden rounded-[26px] border border-white/15 shadow-[0_24px_70px_rgba(0,0,0,0.5)]">
                 {heroPalette.colors.map((color) => (
                   <motion.div key={color.hex} animate={{ backgroundColor: color.hex }} transition={{ duration: 0.6 }} className="flex-1" />
                 ))}
               </div>
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className="absolute -bottom-5 -right-4 z-20 flex items-center gap-2 rounded-2xl border border-white/15 bg-[#1c1c1e]/90 px-4 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.4)] backdrop-blur-xl"
-              >
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" className="text-[#F15B2A]"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" fill="currentColor" /></svg>
-                <div>
-                  <p className="text-xs font-semibold text-white">Accessible</p>
-                  <p className="text-[11px] text-white/50">by default</p>
-                </div>
-              </motion.div>
+
+              <div className="absolute -bottom-7 right-0 z-20 flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                <p className="text-[11px] text-white/35">WCAG AA compliant</p>
+              </div>
             </motion.div>
           </div>
 

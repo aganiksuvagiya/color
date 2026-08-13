@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { StructuredData } from "@/components/seo/structured-data";
 import { ConditionalFooter } from "@/components/conditional-footer";
+import { Providers } from "@/components/providers";
 import { buildOrganizationSchema, buildSoftwareApplicationSchema, buildWebSiteSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/seo/site-config";
 
@@ -85,8 +86,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <StructuredData data={buildWebSiteSchema()} />
         <StructuredData data={buildOrganizationSchema()} />
         <StructuredData data={buildSoftwareApplicationSchema()} />
-        {children}
-        <ConditionalFooter />
+        <Providers>
+          {children}
+          <ConditionalFooter />
+        </Providers>
       </body>
     </html>
   );

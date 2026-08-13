@@ -17,10 +17,13 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",
+    "@auth/supabase-adapter": "^1.11.3",
     "@opennextjs/cloudflare": "^1.20.2",
     "@sparticuz/chromium": "^147.0.0",
+    "@supabase/supabase-js": "^2.112.3",
     "framer-motion": "^12.23.12",
     "next": "^15.0.0",
+    "next-auth": "^5.0.0-beta.32",
     "puppeteer-core": "^25.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const MAIN_LINKS = [
   { href: "/generator", label: "Generator" },
@@ -34,7 +35,10 @@ const TOOL_LINKS = [
 export function Header({ isHome = false }: { isHome?: boolean } = {}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
+  const [signOutConfirm, setSignOutConfirm] = useState(false);
+  const [signOutModal, setSignOutModal] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const { data: session } = useSession();
 
   function handleToolsEnter() {
     clearTimeout(timeoutRef.current);
@@ -119,6 +123,53 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
               ← Home
             </Link>
           )}
+          {session ? (
+            <div className="relative hidden sm:block">
+              <button
+                onClick={() => setSignOutConfirm((v) => !v)}
+                className="flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-sm text-white/70 transition-colors hover:bg-white/8"
+              >
+                {session.user?.image ? (
+                  <Image src={session.user.image} alt="avatar" width={22} height={22} className="rounded-full" />
+                ) : (
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white">
+                    {session.user?.name?.[0] ?? "U"}
+                  </span>
+                )}
+                <span className="max-w-[80px] truncate">{session.user?.name?.split(" ")[0]}</span>
+              </button>
+              {signOutConfirm && (
+                <div className="absolute right-0 top-full mt-2 w-44 rounded-xl border border-white/15 bg-[#1a0e06]/95 p-1.5 shadow-xl backdrop-blur-md">
+                  <Link
+                    href="/profile"
+                    onClick={() => setSignOutConfirm(false)}
+                    className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-white/70 hover:bg-white/8 hover:text-white transition-colors"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                      <circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                    </svg>
+                    Profile
+                  </Link>
+                  <button
+                    onClick={() => { setSignOutConfirm(false); setSignOutModal(true); }}
+                    className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-red-400/70 hover:bg-red-500/10 hover:text-red-400 transition-colors"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                      <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                    </svg>
+                    Sign out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={() => signIn("google")}
+              className="hidden rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-white/70 transition-colors hover:bg-white/8 sm:block"
+            >
+              Sign in
+            </button>
+          )}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/60 transition-colors hover:bg-white/8 md:hidden"
@@ -201,7 +252,77 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
               >
                 {isHome ? "Try Demo" : "← Home"}
               </Link>
+
+              <div className="my-1 border-t border-white/8" />
+              {session ? (
+                  <button
+                    onClick={() => { setMenuOpen(false); setSignOutModal(true); }}
+                    className="flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/8 hover:text-white"
+                  >
+                    {session.user?.image ? (
+                      <Image src={session.user.image} alt="avatar" width={20} height={20} className="rounded-full" />
+                    ) : (
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white">
+                        {session.user?.name?.[0] ?? "U"}
+                      </span>
+                    )}
+                    {session.user?.name?.split(" ")[0]} · Sign out
+                  </button>
+              ) : (
+                <button
+                  onClick={() => { signIn("google"); setMenuOpen(false); }}
+                  className="rounded-lg px-4 py-2.5 text-left text-sm font-medium text-white/70 transition-colors hover:bg-white/8 hover:text-white"
+                >
+                  Sign in with Google
+                </button>
+              )}
             </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Centered sign-out confirmation modal */}
+      <AnimatePresence>
+        {signOutModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center px-4"
+            onClick={() => setSignOutModal(false)}
+          >
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 8 }}
+              transition={{ duration: 0.15 }}
+              className="relative w-full max-w-sm rounded-2xl border border-white/15 bg-[#1a0e06]/98 p-6 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="mb-1 flex h-11 w-11 items-center justify-center rounded-full bg-red-500/15 mx-auto">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-red-400">
+                  <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                </svg>
+              </div>
+              <h3 className="mt-3 text-center text-base font-semibold text-white">Sign out?</h3>
+              <p className="mt-1.5 text-center text-sm text-white/45">Are you sure you want to sign out of your account?</p>
+              <div className="mt-5 flex gap-3">
+                <button
+                  onClick={() => setSignOutModal(false)}
+                  className="flex-1 rounded-xl border border-white/10 py-2.5 text-sm font-medium text-white/50 hover:text-white/80 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => { setSignOutModal(false); signOut(); }}
+                  className="flex-1 rounded-xl bg-red-500 py-2.5 text-sm font-semibold text-white hover:bg-red-600 transition-colors"
+                >
+                  Sign out
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
