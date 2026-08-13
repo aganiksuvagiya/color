@@ -464,9 +464,9 @@ export function HueFlowHomePage() {
           </motion.div>
 
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.05 }} variants={stagger} className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            {trendingPalettes.map((palette) => (
+            {trendingPalettes.map((palette, idx) => (
               <motion.div
-                key={palette.label}
+                key={`${palette.label}-${idx}`}
                 variants={fadeUp}
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 240, damping: 22 }}
