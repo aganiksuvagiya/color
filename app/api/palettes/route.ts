@@ -6,7 +6,7 @@ export async function GET() {
   const session = await auth();
   if (!session?.user?.email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { data: user } = await supabase.from("users").select("id").eq("email", session.user.email).single();
+  const { data: user } = await supabase.from("users").select("id").eq("email", session.user.email).single().overrideTypes<{ id: string }, { merge: false }>();
   if (!user) return NextResponse.json({ palettes: [] });
 
   const { data } = await supabase
@@ -26,12 +26,12 @@ export async function POST(req: NextRequest) {
   const { name, colors } = body;
   if (!colors) return NextResponse.json({ error: "colors required" }, { status: 400 });
 
-  const { data: user } = await supabase.from("users").select("id").eq("email", session.user.email).single();
+  const { data: user } = await supabase.from("users").select("id").eq("email", session.user.email).single().overrideTypes<{ id: string }, { merge: false }>();
   if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
   const { data, error } = await supabase
     .from("palettes")
-    .insert({ user_id: user.id, name: name ?? "Untitled", colors })
+    .insert({ user_id: user.id, name: name ?? "Untitled", colors } as never)
     .select()
     .single();
 
@@ -46,7 +46,7 @@ export async function DELETE(req: NextRequest) {
   const { id } = await req.json();
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
 
-  const { data: user } = await supabase.from("users").select("id").eq("email", session.user.email).single();
+  const { data: user } = await supabase.from("users").select("id").eq("email", session.user.email).single().overrideTypes<{ id: string }, { merge: false }>();
   if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
   await supabase.from("palettes").delete().eq("id", id).eq("user_id", user.id);

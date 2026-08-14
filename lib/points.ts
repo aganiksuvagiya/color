@@ -24,7 +24,8 @@ export async function getUserPoints(userId: string): Promise<number> {
     .from("user_points")
     .select("total")
     .eq("user_id", userId)
-    .single();
+    .single()
+    .overrideTypes<{ total: number }, { merge: false }>();
   return data?.total ?? 0;
 }
 
@@ -40,20 +41,22 @@ export async function awardPoints(userId: string, action: PointAction): Promise<
       .eq("user_id", userId)
       .eq("action", action)
       .gte("created_at", today)
-      .single();
+      .single()
+      .overrideTypes<{ id: string }, { merge: false }>();
     if (existing) return await getUserPoints(userId);
   }
 
-  await supabase.from("point_history").insert({ user_id: userId, action, points: pts });
+  await supabase.from("point_history").insert({ user_id: userId, action, points: pts } as never);
 
   const { data } = await supabase
     .from("user_points")
-    .upsert({ user_id: userId, total: pts }, { onConflict: "user_id", ignoreDuplicates: false })
+    .upsert({ user_id: userId, total: pts } as never, { onConflict: "user_id", ignoreDuplicates: false })
     .select("total")
-    .single();
+    .single()
+    .overrideTypes<{ total: number }, { merge: false }>();
 
   // If row already existed, increment
-  await supabase.rpc("increment_points", { uid: userId, delta: pts });
+  await supabase.rpc("increment_points" as never, { uid: userId, delta: pts } as never);
 
   return await getUserPoints(userId);
 }
