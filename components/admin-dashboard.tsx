@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useMemo, useState, type ComponentType, type SVGProps } from "react";
+import { Fragment, useMemo, useState, type ComponentType, type SVGProps } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
@@ -296,8 +296,18 @@ function UserPointsEditor({
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  useEffect(() => setTotalInput(String(total)), [total]);
-  useEffect(() => setStreakInput(String(streak)), [streak]);
+  // Re-sync inputs when the parent's underlying value actually changes (e.g. after a save
+  // elsewhere), without an effect: https://react.dev/learn/you-might-not-need-an-effect
+  const [prevTotal, setPrevTotal] = useState(total);
+  if (total !== prevTotal) {
+    setPrevTotal(total);
+    setTotalInput(String(total));
+  }
+  const [prevStreak, setPrevStreak] = useState(streak);
+  if (streak !== prevStreak) {
+    setPrevStreak(streak);
+    setStreakInput(String(streak));
+  }
 
   async function handleSave() {
     setSaving(true);
