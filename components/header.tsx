@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 const MAIN_LINKS = [
@@ -39,6 +39,15 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
   const [signOutModal, setSignOutModal] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const { data: session } = useSession();
+  const [streak, setStreak] = useState(0);
+
+  useEffect(() => {
+    if (!session?.user) return;
+    fetch("/api/daily-challenge")
+      .then((r) => r.json())
+      .then((d) => setStreak(d.streak ?? 0))
+      .catch(() => {});
+  }, [session?.user]);
 
   function handleToolsEnter() {
     clearTimeout(timeoutRef.current);
@@ -137,6 +146,11 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                   </span>
                 )}
                 <span className="max-w-[80px] truncate">{session.user?.name?.split(" ")[0]}</span>
+                {streak > 0 && (
+                  <span className="flex items-center gap-1 rounded-full bg-orange-500/15 px-2 py-0.5 text-xs font-semibold text-orange-300">
+                    🔥 {streak}
+                  </span>
+                )}
               </button>
               {signOutConfirm && (
                 <div className="absolute right-0 top-full mt-2 w-44 rounded-xl border border-white/15 bg-[#1a0e06]/95 p-1.5 shadow-xl backdrop-blur-md">
@@ -266,7 +280,11 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                         {session.user?.name?.[0] ?? "U"}
                       </span>
                     )}
-                    {session.user?.name?.split(" ")[0]} · Sign out
+                    {session.user?.name?.split(" ")[0]}
+                    {streak > 0 && (
+                      <span className="rounded-full bg-orange-500/15 px-2 py-0.5 text-xs font-semibold text-orange-300">🔥 {streak}</span>
+                    )}
+                    <span className="ml-auto text-white/40">Sign out</span>
                   </button>
               ) : (
                 <button

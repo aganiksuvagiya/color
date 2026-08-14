@@ -7,6 +7,7 @@ export const POINT_ACTIONS = {
   SHARE_PALETTE: 15,
   SAVE_COLOR: 2,
   REFER_FRIEND: 50,
+  DAILY_CHALLENGE: 10,
 } as const;
 
 export const POINT_REWARDS = {
@@ -27,6 +28,29 @@ export async function getUserPoints(userId: string): Promise<number> {
     .single()
     .overrideTypes<{ total: number }, { merge: false }>();
   return data?.total ?? 0;
+}
+
+export async function getStreakInfo(userId: string): Promise<{ streak: number; streakDate: string | null }> {
+  const { data } = await supabase
+    .from("user_points")
+    .select("streak, streak_date")
+    .eq("user_id", userId)
+    .maybeSingle()
+    .overrideTypes<{ streak: number; streak_date: string | null } | null, { merge: false }>();
+  return { streak: data?.streak ?? 0, streakDate: data?.streak_date ?? null };
+}
+
+async function bumpStreak(userId: string): Promise<void> {
+  const today = new Date().toISOString().slice(0, 10);
+  const { streak, streakDate } = await getStreakInfo(userId);
+  if (streakDate === today) return; // already bumped today
+
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const nextStreak = streakDate === yesterday ? streak + 1 : 1;
+
+  await supabase
+    .from("user_points")
+    .upsert({ user_id: userId, streak: nextStreak, streak_date: today } as never, { onConflict: "user_id" });
 }
 
 export async function awardPoints(userId: string, action: PointAction): Promise<number> {
@@ -57,6 +81,8 @@ export async function awardPoints(userId: string, action: PointAction): Promise<
 
   // If row already existed, increment
   await supabase.rpc("increment_points" as never, { uid: userId, delta: pts } as never);
+
+  if (action === "DAILY_CHALLENGE") await bumpStreak(userId);
 
   return await getUserPoints(userId);
 }

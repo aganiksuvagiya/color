@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +17,8 @@ import { usePaletteStorage } from "@/hooks/use-palette-storage";
 
 type Tab = "palettes" | "gradients";
 
+type Sort = "newest" | "oldest" | "name";
+
 export function ProfilePage() {
   const { data: session } = useSession();
   const [tab, setTab] = useState<Tab>("palettes");
@@ -25,6 +27,10 @@ export function ProfilePage() {
   const [mounted, setMounted] = useState(false);
   const [signOutModal, setSignOutModal] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [points, setPoints] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [query, setQuery] = useState("");
+  const [sort, setSort] = useState<Sort>("newest");
 
   const { getPalettes, deletePalette } = usePaletteStorage();
 
@@ -34,6 +40,18 @@ export function ProfilePage() {
     setGradients(getSavedGradients());
     setMounted(true);
   }, [getPalettes]);
+
+  useEffect(() => {
+    if (!session?.user) return;
+    fetch("/api/points")
+      .then((r) => r.json())
+      .then((d) => setPoints(d.total ?? 0))
+      .catch(() => {});
+    fetch("/api/daily-challenge")
+      .then((r) => r.json())
+      .then((d) => setStreak(d.streak ?? 0))
+      .catch(() => {});
+  }, [session?.user]);
 
   async function handleDeletePalette(id: string) {
     await deletePalette(id);
@@ -54,16 +72,30 @@ export function ProfilePage() {
   const user = session?.user;
   const initials = user?.name?.split(" ").map((n) => n[0]).join("").toUpperCase() ?? "?";
 
+  const q = query.trim().toLowerCase();
+  const visiblePalettes = useMemo(() => {
+    const filtered = palettes.filter((p) => p.label.toLowerCase().includes(q));
+    if (sort === "newest") return filtered.sort((a, b) => b.savedAt - a.savedAt);
+    if (sort === "oldest") return filtered.sort((a, b) => a.savedAt - b.savedAt);
+    return filtered.sort((a, b) => a.label.localeCompare(b.label));
+  }, [palettes, q, sort]);
+  const visibleGradients = useMemo(() => {
+    const filtered = gradients.filter((g) => g.name.toLowerCase().includes(q));
+    if (sort === "newest") return filtered.sort((a, b) => b.savedAt - a.savedAt);
+    if (sort === "oldest") return filtered.sort((a, b) => a.savedAt - b.savedAt);
+    return filtered.sort((a, b) => a.name.localeCompare(b.name));
+  }, [gradients, q, sort]);
+
   return (
     <main className="relative min-h-screen bg-[#160b05] text-white">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_-10%,rgba(249,115,22,0.18),transparent_55%)]" />
       <Header />
 
-      <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-24 sm:px-6 sm:pt-32">
+      <div className="relative mx-auto max-w-7xl px-4 pb-24 pt-24 sm:px-6 sm:pt-32">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
 
           {/* ── Sidebar ── */}
-          <aside className="w-full shrink-0 lg:w-56 xl:w-64">
+          <aside className="w-full shrink-0 lg:sticky lg:top-32 lg:w-56 lg:self-start xl:w-64">
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#1c0d06]/80 backdrop-blur-xl">
 
               {/* Avatar header */}
@@ -109,6 +141,20 @@ export function ProfilePage() {
                   </p>
                   <p className="mt-0.5 text-[10px] text-white/35">Gradients</p>
                 </div>
+                {user && (
+                  <>
+                    <div className="rounded-xl bg-orange-500/8 px-3 py-2.5 text-center">
+                      <p className="text-lg font-bold tabular-nums text-orange-300">{mounted ? points : "–"}</p>
+                      <p className="mt-0.5 text-[10px] text-white/35">Score</p>
+                    </div>
+                    <div className="rounded-xl bg-orange-500/8 px-3 py-2.5 text-center">
+                      <p className="text-lg font-bold tabular-nums text-orange-300">
+                        {mounted ? (streak > 0 ? `🔥 ${streak}` : streak) : "–"}
+                      </p>
+                      <p className="mt-0.5 text-[10px] text-white/35">Day Streak</p>
+                    </div>
+                  </>
+                )}
               </div>
 
               <div className="mx-4 border-t border-white/8" />
@@ -187,13 +233,41 @@ export function ProfilePage() {
           <div className="min-w-0 flex-1">
 
             {/* Header */}
-            <div className="mb-5">
-              <p className="mb-1 text-[11px] font-semibold uppercase tracking-widest text-orange-400/60">
-                My Library
-              </p>
-              <h1 className="text-2xl font-bold text-white">
-                {tab === "palettes" ? "Saved Palettes" : "Saved Gradients"}
-              </h1>
+            <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="mb-1 text-[11px] font-semibold uppercase tracking-widest text-orange-400/60">
+                  My Library
+                </p>
+                <h1 className="text-2xl font-bold text-white">
+                  {tab === "palettes" ? "Saved Palettes" : "Saved Gradients"}
+                  <span className="ml-2 align-middle text-sm font-normal text-white/30">
+                    {tab === "palettes" ? visiblePalettes.length : visibleGradients.length}
+                  </span>
+                </h1>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className="relative">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-white/25">
+                    <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
+                  </svg>
+                  <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search..."
+                    className="w-36 rounded-lg border border-white/8 bg-white/4 py-1.5 pl-8 pr-2.5 text-xs text-white placeholder:text-white/25 outline-none transition-colors focus:border-white/20 sm:w-44"
+                  />
+                </div>
+                <select
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value as Sort)}
+                  className="rounded-lg border border-white/8 bg-white/4 px-2.5 py-1.5 text-xs text-white/60 outline-none transition-colors focus:border-white/20"
+                >
+                  <option value="newest" className="bg-[#1c0d06]">Newest</option>
+                  <option value="oldest" className="bg-[#1c0d06]">Oldest</option>
+                  <option value="name" className="bg-[#1c0d06]">Name</option>
+                </select>
+              </div>
             </div>
 
             {/* Tab switcher */}
@@ -201,7 +275,10 @@ export function ProfilePage() {
               {(["palettes", "gradients"] as Tab[]).map((t) => (
                 <button
                   key={t}
-                  onClick={() => setTab(t)}
+                  onClick={() => {
+                    setTab(t);
+                    setQuery("");
+                  }}
                   className={`relative rounded-lg px-4 py-1.5 text-sm font-medium capitalize transition-colors ${
                     tab === t ? "text-white" : "text-white/40 hover:text-white/65"
                   }`}
@@ -257,9 +334,16 @@ export function ProfilePage() {
                         </svg>
                       </Link>
                     </div>
+                  ) : visiblePalettes.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-24 text-center">
+                      <p className="text-sm font-medium text-white/40">No palettes match &quot;{query}&quot;</p>
+                      <button onClick={() => setQuery("")} className="mt-3 text-xs text-orange-400 hover:text-orange-300">
+                        Clear search
+                      </button>
+                    </div>
                   ) : (
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      {palettes.map((p) => (
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                      {visiblePalettes.map((p) => (
                         <motion.div
                           key={p.id}
                           layout
@@ -371,9 +455,16 @@ export function ProfilePage() {
                         </svg>
                       </Link>
                     </div>
+                  ) : visibleGradients.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-24 text-center">
+                      <p className="text-sm font-medium text-white/40">No gradients match &quot;{query}&quot;</p>
+                      <button onClick={() => setQuery("")} className="mt-3 text-xs text-orange-400 hover:text-orange-300">
+                        Clear search
+                      </button>
+                    </div>
                   ) : (
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                      {gradients.map((g) => (
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                      {visibleGradients.map((g) => (
                         <div
                           key={g.id}
                           className="overflow-hidden rounded-2xl border border-white/10 bg-[#1c0d06]/60 transition-all duration-200 hover:border-white/16"

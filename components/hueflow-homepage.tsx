@@ -5,6 +5,7 @@ import { useMemo, useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Header } from "./header";
 import { ColorPlayground } from "./color-playground";
+import { DailyChallengeBanner } from "./daily-challenge-banner";
 import { generateRandomPalette } from "@/lib/color-utils";
 import { generateTrendingPalettes, dayIndex } from "@/lib/trending";
 import { encodePalette } from "@/lib/share-utils";
@@ -457,6 +458,8 @@ export function HueFlowHomePage() {
             </div>
           </motion.div>
         </section>
+
+        <DailyChallengeBanner />
 
         {/* WHY THIS DIRECTION WORKS */}
         <section className="defer-offscreen mx-auto mt-24 grid grid-cols-1 max-w-[1560px] gap-8 lg:grid-cols-[0.95fr_1.05fr]" id="why">

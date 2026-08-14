@@ -1,9 +1,10 @@
 "use client";
 
-import { Fragment, useMemo, useState, type ComponentType, type SVGProps } from "react";
+import { Fragment, useEffect, useMemo, useState, type ComponentType, type SVGProps } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { signOut } from "next-auth/react";
+import { THEMES } from "@/lib/daily-challenge";
 
 /* ─── Icons (inline SVG, no icon library) ───────────────────────────────── */
 
@@ -95,6 +96,15 @@ function IconSpark(props: IconProps) {
   );
 }
 
+function IconFlag(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" {...iconBase} {...props}>
+      <path d="M5 21V4" />
+      <path d="M5 4h13l-3 4.5L18 13H5" />
+    </svg>
+  );
+}
+
 export type AdminUser = {
   id: string;
   name: string | null;
@@ -124,8 +134,9 @@ type Props = {
   adminUser: { name: string | null; email: string; image: string | null };
   users: AdminUser[];
   palettes: AdminPalette[];
-  points: { user_id: string; total: number }[];
+  points: { user_id: string; total: number; streak: number }[];
   history: AdminPointHistory[];
+  challenge: { theme: string; updatedAt: string | null; updatedBy: string | null };
 };
 
 /* ─── Helpers ────────────────────────────────────────────────────────── */
@@ -269,6 +280,76 @@ function StatCard({ label, value, icon: Icon }: { label: string; value: number |
   );
 }
 
+function UserPointsEditor({
+  userId,
+  total,
+  streak,
+  onSave,
+}: {
+  userId: string;
+  total: number;
+  streak: number;
+  onSave: (userId: string, total: number, streak: number) => Promise<boolean>;
+}) {
+  const [totalInput, setTotalInput] = useState(String(total));
+  const [streakInput, setStreakInput] = useState(String(streak));
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => setTotalInput(String(total)), [total]);
+  useEffect(() => setStreakInput(String(streak)), [streak]);
+
+  async function handleSave() {
+    setSaving(true);
+    setSaved(false);
+    const ok = await onSave(userId, Math.max(0, Math.trunc(Number(totalInput)) || 0), Math.max(0, Math.trunc(Number(streakInput)) || 0));
+    setSaving(false);
+    setSaved(ok);
+  }
+
+  return (
+    <div>
+      <div className="mb-2 text-xs font-medium uppercase tracking-wide text-white/40">Edit points / streak</div>
+      <div className="flex flex-wrap items-end gap-2">
+        <div>
+          <label className="block text-[11px] text-white/40">Points</label>
+          <input
+            type="number"
+            min={0}
+            value={totalInput}
+            onChange={(e) => {
+              setTotalInput(e.target.value);
+              setSaved(false);
+            }}
+            className="mt-1 w-24 rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-sm outline-none focus:border-white/30"
+          />
+        </div>
+        <div>
+          <label className="block text-[11px] text-white/40">Streak</label>
+          <input
+            type="number"
+            min={0}
+            value={streakInput}
+            onChange={(e) => {
+              setStreakInput(e.target.value);
+              setSaved(false);
+            }}
+            className="mt-1 w-24 rounded-lg border border-white/10 bg-white/5 px-2 py-1.5 text-sm outline-none focus:border-white/30"
+          />
+        </div>
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className="rounded-lg bg-orange-500 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-orange-400 disabled:opacity-50"
+        >
+          {saving ? "Saving…" : "Save"}
+        </button>
+        {saved && <span className="text-xs text-green-300">✓ Updated</span>}
+      </div>
+    </div>
+  );
+}
+
 /* ─── Sections ───────────────────────────────────────────────────────── */
 
 const NAV = [
@@ -276,19 +357,52 @@ const NAV = [
   { id: "users", label: "Users", icon: IconUsers },
   { id: "palettes", label: "Palettes", icon: IconPalette },
   { id: "activity", label: "Activity", icon: IconActivity },
+  { id: "challenge", label: "Challenge", icon: IconFlag },
   { id: "profile", label: "Profile", icon: IconSettings },
 ] as const;
 type Section = (typeof NAV)[number]["id"];
 
-export function AdminDashboard({ adminUser, users, palettes, points, history }: Props) {
+export function AdminDashboard({ adminUser, users, palettes, points, history, challenge }: Props) {
   const [section, setSection] = useState<Section>("overview");
   const [search, setSearch] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [usersPage, setUsersPage] = useState(0);
   const [palettesPage, setPalettesPage] = useState(0);
   const [historyPage, setHistoryPage] = useState(0);
+  const [currentTheme, setCurrentTheme] = useState(challenge.theme);
+  const [themePreset, setThemePreset] = useState(THEMES.includes(challenge.theme as (typeof THEMES)[number]) ? challenge.theme : "custom");
+  const [customTheme, setCustomTheme] = useState(THEMES.includes(challenge.theme as (typeof THEMES)[number]) ? "" : challenge.theme);
+  const [savingTheme, setSavingTheme] = useState(false);
+  const [themeSaved, setThemeSaved] = useState(false);
 
-  const pointsByUser = useMemo(() => new Map(points.map((p) => [p.user_id, p.total])), [points]);
+  async function saveTheme() {
+    const theme = themePreset === "custom" ? customTheme.trim() : themePreset;
+    if (!theme) return;
+    setSavingTheme(true);
+    setThemeSaved(false);
+    try {
+      const res = await fetch("/api/admin/daily-challenge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ theme }),
+      });
+      if (res.ok) {
+        setCurrentTheme(theme);
+        setThemeSaved(true);
+      }
+    } finally {
+      setSavingTheme(false);
+    }
+  }
+
+  const [pointsOverride, setPointsOverride] = useState<Map<string, number>>(new Map());
+  const [streakOverride, setStreakOverride] = useState<Map<string, number>>(new Map());
+  const pointsByUser = useMemo(() => {
+    const map = new Map(points.map((p) => [p.user_id, p.total]));
+    for (const [id, v] of pointsOverride) map.set(id, v);
+    return map;
+  }, [points, pointsOverride]);
+  const rawStreakByUser = useMemo(() => new Map(points.map((p) => [p.user_id, p.streak])), [points]);
   const palettesByUser = useMemo(() => {
     const map = new Map<string, AdminPalette[]>();
     for (const p of palettes) {
@@ -306,6 +420,25 @@ export function AdminDashboard({ adminUser, users, palettes, points, history }: 
     return map;
   }, [history]);
   const emailByUser = useMemo(() => new Map(users.map((u) => [u.id, u.email])), [users]);
+  const streakByUser = useMemo(() => {
+    const map = new Map(rawStreakByUser);
+    for (const [id, v] of streakOverride) map.set(id, v);
+    return map;
+  }, [rawStreakByUser, streakOverride]);
+
+  async function saveUserPoints(userId: string, total: number, streak: number) {
+    const res = await fetch("/api/admin/user-points", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, total, streak }),
+    });
+    if (res.ok) {
+      setPointsOverride((m) => new Map(m).set(userId, total));
+      setStreakOverride((m) => new Map(m).set(userId, streak));
+      return true;
+    }
+    return false;
+  }
 
   const filteredUsers = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -462,13 +595,14 @@ export function AdminDashboard({ adminUser, users, palettes, points, history }: 
                 />
               </div>
               <div className="mt-4 overflow-x-auto rounded-xl border border-white/10">
-                <table className="w-full min-w-[820px] text-left text-sm">
+                <table className="w-full min-w-[920px] text-left text-sm">
                   <thead className="bg-white/5 text-white/60">
                     <tr>
                       <th className="px-4 py-3 font-medium">User</th>
                       <th className="px-4 py-3 font-medium">Email</th>
                       <th className="px-4 py-3 font-medium">Palettes</th>
                       <th className="px-4 py-3 font-medium">Points</th>
+                      <th className="px-4 py-3 font-medium">Streak</th>
                       <th className="px-4 py-3 font-medium">Last sign-in</th>
                     </tr>
                   </thead>
@@ -490,12 +624,15 @@ export function AdminDashboard({ adminUser, users, palettes, points, history }: 
                             <td className="px-4 py-3 text-white/70">{u.email}</td>
                             <td className="px-4 py-3">{userPalettes.length}</td>
                             <td className="px-4 py-3">{pointsByUser.get(u.id) ?? 0}</td>
+                            <td className="px-4 py-3">
+                              {(streakByUser.get(u.id) ?? 0) > 0 ? `🔥 ${streakByUser.get(u.id)}` : "—"}
+                            </td>
                             <td className="px-4 py-3 text-white/50">{formatDate(u.emailVerified)}</td>
                           </tr>
                           {isOpen && (
                             <tr className="border-t border-white/10 bg-white/[0.03]">
-                              <td colSpan={5} className="px-4 py-4">
-                                <div className="grid gap-6 sm:grid-cols-2">
+                              <td colSpan={6} className="px-4 py-4">
+                                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                                   <div>
                                     <div className="mb-2 text-xs font-medium uppercase tracking-wide text-white/40">
                                       Palettes ({userPalettes.length})
@@ -542,6 +679,14 @@ export function AdminDashboard({ adminUser, users, palettes, points, history }: 
                                       </ul>
                                     )}
                                   </div>
+                                  <div>
+                                    <UserPointsEditor
+                                      userId={u.id}
+                                      total={pointsByUser.get(u.id) ?? 0}
+                                      streak={streakByUser.get(u.id) ?? 0}
+                                      onSave={saveUserPoints}
+                                    />
+                                  </div>
                                 </div>
                               </td>
                             </tr>
@@ -551,7 +696,7 @@ export function AdminDashboard({ adminUser, users, palettes, points, history }: 
                     })}
                     {filteredUsers.length === 0 && (
                       <tr>
-                        <td colSpan={5} className="px-4 py-6 text-center text-white/40">
+                        <td colSpan={6} className="px-4 py-6 text-center text-white/40">
                           No matching users.
                         </td>
                       </tr>
@@ -642,6 +787,62 @@ export function AdminDashboard({ adminUser, users, palettes, points, history }: 
                   </tbody>
                 </table>
                 <Pager page={historyPageClamped} pageCount={historyPageCount} onChange={setHistoryPage} />
+              </div>
+            </section>
+          )}
+
+          {section === "challenge" && (
+            <section className="max-w-lg">
+              <h2 className="text-xl font-medium">Daily Challenge</h2>
+              <p className="mt-1 text-sm text-white/60">
+                The theme shown on the homepage banner. Users complete it for points and a streak.
+              </p>
+
+              <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-5">
+                <div className="text-xs font-medium uppercase tracking-wide text-white/40">Currently live</div>
+                <div className="mt-1.5 text-lg font-semibold text-orange-300">{currentTheme}</div>
+                {challenge.updatedAt && (
+                  <div className="mt-1 text-xs text-white/40">
+                    Last set {formatDate(challenge.updatedAt)}
+                    {challenge.updatedBy ? ` by ${challenge.updatedBy}` : ""}
+                  </div>
+                )}
+
+                <div className="mt-5 border-t border-white/10 pt-5">
+                  <label className="text-xs font-medium uppercase tracking-wide text-white/40">Pick a new theme</label>
+                  <select
+                    value={themePreset}
+                    onChange={(e) => setThemePreset(e.target.value)}
+                    className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm outline-none focus:border-white/30"
+                  >
+                    {THEMES.map((t) => (
+                      <option key={t} value={t} className="bg-[#1a0f08]">
+                        {t}
+                      </option>
+                    ))}
+                    <option value="custom" className="bg-[#1a0f08]">
+                      Custom…
+                    </option>
+                  </select>
+
+                  {themePreset === "custom" && (
+                    <input
+                      value={customTheme}
+                      onChange={(e) => setCustomTheme(e.target.value)}
+                      placeholder="Type a custom theme…"
+                      className="mt-2 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm outline-none placeholder:text-white/30 focus:border-white/30"
+                    />
+                  )}
+
+                  <button
+                    onClick={saveTheme}
+                    disabled={savingTheme || (themePreset === "custom" && !customTheme.trim())}
+                    className="mt-4 w-full rounded-lg bg-gradient-to-r from-[#F15B2A] to-[#C94B1A] px-4 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.01] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    {savingTheme ? "Saving…" : "Set as today's challenge"}
+                  </button>
+                  {themeSaved && <div className="mt-2 text-center text-xs text-green-300">✓ Updated — live on the homepage now.</div>}
+                </div>
               </div>
             </section>
           )}
