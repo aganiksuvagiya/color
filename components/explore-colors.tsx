@@ -82,6 +82,7 @@ export function ExploreColors() {
 
   useEffect(() => {
     categoryRef.current = activeCategory;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- must run client-only: makeBatch uses Math.random(), so computing it during render would mismatch SSR output
     setPalettes(makeBatch(activeCategory, BATCH_SIZE));
     setSearch("");
   }, [activeCategory]);

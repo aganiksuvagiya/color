@@ -30,6 +30,7 @@ export function ProfilePage() {
 
   useEffect(() => {
     getPalettes().then(setPalettes);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- must run client-only (localStorage); `mounted` gate below avoids SSR hydration mismatch
     setGradients(getSavedGradients());
     setMounted(true);
   }, [getPalettes]);
