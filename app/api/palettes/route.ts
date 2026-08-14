@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
   const { data, error } = await supabase
     .from("palettes")
-    .insert({ user_id: user.id, name: name ?? "Untitled", colors } as never)
+    .insert({ user_id: user.id, email: session.user.email, name: name ?? "Untitled", colors } as never)
     .select()
     .single();
 
