@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth, supabase } from "@/lib/auth";
 import { awardPoints, getStreakInfo } from "@/lib/points";
 import { getDateKey, getRotatingTheme } from "@/lib/daily-challenge";
+import { getClientIp, isRateLimited } from "@/lib/rate-limit";
 
 async function getCurrentTheme() {
   const { data } = await supabase
@@ -52,7 +53,11 @@ export async function GET() {
 }
 
 /** Registers a "try" — works with or without a session. Counter always moves; points/streak only apply if signed in. */
-export async function POST() {
+export async function POST(req: Request) {
+  if (isRateLimited(`daily-challenge:${getClientIp(req)}`, 20, 60_000)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   const dateKey = getDateKey();
 
   await supabase.rpc("increment_challenge_tries" as never, { d: dateKey } as never);

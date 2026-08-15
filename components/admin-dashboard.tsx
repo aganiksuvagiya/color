@@ -241,6 +241,50 @@ function DonutChart({ data }: { data: { label: string; value: number; color: str
   );
 }
 
+function ConfirmDeleteButton({ label, confirmLabel, onConfirm }: { label: string; confirmLabel: string; onConfirm: () => Promise<boolean> }) {
+  const [confirming, setConfirming] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  if (deleting) {
+    return <span className="text-xs text-white/30">Deleting…</span>;
+  }
+
+  if (confirming) {
+    return (
+      <span className="inline-flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+        <button
+          onClick={async () => {
+            setDeleting(true);
+            const ok = await onConfirm();
+            if (!ok) setDeleting(false);
+          }}
+          className="rounded-lg bg-red-500 px-2.5 py-1 text-xs font-medium text-white hover:bg-red-400"
+        >
+          {confirmLabel}
+        </button>
+        <button
+          onClick={() => setConfirming(false)}
+          className="rounded-lg border border-white/10 px-2.5 py-1 text-xs text-white/50 hover:bg-white/5"
+        >
+          Cancel
+        </button>
+      </span>
+    );
+  }
+
+  return (
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        setConfirming(true);
+      }}
+      className="rounded-lg border border-red-500/20 px-2.5 py-1 text-xs text-red-400/80 hover:bg-red-500/10 hover:text-red-400"
+    >
+      {label}
+    </button>
+  );
+}
+
 function Pager({ page, pageCount, onChange }: { page: number; pageCount: number; onChange: (page: number) => void }) {
   if (pageCount <= 1) return null;
   return (
@@ -372,13 +416,39 @@ const NAV = [
 ] as const;
 type Section = (typeof NAV)[number]["id"];
 
-export function AdminDashboard({ adminUser, users, palettes, points, history, challenge }: Props) {
+export function AdminDashboard({ adminUser, users: initialUsers, palettes: initialPalettes, points, history, challenge }: Props) {
+  const [users, setUsers] = useState(initialUsers);
+  const [palettes, setPalettes] = useState(initialPalettes);
   const [section, setSection] = useState<Section>("overview");
   const [search, setSearch] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [usersPage, setUsersPage] = useState(0);
   const [palettesPage, setPalettesPage] = useState(0);
   const [historyPage, setHistoryPage] = useState(0);
+
+  async function deleteUser(userId: string) {
+    const res = await fetch("/api/admin/users", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId }),
+    });
+    if (res.ok) {
+      setUsers((prev) => prev.filter((u) => u.id !== userId));
+      setPalettes((prev) => prev.filter((p) => p.user_id !== userId));
+      setExpandedId((id) => (id === userId ? null : id));
+    }
+    return res.ok;
+  }
+
+  async function deletePaletteAsAdmin(id: string) {
+    const res = await fetch("/api/admin/palettes", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    if (res.ok) setPalettes((prev) => prev.filter((p) => p.id !== id));
+    return res.ok;
+  }
   const [currentTheme, setCurrentTheme] = useState(challenge.theme);
   const [themePreset, setThemePreset] = useState(THEMES.includes(challenge.theme as (typeof THEMES)[number]) ? challenge.theme : "custom");
   const [customTheme, setCustomTheme] = useState(THEMES.includes(challenge.theme as (typeof THEMES)[number]) ? "" : challenge.theme);
@@ -696,6 +766,14 @@ export function AdminDashboard({ adminUser, users, palettes, points, history, ch
                                       streak={streakByUser.get(u.id) ?? 0}
                                       onSave={saveUserPoints}
                                     />
+                                    <div className="mt-5 border-t border-white/10 pt-4">
+                                      <div className="mb-2 text-xs font-medium uppercase tracking-wide text-white/40">Danger zone</div>
+                                      <ConfirmDeleteButton
+                                        label="Delete user"
+                                        confirmLabel="Confirm delete"
+                                        onConfirm={() => deleteUser(u.id)}
+                                      />
+                                    </div>
                                   </div>
                                 </div>
                               </td>
@@ -722,13 +800,14 @@ export function AdminDashboard({ adminUser, users, palettes, points, history, ch
             <section>
               <h2 className="text-xl font-medium">All palettes</h2>
               <div className="mt-4 overflow-x-auto rounded-xl border border-white/10">
-                <table className="w-full min-w-[720px] text-left text-sm">
+                <table className="w-full min-w-[800px] text-left text-sm">
                   <thead className="bg-white/5 text-white/60">
                     <tr>
                       <th className="px-4 py-3 font-medium">Name</th>
                       <th className="px-4 py-3 font-medium">Owner</th>
                       <th className="px-4 py-3 font-medium">Colors</th>
                       <th className="px-4 py-3 font-medium">Saved</th>
+                      <th className="px-4 py-3 font-medium"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -749,11 +828,18 @@ export function AdminDashboard({ adminUser, users, palettes, points, history, ch
                           </div>
                         </td>
                         <td className="px-4 py-3 text-white/50">{formatDate(p.created_at)}</td>
+                        <td className="px-4 py-3 text-right">
+                          <ConfirmDeleteButton
+                            label="Delete"
+                            confirmLabel="Confirm"
+                            onConfirm={() => deletePaletteAsAdmin(p.id)}
+                          />
+                        </td>
                       </tr>
                     ))}
                     {palettes.length === 0 && (
                       <tr>
-                        <td colSpan={4} className="px-4 py-6 text-center text-white/40">
+                        <td colSpan={5} className="px-4 py-6 text-center text-white/40">
                           No palettes saved yet.
                         </td>
                       </tr>

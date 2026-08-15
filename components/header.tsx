@@ -5,11 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { awardPointsClient } from "@/lib/award-points-client";
 
 const MAIN_LINKS = [
   { href: "/generator", label: "Generator" },
   { href: "/explore", label: "Explore" },
   { href: "/trends", label: "Trends" },
+  { href: "/community", label: "Community" },
 ];
 
 const TOOL_LINKS = [
@@ -47,6 +49,10 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
       .then((r) => r.json())
       .then((d) => setStreak(d.streak ?? 0))
       .catch(() => {});
+    // Server dedupes this to once per calendar day, so it's safe to call on every mount.
+    awardPointsClient("DAILY_VISIT");
+    // No-op once already claimed (or no referral cookie present) — safe to call every mount.
+    fetch("/api/referral/claim", { method: "POST" }).catch(() => {});
   }, [session?.user]);
 
   function handleToolsEnter() {
@@ -133,6 +139,25 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
             </Link>
           )}
           {session ? (
+            <>
+              <Link
+                href="/profile"
+                className="flex items-center gap-1 sm:hidden"
+                aria-label="Profile"
+              >
+                {session.user?.image ? (
+                  <Image src={session.user.image} alt="avatar" width={28} height={28} className="rounded-full" />
+                ) : (
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white">
+                    {session.user?.name?.[0] ?? "U"}
+                  </span>
+                )}
+                {streak > 0 && (
+                  <span className="flex items-center gap-1 rounded-full bg-orange-500/15 px-1.5 py-0.5 text-[11px] font-semibold text-orange-300">
+                    🔥 {streak}
+                  </span>
+                )}
+              </Link>
             <div className="relative hidden sm:block">
               <button
                 onClick={() => setSignOutConfirm((v) => !v)}
@@ -176,13 +201,22 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                 </div>
               )}
             </div>
+            </>
           ) : (
-            <button
-              onClick={() => signIn("google")}
-              className="hidden rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-white/70 transition-colors hover:bg-white/8 sm:block"
-            >
-              Sign in
-            </button>
+            <>
+              <button
+                onClick={() => signIn("google")}
+                className="hidden rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-white/70 transition-colors hover:bg-white/8 sm:block"
+              >
+                Sign in
+              </button>
+              <button
+                onClick={() => signIn("google")}
+                className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-medium text-white/70 transition-colors hover:bg-white/8 sm:hidden"
+              >
+                Sign in
+              </button>
+            </>
           )}
           <button
             onClick={() => setMenuOpen(!menuOpen)}

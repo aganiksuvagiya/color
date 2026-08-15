@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Suspense } from "react";
 import "./globals.css";
 
 import { StructuredData } from "@/components/seo/structured-data";
 import { ConditionalFooter } from "@/components/conditional-footer";
 import { Providers } from "@/components/providers";
+import { ReferralCapture } from "@/components/referral-capture";
 import { buildOrganizationSchema, buildSoftwareApplicationSchema, buildWebSiteSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/seo/site-config";
 
@@ -86,6 +88,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <StructuredData data={buildWebSiteSchema()} />
         <StructuredData data={buildOrganizationSchema()} />
         <StructuredData data={buildSoftwareApplicationSchema()} />
+        <Suspense fallback={null}>
+          <ReferralCapture />
+        </Suspense>
         <Providers>
           {children}
           <ConditionalFooter />

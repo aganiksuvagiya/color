@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { EffectiveCpmAd } from "./ad-slot";
 
 const FOOTER_LINKS = [
   {
@@ -59,6 +60,11 @@ export function Footer() {
               Colors, palettes, gradients, and accessible brand color systems
               for product, marketing, and web design.
             </p>
+            <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
+              <div className="max-h-[160px] overflow-hidden rounded-xl [&_img]:h-auto [&_img]:max-h-[110px] [&_img]:w-full [&_img]:object-cover">
+                <EffectiveCpmAd />
+              </div>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
             {FOOTER_LINKS.map((group) => (

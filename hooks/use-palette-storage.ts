@@ -10,6 +10,17 @@ import {
 } from "@/lib/storage";
 import type { Palette } from "@/lib/types";
 
+export class PaletteLimitError extends Error {
+  points: number;
+  required: number;
+  constructor(message: string, points: number, required: number) {
+    super(message);
+    this.name = "PaletteLimitError";
+    this.points = points;
+    this.required = required;
+  }
+}
+
 export function usePaletteStorage() {
   const { data: session } = useSession();
   const isLoggedIn = !!session?.user?.email;
@@ -41,8 +52,9 @@ export function usePaletteStorage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name: palette.label, colors: palette.colors }),
         });
-        const { palette: saved } = await res.json();
-        return { ...palette, id: saved.id, savedAt: Date.now() };
+        const data = await res.json();
+        if (data.locked) throw new PaletteLimitError(data.error, data.points ?? 0, data.required ?? 50);
+        return { ...palette, id: data.palette.id, savedAt: Date.now() };
       }
       return saveLocal(palette);
     },
@@ -53,15 +65,30 @@ export function usePaletteStorage() {
     if (isLoggedIn) {
       const res = await fetch("/api/palettes");
       const { palettes } = await res.json();
-      return (palettes ?? []).map((p: { id: string; name: string; colors: Palette["colors"]; created_at: string }) => ({
-        id: p.id,
-        label: p.name,
-        colors: p.colors,
-        savedAt: new Date(p.created_at).getTime(),
-      }));
+      return (palettes ?? []).map(
+        (p: { id: string; name: string; colors: Palette["colors"]; created_at: string; is_public?: boolean }) => ({
+          id: p.id,
+          label: p.name,
+          colors: p.colors,
+          savedAt: new Date(p.created_at).getTime(),
+          isPublic: p.is_public ?? false,
+        })
+      );
     }
     return getSavedPalettes();
   }, [isLoggedIn]);
+
+  const setPalettePublic = useCallback(
+    async (id: string, isPublic: boolean): Promise<void> => {
+      if (!isLoggedIn) return;
+      await fetch("/api/palettes", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, isPublic }),
+      });
+    },
+    [isLoggedIn]
+  );
 
   const deletePalette = useCallback(
     async (id: string): Promise<void> => {
@@ -78,5 +105,5 @@ export function usePaletteStorage() {
     [isLoggedIn]
   );
 
-  return { savePalette, getPalettes, deletePalette, isLoggedIn };
+  return { savePalette, getPalettes, deletePalette, setPalettePublic, isLoggedIn };
 }

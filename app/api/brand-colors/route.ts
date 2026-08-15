@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import chromium from "@sparticuz/chromium";
 import puppeteer, { type Page } from "puppeteer-core";
+import { auth, supabase } from "@/lib/auth";
+import { getUserPoints } from "@/lib/points";
+import { hasUnlocked, POINT_REWARDS } from "@/lib/rewards";
 
 export const maxDuration = 60;
 export const runtime = "nodejs";
@@ -41,6 +44,26 @@ async function resolveExecutablePath(): Promise<string> {
 }
 
 export async function POST(request: NextRequest) {
+  const session = await auth();
+  const lockedMessage = `Sign in and earn ${POINT_REWARDS.BRAND_ANALYZER} points to unlock the Brand Analyzer.`;
+  if (!session?.user?.email) {
+    return NextResponse.json({ error: lockedMessage, locked: true, points: 0, required: POINT_REWARDS.BRAND_ANALYZER }, { status: 401 });
+  }
+
+  const { data: user } = await supabase
+    .from("users")
+    .select("id")
+    .eq("email", session.user.email)
+    .single()
+    .overrideTypes<{ id: string }, { merge: false }>();
+  const points = user ? await getUserPoints(user.id) : 0;
+  if (!hasUnlocked(points, "BRAND_ANALYZER")) {
+    return NextResponse.json(
+      { error: `Earn ${POINT_REWARDS.BRAND_ANALYZER - points} more points to unlock the Brand Analyzer.`, locked: true, points, required: POINT_REWARDS.BRAND_ANALYZER },
+      { status: 403 }
+    );
+  }
+
   let browser: Awaited<ReturnType<typeof puppeteer.launch>> | null = null;
 
   try {

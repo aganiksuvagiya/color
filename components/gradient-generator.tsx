@@ -6,7 +6,8 @@ import { useState, useCallback, useEffect, useRef } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { toolPageContent } from "@/lib/seo/tool-pages";
-import { deleteGradient, getSavedGradients, saveGradient, type SavedGradient } from "@/lib/storage";
+import { type SavedGradient } from "@/lib/storage";
+import { useGradientStorage } from "@/hooks/use-gradient-storage";
 
 interface ColorStop {
   color: string;
@@ -88,6 +89,7 @@ function presetToStyle(preset: PresetGradient): string {
 }
 
 export function GradientGenerator() {
+  const { saveGradient, getGradients, deleteGradient } = useGradientStorage();
   const [gradientType, setGradientType] = useState<GradientType>("linear");
   const [angle, setAngle] = useState(90);
   const [stops, setStops] = useState<ColorStop[]>([
@@ -165,12 +167,11 @@ export function GradientGenerator() {
   }, []);
 
   useEffect(() => {
-    const loadSavedGradients = () => {
-      setSavedGradients(getSavedGradients());
+    getGradients().then((g) => {
+      setSavedGradients(g);
       setGradientsMounted(true);
-    };
-    loadSavedGradients();
-  }, []);
+    });
+  }, [getGradients]);
 
   const fetchGradients = useCallback(async (pageNum: number, append: boolean) => {
     setLoadingGradients(true);
@@ -278,8 +279,8 @@ export function GradientGenerator() {
     }
   }, [cssOutput]);
 
-  const handleSaveGradient = useCallback(() => {
-    const saved = saveGradient({
+  const handleSaveGradient = useCallback(async () => {
+    const saved = await saveGradient({
       name: `${gradientType[0].toUpperCase()}${gradientType.slice(1)} ${angle}°`,
       css: cssOutput,
       preview: gradientStyle,
@@ -287,12 +288,15 @@ export function GradientGenerator() {
     setSavedGradients((prev) => [saved, ...prev]);
     setSaveMessage("Saved!");
     setTimeout(() => setSaveMessage(null), 2000);
-  }, [gradientType, angle, cssOutput, gradientStyle]);
+  }, [gradientType, angle, cssOutput, gradientStyle, saveGradient]);
 
-  const handleDeleteGradient = useCallback((id: string) => {
-    deleteGradient(id);
-    setSavedGradients((prev) => prev.filter((g) => g.id !== id));
-  }, []);
+  const handleDeleteGradient = useCallback(
+    async (id: string) => {
+      await deleteGradient(id);
+      setSavedGradients((prev) => prev.filter((g) => g.id !== id));
+    },
+    [deleteGradient]
+  );
 
   const handleCopyGradientCss = useCallback(async (css: string) => {
     await navigator.clipboard.writeText(css);

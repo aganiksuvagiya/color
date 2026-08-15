@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useRef, useCallback } from "react";
+import Link from "next/link";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { findClosestColorName } from "@/lib/color-names";
@@ -78,6 +79,7 @@ export function BrandColorAnalyzer() {
   const [analyzedUrl, setAnalyzedUrl] = useState("");
   const [screenshotSrc, setScreenshotSrc] = useState<string | null>(null);
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
+  const [locked, setLocked] = useState<{ points: number; required: number } | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const extractColors = useCallback((imageSrc: string) => {
@@ -162,6 +164,7 @@ export function BrandColorAnalyzer() {
     setError("");
     setColors([]);
     setScreenshotSrc(null);
+    setLocked(null);
 
     try {
       const res = await fetch("/api/brand-colors", {
@@ -170,7 +173,10 @@ export function BrandColorAnalyzer() {
         body: JSON.stringify({ url: url.trim() }),
       });
       const data = await res.json();
-      if (data.error) {
+      if (data.locked) {
+        setLocked({ points: data.points ?? 0, required: data.required ?? 100 });
+        setLoading(false);
+      } else if (data.error) {
         setError(data.error);
         setLoading(false);
       } else {
@@ -240,6 +246,29 @@ export function BrandColorAnalyzer() {
           </div>
           {error && (
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-3 text-sm text-red-400">{error}</motion.p>
+          )}
+          {locked && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4 rounded-xl border border-orange-500/25 bg-orange-500/8 p-4"
+            >
+              <p className="text-sm font-medium text-orange-300">
+                🔒 Unlock the Brand Analyzer at {locked.required} points
+              </p>
+              <p className="mt-1 text-xs text-white/50">
+                You have {locked.points} points. Try the homepage Daily Challenge or save/share palettes to earn more.
+              </p>
+              <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-white/10">
+                <div
+                  className="h-full rounded-full bg-orange-400"
+                  style={{ width: `${Math.min(100, Math.round((locked.points / locked.required) * 100))}%` }}
+                />
+              </div>
+              <Link href="/" className="mt-3 inline-block text-xs font-medium text-orange-300 hover:text-orange-200">
+                Go earn points →
+              </Link>
+            </motion.div>
           )}
         </motion.div>
 

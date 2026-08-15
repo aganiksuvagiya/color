@@ -7,8 +7,9 @@ import { Header } from "@/components/header";
 import { generateFromPrompt, generateRandomPalette, getContrastText } from "@/lib/color-utils";
 import { withExtraColors } from "@/lib/shades";
 import { type SavedPalette } from "@/lib/storage";
-import { usePaletteStorage } from "@/hooks/use-palette-storage";
+import { usePaletteStorage, PaletteLimitError } from "@/hooks/use-palette-storage";
 import { encodePalette, decodePalette } from "@/lib/share-utils";
+import { awardPointsClient } from "@/lib/award-points-client";
 import type { Palette } from "@/lib/types";
 import { PaletteDisplay } from "./palette-display";
 import { ExportPanel } from "./export-panel";
@@ -234,10 +235,18 @@ export function GeneratorPage() {
 
   async function handleSave() {
     if (!activePalette) return;
-    await savePalette(activePalette);
-    setSavedVersion(version => version + 1);
-    setSaveMessage("Saved!");
-    setTimeout(() => setSaveMessage(null), 2000);
+    let message = "Saved!";
+    try {
+      await savePalette(activePalette);
+      setSavedVersion(version => version + 1);
+    } catch (err) {
+      message =
+        err instanceof PaletteLimitError
+          ? `Free limit reached (${err.points}/${err.required} pts to unlock unlimited saves)`
+          : "Couldn't save — try again.";
+    }
+    setSaveMessage(message);
+    setTimeout(() => setSaveMessage(null), 3000);
   }
 
   async function handleShare() {
@@ -245,6 +254,7 @@ export function GeneratorPage() {
     const url = `${window.location.origin}/generator${encodePalette(activePalette)}`;
     await navigator.clipboard.writeText(url);
     setShareMessage("Link copied!");
+    awardPointsClient("SHARE_PALETTE");
     setTimeout(() => setShareMessage(null), 2000);
   }
 

@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import { auth, supabase } from "@/lib/auth";
-
-const ADMIN_EMAIL = "suvagiyaaganik@gmail.com";
+import { isAdmin } from "@/lib/admin";
 
 export async function POST(req: Request) {
   const session = await auth();
-  if (session?.user?.email !== ADMIN_EMAIL) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!isAdmin(session?.user?.email)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json().catch(() => null);
   const userId = typeof body?.userId === "string" ? body.userId : "";
@@ -24,7 +23,10 @@ export async function POST(req: Request) {
   }
 
   const { error } = await supabase.from("user_points").upsert(patch as never, { onConflict: "user_id" });
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) {
+    console.error("[admin/user-points] upsert error:", error);
+    return NextResponse.json({ error: "Failed to update points" }, { status: 500 });
+  }
 
   return NextResponse.json({ success: true, total, streak });
 }

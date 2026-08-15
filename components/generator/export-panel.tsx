@@ -1,7 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { hasUnlocked, POINT_REWARDS } from "@/lib/rewards";
 import {
   exportAsCssVariables,
   exportAsJson,
@@ -16,6 +18,7 @@ import {
   generateAseBlob,
   generatePdfBlob,
 } from "@/lib/export-utils";
+import { awardPointsClient } from "@/lib/award-points-client";
 import type { Palette } from "@/lib/types";
 
 type Format = "tailwind" | "css" | "json" | "scss" | "swift" | "android" | "figma" | "svg" | "gpl" | "png" | "ase" | "pdf";
@@ -59,14 +62,27 @@ function isDownloadFormat(format: Format): format is DownloadFormat {
 }
 
 export function ExportPanel({ palette }: Props) {
+  const { data: session } = useSession();
   const [format, setFormat] = useState<Format>("tailwind");
   const [copied, setCopied] = useState(false);
+  const [points, setPoints] = useState(0);
 
-  const output = !isDownloadFormat(format) ? formatters[format](palette) : "";
+  useEffect(() => {
+    if (!session?.user) return;
+    fetch("/api/points")
+      .then((r) => r.json())
+      .then((d) => setPoints(d.total ?? 0))
+      .catch(() => {});
+  }, [session?.user]);
+
+  const figmaLocked = format === "figma" && !hasUnlocked(points, "FIGMA_EXPORT");
+  const output = !isDownloadFormat(format) && !figmaLocked ? formatters[format](palette) : "";
 
   async function handleCopy() {
+    if (figmaLocked) return;
     await navigator.clipboard.writeText(output);
     setCopied(true);
+    awardPointsClient("EXPORT_CSS");
     setTimeout(() => setCopied(false), 2000);
   }
 
@@ -89,6 +105,7 @@ export function ExportPanel({ palette }: Props) {
       downloadFile(url, "pdf");
       URL.revokeObjectURL(url);
     }
+    awardPointsClient("EXPORT_CSS");
   }
 
   return (
@@ -118,9 +135,10 @@ export function ExportPanel({ palette }: Props) {
         {!isDownloadFormat(format) ? (
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/60 transition-colors hover:bg-white/12"
+            disabled={figmaLocked}
+            className="flex items-center gap-1.5 rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/60 transition-colors hover:bg-white/12 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            {copied ? "Copied!" : "Copy"}
+            {figmaLocked ? "Locked" : copied ? "Copied!" : "Copy"}
           </button>
         ) : (
           <button
@@ -147,6 +165,28 @@ export function ExportPanel({ palette }: Props) {
                 <span className={`font-mono text-[10px] ${c.text === "light" ? "text-white/70" : "text-black/60"}`}>{c.hex}</span>
               </div>
             ))}
+          </motion.div>
+        ) : figmaLocked ? (
+          <motion.div
+            key="figma-locked"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+            className="rounded-xl border border-orange-500/25 bg-orange-500/8 p-4"
+          >
+            <p className="text-sm font-medium text-orange-300">
+              🔒 Unlock Figma export at {POINT_REWARDS.FIGMA_EXPORT} points
+            </p>
+            <p className="mt-1 text-xs text-white/50">
+              You have {points} points — save/share palettes or try the Daily Challenge to earn more.
+            </p>
+            <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-white/10">
+              <div
+                className="h-full rounded-full bg-orange-400"
+                style={{ width: `${Math.min(100, Math.round((points / POINT_REWARDS.FIGMA_EXPORT) * 100))}%` }}
+              />
+            </div>
           </motion.div>
         ) : (
           <motion.pre

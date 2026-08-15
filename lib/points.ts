@@ -1,4 +1,7 @@
 import { supabase } from "@/lib/auth";
+import { POINT_REWARDS, hasUnlocked, type PointReward } from "@/lib/rewards";
+
+export { POINT_REWARDS, hasUnlocked, type PointReward };
 
 export const POINT_ACTIONS = {
   DAILY_VISIT: 3,
@@ -10,15 +13,7 @@ export const POINT_ACTIONS = {
   DAILY_CHALLENGE: 10,
 } as const;
 
-export const POINT_REWARDS = {
-  UNLIMITED_SAVES: 50,
-  BRAND_ANALYZER: 100,
-  FIGMA_EXPORT: 200,
-  PRO_ALL: 500,
-} as const;
-
 export type PointAction = keyof typeof POINT_ACTIONS;
-export type PointReward = keyof typeof POINT_REWARDS;
 
 export async function getUserPoints(userId: string): Promise<number> {
   const { data } = await supabase
@@ -53,11 +48,16 @@ async function bumpStreak(userId: string): Promise<void> {
     .upsert({ user_id: userId, streak: nextStreak, streak_date: today } as never, { onConflict: "user_id" });
 }
 
+// Client-triggered actions get one award per calendar day, so spam-clicking (or
+// replaying the request) can't farm unlimited points. Server-verified actions
+// (CREATE_PALETTE on an actual insert, DAILY_CHALLENGE via its own streak_date check)
+// don't need this.
+const DAILY_DEDUP_ACTIONS: PointAction[] = ["DAILY_VISIT", "EXPORT_CSS", "SHARE_PALETTE"];
+
 export async function awardPoints(userId: string, action: PointAction): Promise<number> {
   const pts = POINT_ACTIONS[action];
 
-  // Prevent duplicate daily visit points
-  if (action === "DAILY_VISIT") {
+  if (DAILY_DEDUP_ACTIONS.includes(action)) {
     const today = new Date().toISOString().slice(0, 10);
     const { data: existing } = await supabase
       .from("point_history")
@@ -85,8 +85,4 @@ export async function awardPoints(userId: string, action: PointAction): Promise<
   if (action === "DAILY_CHALLENGE") await bumpStreak(userId);
 
   return await getUserPoints(userId);
-}
-
-export function hasUnlocked(points: number, reward: PointReward): boolean {
-  return points >= POINT_REWARDS[reward];
 }

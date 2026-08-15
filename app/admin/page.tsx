@@ -1,15 +1,15 @@
 import { redirect } from "next/navigation";
 import { auth, supabase } from "@/lib/auth";
 import { getRotatingTheme } from "@/lib/daily-challenge";
+import { isAdmin } from "@/lib/admin";
 import { AdminDashboard, type AdminUser, type AdminPalette, type AdminPointHistory } from "@/components/admin-dashboard";
 
 export const dynamic = "force-dynamic";
 
-const ADMIN_EMAIL = "suvagiyaaganik@gmail.com";
-
 export default async function AdminPage() {
   const session = await auth();
-  if (session?.user?.email !== ADMIN_EMAIL) redirect("/");
+  const adminEmail = session?.user?.email;
+  if (!isAdmin(adminEmail)) redirect("/");
 
   const [usersRes, palettesRes, pointsRes, historyRes, challengeRes] = await Promise.all([
     supabase
@@ -42,7 +42,7 @@ export default async function AdminPage() {
 
   return (
     <AdminDashboard
-      adminUser={{ name: session.user?.name ?? null, email: session.user.email, image: session.user?.image ?? null }}
+      adminUser={{ name: session?.user?.name ?? null, email: adminEmail, image: session?.user?.image ?? null }}
       users={usersRes.data ?? []}
       palettes={palettesRes.data ?? []}
       points={pointsRes.data ?? []}

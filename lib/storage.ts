@@ -7,6 +7,7 @@ const GRADIENTS_KEY = "hueflow-saved-gradients";
 export type SavedPalette = Palette & {
   id: string;
   savedAt: number;
+  isPublic?: boolean;
 };
 
 export function getSavedPalettes(): SavedPalette[] {

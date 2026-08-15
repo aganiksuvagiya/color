@@ -7,15 +7,21 @@ import Link from "next/link";
 import { useSession, signOut, signIn } from "next-auth/react";
 import { Header } from "./header";
 import { encodePalette } from "@/lib/share-utils";
+import { awardPointsClient } from "@/lib/award-points-client";
 import {
-  deleteGradient,
-  getSavedGradients,
   type SavedGradient,
   type SavedPalette,
+  type Collection,
+  getCollections,
+  createCollection,
+  deleteCollection,
+  addPaletteToCollection,
+  removePaletteFromCollection,
 } from "@/lib/storage";
 import { usePaletteStorage } from "@/hooks/use-palette-storage";
+import { useGradientStorage } from "@/hooks/use-gradient-storage";
 
-type Tab = "palettes" | "gradients";
+type Tab = "palettes" | "gradients" | "collections";
 
 type Sort = "newest" | "oldest" | "name";
 
@@ -31,15 +37,22 @@ export function ProfilePage() {
   const [streak, setStreak] = useState(0);
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<Sort>("newest");
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const [activeCollectionId, setActiveCollectionId] = useState<string | null>(null);
+  const [newCollectionName, setNewCollectionName] = useState("");
+  const [addToCollectionMenuId, setAddToCollectionMenuId] = useState<string | null>(null);
+  const [copiedReferral, setCopiedReferral] = useState(false);
 
-  const { getPalettes, deletePalette } = usePaletteStorage();
+  const { getPalettes, deletePalette, setPalettePublic } = usePaletteStorage();
+  const { getGradients, deleteGradient } = useGradientStorage();
 
   useEffect(() => {
     getPalettes().then(setPalettes);
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- must run client-only (localStorage); `mounted` gate below avoids SSR hydration mismatch
-    setGradients(getSavedGradients());
+    getGradients().then(setGradients);
+    setCollections(getCollections());
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- client-only mount gate, avoids SSR hydration mismatch
     setMounted(true);
-  }, [getPalettes]);
+  }, [getPalettes, getGradients]);
 
   useEffect(() => {
     if (!session?.user) return;
@@ -58,19 +71,54 @@ export function ProfilePage() {
     setPalettes(await getPalettes());
   }
 
-  function handleDeleteGradient(id: string) {
-    deleteGradient(id);
-    setGradients(getSavedGradients());
+  async function handleTogglePublic(p: SavedPalette) {
+    const next = !p.isPublic;
+    setPalettes((prev) => prev.map((x) => (x.id === p.id ? { ...x, isPublic: next } : x)));
+    await setPalettePublic(p.id, next);
+  }
+
+  function handleCreateCollection() {
+    const name = newCollectionName.trim();
+    if (!name) return;
+    createCollection(name);
+    setCollections(getCollections());
+    setNewCollectionName("");
+  }
+
+  function handleDeleteCollection(id: string) {
+    deleteCollection(id);
+    setCollections(getCollections());
+    setActiveCollectionId((cur) => (cur === id ? null : cur));
+  }
+
+  function toggleCollectionMembership(collectionId: string, paletteId: string, inCollection: boolean) {
+    if (inCollection) removePaletteFromCollection(collectionId, paletteId);
+    else addPaletteToCollection(collectionId, paletteId);
+    setCollections(getCollections());
+  }
+
+  async function handleDeleteGradient(id: string) {
+    await deleteGradient(id);
+    setGradients(await getGradients());
   }
 
   function handleCopyLink(p: SavedPalette) {
     navigator.clipboard.writeText(`${window.location.origin}/generator${encodePalette(p)}`);
     setCopiedId(p.id);
+    awardPointsClient("SHARE_PALETTE");
     setTimeout(() => setCopiedId(null), 2000);
   }
 
   const user = session?.user;
   const initials = user?.name?.split(" ").map((n) => n[0]).join("").toUpperCase() ?? "?";
+  const referralLink = mounted && user?.id ? `${window.location.origin}/?ref=${user.id}` : "";
+
+  function handleCopyReferral() {
+    if (!referralLink) return;
+    navigator.clipboard.writeText(referralLink);
+    setCopiedReferral(true);
+    setTimeout(() => setCopiedReferral(false), 2000);
+  }
 
   const q = query.trim().toLowerCase();
   const visiblePalettes = useMemo(() => {
@@ -85,6 +133,12 @@ export function ProfilePage() {
     if (sort === "oldest") return filtered.sort((a, b) => a.savedAt - b.savedAt);
     return filtered.sort((a, b) => a.name.localeCompare(b.name));
   }, [gradients, q, sort]);
+  const paletteById = useMemo(() => new Map(palettes.map((p) => [p.id, p])), [palettes]);
+  const activeCollection = collections.find((c) => c.id === activeCollectionId) ?? null;
+  const activeCollectionPalettes = useMemo(
+    () => (activeCollection ? activeCollection.paletteIds.map((id) => paletteById.get(id)).filter((p): p is SavedPalette => !!p) : []),
+    [activeCollection, paletteById]
+  );
 
   return (
     <main className="relative min-h-screen bg-[#160b05] text-white">
@@ -157,6 +211,30 @@ export function ProfilePage() {
                 )}
               </div>
 
+              {user && referralLink && (
+                <div className="mx-4 mb-4 rounded-xl bg-white/4 p-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-white/35">
+                    Invite friends · +50 pts each
+                  </p>
+                  <div className="mt-2 flex items-center gap-1.5">
+                    <input
+                      readOnly
+                      value={referralLink}
+                      onFocus={(e) => e.target.select()}
+                      className="min-w-0 flex-1 truncate rounded-lg border border-white/8 bg-white/5 px-2 py-1.5 text-[11px] text-white/50 outline-none"
+                    />
+                    <button
+                      onClick={handleCopyReferral}
+                      className={`shrink-0 rounded-lg px-2.5 py-1.5 text-[11px] font-medium transition-colors ${
+                        copiedReferral ? "bg-green-500/15 text-green-400" : "bg-orange-500/15 text-orange-300 hover:bg-orange-500/25"
+                      }`}
+                    >
+                      {copiedReferral ? "Copied" : "Copy"}
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <div className="mx-4 border-t border-white/8" />
 
               {/* Nav */}
@@ -165,11 +243,15 @@ export function ProfilePage() {
                   [
                     { key: "palettes", label: "Saved Palettes", count: palettes.length },
                     { key: "gradients", label: "Saved Gradients", count: gradients.length },
+                    { key: "collections", label: "Collections", count: collections.length },
                   ] as const
                 ).map((item) => (
                   <button
                     key={item.key}
-                    onClick={() => setTab(item.key)}
+                    onClick={() => {
+                      setTab(item.key);
+                      setActiveCollectionId(null);
+                    }}
                     className={`flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition-all ${
                       tab === item.key
                         ? "bg-orange-500/15 text-orange-300"
@@ -183,10 +265,14 @@ export function ProfilePage() {
                         <rect x="3" y="14" width="7" height="7" rx="1" />
                         <rect x="14" y="14" width="7" height="7" rx="1" />
                       </svg>
-                    ) : (
+                    ) : item.key === "gradients" ? (
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <circle cx="12" cy="12" r="10" />
                         <path d="M12 2a10 10 0 010 20" />
+                      </svg>
+                    ) : (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
                       </svg>
                     )}
                     {item.label}
@@ -239,45 +325,60 @@ export function ProfilePage() {
                   My Library
                 </p>
                 <h1 className="text-2xl font-bold text-white">
-                  {tab === "palettes" ? "Saved Palettes" : "Saved Gradients"}
+                  {tab === "palettes"
+                    ? "Saved Palettes"
+                    : tab === "gradients"
+                    ? "Saved Gradients"
+                    : activeCollection
+                    ? activeCollection.name
+                    : "Collections"}
                   <span className="ml-2 align-middle text-sm font-normal text-white/30">
-                    {tab === "palettes" ? visiblePalettes.length : visibleGradients.length}
+                    {tab === "palettes"
+                      ? visiblePalettes.length
+                      : tab === "gradients"
+                      ? visibleGradients.length
+                      : activeCollection
+                      ? activeCollectionPalettes.length
+                      : collections.length}
                   </span>
                 </h1>
               </div>
 
-              <div className="flex items-center gap-2">
-                <div className="relative">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-white/25">
-                    <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
-                  </svg>
-                  <input
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search..."
-                    className="w-36 rounded-lg border border-white/8 bg-white/4 py-1.5 pl-8 pr-2.5 text-xs text-white placeholder:text-white/25 outline-none transition-colors focus:border-white/20 sm:w-44"
-                  />
+              {tab !== "collections" && (
+                <div className="flex items-center gap-2">
+                  <div className="relative">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-white/25">
+                      <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
+                    </svg>
+                    <input
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder="Search..."
+                      className="w-36 rounded-lg border border-white/8 bg-white/4 py-1.5 pl-8 pr-2.5 text-xs text-white placeholder:text-white/25 outline-none transition-colors focus:border-white/20 sm:w-44"
+                    />
+                  </div>
+                  <select
+                    value={sort}
+                    onChange={(e) => setSort(e.target.value as Sort)}
+                    className="rounded-lg border border-white/8 bg-white/4 px-2.5 py-1.5 text-xs text-white/60 outline-none transition-colors focus:border-white/20"
+                  >
+                    <option value="newest" className="bg-[#1c0d06]">Newest</option>
+                    <option value="oldest" className="bg-[#1c0d06]">Oldest</option>
+                    <option value="name" className="bg-[#1c0d06]">Name</option>
+                  </select>
                 </div>
-                <select
-                  value={sort}
-                  onChange={(e) => setSort(e.target.value as Sort)}
-                  className="rounded-lg border border-white/8 bg-white/4 px-2.5 py-1.5 text-xs text-white/60 outline-none transition-colors focus:border-white/20"
-                >
-                  <option value="newest" className="bg-[#1c0d06]">Newest</option>
-                  <option value="oldest" className="bg-[#1c0d06]">Oldest</option>
-                  <option value="name" className="bg-[#1c0d06]">Name</option>
-                </select>
-              </div>
+              )}
             </div>
 
             {/* Tab switcher */}
             <div className="mb-5 flex w-fit items-center gap-1 rounded-xl border border-white/8 bg-white/3 p-1">
-              {(["palettes", "gradients"] as Tab[]).map((t) => (
+              {(["palettes", "gradients", "collections"] as Tab[]).map((t) => (
                 <button
                   key={t}
                   onClick={() => {
                     setTab(t);
                     setQuery("");
+                    setActiveCollectionId(null);
                   }}
                   className={`relative rounded-lg px-4 py-1.5 text-sm font-medium capitalize transition-colors ${
                     tab === t ? "text-white" : "text-white/40 hover:text-white/65"
@@ -348,10 +449,10 @@ export function ProfilePage() {
                           key={p.id}
                           layout
                           exit={{ opacity: 0, scale: 0.97 }}
-                          className="group overflow-hidden rounded-2xl border border-white/10 bg-[#1c0d06]/60 transition-all duration-200 hover:border-white/16"
+                          className="group rounded-2xl border border-white/10 bg-[#1c0d06]/60 transition-all duration-200 hover:border-white/16"
                         >
                           {/* Color swatch strip — click individual color to copy hex */}
-                          <div className="flex h-28">
+                          <div className="flex h-28 overflow-hidden rounded-t-2xl">
                             {p.colors.map((c, i) => (
                               <div
                                 key={i}
@@ -416,8 +517,59 @@ export function ProfilePage() {
                                 )}
                               </button>
                               <button
+                                onClick={() => handleTogglePublic(p)}
+                                className={`ml-auto rounded-lg p-1.5 transition-colors ${
+                                  p.isPublic ? "text-orange-400 hover:bg-orange-500/10" : "text-white/25 hover:bg-white/10 hover:text-white/70"
+                                }`}
+                                title={p.isPublic ? "Public — visible in Community gallery" : "Make public"}
+                              >
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <circle cx="12" cy="12" r="9" />
+                                  <path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" />
+                                </svg>
+                              </button>
+                              <div className="relative">
+                                <button
+                                  onClick={() => setAddToCollectionMenuId((cur) => (cur === p.id ? null : p.id))}
+                                  className="rounded-lg p-1.5 text-white/25 transition-colors hover:bg-white/10 hover:text-white/70"
+                                  title="Add to collection"
+                                >
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+                                    <path d="M12 11v4M10 13h4" />
+                                  </svg>
+                                </button>
+                                {addToCollectionMenuId === p.id && (
+                                  <div className="absolute right-0 top-full z-10 mt-1.5 w-48 rounded-xl border border-white/15 bg-[#1a0e06]/98 p-1.5 shadow-xl backdrop-blur-md">
+                                    {collections.length === 0 ? (
+                                      <p className="px-2.5 py-2 text-xs text-white/35">No collections yet. Create one from the Collections tab.</p>
+                                    ) : (
+                                      collections.map((c) => {
+                                        const inCollection = c.paletteIds.includes(p.id);
+                                        return (
+                                          <button
+                                            key={c.id}
+                                            onClick={() => toggleCollectionMembership(c.id, p.id, inCollection)}
+                                            className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-xs font-medium text-white/70 transition-colors hover:bg-white/8 hover:text-white"
+                                          >
+                                            <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border ${inCollection ? "border-orange-400 bg-orange-500/20" : "border-white/20"}`}>
+                                              {inCollection && (
+                                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                                                  <path d="M20 6L9 17l-5-5" className="text-orange-400" />
+                                                </svg>
+                                              )}
+                                            </span>
+                                            <span className="truncate">{c.name}</span>
+                                          </button>
+                                        );
+                                      })
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                              <button
                                 onClick={() => handleDeletePalette(p.id)}
-                                className="ml-auto rounded-lg p-1.5 text-white/25 transition-colors hover:bg-red-500/10 hover:text-red-400"
+                                className="rounded-lg p-1.5 text-white/25 transition-colors hover:bg-red-500/10 hover:text-red-400"
                                 title="Delete"
                               >
                                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -432,7 +584,7 @@ export function ProfilePage() {
                     </div>
                   )}
                 </motion.div>
-              ) : (
+              ) : tab === "gradients" ? (
                 <motion.div
                   key="gradients"
                   initial={{ opacity: 0, y: 8 }}
@@ -494,6 +646,125 @@ export function ProfilePage() {
                         </div>
                       ))}
                     </div>
+                  )}
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="collections"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  {activeCollection ? (
+                    <>
+                      <button
+                        onClick={() => setActiveCollectionId(null)}
+                        className="mb-4 flex items-center gap-1.5 text-xs text-white/50 hover:text-white"
+                      >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                          <path d="M15 6l-6 6 6 6" />
+                        </svg>
+                        All collections
+                      </button>
+                      {activeCollectionPalettes.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-24 text-center">
+                          <p className="text-sm font-medium text-white/40">No palettes in this collection yet</p>
+                          <p className="mt-1 text-xs text-white/22">Add palettes from the Saved Palettes tab.</p>
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                          {activeCollectionPalettes.map((p) => (
+                            <div key={p.id} className="overflow-hidden rounded-2xl border border-white/10 bg-[#1c0d06]/60">
+                              <div className="flex h-28">
+                                {p.colors.map((c, i) => (
+                                  <div key={i} className="flex-1" style={{ backgroundColor: c.hex }} />
+                                ))}
+                              </div>
+                              <div className="flex items-center justify-between gap-2 px-4 py-3.5">
+                                <p className="truncate text-sm font-semibold text-white">{p.label}</p>
+                                <button
+                                  onClick={() => activeCollectionId && toggleCollectionMembership(activeCollectionId, p.id, true)}
+                                  className="shrink-0 rounded-lg p-1.5 text-white/25 transition-colors hover:bg-red-500/10 hover:text-red-400"
+                                  title="Remove from collection"
+                                >
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                                    <path d="M18 6L6 18M6 6l12 12" />
+                                  </svg>
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <div className="mb-5 flex gap-2">
+                        <input
+                          value={newCollectionName}
+                          onChange={(e) => setNewCollectionName(e.target.value)}
+                          onKeyDown={(e) => e.key === "Enter" && handleCreateCollection()}
+                          placeholder="New collection name…"
+                          className="flex-1 rounded-lg border border-white/8 bg-white/4 px-3 py-2 text-sm text-white placeholder:text-white/25 outline-none transition-colors focus:border-white/20"
+                        />
+                        <button
+                          onClick={handleCreateCollection}
+                          disabled={!newCollectionName.trim()}
+                          className="rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:opacity-40"
+                        >
+                          Create
+                        </button>
+                      </div>
+                      {collections.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-24 text-center">
+                          <p className="text-sm font-medium text-white/40">No collections yet</p>
+                          <p className="mt-1 text-xs text-white/22">Group your saved palettes into collections.</p>
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                          {collections.map((c) => {
+                            const preview = c.paletteIds.map((id) => paletteById.get(id)).filter((p): p is SavedPalette => !!p);
+                            return (
+                              <div
+                                key={c.id}
+                                onClick={() => setActiveCollectionId(c.id)}
+                                className="group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-[#1c0d06]/60 transition-all duration-200 hover:border-white/16"
+                              >
+                                <div className="flex h-20">
+                                  {preview.length === 0 ? (
+                                    <div className="flex-1 bg-white/5" />
+                                  ) : (
+                                    preview.slice(0, 5).flatMap((p) => p.colors.slice(0, 1)).map((c2, i) => (
+                                      <div key={i} className="flex-1" style={{ backgroundColor: c2.hex }} />
+                                    ))
+                                  )}
+                                </div>
+                                <div className="flex items-center justify-between gap-2 px-4 py-3.5">
+                                  <div className="min-w-0">
+                                    <p className="truncate text-sm font-semibold text-white">{c.name}</p>
+                                    <p className="text-[11px] text-white/35">{c.paletteIds.length} palettes</p>
+                                  </div>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleDeleteCollection(c.id);
+                                    }}
+                                    className="shrink-0 rounded-lg p-1.5 text-white/25 opacity-0 transition-opacity hover:bg-red-500/10 hover:text-red-400 group-hover:opacity-100"
+                                    title="Delete collection"
+                                  >
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                      <polyline points="3 6 5 6 21 6" />
+                                      <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
+                                    </svg>
+                                  </button>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </>
                   )}
                 </motion.div>
               )}
