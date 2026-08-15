@@ -49,6 +49,7 @@ export function ProfilePage() {
   useEffect(() => {
     getPalettes().then(setPalettes);
     getGradients().then(setGradients);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- client-only localStorage read on mount
     setCollections(getCollections());
     // eslint-disable-next-line react-hooks/set-state-in-effect -- client-only mount gate, avoids SSR hydration mismatch
     setMounted(true);

@@ -37,6 +37,7 @@ export function CommunityGallery() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial fetch on mount, not syncing a prop
     load(1, false);
   }, [load]);
 
