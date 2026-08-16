@@ -4,36 +4,33 @@ import { EffectiveCpmAd } from "./ad-slot";
 
 const FOOTER_LINKS = [
   {
+    heading: "Product",
+    links: [
+      { href: "/generator", label: "Palette Generator" },
+      { href: "/tools/picker", label: "Color Picker" },
+      { href: "/color-converter", label: "Color Converter" },
+      { href: "/tools/contrast", label: "Contrast Checker" },
+      { href: "/trends", label: "Color Trends" },
+    ],
+  },
+  {
     heading: "Explore",
     links: [
-      { href: "/generator", label: "Generator" },
-      { href: "/explore", label: "Explore Colors" },
-      { href: "/palettes", label: "Palettes" },
+      { href: "/palettes", label: "Color Palettes" },
+      { href: "/color-combinations", label: "Color Combinations" },
+      { href: "/tools/tailwind-scale", label: "Color Shades" },
+      { href: "/explore", label: "Color Inspiration" },
       { href: "/gradients", label: "Gradients" },
-      { href: "/trends", label: "Trends" },
+    ],
+  },
+  {
+    heading: "Resources",
+    links: [
+      { href: "/color-meanings", label: "Color Guide" },
       { href: "/blog", label: "Blog" },
-    ],
-  },
-  {
-    heading: "Tools",
-    links: [
-      { href: "/tools/picker", label: "Color Picker" },
-      { href: "/tools/gradient", label: "Gradient Generator" },
-      { href: "/tools/contrast", label: "Contrast Checker" },
-      { href: "/tools/tailwind", label: "Tailwind Colors" },
-      { href: "/tools/image-colors", label: "Image Colors" },
-      { href: "/tools/color-mixer", label: "Color Mixer" },
-    ],
-  },
-  {
-    heading: "Learn",
-    links: [
-      { href: "/color-meanings", label: "Color Meanings" },
+      { href: "/faqs", label: "FAQ" },
       { href: "/color-psychology", label: "Color Psychology" },
-      { href: "/brand-colors", label: "Brand Colors" },
       { href: "/accessibility", label: "Accessibility" },
-      { href: "/guides", label: "Guides" },
-      { href: "/faqs", label: "FAQs" },
     ],
   },
   {
@@ -41,26 +38,25 @@ const FOOTER_LINKS = [
     links: [
       { href: "/about", label: "About" },
       { href: "/contact", label: "Contact" },
-      { href: "/privacy", label: "Privacy Policy" },
-      { href: "/terms", label: "Terms of Service" },
+      { href: "/privacy", label: "Privacy" },
+      { href: "/terms", label: "Terms" },
     ],
   },
 ] as const;
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#14100d] text-white">
-      <div className="mx-auto max-w-[1560px] px-6 py-14 sm:px-8">
+    <footer className="border-t border-black/8 bg-[#faf7f2] text-[#1c1712]">
+      <div className="mx-auto max-w-[1400px] px-6 py-16 sm:px-8">
         <div className="flex flex-col gap-12 md:flex-row md:justify-between">
           <div className="max-w-xs">
             <Link href="/" className="inline-flex items-center">
-              <Image src="/hueflow.svg" alt="HueFlow" width={100} height={20} />
+              <Image src="/hueflow.svg" alt="HueFlow" width={104} height={22} className="[filter:brightness(0)_saturate(100%)]" />
             </Link>
-            <p className="mt-4 text-sm leading-relaxed text-white/50">
-              Colors, palettes, gradients, and accessible brand color systems
-              for product, marketing, and web design.
+            <p className="mt-4 text-sm leading-relaxed text-[#1c1712]/55">
+              Find colors that feel right.
             </p>
-            <div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.03] p-3">
+            <div className="mt-6 rounded-2xl border border-black/8 bg-white p-3">
               <div className="max-h-[160px] overflow-hidden rounded-xl [&_img]:h-auto [&_img]:max-h-[110px] [&_img]:w-full [&_img]:object-cover">
                 <EffectiveCpmAd />
               </div>
@@ -69,7 +65,7 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
             {FOOTER_LINKS.map((group) => (
               <div key={group.heading}>
-                <p className="text-xs font-semibold uppercase tracking-wider text-white/40">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#1c1712]/35">
                   {group.heading}
                 </p>
                 <ul className="mt-4 space-y-2.5">
@@ -77,7 +73,7 @@ export function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-sm text-white/60 transition-colors hover:text-white"
+                        className="text-sm text-[#1c1712]/60 transition-colors hover:text-[#e8531f]"
                       >
                         {link.label}
                       </Link>
@@ -88,16 +84,16 @@ export function Footer() {
             ))}
           </div>
         </div>
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/40 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-black/8 pt-6 text-sm text-[#1c1712]/40 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} HueFlow. All rights reserved.</p>
           <div className="flex gap-5">
-            <Link href="/privacy" className="transition-colors hover:text-white">
+            <Link href="/privacy" className="transition-colors hover:text-[#1c1712]">
               Privacy
             </Link>
-            <Link href="/terms" className="transition-colors hover:text-white">
+            <Link href="/terms" className="transition-colors hover:text-[#1c1712]">
               Terms
             </Link>
-            <Link href="/contact" className="transition-colors hover:text-white">
+            <Link href="/contact" className="transition-colors hover:text-[#1c1712]">
               Contact
             </Link>
           </div>
