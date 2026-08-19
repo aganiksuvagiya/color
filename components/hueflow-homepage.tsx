@@ -8,7 +8,7 @@ import { DailyChallengeBanner } from "./daily-challenge-banner";
 import { StructuredData } from "./seo/structured-data";
 import { generateRandomPalette, hexToHsl, hslToHex, getContrastText } from "@/lib/color-utils";
 import { generateHarmony } from "@/lib/harmony";
-import { generateShades, shiftLightness } from "@/lib/shades";
+import { generateShades } from "@/lib/shades";
 import { generateTrendingPalettes, dayIndex } from "@/lib/trending";
 import { getContrastRatio, getWcagLevel } from "@/lib/accessibility";
 import { encodePalette } from "@/lib/share-utils";
@@ -94,6 +94,51 @@ const WHY_HUEFLOW = [
   { title: "Made for real projects", body: "Colors come in formats designers and developers can actually use." },
 ];
 
+const COLOR_MOODS: { label: string; emoji: string; description: string; colors: string[]; href: string }[] = [
+  {
+    label: "Calm",
+    emoji: "🌊",
+    description: "Still. Balanced. At ease.",
+    colors: ["#D6E8F0", "#A8C8D8", "#6B9EB8", "#3A7A96", "#1E4D66"],
+    href: "/generator?label=Calm&c=D6E8F0-A8C8D8-6B9EB8-3A7A96-1E4D66",
+  },
+  {
+    label: "Energetic",
+    emoji: "⚡",
+    description: "Vivid. Forward. Electric.",
+    colors: ["#0A0A0A", "#E8531F", "#FF6B35", "#FFD23F", "#FFF3D6"],
+    href: "/generator?label=Energetic&c=0A0A0A-E8531F-FF6B35-FFD23F-FFF3D6",
+  },
+  {
+    label: "Serene",
+    emoji: "🌿",
+    description: "Gentle. Natural. Grounded.",
+    colors: ["#F2EFE1", "#C6D9A1", "#7FA65C", "#3F6B3A", "#1D2B1A"],
+    href: "/generator?label=Serene&c=F2EFE1-C6D9A1-7FA65C-3F6B3A-1D2B1A",
+  },
+  {
+    label: "Luxe",
+    emoji: "✨",
+    description: "Rich. Refined. Timeless.",
+    colors: ["#0D0D0D", "#2A1F0E", "#B9924A", "#E6D5AE", "#F8F3E8"],
+    href: "/generator?label=Luxe&c=0D0D0D-2A1F0E-B9924A-E6D5AE-F8F3E8",
+  },
+  {
+    label: "Playful",
+    emoji: "🎨",
+    description: "Bright. Fun. Unexpected.",
+    colors: ["#FF3366", "#FF6B35", "#FFD23F", "#2EC4B6", "#8B4A9C"],
+    href: "/generator?label=Playful&c=FF3366-FF6B35-FFD23F-2EC4B6-8B4A9C",
+  },
+  {
+    label: "Bold",
+    emoji: "🔥",
+    description: "Strong. Direct. Unforgettable.",
+    colors: ["#0D0D0D", "#1D4E89", "#E8531F", "#FFD23F", "#F5F5F5"],
+    href: "/generator?label=Bold&c=0D0D0D-1D4E89-E8531F-FFD23F-F5F5F5",
+  },
+];
+
 const STORIES: { href: string; title: string }[] = [
   { href: "/guides/conversion-color-strategy", title: "Building a conversion-focused color strategy" },
   { href: "/guides/luxury-brand-color-strategy", title: "Luxury brand color strategy, explained" },
@@ -112,15 +157,6 @@ const FAQS = [
   { question: "Can I copy HEX, RGB, and HSL values?", answer: "Yes. Click any color anywhere on HueFlow to copy its value, or open a palette in the generator to export it in multiple formats." },
 ];
 
-const TOOL_NAV = [
-  { key: "generator", title: "Palette Generator", body: "Create harmonious palettes instantly.", href: "/generator" },
-  { key: "picker", title: "Color Picker", body: "Explore and copy precise colors.", href: "/tools/picker" },
-  { key: "converter", title: "Color Converter", body: "Convert between HEX, RGB, HSL, and more.", href: "/color-converter" },
-  { key: "contrast", title: "Contrast Checker", body: "Make sure your colors are accessible.", href: "/tools/contrast" },
-  { key: "shades", title: "Color Shades", body: "Generate tints, shades, and tones.", href: "/tools/tailwind-scale" },
-] as const;
-
-type ToolKey = (typeof TOOL_NAV)[number]["key"];
 
 const BASE_SWATCHES = ["#E8531F", "#1D4E89", "#3F6B3A", "#8B4A9C", "#B9924A", "#0D0D0D"];
 
@@ -180,18 +216,28 @@ export function HueFlowHomePage() {
   const [heroPalette, setHeroPalette] = useState<Palette>(DEFAULT_HERO_PALETTE);
   const [heroHoverIndex, setHeroHoverIndex] = useState<number | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const [activeTool, setActiveTool] = useState<ToolKey>("generator");
   const [baseColor, setBaseColor] = useState(BASE_SWATCHES[0]);
+  const [toolColor, setToolColor] = useState(BASE_SWATCHES[0]);
+  const [activeMood, setActiveMood] = useState(0);
   const [openFaq, setOpenFaq] = useState(0);
 
   const trendingPalette = useMemo(() => generateTrendingPalettes(dayIndex(), 1)[0], []);
 
-  const harmony = useMemo(() => generateHarmony(baseColor, "complementary"), [baseColor]);
-  const shades = useMemo(() => generateShades(baseColor), [baseColor]);
   const colorSystem = useMemo(() => buildColorSystem(baseColor), [baseColor]);
-  const lighter = useMemo(() => shiftLightness(baseColor, 22), [baseColor]);
-  const darker = useMemo(() => shiftLightness(baseColor, -22), [baseColor]);
-  const baseContrastWhite = useMemo(() => getContrastRatio(baseColor, "#ffffff"), [baseColor]);
+
+  const toolShades = useMemo(() => generateShades(toolColor), [toolColor]);
+  const toolContrastWhite = useMemo(() => getContrastRatio(toolColor, "#ffffff"), [toolColor]);
+  const toolContrastBlack = useMemo(() => getContrastRatio(toolColor, "#000000"), [toolColor]);
+  const toolSystemColors = useMemo(() => {
+    const { h, s, l } = hexToHsl(toolColor);
+    return [
+      { name: "Base",    hex: toolColor },
+      { name: "Step 1",  hex: hslToHex((h + 20) % 360, s, Math.min(l + 8, 85)) },
+      { name: "Step 2",  hex: hslToHex((h + 40) % 360, Math.max(s - 8, 20), l) },
+      { name: "Step 3",  hex: hslToHex((h - 20 + 360) % 360, s, Math.max(l - 10, 15)) },
+      { name: "Step 4",  hex: hslToHex((h - 40 + 360) % 360, Math.min(s + 8, 100), Math.min(l + 15, 88)) },
+    ];
+  }, [toolColor]);
 
   const handleGenerate = useCallback(() => {
     setHeroPalette(generateRandomPalette());
@@ -278,11 +324,13 @@ export function HueFlowHomePage() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="relative mx-auto mt-14 max-w-4xl"
           >
-            <div className="flex h-40 gap-2 overflow-hidden rounded-[26px] border border-black/8 shadow-[0_20px_60px_rgba(28,23,18,0.08)] sm:h-52">
+            <div className="flex h-52 gap-2 overflow-hidden rounded-[26px] border border-black/8 shadow-[0_20px_60px_rgba(28,23,18,0.08)] sm:h-72">
               {heroPalette.colors.map((color, i) => {
                 const isHover = heroHoverIndex === i;
                 const isCopied = copiedKey === `hero-${i}`;
                 const isLight = color.text === "light";
+                const labelColor = isLight ? "text-white" : "text-black/80";
+                const dimColor = isLight ? "text-white/50" : "text-black/40";
                 return (
                   <motion.button
                     key={`${color.hex}-${i}`}
@@ -291,52 +339,62 @@ export function HueFlowHomePage() {
                     onMouseLeave={() => setHeroHoverIndex((v) => (v === i ? null : v))}
                     onClick={() => handleCopy(`hero-${i}`, color.hex)}
                     aria-label={`Copy ${color.hex}`}
-                    animate={{ backgroundColor: color.hex, flexGrow: isHover ? 1.6 : 1 }}
+                    animate={{ backgroundColor: color.hex, flexGrow: isHover ? 1.7 : 1 }}
                     transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative flex flex-1 flex-col items-center justify-end overflow-hidden p-4"
+                    className="relative flex flex-1 flex-col justify-end overflow-hidden px-3 pb-4"
                   >
-                    <AnimatePresence>
-                      {isHover && !isCopied && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 8 }}
-                          transition={{ duration: 0.18 }}
-                          className={`flex flex-col items-center gap-1 ${isLight ? "text-white" : "text-black/80"}`}
-                        >
-                          <span className="font-mono text-xs font-semibold sm:text-sm">{color.hex.toUpperCase()}</span>
-                          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className="opacity-70">
-                            <rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
-                          </svg>
+                    <AnimatePresence mode="wait">
+                      {isCopied ? (
+                        <motion.div key="copied" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="flex flex-col gap-0.5">
+                          <span className={`text-[9px] font-bold uppercase tracking-[0.16em] ${dimColor}`}>{color.name}</span>
+                          <span className={`font-mono text-sm font-bold ${labelColor}`}>Copied!</span>
                         </motion.div>
-                      )}
-                      {isCopied && (
-                        <motion.span
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          className={`text-xs font-bold uppercase tracking-[0.14em] ${isLight ? "text-white" : "text-black/80"}`}
-                        >
-                          Copied!
-                        </motion.span>
+                      ) : isHover ? (
+                        <motion.div key="hover" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }} transition={{ duration: 0.18 }} className="flex flex-col gap-1">
+                          <span className={`text-[9px] font-bold uppercase tracking-[0.16em] ${dimColor}`}>{color.name}</span>
+                          <span className={`font-mono text-sm font-bold ${labelColor}`}>{color.hex.toUpperCase()}</span>
+                          <div className={`mt-0.5 flex items-center gap-1 ${dimColor}`}>
+                            <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                              <rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                            </svg>
+                            <span className="text-[9px] font-semibold uppercase tracking-wider">Copy</span>
+                          </div>
+                        </motion.div>
+                      ) : (
+                        <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="flex flex-col gap-0.5">
+                          <span className={`text-[9px] font-semibold uppercase tracking-[0.16em] ${dimColor}`}>{color.name}</span>
+                          <span className={`font-mono text-[10px] font-semibold ${isLight ? "text-white/55" : "text-black/45"}`}>{color.hex.toUpperCase()}</span>
+                        </motion.div>
                       )}
                     </AnimatePresence>
                   </motion.button>
                 );
               })}
             </div>
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 px-1">
-              <p className="text-sm text-[#1c1712]/40">{heroPalette.label}</p>
-              <div className="flex items-center gap-4">
+
+            {/* Bottom controls */}
+            <div className="mt-5 flex items-center justify-between gap-4 px-1">
+              <div className="flex items-center gap-2.5">
+                <span className="h-2 w-2 rounded-full bg-[#e8531f]/50" />
+                <p className="text-sm font-medium text-[#1c1712]/50">{heroPalette.label}</p>
+              </div>
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={handleGenerate}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-[#1c1712]/55 transition-colors hover:text-[#1c1712]"
+                  className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-xs font-semibold text-[#1c1712]/55 transition-all hover:border-black/18 hover:text-[#1c1712] hover:shadow-sm"
                 >
-                  <kbd className="rounded border border-black/10 bg-white px-1.5 py-0.5 font-mono text-[10px]">Space</kbd>
-                  Generate new palette
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M1 4v6h6M23 20v-6h-6" />
+                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15" />
+                  </svg>
+                  Shuffle
                 </button>
-                <Link href={`/generator${encodePalette(heroPalette)}`} className="text-sm font-medium text-[#e8531f] hover:underline underline-offset-4">
+                <Link
+                  href={`/generator${encodePalette(heroPalette)}`}
+                  className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold text-white shadow-[0_4px_14px_rgba(232,83,31,0.3)] transition-transform hover:scale-[1.02]"
+                  style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
+                >
                   Edit &amp; export →
                 </Link>
               </div>
@@ -350,113 +408,219 @@ export function HueFlowHomePage() {
         <section className="mt-28" id="tools">
           <SectionHeading eyebrow="The workspace" title="One place for everything color." body="From your first color idea to a production-ready palette." />
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.6 }}
-            className="mt-12 grid grid-cols-1 gap-4 lg:grid-cols-[0.85fr_1.15fr]"
-          >
-            <div className="flex flex-col gap-2">
-              {TOOL_NAV.map((tool) => {
-                const isActive = activeTool === tool.key;
-                return (
-                  <button
-                    key={tool.key}
-                    type="button"
-                    onClick={() => setActiveTool(tool.key)}
-                    className={`rounded-2xl border px-5 py-4 text-left transition-colors ${
-                      isActive ? "border-[#e8531f]/30 bg-white shadow-[0_4px_20px_rgba(28,23,18,0.06)]" : "border-transparent hover:bg-white/60"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <p className={`text-base font-semibold ${isActive ? "text-[#1c1712]" : "text-[#1c1712]/70"}`}>{tool.title}</p>
-                      <span className={`text-lg transition-transform ${isActive ? "translate-x-0 text-[#e8531f]" : "-translate-x-1 text-[#1c1712]/20"}`}>→</span>
-                    </div>
-                    <p className="mt-1 text-sm text-[#1c1712]/50">{tool.body}</p>
-                  </button>
-                );
-              })}
-              <Link
-                href={TOOL_NAV.find((t) => t.key === activeTool)?.href ?? "/generator"}
-                className="mt-2 inline-flex w-fit items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_6px_18px_rgba(232,83,31,0.25)] transition-transform hover:scale-[1.02]"
-                style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
-              >
-                Open {TOOL_NAV.find((t) => t.key === activeTool)?.title}
-              </Link>
-            </div>
+          {/* Live color picker for the tool previews */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
+            {BASE_SWATCHES.map((hex) => (
+              <button
+                key={hex}
+                type="button"
+                onClick={() => setToolColor(hex)}
+                aria-label={`Preview tools with ${hex}`}
+                aria-pressed={toolColor === hex}
+                className={`h-8 w-8 rounded-full border-2 transition-all duration-200 hover:scale-110 ${
+                  toolColor === hex ? "scale-110 border-[#1c1712] shadow-[0_0_0_2px_rgba(28,23,18,0.12)]" : "border-white shadow-[0_0_0_1px_rgba(28,23,18,0.1)]"
+                }`}
+                style={{ backgroundColor: hex }}
+              />
+            ))}
+            <label className="flex cursor-pointer items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-1 text-xs font-medium text-[#1c1712]/50 hover:border-black/20">
+              Custom
+              <input
+                type="color"
+                value={toolColor}
+                onChange={(e) => setToolColor(e.target.value)}
+                className="h-5 w-5 cursor-pointer overflow-hidden rounded-full border-0 bg-transparent p-0"
+                aria-label="Pick a custom color for tool previews"
+              />
+            </label>
+          </div>
 
-            <div className="rounded-[28px] border border-black/8 bg-white p-6 shadow-[0_4px_30px_rgba(28,23,18,0.05)] sm:p-8">
-              <AnimatePresence mode="wait">
-                {activeTool === "generator" && (
-                  <motion.div key="generator" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
-                    <div className="flex h-40 gap-2 overflow-hidden rounded-2xl sm:h-56">
-                      {heroPalette.colors.map((c) => (
-                        <div key={c.hex} className="flex-1" style={{ backgroundColor: c.hex }} />
-                      ))}
-                    </div>
-                    <p className="mt-5 text-sm leading-6 text-[#1c1712]/55">
-                      Generate primary, neutral, success, warning, and accent colors in one click — lock the ones you want to keep and reroll the rest.
-                    </p>
-                  </motion.div>
-                )}
-                {activeTool === "picker" && (
-                  <motion.div key="picker" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
-                    <div className="flex flex-col items-center gap-5 py-4 sm:flex-row sm:items-center">
-                      <div className="h-32 w-32 shrink-0 rounded-full sm:h-40 sm:w-40" style={{ background: "conic-gradient(from 0deg, #E8531F, #F4B93F, #7FBE6B, #3E82C4, #8B4A9C, #E8531F)" }} />
-                      <div className="grid w-full grid-cols-3 gap-2 text-center">
-                        {[{ label: "HEX", value: baseColor.toUpperCase() }, { label: "RGB", value: hexToRgbString(baseColor) }, { label: "HSL", value: hexToHslString(baseColor) }].map((f) => (
-                          <div key={f.label} className="rounded-xl border border-black/8 bg-[#faf7f2] px-3 py-3">
-                            <p className="text-[10px] font-semibold uppercase tracking-widest text-[#1c1712]/40">{f.label}</p>
-                            <p className="mt-1 font-mono text-xs text-[#1c1712]">{f.value}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <p className="mt-2 text-sm leading-6 text-[#1c1712]/55">Pick any color and inspect it across every format instantly.</p>
-                  </motion.div>
-                )}
-                {activeTool === "converter" && (
-                  <motion.div key="converter" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
-                    <div className="flex items-center gap-4 py-2">
-                      <div className="h-20 w-20 shrink-0 rounded-2xl" style={{ backgroundColor: baseColor }} />
-                      <div className="flex-1 space-y-2">
-                        {[hexToRgbString(baseColor), hexToHslString(baseColor), baseColor.toUpperCase()].map((v) => (
-                          <div key={v} className="flex items-center justify-between rounded-xl border border-black/8 bg-[#faf7f2] px-4 py-2.5 font-mono text-sm text-[#1c1712]/75">
-                            {v}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <p className="mt-3 text-sm leading-6 text-[#1c1712]/55">Convert between HEX, RGB, HSL, and other formats without leaving the page.</p>
-                  </motion.div>
-                )}
-                {activeTool === "contrast" && (
-                  <motion.div key="contrast" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
-                    <div className="flex items-center justify-center rounded-2xl py-10" style={{ backgroundColor: baseColor }}>
-                      <p className="text-2xl font-semibold" style={{ color: getContrastText(baseColor) === "light" ? "#fff" : "#1c1712" }}>Aa Sample text</p>
-                    </div>
-                    <div className="mt-5 flex items-center justify-between text-sm">
-                      <span className="text-[#1c1712]/55">Contrast against white</span>
-                      <span className={`font-semibold ${getWcagLevel(baseContrastWhite) === "Fail" ? "text-red-500" : "text-emerald-600"}`}>
-                        {baseContrastWhite.toFixed(2)} · {getWcagLevel(baseContrastWhite)}
-                      </span>
-                    </div>
-                    <p className="mt-3 text-sm leading-6 text-[#1c1712]/55">Every generated palette carries a WCAG contrast check, so text stays readable.</p>
-                  </motion.div>
-                )}
-                {activeTool === "shades" && (
-                  <motion.div key="shades" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
-                    <div className="flex h-40 gap-1 overflow-hidden rounded-2xl sm:h-56">
-                      {shades.map((s) => (
-                        <div key={s.hex} className="flex-1" style={{ backgroundColor: s.hex }} />
-                      ))}
-                    </div>
-                    <p className="mt-5 text-sm leading-6 text-[#1c1712]/55">Build a full tint-and-shade scale from a single base color, ready for a design system.</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.08 }}
+            variants={stagger}
+            className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-3"
+          >
+            {/* Generator — hero card, spans 2 cols */}
+            <motion.div variants={fadeUp} className="col-span-2">
+              <Link
+                href="/generator"
+                className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
+              >
+                <div className="flex flex-1 gap-1.5 overflow-hidden">
+                  {toolSystemColors.map((c) => (
+                    <motion.div
+                      key={c.name}
+                      animate={{ backgroundColor: c.hex }}
+                      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                      className="min-h-[10rem] flex-1 transition-[flex-grow] duration-500 ease-out hover:flex-[1.8] sm:min-h-[13rem]"
+                    />
+                  ))}
+                </div>
+                <div className="flex items-center justify-between gap-4 px-6 py-5">
+                  <div>
+                    <p className="text-lg font-semibold tracking-[-0.02em] text-[#1c1712]">Palette Generator</p>
+                    <p className="mt-0.5 font-mono text-sm text-[#1c1712]/50">{toolColor.toUpperCase()} · {toolSystemColors.length} colors</p>
+                  </div>
+                  <span className="shrink-0 rounded-full border border-black/10 px-4 py-1.5 text-sm font-medium text-[#1c1712]/60 transition-colors group-hover:border-[#e8531f]/40 group-hover:text-[#e8531f]">
+                    Open →
+                  </span>
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Color Picker — live color + formats */}
+            <motion.div variants={fadeUp} className="col-span-1">
+              <Link
+                href="/tools/picker"
+                className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
+              >
+                <div className="relative flex flex-1 items-center justify-center overflow-hidden px-6 py-8" style={{ backgroundColor: toolColor }}>
+                  <div className="flex flex-col items-center gap-2">
+                    <motion.p
+                      key={toolColor}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="font-mono text-2xl font-bold tracking-tight"
+                      style={{ color: getContrastText(toolColor) === "light" ? "rgba(255,255,255,0.95)" : "rgba(0,0,0,0.8)" }}
+                    >
+                      {toolColor.toUpperCase()}
+                    </motion.p>
+                    <motion.p
+                      key={`rgb-${toolColor}`}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.25, delay: 0.05 }}
+                      className="font-mono text-xs"
+                      style={{ color: getContrastText(toolColor) === "light" ? "rgba(255,255,255,0.55)" : "rgba(0,0,0,0.4)" }}
+                    >
+                      {hexToRgbString(toolColor)}
+                    </motion.p>
+                  </div>
+                </div>
+                <div className="flex items-end justify-between gap-4 px-5 py-5">
+                  <div>
+                    <p className="text-base font-semibold tracking-[-0.02em] text-[#1c1712]">Color Picker</p>
+                    <p className="mt-0.5 text-sm text-[#1c1712]/50">Explore and copy precise colors.</p>
+                  </div>
+                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#e8531f]">→</span>
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Color Converter — live values */}
+            <motion.div variants={fadeUp} className="col-span-1">
+              <Link
+                href="/color-converter"
+                className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
+              >
+                <div className="flex flex-1 flex-col justify-center gap-2 bg-[#f5f1ea] px-5 py-6">
+                  {[
+                    { label: "HEX", value: toolColor.toUpperCase() },
+                    { label: "RGB", value: hexToRgbString(toolColor) },
+                    { label: "HSL", value: hexToHslString(toolColor) },
+                  ].map((row) => (
+                    <motion.div
+                      key={`${row.label}-${toolColor}`}
+                      initial={{ opacity: 0.6 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center gap-3 rounded-xl border border-black/8 bg-white px-4 py-2.5"
+                    >
+                      <span className="w-8 shrink-0 text-[10px] font-bold uppercase tracking-widest text-[#1c1712]/35">{row.label}</span>
+                      <span className="font-mono text-xs text-[#1c1712]/75">{row.value}</span>
+                    </motion.div>
+                  ))}
+                </div>
+                <div className="flex items-end justify-between gap-4 px-5 py-5">
+                  <div>
+                    <p className="text-base font-semibold tracking-[-0.02em] text-[#1c1712]">Color Converter</p>
+                    <p className="mt-0.5 text-sm text-[#1c1712]/50">HEX, RGB, HSL, and more.</p>
+                  </div>
+                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#e8531f]">→</span>
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Contrast Checker — live WCAG data */}
+            <motion.div variants={fadeUp} className="col-span-1">
+              <Link
+                href="/tools/contrast"
+                className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
+              >
+                <div className="flex flex-1 flex-col items-center justify-center gap-3 px-5 py-6" style={{ backgroundColor: toolColor }}>
+                  <motion.p
+                    key={`aa-text-${toolColor}`}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.25 }}
+                    className="text-3xl font-bold"
+                    style={{ color: getContrastText(toolColor) === "light" ? "#ffffff" : "#1c1712" }}
+                  >
+                    Aa
+                  </motion.p>
+                  <div className="flex gap-2">
+                    {(["AA", "AAA"] as const).map((level) => {
+                      const ratio = toolContrastWhite;
+                      const passes = level === "AA" ? ratio >= 4.5 : ratio >= 7;
+                      return (
+                        <span
+                          key={level}
+                          className={`rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white ${passes ? "bg-emerald-500" : "bg-black/25"}`}
+                        >
+                          {level}
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <motion.p
+                    key={`ratio-${toolColor}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                    className="font-mono text-xs"
+                    style={{ color: getContrastText(toolColor) === "light" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)" }}
+                  >
+                    {toolContrastWhite.toFixed(2)} : 1 vs white
+                  </motion.p>
+                </div>
+                <div className="flex items-end justify-between gap-4 px-5 py-5">
+                  <div>
+                    <p className="text-base font-semibold tracking-[-0.02em] text-[#1c1712]">Contrast Checker</p>
+                    <p className="mt-0.5 text-sm text-[#1c1712]/50">Make sure colors are accessible.</p>
+                  </div>
+                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#e8531f]">→</span>
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Color Shades — live shade scale */}
+            <motion.div variants={fadeUp} className="col-span-1">
+              <Link
+                href="/tools/tailwind-scale"
+                className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
+              >
+                <div className="flex flex-1 gap-0.5 overflow-hidden">
+                  {toolShades.slice(0, 7).map((s, i) => (
+                    <motion.div
+                      key={`${s.hex}-${i}`}
+                      animate={{ backgroundColor: s.hex }}
+                      transition={{ duration: 0.4, delay: i * 0.03 }}
+                      className="flex-1 transition-[flex-grow] duration-500 group-hover:last:flex-[1.5]"
+                    />
+                  ))}
+                </div>
+                <div className="flex items-end justify-between gap-4 px-5 py-5">
+                  <div>
+                    <p className="text-base font-semibold tracking-[-0.02em] text-[#1c1712]">Color Shades</p>
+                    <p className="mt-0.5 text-sm text-[#1c1712]/50">Generate tints, shades, and tones.</p>
+                  </div>
+                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#e8531f]">→</span>
+                </div>
+              </Link>
+            </motion.div>
           </motion.div>
         </section>
 
@@ -527,53 +691,89 @@ export function HueFlowHomePage() {
           </motion.div>
         </section>
 
-        {/* ============ INTERACTIVE COLOR EXPERIENCE ============ */}
-        <section className="mt-28" id="playground">
-          <SectionHeading eyebrow="Try it now" title="Pick a color. Watch a system appear." body="Choose a base color and HueFlow builds its complementary, analogous, and tonal relatives instantly." />
+        {/* ============ COLOR MOODS ============ */}
+        <section className="mt-28" id="moods">
+          <SectionHeading
+            eyebrow="Color & Emotion"
+            title="Every palette has a feeling."
+            body="Explore palettes built around how colors make you feel — then open yours in the generator."
+          />
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            {BASE_SWATCHES.map((hex) => (
-              <button
-                key={hex}
-                type="button"
-                onClick={() => setBaseColor(hex)}
-                aria-label={`Use ${hex} as base color`}
-                aria-pressed={baseColor === hex}
-                className={`h-10 w-10 rounded-full border-2 transition-transform hover:scale-110 ${baseColor === hex ? "border-[#1c1712] scale-110" : "border-white shadow-[0_0_0_1px_rgba(28,23,18,0.1)]"}`}
-                style={{ backgroundColor: hex }}
-              />
-            ))}
-            <label className="flex items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-1.5 text-xs font-medium text-[#1c1712]/50">
-              Custom
-              <input
-                type="color"
-                value={baseColor}
-                onChange={(e) => setBaseColor(e.target.value)}
-                className="h-5 w-5 cursor-pointer overflow-hidden rounded-full border-0 bg-transparent p-0"
-                aria-label="Pick a custom base color"
-              />
-            </label>
+            {COLOR_MOODS.map((mood, i) => {
+              const isActive = activeMood === i;
+              return (
+                <button
+                  key={mood.label}
+                  type="button"
+                  onClick={() => setActiveMood(i)}
+                  className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                    isActive
+                      ? "border-[#e8531f]/30 bg-white shadow-[0_4px_16px_rgba(28,23,18,0.09)] text-[#1c1712]"
+                      : "border-transparent bg-black/[0.04] text-[#1c1712]/60 hover:bg-white hover:text-[#1c1712]"
+                  }`}
+                >
+                  {mood.label}
+                </button>
+              );
+            })}
           </div>
 
-          <motion.div layout transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {[
-              { label: "Base", hex: baseColor },
-              { label: "Complementary", hex: harmony.colors.find((c) => c.role === "accent")?.hex ?? baseColor },
-              { label: "Analogous", hex: harmony.colors.find((c) => c.role === "success")?.hex ?? baseColor },
-              { label: "Lighter", hex: lighter },
-              { label: "Darker", hex: darker },
-            ].map((item) => (
-              <motion.div
-                key={item.label}
-                animate={{ backgroundColor: item.hex }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="flex h-28 flex-col justify-end rounded-2xl p-3 sm:h-36"
-              >
-                <p className={`text-[10px] font-semibold uppercase tracking-wider ${getContrastText(item.hex) === "light" ? "text-white/70" : "text-black/50"}`}>{item.label}</p>
-                <p className={`font-mono text-xs font-semibold ${getContrastText(item.hex) === "light" ? "text-white" : "text-black/80"}`}>{item.hex.toUpperCase()}</p>
-              </motion.div>
-            ))}
-          </motion.div>
+          <AnimatePresence mode="wait">
+            {COLOR_MOODS.map((mood, i) =>
+              activeMood === i ? (
+                <motion.div
+                  key={mood.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className="mt-8"
+                >
+                  <div className="overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_4px_30px_rgba(28,23,18,0.05)]">
+                    <div className="flex h-44 sm:h-64">
+                      {mood.colors.map((hex, ci) => (
+                        <motion.div
+                          key={`${hex}-${ci}`}
+                          initial={{ opacity: 0, scaleY: 0.92 }}
+                          animate={{ opacity: 1, scaleY: 1 }}
+                          transition={{ duration: 0.4, delay: ci * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                          className="flex-1 origin-bottom"
+                          style={{ backgroundColor: hex }}
+                        />
+                      ))}
+                    </div>
+                    <div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="text-base font-semibold text-[#1c1712]">
+                          {mood.label}
+                        </p>
+                        <p className="mt-1 text-sm text-[#1c1712]/50">{mood.description}</p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex gap-1.5">
+                          {mood.colors.map((hex) => (
+                            <span
+                              key={hex}
+                              className="h-7 w-7 rounded-full border-2 border-white shadow-[0_0_0_1px_rgba(28,23,18,0.10)]"
+                              style={{ backgroundColor: hex }}
+                            />
+                          ))}
+                        </div>
+                        <Link
+                          href={mood.href}
+                          className="inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_6px_18px_rgba(232,83,31,0.22)] transition-transform hover:scale-[1.02]"
+                          style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
+                        >
+                          Open in generator →
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : null
+            )}
+          </AnimatePresence>
         </section>
 
         {/* ============ FOR YOU ============ */}
@@ -652,39 +852,81 @@ export function HueFlowHomePage() {
 
         {/* ============ FAQ ============ */}
         <section className="mt-28" id="faq">
-          <SectionHeading eyebrow="FAQ" title="A few things people usually ask." />
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16 lg:items-start">
 
-          <div className="mx-auto mt-10 max-w-3xl divide-y divide-black/8 rounded-[24px] border border-black/8 bg-white">
-            {FAQS.map((faq, index) => {
-              const isOpen = openFaq === index;
-              return (
-                <button
-                  key={faq.question}
-                  type="button"
-                  onClick={() => setOpenFaq(isOpen ? -1 : index)}
-                  aria-expanded={isOpen}
-                  className="w-full px-6 py-5 text-left"
-                >
-                  <div className="flex items-center justify-between gap-6">
-                    <h3 className="text-base font-semibold text-[#1c1712] sm:text-lg">{faq.question}</h3>
-                    <span className={`shrink-0 text-xl text-[#1c1712]/40 transition-transform ${isOpen ? "rotate-45" : ""}`}>+</span>
-                  </div>
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.p
-                        initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                        animate={{ opacity: 1, height: "auto", marginTop: 12 }}
-                        exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                        transition={{ duration: 0.28 }}
-                        className="overflow-hidden text-sm leading-7 text-[#1c1712]/55"
-                      >
-                        {faq.answer}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
-                </button>
-              );
-            })}
+            {/* Left — sticky heading + context */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5 }}
+              className="lg:sticky lg:top-28"
+            >
+              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#1c1712]/45">FAQ</p>
+              <h2 className="mt-4 font-display text-[2rem] font-semibold leading-[1.05] tracking-[-0.04em] text-[#1c1712] sm:text-[2.6rem]">
+                A few things people usually ask.
+              </h2>
+              <p className="mt-5 text-base leading-7 text-[#1c1712]/50">
+                Can&apos;t find what you&apos;re looking for? Feel free to reach out and we&apos;ll help you out.
+              </p>
+            </motion.div>
+
+            {/* Right — accordion */}
+            <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={stagger}
+              className="flex flex-col gap-3"
+            >
+              {FAQS.map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <motion.div key={faq.question} variants={fadeUp}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaq(isOpen ? -1 : index)}
+                      aria-expanded={isOpen}
+                      className={`w-full rounded-[18px] border px-6 py-5 text-left transition-all duration-200 ${
+                        isOpen
+                          ? "border-[#e8531f]/20 bg-white shadow-[0_4px_20px_rgba(28,23,18,0.06)]"
+                          : "border-black/8 bg-white hover:border-black/14 hover:shadow-[0_2px_12px_rgba(28,23,18,0.05)]"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-6">
+                        <h3 className={`text-base font-semibold transition-colors ${isOpen ? "text-[#1c1712]" : "text-[#1c1712]/80"} sm:text-[1.05rem]`}>
+                          {faq.question}
+                        </h3>
+                        <span
+                          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
+                            isOpen
+                              ? "border-[#e8531f]/30 bg-[#e8531f]/8 text-[#e8531f] rotate-180"
+                              : "border-black/10 bg-transparent text-[#1c1712]/35"
+                          }`}
+                        >
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                            <path d="M6 9l6 6 6-6" />
+                          </svg>
+                        </span>
+                      </div>
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.p
+                            initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                            animate={{ opacity: 1, height: "auto", marginTop: 14 }}
+                            exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                            transition={{ duration: 0.28 }}
+                            className="overflow-hidden text-sm leading-7 text-[#1c1712]/55"
+                          >
+                            {faq.answer}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                    </button>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
           </div>
         </section>
 
@@ -695,72 +937,46 @@ export function HueFlowHomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
-            className="relative overflow-hidden rounded-[32px] border border-black/8"
-            style={{ background: "linear-gradient(135deg, #1c1712, #2b1f16)" }}
+            className="relative overflow-hidden rounded-[32px]"
+            style={{ background: "linear-gradient(155deg, #FF8A5A 0%, #E8531F 55%, #C23A10 100%)" }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-2">
-              <div className="flex flex-col justify-center px-8 py-14 sm:px-12 sm:py-16">
-                <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#ff7a45]">Ready to start?</p>
-                <h2 className="mt-4 font-display text-[2rem] font-semibold leading-[1.08] tracking-[-0.04em] text-white sm:text-[2.6rem]">
-                  Ready to find your colors?
-                </h2>
-                <p className="mt-4 max-w-sm text-base leading-7 text-white/60">
-                  Start with one color. Explore where it can take you.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Link
-                    href="/generator"
-                    className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(232,83,31,0.35)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
-                    style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
-                  >
-                    Create a palette
-                  </Link>
-                  <Link
-                    href="/explore"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/18 px-7 py-3.5 text-sm font-semibold text-white/75 transition-colors hover:border-white/30 hover:text-white"
-                  >
-                    Explore colors →
-                  </Link>
-                </div>
-                <p className="mt-6 text-xs text-white/35">Free forever · No account needed · Works everywhere</p>
+            {/* Decorative blurred glow blobs */}
+            <div className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 rounded-full opacity-30" style={{ background: "radial-gradient(circle, #FFB38A 0%, transparent 70%)" }} />
+            <div className="pointer-events-none absolute -bottom-20 -right-20 h-80 w-80 rounded-full opacity-20" style={{ background: "radial-gradient(circle, #FF6020 0%, transparent 70%)" }} />
+
+            <div className="relative flex flex-col items-center px-8 pb-10 pt-12 text-center sm:px-12 sm:pb-12 sm:pt-14">
+
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-white/90">
+                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                Start creating
               </div>
 
-              <div className="hidden lg:grid grid-cols-5 grid-rows-4 gap-2 p-6">
-                {Array.from({ length: 20 }, (_, i) => {
-                  const colIndex = i % 5;
-                  const color = heroPalette.colors[colIndex];
-                  const cellKey = `cta-${i}`;
-                  const isCellCopied = copiedKey === cellKey;
-                  const textColor = color?.text === "light" ? "white" : "rgba(0,0,0,0.75)";
-                  return (
-                    <motion.button
-                      key={cellKey}
-                      type="button"
-                      aria-label={`Copy ${color?.hex}`}
-                      onClick={() => handleCopy(cellKey, color?.hex ?? "")}
-                      animate={{ backgroundColor: color?.hex }}
-                      transition={{ backgroundColor: { duration: 0.5 } }}
-                      whileHover={{ scale: 1.07 }}
-                      whileTap={{ scale: 0.93 }}
-                      className="relative overflow-hidden rounded-xl"
-                    >
-                      <AnimatePresence>
-                        {isCellCopied && (
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="absolute inset-0 flex items-center justify-center text-[8px] font-bold uppercase tracking-[0.12em]"
-                            style={{ color: textColor }}
-                          >
-                            Copied
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.button>
-                  );
-                })}
+              {/* Headline */}
+              <h2 className="mx-auto mt-5 max-w-xl font-display text-[2.2rem] font-semibold leading-[1.06] tracking-[-0.04em] text-white sm:text-[3rem] lg:text-[3.4rem]">
+                Your colors are waiting.
+              </h2>
+
+              <p className="mt-4 max-w-md text-base leading-7 text-white/65">
+                Build a palette, check contrast, generate shades — all in one place, for free.
+              </p>
+
+              {/* CTA buttons */}
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  href="/generator"
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#C23A10] shadow-[0_6px_20px_rgba(0,0,0,0.2)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  Create a palette
+                </Link>
+                <Link
+                  href="/explore"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/18"
+                >
+                  Explore colors →
+                </Link>
               </div>
+
             </div>
           </motion.div>
         </section>
