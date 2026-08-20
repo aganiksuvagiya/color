@@ -170,7 +170,7 @@ export function ExploreColors() {
     <div className="min-h-screen text-[#1c1712]" style={{ backgroundColor: "#f8f4ef" }}>
       <Header />
 
-      <main className="mx-auto max-w-[1560px] px-4 pt-24 pb-24 sm:px-6 sm:pt-36 lg:px-8">
+      <main className="mx-auto max-w-[1400px] px-4 pt-24 pb-24 sm:px-6 sm:pt-36 lg:px-8">
 
         {/* Page header */}
         <motion.div
