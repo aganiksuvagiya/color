@@ -57,7 +57,7 @@ export function DailyChallengeBanner() {
   const swatches = themeToColors(data.theme);
 
   return (
-    <div className="mx-auto mt-8 max-w-[1400px] overflow-hidden rounded-[24px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)]">
+    <div className="w-full overflow-hidden rounded-[24px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)]">
       <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:gap-6 sm:p-6">
 
         {/* Left — badge + title + count */}

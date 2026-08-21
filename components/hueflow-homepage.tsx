@@ -215,6 +215,9 @@ function buildColorSystem(baseHex: string) {
 export function HueFlowHomePage() {
   const [heroPalette, setHeroPalette] = useState<Palette>(DEFAULT_HERO_PALETTE);
   const [heroHoverIndex, setHeroHoverIndex] = useState<number | null>(null);
+  const [stripColors, setStripColors] = useState<string[][]>(
+    () => DISCOVER_COLLECTIONS.slice(0, 10).filter(c => c.colors.length).map(c => c.colors)
+  );
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [baseColor, setBaseColor] = useState(BASE_SWATCHES[0]);
   const [toolColor, setToolColor] = useState(BASE_SWATCHES[0]);
@@ -241,6 +244,7 @@ export function HueFlowHomePage() {
 
   const handleGenerate = useCallback(() => {
     setHeroPalette(generateRandomPalette());
+    setStripColors(Array.from({ length: 9 }, () => generateRandomPalette().colors.map(c => c.hex)));
   }, []);
 
   useEffect(() => {
@@ -275,137 +279,130 @@ export function HueFlowHomePage() {
       <StructuredData data={buildFaqSchema(FAQS)} />
       <Header isHome />
 
-      <div className="relative mx-auto max-w-[1400px] px-6 pb-28 pt-28 lg:px-8 lg:pt-32">
+      <div className="relative mx-auto max-w-[1400px] px-6 pb-20 lg:px-8">
+        {/* Hero + Challenge */}
+        <div className="flex flex-col gap-20 pt-[9rem] pb-0">
+
         {/* ============ HERO ============ */}
-        <section className="relative mx-auto max-w-[1400px]">
-          <motion.div initial="hidden" animate="show" variants={stagger} className="mx-auto max-w-3xl text-center">
-            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 rounded-full border border-black/8 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#1c1712]/55">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]" />
-              The modern color workspace
-            </motion.div>
+        <section aria-labelledby="hero-heading" className="relative mx-auto w-full max-w-[1400px]">
+          <div className="grid items-center gap-40 lg:grid-cols-[420px_1fr]">
 
-            <motion.h1
-              variants={fadeUp}
-              className="mx-auto mt-7 max-w-2xl font-display text-[2.75rem] font-semibold leading-[1.04] tracking-[-0.05em] text-[#1c1712] sm:text-[3.6rem] lg:text-[4.4rem]"
-            >
-              Find colors that <span style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>feel right.</span>
-            </motion.h1>
+            {/* Left: text content */}
+            <motion.div initial="hidden" animate="show" variants={stagger} className="text-left">
 
-            <motion.p variants={fadeUp} className="mx-auto mt-6 max-w-xl text-base leading-7 text-[#1c1712]/55 sm:text-lg sm:leading-8">
-              Create beautiful color palettes, explore color combinations, check accessibility, and turn inspiration into colors you can actually use.
-            </motion.p>
+              {/* Eyebrow */}
+              <motion.div variants={fadeUp}>
+                <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.24em] text-[#1c1712]/48 shadow-[0_1px_4px_rgba(28,23,18,0.06)]">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#e8531f]" aria-hidden="true" />
+                  The modern color workspace
+                </span>
+              </motion.div>
 
-            <motion.div variants={fadeUp} className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <Link
-                href="/generator"
-                className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(232,83,31,0.28)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
-                style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
+              {/* H1 */}
+              <motion.h1
+                id="hero-heading"
+                variants={fadeUp}
+                className="mt-5 font-display text-[2.8rem] font-bold leading-[1.03] tracking-[-0.05em] text-[#1c1712] sm:text-[3.4rem] lg:text-[3.8rem]"
               >
-                Create a palette
-              </Link>
-              <Link
-                href="/explore"
-                className="inline-flex items-center gap-2 rounded-full border border-black/10 px-7 py-3.5 text-sm font-semibold text-[#1c1712]/75 transition-colors hover:border-black/20 hover:bg-black/[0.02]"
-              >
-                Explore colors →
-              </Link>
-            </motion.div>
+                Find colors that{" "}
+                <span style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+                  feel right.
+                </span>
+              </motion.h1>
 
-            <motion.p variants={fadeUp} className="mt-6 text-sm text-[#1c1712]/40">
-              Free to use · No design experience required
-            </motion.p>
-          </motion.div>
+              {/* Description */}
+              <motion.p variants={fadeUp} className="mt-5 max-w-[420px] text-[0.975rem] leading-[1.75] text-[#1c1712]/50">
+                Create palettes, check contrast, explore combinations — all in one place.
+              </motion.p>
 
-          {/* Interactive hero palette */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-auto mt-14 max-w-4xl"
-          >
-            <div className="flex h-52 gap-2 overflow-hidden rounded-[26px] border border-black/8 shadow-[0_20px_60px_rgba(28,23,18,0.08)] sm:h-72">
-              {heroPalette.colors.map((color, i) => {
-                const isHover = heroHoverIndex === i;
-                const isCopied = copiedKey === `hero-${i}`;
-                const isLight = color.text === "light";
-                const labelColor = isLight ? "text-white" : "text-black/80";
-                const dimColor = isLight ? "text-white/50" : "text-black/40";
-                return (
-                  <motion.button
-                    key={`${color.hex}-${i}`}
-                    type="button"
-                    onMouseEnter={() => setHeroHoverIndex(i)}
-                    onMouseLeave={() => setHeroHoverIndex((v) => (v === i ? null : v))}
-                    onClick={() => handleCopy(`hero-${i}`, color.hex)}
-                    aria-label={`Copy ${color.hex}`}
-                    animate={{ backgroundColor: color.hex, flexGrow: isHover ? 1.7 : 1 }}
-                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative flex flex-1 flex-col justify-end overflow-hidden px-3 pb-4"
-                  >
-                    <AnimatePresence mode="wait">
-                      {isCopied ? (
-                        <motion.div key="copied" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="flex flex-col gap-0.5">
-                          <span className={`text-[9px] font-bold uppercase tracking-[0.16em] ${dimColor}`}>{color.name}</span>
-                          <span className={`font-mono text-sm font-bold ${labelColor}`}>Copied!</span>
-                        </motion.div>
-                      ) : isHover ? (
-                        <motion.div key="hover" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }} transition={{ duration: 0.18 }} className="flex flex-col gap-1">
-                          <span className={`text-[9px] font-bold uppercase tracking-[0.16em] ${dimColor}`}>{color.name}</span>
-                          <span className={`font-mono text-sm font-bold ${labelColor}`}>{color.hex.toUpperCase()}</span>
-                          <div className={`mt-0.5 flex items-center gap-1 ${dimColor}`}>
-                            <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                              <rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
-                            </svg>
-                            <span className="text-[9px] font-semibold uppercase tracking-wider">Copy</span>
-                          </div>
-                        </motion.div>
-                      ) : (
-                        <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="flex flex-col gap-0.5">
-                          <span className={`text-[9px] font-semibold uppercase tracking-[0.16em] ${dimColor}`}>{color.name}</span>
-                          <span className={`font-mono text-[10px] font-semibold ${isLight ? "text-white/55" : "text-black/45"}`}>{color.hex.toUpperCase()}</span>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.button>
-                );
-              })}
-            </div>
-
-            {/* Bottom controls */}
-            <div className="mt-5 flex items-center justify-between gap-4 px-1">
-              <div className="flex items-center gap-2.5">
-                <span className="h-2 w-2 rounded-full bg-[#e8531f]/50" />
-                <p className="text-sm font-medium text-[#1c1712]/50">{heroPalette.label}</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleGenerate}
-                  className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-4 py-2 text-xs font-semibold text-[#1c1712]/55 transition-all hover:border-black/18 hover:text-[#1c1712] hover:shadow-sm"
-                >
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M1 4v6h6M23 20v-6h-6" />
-                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15" />
-                  </svg>
-                  Shuffle
-                </button>
+              {/* CTAs */}
+              <motion.div variants={fadeUp} className="mt-7 flex flex-wrap items-center gap-3">
                 <Link
-                  href={`/generator${encodePalette(heroPalette)}`}
-                  className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold text-white shadow-[0_4px_14px_rgba(232,83,31,0.3)] transition-transform hover:scale-[1.02]"
+                  href="/generator"
+                  className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(232,83,31,0.26)] transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_12px_32px_rgba(232,83,31,0.34)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e8531f] focus-visible:ring-offset-2"
                   style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
                 >
-                  Edit &amp; export →
+                  Create a palette
                 </Link>
-              </div>
+                <Link
+                  href="/explore"
+                  className="inline-flex items-center gap-2 rounded-full border border-black/[0.10] bg-white px-6 py-3 text-sm font-semibold text-[#1c1712]/65 shadow-[0_1px_4px_rgba(28,23,18,0.06)] transition-all duration-200 hover:border-black/[0.18] hover:shadow-[0_4px_12px_rgba(28,23,18,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c1712]/25 focus-visible:ring-offset-2"
+                >
+                  Explore colors →
+                </Link>
+              </motion.div>
+
+              {/* Trust text */}
+              <motion.p variants={fadeUp} className="mt-4 text-xs text-[#1c1712]/30">
+                Free to use · No account required
+              </motion.p>
+
+              {/* Mobile color grid */}
+              <motion.div
+                variants={fadeUp}
+                aria-hidden="true"
+                className="mt-8 flex gap-1.5 h-40 overflow-hidden lg:hidden"
+              >
+                {stripColors.slice(0, 6).map((colors, si) => (
+                  <div key={si} className="flex flex-1 flex-col gap-1.5 overflow-hidden rounded-xl">
+                    {colors.map((hex, i) => (
+                      <div
+                        key={i}
+                        className="flex-1 rounded-md"
+                        style={{ backgroundColor: hex }}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            {/* Right: color grid (desktop only) */}
+            <div
+              aria-hidden="true"
+              className="hidden lg:flex gap-2 h-[440px] overflow-hidden w-full"
+            >
+              {stripColors.slice(0, 5).map((colors, si) => (
+                <motion.div
+                  key={si}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.08 + si * 0.045, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex flex-1 flex-col gap-1.5 overflow-hidden rounded-xl"
+                >
+                  {colors.map((hex, i) => {
+                    const isLight = (() => { try { const { l } = hexToHsl(hex); return l > 60; } catch { return true; } })();
+                    return (
+                      <button
+                        key={i}
+                        type="button"
+                        aria-label={`Copy ${hex}`}
+                        className="group/tile relative flex-1 cursor-pointer overflow-hidden rounded-lg border border-transparent transition-all duration-200 hover:scale-[1.03] hover:border-black/[0.06] hover:shadow-[0_4px_16px_rgba(28,23,18,0.14)] hover:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e8531f] focus-visible:ring-offset-1"
+                        style={{ backgroundColor: hex }}
+                        onClick={() => handleCopy(`strip-${si}-${i}`, hex)}
+                      >
+                        <span
+                          className={`pointer-events-none absolute inset-x-0 bottom-1 flex items-center justify-center text-[7.5px] font-bold uppercase tracking-wider transition-opacity duration-150 ${copiedKey === `strip-${si}-${i}` ? "opacity-100" : "opacity-0 group-hover/tile:opacity-100"}`}
+                          style={{ color: isLight ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.85)" }}
+                        >
+                          {copiedKey === `strip-${si}-${i}` ? "✓ Copied" : hex.toUpperCase()}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </motion.div>
+              ))}
             </div>
-          </motion.div>
+
+          </div>
         </section>
 
         <DailyChallengeBanner />
 
+        </div>{/* end min-h viewport wrapper */}
+
         {/* ============ PRIMARY PRODUCT SECTION ============ */}
-        <section className="mt-28" id="tools">
+        <section className="mt-20" id="tools">
           <SectionHeading eyebrow="The workspace" title="One place for everything color." body="From your first color idea to a production-ready palette." />
 
           {/* Live color picker for the tool previews */}
