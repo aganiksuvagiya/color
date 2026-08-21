@@ -382,8 +382,7 @@ export function HueFlowHomePage() {
                         onClick={() => handleCopy(`strip-${si}-${i}`, hex)}
                       >
                         <span
-                          className={`pointer-events-none absolute inset-x-0 bottom-1 flex items-center justify-center text-[7.5px] font-bold uppercase tracking-wider transition-opacity duration-150 ${copiedKey === `strip-${si}-${i}` ? "opacity-100" : "opacity-0 group-hover/tile:opacity-100"}`}
-                          style={{ color: isLight ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.85)" }}
+                          className={`pointer-events-none absolute inset-x-2 bottom-2 rounded-full bg-black/55 px-2 py-1 text-center font-mono text-[8px] text-white transition-opacity duration-150 ${copiedKey === `strip-${si}-${i}` ? "opacity-100" : "opacity-0 group-hover/tile:opacity-100"}`}
                         >
                           {copiedKey === `strip-${si}-${i}` ? "✓ Copied" : hex.toUpperCase()}
                         </span>

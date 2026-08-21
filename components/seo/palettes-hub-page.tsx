@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -35,9 +35,12 @@ export function PalettesHubView({ hub }: { hub: HubPage }) {
   // Card stack: auto-cycle + mouse parallax
   const validCards = hub.featuredLinks.filter((f) => f.paletteColors?.length).slice(0, 4);
   const [activeIdx, setActiveIdx] = useState(0);
+  const isPaused = useRef(false);
 
   useEffect(() => {
-    const t = setInterval(() => setActiveIdx((p) => (p + 1) % validCards.length), 3200);
+    const t = setInterval(() => {
+      if (!isPaused.current) setActiveIdx((p) => (p + 1) % validCards.length);
+    }, 3200);
     return () => clearInterval(t);
   }, [validCards.length]);
 
@@ -141,7 +144,11 @@ export function PalettesHubView({ hub }: { hub: HubPage }) {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               {/* Main card — all cards stacked, crossfade via opacity only (no white flash) */}
-              <div className="relative overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_8px_40px_rgba(28,23,18,0.10)]">
+              <div
+                className="relative overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_8px_40px_rgba(28,23,18,0.10)]"
+                onMouseEnter={() => { isPaused.current = true; }}
+                onMouseLeave={() => { isPaused.current = false; }}
+              >
                 {validCards.map((card, i) => (
                   <motion.div
                     key={card.href}
@@ -151,17 +158,24 @@ export function PalettesHubView({ hub }: { hub: HubPage }) {
                     className={i === 0 ? "relative" : "absolute inset-0"}
                     style={{ pointerEvents: i === activeIdx ? "auto" : "none" }}
                   >
-                    {/* Color strip — click cycles to next palette, hover expands individual color */}
-                    <div
-                      className="flex h-52 w-full cursor-pointer"
-                      onClick={() => setActiveIdx((p) => (p + 1) % validCards.length)}
-                    >
+                    {/* Color strip — hover expands individual color */}
+                    <div className="flex h-52 w-full">
                       {card.paletteColors?.map((hex, j) => (
                         <div
                           key={j}
-                          className="flex-1 transition-[flex] duration-300 hover:flex-[3]"
+                          className="group/swatch relative flex-1 transition-[flex] duration-300 hover:flex-[3]"
                           style={{ backgroundColor: hex }}
-                        />
+                        >
+                          <button
+                            onClick={(e) => copyColor(hex, e)}
+                            className="absolute inset-0 flex items-end justify-center pb-2.5"
+                            aria-label={`Copy ${hex}`}
+                          >
+                            <span className="rounded-full bg-black/55 px-2.5 py-1 font-mono text-[9px] text-white opacity-0 transition-opacity duration-200 group-hover/swatch:opacity-100">
+                              {copiedColor === hex ? "✓ Copied" : hex.toUpperCase()}
+                            </span>
+                          </button>
+                        </div>
                       ))}
                     </div>
                     {/* Card footer — link to palette page */}
@@ -247,15 +261,14 @@ export function PalettesHubView({ hub }: { hub: HubPage }) {
           >
             <div className="relative flex h-64 w-full overflow-hidden">
               {featured.paletteColors.map((hex, i) => (
-                <div key={i} className="relative flex-1">
-                  <div className="h-full w-full" style={{ backgroundColor: hex }} />
+                <div key={i} className="group/swatch relative flex-1 transition-[flex] duration-300 hover:flex-[2]" style={{ backgroundColor: hex }}>
                   <button
                     onClick={(e) => copyColor(hex, e)}
-                    className="absolute inset-0 flex items-end justify-center pb-3 opacity-0 group-hover:opacity-100 transition-opacity"
-                    style={{ backgroundColor: "rgba(0,0,0,0.22)" }}
+                    className="absolute inset-0 flex items-end justify-center pb-3"
+                    aria-label={`Copy ${hex}`}
                   >
-                    <span className="font-mono text-[9px] font-bold text-white tracking-wider">
-                      {copiedColor === hex ? "✓ Copied" : hex.slice(1).toUpperCase()}
+                    <span className="rounded-full bg-black/55 px-2.5 py-1 font-mono text-[9px] text-white opacity-0 transition-opacity duration-200 group-hover/swatch:opacity-100">
+                      {copiedColor === hex ? "✓ Copied" : hex.toUpperCase()}
                     </span>
                   </button>
                 </div>
@@ -292,15 +305,14 @@ export function PalettesHubView({ hub }: { hub: HubPage }) {
               {item.paletteColors?.length ? (
                 <div className="relative flex h-36 w-full overflow-hidden">
                   {item.paletteColors.map((hex, i) => (
-                    <div key={i} className="relative flex-1">
-                      <div className="h-full w-full transition-all duration-300 group-hover:first:flex-[1.4]" style={{ backgroundColor: hex }} />
+                    <div key={i} className="group/swatch relative flex-1 transition-[flex] duration-300 hover:flex-[2]" style={{ backgroundColor: hex }}>
                       <button
                         onClick={(e) => copyColor(hex, e)}
-                        className="absolute inset-0 flex items-end justify-center pb-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ backgroundColor: "rgba(0,0,0,0.25)" }}
+                        className="absolute inset-0 flex items-end justify-center pb-2"
+                        aria-label={`Copy ${hex}`}
                       >
-                        <span className="font-mono text-[8px] font-bold text-white">
-                          {copiedColor === hex ? "✓" : hex.slice(1).toUpperCase()}
+                        <span className="rounded-full bg-black/55 px-2 py-0.5 font-mono text-[8px] text-white opacity-0 transition-opacity duration-150 group-hover/swatch:opacity-100">
+                          {copiedColor === hex ? "✓ Copied" : hex.toUpperCase()}
                         </span>
                       </button>
                     </div>

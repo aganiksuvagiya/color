@@ -8,7 +8,6 @@ import { encodePalette } from "@/lib/share-utils";
 import { dayIndex, generateTrendingPalettes, getCuratedTrendPalettes, type PaletteCategory } from "@/lib/trending";
 
 type Category = "all" | PaletteCategory;
-
 type TrendPalette = ReturnType<typeof getCuratedTrendPalettes>[number];
 
 const categories: { key: Category; label: string }[] = [
@@ -24,7 +23,7 @@ const categoryMeta: Record<Category, { eyebrow: string; title: string; blurb: st
   all: {
     eyebrow: "Palette Radar",
     title: "Trending palettes built for modern interfaces",
-    blurb: "A sharper mix of curated trend palettes and fresh category-driven systems you can drop straight into branding, products, and landing pages.",
+    blurb: "A curated mix of trend palettes and fresh category-driven systems you can drop straight into branding, products, and landing pages.",
   },
   "2026": {
     eyebrow: "Forecast",
@@ -63,22 +62,23 @@ const categorySignals: Record<PaletteCategory, string[]> = {
 
 function getPaletteSummary(palette: TrendPalette) {
   switch (palette.category) {
-    case "2026":
-      return "Emerging digital and editorial color direction.";
-    case "saas":
-      return "Balanced for dashboards and polished product UI.";
-    case "ecommerce":
-      return "Built for merchandising and conversion-focused experiences.";
-    case "mobile":
-      return "Optimized for compact screens and quick scanning.";
-    case "branding":
-      return "Great for identity systems and expressive launches.";
+    case "2026": return "Emerging digital and editorial color direction.";
+    case "saas": return "Balanced for dashboards and polished product UI.";
+    case "ecommerce": return "Built for merchandising and conversion-focused experiences.";
+    case "mobile": return "Optimized for compact screens and quick scanning.";
+    case "branding": return "Great for identity systems and expressive launches.";
   }
 }
 
-function getRoleLabel(index: number) {
-  return ["Base", "Primary", "Support", "Highlight", "Accent"][index] ?? `Tone ${index + 1}`;
-}
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const } },
+};
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
+};
 
 export function TrendsPage() {
   const [active, setActive] = useState<Category>("all");
@@ -94,217 +94,221 @@ export function TrendsPage() {
   const filtered = active === "all" ? trendingPalettes : trendingPalettes.filter((p) => p.category === active);
   const featured = filtered[0] ?? trendingPalettes[0];
   const meta = categoryMeta[active];
-  const uniqueCategories = new Set(trendingPalettes.map((palette) => palette.category)).size;
 
   async function copyPalette(palette: TrendPalette) {
-    const hex = palette.colors.map((color) => color.hex.toUpperCase()).join(", ");
+    const hex = palette.colors.map((c) => c.hex.toUpperCase()).join(", ");
     await navigator.clipboard.writeText(hex);
     setCopied(palette.label);
-    window.setTimeout(() => setCopied((current) => (current === palette.label ? null : current)), 1800);
+    window.setTimeout(() => setCopied((cur) => (cur === palette.label ? null : cur)), 1800);
   }
 
   async function copySwatch(hex: string) {
     const formatted = hex.toUpperCase();
     await navigator.clipboard.writeText(formatted);
     setCopiedSwatch(formatted);
-    window.setTimeout(() => setCopiedSwatch((current) => (current === formatted ? null : current)), 1600);
+    window.setTimeout(() => setCopiedSwatch((cur) => (cur === formatted ? null : cur)), 1600);
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#130904] text-white">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,153,76,0.16),transparent_26%),radial-gradient(circle_at_82%_14%,rgba(255,255,255,0.08),transparent_18%),radial-gradient(circle_at_50%_100%,rgba(255,92,33,0.18),transparent_30%),linear-gradient(145deg,#1b0d06_0%,#130904_42%,#0c0604_100%)]" />
-      <div className="noise absolute inset-0 opacity-20" />
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-
+    <main className="relative min-h-screen bg-[#faf7f2] text-[#1c1712]">
       <Header />
 
-      <div className="relative mx-auto max-w-7xl px-4 pb-24 pt-24 sm:px-6 lg:px-8 sm:pt-36">
-        <section className="rounded-[34px] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] px-5 py-6 shadow-[0_24px_120px_rgba(0,0,0,0.32)] backdrop-blur-2xl sm:px-7 sm:py-8 lg:px-9 lg:py-10">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:items-start">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#ff9d6c]">{meta.eyebrow}</p>
-            <h1 className="mt-4 max-w-2xl text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-[4.25rem] lg:leading-[0.92]">
-              {meta.title}
-            </h1>
-            <p className="mt-5 max-w-xl text-base leading-7 text-white/58 sm:text-lg">
-              {meta.blurb}
-            </p>
+      <div className="mx-auto max-w-[1400px] px-6 pb-24 lg:px-8">
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <div className="min-w-[150px] rounded-2xl border border-white/10 bg-black/10 px-4 py-3">
-                <p className="text-[10px] uppercase tracking-[0.22em] text-white/35">Live Mix</p>
-                <p className="mt-1 text-lg font-semibold text-white">{filtered.length} palettes</p>
-              </div>
-              <div className="min-w-[150px] rounded-2xl border border-white/10 bg-black/10 px-4 py-3">
-                <p className="text-[10px] uppercase tracking-[0.22em] text-white/35">Coverage</p>
-                <p className="mt-1 text-lg font-semibold text-white">{uniqueCategories} categories</p>
-              </div>
-              <div className="min-w-[210px] rounded-2xl border border-white/10 bg-black/10 px-4 py-3">
-                <p className="text-[10px] uppercase tracking-[0.22em] text-white/35">Built For</p>
-                <p className="mt-1 text-lg font-semibold text-white">UI, brands, launches</p>
-              </div>
+        {/* ── Hero ── */}
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={stagger}
+          className="pt-32 pb-14"
+        >
+          <motion.div variants={fadeUp}>
+            <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.24em] text-[#1c1712]/48 shadow-[0_1px_4px_rgba(28,23,18,0.06)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]" aria-hidden="true" />
+              {meta.eyebrow}
+            </span>
+          </motion.div>
+
+          <div className="mt-5">
+              <motion.h1
+                variants={fadeUp}
+                className="max-w-3xl font-display text-[2.4rem] font-bold leading-[1.04] tracking-[-0.05em] text-[#1c1712] sm:text-[3rem] lg:text-[3.6rem]"
+              >
+                {meta.title}
+              </motion.h1>
+              <motion.p variants={fadeUp} className="mt-4 max-w-xl text-base leading-7 text-[#1c1712]/50">
+                {meta.blurb}
+              </motion.p>
+          </div>
+        </motion.div>
+
+        {/* ── Category filter pills ── */}
+        <div className="-mx-6 overflow-x-auto px-6 lg:-mx-8 lg:px-8">
+          <div className="flex items-center gap-2 pb-6">
+            {categories.map((cat) => (
+              <button
+                key={cat.key}
+                onClick={() => setActive(cat.key)}
+                className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
+                  active === cat.key
+                    ? "bg-[#1c1712] text-white shadow-[0_4px_14px_rgba(28,23,18,0.18)]"
+                    : "border border-black/10 bg-white text-[#1c1712]/60 hover:border-black/18 hover:text-[#1c1712]"
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+
+            <div className="ml-auto flex shrink-0 items-center gap-2.5 pl-2">
+              <span className="text-sm text-[#1c1712]/38">{filtered.length} palettes</span>
+              <button
+                onClick={() => setSeed(Date.now())}
+                className="inline-flex items-center gap-1.5 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-[#1c1712]/60 shadow-[0_1px_4px_rgba(28,23,18,0.06)] transition-all hover:border-black/18 hover:text-[#1c1712] hover:shadow-[0_4px_12px_rgba(28,23,18,0.08)]"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M1 4v6h6M23 20v-6h-6" />
+                  <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15" />
+                </svg>
+                Shuffle
+              </button>
             </div>
           </div>
+        </div>
 
-          {featured && (
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="overflow-hidden rounded-[30px] border border-white/10 bg-[#221510]/85 shadow-[0_24px_80px_rgba(0,0,0,0.28)]"
-            >
-              <div className="border-b border-white/10 px-5 py-4 sm:px-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.24em] text-[#ff9d6c]">Featured Palette</p>
-                    <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-white">{featured.label}</h2>
-                  </div>
-                  <span className="rounded-full border border-white/10 bg-white/8 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-white/55">
-                    {featured.category}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex h-40 w-full sm:h-44">
+        {/* ── Featured palette ── */}
+        {featured && (
+          <motion.div
+            key={featured.label}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-8 overflow-hidden rounded-[28px] border border-black/[0.07] bg-white shadow-[0_4px_40px_rgba(28,23,18,0.08)]"
+          >
+            <div className="grid lg:grid-cols-[1fr_320px]">
+              {/* Color strip */}
+              <div className="flex h-56 lg:h-72">
                 {featured.colors.map((color) => (
                   <button
-                    key={`${featured.label}-${color.hex}`}
+                    key={`featured-${color.hex}`}
                     type="button"
                     onClick={() => copySwatch(color.hex)}
-                    className="group relative flex-1 overflow-hidden"
+                    className="group relative flex-1 overflow-hidden transition-[flex] duration-300 hover:flex-[2]"
                     style={{ backgroundColor: color.hex }}
                     aria-label={`Copy ${color.hex.toUpperCase()}`}
-                    title={`Copy ${color.hex.toUpperCase()}`}
                   >
-                    <span className="pointer-events-none absolute inset-x-2 bottom-2 rounded-full bg-black/20 px-2 py-1 text-center font-mono text-[10px] text-white/0 opacity-0 backdrop-blur-[2px] transition-all duration-200 group-hover:opacity-100 group-hover:text-white/90 group-focus-visible:opacity-100 group-focus-visible:text-white/90">
-                      {copiedSwatch === color.hex.toUpperCase() ? "Copied" : color.hex.toUpperCase()}
+                    <span className="pointer-events-none absolute inset-x-2 bottom-2 rounded-full bg-black/55 px-2 py-1.5 text-center font-mono text-[10px] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                      {copiedSwatch === color.hex.toUpperCase() ? "✓ Copied" : color.hex.toUpperCase()}
                     </span>
                   </button>
                 ))}
               </div>
 
-              <div className="px-5 py-4 sm:px-6">
-                <div className="flex items-center justify-end gap-3">
-                  <button
-                    onClick={() => copyPalette(featured)}
-                    className="shrink-0 text-sm font-medium text-white/52 transition-colors hover:text-white"
-                  >
-                    {copied === featured.label ? "Copied" : "Copy"}
-                  </button>
+              {/* Info panel */}
+              <div className="flex flex-col justify-between border-t border-black/[0.06] p-6 lg:border-l lg:border-t-0">
+                <div>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#e8531f]/20 bg-[#e8531f]/8 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#e8531f]">
+                    Featured
+                  </span>
+                  <h2 className="mt-3 text-xl font-bold tracking-[-0.03em] text-[#1c1712]">{featured.label}</h2>
+                  <p className="mt-2 text-sm leading-6 text-[#1c1712]/50">{getPaletteSummary(featured)}</p>
+
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {categorySignals[featured.category].map((signal) => (
+                      <span key={signal} className="rounded-full border border-black/8 bg-[#faf7f2] px-3 py-1 text-[11px] text-[#1c1712]/55">
+                        {signal}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="mt-4">
+                <div className="mt-6 flex flex-col gap-2">
                   <Link
                     href={`/generator${encodePalette(featured)}`}
-                    className="block rounded-2xl bg-[#f46b35] px-4 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-[#ff844d]"
+                    className="inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_6px_18px_rgba(232,83,31,0.25)] transition-all hover:scale-[1.02] hover:shadow-[0_8px_24px_rgba(232,83,31,0.32)]"
+                    style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
                   >
                     Open in Generator
                   </Link>
+                  <button
+                    onClick={() => copyPalette(featured)}
+                    className="rounded-full border border-black/10 bg-white py-2.5 text-sm font-semibold text-[#1c1712]/60 transition-all hover:border-black/18 hover:text-[#1c1712]"
+                  >
+                    {copied === featured.label ? "✓ Copied" : "Copy all HEX"}
+                  </button>
                 </div>
               </div>
-            </motion.div>
-          )}
-          </div>
-        </section>
-
-        <section className="mt-12 rounded-[30px] border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl sm:p-5">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.24em] text-white/35">Browse by lane</p>
-              <p className="mt-1 text-sm text-white/55">Switch mood, reshuffle fresh options, or jump straight into a palette.</p>
             </div>
+          </motion.div>
+        )}
 
-            <div className="flex flex-wrap items-center gap-2">
-              {categories.map((cat) => (
-                <button
-                  key={cat.key}
-                  onClick={() => setActive(cat.key)}
-                  className={`rounded-2xl px-4 py-2 text-sm font-medium transition-all ${
-                    active === cat.key
-                      ? "bg-white text-[#180a05] shadow-[0_10px_30px_rgba(255,255,255,0.18)]"
-                      : "border border-white/10 bg-white/5 text-white/55 hover:bg-white/10 hover:text-white"
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              ))}
-              <button
-                onClick={() => setSeed(Date.now())}
-                className="ml-1 inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white/65 transition-colors hover:bg-white/10 hover:text-white"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 12a9 9 0 1 1-2.64-6.36" />
-                  <path d="M21 4v5h-5" />
-                </svg>
-                Shuffle Set
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <section className="mt-8 grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
-          {filtered.map((palette, idx) => (
+        {/* ── Grid ── */}
+        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {filtered.slice(1).map((palette, idx) => (
             <motion.article
               key={`${palette.label}-${idx}`}
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.04 }}
-              className="group overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] shadow-[0_18px_80px_rgba(0,0,0,0.24)] transition-transform duration-300 hover:-translate-y-1"
+              transition={{ delay: idx * 0.04, duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+              className="group overflow-hidden rounded-[24px] border border-black/[0.07] bg-white shadow-[0_2px_16px_rgba(28,23,18,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(28,23,18,0.10)]"
             >
+              {/* Color strip */}
               <div className="flex h-44">
                 {palette.colors.map((color) => (
                   <button
                     key={`${palette.label}-${color.hex}`}
                     type="button"
                     onClick={() => copySwatch(color.hex)}
-                    className="group relative flex-1 overflow-hidden"
+                    className="group/swatch relative flex-1 overflow-hidden transition-[flex] duration-300 hover:flex-[2]"
                     style={{ backgroundColor: color.hex }}
                     aria-label={`Copy ${color.hex.toUpperCase()}`}
-                    title={`Copy ${color.hex.toUpperCase()}`}
                   >
-                    <span className="pointer-events-none absolute inset-x-2 bottom-2 rounded-full bg-black/20 px-2 py-1 text-center font-mono text-[10px] text-white/0 opacity-0 backdrop-blur-[2px] transition-all duration-200 group-hover:opacity-100 group-hover:text-white/90 group-focus-visible:opacity-100 group-focus-visible:text-white/90">
-                      {copiedSwatch === color.hex.toUpperCase() ? "Copied" : color.hex.toUpperCase()}
+                    <span className="pointer-events-none absolute inset-x-1.5 bottom-1.5 rounded-full bg-black/55 px-1.5 py-1 text-center font-mono text-[9px] text-white opacity-0 transition-opacity duration-150 group-hover/swatch:opacity-100">
+                      {copiedSwatch === color.hex.toUpperCase() ? "✓ Copied" : color.hex.toUpperCase()}
                     </span>
                   </button>
                 ))}
               </div>
 
+              {/* Card info */}
               <div className="p-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-xl font-semibold tracking-[-0.03em] text-white">{palette.label}</p>
-                    <p className="mt-2 text-sm leading-6 text-white/55">{getPaletteSummary(palette)}</p>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate text-base font-bold tracking-[-0.02em] text-[#1c1712]">{palette.label}</p>
+                    <p className="mt-1 text-sm leading-5 text-[#1c1712]/50">{getPaletteSummary(palette)}</p>
                   </div>
-                  <span className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/45">
+                  <span className="shrink-0 rounded-full border border-black/8 bg-[#faf7f2] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45">
                     {palette.category}
                   </span>
                 </div>
 
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-3 flex flex-wrap gap-1.5">
                   {categorySignals[palette.category].map((signal) => (
-                    <span key={`${palette.label}-${signal}`} className="rounded-full bg-white/6 px-3 py-1 text-[11px] text-white/55">
+                    <span key={`${palette.label}-${signal}`} className="rounded-full border border-black/6 bg-[#faf7f2] px-2.5 py-0.5 text-[10px] text-[#1c1712]/50">
                       {signal}
                     </span>
                   ))}
                 </div>
 
-                <div className="mt-5 flex gap-2">
+                <div className="mt-4 flex gap-2">
                   <Link
                     href={`/generator${encodePalette(palette)}`}
-                    className="flex-1 rounded-2xl bg-white/10 px-4 py-2.5 text-center text-sm font-medium text-white transition-colors hover:bg-white/16"
+                    className="flex-1 rounded-full py-2.5 text-center text-sm font-semibold text-white shadow-[0_4px_14px_rgba(232,83,31,0.22)] transition-all hover:scale-[1.01] hover:shadow-[0_6px_18px_rgba(232,83,31,0.30)]"
+                    style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
                   >
                     Open in Generator
                   </Link>
                   <button
                     onClick={() => copyPalette(palette)}
-                    className="rounded-2xl border border-white/10 bg-white/6 px-4 py-2.5 text-sm font-medium text-white/65 transition-colors hover:bg-white/12 hover:text-white"
+                    className="rounded-full border border-black/10 bg-white px-4 py-2.5 text-sm font-semibold text-[#1c1712]/55 transition-all hover:border-black/18 hover:text-[#1c1712]"
                   >
-                    {copied === palette.label ? "Copied" : "Copy"}
+                    {copied === palette.label ? "✓" : "Copy"}
                   </button>
                 </div>
               </div>
             </motion.article>
           ))}
-        </section>
+        </div>
+
       </div>
     </main>
   );

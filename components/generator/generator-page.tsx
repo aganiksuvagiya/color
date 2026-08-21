@@ -292,14 +292,16 @@ export function GeneratorPage() {
   }
 
   const tbBtn = (active = false) =>
-    `inline-flex items-center gap-1.5 rounded-xl px-3 h-8 text-xs font-medium whitespace-nowrap transition-all ${
-      active ? "bg-white/10 text-white" : "text-white/45 hover:bg-white/8 hover:text-white"
+    `inline-flex items-center gap-1.5 rounded-full px-3.5 h-8 text-[11px] font-semibold whitespace-nowrap transition-all duration-150 ${
+      active
+        ? "bg-[#1c1712] text-white shadow-[0_2px_8px_rgba(28,23,18,0.18)]"
+        : "text-[#1c1712]/50 hover:bg-[#1c1712]/7 hover:text-[#1c1712]"
     }`;
 
-  const iconBtn = "flex h-8 w-8 items-center justify-center rounded-xl text-white/40 transition-all hover:bg-white/8 hover:text-white";
+  const iconBtn = "flex h-8 w-8 items-center justify-center rounded-full text-[#1c1712]/38 transition-all duration-150 hover:bg-[#1c1712]/7 hover:text-[#1c1712]";
 
   return (
-    <main className="flex h-screen flex-col overflow-hidden bg-[#100804] text-white">
+    <main className="flex h-screen flex-col overflow-hidden bg-[#faf7f2] text-[#1c1712]">
       <Header />
 
       {/* Palette swatches */}
@@ -310,9 +312,9 @@ export function GeneratorPage() {
             <motion.div
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 z-20 flex items-center justify-center bg-[#100804]"
+              className="absolute inset-0 z-20 flex items-center justify-center bg-[#faf7f2]"
             >
-              <span className="h-5 w-5 animate-spin rounded-full border-2 border-white/15 border-t-white/55" />
+              <span className="h-5 w-5 animate-spin rounded-full border-2 border-black/10 border-t-black/40" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -352,15 +354,15 @@ export function GeneratorPage() {
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: 340, opacity: 0 }}
                 transition={{ type: "spring", damping: 28, stiffness: 300 }}
-                className="fixed bottom-0 right-0 top-0 z-[61] flex w-80 flex-col border-l border-white/10 bg-[#120908] shadow-2xl"
+                className="fixed bottom-0 right-0 top-0 z-[61] flex w-80 flex-col border-l border-black/[0.07] bg-white shadow-2xl"
               >
-                <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-3">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/35">
+                <div className="flex shrink-0 items-center justify-between border-b border-black/[0.07] px-4 py-3">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/38">
                     {PANEL_LABELS[activePanel]}
                   </span>
                   <button
                     onClick={() => setActivePanel(null)}
-                    className="flex h-7 w-7 items-center justify-center rounded-lg text-white/35 hover:bg-white/8 hover:text-white"
+                    className="flex h-7 w-7 items-center justify-center rounded-lg text-[#1c1712]/35 hover:bg-[#1c1712]/6 hover:text-[#1c1712]"
                   >
                     <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                       <path d="M18 6L6 18M6 6l12 12" />
@@ -392,12 +394,12 @@ export function GeneratorPage() {
       </div>
 
       {/* ── Mobile toolbar (< sm) - 2 rows ── */}
-      <div className="flex sm:hidden shrink-0 flex-col border-t border-white/8 bg-[#100804]">
+      <div className="flex sm:hidden shrink-0 flex-col border-t border-black/[0.07] bg-white">
         {/* Row 1: main actions */}
-        <div className="flex h-12 items-center justify-around px-2 border-b border-white/6">
+        <div className="flex h-12 items-center justify-around px-2 border-b border-black/[0.05]">
           <button onClick={undo} className={iconBtn} title="Undo"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M3 7v6h6" /><path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13" /></svg></button>
           <button onClick={redo} className={iconBtn} title="Redo"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M21 7v6h-6" /><path d="M3 17a9 9 0 019-9 9 9 0 016 2.3L21 13" /></svg></button>
-          <div className="h-5 w-px bg-white/10" />
+          <div className="h-5 w-px bg-black/[0.08]" />
           <button onClick={handleRandom} className={`${iconBtn} gap-1.5 w-auto px-2`} title="Shuffle">
             <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><polyline points="16 3 21 3 21 8" /><line x1="4" y1="20" x2="21" y2="3" /><polyline points="21 16 21 21 16 21" /><line x1="15" y1="15" x2="21" y2="21" /><line x1="4" y1="4" x2="9" y2="9" /></svg>
             <span className="text-xs">Shuffle</span>
@@ -405,11 +407,11 @@ export function GeneratorPage() {
           {activePalette && activePalette.colors.length < MAX_COLOR_COUNT && (
             <button onClick={handleAddColor} className={iconBtn} title="Add Color"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M12 5v14M5 12h14" /></svg></button>
           )}
-          <button onClick={() => setPromptOpen(p => !p)} className={`${iconBtn} gap-1.5 w-auto px-2 ${promptOpen ? "text-white bg-white/10" : ""}`} title="Generate">
+          <button onClick={() => setPromptOpen(p => !p)} className={`${iconBtn} gap-1.5 w-auto px-2 ${promptOpen ? "text-[#1c1712] bg-[#1c1712]/8" : ""}`} title="Generate">
             <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" fill="currentColor" /></svg>
             <span className="text-xs">Generate</span>
           </button>
-          <div className="h-5 w-px bg-white/10" />
+          <div className="h-5 w-px bg-black/[0.08]" />
           <button onClick={handleSave} className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-[#F15B2A] px-3 text-xs font-semibold text-white">
             <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" /><path d="M17 21v-8H7v8M7 3v5h8" /></svg>
             Save
@@ -418,31 +420,36 @@ export function GeneratorPage() {
         {/* Row 2: secondary */}
         <div className="flex h-10 items-center justify-around px-2">
           <button onClick={() => setViewFormat(f => f === "HEX" ? "RGB" : f === "RGB" ? "HSL" : "HEX")} className={`${iconBtn} text-[10px] font-bold w-auto px-2`}>{viewFormat}</button>
-          <button onClick={() => togglePanel("insights")} className={`${iconBtn} text-[10px] font-bold w-auto px-2 ${activePanel === "insights" ? "text-white bg-white/10" : ""}`}>Info</button>
-          <button onClick={() => togglePanel("accessibility")} className={`${iconBtn} text-[10px] font-bold w-auto px-2 ${activePanel === "accessibility" ? "text-white bg-white/10" : ""}`}>A11y</button>
-          <button onClick={() => togglePanel("tools")} className={`${iconBtn} ${activePanel === "tools" ? "text-white bg-white/10" : ""}`} title="Tools"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" /></svg></button>
-          <button onClick={() => togglePanel("export")} className={`${iconBtn} ${activePanel === "export" ? "text-white bg-white/10" : ""}`} title="Export"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg></button>
-          <button onClick={() => togglePanel("saved")} className={`${iconBtn} ${activePanel === "saved" ? "text-white bg-white/10" : ""}`} title="Library"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" /></svg></button>
+          <button onClick={() => togglePanel("insights")} className={`${iconBtn} text-[10px] font-bold w-auto px-2 ${activePanel === "insights" ? "text-[#1c1712] bg-[#1c1712]/8" : ""}`}>Info</button>
+          <button onClick={() => togglePanel("accessibility")} className={`${iconBtn} text-[10px] font-bold w-auto px-2 ${activePanel === "accessibility" ? "text-[#1c1712] bg-[#1c1712]/8" : ""}`}>A11y</button>
+          <button onClick={() => togglePanel("tools")} className={`${iconBtn} ${activePanel === "tools" ? "text-[#1c1712] bg-[#1c1712]/8" : ""}`} title="Tools"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" /></svg></button>
+          <button onClick={() => togglePanel("export")} className={`${iconBtn} ${activePanel === "export" ? "text-[#1c1712] bg-[#1c1712]/8" : ""}`} title="Export"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg></button>
+          <button onClick={() => togglePanel("saved")} className={`${iconBtn} ${activePanel === "saved" ? "text-[#1c1712] bg-[#1c1712]/8" : ""}`} title="Library"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" /></svg></button>
           <button onClick={handleShare} className={iconBtn} title="Share"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" /></svg></button>
         </div>
       </div>
 
       {/* ── Desktop toolbar (sm+) ── */}
-      <div className="hidden sm:flex h-14 shrink-0 items-center gap-1 border-t border-white/8 bg-[#100804] px-3">
-        {/* Undo / Redo */}
-        <button onClick={undo} className={iconBtn} title="Undo (⌘Z)">
-          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path d="M3 7v6h6" /><path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13" />
-          </svg>
-        </button>
-        <button onClick={redo} className={iconBtn} title="Redo (⌘⇧Z)">
-          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path d="M21 7v6h-6" /><path d="M3 17a9 9 0 019-9 9 9 0 016 2.3L21 13" />
-          </svg>
-        </button>
+      <div className="hidden sm:flex h-[52px] shrink-0 items-center gap-1.5 border-t border-black/[0.07] bg-white px-4 shadow-[0_-1px_0_rgba(28,23,18,0.04)]">
 
-        {/* Palette name (hide on md and below to save space) */}
-        <div className="mx-2 hidden lg:block">
+        {/* Left: undo/redo + palette name */}
+        <div className="flex items-center gap-0.5">
+          <button onClick={undo} className={iconBtn} title="Undo (⌘Z)">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+              <path d="M3 7v6h6" /><path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13" />
+            </svg>
+          </button>
+          <button onClick={redo} className={iconBtn} title="Redo (⌘⇧Z)">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+              <path d="M21 7v6h-6" /><path d="M3 17a9 9 0 019-9 9 9 0 016 2.3L21 13" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="mx-1 h-4 w-px bg-black/[0.08]" />
+
+        {/* Palette name */}
+        <div className="hidden lg:block">
           {editingLabel ? (
             <input
               ref={labelInputRef}
@@ -454,14 +461,14 @@ export function GeneratorPage() {
                 if (e.key === "Enter") commitLabel();
                 if (e.key === "Escape") setEditingLabel(false);
               }}
-              className="rounded-lg bg-white/8 px-2 py-1 text-[11px] font-semibold text-white/80 outline-none"
+              className="rounded-full bg-[#1c1712]/6 px-3 py-1 text-[11px] font-semibold text-[#1c1712] outline-none"
               style={{ width: Math.max(100, labelValue.length * 7) + "px" }}
               maxLength={40}
             />
           ) : (
             <button
               onClick={startEditLabel}
-              className="rounded-lg px-2 py-1 text-[11px] font-medium text-white/30 transition-all hover:bg-white/8 hover:text-white/65 max-w-[140px] truncate"
+              className="max-w-[160px] truncate rounded-full px-3 py-1 text-[11px] font-semibold text-[#1c1712]/45 transition-all hover:bg-[#1c1712]/6 hover:text-[#1c1712]/75"
               title="Rename palette"
             >
               {activePalette?.label ?? ""}
@@ -469,70 +476,72 @@ export function GeneratorPage() {
           )}
         </div>
 
-        <div className="mx-1.5 hidden lg:block h-5 w-px bg-white/10" />
+        <div className="mx-1 hidden lg:block h-4 w-px bg-black/[0.08]" />
 
-        {/* Center */}
-        <div className="flex flex-1 items-center justify-center gap-1">
-          <button onClick={handleRandom} className={tbBtn()} title="Shuffle (Space)">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <polyline points="16 3 21 3 21 8" />
-              <line x1="4" y1="20" x2="21" y2="3" />
-              <polyline points="21 16 21 21 16 21" />
-              <line x1="15" y1="15" x2="21" y2="21" />
-              <line x1="4" y1="4" x2="9" y2="9" />
-            </svg>
-            Shuffle
-            <kbd className="hidden lg:inline rounded border border-white/12 bg-white/5 px-1 py-0.5 font-mono text-[9px] text-white/25">Space</kbd>
-          </button>
-
-          {activePalette && activePalette.colors.length < MAX_COLOR_COUNT && (
-            <button onClick={handleAddColor} className={tbBtn()} title="Add a color">
-              <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                <path d="M12 5v14M5 12h14" />
+        {/* Center: primary actions pill group */}
+        <div className="flex flex-1 items-center justify-center">
+          <div className="flex items-center gap-0.5 rounded-full border border-black/[0.08] bg-[#faf7f2] p-1">
+            <button onClick={handleRandom} className={tbBtn()} title="Shuffle (Space)">
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                <polyline points="16 3 21 3 21 8" />
+                <line x1="4" y1="20" x2="21" y2="3" />
+                <polyline points="21 16 21 21 16 21" />
+                <line x1="15" y1="15" x2="21" y2="21" />
+                <line x1="4" y1="4" x2="9" y2="9" />
               </svg>
-              <span className="hidden lg:inline">Add Color</span>
+              Shuffle
+              <kbd className="hidden lg:inline rounded-md border border-black/[0.08] bg-white px-1 py-0.5 font-mono text-[8px] text-[#1c1712]/30">Space</kbd>
             </button>
-          )}
 
-          <button onClick={() => setPromptOpen(p => !p)} className={tbBtn(promptOpen)} title="Generate with AI prompt">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24">
-              <path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" fill="currentColor" />
-            </svg>
-            Generate
-          </button>
+            {activePalette && activePalette.colors.length < MAX_COLOR_COUNT && (
+              <button onClick={handleAddColor} className={tbBtn()} title="Add a color">
+                <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                <span className="hidden lg:inline">Add Color</span>
+              </button>
+            )}
 
-          <button onClick={() => togglePanel("tools")} className={tbBtn(activePanel === "tools")} title="Image extract · Harmony">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="3" />
-              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-            </svg>
-            Tools
-          </button>
+            <button onClick={() => setPromptOpen(p => !p)} className={tbBtn(promptOpen)} title="Generate with AI prompt">
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24">
+                <path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" fill="currentColor" />
+              </svg>
+              Generate
+            </button>
+
+            <button onClick={() => togglePanel("tools")} className={tbBtn(activePanel === "tools")} title="Image extract · Harmony">
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+              </svg>
+              Tools
+            </button>
+          </div>
         </div>
 
-        <div className="mx-1.5 h-5 w-px bg-white/10" />
-
-        {/* Right */}
-        <div className="flex items-center gap-1">
+        {/* Right: secondary actions */}
+        <div className="flex items-center gap-0.5">
           <button
             onClick={() => setViewFormat(f => f === "HEX" ? "RGB" : f === "RGB" ? "HSL" : "HEX")}
-            className={`${tbBtn()} hidden md:inline-flex`}
+            className={`${tbBtn()} hidden md:inline-flex font-mono`}
             title="Toggle color format"
           >
             {viewFormat}
           </button>
 
-          <div className="mx-0.5 hidden md:block h-5 w-px bg-white/10" />
+          <div className="mx-1 hidden md:block h-4 w-px bg-black/[0.08]" />
 
           <button onClick={() => togglePanel("insights")} className={`${tbBtn(activePanel === "insights")} hidden md:inline-flex`}>
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
               <circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" />
             </svg>
             Insights
           </button>
-          <button onClick={() => togglePanel("accessibility")} className={`${tbBtn(activePanel === "accessibility")} hidden lg:inline-flex`}>A11y</button>
+          <button onClick={() => togglePanel("accessibility")} className={`${tbBtn(activePanel === "accessibility")} hidden lg:inline-flex`}>
+            A11y
+          </button>
           <button onClick={() => togglePanel("export")} className={`${tbBtn(activePanel === "export")} hidden md:inline-flex`}>
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
               <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
               <line x1="12" y1="15" x2="12" y2="3" />
@@ -540,15 +549,15 @@ export function GeneratorPage() {
             Export
           </button>
           <button onClick={() => togglePanel("saved")} className={`${tbBtn(activePanel === "saved")} hidden lg:inline-flex`}>
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
               <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
             </svg>
             {saved.length > 0 ? `Library (${saved.length})` : "Library"}
           </button>
 
-          <div className="mx-0.5 hidden lg:block h-5 w-px bg-white/10" />
+          <div className="mx-1 h-4 w-px bg-black/[0.08]" />
 
-          {/* Copy all hex */}
+          {/* Copy all */}
           <button onClick={handleCopyAll} className={`${iconBtn} hidden lg:flex`} title="Copy all hex codes">
             <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <rect x="9" y="9" width="13" height="13" rx="2" />
@@ -559,10 +568,11 @@ export function GeneratorPage() {
           {/* Save */}
           <button
             onClick={handleSave}
-            className="inline-flex h-8 items-center gap-1.5 rounded-xl bg-[#F15B2A] px-4 text-xs font-semibold text-white transition-all hover:bg-[#F97A45] hover:shadow-[0_0_14px_rgba(241,91,42,0.4)]"
+            className="inline-flex h-8 items-center gap-1.5 rounded-full px-4 text-[11px] font-semibold text-white shadow-[0_4px_14px_rgba(232,83,31,0.30)] transition-all hover:shadow-[0_6px_18px_rgba(232,83,31,0.38)] hover:scale-[1.02] active:scale-[0.98]"
+            style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
             title="Save palette (S)"
           >
-            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
               <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
               <path d="M17 21v-8H7v8M7 3v5h8" />
             </svg>
@@ -584,7 +594,7 @@ export function GeneratorPage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
-                className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400"
+                className="rounded-xl border border-[#e8531f]/20 bg-[#e8531f]/8 px-3 py-1 text-xs font-medium text-[#e8531f]"
               >
                 {saveMessage || shareMessage}
               </motion.span>
@@ -608,7 +618,7 @@ export function GeneratorPage() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 32, opacity: 0 }}
               transition={{ type: "spring", damping: 30, stiffness: 340 }}
-              className="w-full max-w-2xl overflow-hidden rounded-2xl border border-white/12 bg-[#1c0f08] shadow-2xl"
+              className="w-full max-w-2xl overflow-hidden rounded-2xl border border-black/[0.08] bg-white shadow-2xl"
             >
               {/* Input row */}
               <form
@@ -627,7 +637,7 @@ export function GeneratorPage() {
                   value={promptText}
                   onChange={(e) => setPromptText(e.target.value)}
                   placeholder="Describe a mood, brand, or industry…"
-                  className="flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white/22"
+                  className="flex-1 bg-transparent text-sm text-[#1c1712] outline-none placeholder:text-[#1c1712]/30"
                   maxLength={200}
                 />
                 <button
@@ -640,7 +650,7 @@ export function GeneratorPage() {
                 <button
                   type="button"
                   onClick={() => setPromptOpen(false)}
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-white/35 hover:bg-white/8 hover:text-white"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-[#1c1712]/35 hover:bg-[#1c1712]/6 hover:text-[#1c1712]"
                 >
                   <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path d="M18 6L6 18M6 6l12 12" />
@@ -649,12 +659,12 @@ export function GeneratorPage() {
               </form>
 
               {/* Mood chips */}
-              <div className="flex flex-wrap gap-2 border-t border-white/8 px-5 py-3">
+              <div className="flex flex-wrap gap-2 border-t border-black/[0.06] px-5 py-3">
                 {MOOD_CHIPS.map(({ key, label }) => (
                   <button
                     key={key}
                     onClick={() => handleGenerate(key)}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/50 transition-all hover:border-white/20 hover:bg-white/10 hover:text-white"
+                    className="rounded-full border border-black/10 bg-[#faf7f2] px-3 py-1 text-xs font-medium text-[#1c1712]/55 transition-all hover:border-black/20 hover:bg-[#f0ebe4] hover:text-[#1c1712]"
                   >
                     {label}
                   </button>
@@ -681,11 +691,11 @@ export function GeneratorPage() {
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
               transition={{ duration: 0.2 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-sm rounded-2xl border border-white/12 bg-[#1a1008] p-6 shadow-2xl mx-4"
+              className="w-full max-w-sm rounded-2xl border border-black/[0.08] bg-white p-6 shadow-2xl mx-4"
             >
               <div className="mb-5 flex items-center justify-between">
-                <h2 className="text-base font-semibold text-white">Keyboard Shortcuts</h2>
-                <button onClick={() => setShortcutsOpen(false)} className="text-white/35 hover:text-white/70">
+                <h2 className="text-base font-semibold text-[#1c1712]">Keyboard Shortcuts</h2>
+                <button onClick={() => setShortcutsOpen(false)} className="text-[#1c1712]/35 hover:text-[#1c1712]/70">
                   <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path d="M18 6L6 18M6 6l12 12" />
                   </svg>
@@ -702,16 +712,16 @@ export function GeneratorPage() {
                   { keys: ["?"], label: "Show this guide" },
                 ].map(({ keys, label }) => (
                   <div key={label} className="flex items-center justify-between">
-                    <span className="text-sm text-white/55">{label}</span>
+                    <span className="text-sm text-[#1c1712]/55">{label}</span>
                     <div className="flex gap-1">
                       {keys.map((k) => (
-                        <kbd key={k} className="rounded-md border border-white/15 bg-white/8 px-2 py-0.5 font-mono text-[11px] text-white/70">{k}</kbd>
+                        <kbd key={k} className="rounded-md border border-black/10 bg-[#faf7f2] px-2 py-0.5 font-mono text-[11px] text-[#1c1712]/65">{k}</kbd>
                       ))}
                     </div>
                   </div>
                 ))}
               </div>
-              <p className="mt-5 text-[11px] text-white/25 text-center">Press <kbd className="rounded border border-white/10 bg-white/5 px-1 font-mono text-[10px]">?</kbd> anytime to toggle</p>
+              <p className="mt-5 text-[11px] text-[#1c1712]/30 text-center">Press <kbd className="rounded border border-black/10 bg-[#faf7f2] px-1 font-mono text-[10px]">?</kbd> anytime to toggle</p>
             </motion.div>
           </motion.div>
         )}
