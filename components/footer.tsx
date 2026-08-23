@@ -56,10 +56,8 @@ export function Footer() {
             <p className="mt-4 text-sm leading-relaxed text-[#1c1712]/55">
               Find colors that feel right.
             </p>
-            <div className="mt-6 rounded-2xl border border-black/8 bg-white p-3">
-              <div className="max-h-[160px] overflow-hidden rounded-xl [&_img]:h-auto [&_img]:max-h-[110px] [&_img]:w-full [&_img]:object-cover">
-                <EffectiveCpmAd />
-              </div>
+            <div className="mt-6 overflow-hidden rounded-xl border border-black/8 bg-[#f0ede8] px-2 py-2">
+              <EffectiveCpmAd />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">

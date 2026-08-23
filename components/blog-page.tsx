@@ -7,112 +7,107 @@ import { Header } from "./header";
 import { blogPageContent } from "@/lib/seo/tool-pages";
 
 const categoryColors: Record<string, string> = {
-  Guides: "bg-indigo-500/20 text-indigo-300",
-  Explainers: "bg-emerald-500/20 text-emerald-300",
-  Comparisons: "bg-amber-500/20 text-amber-300",
-  "Best Colors": "bg-pink-500/20 text-pink-300",
+  Guides:        "bg-indigo-50 text-indigo-600",
+  Explainers:    "bg-emerald-50 text-emerald-600",
+  Comparisons:   "bg-amber-50 text-amber-600",
+  "Best Colors": "bg-pink-50 text-pink-600",
 };
 
 export function BlogPage() {
   return (
-    <main className="relative min-h-screen bg-[#160b05] text-white">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(0,0,0,0.95),transparent_18%),radial-gradient(circle_at_88%_0%,rgba(255,106,44,0.2),transparent_30%),linear-gradient(135deg,#1a0e06_0%,#160b05_50%,#1a0e06_100%)]" />
-      <div className="noise absolute inset-0 opacity-20" />
-
+    <div className="min-h-screen bg-[#f0ede8] text-[#1c1712]">
       <Header />
 
-      <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-24 sm:px-6 sm:pt-40">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto max-w-4xl text-center"
-        >
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-orange-300">Color resource library</p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">{blogPageContent.title}</h1>
-          <p className="mx-auto mt-4 max-w-3xl text-lg text-white/60">{blogPageContent.description}</p>
+      <main className="mx-auto w-full max-w-[1040px] px-4 pb-20 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
+
+        {/* Hero */}
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}
+          className="mb-6 flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/40 shadow-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]"/>Color resource library
+            </span>
+            <h1 className="font-display text-[2rem] font-black leading-none tracking-[-0.04em] sm:text-[2.6rem]">
+              {blogPageContent.title}
+            </h1>
+          </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.05 }}
-          className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-6"
-        >
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-orange-300">Direct answer</p>
-          <p className="mt-3 max-w-4xl text-sm leading-7 text-white/72">{blogPageContent.answer}</p>
+        {/* Answer box */}
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, delay: 0.04 }}
+          className="mb-6 rounded-2xl border border-[#e8531f]/20 bg-[#e8531f]/[0.05] px-6 py-5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#e8531f]">Quick answer</p>
+          <p className="mt-2 text-[14px] leading-[1.8] text-[#1c1712]/65">{blogPageContent.answer}</p>
         </motion.div>
 
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {/* Featured articles grid */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.08 }}
+          className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {blogPageContent.featuredArticles.map((article, idx) => (
-            <motion.div
-              key={article.href}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.05 }}
-            >
-              <Link
-                href={article.href}
-                className="group block h-full rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl transition-colors hover:bg-white/8"
-              >
-                <div className="mb-3 flex items-center gap-2">
-                  <span className={`rounded-md px-2 py-0.5 text-[10px] font-bold ${categoryColors[article.category] || "bg-white/10 text-white/60"}`}>
-                    {article.category}
-                  </span>
-                  <span className="text-[10px] text-white/25">{article.readTime} read</span>
-                </div>
-                <h2 className="text-base font-semibold text-white group-hover:text-white/90">{article.title}</h2>
-                <p className="mt-3 text-sm leading-6 text-white/55">{article.excerpt}</p>
-                <p className="mt-5 text-sm font-medium text-orange-300">Open resource</p>
-              </Link>
-            </motion.div>
+            <Link key={article.href} href={article.href}
+              className="group flex flex-col rounded-2xl border border-black/[0.08] bg-white p-5 shadow-sm transition hover:shadow-md hover:border-black/[0.12]">
+              <div className="mb-3 flex items-center gap-2">
+                <span className={`rounded-lg px-2.5 py-1 text-[10px] font-bold ${categoryColors[article.category] ?? "bg-[#faf7f2] text-[#1c1712]/50"}`}>
+                  {article.category}
+                </span>
+                <span className="text-[10px] text-[#1c1712]/30">{article.readTime} read</span>
+              </div>
+              <h2 className="text-[14px] font-bold leading-snug text-[#1c1712] group-hover:text-[#e8531f] transition-colors">
+                {article.title}
+              </h2>
+              <p className="mt-2.5 flex-1 text-[13px] leading-[1.7] text-[#1c1712]/55">{article.excerpt}</p>
+              <p className="mt-4 flex items-center gap-1 text-[12px] font-semibold text-[#e8531f]">
+                Open resource
+                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+              </p>
+            </Link>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {blogPageContent.sections.map((section, idx) => (
-            <motion.section
-              key={section.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + idx * 0.05 }}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6"
-            >
-              <h2 className="text-xl font-semibold text-white">{section.title}</h2>
-              <p className="mt-3 text-sm leading-7 text-white/65">{section.body}</p>
-            </motion.section>
+        {/* Sections grid */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.12 }}
+          className="mb-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+          {blogPageContent.sections.map((section) => (
+            <section key={section.title}
+              className="rounded-2xl border border-black/[0.08] bg-white p-6 shadow-sm">
+              <h2 className="text-[16px] font-bold text-[#1c1712]">{section.title}</h2>
+              <p className="mt-3 text-[13px] leading-[1.75] text-[#1c1712]/55">{section.body}</p>
+            </section>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h2 className="text-xl font-semibold text-white">FAQ</h2>
-            <div className="mt-5 space-y-4">
+        {/* FAQ + Explore next */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.16 }}
+          className="grid grid-cols-1 gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+
+          <section className="rounded-2xl border border-black/[0.08] bg-white p-6 shadow-sm">
+            <h2 className="text-[16px] font-bold text-[#1c1712]">FAQ</h2>
+            <div className="mt-5 space-y-3">
               {blogPageContent.faq.map((item) => (
-                <div key={item.question} className="rounded-xl bg-black/20 p-4">
-                  <h3 className="text-base font-semibold text-white">{item.question}</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/65">{item.answer}</p>
+                <div key={item.question} className="rounded-xl border border-black/[0.06] bg-[#faf7f2] px-5 py-4">
+                  <h3 className="text-[13px] font-bold text-[#1c1712]">{item.question}</h3>
+                  <p className="mt-1.5 text-[13px] leading-[1.75] text-[#1c1712]/55">{item.answer}</p>
                 </div>
               ))}
             </div>
           </section>
 
-          <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-            <h2 className="text-xl font-semibold text-white">Explore next</h2>
-            <div className="mt-5 space-y-3">
+          <section className="rounded-2xl border border-black/[0.08] bg-white p-6 shadow-sm">
+            <h2 className="text-[16px] font-bold text-[#1c1712]">Explore next</h2>
+            <div className="mt-5 space-y-2">
               {blogPageContent.relatedLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="block rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/72 transition-colors hover:bg-black/30 hover:text-white"
-                >
+                <Link key={link.href} href={link.href}
+                  className="flex items-center gap-2.5 rounded-xl border border-black/[0.06] bg-[#faf7f2] px-4 py-3 text-[13px] text-[#1c1712]/60 transition hover:bg-[#f0ede8] hover:text-[#1c1712]">
+                  <span className="h-1 w-1 shrink-0 rounded-full bg-[#e8531f]/40"/>
                   {link.title}
                 </Link>
               ))}
             </div>
           </section>
-        </div>
-      </div>
-    </main>
+        </motion.div>
+      </main>
+    </div>
   );
 }

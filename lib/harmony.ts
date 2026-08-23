@@ -23,60 +23,77 @@ export function generateHarmony(baseHex: string, mode: HarmonyMode): Palette {
   let colors: PaletteColor[];
 
   switch (mode) {
-    case "complementary":
+    case "complementary": {
+      // Two hues only: h and h+180. Fill 5 slots with shades of each.
+      const c = (h + 180) % 360;
       colors = [
-        make("Base Dark", "neutral", h, Math.min(s, 15), 8),
-        make("Primary", "primary", h, s, l),
-        make("Fresh", "success", (h + 150) % 360, 55, 48),
-        make("Warm", "warning", (h + 60) % 360, 75, 58),
-        make("Complement", "accent", (h + 180) % 360, s, l),
+        make("Primary Dark",    "neutral", h, s,                    Math.max(8,  l - 28)),
+        make("Primary",         "primary", h, s,                    l),
+        make("Primary Tint",    "success", h, Math.max(15, s - 20), Math.min(88, l + 22)),
+        make("Complement",      "warning", c, s,                    l),
+        make("Complement Tint", "accent",  c, Math.max(15, s - 20), Math.min(88, l + 22)),
       ];
       break;
-    case "analogous":
+    }
+    case "analogous": {
+      // Five adjacent hues spanning ±60° around base
       colors = [
-        make("Base Dark", "neutral", h, Math.min(s, 15), 8),
-        make("Primary", "primary", h, s, l),
-        make("Near Left", "success", (h - 30 + 360) % 360, s, l + 5),
-        make("Near Right", "warning", (h + 30) % 360, s, l - 5),
-        make("Far Right", "accent", (h + 60) % 360, s, l),
+        make("Far Left",   "neutral", (h - 60 + 360) % 360, s, l),
+        make("Near Left",  "primary", (h - 30 + 360) % 360, s, Math.min(88, l + 5)),
+        make("Base",       "success", h,                     s, l),
+        make("Near Right", "warning", (h + 30) % 360,        s, Math.max(12, l - 5)),
+        make("Far Right",  "accent",  (h + 60) % 360,        s, l),
       ];
       break;
-    case "triadic":
+    }
+    case "triadic": {
+      // Three hues exactly 120° apart; add a tint of each to fill 5 slots
+      const t1 = (h + 120) % 360;
+      const t2 = (h + 240) % 360;
       colors = [
-        make("Base Dark", "neutral", h, Math.min(s, 15), 8),
-        make("Primary", "primary", h, s, l),
-        make("Triad A", "success", (h + 120) % 360, s, l),
-        make("Warm", "warning", (h + 60) % 360, 70, 58),
-        make("Triad B", "accent", (h + 240) % 360, s, l),
+        make("Primary",      "neutral", h,  s,                    l),
+        make("Primary Tint", "primary", h,  Math.max(15, s - 18), Math.min(88, l + 20)),
+        make("Triad A",      "success", t1, s,                    l),
+        make("Triad A Tint", "warning", t1, Math.max(15, s - 18), Math.min(88, l + 20)),
+        make("Triad B",      "accent",  t2, s,                    l),
       ];
       break;
-    case "split-complementary":
+    }
+    case "split-complementary": {
+      // Base + two colors flanking its complement (h+150 and h+210)
+      const s1 = (h + 150) % 360;
+      const s2 = (h + 210) % 360;
       colors = [
-        make("Base Dark", "neutral", h, Math.min(s, 15), 8),
-        make("Primary", "primary", h, s, l),
-        make("Split A", "success", (h + 150) % 360, s, l),
-        make("Warm", "warning", (h + 60) % 360, 70, 58),
-        make("Split B", "accent", (h + 210) % 360, s, l),
+        make("Primary",       "neutral", h,  s,                    l),
+        make("Primary Tint",  "primary", h,  Math.max(15, s - 18), Math.min(88, l + 22)),
+        make("Split A",       "success", s1, s,                    l),
+        make("Split B",       "warning", s2, s,                    l),
+        make("Split B Tint",  "accent",  s2, Math.max(15, s - 18), Math.min(88, l + 22)),
       ];
       break;
-    case "tetradic":
+    }
+    case "tetradic": {
+      // Four hues exactly 90° apart — all four kept, drop the dark filler
       colors = [
-        make("Base Dark", "neutral", h, Math.min(s, 15), 8),
-        make("Primary", "primary", h, s, l),
-        make("Tetrad A", "success", (h + 90) % 360, s, l),
-        make("Tetrad B", "warning", (h + 180) % 360, s, l),
-        make("Tetrad C", "accent", (h + 270) % 360, s, l),
+        make("Primary",  "neutral", h,               s, l),
+        make("Tetrad A", "primary", (h + 90)  % 360, s, l),
+        make("Tetrad B", "success", (h + 180) % 360, s, l),
+        make("Tetrad C", "warning", (h + 270) % 360, s, l),
+        make("Tint",     "accent",  h,               Math.max(15, s - 20), Math.min(88, l + 24)),
       ];
       break;
-    case "monochromatic":
+    }
+    case "monochromatic": {
+      // Single hue, five lightness steps — saturation held constant
       colors = [
-        make("Darkest", "neutral", h, s, Math.max(8, l - 32)),
-        make("Primary", "primary", h, s, l),
-        make("Lighter", "success", h, Math.max(20, s - 15), Math.min(85, l + 15)),
-        make("Muted", "warning", h, Math.max(10, s - 35), Math.max(20, l - 12)),
-        make("Lightest", "accent", h, Math.max(15, s - 25), Math.min(92, l + 30)),
+        make("Darkest",  "neutral", h, s, Math.max(8,  l - 32)),
+        make("Dark",     "primary", h, s, Math.max(20, l - 16)),
+        make("Base",     "success", h, s, l),
+        make("Light",    "warning", h, s, Math.min(82, l + 16)),
+        make("Lightest", "accent",  h, s, Math.min(92, l + 32)),
       ];
       break;
+    }
   }
 
   return { label: labels[mode], colors };

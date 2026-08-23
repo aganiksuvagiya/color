@@ -36,6 +36,11 @@ function hslToHex(h: number, s: number, l: number) {
 
 function clamp(v: number, lo: number, hi: number) { return Math.max(lo, Math.min(hi, v)); }
 
+function isLight(hex: string) {
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return (r*299+g*587+b*114)/1000 > 160;
+}
+
 function getSimilarColors(hex: string) {
   const { h, s, l } = hexToHslValues(hex);
   return [
@@ -50,24 +55,21 @@ function getSimilarColors(hex: string) {
   });
 }
 
-type Breadcrumb = {
-  name: string;
-  href: string;
-};
+type Breadcrumb = { name: string; href: string };
 
 const relatedGroups = [
-  { label: "Related colors", match: "/colors/" },
-  { label: "Related color meanings", match: "/color-meanings/" },
-  { label: "Related color psychology", match: "/color-psychology/" },
-  { label: "Related palettes", match: "/palettes/" },
-  { label: "Related gradients", match: "/gradients/" },
-  { label: "Related accessibility guides", match: "/accessibility/" },
-  { label: "Related branding guides", match: "/brand-colors/" },
-  { label: "Tailwind guides", match: "/tailwind/" },
-  { label: "CSS guides", match: "/css-colors/" },
-  { label: "Developer guides", match: "/developer/" },
-  { label: "Color tools", match: "/tools/" },
-  { label: "Related articles", match: "/" },
+  { label: "Related colors",             match: "/colors/" },
+  { label: "Related color meanings",     match: "/color-meanings/" },
+  { label: "Related color psychology",   match: "/color-psychology/" },
+  { label: "Related palettes",           match: "/palettes/" },
+  { label: "Related gradients",          match: "/gradients/" },
+  { label: "Accessibility guides",       match: "/accessibility/" },
+  { label: "Branding guides",            match: "/brand-colors/" },
+  { label: "Tailwind guides",            match: "/tailwind/" },
+  { label: "CSS guides",                 match: "/css-colors/" },
+  { label: "Developer guides",           match: "/developer/" },
+  { label: "Color tools",                match: "/tools/" },
+  { label: "Related articles",           match: "/" },
 ] as const;
 
 export function ContentPageView({
@@ -79,8 +81,8 @@ export function ContentPageView({
   breadcrumbs: Breadcrumb[];
   answerLabel?: string;
 }) {
-  const hexFact = entry.quickFacts.find((f) => f.label === "Hex");
-  const originalHex = hexFact?.value ?? null;
+  const hexFact      = entry.quickFacts.find((f) => f.label === "Hex");
+  const originalHex  = hexFact?.value ?? null;
   const similarColors = originalHex
     ? [
         { hex: originalHex, slug: originalHex.slice(1).toLowerCase(), name: entry.quickFacts.find(f => f.label === "Closest named color")?.value ?? originalHex },
@@ -91,89 +93,80 @@ export function ContentPageView({
   const groupedLinks = relatedGroups
     .map((group) => ({
       label: group.label,
-      links:
-        group.match === "/"
-          ? entry.relatedLinks.filter((link) =>
-              ["/guides/", "/explainers/", "/comparisons/", "/faqs/", "/resources/", "/blog"].some((prefix) =>
-                link.href.startsWith(prefix),
-              ),
-            )
-          : entry.relatedLinks.filter((link) => link.href.startsWith(group.match)),
+      links: group.match === "/"
+        ? entry.relatedLinks.filter((link) =>
+            ["/guides/", "/explainers/", "/comparisons/", "/faqs/", "/resources/", "/blog"].some((p) => link.href.startsWith(p))
+          )
+        : entry.relatedLinks.filter((link) => link.href.startsWith(group.match)),
     }))
-    .filter((group) => group.links.length > 0);
+    .filter((g) => g.links.length > 0);
 
   return (
-    <main className="relative min-h-screen bg-[#160b05] text-white">
-      {/* Background gradients matching homepage */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(0,0,0,0.95),transparent_18%),radial-gradient(circle_at_88%_0%,rgba(255,106,44,0.18),transparent_30%),linear-gradient(135deg,#1a0e06_0%,#160b05_50%,#1a0e06_100%)]" />
-      <div className="noise absolute inset-0 opacity-20" />
-
+    <main className="min-h-screen bg-[#f0ede8] text-[#1c1712]">
       <Header />
 
-      {/* Hero section */}
-      <section className="relative border-b border-white/8">
+      {/* ── Hero ── */}
+      <section className="border-b border-black/[0.06] bg-white">
         <div className="mx-auto max-w-6xl px-6 py-10 pt-28 lg:px-8">
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm text-white/40">
-            {breadcrumbs.map((item, index) => (
+
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[12px] text-[#1c1712]/40">
+            {breadcrumbs.map((item, i) => (
               <span key={item.href} className="flex items-center gap-2">
-                <Link href={item.href} className="hover:text-white/70 transition-colors">
-                  {item.name}
-                </Link>
-                {index < breadcrumbs.length - 1 ? <span className="text-white/20">/</span> : null}
+                <Link href={item.href} className="transition hover:text-[#1c1712]/70">{item.name}</Link>
+                {i < breadcrumbs.length - 1 && <span className="text-[#1c1712]/20">/</span>}
               </span>
             ))}
           </nav>
+
+          {/* Color swatch */}
           {originalHex && (
             <div className="mt-6">
-              <div
-                className="h-36 w-full rounded-2xl sm:h-44"
-                style={{ backgroundColor: originalHex }}
-              />
+              <div className="h-36 w-full overflow-hidden rounded-2xl border border-black/[0.08] shadow-sm sm:h-44"
+                style={{ backgroundColor: originalHex }}/>
               <div className="mt-3 flex items-center gap-3">
-                <span className="font-mono text-base font-semibold uppercase text-white/70">
+                <span className="font-mono text-[14px] font-semibold uppercase text-[#1c1712]/55">
                   {originalHex.toUpperCase()}
                 </span>
-                <CopyHexButton hex={originalHex} />
+                <CopyHexButton hex={originalHex}/>
               </div>
             </div>
           )}
 
-          <h1 className="mt-5 text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">{entry.title}</h1>
-          <p className="mt-4 max-w-4xl text-lg leading-8 text-white/55">{entry.description}</p>
+          <h1 className="mt-5 text-4xl font-black tracking-[-0.04em] text-[#1c1712] sm:text-5xl">{entry.title}</h1>
+          <p className="mt-4 max-w-4xl text-[16px] leading-8 text-[#1c1712]/50">{entry.description}</p>
 
+          {/* Palette strip */}
           {entry.paletteColors && entry.paletteColors.length > 0 && (
             <div className="mt-8">
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/35">{originalHex ? "Palette colors" : "Color shades"}</p>
-              <PaletteColorStrip colors={entry.paletteColors} linkToColors={!originalHex} />
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/30">
+                {originalHex ? "Palette colors" : "Color shades"}
+              </p>
+              <PaletteColorStrip colors={entry.paletteColors} linkToColors={!originalHex}/>
             </div>
           )}
 
+          {/* Similar colors */}
           {similarColors.length > 0 && (
             <div className="mt-8">
-              <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/35">Similar colors</p>
-              <div className="flex w-full overflow-hidden rounded-2xl ring-1 ring-inset ring-white/10">
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/30">Similar colors</p>
+              <div className="flex w-full overflow-hidden rounded-2xl border border-black/[0.08] shadow-sm">
                 {similarColors.map((c, i) => {
-                  const light = (() => {
-                    const r = parseInt(c.hex.slice(1,3),16), g = parseInt(c.hex.slice(3,5),16), b = parseInt(c.hex.slice(5,7),16);
-                    return (r*299+g*587+b*114)/1000 > 160;
-                  })();
+                  const light = isLight(c.hex);
                   return (
-                    <Link
-                      key={c.hex}
-                      href={`/colors/${c.slug}`}
-                      className="group relative flex-1 min-w-0"
-                      style={{ backgroundColor: c.hex }}
-                    >
-                      <div className="flex h-20 flex-col items-center justify-center gap-0.5 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <p className={`font-mono text-[11px] font-semibold uppercase truncate w-full text-center ${light ? "text-black/60" : "text-white/80"}`}>
+                    <Link key={c.hex} href={`/colors/${c.slug}`}
+                      className="group relative min-w-0 flex-1"
+                      style={{ backgroundColor: c.hex }}>
+                      <div className="flex h-20 flex-col items-center justify-center gap-0.5 px-2 opacity-0 transition-opacity group-hover:opacity-100">
+                        <p className={`w-full truncate text-center font-mono text-[11px] font-semibold uppercase ${light ? "text-black/60" : "text-white/80"}`}>
                           {c.hex.toUpperCase()}
                         </p>
-                        <p className={`text-[10px] truncate w-full text-center ${light ? "text-black/45" : "text-white/55"}`}>
+                        <p className={`w-full truncate text-center text-[10px] ${light ? "text-black/45" : "text-white/55"}`}>
                           {c.name}
                         </p>
                       </div>
                       {i < similarColors.length - 1 && (
-                        <span className="absolute right-0 top-1/4 h-1/2 w-px bg-black/10" />
+                        <span className="absolute right-0 top-1/4 h-1/2 w-px bg-black/10"/>
                       )}
                     </Link>
                   );
@@ -182,232 +175,224 @@ export function ContentPageView({
             </div>
           )}
 
-          <div className="mt-8 rounded-2xl border border-[#F15B2A]/25 bg-[#F15B2A]/8 p-6 backdrop-blur-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#F97A45]">{answerLabel}</p>
-            <p className="mt-3 text-lg leading-8 text-white/90">{entry.answer}</p>
+          {/* Answer box */}
+          <div className="mt-8 rounded-2xl border border-[#e8531f]/20 bg-[#e8531f]/[0.05] p-6">
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#e8531f]">{answerLabel}</p>
+            <p className="mt-3 text-[15px] leading-8 text-[#1c1712]/75">{entry.answer}</p>
           </div>
         </div>
       </section>
 
-      <section className="relative mx-auto grid grid-cols-1 max-w-6xl gap-10 px-6 py-12 lg:grid-cols-[1fr_300px] lg:px-8">
-        <article className="space-y-6">
-          {/* Key takeaways + Quick facts */}
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            <div className="rounded-2xl border border-white/10 bg-white/4 p-5 backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">Key takeaways</p>
-              <ul className="mt-3 space-y-3 text-sm leading-7 text-white/70">
-                {entry.keyTakeaways.map((takeaway) => (
-                  <li key={takeaway} className="flex gap-2">
-                    <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-[#F15B2A]" />
-                    {takeaway}
+      {/* ── Body ── */}
+      <section className="mx-auto max-w-5xl px-6 py-10 lg:px-8">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+
+          {/* ── Main article ── */}
+          <article className="min-w-0 flex-1 space-y-5">
+
+            {/* Key takeaways */}
+            <div className="rounded-2xl bg-white p-7">
+              <h2 className="mb-4 text-[18px] font-bold text-[#1c1712]">Key Takeaways</h2>
+              <ul className="space-y-3">
+                {entry.keyTakeaways.map((t) => (
+                  <li key={t} className="flex items-start gap-3 text-[15px] leading-[1.7] text-[#1c1712]/65">
+                    <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#1c1712]/30"/>
+                    {t}
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/4 p-5 backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">Quick facts</p>
-              <div className="mt-3 space-y-3">
+              <div className="mt-5 space-y-2 border-t border-black/[0.07] pt-5">
                 {entry.quickFacts.map((fact) => (
-                  <div key={fact.label} className="rounded-xl border border-white/8 bg-white/4 px-4 py-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/35">{fact.label}</p>
-                    <p className="mt-1.5 text-sm leading-6 text-white/80">{fact.value}</p>
-                  </div>
+                  <p key={fact.label} className="text-[14px] leading-[1.65] text-[#1c1712]/65">
+                    <strong className="font-semibold text-[#1c1712]">{fact.label}:</strong>{" "}{fact.value}
+                  </p>
                 ))}
               </div>
             </div>
-          </div>
 
-          {/* Expert summary */}
-          <section className="rounded-2xl border border-[#F15B2A]/20 bg-gradient-to-br from-[#F15B2A]/10 to-[#F15B2A]/4 p-7 backdrop-blur-sm">
-            <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">{entry.expertSummary.title}</h2>
-            <p className="mt-4 text-base leading-8 text-white/70">{entry.expertSummary.body}</p>
-          </section>
+            {/* Expert summary */}
+            <div className="rounded-2xl bg-white p-7">
+              <h2 className="mb-3 text-[18px] font-bold text-[#1c1712]">{entry.expertSummary.title}</h2>
+              <p className="text-[15px] leading-[1.8] text-[#1c1712]/65">{entry.expertSummary.body}</p>
+            </div>
 
-          {/* Definitions + Pros/Cons */}
-          <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1.02fr_0.98fr]">
-            <section className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">Definitions</p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-white">Core ideas in plain English</h2>
-              <div className="mt-6 space-y-4">
+            {/* Definitions */}
+            <div className="rounded-2xl bg-white p-7">
+              <h2 className="mb-5 text-[18px] font-bold text-[#1c1712]">Core Definitions</h2>
+              <div className="space-y-5">
                 {entry.definitions.map((item) => (
-                  <div key={item.term} className="rounded-xl border border-white/8 bg-white/4 p-5">
-                    <h3 className="text-lg font-semibold text-white">{item.term}</h3>
-                    <p className="mt-2 text-sm leading-7 text-white/60">{item.definition}</p>
+                  <div key={item.term}>
+                    <h3 className="mb-1.5 text-[15px] font-semibold text-[#1c1712]">{item.term}</h3>
+                    <p className="text-[14px] leading-[1.75] text-[#1c1712]/60">{item.definition}</p>
                   </div>
                 ))}
               </div>
-            </section>
+            </div>
 
-            <section className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">Tradeoffs</p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-white">Pros and cons</h2>
-              <div className="mt-6 space-y-4">
-                <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/8 p-5">
-                  <div className="flex items-center gap-3">
-                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/20 text-sm font-bold text-emerald-400">+</span>
-                    <h3 className="font-semibold text-emerald-300">Pros</h3>
-                  </div>
-                  <ul className="mt-4 space-y-2 text-sm leading-7 text-white/70">
+            {/* Pros / Cons */}
+            <div className="rounded-2xl bg-white p-7">
+              <h2 className="mb-5 text-[18px] font-bold text-[#1c1712]">Pros &amp; Cons</h2>
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div>
+                  <p className="mb-3 text-[13px] font-semibold text-[#1c1712]">Pros</p>
+                  <ul className="space-y-2.5">
                     {entry.prosCons.pros.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-emerald-400" />
+                      <li key={item} className="flex items-start gap-3 text-[14px] leading-[1.7] text-[#1c1712]/60">
+                        <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#1c1712]/30"/>
                         {item}
                       </li>
                     ))}
                   </ul>
+                  <p className="mt-4 text-[13px] leading-[1.6] text-[#1c1712]/40">
+                    <strong className="font-semibold text-[#1c1712]/60">Note:</strong> Consider your use case before applying.
+                  </p>
                 </div>
-                <div className="rounded-xl border border-amber-500/20 bg-amber-500/8 p-5">
-                  <div className="flex items-center gap-3">
-                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-500/20 text-sm font-bold text-amber-400">−</span>
-                    <h3 className="font-semibold text-amber-300">Cons</h3>
-                  </div>
-                  <ul className="mt-4 space-y-2 text-sm leading-7 text-white/70">
+                <div>
+                  <p className="mb-3 text-[13px] font-semibold text-[#1c1712]">Cons</p>
+                  <ul className="space-y-2.5">
                     {entry.prosCons.cons.map((item) => (
-                      <li key={item} className="flex gap-2">
-                        <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-amber-400" />
+                      <li key={item} className="flex items-start gap-3 text-[14px] leading-[1.7] text-[#1c1712]/60">
+                        <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#1c1712]/30"/>
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
               </div>
-            </section>
-          </div>
+            </div>
 
-          {/* AI sections */}
-          {entry.aiSections.length > 0 && (
-            <section className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
-              <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">More detail</h2>
-              <div className="mt-6 grid gap-4">
-                {entry.aiSections.map((section) => (
-                  <div key={section.title} className="rounded-xl border border-white/8 bg-white/4 p-5">
-                    <h3 className="font-semibold text-white">{section.title}</h3>
-                    <p className="mt-2 text-sm leading-7 text-white/60">{section.body}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Content sections */}
-          <div className="space-y-5">
-            {entry.sections.map((section) => (
-              <section key={section.title} className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
-                <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">{section.title}</h2>
-                <p className="mt-4 text-base leading-8 text-white/65">{section.body}</p>
-              </section>
-            ))}
-          </div>
-
-          {/* Comparison table */}
-          {entry.comparisonRows ? (
-            <section className="overflow-hidden rounded-2xl border border-white/10 backdrop-blur-sm">
-              <div className="border-b border-white/8 bg-white/4 px-7 py-5">
-                <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">Comparison table</h2>
-              </div>
-              <div className="overflow-x-auto bg-white/3">
-                <table className="min-w-full text-left text-sm">
-                  <thead className="border-b border-white/8 text-white/40">
-                    <tr>
-                      <th className="px-6 py-4 font-semibold">Option</th>
-                      <th className="px-6 py-4 font-semibold">Best for</th>
-                      <th className="px-6 py-4 font-semibold">Strengths</th>
-                      <th className="px-6 py-4 font-semibold">Watchouts</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {entry.comparisonRows.map((row) => (
-                      <tr key={row.label} className="border-t border-white/6">
-                        <td className="px-6 py-4 font-medium text-white">{row.label}</td>
-                        <td className="px-6 py-4 text-white/60">{row.bestFor}</td>
-                        <td className="px-6 py-4 text-white/60">{row.strengths}</td>
-                        <td className="px-6 py-4 text-white/60">{row.watchouts}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          ) : null}
-
-          {/* Examples */}
-          {entry.examples ? (
-            <section className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
-              <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">Examples</h2>
-              <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-                {entry.examples.map((example) => (
-                  <div key={example.title} className="rounded-xl border border-white/8 bg-white/4 p-5">
-                    <h3 className="font-semibold text-white">{example.title}</h3>
-                    <p className="mt-2 text-sm leading-7 text-white/60">{example.body}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ) : null}
-
-          {/* Citation blocks */}
-          {entry.citationBlocks.length > 0 && (
-            <section className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
-              <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">Key quotes</h2>
-              <div className="mt-6 space-y-4">
-                {entry.citationBlocks.map((block) => (
-                  <blockquote key={block} className="rounded-xl border-l-2 border-[#F15B2A] bg-white/4 px-5 py-4 text-sm leading-7 text-white/70">
-                    {block}
-                  </blockquote>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* FAQ */}
-          <section className="rounded-2xl border border-white/10 bg-white/4 p-7 backdrop-blur-sm">
-            <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">FAQ</h2>
-            <div className="mt-6 space-y-4">
-              {entry.faq.map((item) => (
-                <div key={item.question} className="rounded-xl border border-white/8 bg-white/4 p-5">
-                  <h3 className="font-semibold text-white">{item.question}</h3>
-                  <p className="mt-2 text-sm leading-7 text-white/60">{item.answer}</p>
+            {/* AI sections */}
+            {entry.aiSections.length > 0 && (
+              <div className="rounded-2xl bg-white p-7">
+                <div className="space-y-6">
+                  {entry.aiSections.map((section) => (
+                    <div key={section.title}>
+                      <h3 className="mb-2 text-[16px] font-semibold text-[#1c1712]">{section.title}</h3>
+                      <p className="text-[14px] leading-[1.8] text-[#1c1712]/60">{section.body}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </section>
-        </article>
+              </div>
+            )}
 
-        {/* Sidebar */}
-        <aside className="space-y-5 lg:sticky lg:top-6 lg:self-start">
-          {entry.entityRelations.length > 0 && (
-            <div className="rounded-2xl border border-white/10 bg-white/4 p-6 backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">Related concepts</p>
-              <div className="mt-4 space-y-3">
-                {entry.entityRelations.map((relation) => (
-                  <div key={`${relation.entity}-${relation.connectedTo}`} className="rounded-xl border border-white/8 bg-white/4 px-4 py-3 text-sm text-white/70">
-                    <span className="font-semibold text-white">{relation.entity}</span>{" "}
-                    <span className="text-white/40">{relation.relationship}</span>{" "}
-                    <span className="font-semibold text-white">{relation.connectedTo}</span>
+            {/* Content sections */}
+            {entry.sections.map((section, si) => (
+              <div key={section.title} className="rounded-2xl bg-white p-7">
+                <h2 className="mb-4 text-[18px] font-bold text-[#1c1712]">
+                  {si + 1}. {section.title}
+                </h2>
+                <p className="text-[15px] leading-[1.8] text-[#1c1712]/65">{section.body}</p>
+              </div>
+            ))}
+
+            {/* Comparison table */}
+            {entry.comparisonRows && (
+              <div className="rounded-2xl bg-white p-7">
+                <h2 className="mb-5 text-[18px] font-bold text-[#1c1712]">Comparison</h2>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-left">
+                    <thead>
+                      <tr className="border-b border-black/[0.08]">
+                        {["Option","Best for","Strengths","Watchouts"].map(h => (
+                          <th key={h} className="pb-3 pr-6 text-[11px] font-semibold text-[#1c1712]/40">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-black/[0.06]">
+                      {entry.comparisonRows.map((row) => (
+                        <tr key={row.label}>
+                          <td className="py-3 pr-6 text-[13px] font-semibold text-[#1c1712]">{row.label}</td>
+                          <td className="py-3 pr-6 text-[13px] text-[#1c1712]/55">{row.bestFor}</td>
+                          <td className="py-3 pr-6 text-[13px] text-[#1c1712]/55">{row.strengths}</td>
+                          <td className="py-3 text-[13px] text-[#1c1712]/55">{row.watchouts}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* Examples */}
+            {entry.examples && (
+              <div className="rounded-2xl bg-white p-7">
+                <h2 className="mb-5 text-[18px] font-bold text-[#1c1712]">Examples</h2>
+                <div className="space-y-5">
+                  {entry.examples.map((example) => (
+                    <div key={example.title}>
+                      <h3 className="mb-1.5 text-[15px] font-semibold text-[#1c1712]">{example.title}</h3>
+                      <p className="text-[14px] leading-[1.75] text-[#1c1712]/60">{example.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Citations */}
+            {entry.citationBlocks.length > 0 && (
+              <div className="rounded-2xl bg-white p-7">
+                <h2 className="mb-5 text-[18px] font-bold text-[#1c1712]">Key Quotes</h2>
+                <div className="space-y-4">
+                  {entry.citationBlocks.map((block) => (
+                    <blockquote key={block}
+                      className="border-l-[3px] border-[#1c1712]/20 pl-5 text-[14px] italic leading-[1.8] text-[#1c1712]/55">
+                      {block}
+                    </blockquote>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* FAQ */}
+            <div className="rounded-2xl bg-white p-7">
+              <h2 className="mb-6 text-[18px] font-bold text-[#1c1712]">Frequently Asked Questions</h2>
+              <div className="space-y-6">
+                {entry.faq.map((item) => (
+                  <div key={item.question}>
+                    <h3 className="mb-2 text-[15px] font-semibold text-[#1c1712]">{item.question}</h3>
+                    <p className="text-[14px] leading-[1.8] text-[#1c1712]/60">{item.answer}</p>
                   </div>
                 ))}
               </div>
             </div>
-          )}
+          </article>
 
-          <div className="rounded-2xl border border-white/10 bg-white/4 p-6 backdrop-blur-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/40">See also</p>
-            <div className="mt-4 space-y-5">
-              {groupedLinks.map((group) => (
-                <div key={group.label}>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/30">{group.label}</p>
-                  <div className="mt-3 space-y-2">
-                    {group.links.map((link) => (
-                      <Link key={link.href} href={link.href} className="block rounded-xl border border-white/8 bg-white/3 px-4 py-3 text-sm text-white/65 transition-colors hover:border-white/15 hover:bg-white/6 hover:text-white">
+          {/* ── Sidebar ── */}
+          <aside className="w-full shrink-0 space-y-5 lg:sticky lg:top-6 lg:w-[240px] lg:self-start">
+
+            {entry.entityRelations.length > 0 && (
+              <div className="rounded-2xl bg-white p-5">
+                <p className="mb-4 text-[12px] font-semibold text-[#1c1712]">Related Concepts</p>
+                <div className="space-y-3">
+                  {entry.entityRelations.map((rel) => (
+                    <p key={`${rel.entity}-${rel.connectedTo}`} className="text-[13px] leading-[1.6] text-[#1c1712]/60">
+                      <strong className="font-semibold text-[#1c1712]">{rel.entity}</strong>{" "}
+                      {rel.relationship}{" "}
+                      <strong className="font-semibold text-[#1c1712]">{rel.connectedTo}</strong>
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {groupedLinks.map((group) => (
+              <div key={group.label} className="rounded-2xl bg-white p-5">
+                <p className="mb-3 text-[12px] font-semibold text-[#1c1712]">{group.label}</p>
+                <ul className="space-y-1">
+                  {group.links.map((link) => (
+                    <li key={link.href}>
+                      <Link href={link.href}
+                        className="flex items-start gap-2.5 py-1 text-[13px] text-[#1c1712]/55 transition hover:text-[#1c1712]">
+                        <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#1c1712]/25"/>
                         {link.title}
                       </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </aside>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </aside>
+        </div>
       </section>
     </main>
   );

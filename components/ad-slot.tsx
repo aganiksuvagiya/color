@@ -23,11 +23,29 @@ export function EffectiveCpmAd() {
         #container-6d475ff6d3bd6e40dfd40a5f2f616def {
           position: static !important;
           inset: auto !important;
+          width: 100% !important;
         }
-        #container-6d475ff6d3bd6e40dfd40a5f2f616def > * {
+        #container-6d475ff6d3bd6e40dfd40a5f2f616def > *,
+        .container-6d475ff6d3bd6e40dfd40a5f2f616def__bn-container {
           position: static !important;
           inset: auto !important;
-          max-width: 100% !important;
+          width: 100% !important;
+          padding: 2px !important;
+          margin: 0 !important;
+        }
+        #container-6d475ff6d3bd6e40dfd40a5f2f616def img {
+          width: 100% !important;
+          height: auto !important;
+          display: block !important;
+          border-radius: 0 !important;
+        }
+        #container-6d475ff6d3bd6e40dfd40a5f2f616def a,
+        #container-6d475ff6d3bd6e40dfd40a5f2f616def div {
+          border-radius: 0 !important;
+        }
+        #container-6d475ff6d3bd6e40dfd40a5f2f616def a {
+          display: block !important;
+          width: 100% !important;
         }
         #container-6d475ff6d3bd6e40dfd40a5f2f616def p,
         #container-6d475ff6d3bd6e40dfd40a5f2f616def span,
@@ -41,7 +59,7 @@ export function EffectiveCpmAd() {
           display: none !important;
         }
       `}</style>
-      <div id="container-6d475ff6d3bd6e40dfd40a5f2f616def" ref={ref} className="relative" />
+      <div id="container-6d475ff6d3bd6e40dfd40a5f2f616def" ref={ref} className="w-full" />
     </>
   );
 }
