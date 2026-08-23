@@ -88,7 +88,7 @@ export function SvgImageRecolor() {
   }, [loadSvgText]);
 
   useEffect(() => {
-    loadDemo();
+    void loadDemo();
   }, [loadDemo]);
 
   function setReplacement(originalHex: string, newHex: string) {

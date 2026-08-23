@@ -50,10 +50,12 @@ export function ProfilePage() {
   const { getGradients, deleteGradient } = useGradientStorage();
 
   useEffect(() => {
-    getPalettes().then(setPalettes);
-    getGradients().then(setGradients);
-    setCollections(getCollections());
-    setMounted(true);
+    Promise.all([getPalettes(), getGradients()]).then(([p, g]) => {
+      setPalettes(p);
+      setGradients(g);
+      setCollections(getCollections());
+      setMounted(true);
+    });
   }, [getPalettes, getGradients]);
 
   useEffect(() => {
