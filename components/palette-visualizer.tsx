@@ -204,7 +204,7 @@ function MarketingPreview({ neutral, primary, success, warning, accent, primaryT
       {/* ── Testimonial ── */}
       <div className="border-b px-6 py-5" style={{ borderColor: border }}>
         <div className="flex items-start gap-2">
-          <span className="text-[2rem] leading-none font-serif" style={{ color: primary }}>"</span>
+          <span className="text-[2rem] leading-none font-serif" style={{ color: primary }}>&ldquo;</span>
           <div>
             <p className="text-[11px] leading-relaxed" style={{ color: muted }}>
               HueFlow is the only tool that makes color work feel effortless. The contrast checker alone has saved us hours of back-and-forth with developers.

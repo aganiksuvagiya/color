@@ -79,7 +79,7 @@ export function ContrastFixer() {
             Smart Contrast Fixer
           </h1>
           <p className="max-w-md text-sm leading-6 text-[#1c1712]/45 sm:text-[15px]">
-            Auto-fix accessibility contrast issues while preserving your design's color intent.
+            Auto-fix accessibility contrast issues while preserving your design&apos;s color intent.
           </p>
         </div>
 

@@ -306,6 +306,7 @@ export function GradientGenerator() {
     } catch {/* ignore */} finally { setLoadingGradients(false); }
   }, []);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(()=>{ fetchGradients(1,false); },[fetchGradients]);
 
   const loadMoreGradients = useCallback(()=>{

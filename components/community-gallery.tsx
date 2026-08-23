@@ -114,7 +114,9 @@ export function CommunityGallery() {
   }, [sort]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPage(1);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPalettes([]);
     load(1, false);
   }, [load]);
