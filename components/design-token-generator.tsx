@@ -103,7 +103,7 @@ function generateOutput(
   const shadeLinesForColor = (c: ColorEntry, prefix: (name: string, step: string) => string) => {
     if (!generateShades || !isValidHex(c.hex)) return [];
     const scale = generateTailwindScale(c.hex);
-    return scale.map(({ step, hex }) => prefix(slugify(c.name), step) + hex);
+    return scale.map(({ step, hex }) => prefix(slugify(c.name), String(step)) + hex);
   };
 
   switch (format) {

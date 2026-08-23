@@ -115,14 +115,10 @@ export function ExploreColors() {
   useEffect(() => {
     categoryRef.current = activeCategory;
     if (activeCategory !== "Trending") {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPalettes(makeBatch(activeCategory, BATCH_SIZE));
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSearch("");
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHueFilter(null);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setInitialLoading(false);
   }, [activeCategory]);
 
