@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { EffectiveCpmAd } from "./ad-slot";
+import { FooterAdRow } from "./ad-slot";
 
 const FOOTER_LINKS = [
   {
@@ -56,9 +56,6 @@ export function Footer() {
             <p className="mt-4 text-sm leading-relaxed text-[#1c1712]/55">
               Find colors that feel right.
             </p>
-            <div className="mt-6 overflow-hidden rounded-xl border border-black/8 bg-[#f0ede8] px-2 py-2">
-              <EffectiveCpmAd />
-            </div>
           </div>
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
             {FOOTER_LINKS.map((group) => (
@@ -82,7 +79,10 @@ export function Footer() {
             ))}
           </div>
         </div>
-        <div className="mt-12 flex flex-col gap-3 border-t border-black/8 pt-6 text-sm text-[#1c1712]/40 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12">
+          <FooterAdRow />
+        </div>
+        <div className="mt-6 flex flex-col gap-3 border-t border-black/8 pt-6 text-sm text-[#1c1712]/40 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} HueFlow. All rights reserved.</p>
           <div className="flex gap-5">
             <Link href="/privacy" className="transition-colors hover:text-[#1c1712]">
