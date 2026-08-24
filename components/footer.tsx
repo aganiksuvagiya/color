@@ -79,9 +79,6 @@ export function Footer() {
             ))}
           </div>
         </div>
-        <div className="mt-12 hidden md:block">
-          <FooterAdRow />
-        </div>
         <div className="mt-6 flex flex-col gap-3 border-t border-black/8 pt-6 text-sm text-[#1c1712]/40 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} HueFlow. All rights reserved.</p>
           <div className="flex gap-5">
