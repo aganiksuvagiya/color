@@ -279,7 +279,7 @@ export function HueFlowHomePage() {
       <StructuredData data={buildFaqSchema(FAQS)} />
       <Header isHome />
 
-      <div className="relative mx-auto max-w-[1400px] px-6 pb-20 lg:px-8">
+      <div className="relative mx-auto max-w-[1400px] px-4 pb-20 sm:px-6 lg:px-8">
         {/* Hero + Challenge */}
         <div className="flex flex-col gap-20 pt-[9rem] pb-0">
 
@@ -436,7 +436,7 @@ export function HueFlowHomePage() {
             whileInView="show"
             viewport={{ once: true, amount: 0.08 }}
             variants={stagger}
-            className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-3"
+            className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3"
           >
             {/* Generator — hero card, spans 2 cols */}
             <motion.div variants={fadeUp} className="col-span-2">
@@ -472,14 +472,14 @@ export function HueFlowHomePage() {
                 href="/tools/picker"
                 className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
               >
-                <div className="relative flex flex-1 items-center justify-center overflow-hidden px-6 py-8" style={{ backgroundColor: toolColor }}>
+                <div className="relative flex flex-1 items-center justify-center overflow-hidden px-3 py-6 sm:px-6 sm:py-8" style={{ backgroundColor: toolColor }}>
                   <div className="flex flex-col items-center gap-2">
                     <motion.p
                       key={toolColor}
                       initial={{ opacity: 0, y: 6 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.25 }}
-                      className="font-mono text-2xl font-bold tracking-tight"
+                      className="font-mono text-lg font-bold tracking-tight sm:text-2xl"
                       style={{ color: getContrastText(toolColor) === "light" ? "rgba(255,255,255,0.95)" : "rgba(0,0,0,0.8)" }}
                     >
                       {toolColor.toUpperCase()}
@@ -512,7 +512,7 @@ export function HueFlowHomePage() {
                 href="/color-converter"
                 className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
               >
-                <div className="flex flex-1 flex-col justify-center gap-2 bg-[#f5f1ea] px-5 py-6">
+                <div className="flex flex-1 flex-col justify-center gap-2 bg-[#f5f1ea] px-3 py-5 sm:px-5 sm:py-6">
                   {[
                     { label: "HEX", value: toolColor.toUpperCase() },
                     { label: "RGB", value: hexToRgbString(toolColor) },
@@ -523,10 +523,10 @@ export function HueFlowHomePage() {
                       initial={{ opacity: 0.6 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.2 }}
-                      className="flex items-center gap-3 rounded-xl border border-black/8 bg-white px-4 py-2.5"
+                      className="flex items-center gap-2 rounded-xl border border-black/8 bg-white px-3 py-2.5"
                     >
-                      <span className="w-8 shrink-0 text-[10px] font-bold uppercase tracking-widest text-[#1c1712]/35">{row.label}</span>
-                      <span className="font-mono text-xs text-[#1c1712]/75">{row.value}</span>
+                      <span className="w-7 shrink-0 text-[9px] font-bold uppercase tracking-widest text-[#1c1712]/35">{row.label}</span>
+                      <span className="min-w-0 truncate font-mono text-[10px] text-[#1c1712]/75 sm:text-xs">{row.value}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -739,29 +739,30 @@ export function HueFlowHomePage() {
                         />
                       ))}
                     </div>
-                    <div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-4 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
                       <div>
                         <p className="text-base font-semibold text-[#1c1712]">
                           {mood.label}
                         </p>
                         <p className="mt-1 text-sm text-[#1c1712]/50">{mood.description}</p>
                       </div>
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-between gap-3 sm:justify-start sm:gap-4">
                         <div className="flex gap-1.5">
                           {mood.colors.map((hex) => (
                             <span
                               key={hex}
-                              className="h-7 w-7 rounded-full border-2 border-white shadow-[0_0_0_1px_rgba(28,23,18,0.10)]"
+                              className="h-6 w-6 rounded-full border-2 border-white shadow-[0_0_0_1px_rgba(28,23,18,0.10)] sm:h-7 sm:w-7"
                               style={{ backgroundColor: hex }}
                             />
                           ))}
                         </div>
                         <Link
                           href={mood.href}
-                          className="inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_6px_18px_rgba(232,83,31,0.22)] transition-transform hover:scale-[1.02]"
+                          className="inline-flex shrink-0 items-center rounded-full px-4 py-2 text-xs font-semibold text-white shadow-[0_6px_18px_rgba(232,83,31,0.22)] transition-transform hover:scale-[1.02] sm:px-5 sm:py-2.5 sm:text-sm"
                           style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
                         >
-                          Open in generator →
+                          <span className="sm:hidden">Open →</span>
+                          <span className="hidden sm:inline">Open in generator →</span>
                         </Link>
                       </div>
                     </div>

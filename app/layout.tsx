@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     shortcut: ["/favicon.svg"],
   },
   description:
-    "Build premium brand palettes, semantic color systems, accessible scales, color guides, and programmatic content with HueFlow.",
+    "Free color tools for designers & developers — palette generator, contrast checker, gradient builder, color meanings, and brand color guides. No signup needed.",
   keywords: [
     "HueFlow",
     "HueFlow color tool",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "HueFlow | Colors, Palettes, Gradients, and Brand Color Strategy",
     description:
-      "Find colors, palettes, gradients, brand-color answers, accessibility guidance, and implementation-ready Tailwind or CSS systems.",
+      "Free color tools for designers & developers — palette generator, contrast checker, gradient builder, color meanings, and brand color guides. No signup needed.",
     type: "website",
     siteName: siteConfig.name,
     url: siteConfig.domain,
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "HueFlow | Colors, Palettes, Gradients, and Brand Color Strategy",
     description:
-      "Find colors, palettes, gradients, brand-color answers, accessibility guidance, and implementation-ready Tailwind or CSS systems.",
+      "Free color tools for designers & developers — palette generator, contrast checker, gradient builder, color meanings, and brand color guides. No signup needed.",
   },
 };
 

@@ -78,6 +78,24 @@ export function EffectiveCpmAd() {
   );
 }
 
+export function FooterInlineAd() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || el.childElementCount > 0) return;
+    const cfg = document.createElement("script");
+    cfg.text = `atOptions = { 'key': '7032323ef83f13c8d75b1c1095b73ebc', 'format': 'iframe', 'height': 250, 'width': 300, 'params': {} };`;
+    el.appendChild(cfg);
+    const invoke = document.createElement("script");
+    invoke.async = true;
+    invoke.src = "https://www.highrevenueformat.com/7032323ef83f13c8d75b1c1095b73ebc/invoke.js";
+    el.appendChild(invoke);
+  }, []);
+
+  return <div ref={ref} style={{ width: 300, minHeight: 250 }} />;
+}
+
 export function FooterAdRow() {
   return (
     <div className="grid grid-cols-4 gap-2 overflow-hidden rounded-xl border border-black/8 bg-[#f0ede8] p-1">

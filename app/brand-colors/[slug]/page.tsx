@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { buildCollectionMetadata, renderCollectionPage, staticParamsFor } from "@/lib/seo/page-utils";
 
 export const revalidate = false;
-export const dynamicParams = true;
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return staticParamsFor("brandColors");

@@ -242,18 +242,21 @@ export function buildProgrammaticColorEntry(slug: string): ContentEntry | null {
 
   return {
     slug,
-    title: `${colorLabel} Color ${displayHex} - Hex, RGB, HSL, Shades & Palettes`,
-    description: `${descriptor.displayName} (${displayHex}) - hex, RGB (${rgbStr}), HSL (${hslStr}). Explore shades, tints, complementary colors, accessibility contrast, and palette ideas for ${descriptor.displayName.toLowerCase()}.`,
-    answer: `${titlePrefix} works best when a team needs ${descriptor.psychology} and wants a shade that connects naturally to ${descriptor.branding}. It is most effective when paired with accessible contrast, a clear palette role, and related gradients, branding guides, and UI implementation patterns.`,
+    title: `${colorLabel} Color – Hex ${displayHex}, RGB, HSL, Shades & Palettes | HueFlow`,
+    description: `${descriptor.displayName} is a ${descriptor.hueLabel.toLowerCase()}-family color (${displayHex}). Get the hex code, RGB (${rgbStr}), HSL (${hslStr}), shades, tints, complementary palettes, and design ideas for ${descriptor.displayName.toLowerCase()}.`,
+    answer: `${descriptor.displayName} is a ${descriptor.hueLabel.toLowerCase()}-family color that communicates ${descriptor.psychology}. It is widely used in ${descriptor.branding}. Hex: ${displayHex}, RGB: ${rgbStr}, HSL: ${hslStr}.`,
     intent: "informational",
     keywords: [
       `${descriptor.displayName.toLowerCase()} color`,
+      `what is ${descriptor.displayName.toLowerCase()} color`,
       `${descriptor.displayName.toLowerCase()} hex code`,
       `${descriptor.hex.toLowerCase()} color`,
       `${descriptor.displayName.toLowerCase()} rgb`,
       `${descriptor.displayName.toLowerCase()} hsl`,
       `${descriptor.hueLabel.toLowerCase()} color palette`,
       `${descriptor.displayName.toLowerCase()} shades`,
+      `${descriptor.displayName.toLowerCase()} color meaning`,
+      `${descriptor.displayName.toLowerCase()} color palette`,
     ],
     sections: [
       {
@@ -423,7 +426,7 @@ export function buildProgrammaticBrandColorEntry(slug: string): ContentEntry | n
 }
 
 export function getProgrammaticColorStaticParams() {
-  const nameParams = getPopularNamedColorSlugs(72).map((slug) => ({ slug }));
+  const nameParams = getPopularNamedColorSlugs(120).map((slug) => ({ slug }));
   const hexParams = getPopularHexSamples(24).map((slug) => ({ slug }));
   return [...nameParams, ...hexParams];
 }

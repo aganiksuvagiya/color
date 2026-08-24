@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FooterAdRow } from "./ad-slot";
+import { FooterAdRow, FooterInlineAd } from "./ad-slot";
 
 const FOOTER_LINKS = [
   {
@@ -56,6 +56,9 @@ export function Footer() {
             <p className="mt-4 text-sm leading-relaxed text-[#1c1712]/55">
               Find colors that feel right.
             </p>
+            <div className="mt-4 hidden sm:block">
+              <FooterInlineAd />
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
             {FOOTER_LINKS.map((group) => (

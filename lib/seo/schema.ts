@@ -177,6 +177,46 @@ export function buildFaqSchema(items: FaqItem[]) {
   };
 }
 
+export function buildCollectionPageSchema({
+  title,
+  description,
+  url,
+  items,
+}: {
+  title: string;
+  description: string;
+  url: string;
+  items: Array<{ title: string; href: string }>;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: title,
+    description,
+    url,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: items.slice(0, 20).map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.title,
+        url: `${siteConfig.domain}${item.href}`,
+      })),
+    },
+  };
+}
+
+export function buildSpeakableSchema(cssSelectors: string[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: cssSelectors,
+    },
+  };
+}
+
 export function buildBreadcrumbSchema(crumbs: Crumb[]) {
   return {
     "@context": "https://schema.org",

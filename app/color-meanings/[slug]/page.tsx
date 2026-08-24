@@ -4,7 +4,7 @@ import { buildCollectionMetadata, renderCollectionPage } from "@/lib/seo/page-ut
 import { getProgrammaticColorStaticParams } from "@/lib/seo/programmatic";
 
 export const revalidate = false;
-export const dynamicParams = true;
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return getProgrammaticColorStaticParams();

@@ -9,6 +9,7 @@ import { buildProgrammaticBrandColorEntry, buildProgrammaticColorEntry, getProgr
 import {
   buildArticleSchema,
   buildBreadcrumbSchema,
+  buildCollectionPageSchema,
   buildFaqSchema,
   buildHowToSchema,
   buildWebPageSchema,
@@ -72,6 +73,14 @@ export function renderHub(path: string) {
   return (
     <>
       <StructuredData data={buildWebPageSchema({ title: hub.title, description: hub.description, url })} />
+      <StructuredData
+        data={buildCollectionPageSchema({
+          title: hub.title,
+          description: hub.description,
+          url,
+          items: hub.featuredLinks.map((l) => ({ title: l.title, href: l.href })),
+        })}
+      />
       <StructuredData
         data={buildBreadcrumbSchema([
           { name: "Home", item: siteConfig.domain },

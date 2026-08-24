@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 
 import { StaticPage } from "@/components/static-page";
+import { StructuredData } from "@/components/seo/structured-data";
 import { buildPageMetadata } from "@/lib/seo/page-utils";
+import { buildOrganizationSchema, buildWebPageSchema } from "@/lib/seo/schema";
+import { siteConfig } from "@/lib/seo/site-config";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "About",
@@ -12,6 +15,9 @@ export const metadata: Metadata = buildPageMetadata({
 
 export default function AboutPage() {
   return (
+    <>
+      <StructuredData data={buildOrganizationSchema()} />
+      <StructuredData data={buildWebPageSchema({ title: "About HueFlow", description: "HueFlow is a color platform for designers, developers, and marketers.", url: `${siteConfig.domain}/about` })} />
     <StaticPage title="About HueFlow">
       <p>
         HueFlow is a color platform built for the people who work with color
@@ -64,5 +70,6 @@ export default function AboutPage() {
         love to hear from you - visit the <a href="/contact">contact page</a>.
       </p>
     </StaticPage>
+    </>
   );
 }

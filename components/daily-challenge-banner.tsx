@@ -52,7 +52,28 @@ export function DailyChallengeBanner() {
       .catch(() => {});
   }
 
-  if (!data) return null;
+  if (!data) {
+    return (
+      <div
+        aria-hidden
+        className="w-full overflow-hidden rounded-[24px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)]"
+      >
+        <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:gap-6 sm:p-6">
+          <div className="min-w-0 flex-1 space-y-2">
+            <div className="h-5 w-28 animate-pulse rounded-full bg-[#1c1712]/[0.06]" />
+            <div className="h-6 w-48 animate-pulse rounded-lg bg-[#1c1712]/[0.06]" />
+            <div className="h-4 w-36 animate-pulse rounded-lg bg-[#1c1712]/[0.04]" />
+          </div>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="h-10 w-10 animate-pulse rounded-xl bg-[#1c1712]/[0.06] sm:h-12 sm:w-12" />
+            ))}
+          </div>
+          <div className="h-10 w-36 animate-pulse rounded-full bg-[#1c1712]/[0.06]" />
+        </div>
+      </div>
+    );
+  }
 
   const swatches = themeToColors(data.theme);
 

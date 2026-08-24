@@ -34,7 +34,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     path: "/tools/contrast",
     title: "Contrast Checker",
     description:
-      "Check WCAG contrast ratios between any two colors, validate AA or AAA accessibility, and review readable text combinations for websites and apps.",
+      "Free WCAG contrast checker — instantly see the contrast ratio, AA/AAA pass-fail, and fix suggestions for any two colors. No signup needed.",
     keywords: [
       "contrast checker",
       "wcag contrast checker",
@@ -85,7 +85,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     path: "/tools/gradient",
     title: "Gradient Generator",
     description:
-      "Create CSS gradients with multiple color stops, angle control, preset palettes, and copy-ready code for landing pages, apps, and marketing assets.",
+      "Free CSS gradient generator — pick colors, set angles, preview live, and copy the code instantly. Linear, radial, and conic gradients. No signup.",
     keywords: [
       "gradient generator",
       "css gradient generator",
@@ -136,7 +136,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     path: "/tools/picker",
     title: "Color Picker",
     description:
-      "Pick any color, copy HEX, RGB, or HSL values, and explore shades and tints for brand systems, UI kits, and accessible web design.",
+      "Free online color picker — click any color to instantly get HEX, RGB, and HSL values, plus shades, tints, and complementary palettes.",
     keywords: [
       "color picker",
       "hex color picker",

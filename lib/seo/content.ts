@@ -1185,11 +1185,11 @@ const combinations: ContentEntry[] = [
   {
     slug: "purple-and-gold",
     title: "Purple and Gold Color Combination",
-    description: "A regal, premium combination for luxury, education, and awards-driven brands.",
+    description: "Purple and gold is a regal, premium color combination used by luxury brands, universities, and award programs. The pairing signals status, achievement, and high value.",
     answer:
       "Purple and gold read as premium and ceremonial because both hues carry historical associations with royalty and achievement, which makes the pairing effective for luxury goods, universities, and award or membership programs.",
     intent: "informational",
-    keywords: ["purple and gold color combination", "luxury brand colors", "royal color palette"],
+    keywords: ["purple and gold color combination", "purple and gold color palette", "luxury brand colors", "royal color palette", "purple gold hex codes", "regal color combination", "university brand colors"],
     sections: [
       { title: "The royalty association", body: "Purple and gold together carry centuries of royal and ceremonial association, which is why the combination reads as premium almost immediately, without any other design signal." },
       { title: "Where it works", body: "Universities, award programs, premium loyalty tiers, and luxury goods all lean on this pairing because it signals status without needing extra ornamentation." },
@@ -1198,6 +1198,9 @@ const combinations: ContentEntry[] = [
     faq: [
       { question: "Is purple and gold outdated?", answer: "Not if the purple is deep and muted rather than bright violet, and the gold is used sparingly as an accent rather than as a dominant fill." },
       { question: "What brands use purple and gold?", answer: "Universities, award and loyalty programs, and luxury goods brands use it most consistently, since both audiences respond to its ceremonial associations." },
+      { question: "What hex codes are used for purple and gold?", answer: "Common purple shades: #6B21A8 (deep purple), #7C3AED (violet), #581C87 (royal purple). Common gold shades: #D97706 (amber gold), #B45309 (dark gold), #F59E0B (bright gold)." },
+      { question: "Is purple and gold a good color combination for a logo?", answer: "Yes — purple and gold is one of the strongest combinations for premium logos. Use a deep purple as the primary and a restrained gold accent. Avoid bright, shiny gold which can feel cheap rather than luxurious." },
+      { question: "What does purple and gold mean?", answer: "Purple historically represents royalty, creativity, and premium value. Gold represents success, achievement, and wealth. Together they create a strong signal of prestige and accomplishment." },
     ],
     relatedLinks: [
       { title: "Purple color meaning", href: "/colors/purple" },
@@ -1254,19 +1257,22 @@ const combinations: ContentEntry[] = [
   {
     slug: "purple-and-black",
     title: "Purple and Black Color Combination",
-    description: "A dramatic, premium combination for gaming, nightlife, and luxury digital products.",
+    description: "Purple and black is a dramatic, premium color combination used in gaming, nightlife, and luxury digital products. It signals mystery, creativity, and high-end style.",
     answer:
       "Purple and black create a dramatic, premium combination because black adds authority while purple adds a creative or mysterious edge, making the pairing especially common in gaming, nightlife, and premium digital products.",
     intent: "informational",
-    keywords: ["purple and black color combination", "dark theme brand colors", "gaming brand colors"],
+    keywords: ["purple and black color combination", "purple and black color palette", "dark theme brand colors", "gaming brand colors", "purple black hex codes", "dark luxury color palette", "gaming website colors"],
     sections: [
       { title: "Why it feels premium", body: "Black provides the authority and depth, while purple adds just enough color to avoid the flatness of black-and-white alone - the result reads as intentional rather than simply dark." },
       { title: "Best use cases", body: "Gaming brands, nightlife and events, and dark-mode-first digital products all use this combination to feel premium without leaning on the more common gold accent." },
       { title: "Accessibility note", body: "Purple text on black can fail contrast at smaller sizes - lighten the purple significantly for body copy and reserve the deepest tones for large display use." },
     ],
     faq: [
-      { question: "Is purple and black good for dark mode?", answer: "Yes - it's one of the more distinctive dark-mode color pairs, but body text needs a notably lighter purple than the deep tone used for large surfaces or logos." },
+      { question: "Is purple and black good for dark mode?", answer: "Yes — it's one of the more distinctive dark-mode color pairs, but body text needs a notably lighter purple than the deep tone used for large surfaces or logos." },
       { question: "What brands use purple and black?", answer: "Gaming, nightlife, events, and premium dark-mode digital products use this pairing most consistently." },
+      { question: "What hex codes are used for purple and black?", answer: "Common purple shades for this combination: #7C3AED, #6D28D9, #4C1D95. Pair with #000000 (pure black) or #0A0A0A (near-black) for the background." },
+      { question: "Is purple and black good for a gaming logo?", answer: "Yes — purple and black is one of the most used color combinations in gaming branding. It communicates power, mystery, and premium quality without the warmth of red or orange." },
+      { question: "What does the purple and black color combination mean?", answer: "Purple signals creativity, luxury, and mystery. Black signals authority and power. Together they create a premium, dramatic identity that works well for entertainment, gaming, and luxury digital brands." },
     ],
     relatedLinks: [
       { title: "Purple color meaning", href: "/colors/purple" },
@@ -1277,19 +1283,22 @@ const combinations: ContentEntry[] = [
   {
     slug: "blue-and-black",
     title: "Blue and Black Color Combination",
-    description: "A stable, institutional combination for enterprise software, finance, and professional service brands.",
+    description: "Blue and black is a stable, professional color combination used in enterprise software, finance, and B2B brands. It signals trust, authority, and institutional credibility.",
     answer:
       "Blue and black together create one of the most institutional-feeling color combinations available, which makes it a common default for enterprise software, financial services, and B2B brands that need to signal stability above all else.",
     intent: "informational",
-    keywords: ["blue and black color combination", "enterprise brand colors", "professional color palette"],
+    keywords: ["blue and black color combination", "blue and black color palette", "enterprise brand colors", "professional color palette", "blue black hex codes", "corporate color combination", "finance website colors"],
     sections: [
       { title: "Why it feels institutional", body: "Both hues independently signal trust and authority, so combining them produces a palette that feels stable and serious with very little additional design effort." },
       { title: "Best use cases", body: "Enterprise software, financial services, legal and professional services, and B2B products where reliability matters more than distinctiveness fit this pairing well." },
       { title: "Risk", body: "The combination is common enough that it can feel generic without a differentiated accent color carrying the brand's actual personality." },
     ],
     faq: [
-      { question: "Is blue and black too generic for a startup?", answer: "It can be, unless paired with a distinctive accent color - on its own, blue and black is one of the most common enterprise palettes available." },
-      { question: "Does blue and black work for dark mode?", answer: "Yes, it's a natural fit - use black as the surface and blue for primary actions and accents." },
+      { question: "Is blue and black too generic for a startup?", answer: "It can be, unless paired with a distinctive accent color — on its own, blue and black is one of the most common enterprise palettes available." },
+      { question: "Does blue and black work for dark mode?", answer: "Yes, it's a natural fit — use black as the surface and blue for primary actions and accents." },
+      { question: "What hex codes are used for blue and black?", answer: "Common blue shades: #2563EB (Tailwind blue-600), #1D4ED8 (blue-700), #1E40AF (blue-800). Pair with #000000 or #111827 (near-black) for the dark surface." },
+      { question: "What does the blue and black color combination mean?", answer: "Blue communicates trust, stability, and clarity. Black adds authority and seriousness. Together they project institutional credibility — ideal for enterprise software, finance, and B2B brands." },
+      { question: "Is blue and black good for a finance website?", answer: "Yes — blue and black is one of the most common palettes in financial services. It signals trust and stability. Add white for contrast and a small accent color (teal or gold) for differentiation." },
     ],
     relatedLinks: [
       { title: "Blue color meaning", href: "/colors/blue" },

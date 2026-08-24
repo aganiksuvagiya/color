@@ -1,4 +1,7 @@
 import { TrendsPage } from "@/components/trends-page";
+import { StructuredData } from "@/components/seo/structured-data";
+import { buildWebPageSchema } from "@/lib/seo/schema";
+import { siteConfig } from "@/lib/seo/site-config";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,5 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <TrendsPage />;
+  return (
+    <>
+      <StructuredData data={buildWebPageSchema({ title: "Trending Color Palettes", description: "Curated trending color palettes for SaaS, E-commerce, Mobile, and Branding.", url: `${siteConfig.domain}/trends` })} />
+      <TrendsPage />
+    </>
+  );
 }
