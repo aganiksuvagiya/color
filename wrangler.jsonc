@@ -16,6 +16,12 @@
       "service": "hueflow"
     }
   ],
+  "kv_namespaces": [
+    {
+      "binding": "NEXT_INC_CACHE_KV",
+      "id": "2334e2af31c1469aa427d7f50425ce4f"
+    }
+  ],
   "images": {
     "binding": "IMAGES"
   },
