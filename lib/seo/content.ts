@@ -170,7 +170,7 @@ const colors: ContentEntry[] = [
     ],
     relatedLinks: [
       { title: "Red and black combinations", href: "/color-combinations/red-and-black" },
-      { title: "Retail brand colors", href: "/brand-colors/retail" },
+      { title: "Best colors for ecommerce", href: "/best-colors-for/ecommerce-conversions" },
       { title: "Red gradients", href: "/gradients/sunset-burst" },
       { title: "Marketing urgency colors", href: "/marketing-colors" },
       { title: "Red color meaning", href: "/color-meanings/red" },
@@ -272,10 +272,9 @@ const colors: ContentEntry[] = [
       "Warm yellows (amber, gold) feel premium; cool yellows feel energetic and playful.",
     ],
     quickFacts: [
-      { label: "Primary Intent", value: "Informational" },
-      { label: "Core Entity", value: "Yellow Color Meaning" },
-      { label: "Main Focus", value: "yellow color meaning" },
-      { label: "Semantic Links", value: "Orange color meaning • Brand colors • Contrast checker" },
+      { label: "Common hex", value: "#EAB308" },
+      { label: "Pairs well with", value: "Black, navy, or soft gray" },
+      { label: "Best used for", value: "Accents, highlights, and warning states - not body text" },
     ],
     sections: [
       { title: "When yellow works", body: "Yellow is most effective when used for attention-grabbing CTAs, promotional labels, and energetic brand identities where urgency or optimism is needed." },
@@ -310,10 +309,9 @@ const colors: ContentEntry[] = [
       "In UI, pink accents stand out strongly - use them for highlights, not base surfaces.",
     ],
     quickFacts: [
-      { label: "Primary Intent", value: "Informational" },
-      { label: "Core Entity", value: "Pink Color Meaning" },
-      { label: "Main Focus", value: "pink color meaning" },
-      { label: "Semantic Links", value: "Red color meaning • Beauty brand colors • Rose gold gradient" },
+      { label: "Common hex", value: "#EC4899" },
+      { label: "Pairs well with", value: "Gold, black, or white" },
+      { label: "Best used for", value: "Highlights and accents - use blush tones for a more refined feel" },
     ],
     sections: [
       { title: "Pink in beauty and lifestyle", body: "Pink dominates beauty, skincare, and wellness branding because it signals care, warmth, and approachability - core emotional attributes in those categories." },
@@ -346,10 +344,9 @@ const colors: ContentEntry[] = [
       "It pairs well with white, slate, and warm neutrals like sand or cream.",
     ],
     quickFacts: [
-      { label: "Primary Intent", value: "Informational" },
-      { label: "Core Entity", value: "Teal Color Meaning" },
-      { label: "Main Focus", value: "teal color meaning" },
-      { label: "Semantic Links", value: "Blue color meaning • Green color meaning • Healthcare brand colors" },
+      { label: "Common hex", value: "#14B8A6" },
+      { label: "Pairs well with", value: "White, slate, or warm neutrals" },
+      { label: "Best used for", value: "Healthcare, wellness, and modern B2B interfaces" },
     ],
     sections: [
       { title: "Teal in healthcare and wellness", body: "Teal is one of the most common colors in healthcare UI because it feels clean, calm, and trustworthy - while being slightly warmer and more approachable than pure blue." },
@@ -383,10 +380,9 @@ const colors: ContentEntry[] = [
       "Gray text on white backgrounds must be tested for WCAG contrast at every text size.",
     ],
     quickFacts: [
-      { label: "Primary Intent", value: "Informational" },
-      { label: "Core Entity", value: "Gray Color Meaning" },
-      { label: "Main Focus", value: "gray color in design" },
-      { label: "Semantic Links", value: "Black color meaning • White color • Design system colors" },
+      { label: "Common hex", value: "#6B7280" },
+      { label: "Pairs well with", value: "Almost any accent color" },
+      { label: "Best used for", value: "Backgrounds, borders, and text hierarchy - not accents" },
     ],
     sections: [
       { title: "Gray in UI systems", body: "Most design systems use 9–11 shades of gray for backgrounds, cards, borders, placeholder text, and disabled states. A consistent gray scale prevents visual noise and creates hierarchy without color." },
@@ -420,10 +416,9 @@ const colors: ContentEntry[] = [
       "White backgrounds pair with any accent color, making them ideal for flexible design systems.",
     ],
     quickFacts: [
-      { label: "Primary Intent", value: "Informational" },
-      { label: "Core Entity", value: "White Color Meaning" },
-      { label: "Main Focus", value: "white color meaning" },
-      { label: "Semantic Links", value: "Black color meaning • Gray color • Minimalist design" },
+      { label: "Common hex", value: "#FAFAF9 (off-white)" },
+      { label: "Pairs well with", value: "Any accent color, black, or gray" },
+      { label: "Best used for", value: "Backgrounds and negative space in minimalist layouts" },
     ],
     sections: [
       { title: "White in product design", body: "Most SaaS, fintech, and productivity tools default to white backgrounds because they feel clean, trustworthy, and allow content to take center stage." },
@@ -456,10 +451,9 @@ const colors: ContentEntry[] = [
       "Brown pairs best with cream, white, green, and gold.",
     ],
     quickFacts: [
-      { label: "Primary Intent", value: "Informational" },
-      { label: "Core Entity", value: "Brown Color Meaning" },
-      { label: "Main Focus", value: "brown color meaning" },
-      { label: "Semantic Links", value: "Orange color meaning • Earthy palettes • Wellness brands" },
+      { label: "Common hex", value: "#B45309" },
+      { label: "Pairs well with", value: "Cream, white, green, or gold" },
+      { label: "Best used for", value: "Food, outdoor, and artisan brands wanting warmth" },
     ],
     sections: [
       { title: "Brown in food and coffee brands", body: "Brown is the default color for coffee, chocolate, and artisan food brands because it directly references the product category and signals warmth, richness, and quality." },
@@ -551,7 +545,7 @@ const colors: ContentEntry[] = [
     relatedLinks: [
       { title: "Blue color meaning", href: "/colors/blue" },
       { title: "Teal color meaning", href: "/colors/teal" },
-      { title: "Healthcare website color guide", href: "/best-colors-for/best-colors-for-healthcare-websites-usa" },
+      { title: "Healthcare website color guide", href: "/guides/best-colors-for-healthcare-websites-usa" },
       { title: "Color contrast checker", href: "/tools/contrast" },
       { title: "WCAG contrast guide", href: "/accessibility/color-contrast" },
       { title: "Cool color palettes", href: "/palettes/fintech-growth-grid" },
@@ -1023,33 +1017,33 @@ const brandColorEntries: ContentEntry[] = [
   },
   {
     slug: "healthcare",
-    title: "Best Brand Colors for Healthcare Companies",
-    description: "Healthcare color guidance for trust, calm, cleanliness, and accessible patient experiences.",
+    title: "Healthcare Brand Colors: What Different Types of Healthcare Companies Actually Signal",
+    description: "Not every healthcare brand should look the same. How payers, hospital systems, telehealth startups, and pharma brands use color differently - and why.",
     answer:
-      "Healthcare brands usually perform best with blue, teal, and soft green systems because those colors feel trustworthy, clean, and calm. The key is balancing reassurance with enough contrast for readability and action clarity.",
+      "Healthcare isn't one category with one right palette. A hospital system needs to feel established and reassuring, a telehealth startup needs to feel modern and fast, and a payer or insurer needs to feel both trustworthy and non-threatening. The right healthcare color depends on which of those jobs the brand is actually doing.",
     intent: "commercial",
-    keywords: ["healthcare brand colors", "medical website colors", "best colors for trust"],
+    keywords: ["healthcare brand colors", "medical brand identity", "telehealth brand colors", "hospital brand colors"],
     sections: [
-      { title: "Calm plus credibility", body: "Blue and teal reduce perceived risk while soft green can add a restorative, human tone." },
-      { title: "Accessibility matters more", body: "Healthcare experiences need stronger-than-average contrast because the audience range is broad and often stressed." },
-      { title: "Avoid harsh saturation", body: "Very bright reds and neons can feel alarming in care contexts unless used only for urgent alerts." },
+      { title: "Hospital systems and providers lean conservative", body: "Established hospital systems tend to use deeper, more institutional blues and navy - closer to a bank than a startup - because their brand equity is built on decades of trust, not novelty. A hospital brand that suddenly looks trendy can read as a red flag rather than a refresh." },
+      { title: "Telehealth and health tech lean lighter and brighter", body: "Newer telehealth and health-tech brands (think consumer-facing apps rather than institutions) tend toward brighter, warmer teals and greens with more white space - signaling approachability and modernity to a generation used to app-based, not clinic-based, care." },
+      { title: "Insurers and payers walk a narrower line", body: "Insurance and payer brands need to feel financially solid (pulling toward blue) without feeling cold or bureaucratic (pulling toward warmer, more human accent colors) - which is why many land on blue-plus-one-warm-accent rather than a pure trust-blue system." },
     ],
     faq: [
-      { question: "What color improves trust?", answer: "Blue is usually the strongest trust color, especially in healthcare, finance, and enterprise software." },
-      { question: "What colors fit healthcare websites?", answer: "Blue, teal, soft green, and neutral white or slate systems usually fit best." },
+      { question: "Should every healthcare brand use blue?", answer: "No - blue is a safe default for provider and payer brands specifically, but consumer-facing telehealth and wellness brands increasingly differentiate with warmer teals, greens, or even coral accents." },
+      { question: "Why do so many healthcare brands look the same?", answer: "Institutional healthcare has historically prioritized safety over distinctiveness, which is exactly why a healthcare brand willing to differentiate (while keeping accessibility high) can stand out." },
     ],
     relatedLinks: [
-      { title: "Blue color meaning", href: "/colors/blue" },
-      { title: "Mint horizon gradient", href: "/gradients/mint-horizon" },
+      { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
+      { title: "Teal color meaning", href: "/colors/teal" },
       { title: "Accessibility guide", href: "/accessibility/color-contrast" },
     ],
   },
   {
     slug: "stripe",
     title: "Stripe Brand Colors Analysis",
-    description: "A programmatic page studying why Stripe's indigo-led system feels trustworthy, modern, and developer-friendly.",
+    description: "A brand color breakdown of why Stripe's indigo-led system feels trustworthy, modern, and developer-friendly - and what other brands can actually take from it.",
     answer:
-      "Stripe’s color system works because it pairs a trustworthy indigo base with polished neutrals and disciplined accent usage. The result feels modern and technical without losing financial credibility.",
+      "Stripe's color system works because it pairs a distinctive indigo base with polished neutrals and disciplined accent usage. The result feels modern and technical without losing financial credibility - the kind of balance most fintech and dev-tool brands are trying to hit.",
     intent: "navigational",
     keywords: ["stripe brand colors", "stripe color palette", "developer brand colors"],
     sections: [
@@ -1069,14 +1063,236 @@ const brandColorEntries: ContentEntry[] = [
   },
 ];
 
+type ColorMeaningOverride = {
+  title: string;
+  description: string;
+  answer: string;
+  sections: ContentSection[];
+  faq: FaqItem[];
+  keyTakeaways?: string[];
+};
+
+// /color-meanings covers the psychology/symbolism angle - what the color signals emotionally
+// and culturally. /colors covers the practical/implementation angle - hex values, branding,
+// UI use. Keeping these distinct avoids serving the same article twice under two URLs.
+const colorMeaningOverrides: Record<string, ColorMeaningOverride> = {
+  blue: {
+    title: "What Blue Means in Color Psychology",
+    description: "The psychology behind blue - why it reads as trustworthy, where that association comes from, and where it can work against you.",
+    answer: "Blue is the color most consistently rated as trustworthy and calm across psychology studies, likely because it has no strong associations with danger, food, or warning signals in nature. That neutrality is exactly what makes it a safe default - and also why it can feel impersonal if overused.",
+    sections: [
+      { title: "Where the association comes from", body: "Sky and open water are both blue and both read as stable, unthreatening environments. Researchers studying color preference across cultures consistently find blue as the most-preferred color, which is part of why it feels 'safe' rather than exciting." },
+      { title: "The trust vs. boring trade-off", body: "Blue's biggest psychological strength - low perceived risk - is also its weakness. A product that only needs to feel safe benefits from it. A product that needs to feel bold, urgent, or emotionally warm usually needs a second color doing that work, because blue alone won't create it." },
+      { title: "Cultural notes", body: "Blue's positive, calm association is unusually consistent across Western, East Asian, and Middle Eastern contexts compared to most colors - one reason it's the least risky global default." },
+    ],
+    faq: [
+      { question: "Why is blue considered the most trustworthy color?", answer: "It has few negative or alarming associations in nature or culture, so it reads as neutral and stable rather than provoking a strong reaction either way." },
+      { question: "Does blue mean the same thing in every culture?", answer: "Mostly yes - blue is one of the more culturally consistent colors, though exact shades (navy vs. bright blue) still shift the tone from formal to playful." },
+    ],
+    keyTakeaways: [
+      "Blue's trust association comes from its lack of negative natural or cultural associations, not an inherent 'meaning.'",
+      "It's a safe default, not an exciting one - pair it with a second color if the brand needs energy.",
+      "It reads consistently across most cultures, which is why it's the most common corporate default worldwide.",
+    ],
+  },
+  green: {
+    title: "What Green Means in Color Psychology",
+    description: "Why green reads as growth and health, and where that signal can backfire.",
+    answer: "Green's psychological association with growth, safety, and health traces directly back to vegetation and 'go' signals. It's one of the easiest colors to read correctly at a glance, which is exactly why it's used for success states and confirmations - but that same directness can feel flat if a brand wants to feel more distinctive.",
+    sections: [
+      { title: "The 'go' signal", body: "Green is used almost universally for approval, success, and 'proceed' states (traffic lights, form validation, checkmarks) because the association with safety and growth is learned early and reinforced constantly." },
+      { title: "Two different greens, two different feelings", body: "Muted, desaturated greens (sage, olive) read as calm and natural. Saturated, bright greens read as energetic and modern - closer to a tech or gaming feel than a wellness one. Choosing between them matters more than choosing 'green' in the abstract." },
+      { title: "Where it falls short", body: "Because green is so strongly tied to 'success' in UI conventions, using it for anything else (a primary brand color unrelated to growth or status) can create a subtle mismatch between what users expect it to mean and what it's actually being used for." },
+    ],
+    faq: [
+      { question: "Why is green used for success messages?", answer: "It's a learned convention reinforced by traffic lights, checkmarks, and financial gains - users read it as 'good' almost instantly, which is why UI design relies on it so heavily." },
+      { question: "Does bright green mean something different from muted green?", answer: "Yes. Bright green skews energetic and modern; muted or sage green skews calm and natural. They're not interchangeable despite being the same hue family." },
+    ],
+  },
+  red: {
+    title: "What Red Means in Color Psychology",
+    description: "The psychology of red as an urgency and attention color, and why it also raises stress.",
+    answer: "Red is the color the eye is drawn to fastest - it has the longest wavelength of visible light, which is part of why it's used for warnings, alerts, and urgency cues across almost every culture. That same physiological pull is why overusing it makes an interface feel stressful rather than exciting.",
+    sections: [
+      { title: "Why the eye notices it first", body: "Red has practical, physical reasons for grabbing attention, not just symbolic ones - it's more visible in peripheral vision than cooler colors, which is why it's the default choice for stop signs, error states, and alerts." },
+      { title: "Urgency has a ceiling", body: "A small amount of red creates focus. A lot of red creates anxiety - studies on red environments consistently link it to increased heart rate and perceived time pressure, which is useful for a single CTA and counterproductive for an entire layout." },
+      { title: "Context flips the meaning", body: "In finance, red usually means loss. In retail, it usually means a deal. In UI, it usually means an error. The same hue carries opposite emotional weight depending on what it's placed next to." },
+    ],
+    faq: [
+      { question: "Why does red feel more urgent than other colors?", answer: "It's physically more attention-grabbing due to its wavelength, and it's culturally reinforced by stop signs, alerts, and warning labels, so the urgency reaction is both physiological and learned." },
+      { question: "Is red always a negative or alarming color?", answer: "No - context changes it completely. In retail it often signals a deal or excitement; in finance or error states it signals a problem." },
+    ],
+  },
+  purple: {
+    title: "What Purple Means in Color Psychology",
+    description: "Why purple reads as creative and premium, and where that history comes from.",
+    answer: "Purple's association with luxury and creativity has a genuinely historical root: purple dye was extremely rare and expensive to produce for most of human history, so it became reserved for royalty and status. That scarcity association still shows up today in how the color reads.",
+    sections: [
+      { title: "A meaning with real history behind it", body: "Unlike most color associations, purple's 'luxury' reading isn't just modern branding - Tyrian purple dye was famously difficult to produce in antiquity, which made it a literal status symbol for centuries." },
+      { title: "Why it also reads as 'creative'", body: "Purple sits between the calm of blue and the energy of red, which is likely part of why it reads as imaginative rather than settled - it doesn't have a single, obvious natural association the way green or blue do." },
+      { title: "Where it can undercut trust", body: "In categories where predictability matters more than originality (say, healthcare compliance or enterprise security), purple's 'different' quality can work against the brand unless it's balanced with more grounded neutrals." },
+    ],
+    faq: [
+      { question: "Why is purple associated with royalty?", answer: "Purple dye was historically rare and expensive to produce, so only the wealthy or powerful could afford it - the association with status has stuck for centuries." },
+      { question: "Is purple a risky color for a serious brand?", answer: "It can be, if the category depends on feeling predictable and conservative. Pairing it with disciplined typography and neutral surfaces reduces that risk." },
+    ],
+  },
+  black: {
+    title: "What Black Means in Color Psychology",
+    description: "Why black reads as authority and luxury, and how it differs from simply being the absence of color.",
+    answer: "Black's psychological weight comes from contrast and restraint rather than the color itself - it's technically the absence of visible light, and its meaning shifts almost entirely based on what's placed against it. Used with generous space, it reads as premium; used densely, it reads as heavy or somber.",
+    sections: [
+      { title: "It's a relationship color, not a standalone one", body: "Black rarely carries meaning by itself - it's defined by contrast. Black text on white reads as clean and legible. Black backgrounds with gold or white accents read as premium. Black used everywhere with no contrast reads as flat or oppressive." },
+      { title: "Authority vs. mourning", body: "In most Western contexts black signals authority, formality, and premium positioning. In some cultures and contexts it's strongly associated with mourning - worth checking if a design is going into a market where that association is stronger." },
+      { title: "Why minimalist brands lean on it", body: "Removing color removes decisions - black-and-white systems force every other design choice (typography, spacing, imagery) to carry more weight, which is why it's a common choice for brands trying to feel deliberate rather than decorative." },
+    ],
+    faq: [
+      { question: "Does black always mean luxury?", answer: "Not automatically - it needs deliberate spacing, typography, and restraint to read as premium. Used carelessly, it can just read as heavy or generic." },
+      { question: "Is black associated with mourning everywhere?", answer: "It's the dominant mourning color in most Western contexts, but not universal - some cultures use white for mourning instead, so context matters for global brands." },
+    ],
+  },
+  orange: {
+    title: "What Orange Means in Color Psychology",
+    description: "Why orange reads as friendly and energetic without the alarm of red.",
+    answer: "Orange sits between red's urgency and yellow's optimism, which is why it reads as energetic and inviting without feeling alarming. It's a genuinely uncommon primary brand color, which also makes it one of the easier ways for a brand to stand out in a crowded, blue-dominated category.",
+    sections: [
+      { title: "Borrowed energy, less intensity", body: "Orange keeps some of red's attention-grabbing quality but loses the alarm - it's a common choice for calls to action that need to feel encouraging rather than urgent, like 'sign up' instead of 'sale ends today.'" },
+      { title: "Why it stands out by default", body: "Very few large brands use orange as a primary color compared to blue or red, so a brand choosing it gets differentiation almost for free - the tradeoff is that lighter oranges wash out fast and need deeper shades to stay legible." },
+    ],
+    faq: [
+      { question: "Is orange a good color for a friendly brand?", answer: "Yes - it reads as warm and approachable without red's intensity, which is why it's common in hospitality, education, and creator-focused products." },
+      { question: "Why do so few big brands use orange?", answer: "It's less common than blue or red as a primary corporate color, which is part of why it stands out - but it also means there's less established convention for how to use it well." },
+    ],
+  },
+  yellow: {
+    title: "What Yellow Means in Color Psychology",
+    description: "Why yellow grabs attention fastest, and why that makes it hard to use as a base color.",
+    answer: "Yellow is the most visible color to the human eye in daylight, which is why it's used for hazard signs, school buses, and high-vis clothing as much as for cheerful branding. That same visibility is what makes it effective as an accent and unusable as a body-text or large-surface color.",
+    sections: [
+      { title: "The most visible color, not the most readable one", body: "Yellow reflects more light than any other hue at typical saturation, which makes it the fastest color the eye picks out from a distance - and also the reason yellow text almost always fails contrast checks against white." },
+      { title: "Optimism and caution are two ends of the same signal", body: "Yellow's high visibility gets used for opposite purposes depending on saturation and pairing: bright yellow with black reads as caution (hazard tape, warning labels); soft yellow alone reads as cheerful and optimistic." },
+    ],
+    faq: [
+      { question: "Why is yellow hard to use in UI design?", answer: "It has very low contrast against white and light backgrounds, so it works well as an accent or highlight but rarely as body text or a large background." },
+      { question: "Why does yellow appear on warning signs?", answer: "It's the most visible color to the human eye in daylight, so pairing it with black (maximum contrast) creates the most attention-grabbing combination available, which is exactly what hazard signage needs." },
+    ],
+  },
+  pink: {
+    title: "What Pink Means in Color Psychology",
+    description: "How pink's meaning shifted from a general color to a gendered one, and back again.",
+    answer: "Pink's association with femininity is a relatively recent, largely 20th-century marketing convention rather than a fixed psychological reading - earlier in Western history pink was sometimes marketed as the 'stronger,' more masculine shade of red for boys. That history is part of why modern brands increasingly use pink as gender-neutral.",
+    sections: [
+      { title: "A newer association than it seems", body: "The strong pink-equals-girls, blue-equals-boys convention largely dates to mid-20th-century marketing, not some deeper psychological root - which explains why it's loosened significantly in the last decade of brand design." },
+      { title: "Hot pink and blush pink read almost oppositely", body: "Saturated, hot pink reads as bold, youthful, and energetic. Desaturated blush or dusty pink reads as soft, refined, and closer to a neutral than a statement color - the two shouldn't be thought of as the same color psychologically." },
+    ],
+    faq: [
+      { question: "Is pink still considered a 'feminine' color in branding?", answer: "Less than it used to be - many fintech, tech, and lifestyle brands now use pink as a gender-neutral way to signal confidence and originality rather than femininity specifically." },
+      { question: "Why do hot pink and blush pink feel so different?", answer: "Saturation changes the read entirely - hot pink is loud and energetic, blush pink is quiet and refined, even though they're the same base hue." },
+    ],
+  },
+  teal: {
+    title: "What Teal Means in Color Psychology",
+    description: "Why teal reads as calm-but-credible - a blend of blue's trust and green's warmth.",
+    answer: "Teal sits directly between blue and green, and it tends to carry a blend of both associations - blue's trust and green's sense of health or balance - without blue's occasional coldness or green's occasional informality. That combination is why it's become a common healthcare and modern-SaaS choice over the last decade.",
+    sections: [
+      { title: "A blend, not a compromise", body: "Teal doesn't dilute blue and green's associations so much as combine them - it reads as trustworthy like blue but less corporate, and as fresh like green but less casual, which is a fairly specific niche few single colors fill." },
+      { title: "Why it's become common in one particular category", body: "Healthcare and wellness brands have converged on teal heavily enough that it's started to read as a category signal on its own - a genuine consideration if a brand wants to avoid blending into a crowded healthcare-blue-green landscape." },
+    ],
+    faq: [
+      { question: "Is teal just a variant of blue?", answer: "Not psychologically - it reads with more warmth and less formality than blue, closer to a genuine blend with green than a simple shade variation." },
+      { question: "Why do so many healthcare brands use teal?", answer: "It reads as both trustworthy and calming without blue's occasional coldness, which fits healthcare's need to feel both credible and reassuring." },
+    ],
+  },
+  gray: {
+    title: "What Gray Means in Color Psychology",
+    description: "Why gray reads as neutral rather than 'boring,' and where warm vs. cool gray diverge emotionally.",
+    answer: "Gray's psychological role is almost entirely structural rather than emotional - unlike most colors, it isn't asked to carry meaning on its own so much as to stay out of the way of whatever color is placed against it. Its temperature (warm vs. cool undertone) does most of the emotional work.",
+    sections: [
+      { title: "A supporting color, not a statement one", body: "Gray rarely appears as a brand's primary identity color precisely because its job is usually to recede - providing hierarchy and structure while accent colors carry the emotional signal." },
+      { title: "Warm gray vs. cool gray changes everything", body: "A gray with a brown or beige undertone reads as soft, human, and editorial. A gray with a blue undertone reads as technical, precise, and closer to enterprise software. The difference is subtle in isolation but obvious side by side." },
+    ],
+    faq: [
+      { question: "Does gray have an emotional meaning on its own?", answer: "Not much of one in isolation - its temperature (warm or cool undertone) carries most of the feeling, and its main job is usually to support other colors rather than lead." },
+      { question: "Why do enterprise software products often use cool gray?", answer: "Cool, blue-tinted grays read as more technical and precise, which fits products that want to feel structured and professional over warm or approachable." },
+    ],
+  },
+  white: {
+    title: "What White Means in Color Psychology",
+    description: "Why white reads as clean and spacious, and how that reading shifts across cultures.",
+    answer: "White's association with clarity and simplicity in Western design comes largely from what it isn't - it carries no hue to compete with content, so it reads as open and unobstructed. That reading isn't universal, though: in several East Asian and South Asian traditions, white is strongly associated with mourning rather than purity.",
+    sections: [
+      { title: "Meaning through absence", body: "White doesn't communicate through association the way red or green do - it communicates through the absence of visual competition, which is exactly why minimalist and premium brands lean on it to let typography and imagery carry the message." },
+      { title: "Not a universal 'clean' signal", body: "In parts of East Asia and South Asia, white is traditionally a mourning color, not a purity one - a genuinely important consideration for any brand designing for a global rather than Western-only audience." },
+    ],
+    faq: [
+      { question: "Does white mean the same thing in every culture?", answer: "No - while it reads as clean and pure in most Western contexts, it's traditionally associated with mourning in several East Asian and South Asian cultures." },
+      { question: "Why do luxury brands rely so heavily on white?", answer: "It removes visual competition, so typography, spacing, and product photography do the work of signaling quality instead of the color itself." },
+    ],
+  },
+  brown: {
+    title: "What Brown Means in Color Psychology",
+    description: "Why brown reads as reliable and grounded rather than exciting - and why that's the point.",
+    answer: "Brown's association with reliability and warmth comes directly from its ties to earth, wood, and natural materials - it's one of the few colors whose meaning barely shifts across cultures, because soil and timber look roughly the same everywhere. That consistency is exactly why it reads as dependable rather than flashy.",
+    sections: [
+      { title: "One of the more culturally stable colors", body: "Because brown's natural associations (earth, wood, coffee) are consistent worldwide, it doesn't carry the same cross-cultural risk that colors like white or red do - making it a comparatively safe choice for global, nature-adjacent brands." },
+      { title: "Grounded, not exciting - and that's the trade", body: "Brown rarely creates urgency or excitement, which is a deliberate trade-off: it signals durability and authenticity for categories (coffee, leather goods, outdoor gear) where trust in the material matters more than standing out." },
+    ],
+    faq: [
+      { question: "Why do coffee and food brands use brown so often?", answer: "It directly references the product itself and signals warmth and quality without needing an abstract color association - the color and the product category are literally connected." },
+      { question: "Is brown a safe color choice internationally?", answer: "Generally yes - its natural, earthy associations are more consistent across cultures than most colors, making it lower-risk for global brands." },
+    ],
+  },
+  azure: {
+    title: "What Azure Means in Color Psychology",
+    description: "Why azure reads as calm and open rather than carrying a strong emotional signal of its own.",
+    answer: "Azure sits so close to white on the lightness scale that it barely registers as a distinct hue psychologically - it reads as an airy, calm variation of white rather than a color with its own strong associations, which is exactly why it works well as a background tint but rarely as a brand-defining color.",
+    sections: [
+      { title: "Closer to a mood than a meaning", body: "Because azure is so pale, it doesn't carry a strong symbolic association the way saturated blue does - it functions more as a temperature (cool, calm, open) than a message, which is why it shows up as a supporting tone rather than a lead color." },
+      { title: "Why it suits calm, clinical spaces", body: "Healthcare and wellness interfaces use pale cool tints like azure because they lower visual intensity without going fully white - useful when a space needs to feel calm rather than stark." },
+    ],
+    faq: [
+      { question: "Does azure carry the same meaning as blue?", answer: "Only loosely - it keeps blue's calm association but is too pale to carry blue's stronger 'trust' signal, so it reads more as a mood than a deliberate message." },
+      { question: "Why is azure common in healthcare interfaces?", answer: "It softens a layout without the starkness of pure white, which suits interfaces that need to feel calm rather than clinical or cold." },
+    ],
+  },
+};
+
+// True when a color-meanings slug has genuinely distinct, hand-written psychology
+// content (see colorMeaningOverrides above) rather than falling back to the
+// programmatic hex/RGB generator shared with /colors.
+export function isColorMeaningAuthored(slug: string): boolean {
+  return Object.prototype.hasOwnProperty.call(colorMeaningOverrides, slug);
+}
+
 const colorMeaningEntries: ContentEntry[] = colors.map((entry) => {
+  const override = colorMeaningOverrides[entry.slug];
   const cap = `${entry.slug[0].toUpperCase()}${entry.slug.slice(1)}`;
+
+  if (!override) {
+    return {
+      ...entry,
+      title: `${cap} Color Meaning`,
+      relatedLinks: [
+        { title: `${cap} color page`, href: `/colors/${entry.slug}` },
+        ...entry.relatedLinks.filter((l) => !l.href.startsWith(`/color-meanings/${entry.slug}`)),
+      ],
+    };
+  }
+
   return {
-    ...entry,
-    title: `${cap} Color Meaning`,
+    slug: entry.slug,
+    paletteColors: entry.paletteColors,
+    title: override.title,
+    description: override.description,
+    answer: override.answer,
+    intent: "informational",
+    keywords: entry.keywords,
+    sections: override.sections,
+    faq: override.faq,
+    keyTakeaways: override.keyTakeaways,
     relatedLinks: [
-      { title: `${cap} color page`, href: `/colors/${entry.slug}` },
-      ...entry.relatedLinks.filter((l) => !l.href.startsWith(`/color-meanings/${entry.slug}`)),
+      { title: `${cap} color page (hex, RGB, use cases)`, href: `/colors/${entry.slug}` },
+      ...entry.relatedLinks.filter((l) => !l.href.startsWith(`/color-meanings/${entry.slug}`) && !l.href.startsWith(`/colors/${entry.slug}`)),
     ],
   };
 });
@@ -1514,6 +1730,7 @@ const accessibilityEntries: ContentEntry[] = [
       { title: "Blue accessibility example", href: "/colors/blue" },
       { title: "Accessible Tailwind colors", href: "/tailwind/blue" },
       { title: "CSS color accessibility", href: "/css-colors/black" },
+      { title: "Color palettes for color-blind users", href: "/guides/color-blind-friendly-design" },
     ],
   },
   {
@@ -1537,9 +1754,19 @@ const accessibilityEntries: ContentEntry[] = [
       { title: "Green color page", href: "/colors/green" },
       { title: "Contrast guide", href: "/accessibility/color-contrast" },
       { title: "Fintech palette", href: "/palettes/fintech-growth-grid" },
+      { title: "Color palettes for color-blind users", href: "/guides/color-blind-friendly-design" },
     ],
   },
 ];
+
+// Only these colors have a dedicated /css-colors/<slug> page - link to it only when it exists
+// so /tailwind/<slug> pages that cover a wider color set (e.g. slate, indigo, sky) don't point
+// at a 404.
+const CSS_COLOR_SLUGS = new Set(["blue", "green", "purple", "orange", "black"]);
+
+// "slate" and "sky" aren't resolvable /colors or /color-meanings slugs (no matching named
+// color and not a hex code), so skip generating links to those routes for them.
+const NO_COLOR_PAGE_SLUGS = new Set(["slate", "sky"]);
 
 const tailwindEntries: ContentEntry[] = ["blue", "green", "purple", "orange", "black", "red", "yellow", "gray", "slate", "indigo", "sky", "pink", "teal"].map((color) => ({
   slug: color,
@@ -1561,9 +1788,11 @@ const tailwindEntries: ContentEntry[] = ["blue", "green", "purple", "orange", "b
     { question: `What is the darkest Tailwind ${color} class?`, answer: `${color}-950 is the darkest shade in the Tailwind ${color} scale, suitable for text and borders on light backgrounds.` },
   ],
   relatedLinks: [
-    { title: `${color[0].toUpperCase()}${color.slice(1)} color page`, href: `/colors/${color}` },
-    { title: `${color[0].toUpperCase()}${color.slice(1)} CSS guide`, href: `/css-colors/${color}` },
-    { title: `${color[0].toUpperCase()}${color.slice(1)} color meaning`, href: `/color-meanings/${color}` },
+    ...(NO_COLOR_PAGE_SLUGS.has(color) ? [] : [
+      { title: `${color[0].toUpperCase()}${color.slice(1)} color page`, href: `/colors/${color}` },
+      { title: `${color[0].toUpperCase()}${color.slice(1)} color meaning`, href: `/color-meanings/${color}` },
+    ]),
+    ...(CSS_COLOR_SLUGS.has(color) ? [{ title: `${color[0].toUpperCase()}${color.slice(1)} CSS guide`, href: `/css-colors/${color}` }] : []),
     { title: "Color contrast guide", href: "/accessibility/color-contrast" },
   ],
 }));
@@ -1605,7 +1834,7 @@ const guides: ContentEntry[] = [
     sections: [
       { title: "Trust vs urgency", body: "Blue helps when buyers need confidence. Orange and red help when attention and urgency are more important." },
       { title: "The real conversion driver", body: "Contrast, hierarchy, message fit, and audience expectations matter more than any universal best color." },
-      { title: "USA search intent fit", body: "Most searchers want a simple answer first, then industry-specific examples and caveats." },
+      { title: "What to check before deciding", body: "Look at what your competitors are already using in the same slot - if everyone in your category uses blue CTAs, a warm accent will stand out more than another blue one." },
     ],
     faq: [
       { question: "What colors increase conversions?", answer: "Blue often helps trust-based products convert, while orange and red can increase attention for action-focused offers." },
@@ -1620,6 +1849,8 @@ const guides: ContentEntry[] = [
       { title: "DTC palette", href: "/palettes/dtc-energy-stack" },
       { title: "Marketing colors", href: "/marketing-colors" },
       { title: "CTA color FAQ", href: "/faqs/cta-colors" },
+      { title: "Color psychology for email marketing", href: "/guides/email-marketing-color-psychology" },
+      { title: "Gradients vs solid colors: which converts better?", href: "/guides/gradient-vs-solid-website-backgrounds" },
     ],
   },
   {
@@ -1689,6 +1920,7 @@ const guides: ContentEntry[] = [
       { title: "SaaS brand colors", href: "/brand-colors/saas" },
       { title: "Apricot launch gradient", href: "/gradients/apricot-launch" },
       { title: "What colors increase conversions?", href: "/guides/conversion-color-strategy" },
+      { title: "Web design color trends for 2026", href: "/guides/color-trends-2026" },
     ],
   },
   {
@@ -1763,6 +1995,7 @@ const guides: ContentEntry[] = [
       { title: "Best CTA color FAQ", href: "/faqs/cta-colors" },
       { title: "Contrast checker", href: "/tools/contrast" },
       { title: "Startup website color strategy", href: "/guides/startup-website-color-strategy" },
+      { title: "Common brand color mistakes", href: "/guides/brand-color-palette-mistakes" },
     ],
   },
   {
@@ -1787,6 +2020,7 @@ const guides: ContentEntry[] = [
       { title: "Orange color meaning", href: "/colors/orange" },
       { title: "Conversion color strategy guide", href: "/guides/conversion-color-strategy" },
       { title: "Marketing colors", href: "/marketing-colors" },
+      { title: "Gradients vs solid colors: which converts better?", href: "/guides/gradient-vs-solid-website-backgrounds" },
     ],
   },
   {
@@ -1811,6 +2045,7 @@ const guides: ContentEntry[] = [
       { title: "Contrast checker", href: "/tools/contrast" },
       { title: "Midnight metal gradient", href: "/gradients/midnight-metal" },
       { title: "Luxury editorial noir palette", href: "/palettes/luxury-editorial-noir" },
+      { title: "Web design color trends for 2026", href: "/guides/color-trends-2026" },
     ],
   },
   {
@@ -1965,53 +2200,308 @@ const guides: ContentEntry[] = [
       { title: "Color contrast checker tool", href: "/tools/contrast" },
     ],
   },
+  {
+    slug: "color-trends-2026",
+    title: "Web Design Color Trends for 2026",
+    description: "What's actually showing up in new website launches this year, and which trends are worth adopting versus skipping.",
+    answer:
+      "2026 is leaning toward warmer, more saturated neutrals instead of the cool grays that dominated the last few years, paired with one confident accent color rather than a full rainbow of brand hues. Muted earth tones, deep greens, and soft terracotta are showing up across SaaS, DTC, and portfolio sites alike.",
+    intent: "informational",
+    keywords: ["color trends 2026", "web design color trends", "trending website colors", "2026 color palette"],
+    sections: [
+      {
+        title: "Warm neutrals are replacing cool grays",
+        body: "For a while, every SaaS site looked the same: slate gray backgrounds, blue accents, done. That's fading. Designers are swapping in warmer bases - think stone, sand, and off-white with a hint of orange - because they feel less clinical and more approachable without giving up the professional look.",
+      },
+      {
+        title: "One bold accent beats a full palette",
+        body: "Instead of five brand colors fighting for attention, the sites getting noticed right now pick one saturated accent - often a deep green, a burnt orange, or an electric indigo - and use it sparingly against a calm neutral base. It reads as more confident than spreading color everywhere.",
+      },
+      {
+        title: "Dark mode is no longer optional",
+        body: "This isn't new for 2026 specifically, but it's become table stakes. Products launching without a real dark theme (not just an inverted color filter) feel dated fast, especially for developer tools and anything used at night.",
+      },
+    ],
+    faq: [
+      { question: "What colors are trending in 2026?", answer: "Warm neutrals like stone and sand, paired with a single bold accent such as deep green, burnt orange, or indigo, rather than large multi-color palettes." },
+      { question: "Are bright neon colors still popular?", answer: "Neon works for specific niches like gaming and youth brands, but most mainstream sites in 2026 are moving toward more restrained, warmer palettes." },
+    ],
+    definitions: [
+      { term: "Warm neutral", definition: "A background color like stone, sand, or off-white that leans slightly toward orange or yellow instead of pure gray." },
+      { term: "Accent-first palette", definition: "A color system built around one dominant accent color used sparingly, rather than several competing brand colors." },
+    ],
+    prosCons: {
+      pros: [
+        "Warm neutrals feel less clinical than the cool grays most SaaS sites have used for years.",
+        "A single strong accent is easier to keep consistent across a site than five 'brand colors.'",
+        "A real dark theme (not an inverted filter) is now expected, not a nice-to-have.",
+      ],
+      cons: [
+        "Warm neutrals can look muddy if the underlying gray value isn't tuned carefully.",
+        "Chasing a trend for its own sake can clash with an already-established brand identity.",
+      ],
+    },
+    expertSummary: {
+      title: "Should you actually chase this trend?",
+      body: "Trend pieces like this are useful for noticing direction, not for copying wholesale. If your brand already has a distinct palette that's working, don't swap it out just because stone and terracotta are having a moment. The trend is worth adopting mainly if your current palette already feels dated or overly generic - in that case, warming up your neutrals and cutting down to one confident accent is a low-risk way to modernize.",
+    },
+    relatedLinks: [
+      { title: "Color playground", href: "/tools/playground" },
+      { title: "Startup website color strategy", href: "/guides/startup-website-color-strategy" },
+      { title: "Dark mode color guide", href: "/guides/dark-mode-color-guide" },
+    ],
+  },
+  {
+    slug: "color-blind-friendly-design",
+    title: "How to Design Color Palettes for Color-Blind Users",
+    description: "Practical steps for building palettes that still work for the roughly 1 in 12 men and 1 in 200 women with some form of color blindness.",
+    answer:
+      "Color-blind friendly design mostly comes down to never relying on color alone to communicate meaning, and choosing hues that stay distinct even under red-green or blue-yellow confusion. Pairing color with icons, labels, or patterns fixes most real-world problems.",
+    intent: "informational",
+    keywords: ["color blind friendly design", "colorblind palette", "accessible color design", "red green color blindness design"],
+    sections: [
+      {
+        title: "Never let color be the only signal",
+        body: "This is the single biggest fix. If a chart uses red for 'down' and green for 'up' with no labels, a color-blind user is guessing. Add an icon, a pattern, or a text label alongside the color and the problem mostly disappears, even without changing your palette.",
+      },
+      {
+        title: "Red and green are the riskiest pair",
+        body: "Deuteranopia and protanopia (the two most common types) make red and green hard to tell apart. If your success/error states rely on that pairing, try swapping the error state toward orange or a darker red, and lean the success state toward blue-green rather than pure green.",
+      },
+      {
+        title: "Test with a simulator, not just intuition",
+        body: "You can't reliably guess how your palette looks to someone with color blindness by eye. Run your key screens through a simulator (most design tools have one built in, or there are free browser extensions) before shipping anything that depends on color coding.",
+      },
+    ],
+    faq: [
+      { question: "What colors should be avoided for accessibility?", answer: "It's less about avoiding specific colors and more about avoiding red-green pairs as your only signal for opposite meanings, like error versus success." },
+      { question: "How common is color blindness?", answer: "Roughly 1 in 12 men and 1 in 200 women have some form of color blindness, most commonly red-green." },
+    ],
+    definitions: [
+      { term: "Deuteranopia", definition: "The most common form of red-green color blindness, caused by reduced sensitivity to green light." },
+      { term: "Color-independent signal", definition: "A way of communicating status or meaning (icon, label, pattern, position) that doesn't rely on color alone." },
+    ],
+    prosCons: {
+      pros: [
+        "Pairing color with icons or labels fixes most accessibility issues without redesigning the palette.",
+        "Simulator testing catches problems before they reach real users, at almost no cost.",
+        "Fixes that help color-blind users, like better contrast and clearer labeling, usually improve the experience for everyone.",
+      ],
+      cons: [
+        "Retrofitting an existing product that leans on color-only signals can mean touching a lot of screens.",
+        "Some fixes, like adding icons everywhere, can clutter a design if done without care.",
+      ],
+    },
+    expertSummary: {
+      title: "Where teams usually go wrong",
+      body: "The most common mistake isn't picking bad colors - it's shipping a chart, form validation, or status system where color is the only signal, then finding out during a support ticket that a chunk of users can't read it. Building in a second signal (icon, label, shape) from the start costs almost nothing. Retrofitting it after launch, across dozens of screens, is the expensive version of this fix.",
+    },
+    relatedLinks: [
+      { title: "WCAG color contrast guide", href: "/accessibility/color-contrast" },
+      { title: "Accessible success states", href: "/accessibility/accessible-success-states" },
+      { title: "Contrast checker tool", href: "/tools/contrast" },
+    ],
+  },
+  {
+    slug: "gradient-vs-solid-website-backgrounds",
+    title: "Gradients vs. Solid Colors: Which Converts Better?",
+    description: "A practical breakdown of when a gradient background helps a page and when it just adds noise that hurts conversions.",
+    answer:
+      "Neither wins outright. Solid backgrounds usually convert better for text-heavy, trust-driven pages like pricing or checkout, while gradients help hero sections and product launches feel more energetic and modern when used with restraint and enough contrast for the text on top.",
+    intent: "informational",
+    keywords: ["gradient vs solid color website", "gradient background conversion", "should i use a gradient background"],
+    sections: [
+      {
+        title: "Where gradients actually help",
+        body: "A subtle gradient in a hero section can add depth without hurting readability, especially for product launches, AI tools, and creative brands where 'modern and dynamic' is the goal. Keep the gradient behind imagery or short headlines, not paragraphs of body text.",
+      },
+      {
+        title: "Where solid colors win",
+        body: "Pricing tables, checkout flows, and long-form content read better against a flat background. Gradients add visual movement your eye has to process, which is the opposite of what you want when someone's trying to read a price or fill out a form.",
+      },
+      {
+        title: "The contrast trap",
+        body: "The most common gradient mistake is placing white text over a gradient that shifts from light to dark. It looks fine at the top and becomes unreadable at the bottom. If you're using a gradient behind text, check contrast at every point the text touches, not just the average.",
+      },
+    ],
+    faq: [
+      { question: "Do gradients hurt website conversions?", answer: "Not inherently. They can hurt conversions when they reduce text contrast or make a checkout/pricing page feel busy, but they help hero and launch pages when used carefully." },
+      { question: "Are gradients still in style?", answer: "Yes, but softer and more restrained than the loud purple-to-pink gradients from a few years ago. Subtlety is the current direction." },
+    ],
+    definitions: [
+      { term: "Point-of-contact contrast", definition: "The contrast ratio measured at the specific spot where text sits on a gradient, rather than the gradient's average brightness." },
+      { term: "Restrained gradient", definition: "A gradient with a narrow color and brightness range, used for subtle depth rather than a dramatic visual statement." },
+    ],
+    prosCons: {
+      pros: [
+        "Gradients add depth and energy to hero sections and launch pages without much extra design work.",
+        "Solid backgrounds keep pricing, checkout, and form pages fast to scan and easy to trust.",
+        "A restrained gradient reads as more premium than a loud, high-contrast one.",
+      ],
+      cons: [
+        "Gradients behind text need contrast checked at every point, not just on average - this step gets skipped often.",
+        "Overusing gradients across an entire product can make it feel like a marketing site instead of a tool.",
+      ],
+    },
+    expertSummary: {
+      title: "The decision rule we'd actually use",
+      body: "Ask what the page's main job is. If it's persuasion - a hero, a launch announcement, a landing page above the fold - a gradient can help set the mood. If the page's job is a transaction or a decision - pricing, checkout, a form - go solid. Mixing the two within one product page (gradient hero, solid everything below) is usually the safest default.",
+    },
+    relatedLinks: [
+      { title: "Violet aurora gradient", href: "/gradients/violet-aurora" },
+      { title: "Midnight metal gradient", href: "/gradients/midnight-metal" },
+      { title: "Contrast checker tool", href: "/tools/contrast" },
+    ],
+  },
+  {
+    slug: "brand-color-palette-mistakes",
+    title: "Common Brand Color Mistakes (and How to Fix Them)",
+    description: "The recurring color mistakes that quietly make brands look inconsistent, cheap, or hard to trust - and how to fix each one.",
+    answer:
+      "Most brand color problems trace back to three things: too many colors without defined roles, accent colors reused as text colors where they fail contrast, and no documented palette so every new page invents slightly different shades.",
+    intent: "informational",
+    keywords: ["brand color mistakes", "common branding color errors", "how to fix inconsistent brand colors"],
+    sections: [
+      {
+        title: "Too many colors, no assigned roles",
+        body: "A logo can have three colors and still work. A product with eight 'brand colors' and no rule for when to use which one usually looks scattered. Assign each color a job - primary action, secondary accent, success, warning, error - and stop there.",
+      },
+      {
+        title: "Using the accent color as body text",
+        body: "Bright brand colors often fail contrast requirements when used as text on a light background. It's a common mistake to grab the brand blue or orange straight from the logo and use it for paragraph text, then wonder why the site feels hard to read. Darken it for text, keep the bright version for buttons and highlights.",
+      },
+      {
+        title: "No documented palette means drift",
+        body: "Without a written color system (hex values, usage rules, a couple of examples), every new page a different designer or developer builds ends up slightly off. A simple one-page reference with locked hex codes fixes this faster than any design review process.",
+      },
+    ],
+    faq: [
+      { question: "How many colors should a brand use?", answer: "Most strong brand systems use one primary color, one or two accents, and a small neutral scale - rarely more than four or five colors total with clear roles for each." },
+      { question: "Why does my brand feel inconsistent across pages?", answer: "Usually because there's no documented palette with locked hex values, so each new page or designer picks a slightly different shade from memory." },
+    ],
+    definitions: [
+      { term: "Color role", definition: "A defined job for a color in a system, such as primary action, success state, or error state, rather than a color used ad hoc." },
+      { term: "Locked palette", definition: "A written reference of exact hex values and their intended use, so every designer and developer pulls from the same source." },
+    ],
+    prosCons: {
+      pros: [
+        "Assigning roles to colors stops the 'which blue do I use' problem before it starts.",
+        "Darkening accent colors for text usually fixes contrast complaints without touching the brand palette itself.",
+        "A one-page locked reference is cheap to make and saves real time in design review.",
+      ],
+      cons: [
+        "Enforcing a locked palette needs some process - without it, drift creeps back in within a few months.",
+        "Very small teams may feel a formal color doc is overkill until the product actually grows.",
+      ],
+    },
+    expertSummary: {
+      title: "The fix that actually sticks",
+      body: "Teams usually try to fix inconsistent colors with a design review or a Slack reminder, and it works for a week. What actually sticks is a locked reference - hex codes, named roles, one example of each - linked from wherever new pages get built. It turns 'what shade of blue is our brand blue' from a judgment call into a copy-paste.",
+    },
+    relatedLinks: [
+      { title: "Design token generator", href: "/tools/design-tokens" },
+      { title: "Homepage color mistakes", href: "/guides/homepage-color-mistakes-hurting-conversions" },
+      { title: "Color system overview", href: "/resources/color-system-overview" },
+    ],
+  },
+  {
+    slug: "email-marketing-color-psychology",
+    title: "Color Psychology for Email Marketing",
+    description: "How CTA button color, sender branding, and email background choices actually affect open and click-through rates.",
+    answer:
+      "Email color psychology matters most in two places: the CTA button, where contrast against the surrounding email beats any specific 'best' color, and consistent brand color use in headers/footers, which builds recognition in a crowded inbox over time.",
+    intent: "informational",
+    keywords: ["color psychology email marketing", "best cta button color email", "email design colors"],
+    sections: [
+      {
+        title: "CTA contrast beats CTA color",
+        body: "There's no single best button color for emails. What matters is whether the button clearly stands out from everything around it. A green button on a white email with light gray text will outperform a 'proven' orange button that blends into a busy layout.",
+      },
+      {
+        title: "Keep the palette small for scanability",
+        body: "Most people skim email on their phone in a few seconds. Two or three colors - a neutral text color, a brand accent for links and buttons, and maybe one highlight color for promos - keeps the email easy to scan instead of looking like a flyer.",
+      },
+      {
+        title: "Consistency builds inbox recognition",
+        body: "Using the same header color and button style across every campaign helps subscribers recognize your brand at a glance, which matters more for open rates over time than picking the theoretically 'best' individual color for any one email.",
+      },
+    ],
+    faq: [
+      { question: "What is the best color for an email CTA button?", answer: "There's no universal best color - what matters most is strong contrast against the surrounding email so the button is impossible to miss." },
+      { question: "Should marketing emails match the website's brand colors?", answer: "Yes. Consistent colors across email and web build recognition and trust, especially for repeat subscribers scanning a crowded inbox." },
+    ],
+    definitions: [
+      { term: "Contrast-first CTA", definition: "A button styled primarily for standing out against its surrounding email, rather than for matching a 'proven' color." },
+      { term: "Inbox recognition", definition: "The ability for a subscriber to identify a brand's email at a glance from consistent color and layout, before reading any text." },
+    ],
+    prosCons: {
+      pros: [
+        "Contrast-based CTA design works across every email client and dark-mode inbox without extra testing.",
+        "A small, consistent palette keeps mobile skimming fast, where most email actually gets read.",
+        "Repeating the same header/button style builds recognition that compounds over months of campaigns.",
+      ],
+      cons: [
+        "Dark mode email clients can invert or shift colors unpredictably, so contrast should be checked in both modes.",
+        "Chasing a 'best' button color from a case study can backfire if it doesn't actually contrast with your template.",
+      ],
+    },
+    expertSummary: {
+      title: "Why the 'best CTA color' question is the wrong one",
+      body: "Marketers often ask what color converts best for a button, expecting a universal answer like orange or green. The honest answer is that it depends entirely on what's around it. A worse test to run is 'which color wins' - a better one is 'which version has the strongest contrast against this specific template,' since that's the variable that actually predicts clicks.",
+    },
+    relatedLinks: [
+      { title: "What colors increase conversions?", href: "/guides/conversion-color-strategy" },
+      { title: "CTA color FAQ", href: "/faqs/cta-colors" },
+      { title: "Marketing colors", href: "/marketing-colors" },
+    ],
+  },
 ];
 
 const explainers: ContentEntry[] = [
   {
     slug: "why-blue-builds-trust",
-    title: "Why Blue Builds Trust",
-    description: "A short explainer on why blue remains the strongest trust color across many US digital categories.",
+    title: "If Blue Builds Trust, Why Doesn't Every Blue Site Feel Trustworthy?",
+    description: "Blue is the most common trust color in digital design, but plenty of blue websites still feel generic or unconvincing. Here's the part the 'blue means trust' advice usually leaves out.",
     answer:
-      "Blue builds trust because it feels stable, clear, and low-risk. That is why it appears so often in finance, healthcare, and SaaS brands where users need confidence before they act.",
+      "Blue builds trust as a starting point, not a guarantee - it removes a reason to doubt a brand without adding a reason to believe it. The trust actually gets built by contrast, clarity, and consistency around the blue, which is why two blue SaaS sites can feel completely different in how credible they seem.",
     intent: "informational",
-    keywords: ["why blue builds trust", "trust color psychology", "blue brand psychology"],
+    keywords: ["why blue builds trust", "blue website not trustworthy", "trust color psychology"],
     sections: [
-      { title: "Psychology in practice", body: "Blue is not magic, but it reliably supports calm, clarity, and institutional credibility in modern interfaces." },
-      { title: "Where it wins", body: "It works best when the user journey depends on reassurance rather than urgency." },
-      { title: "What makes it work", body: "Typography, spacing, and neutral balance are what keep blue from feeling bland." },
+      { title: "Blue is a floor, not a ceiling", body: "Choosing blue mostly rules out feeling alarming or chaotic - it doesn't automatically make a product feel competent. A blue site with inconsistent spacing, unclear copy, or a broken layout will still feel untrustworthy; the color can't compensate for that." },
+      { title: "The actual trust signals hiding next to the color", body: "What usually reads as 'trustworthy' is legible type, enough white space to breathe, a clear hierarchy of what to do next, and specific, real details (an actual address, a real support email, plausible pricing) - blue just doesn't work against any of that." },
+      { title: "When blue actively backfires", body: "In a category where every competitor already uses blue (fintech, SaaS, healthcare), adding another blue brand doesn't build extra trust - it just makes the product harder to tell apart from the last five tabs someone had open." },
     ],
     faq: [
-      { question: "What color improves trust?", answer: "Blue is generally the strongest trust color across digital products and service brands." },
-      { question: "Is blue always best?", answer: "No, but it is the safest default when credibility matters more than excitement." },
+      { question: "Does using blue automatically make a website look trustworthy?", answer: "No - it removes an obstacle more than it adds credibility. Clarity, consistency, and real specific details do the actual work of building trust." },
+      { question: "Should a new brand avoid blue because everyone else uses it?", answer: "Not necessarily, but it's worth knowing that blue alone won't differentiate you - if trust is the goal, invest in clarity and specificity, and consider a less crowded hue if standing out matters too." },
     ],
     relatedLinks: [
-      { title: "Blue color page", href: "/colors/blue" },
+      { title: "What blue means in color psychology", href: "/color-meanings/blue" },
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
-      { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
+      { title: "Blue vs green for trust", href: "/comparisons/blue-vs-green-for-trust" },
     ],
   },
   {
     slug: "how-color-psychology-affects-buyers",
-    title: "How Color Psychology Affects Buyers",
-    description: "A clear explainer on how color shapes trust, urgency, appetite, and premium perception.",
+    title: "Does Color Really Affect Buying Decisions? (What the Research Actually Supports)",
+    description: "You've probably seen a stat claiming a specific color increases sales by some precise percentage. Here's why those numbers don't hold up, and what color actually does affect.",
     answer:
-      "Color psychology affects buyers by changing how quickly a page feels trustworthy, urgent, premium, or approachable. The strongest results come from pairing the right emotional tone with clear hierarchy and audience fit.",
+      "Color affects buying decisions mostly through legibility, contrast, and first-impression fit with a category - not through any fixed color-to-percentage sales formula. Claims like 'red buttons convert 34% better' rarely hold up outside the one test they came from, because the real variable is usually contrast against that specific page, not the color in isolation.",
     intent: "informational",
-    keywords: ["how color psychology affects buyers", "marketing color psychology", "buying behavior colors"],
+    keywords: ["does color affect buying decisions", "color psychology marketing myths", "color and conversion rate"],
     sections: [
-      { title: "Emotions are contextual", body: "Red does not always mean urgency and blue does not always mean trust. Category expectations influence the effect." },
-      { title: "Hierarchy matters more", body: "Color works through contrast and emphasis as much as through symbolism." },
-      { title: "Use cases", body: "Trust categories lean blue, wellness leans green, luxury leans black, and hype campaigns lean warm." },
+      { title: "Why the viral color-conversion stats don't replicate", body: "Most of the 'this color converts X% better' claims trace back to a single A/B test on one specific page, then get generalized as a universal rule. Rerun the same test on a different layout and the result frequently reverses, because what actually moved the number was contrast against that page's background, not the hue itself." },
+      { title: "What color reliably does affect", body: "Color reliably affects how fast something is noticed (contrast), how a category is read at a glance (a food brand in blue reads oddly fast), and consistency-driven recognition over repeat visits. It's much less reliable as a direct lever on whether someone buys." },
+      { title: "The practical takeaway", body: "Instead of chasing a 'best converting color,' pick a color that fits the category, make sure your primary action has strong contrast against its surroundings, and test changes on your own traffic rather than trusting someone else's single case study." },
     ],
     faq: [
-      { question: "What colors attract customers?", answer: "Colors that match customer expectations and make the page easier to understand attract customers best." },
-      { question: "Do colors directly cause sales?", answer: "Not by themselves. Offer quality, messaging, and clarity still matter most." },
+      { question: "Is it true that changing a button color can increase sales by a specific percentage?", answer: "Treat any specific percentage with skepticism - those numbers usually come from one isolated test and don't generalize to other pages or audiences." },
+      { question: "So does color psychology matter at all for buying decisions?", answer: "Yes, but mostly through legibility, contrast, and category fit rather than any color having an inherent persuasive power on its own." },
     ],
     relatedLinks: [
       { title: "Marketing colors", href: "/marketing-colors" },
-      { title: "Color meanings", href: "/color-meanings/blue" },
-      { title: "FAQ on trust colors", href: "/faqs/trust-colors" },
+      { title: "Color psychology in marketing", href: "/color-psychology/color-psychology-in-marketing" },
+      { title: "What colors increase conversions?", href: "/guides/conversion-color-strategy" },
     ],
   },
 ];
@@ -2211,10 +2701,10 @@ const bestColorsFor: ContentEntry[] = [
     ],
     relatedLinks: [
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
-      { title: "Best blue color palettes", href: "/palettes/blues-collection" },
+      { title: "SaaS trust spectrum palette", href: "/palettes/saas-trust-spectrum" },
       { title: "Teal color page", href: "/colors/teal" },
       { title: "Azure color page", href: "/colors/azure" },
-      { title: "Color psychology in UI design", href: "/best-colors-for/color-psychology-in-ui-design" },
+      { title: "Color psychology in UI design", href: "/color-psychology/color-psychology-in-ui-design" },
     ],
   },
   {
@@ -2847,7 +3337,7 @@ export const hubs: HubPage[] = [
     description: "Explore individual colors by meaning, accessibility, use case, Tailwind mapping, and CSS implementation.",
     answer:
       "HueFlow's color hub maps every major color to brand meaning, UI use cases, accessibility guidance, Tailwind classes, CSS tokens, and related palettes so users and search engines can move from definition to application quickly.",
-    goals: ["Own color-name intent", "Support programmatic color pages", "Feed palettes, gradients, and meanings"],
+    goals: ["Look up any color by name", "See hex, RGB, and HSL values", "Jump to matching palettes and gradients"],
     featuredLinks: colors.map((entry) => ({ title: entry.title, href: `/colors/${entry.slug}` })),
   },
   {
@@ -2857,7 +3347,7 @@ export const hubs: HubPage[] = [
     description: "Browse curated palettes for SaaS, fintech, luxury, DTC, AI, and conversion-focused design systems.",
     answer:
       "Each palette page shows how colors work together in a specific context - SaaS, fintech, luxury ecommerce, and more - with real examples and ready-to-use color combinations.",
-    goals: ["Own industry palette intent", "Support best-for and brand-color pages", "Drive tool adoption"],
+    goals: ["Browse palettes by industry", "Copy ready-to-use color combinations", "Open a palette in the generator"],
     featuredLinks: palettes.map((entry) => ({ title: entry.title, href: `/palettes/${entry.slug}`, paletteColors: entry.paletteColors })),
   },
   {
@@ -2867,7 +3357,7 @@ export const hubs: HubPage[] = [
     description: "Gradient generators, use cases, and named gradients for websites, apps, launch pages, and brand systems.",
     answer:
       "Each gradient page ties a specific gradient to its color family, category, and UI use case - so you can find gradients that actually fit your design context.",
-    goals: ["Capture gradient generator intent", "Link gradients to colors and palettes", "Support web design pages"],
+    goals: ["Browse named gradients by mood", "Copy CSS for any gradient", "Build a custom one in the generator"],
     featuredLinks: gradients.map((entry) => ({ title: entry.title, href: `/gradients/${entry.slug}`, paletteColors: entry.paletteColors })),
   },
   {
@@ -2877,7 +3367,7 @@ export const hubs: HubPage[] = [
     description: "Industry and company color strategy pages for SaaS, fintech, healthcare, luxury, and iconic brands.",
     answer:
       "Each brand color page breaks down the palette behind a specific industry or company - what colors they use, why they work, and how to apply the same strategy to your own brand.",
-    goals: ["Own industry brand-color searches", "Bridge categories to palettes", "Support comparison pages"],
+    goals: ["See real brand color breakdowns", "Compare palettes across industries", "Apply the same logic to your own brand"],
     featuredLinks: brandColorEntries.map((entry) => ({ title: entry.title, href: `/brand-colors/${entry.slug}` })),
   },
   {
@@ -2887,7 +3377,7 @@ export const hubs: HubPage[] = [
     description: "Color psychology pages explaining what each color communicates to customers and users.",
     answer:
       "Users often begin with emotional intent - trust, urgency, luxury, growth - before they search for palettes or specific tools. Color meaning pages meet them at that earlier stage with clear, useful answers.",
-    goals: ["Capture color psychology queries", "Support featured snippets", "Feed brand-color decisions"],
+    goals: ["Understand what each color signals", "Compare psychology across colors", "Connect meaning to brand decisions"],
     featuredLinks: colorMeaningEntries.map((entry) => ({ title: entry.title, href: `/color-meanings/${entry.slug}` })),
   },
   {
@@ -2897,7 +3387,7 @@ export const hubs: HubPage[] = [
     description: "High-intent combination pages showing how two colors work together across brands, websites, and campaigns.",
     answer:
       "Each combination page explains how two colors interact - when the pairing works, what it communicates, and real-world examples across branding and UI.",
-    goals: ["Capture pairing intent", "Support palette exploration", "Feed design decisions"],
+    goals: ["See which colors pair well", "Understand why a pairing works", "Find real examples across branding and UI"],
     featuredLinks: combinations.map((entry) => ({ title: entry.title, href: `/color-combinations/${entry.slug}` })),
   },
   {
@@ -2907,7 +3397,7 @@ export const hubs: HubPage[] = [
     description: "Practical guides to contrast, status colors, UI readability, and WCAG-safe color systems.",
     answer:
       "Each accessibility page gives practical guidance on contrast ratios, status colors, and WCAG compliance - so your color choices work for all users, not just the majority.",
-    goals: ["Own WCAG color searches", "Support trust and compliance", "Link into Tailwind and CSS implementation"],
+    goals: ["Check contrast ratios against WCAG", "Fix common accessibility mistakes", "Apply fixes in Tailwind or CSS"],
     featuredLinks: accessibilityEntries.map((entry) => ({ title: entry.title, href: `/accessibility/${entry.slug}` })),
   },
   {
@@ -2917,7 +3407,7 @@ export const hubs: HubPage[] = [
     description: "Web design color strategy for landing pages, SaaS sites, hero sections, navigation systems, and UI hierarchy.",
     answer:
       "The web design hub turns color theory into page-level execution by connecting color choices to navigation, CTA hierarchy, screenshots, illustrations, and section design.",
-    goals: ["Own web-design color intent", "Link gradients and palettes", "Support best-for pages"],
+    goals: ["Turn color theory into page-level design", "See CTA and navigation examples", "Find palettes for specific site types"],
     featuredLinks: [
       { title: "Best colors for SaaS websites", href: "/best-colors-for/saas-websites" },
       { title: "AI website color strategy", href: "/guides/ai-website-color-strategy" },
@@ -2931,11 +3421,12 @@ export const hubs: HubPage[] = [
     description: "Marketing color strategy for conversions, trust, urgency, and customer attraction across channels.",
     answer:
       "Each marketing color page answers outcome-driven questions - what colors increase conversions, what colors attract customers - with research-backed guidance and practical examples.",
-    goals: ["Own conversion-driven searches", "Support FAQ and guide pages", "Bridge to palettes and best-for content"],
+    goals: ["See which colors affect conversion", "Get answers backed by practical examples", "Apply findings to palettes and CTAs"],
     featuredLinks: [
       { title: "What colors increase conversions?", href: "/guides/conversion-color-strategy" },
       { title: "Best colors for ecommerce conversions", href: "/best-colors-for/ecommerce-conversions" },
       { title: "FAQ: What is the best CTA color?", href: "/faqs/cta-colors" },
+      { title: "Color psychology for email marketing", href: "/guides/email-marketing-color-psychology" },
     ],
   },
   {
@@ -2945,7 +3436,7 @@ export const hubs: HubPage[] = [
     description: "Browse every Tailwind CSS color - blue, green, red, gray, slate, indigo, purple, orange, pink, teal, sky, yellow, and black - with class names, scale guidance, accessibility tips, and semantic token examples.",
     answer:
       "Tailwind CSS includes a full color palette from 50 (lightest) to 950 (darkest) for each hue. Each guide covers which shades to use for backgrounds, fills, text, borders, and interactive states - plus how to map them to semantic design tokens for consistent, accessible UIs.",
-    goals: ["Own dev-intent searches", "Support tool adoption", "Link CSS and accessibility content"],
+    goals: ["Find the right Tailwind shade fast", "Copy class names directly", "Check accessibility before shipping"],
     featuredLinks: tailwindEntries.map((entry) => ({ title: entry.title, href: `/tailwind/${entry.slug}` })),
   },
   {
@@ -2955,7 +3446,7 @@ export const hubs: HubPage[] = [
     description: "CSS color guides for variables, tokens, theming, and scalable design-system implementation.",
     answer:
       "CSS color pages target developers who want implementation guidance - from named color values and variables to full theming systems and token architecture.",
-    goals: ["Own CSS color searches", "Support dev audience", "Reinforce semantic-color authority"],
+    goals: ["Get implementation-ready CSS", "Learn variables and theming patterns", "Build a scalable token system"],
     featuredLinks: cssColorEntries.map((entry) => ({ title: entry.title, href: `/css-colors/${entry.slug}` })),
   },
   {
@@ -2965,7 +3456,7 @@ export const hubs: HubPage[] = [
     description: "Editorial content covering color theory, brand systems, accessibility, UI color strategy, and content design.",
     answer:
       "The blog supports topical depth, freshness, and linkability by expanding on core silos with expert commentary, examples, and trend-based commentary.",
-    goals: ["Earn links", "Build freshness", "Support topical authority"],
+    goals: ["Read practical color theory writeups", "See real examples and trend commentary", "Go deeper than the reference pages"],
     featuredLinks: [
       { title: "Color Theory & Resources", href: "/blog" },
       { title: "Why blue builds trust", href: "/explainers/why-blue-builds-trust" },
@@ -2979,7 +3470,7 @@ export const hubs: HubPage[] = [
     description: "In-depth guides covering color theory, design strategy, and practical color selection for websites and brands.",
     answer:
       "Guide pages cover deeper questions - how to choose colors, what colors work for specific industries, how color affects conversions - with practical sections, FAQs, and real examples.",
-    goals: ["Own long-form questions", "Bridge to conversion pages"],
+    goals: ["Get in-depth answers, not just definitions", "See industry-specific recommendations", "Find real examples and next steps"],
     featuredLinks: guides.map((entry) => ({ title: entry.title, href: `/guides/${entry.slug}` })),
   },
   {
@@ -2989,7 +3480,7 @@ export const hubs: HubPage[] = [
     description: "Short, clear explainers on color theory, branding, and design fundamentals - one question answered thoroughly.",
     answer:
       "Explainers answer a single color question clearly and concisely, without making the reader wade through unnecessary context to get the answer.",
-    goals: ["Win snippet intent", "Strengthen color authority"],
+    goals: ["Get a direct answer to one question", "Skip the unnecessary context", "Move on with what you needed"],
     featuredLinks: explainers.map((entry) => ({ title: entry.title, href: `/explainers/${entry.slug}` })),
   },
   {
@@ -2999,7 +3490,7 @@ export const hubs: HubPage[] = [
     description: "Comparison pages that help searchers choose between colors, categories, and brand strategies.",
     answer:
       "Comparison pages help designers and developers make confident decisions by mapping tradeoffs clearly - when to use one color over another, what each communicates, and where each performs best.",
-    goals: ["Capture decision-stage intent", "Support tables and citations", "Bridge to commercial pages"],
+    goals: ["Compare options side by side", "See clear tradeoffs, not just opinions", "Decide with confidence"],
     featuredLinks: comparisons.map((entry) => ({ title: entry.title, href: `/comparisons/${entry.slug}` })),
   },
   {
@@ -3009,7 +3500,7 @@ export const hubs: HubPage[] = [
     description: "High-intent pages answering the best colors for specific industries, sites, and conversion goals.",
     answer:
       "Best-for pages answer the most practical color question a designer or marketer can ask: what colors actually work for this type of site or product.",
-    goals: ["Own recommendation intent", "Link into palettes and brand pages"],
+    goals: ["Get straight recommendations by industry", "See why each color works there", "Jump to a matching palette"],
     featuredLinks: bestColorsFor.map((entry) => ({ title: entry.title, href: `/best-colors-for/${entry.slug}` })),
   },
   {
@@ -3019,7 +3510,7 @@ export const hubs: HubPage[] = [
     description: "Short answer pages covering the most common color questions designers and developers actually ask.",
     answer:
       "FAQ pages give direct answers to specific color questions without burying the reader in editorial content - useful for people who know what they're looking for.",
-    goals: ["Capture long-tail questions", "Support snippet extraction"],
+    goals: ["Find quick answers to specific questions", "Skip the editorial framing", "Get back to work faster"],
     featuredLinks: faqs.map((entry) => ({ title: entry.title, href: `/faqs/${entry.slug}` })),
   },
   {
@@ -3029,7 +3520,7 @@ export const hubs: HubPage[] = [
     description: "Strategic resources covering site architecture, content systems, and search growth operations.",
     answer:
       "Resource pages document HueFlow's approach to color systems, design tooling, and content so designers, developers, and teams can get the most from the platform.",
-    goals: ["Support strategic credibility", "Attract partnerships", "Document operating system"],
+    goals: ["See how HueFlow approaches color systems", "Understand the tooling and content behind it", "Get the most out of the platform"],
     featuredLinks: resources.map((entry) => ({ title: entry.title, href: `/resources/${entry.slug}` })),
   },
   {
@@ -3039,7 +3530,7 @@ export const hubs: HubPage[] = [
     description: "Design tokens, CSS custom properties, Figma variables, and platform color constants for engineering teams.",
     answer:
       "The Developer hub documents how to take a HueFlow color system to production: design tokens, CSS custom properties, Figma variable handoff, and native color constants for Swift, Kotlin, and Flutter.",
-    goals: ["Own developer-intent color searches", "Support the design token generator tool", "Bridge design and engineering handoff"],
+    goals: ["Take a color system to production", "Generate tokens for CSS, Tailwind, and native", "Keep design and code in sync"],
     featuredLinks: developerEntries.map((entry) => ({ title: entry.title, href: `/developer/${entry.slug}` })),
   },
   {
@@ -3049,7 +3540,7 @@ export const hubs: HubPage[] = [
     description: "How color affects perception, trust, urgency, and decision-making across marketing and product design.",
     answer:
       "Color Psychology pages explain the mechanisms behind color meaning - warm vs. cool, marketing perception, and UI state recognition - separately from the per-color meaning pages in Color Meanings.",
-    goals: ["Own broad color-psychology search intent", "Support color-meanings and marketing-colors", "Feed the conversion-strategy guide"],
+    goals: ["Understand the mechanisms behind color meaning", "See warm vs. cool and marketing effects", "Connect theory to real design decisions"],
     featuredLinks: [
       ...colorPsychologyEntries.map((entry) => ({ title: entry.title, href: `/color-psychology/${entry.slug}` })),
       { title: "Color Psychology Explorer (interactive tool)", href: "/tools/color-psychology-explorer" },
@@ -3237,14 +3728,7 @@ function buildKeyTakeaways(entry: ContentEntry) {
 }
 
 function buildQuickFacts(entry: ContentEntry): QuickFact[] {
-  if (entry.quickFacts?.length) {
-    return entry.quickFacts;
-  }
-
-  return [
-    { label: "Topic", value: entry.keywords[0] ?? entry.slug },
-    { label: "See also", value: entry.relatedLinks.slice(0, 3).map((link) => link.title).join(" • ") },
-  ];
+  return entry.quickFacts ?? [];
 }
 
 function buildDefinitions(entry: ContentEntry): DefinitionItem[] {
@@ -3256,10 +3740,6 @@ function buildDefinitions(entry: ContentEntry): DefinitionItem[] {
     {
       term: toTitleCase(entry.slug),
       definition: entry.answer,
-    },
-    {
-      term: "Color strategy",
-      definition: `${entry.title} should be evaluated through color psychology, accessibility, brand positioning, palette fit, and implementation clarity.`,
     },
   ];
 }
@@ -3289,9 +3769,11 @@ function buildExpertSummary(entry: ContentEntry): ExpertSummary {
     return entry.expertSummary;
   }
 
+  const followUp = entry.sections[0]?.body ?? entry.sections[1]?.body;
+
   return {
-    title: "Expert summary",
-    body: `${entry.answer} In practice, the strongest results come from aligning ${entry.keywords.slice(0, 2).join(" and ")} with clear hierarchy, tested contrast, and explicit links to palettes, gradients, branding, psychology, and accessibility decisions.`,
+    title: "The bottom line",
+    body: followUp ? `${entry.answer} ${followUp}` : entry.answer,
   };
 }
 

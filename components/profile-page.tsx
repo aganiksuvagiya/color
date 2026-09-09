@@ -174,7 +174,7 @@ export function ProfilePage() {
               <div className="px-5 pb-4 pt-4 text-center">
                 <div className="mx-auto mb-3 inline-block">
                   {user?.image ? (
-                    <Image src={user.image} alt="avatar" width={64} height={64}
+                    <Image src={user.image} alt={user.name ?? "Your profile photo"} width={64} height={64}
                       className="rounded-full ring-2 ring-[#e8531f]/30 ring-offset-2 ring-offset-white"/>
                   ) : (
                     <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#e8531f] to-orange-600 text-xl font-bold text-white ring-2 ring-[#e8531f]/20 ring-offset-2 ring-offset-white">

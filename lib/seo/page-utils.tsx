@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { ContentPageView } from "@/components/seo/content-page";
 import { HubPageView } from "@/components/seo/hub-page";
 import { StructuredData } from "@/components/seo/structured-data";
-import { findResolvedEntry, getCollection, getHubByPath, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
-import { buildProgrammaticBrandColorEntry, buildProgrammaticColorEntry, getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
+import { findResolvedEntry, getCollection, getHubByPath, isColorMeaningAuthored, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
+import { buildProgrammaticBrandColorEntry, buildProgrammaticColorEntry, getHexDuplicateCanonicalSlug, getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
 import {
   buildArticleSchema,
   buildBreadcrumbSchema,
@@ -21,11 +21,17 @@ export function buildPageMetadata({
   description,
   path,
   keywords,
+  canonicalPath,
+  noindex,
 }: {
   title: string;
   description: string;
   path: string;
   keywords?: string[];
+  /** Set when this page's canonical URL should point at a different, primary page (e.g. a hex-code page that duplicates a named color). */
+  canonicalPath?: string;
+  /** Set for pages that duplicate another page's content closely enough that they shouldn't compete in search results. The page itself still works normally for visitors. */
+  noindex?: boolean;
 }): Metadata {
   const url = `${siteConfig.domain}${path}`;
 
@@ -34,8 +40,9 @@ export function buildPageMetadata({
     description,
     keywords,
     alternates: {
-      canonical: url,
+      canonical: `${siteConfig.domain}${canonicalPath ?? path}`,
     },
+    robots: noindex ? { index: false, follow: true } : undefined,
     openGraph: {
       title,
       description,
@@ -123,11 +130,24 @@ export function buildCollectionMetadata<
     });
   }
 
+  // Hex-code slugs that just re-spell an already-named color (e.g. /colors/000000
+  // for "black") shouldn't compete against the named-color page in search - point
+  // their canonical at the named page instead of indexing a near-duplicate URL.
+  const duplicateOfSlug = key === "colors" || key === "colorMeanings" ? getHexDuplicateCanonicalSlug(slug) : null;
+
+  // Color-meanings pages without hand-written psychology content still fall back to
+  // the same generator that powers /colors, so until they're individually authored
+  // they'd otherwise duplicate that page - keep them working for visitors, but out
+  // of the index.
+  const noindex = key === "colorMeanings" && !duplicateOfSlug && !isColorMeaningAuthored(slug);
+
   return buildPageMetadata({
     title: entry.title,
     description: entry.description,
     keywords: entry.keywords,
     path: `${pathPrefix}/${entry.slug}`,
+    canonicalPath: duplicateOfSlug ? `${pathPrefix}/${duplicateOfSlug}` : undefined,
+    noindex,
   });
 }
 
@@ -166,6 +186,13 @@ function findCollectionEntry<K extends keyof ReturnType<typeof getAllCollections
   }
 
   if (key === "colorMeanings") {
+    // Hand-authored psychology/symbolism content takes priority over the programmatic
+    // hex/RGB generator so these pages stay distinct from their /colors counterpart.
+    const authored = findResolvedEntry("colorMeanings", slug);
+    if (authored) {
+      return authored;
+    }
+
     const colorEntry = buildProgrammaticColorEntry(slug);
     if (colorEntry) {
       return resolveContentEntry({
@@ -173,6 +200,7 @@ function findCollectionEntry<K extends keyof ReturnType<typeof getAllCollections
         title: `${getProgrammaticColorDescriptor(slug)?.displayName ?? slug} Color Meaning`,
       });
     }
+    return undefined;
   }
 
   if (key === "brandColors") {

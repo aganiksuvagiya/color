@@ -19,14 +19,10 @@ export function buildOrganizationSchema() {
     url: siteConfig.domain,
     logo: {
       "@type": "ImageObject",
-      url: `${siteConfig.domain}/logo.png`,
+      url: `${siteConfig.domain}/favicon.svg`,
     },
     description: siteConfig.description,
     areaServed: "US",
-    sameAs: [
-      "https://twitter.com/hueflow",
-      "https://www.linkedin.com/company/hueflow",
-    ],
   };
 }
 
@@ -63,7 +59,7 @@ export function buildSoftwareApplicationSchema() {
       priceCurrency: "USD",
     },
     featureList: [
-      "AI-assisted color palette generator",
+      "Prompt-based color palette generator",
       "WCAG contrast checker and accessibility auto-fix",
       "Colorblind simulation",
       "Gradient generator (linear, radial, conic)",
@@ -116,25 +112,18 @@ export function buildArticleSchema({
     mainEntityOfPage: url,
     datePublished: datePublished ?? today,
     dateModified: dateModified ?? today,
-    author: [
-      {
-        "@type": "Person",
-        name: "HueFlow Editorial Team",
-        url: siteConfig.domain,
-      },
-      {
-        "@type": "Organization",
-        name: siteConfig.name,
-        url: siteConfig.domain,
-      },
-    ],
+    author: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.domain,
+    },
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,
       url: siteConfig.domain,
       logo: {
         "@type": "ImageObject",
-        url: `${siteConfig.domain}/logo.png`,
+        url: `${siteConfig.domain}/favicon.svg`,
       },
     },
   };

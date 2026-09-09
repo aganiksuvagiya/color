@@ -502,7 +502,7 @@ export function GeneratorPage() {
               </button>
             )}
 
-            <button onClick={() => setPromptOpen(p => !p)} className={tbBtn(promptOpen)} title="Generate with AI prompt">
+            <button onClick={() => setPromptOpen(p => !p)} className={tbBtn(promptOpen)} title="Generate from a mood or prompt">
               <svg width="11" height="11" fill="none" viewBox="0 0 24 24">
                 <path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" fill="currentColor" />
               </svg>

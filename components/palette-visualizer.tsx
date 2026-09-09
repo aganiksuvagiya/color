@@ -142,7 +142,7 @@ function MarketingPreview({ neutral, primary, success, warning, accent, primaryT
         </div>
         <div className="grid flex-1 grid-cols-3 gap-3">
           {[
-            { title: "Better palettes",   desc: "AI-assisted harmony that actually looks good.", color: primary },
+            { title: "Better palettes",   desc: "Built-in harmony rules that actually look good.", color: primary },
             { title: "Better contrast",   desc: "WCAG AA/AAA checks built right in.",            color: success },
             { title: "Better exports",    desc: "CSS vars, JSON tokens, Figma & more.",          color: accent  },
           ].map((f) => (

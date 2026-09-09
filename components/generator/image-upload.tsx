@@ -77,7 +77,7 @@ export function ImageUpload({ onExtract }: Props) {
       >
         {preview ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={preview} alt="Uploaded" className="mb-3 h-20 w-20 rounded-xl object-cover shadow-md" />
+          <img src={preview} alt="Your uploaded photo, used as the source for this palette" className="mb-3 h-20 w-20 rounded-xl object-cover shadow-md" />
         ) : (
           <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-[#1c1712]/[0.05]">
             <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className="text-[#1c1712]/30">

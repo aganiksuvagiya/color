@@ -201,16 +201,18 @@ export function ContentPageView({
                   </li>
                 ))}
               </ul>
-              <div className="mt-5 space-y-2 border-t border-black/[0.07] pt-5">
-                {entry.quickFacts.map((fact) => (
-                  <p key={fact.label} className="text-[14px] leading-[1.65] text-[#1c1712]/65">
-                    <strong className="font-semibold text-[#1c1712]">{fact.label}:</strong>{" "}{fact.value}
-                  </p>
-                ))}
-              </div>
+              {entry.quickFacts.length > 0 && (
+                <div className="mt-5 space-y-2 border-t border-black/[0.07] pt-5">
+                  {entry.quickFacts.map((fact) => (
+                    <p key={fact.label} className="text-[14px] leading-[1.65] text-[#1c1712]/65">
+                      <strong className="font-semibold text-[#1c1712]">{fact.label}:</strong>{" "}{fact.value}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* Expert summary */}
+            {/* Bottom-line summary */}
             <div className="rounded-2xl bg-white p-7">
               <h2 className="mb-3 text-[18px] font-bold text-[#1c1712]">{entry.expertSummary.title}</h2>
               <p className="text-[15px] leading-[1.8] text-[#1c1712]/65">{entry.expertSummary.body}</p>

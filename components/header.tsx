@@ -8,7 +8,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { awardPointsClient } from "@/lib/award-points-client";
 
 const MAIN_LINKS = [
-  { href: "/explore", label: "Colors" },
+  { href: "/colors", label: "Colors" },
   { href: "/palettes", label: "Palettes" },
   { href: "/trends", label: "Trends" },
   { href: "/community", label: "Community" },
@@ -148,7 +148,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
             <>
               <Link href="/profile" className="flex items-center gap-1 sm:hidden" aria-label="Profile">
                 {session.user?.image ? (
-                  <Image src={session.user.image} alt="avatar" width={28} height={28} className="rounded-full" />
+                  <Image src={session.user.image} alt={session.user.name ?? "Your profile photo"} width={28} height={28} className="rounded-full" />
                 ) : (
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e8531f] text-xs font-bold text-white">
                     {session.user?.name?.[0] ?? "U"}
@@ -166,7 +166,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                   className="flex items-center gap-2 rounded-full border border-black/8 px-3 py-1.5 text-sm text-[#1c1712]/70 transition-colors hover:bg-black/[0.03]"
                 >
                   {session.user?.image ? (
-                    <Image src={session.user.image} alt="avatar" width={22} height={22} className="rounded-full" />
+                    <Image src={session.user.image} alt={session.user.name ?? "Your profile photo"} width={22} height={22} className="rounded-full" />
                   ) : (
                     <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#e8531f] text-xs font-bold text-white">
                       {session.user?.name?.[0] ?? "U"}
@@ -312,7 +312,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                   className="flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-[#1c1712]/75 transition-colors hover:bg-black/[0.04] hover:text-[#1c1712]"
                 >
                   {session.user?.image ? (
-                    <Image src={session.user.image} alt="avatar" width={20} height={20} className="rounded-full" />
+                    <Image src={session.user.image} alt={session.user.name ?? "Your profile photo"} width={20} height={20} className="rounded-full" />
                   ) : (
                     <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#e8531f] text-xs font-bold text-white">
                       {session.user?.name?.[0] ?? "U"}

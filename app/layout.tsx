@@ -7,7 +7,6 @@ import { StructuredData } from "@/components/seo/structured-data";
 import { ConditionalFooter } from "@/components/conditional-footer";
 import { Providers } from "@/components/providers";
 import { ReferralCapture } from "@/components/referral-capture";
-import { SidebarAd } from "@/components/sidebar-ad";
 import { buildOrganizationSchema, buildSoftwareApplicationSchema, buildWebSiteSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/seo/site-config";
 
@@ -29,7 +28,6 @@ export const metadata: Metadata = {
     "HueFlow",
     "HueFlow color tool",
     "HueFlow palette generator",
-    "AI color generator",
     "color palette generator",
     "brand colors",
     "color psychology",
@@ -95,7 +93,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Providers>
           {children}
           <ConditionalFooter />
-          <SidebarAd />
         </Providers>
       </body>
     </html>

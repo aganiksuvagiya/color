@@ -337,7 +337,7 @@ export function ImageColorExtractor() {
               <div className="relative min-h-[260px] flex-1 overflow-hidden bg-[#f0ede8] sm:min-h-[340px]">
                 <img
                   src={imageUrl}
-                  alt="Uploaded"
+                  alt="Your uploaded photo - click anywhere on it to pick a color"
                   onClick={handleImageClick}
                   style={{ filter: MOOD_FILTERS[mood] ?? "none" }}
                   className={`h-full w-full object-contain transition-[filter] duration-300 ${toolMode === "eyedropper" && selectedId !== null ? "cursor-crosshair" : "cursor-default"}`}

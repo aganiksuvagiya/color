@@ -908,6 +908,41 @@ export const blogPageContent = {
       readTime: "6 min",
       href: "/guides/best-colors-for-healthcare-websites-usa",
     },
+    {
+      title: "Web Design Color Trends for 2026",
+      excerpt: "What's actually showing up in new website launches this year, and which trends are worth adopting versus skipping.",
+      category: "Guides",
+      readTime: "5 min",
+      href: "/guides/color-trends-2026",
+    },
+    {
+      title: "How to Design Color Palettes for Color-Blind Users",
+      excerpt: "Practical steps for building palettes that still work for the roughly 1 in 12 men with some form of color blindness.",
+      category: "Guides",
+      readTime: "5 min",
+      href: "/guides/color-blind-friendly-design",
+    },
+    {
+      title: "Gradients vs. Solid Colors: Which Converts Better?",
+      excerpt: "A practical breakdown of when a gradient background helps a page and when it just adds noise.",
+      category: "Guides",
+      readTime: "5 min",
+      href: "/guides/gradient-vs-solid-website-backgrounds",
+    },
+    {
+      title: "Common Brand Color Mistakes (and How to Fix Them)",
+      excerpt: "The recurring color mistakes that quietly make brands look inconsistent, cheap, or hard to trust.",
+      category: "Guides",
+      readTime: "6 min",
+      href: "/guides/brand-color-palette-mistakes",
+    },
+    {
+      title: "Color Psychology for Email Marketing",
+      excerpt: "How CTA button color, sender branding, and email background choices actually affect click-through rates.",
+      category: "Guides",
+      readTime: "5 min",
+      href: "/guides/email-marketing-color-psychology",
+    },
   ],
   sections: [
     {
@@ -930,7 +965,7 @@ export const blogPageContent = {
     {
       question: "What makes HueFlow resources different from a typical blog?",
       answer:
-        "The content is structured around practical decisions and retrieval-friendly answers rather than generic editorial posts. It is closer to a searchable color strategy library than a casual blog.",
+        "The content is organized around specific decisions - which color, which pairing, which contrast fix - instead of general editorial posts. It's closer to a searchable color strategy library than a casual blog.",
     },
     {
       question: "Which pages should new visitors read first?",

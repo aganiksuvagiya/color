@@ -30,7 +30,7 @@ export default function AboutPage() {
       <h2>What You&apos;ll Find Here</h2>
       <ul>
         <li>
-          <strong>Generator and tools:</strong> an AI-assisted palette
+          <strong>Generator and tools:</strong> a prompt-based palette
           generator plus focused tools for color picking, gradients, contrast
           checking, Tailwind scales, image color extraction, color mixing,
           color blindness simulation, and more.
