@@ -24,6 +24,8 @@ export type ToolPageSeoConfig = {
   audience: string;
   useCases: string[];
   howToSteps: string[];
+  explainerHeading?: string;
+  explainer?: Array<{ title: string; body: string }>;
   faq: Array<{ question: string; answer: string }>;
   relatedLinks: Array<{ title: string; href: string }>;
 };
@@ -78,6 +80,8 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Smart contrast fixer", href: "/tools/contrast-fixer" },
       { title: "Blue color page", href: "/colors/blue" },
       { title: "Color blind simulator", href: "/tools/colorblind-simulator" },
+      { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
+      { title: "Best colors for finance websites", href: "/best-colors-for/finance-websites" },
     ],
   },
   gradient: {
@@ -129,6 +133,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Color animation generator", href: "/tools/animation" },
       { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
       { title: "Color mixer", href: "/tools/color-mixer" },
+      { title: "AI website color strategy", href: "/guides/ai-website-color-strategy" },
     ],
   },
   picker: {
@@ -147,6 +152,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "hex to rgb converter",
       "color shades and tints generator",
       "pick a color online",
+      "what is a hex color code",
     ],
     answer:
       "HueFlow's Color Picker helps teams inspect a color, convert it into usable formats, and generate supporting shades or tints for consistent product and brand systems.",
@@ -162,6 +168,21 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "Click any generated shade or tint to continue exploring.",
       "Copy the final value for design tokens, CSS, or Tailwind classes.",
     ],
+    explainerHeading: "Understanding HEX, RGB & HSL",
+    explainer: [
+      {
+        title: "HEX",
+        body: "A HEX code (like #2563EB) packs red, green, and blue into six characters, two per channel, from 00 to FF. It's the most common format in CSS, design tools, and brand guidelines because it's compact and unambiguous to copy-paste.",
+      },
+      {
+        title: "RGB",
+        body: "RGB (like rgb(37, 99, 235)) writes the same red, green, and blue channels as plain 0-255 numbers instead of hex pairs. It's easier to reason about programmatically and is what most color-mixing and blending math is done in.",
+      },
+      {
+        title: "HSL",
+        body: "HSL (like hsl(221, 83%, 53%)) describes a color by hue, saturation, and lightness instead of channel mixing. It's the easiest format for building a shade scale, since you can raise or lower lightness without shifting the underlying hue.",
+      },
+    ],
     faq: [
       {
         question: "Why use HSL when picking UI colors?",
@@ -173,6 +194,21 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
         answer:
           "Shades and tints turn one core color into hover states, surfaces, borders, text accents, and semantic variants that feel more consistent across a product.",
       },
+      {
+        question: "What is the difference between HEX, RGB, and HSL?",
+        answer:
+          "They describe the same color three different ways. HEX and RGB both encode red/green/blue channel values (as hex pairs or 0-255 numbers); HSL instead uses hue, saturation, and lightness, which is usually easier for humans to adjust by hand.",
+      },
+      {
+        question: "How do I convert HEX to RGB?",
+        answer:
+          "Split the HEX code into three two-character pairs and convert each from base 16 to base 10 - for example #2563EB becomes rgb(37, 99, 235). This picker does that conversion automatically the moment you enter or select a color.",
+      },
+      {
+        question: "Which format should I use in CSS: HEX, RGB, or HSL?",
+        answer:
+          "All three work identically in modern CSS. Use HEX for compact static values, RGB when you need to manage transparency with rgba(), and HSL when you're building a shade/tint scale and want to tune lightness directly.",
+      },
     ],
     relatedLinks: [
       { title: "Colors hub", href: "/colors" },
@@ -183,6 +219,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Palette visualizer", href: "/tools/palette-visualizer" },
       { title: "Color harmony generator", href: "/tools/color-harmony" },
       { title: "Color mixer", href: "/tools/color-mixer" },
+      { title: "AI website color strategy", href: "/guides/ai-website-color-strategy" },
     ],
   },
   tailwind: {
@@ -201,6 +238,8 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "tailwind color names list",
       "tailwind default color palette",
       "tailwind 500 shade hex",
+      "tailwind color chart",
+      "tailwind hex colors",
     ],
     answer:
       "HueFlow's Tailwind CSS Colors page helps teams browse Tailwind shades quickly, compare scale values, and copy production-ready color references for component systems.",
@@ -216,6 +255,21 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "Hover a swatch to review the exact HEX value.",
       "Click any swatch to copy the color into your workflow.",
     ],
+    explainerHeading: "Understanding the Tailwind color system",
+    explainer: [
+      {
+        title: "What is the Tailwind color chart",
+        body: "Tailwind ships a default palette of 22 color families (slate, gray, red, orange... through to rose), each with an 11-step scale from 50 (lightest) to 950 (darkest). This page mirrors that full chart with the exact HEX value under every swatch.",
+      },
+      {
+        title: "Using Tailwind colors in tailwind.config",
+        body: "The default palette is available out of the box via classes like bg-blue-500 or text-slate-900 - no config needed. To customize it, extend theme.colors in tailwind.config.js/ts with your own scale, or override a single family while keeping the rest of the default palette.",
+      },
+      {
+        title: "Arbitrary values vs. theme colors",
+        body: "Tailwind also supports one-off values like bg-[#2563eb] when you need an exact brand HEX that isn't in the default scale. Reach for a theme color first for consistency; use an arbitrary value only when the design genuinely needs a color outside the scale.",
+      },
+    ],
     faq: [
       {
         question: "How do teams choose the right Tailwind shade?",
@@ -227,6 +281,21 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
         answer:
           "Yes. Many teams start with a Tailwind family close to their brand hue, then customize the final token scale to fit product and marketing needs.",
       },
+      {
+        question: "What are the HEX values for Tailwind colors?",
+        answer:
+          "Every Tailwind color family has 11 shades (50-950), each with its own fixed HEX value - for example blue-500 is #3B82F6. Search a family above to see its full chart of exact HEX codes.",
+      },
+      {
+        question: "How do I use Tailwind colors outside of a Tailwind project?",
+        answer:
+          "Copy the HEX value for any shade and use it directly in plain CSS, design tools, or another framework - the values are just standard hex colors, not something tied to Tailwind's build process.",
+      },
+      {
+        question: "Why does Tailwind's default palette work well as a starting point?",
+        answer:
+          "Each family is tuned so shades stay perceptually consistent in lightness and saturation across the 50-950 scale, which makes it easier to build accessible UI states without manually testing contrast at every step.",
+      },
     ],
     relatedLinks: [
       { title: "Tailwind hub", href: "/tailwind" },
@@ -234,6 +303,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Color picker", href: "/tools/picker" },
       { title: "Design token generator", href: "/tools/design-tokens" },
       { title: "Tailwind color scale generator", href: "/tools/tailwind-scale" },
+      { title: "Contrast checker", href: "/tools/contrast" },
     ],
   },
   "design-tokens": {
@@ -335,6 +405,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Brand color analyzer", href: "/tools/brand-analyzer" },
       { title: "Palettes hub", href: "/palettes" },
       { title: "Luxury brand color strategy", href: "/guides/luxury-brand-color-strategy" },
+      { title: "Best colors for photography websites", href: "/best-colors-for/photography-websites" },
     ],
   },
   "brand-analyzer": {

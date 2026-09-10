@@ -40,6 +40,21 @@ export function ToolPageSections({ config }: { config: ToolPageSeoConfig }) {
         </div>
       </div>
 
+      {/* Explainer */}
+      {config.explainer && config.explainer.length > 0 && (
+        <div className="rounded-2xl border border-black/[0.08] bg-white p-6 shadow-[0_1px_6px_rgba(28,23,18,0.06)]">
+          <h2 className="text-base font-bold tracking-[-0.02em] text-[#1c1712]">{config.explainerHeading ?? "Understanding this tool"}</h2>
+          <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
+            {config.explainer.map((item) => (
+              <div key={item.title} className="rounded-xl border border-black/[0.06] bg-[#faf7f2] p-4">
+                <p className="text-sm font-semibold text-[#1c1712]">{item.title}</p>
+                <p className="mt-2 text-sm leading-6 text-[#1c1712]/55">{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* How we structure */}
       <div className="rounded-2xl border border-black/[0.08] bg-white p-6 shadow-[0_1px_6px_rgba(28,23,18,0.06)]">
         <h2 className="text-base font-bold tracking-[-0.02em] text-[#1c1712]">How we structure these pages</h2>

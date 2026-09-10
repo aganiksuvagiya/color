@@ -1856,24 +1856,78 @@ const guides: ContentEntry[] = [
   {
     slug: "ai-website-color-strategy",
     title: "Best Colors for AI Websites",
-    description: "A practical guide to choosing colors for AI tools, assistants, and modern product launches.",
+    description:
+      "The best colors for AI websites are blue, indigo, and purple foundations paired with one electric accent - colors that feel technical, modern, and trustworthy. Includes ready-to-use palettes with HEX values for AI tools, assistants, and SaaS launches.",
     answer:
-      "AI websites often perform best with blue, indigo, or purple foundations because those colors feel technical, modern, and trustworthy. The best systems then add one brighter accent to keep the brand memorable.",
+      "AI websites usually perform best with a blue, indigo, or purple foundation, because those hues feel technical, modern, and trustworthy without being cold. The strongest systems then add exactly one brighter accent - electric blue, magenta, or mint - reserved for highlights, badges, and hero moments, while keeping reading surfaces neutral and stable.",
     intent: "informational",
-    keywords: ["best colors for ai websites", "ai website color palette", "ai brand colors"],
+    keywords: [
+      "best colors for ai websites",
+      "ai website color palette",
+      "ai brand colors",
+      "ai startup colors",
+      "ai website design colors",
+      "artificial intelligence website color palette",
+    ],
     sections: [
-      { title: "Best default", body: "Start with blue or indigo if trust matters most, and shift toward purple if differentiation is a higher priority." },
-      { title: "Accent strategy", body: "Use a warm or electric secondary accent sparingly in highlights, badges, and motion-heavy hero areas." },
-      { title: "Avoid overload", body: "AI brands often overuse gradients and glow effects. Keep core reading surfaces stable and neutral." },
+      {
+        title: "Best default: blue and indigo for trust",
+        body: "Indigo and mid-range blue (#2563EB, #1E3A5F) are the safest AI foundation because they read as technical and reliable without feeling sterile. This is the right default when the product needs to earn trust fast - enterprise AI tools, developer platforms, and B2B assistants.",
+      },
+      {
+        title: "Purple and violet for differentiation",
+        body: "Purple (#5B21B6, #A855F7) signals creativity and forward-thinking positioning, which is why many consumer-facing AI and creative-tool brands lean purple instead of blue. It differentiates from the sea of blue enterprise software while still feeling premium and modern.",
+      },
+      {
+        title: "Dark mode as a first-class surface, not an afterthought",
+        body: "AI products are used in long sessions - chat, code, research - so a genuine dark theme (not just an inverted light theme) matters. Layer 3-4 near-black tones for background, surface, and card, then reserve one electric accent (#388BFD or similar) for primary actions and focus states.",
+      },
+      {
+        title: "Accent strategy",
+        body: "Use a warm or electric secondary accent sparingly - in highlights, streaming/typing indicators, badges, and hero gradients - never as a body-text or full-background color. Overusing the accent is the single most common way AI brands undercut the credibility their base palette worked to build.",
+      },
+      {
+        title: "Avoid gradient and glow overload",
+        body: "AI brands overuse gradients and glow effects more than any other category right now. Keep core reading surfaces (body copy, forms, tables) flat and neutral, and confine gradients to hero backgrounds, illustrations, and loading states where they add energy without hurting legibility.",
+      },
+    ],
+    examples: [
+      {
+        title: "Indigo Intelligence (enterprise / developer AI)",
+        body: "Primary #1E3A5F (headers, nav), secondary #2563EB (CTAs, links), accent #10B981 (success states), neutral #F1F5F9 (surfaces). Built on the site's existing SaaS Trust Spectrum palette - see /palettes/saas-trust-spectrum.",
+      },
+      {
+        title: "Creative Orbit (consumer / creative AI)",
+        body: "Primary #5B21B6 (brand, hero), secondary #A855F7 (highlights), accent #EC4899 (badges, CTAs), neutral #1F2937 (dark text/surfaces). See /palettes/creative-orbit.",
+      },
+      {
+        title: "Midnight Assistant (dark-first chat / copilot UI)",
+        body: "Background #0D1117, surface #161B22, card #21262D, accent #388BFD (primary actions), success #3FB950. Built on the site's existing Dark Mode Pro palette - see /palettes/dark-mode-pro.",
+      },
+    ],
+    quickFacts: [
+      { label: "Safest default", value: "Blue or indigo - highest trust, lowest risk" },
+      { label: "Best for differentiation", value: "Purple or violet - more memorable, less common in enterprise software" },
+      { label: "Contrast check", value: "#1E3A5F on white is 11.5:1 (AAA); #5B21B6 on white is 8.98:1 (AAA); #388BFD on #0D1117 is 5.66:1 (AA) - all safe as primary CTA colors" },
+      { label: "CTA guidance", value: "Reserve the brightest accent in the palette exclusively for the primary action button - if more than one element competes for that color, the CTA loses priority" },
     ],
     faq: [
-      { question: "What colors fit AI brands?", answer: "Blue, indigo, and purple are the most common because they feel modern and trustworthy." },
-      { question: "Should AI websites use gradients?", answer: "Yes, but mainly for visual emphasis rather than the entire reading experience." },
+      { question: "What colors fit AI brands?", answer: "Blue, indigo, and purple are the most common foundations because they feel modern and trustworthy. Purple trades a little trust for more differentiation; blue and indigo are the safer, more enterprise-friendly default." },
+      { question: "Should AI websites use gradients?", answer: "Yes, but mainly for visual emphasis in hero sections, illustrations, and loading states - not across body copy or full-page backgrounds, where they hurt legibility." },
+      { question: "What color should the primary CTA button be on an AI product?", answer: "Whatever single accent color is least used elsewhere on the page. If blue is the brand's base color, an electric blue or mint accent usually makes the strongest, most distinguishable CTA." },
+      { question: "Is dark mode required for AI products?", answer: "Not required, but strongly preferred for chat, code, and research tools used in long sessions. Build dark mode as its own layered surface system (background, surface, card) rather than simply inverting the light theme's colors." },
+      { question: "How do I keep an AI website palette accessible?", answer: "Check every text/background pairing against WCAG AA (4.5:1) at minimum - dark-mode accents in particular can look fine visually but fail contrast against near-black surfaces. Use the contrast checker below before shipping." },
     ],
     relatedLinks: [
       { title: "Creative orbit palette", href: "/palettes/creative-orbit" },
+      { title: "SaaS trust spectrum palette", href: "/palettes/saas-trust-spectrum" },
+      { title: "Dark mode pro palette", href: "/palettes/dark-mode-pro" },
       { title: "Violet aurora gradient", href: "/gradients/violet-aurora" },
       { title: "Purple meaning", href: "/color-meanings/purple" },
+      { title: "Palette generator", href: "/generator" },
+      { title: "Gradient generator", href: "/tools/gradient" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Contrast checker", href: "/tools/contrast" },
     ],
   },
   {
@@ -2659,6 +2713,12 @@ const bestColorsFor: ContentEntry[] = [
       "healthcare brand colors",
       "health app color palette",
     ],
+    quickFacts: [
+      { label: "Primary", value: "#1D4ED8 (deep blue) - navigation, headers, primary CTAs" },
+      { label: "Secondary", value: "#0D9488 (teal) - wellness sections, secondary actions" },
+      { label: "Accent / surface", value: "#F8FAFC (light gray) - backgrounds and cards" },
+      { label: "Contrast check", value: "#1D4ED8 text on white is 6.7:1 (WCAG AA) - safe for body copy and CTA labels" },
+    ],
     sections: [
       {
         title: "Blue - the trust anchor",
@@ -2698,6 +2758,11 @@ const bestColorsFor: ContentEntry[] = [
         answer:
           "Health apps typically use blue or teal primaries with white backgrounds, medium gray text, and green for positive states like goal completion. Keep saturation moderate - high-energy palettes feel inconsistent with the calm health apps need to project.",
       },
+      {
+        question: "What color scheme do hospitals and clinics actually use?",
+        answer:
+          "Most hospital and clinic sites lead with a deep or mid-range blue for the header and navigation, a lighter blue or teal for secondary sections, and near-white gray surfaces for content. Red is reserved strictly for emergency or urgent-care call-outs, never general navigation.",
+      },
     ],
     relatedLinks: [
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
@@ -2705,6 +2770,9 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Teal color page", href: "/colors/teal" },
       { title: "Azure color page", href: "/colors/azure" },
       { title: "Color psychology in UI design", href: "/color-psychology/color-psychology-in-ui-design" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Palette generator", href: "/generator" },
     ],
   },
   {
@@ -2947,6 +3015,12 @@ const bestColorsFor: ContentEntry[] = [
       "tutoring website colors",
       "learning platform color palette",
     ],
+    quickFacts: [
+      { label: "Primary", value: "#2563EB (blue) - navigation, headers, primary CTAs" },
+      { label: "Secondary", value: "#16A34A (green) - progress states and success badges" },
+      { label: "Accent", value: "#FBBF24 (amber) - highlight boxes and achievement callouts only" },
+      { label: "Contrast check", value: "#2563EB text on white is 5.17:1 (WCAG AA); #FBBF24 fails on white (1.67:1) - always pair amber with a dark surface, never use it as body text on white" },
+    ],
     sections: [
       {
         title: "Blue - credibility and institutional trust",
@@ -2986,12 +3060,20 @@ const bestColorsFor: ContentEntry[] = [
         answer:
           "Avoid heavy red except for error states. Avoid very dark or moody interfaces on student-facing pages. Avoid pure corporate gray palettes for anything targeting younger learners - they feel cold and uninviting.",
       },
+      {
+        question: "What color palette do university websites use?",
+        answer:
+          "University websites typically pair a deep institutional navy or blue with one heritage secondary color (often gold, crimson, or forest green) drawn from the school's official brand guidelines, kept mostly to logos, banners, and section dividers rather than body text.",
+      },
     ],
     relatedLinks: [
       { title: "Blue color page", href: "/colors/blue" },
       { title: "Green color page", href: "/colors/green" },
       { title: "Yellow color page", href: "/colors/yellow" },
       { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Palette generator", href: "/generator" },
     ],
   },
   {
@@ -3012,6 +3094,12 @@ const bestColorsFor: ContentEntry[] = [
       "investment website colors",
       "insurance website color palette",
       "best colors for fintech app",
+    ],
+    quickFacts: [
+      { label: "Primary", value: "#1E3A5F (navy) - navigation, headers, primary CTAs" },
+      { label: "Secondary", value: "#166534 (dark green) - growth and wealth-management contexts" },
+      { label: "Accent", value: "#0D9488 (teal) - modern fintech accents and secondary actions" },
+      { label: "Contrast check", value: "#1E3A5F text on white is 11.5:1 (WCAG AAA); #166534 on white is 7.13:1 (AAA) - both safe for dense financial data tables" },
     ],
     sections: [
       {
@@ -3052,6 +3140,11 @@ const bestColorsFor: ContentEntry[] = [
         answer:
           "Dark mode works well for trading platforms and data-heavy dashboards where users want reduced eye strain during long sessions. For general banking and account management, light backgrounds keep financial information scannable and readable for a wider audience.",
       },
+      {
+        question: "What color is most associated with trust in banking?",
+        answer:
+          "Deep navy and institutional blue are the strongest trust signals in banking and finance - they read as stable and authoritative across nearly every major bank's branding. Dark green is the closest runner-up, specifically for wealth and investment contexts where growth is the primary message.",
+      },
     ],
     relatedLinks: [
       { title: "Navy color page", href: "/colors/navy" },
@@ -3059,6 +3152,529 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Blue color page", href: "/colors/blue" },
       { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
       { title: "Best colors for SaaS websites", href: "/best-colors-for/saas-websites" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Palette generator", href: "/generator" },
+    ],
+  },
+  {
+    slug: "law-firm-websites",
+    title: "Best Colors for Law Firm Websites",
+    description:
+      "The best colors for law firm websites are navy, charcoal, and gold - colors that signal authority, trust, and professionalism. Explore five ready-to-use legal color palettes with HEX codes for litigation, corporate, family, and estate law practices.",
+    answer:
+      "The best colors for law firm websites are deep navy, charcoal, and slate, paired with a restrained gold or burgundy accent for CTAs and highlights. These colors communicate authority, discretion, and financial seriousness - qualities clients look for before trusting a firm with a case. Practice area matters too: litigation firms often lean darker and bolder, while family and estate law firms benefit from a warmer, more approachable version of the same palette.",
+    intent: "commercial",
+    keywords: [
+      "best colors for law firm website",
+      "law firm website colors",
+      "law firm website color palette",
+      "professional law firm website colors",
+      "legal website color scheme",
+      "attorney website colors",
+      "law firm brand colors",
+    ],
+    paletteColors: ["#1E3A5F", "#475569", "#B8860B", "#FAF7F2", "#1C1712"],
+    quickFacts: [
+      { label: "Primary", value: "#1E3A5F (deep navy) - header, navigation, primary CTA" },
+      { label: "Secondary", value: "#475569 (slate) - body accents, secondary buttons, dividers" },
+      { label: "Accent", value: "#B8860B (gold) - used sparingly for CTAs, badges, and section markers" },
+      { label: "Contrast check", value: "Navy (#1E3A5F) on warm white (#FAF7F2) is 10.76:1 (AAA); charcoal body text on warm white is 16.64:1 (AAA). Gold on navy is 3.53:1 - fine for a large CTA label, too low for small or normal-size text" },
+    ],
+    sections: [
+      {
+        title: "Why navy and charcoal dominate legal branding",
+        body: "Navy and charcoal are the two most-used colors in legal branding because they read as serious, discreet, and financially credible without feeling cold. Clients hiring a lawyer are usually stressed or facing a high-stakes decision - a calm, authoritative palette reduces perceived risk before they've read a word of copy.",
+      },
+      {
+        title: "Where gold and burgundy fit",
+        body: "A restrained gold or deep burgundy accent adds a sense of established prestige - the same visual language courthouses, law schools, and legacy institutions use. Keep it to logos, dividers, badges, and CTA buttons; a full page of gold reads as gaudy rather than credible.",
+      },
+      {
+        title: "Practice-area positioning",
+        body: "Litigation and corporate defense firms often go darker and higher-contrast to project strength. Family law, estate planning, and personal injury firms usually soften the same navy-and-gold system with a warmer neutral background so the site feels approachable to someone going through a difficult moment, not intimidating.",
+      },
+      {
+        title: "CTA and conversion guidance",
+        body: "Legal sites convert on a single action - usually \"Free Consultation\" or \"Schedule a Case Review.\" Reserve the palette's one accent color exclusively for that button so it's unmistakable in every viewport, and never use the same accent color decoratively elsewhere on the page.",
+      },
+      {
+        title: "Common mistakes to avoid",
+        body: "Avoid bright or saturated colors as primaries - they undercut the seriousness clients expect. Avoid using red as a primary brand color outside of urgent/emergency legal services, where it can work, but it reads as alarming for general practice. Avoid low-contrast gray-on-gray text, which is a frequent readability failure on legal sites built around \"minimal\" templates.",
+      },
+    ],
+    examples: [
+      {
+        title: "Traditional Authority",
+        body: "Primary #1E3A5F (navy), Secondary #475569 (slate), Accent #B8860B (gold), Background #FAF7F2 (warm white), Text #1C1712 (charcoal). The safest default for general practice, corporate, and litigation firms wanting a classic, courthouse-adjacent feel.",
+      },
+      {
+        title: "Modern Corporate",
+        body: "Primary #1F2937 (charcoal), Secondary #3B82F6 (steel blue), Accent #94A3B8 (silver), Background #F8FAFC (off white), Text #111827 (near black). Fits corporate law, IP, and business litigation firms that want to feel current rather than old-guard.",
+      },
+      {
+        title: "Premium Boutique",
+        body: "Primary #1C1712 (near-black), Secondary #7F1D1D (burgundy), Accent #C9A84C (soft gold), Background #F5F0E8 (ivory), Text #1C1712. Suited to high-end boutique firms - white-collar defense, M&A, private wealth law - positioning on exclusivity rather than volume.",
+      },
+      {
+        title: "Approachable Family Law",
+        body: "Primary #0F766E (deep teal), Secondary #6B7280 (warm gray), Accent #D97706 (amber), Background #FDF6E3 (cream), Text #1C1712. Warmer and softer for family law, divorce, and estate planning, where clients need reassurance more than intimidation.",
+      },
+      {
+        title: "Litigation Bold",
+        body: "Primary #991B1B (deep red), Secondary #1F2937 (charcoal), Accent #B8860B (gold), Background #FFFFFF (white), Text #111827. A higher-contrast, more assertive system for trial and litigation-focused firms that want to project strength - use the red sparingly (header/accent only), never as a body-text or full-background color.",
+      },
+    ],
+    faq: [
+      {
+        question: "What is the best color for a law firm website?",
+        answer:
+          "Deep navy is the strongest default because it signals trust, authority, and financial seriousness without feeling cold. Pair it with charcoal or slate text and a restrained gold or burgundy accent for CTAs.",
+      },
+      {
+        question: "Should law firm websites use gold?",
+        answer:
+          "Yes, but only as an accent - in logos, dividers, badges, or CTA buttons. Gold text on light backgrounds often fails contrast requirements, so it should never carry body copy.",
+      },
+      {
+        question: "What color should a law firm's 'Free Consultation' button be?",
+        answer:
+          "Whichever single accent color is used nowhere else decoratively on the page - commonly gold, burgundy, or a warm amber against a navy or charcoal system. Consistency matters more than the specific hue: use one CTA color, everywhere, every page.",
+      },
+      {
+        question: "What colors should law firms avoid?",
+        answer:
+          "Avoid bright, saturated, or playful colors as primaries - they undercut the seriousness clients expect. Avoid red as a general-practice primary color (it can work narrowly for urgent/emergency legal services). Avoid low-contrast gray-on-gray text.",
+      },
+      {
+        question: "Do different practice areas need different color palettes?",
+        answer:
+          "Yes. Litigation and corporate defense firms often use darker, higher-contrast systems to project strength, while family law, estate planning, and personal injury firms benefit from a warmer, softer version of the same navy-and-neutral foundation to feel more approachable.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Navy color page", href: "/colors/navy" },
+      { title: "Best colors for finance websites", href: "/best-colors-for/finance-websites" },
+      { title: "Best colors for real estate websites", href: "/best-colors-for/real-estate-websites" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Palette generator", href: "/generator" },
+    ],
+  },
+  {
+    slug: "dental-websites",
+    title: "Best Colors for Dental Websites",
+    description:
+      "The best colors for dental websites are sky blue, mint, and clean white - colors that feel modern, calm, and family-friendly. Explore five dental practice color palettes with HEX codes, from clinical-clean to warm and family-oriented.",
+    answer:
+      "The best colors for dental websites are light blue and mint paired with clean white and soft neutrals - a lighter, friendlier version of the trust-blue used across healthcare. Dental practices need to feel clean and modern without the heavier, more clinical tone hospitals use, since most visitors are booking a routine or cosmetic appointment rather than dealing with a medical emergency.",
+    intent: "commercial",
+    keywords: [
+      "best colors for dental website",
+      "dental website colors",
+      "dental website color palette",
+      "dentist website colors",
+      "dental practice color scheme",
+      "dental brand colors",
+      "family dentist website colors",
+    ],
+    paletteColors: ["#0EA5E9", "#14B8A6", "#F1F5F9", "#FFFFFF", "#1C1712"],
+    quickFacts: [
+      { label: "Primary", value: "#0EA5E9 (sky blue) - navigation, headers, icons" },
+      { label: "Secondary", value: "#14B8A6 (mint/teal) - secondary actions, badges" },
+      { label: "Accent / CTA", value: "#0D9488 (deeper teal) - booking button" },
+      { label: "Contrast check", value: "Sky blue (#0EA5E9) on light gray (#F1F5F9) is only 2.53:1 - Fail. Use sky blue for icons, nav, and large headings, never for normal body text. Charcoal text on white is 17.79:1 (AAA); the teal CTA on white is 3.74:1, acceptable for a large button label but not for small text" },
+    ],
+    sections: [
+      {
+        title: "Light blue and mint - approachable clinical trust",
+        body: "Dental sites borrow blue's trust signal from healthcare but lighten it considerably - sky blue and mint feel clean and modern rather than clinical. This distinction matters because most dental visitors are booking routine care, whitening, or cosmetic work, not facing a medical crisis, so the tone should read as pleasant rather than serious.",
+      },
+      {
+        title: "White space and cleanliness",
+        body: "Generous white space communicates hygiene and modern equipment before a single word of copy is read. Avoid dense, dark layouts - dental is one of the few healthcare-adjacent categories where a very light, airy design consistently outperforms a heavier one.",
+      },
+      {
+        title: "Family-friendly vs. cosmetic-premium positioning",
+        body: "General and family dental practices benefit from brighter, friendlier blues and mints with warm yellow accents for kids' sections. Cosmetic and premium dental (implants, veneers, whitening) tend to shift toward a more restrained charcoal-and-champagne system that feels closer to a med-spa than a pediatric office.",
+      },
+      {
+        title: "CTA and booking guidance",
+        body: "Nearly every dental site converts on one action: book an appointment. Use a single, consistent teal or blue CTA color across the entire site - homepage, service pages, and mobile sticky bar - so the booking action is instantly recognizable no matter where a visitor lands.",
+      },
+      {
+        title: "Common mistakes to avoid",
+        body: "Avoid using light sky blue as body text - it fails contrast on almost any light background (verified above). Avoid all-white designs with no color anchor, which can feel sterile rather than modern. Avoid red for anything except a genuine emergency-appointment CTA, since it reads as alarming in a routine-care context.",
+      },
+    ],
+    examples: [
+      {
+        title: "Clean Clinical",
+        body: "Primary #0EA5E9 (sky blue), Secondary #FFFFFF (white), Accent #14B8A6 (mint), Background #F1F5F9 (light gray), Text #1C1712 (charcoal). The safest, most common default for general and multi-location dental practices.",
+      },
+      {
+        title: "Calm Modern",
+        body: "Primary #0D9488 (teal), Secondary #7DD3FC (soft blue), Accent #FB7185 (coral, CTA only), Background #FFFFFF, Text #334155 (slate). A slightly warmer alternative for practices wanting to feel less corporate than a dental-chain look.",
+      },
+      {
+        title: "Family Friendly",
+        body: "Primary #38BDF8 (sunny blue), Secondary #34D399 (mint green), Accent #FBBF24 (warm yellow, used only on dark surfaces), Background #FFFDF7 (cream), Text #1C1712. Built for pediatric and family practices - brighter and friendlier, but keep yellow off white backgrounds since it fails contrast there.",
+      },
+      {
+        title: "Premium Cosmetic Dentistry",
+        body: "Primary #1F2937 (charcoal), Secondary #D4AF6A (champagne), Accent #2DD4BF (soft teal), Background #FAF7F2 (ivory), Text #111827 (near black). Positions implants, veneers, and whitening services closer to a med-spa than a clinic.",
+      },
+      {
+        title: "Minimal Modern Practice",
+        body: "Primary #FFFFFF (white), Secondary #64748B (slate), Accent #10B981 (mint), Background #F8FAFC (light gray), Text #1C1712. A restrained, design-forward option for boutique or single-dentist practices wanting to feel current rather than clinical.",
+      },
+    ],
+    faq: [
+      {
+        question: "What is the best color for a dental website?",
+        answer:
+          "Light blue and mint are the strongest defaults - they carry blue's trust signal but feel lighter and more modern than the deeper blues used in general healthcare, which fits a routine-care context better.",
+      },
+      {
+        question: "Can dental websites use bright colors?",
+        answer:
+          "Yes, in moderation - family and pediatric dental practices in particular benefit from warm yellow or mint accents. Keep bright accents off body text and confine them to badges, icons, and dark-background surfaces where contrast holds up.",
+      },
+      {
+        question: "What color should a dental 'Book Appointment' button be?",
+        answer:
+          "A single, consistent teal or blue that's used nowhere else on the page - and repeated identically across every page and the mobile sticky bar, so the booking action is instantly recognizable.",
+      },
+      {
+        question: "Is sky blue text accessible on a dental website?",
+        answer:
+          "Not on light backgrounds - sky blue (#0EA5E9) on a light gray background measures 2.53:1, well below the 4.5:1 WCAG AA minimum for normal text. Use it for icons, navigation, and large headings only, and use a darker charcoal or slate for body copy.",
+      },
+      {
+        question: "How is a dental color palette different from a general healthcare palette?",
+        answer:
+          "Dental palettes are typically lighter and brighter than hospital or clinic palettes, since most visitors are booking routine or cosmetic care rather than facing a medical emergency. General healthcare leans on deeper, more clinical blues; dental leans on sky blue, mint, and generous white space.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
+      { title: "Healthcare website color guide", href: "/guides/best-colors-for-healthcare-websites-usa" },
+      { title: "Teal color page", href: "/colors/teal" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Palette generator", href: "/generator" },
+    ],
+  },
+  {
+    slug: "construction-websites",
+    title: "Best Colors for Construction Websites",
+    description:
+      "The best colors for construction websites are steel gray, safety yellow, and charcoal - colors that signal reliability, strength, and industrial credibility. Explore five construction and contractor color palettes with HEX codes and CTA guidance.",
+    answer:
+      "The best colors for construction websites are steel gray and charcoal for structure, paired with a high-visibility accent - safety yellow or orange - for CTAs and highlights. These colors borrow directly from real jobsite signage and equipment, which reads as authentic and credible to a construction audience, while staying professional enough for commercial and government-facing bids.",
+    intent: "commercial",
+    keywords: [
+      "best colors for construction website",
+      "construction website colors",
+      "construction company website color palette",
+      "contractor website colors",
+      "construction brand colors",
+      "industrial website color scheme",
+      "building company website colors",
+    ],
+    paletteColors: ["#374151", "#F59E0B", "#111827", "#FFFFFF", "#B91C1C"],
+    quickFacts: [
+      { label: "Primary", value: "#374151 (steel gray) - structure, navigation, headers" },
+      { label: "Secondary / Accent", value: "#F59E0B (safety yellow/amber) - CTAs, highlights, badges" },
+      { label: "Background", value: "#FFFFFF (white) or #111827 (charcoal for dark-mode hero sections)" },
+      { label: "Contrast check", value: "Steel gray (#374151) on white is 10.31:1 (AAA). Safety yellow (#F59E0B) as a CTA on charcoal is 8.26:1 (AAA) - strong. That same yellow as body text on white is only 2.15:1 - Fail, so keep it to buttons, icons, and badges on dark surfaces, never to text on light backgrounds" },
+    ],
+    sections: [
+      {
+        title: "Steel gray and safety yellow - authentic industrial signals",
+        body: "Construction is one of the few categories where borrowing directly from real-world signage (steel equipment colors, high-visibility safety yellow and orange) reads as more credible than a typical soft corporate palette. It signals the company actually works in the field, not just in an office.",
+      },
+      {
+        title: "Charcoal and navy for commercial/government credibility",
+        body: "General contractors bidding on commercial or government work often lean toward charcoal and navy instead of bright safety colors, projecting the same financial-seriousness signal law firms and finance brands use. Reserve bright accents for smaller residential or trade-specific contractors where approachability matters more than institutional weight.",
+      },
+      {
+        title: "Where warm tones fit for residential builders",
+        body: "Residential and remodeling contractors often soften the industrial palette with warm browns, terracotta, or sage green accents to feel more approachable to homeowners, while keeping the same steel-gray structural foundation for credibility.",
+      },
+      {
+        title: "CTA and lead-generation guidance",
+        body: "Construction sites convert almost entirely on \"Get a Quote\" or \"Request a Consultation.\" Safety yellow or orange against a dark charcoal or navy background creates the strongest, most jobsite-authentic CTA - just verify the specific yellow you use passes contrast against its exact background before shipping.",
+      },
+      {
+        title: "Common mistakes to avoid",
+        body: "Avoid using safety yellow as body text or on light backgrounds - it fails contrast almost everywhere it's tried (verified above). Avoid all-corporate-blue palettes with no industrial signal, which can feel generic and reduce trust with a jobsite-literate audience. Avoid low-contrast gray-on-gray combinations, common on templated contractor sites.",
+      },
+    ],
+    examples: [
+      {
+        title: "Industrial Reliability",
+        body: "Primary #374151 (steel gray), Secondary #F59E0B (safety yellow), Accent #111827 (charcoal), Background #FFFFFF, Text #111827. The safest, most broadly applicable default for general contractors and trade companies.",
+      },
+      {
+        title: "Traditional Trade",
+        body: "Primary #1E3A5F (navy), Secondary #B91C1C (brick red), Accent #6B7280 (warm gray), Background #F8FAFC, Text #1C1712. A more established, less industrial feel suited to firms with decades of local history to lean on.",
+      },
+      {
+        title: "Modern Commercial Builder",
+        body: "Primary #1F2937 (charcoal), Secondary #EA580C (safety orange), Accent #3B82F6 (steel blue), Background #FFFFFF, Text #111827. Fits commercial general contractors and design-build firms wanting a more current, less \"jobsite\" look for RFP audiences.",
+      },
+      {
+        title: "Residential Approachable",
+        body: "Primary #78350F (warm brown), Secondary #6B8F71 (sage green), Accent #C2623F (terracotta), Background #FDF6E3 (cream), Text #1C1712. Suited to home remodeling, landscaping, and residential builders marketing directly to homeowners.",
+      },
+      {
+        title: "Heavy Industrial Bold",
+        body: "Primary #0D0D0D (black), Secondary #EAB308 (safety yellow), Accent #64748B (steel gray), Background #FFFFFF, Text #111827. A higher-contrast, more assertive system for heavy civil, demolition, and industrial contractors.",
+      },
+    ],
+    faq: [
+      {
+        question: "What is the best color for a construction website?",
+        answer:
+          "Steel gray paired with safety yellow or orange is the strongest default - it signals industrial credibility and reads as authentic to a construction audience, while staying professional enough for commercial clients.",
+      },
+      {
+        question: "Should construction companies use safety yellow?",
+        answer:
+          "Yes, as an accent for CTAs, badges, and highlights - it's an authentic, recognizable signal in this category. Avoid using it as body text or on light backgrounds, where it consistently fails contrast requirements.",
+      },
+      {
+        question: "What color works best for a 'Get a Quote' button on a construction site?",
+        answer:
+          "Safety yellow or orange against a dark charcoal or navy background creates the highest-visibility, most jobsite-authentic CTA. Always verify the exact shade against its exact background before shipping - not all yellows and oranges pass contrast the same way.",
+      },
+      {
+        question: "Should a commercial general contractor use the same palette as a residential contractor?",
+        answer:
+          "Not necessarily. Commercial and government-facing contractors often lean toward charcoal and navy for institutional credibility, while residential and remodeling contractors soften the same structural gray with warmer accents to feel more approachable to homeowners.",
+      },
+      {
+        question: "What colors should construction websites avoid?",
+        answer:
+          "Avoid safety yellow or bright orange as body text or on light backgrounds - both fail WCAG contrast in that role. Avoid an all-soft-corporate palette with no industrial signal, which can undercut credibility with an audience that expects to see jobsite-authentic colors.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for real estate websites", href: "/best-colors-for/real-estate-websites" },
+      { title: "Gray color page", href: "/colors/gray" },
+      { title: "Orange color page", href: "/colors/orange" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Palette generator", href: "/generator" },
+    ],
+  },
+  {
+    slug: "beauty-salon-websites",
+    title: "Best Colors for Beauty Salon Websites",
+    description:
+      "The best colors for beauty salon websites are black, blush, and gold - colors that feel premium, elegant, and modern. Explore five salon and spa color palettes with HEX codes for premium, feminine, bold, and unisex positioning.",
+    answer:
+      "The best colors for beauty salon websites depend heavily on positioning: black and gold signal premium and elegant, blush and mauve signal soft and feminine, and bold black-and-pink systems signal modern and confident. Nearly every strong salon palette shares one trait - a restrained neutral foundation (black, white, or warm gray) with exactly one expressive accent color, rather than many competing bright tones.",
+    intent: "commercial",
+    keywords: [
+      "best colors for beauty salon website",
+      "salon website colors",
+      "beauty salon color palette",
+      "hair salon website colors",
+      "spa website color scheme",
+      "salon brand colors",
+      "beauty business website colors",
+    ],
+    paletteColors: ["#111827", "#F4C2C2", "#C9A84C", "#FAF7F2", "#1C1712"],
+    quickFacts: [
+      { label: "Primary", value: "#111827 (near black) - headers, navigation, primary text" },
+      { label: "Secondary / accent", value: "#F4C2C2 (blush) or #C9A84C (gold) depending on positioning" },
+      { label: "Background", value: "#FAF7F2 (ivory) for premium/feminine, #FFFFFF for modern/minimal" },
+      { label: "Contrast check", value: "Near-black text on ivory is 16.64:1 (AAA) - very safe. Blush pink (#F4C2C2) as text on ivory is only 1.47:1 - Fail; use blush strictly as a background block or decorative element, never as text. Gold (#C9A84C) as a CTA on black is 7.76:1 (AAA)" },
+    ],
+    sections: [
+      {
+        title: "Positioning drives the palette more than category does",
+        body: "Unlike more functional categories, beauty and salon branding is almost entirely about positioning. A black-and-gold system signals premium; blush and mauve signal soft and feminine; black-and-hot-pink signals bold and modern; charcoal-and-copper signals a neutral, unisex barber/salon hybrid. Pick positioning first, then the palette follows.",
+      },
+      {
+        title: "Why neutrals still anchor every version",
+        body: "Even the boldest salon palettes keep a neutral foundation - black, white, or warm gray - and add exactly one expressive accent. Salons selling a visual, aspirational service benefit from a clean backdrop that lets photography (hair, makeup, nails, interiors) be the actual color story, not the UI chrome.",
+      },
+      {
+        title: "Where blush, mauve, and pastel accents work - and where they fail",
+        body: "Soft pinks and pastels work extremely well as background blocks, section dividers, and photo overlays, but most of them fail text-contrast requirements outright (verified above). Never set body copy in blush, pastel, or light mauve - use a dark neutral for all readable text regardless of the accent palette chosen.",
+      },
+      {
+        title: "Booking CTA guidance",
+        body: "Salon sites convert on \"Book Now\" or \"Book a Consultation.\" Gold, copper, or a saturated pink/coral against a dark neutral background creates the strongest CTA in this category - test the exact pairing, since many of the prettiest salon accent colors (blush, champagne, pale gold) are too light to work as button-on-white text.",
+      },
+      {
+        title: "Common mistakes to avoid",
+        body: "Avoid setting body text in blush, pastel pink, or light gold - all fail contrast on light backgrounds. Avoid using more than one bright accent color at once, which reads as cluttered rather than premium. Avoid stock-template purple gradients, which have become a generic signal in this category rather than a distinctive one.",
+      },
+    ],
+    examples: [
+      {
+        title: "Elegant Premium",
+        body: "Primary #111827 (near black), Secondary #F4C2C2 (blush, backgrounds only), Accent #C9A84C (gold), Background #FAF7F2 (ivory), Text #1C1712. The strongest default for higher-end salons and med-spas.",
+      },
+      {
+        title: "Modern Minimal",
+        body: "Primary #FFFFFF (white), Secondary #A8998A (soft taupe), Accent #C2623F (terracotta), Background #F8FAFC (light gray), Text #1C1712. A quieter, design-forward option for boutique studios.",
+      },
+      {
+        title: "Feminine Soft",
+        body: "Primary #F4C2C2 (blush, backgrounds/UI blocks), Secondary #9B6A6C (mauve), Accent #D4AF6A (gold), Background #FFF8F5 (cream), Text #1C1712 (all copy in dark neutral, never in blush or mauve).",
+      },
+      {
+        title: "Bold Modern Salon",
+        body: "Primary #0D0D0D (black), Secondary #EC4899 (hot pink), Accent #FFFFFF (white), Background #F5F5F5 (light gray), Text #111827. Suited to color-forward, editorial-style salons targeting a younger clientele.",
+      },
+      {
+        title: "Neutral Unisex / Barber-Salon Hybrid",
+        body: "Primary #1F2937 (charcoal), Secondary #6B7280 (warm gray), Accent #B45309 (copper), Background #F8FAFC (off white), Text #111827. Fits combined barber/salon businesses wanting a gender-neutral, modern-industrial feel.",
+      },
+    ],
+    faq: [
+      {
+        question: "What is the best color for a beauty salon website?",
+        answer:
+          "It depends on positioning: black and gold for premium salons, blush and mauve for soft/feminine branding, black and hot pink for bold and modern. Nearly all strong salon palettes pair a neutral foundation with exactly one expressive accent.",
+      },
+      {
+        question: "Can salon websites use pastel colors?",
+        answer:
+          "Yes, but mainly as background blocks, dividers, or photo overlays - most pastels (blush, pale gold, light mauve) fail text-contrast requirements and should never be used for body copy.",
+      },
+      {
+        question: "What color should a salon's 'Book Now' button be?",
+        answer:
+          "Gold, copper, or a saturated pink/coral against a dark neutral background works best. Test the exact pairing before shipping - several popular salon accent colors are too light to pass contrast as button text.",
+      },
+      {
+        question: "Is blush pink accessible for salon website text?",
+        answer:
+          "No - blush pink (#F4C2C2) measures roughly 1.5:1 against a warm-white background, far below the 4.5:1 WCAG AA minimum. Use blush as a background or decorative color only, and set all readable text in a dark neutral.",
+      },
+      {
+        question: "How is a barber or unisex salon palette different from a traditional salon palette?",
+        answer:
+          "Unisex and barber-salon hybrids typically drop pink and blush entirely in favor of charcoal, warm gray, and a copper or amber accent - keeping the same premium neutral-plus-one-accent structure without gendered color cues.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Pink color page", href: "/colors/pink" },
+      { title: "Best colors for photography websites", href: "/best-colors-for/photography-websites" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Palette generator", href: "/generator" },
+      { title: "Image color extractor", href: "/tools/image-colors" },
+    ],
+  },
+  {
+    slug: "photography-websites",
+    title: "Best Colors for Photography Websites",
+    description:
+      "The best colors for photography websites are black, white, and warm neutrals - colors that stay out of the way so the photography itself becomes the color story. Explore five portfolio color palettes with HEX codes for editorial, luxury, and creative photographers.",
+    answer:
+      "The best colors for photography websites are restrained neutrals - black, white, warm gray, and cream - that let the photographs supply the actual color and visual interest. A portfolio site's UI should recede, not compete: the strongest photography sites use one quiet neutral system across the entire chrome and reserve any expressive color for a single accent, if they use one at all.",
+    intent: "commercial",
+    keywords: [
+      "best colors for photography website",
+      "photography website colors",
+      "photography portfolio color scheme",
+      "photographer website color palette",
+      "photography brand colors",
+      "wedding photography website colors",
+      "creative portfolio website colors",
+    ],
+    paletteColors: ["#0D0D0D", "#FFFFFF", "#6B7280", "#C9A84C", "#4C1D95"],
+    quickFacts: [
+      { label: "Primary", value: "#0D0D0D (near black) or #FFFFFF (white) - whichever the portfolio's imagery reads best against" },
+      { label: "Secondary", value: "#6B7280 (neutral gray) - captions, metadata, secondary UI" },
+      { label: "Accent", value: "One restrained color only, if any - gold for luxury/wedding, or none at all for a fully neutral portfolio" },
+      { label: "Contrast check", value: "Near-black text (#111827) on white is 17.74:1 (AAA) - the safest, most common photography-site pairing. Gold (#C9A84C) as body text on ivory (#FAF7F2) is only 2.14:1 - Fail, so reserve gold for logos, dividers, and large display type, never for captions or body copy" },
+    ],
+    sections: [
+      {
+        title: "The UI should recede so the photography leads",
+        body: "Photography is the rare category where the goal of the color system is to be nearly invisible. A pure black-and-white or black-and-cream chrome keeps every visitor's attention on the images rather than the interface - the opposite instinct from most commercial sites, which use color to direct attention toward itself.",
+      },
+      {
+        title: "Warm neutrals vs. cool neutrals",
+        body: "Warm neutrals (cream, warm gray, soft black) tend to suit portrait, wedding, and lifestyle photographers, complementing skin tones in the work itself. Cool, true neutrals (pure white, cool gray, true black) suit architectural, product, and fine-art photographers where color-accuracy and a gallery-like feel matter more.",
+      },
+      {
+        title: "Luxury and wedding photography positioning",
+        body: "Luxury and wedding photographers often add a single restrained gold or champagne accent to an otherwise black-and-ivory system, echoing the same premium signal used in beauty and hospitality branding - but that accent should stay confined to logos, dividers, and large headings, never body text or captions.",
+      },
+      {
+        title: "Creative and editorial positioning",
+        body: "Documentary, editorial, and creative portfolio photographers have more room for one bold, unexpected accent color (deep purple, electric pink) precisely because the rest of the palette is otherwise neutral and the images carry the visual weight - the accent becomes a signature, not a distraction.",
+      },
+      {
+        title: "Common mistakes to avoid",
+        body: "Avoid competing with your own photography using a saturated, colorful UI - it's the single most common mistake on photography sites. Avoid low-contrast caption text (light gray on white is a frequent offender). Avoid using a luxury accent color like gold for body copy or captions, where it consistently fails contrast.",
+      },
+    ],
+    examples: [
+      {
+        title: "Portfolio Neutral",
+        body: "Primary #0D0D0D (black), Secondary #FFFFFF (white), Accent #6B7280 (gray, minimal use), Background #FFFFFF, Text #111827. The most common, safest default - a true gallery backdrop for any genre.",
+      },
+      {
+        title: "Warm Editorial",
+        body: "Primary #1F2937 (charcoal), Secondary #D9C7B8 (warm beige), Accent #C2623F (terracotta), Background #FAF7F2 (cream), Text #1C1712. Complements portrait, lifestyle, and warm-toned editorial work.",
+      },
+      {
+        title: "Luxury Wedding Photography",
+        body: "Primary #111827 (black), Secondary #F5F0E8 (ivory), Accent #C9A84C (gold, display type and dividers only), Background #FAF7F2 (ivory), Text #1C1712. The standard premium wedding-photography system.",
+      },
+      {
+        title: "Creative Bold Portfolio",
+        body: "Primary #4C1D95 (deep purple), Secondary #111827 (black), Accent #EC4899 (electric pink), Background #FFFFFF, Text #111827. Suited to editorial, fashion, and creative photographers wanting one unmistakable signature color.",
+      },
+      {
+        title: "Documentary Muted",
+        body: "Primary #334155 (slate), Secondary #78716C (warm gray), Accent #CA8A04 (mustard), Background #F8FAFC (off white), Text #1C1712. A quieter, journalistic feel suited to documentary and photojournalism portfolios.",
+      },
+    ],
+    faq: [
+      {
+        question: "What is the best color scheme for a photography website?",
+        answer:
+          "Restrained neutrals - black, white, warm gray, or cream - work best because they let the photography itself supply the color and visual interest instead of competing with it.",
+      },
+      {
+        question: "Should a photography portfolio use bright colors?",
+        answer:
+          "Generally no, or only as a single restrained accent. The whole point of a photography site's palette is to recede so the images lead; a colorful UI competes with the work rather than showcasing it.",
+      },
+      {
+        question: "What color palette works for wedding or luxury photography?",
+        answer:
+          "A black-and-ivory foundation with a single gold or champagne accent, confined to logos, dividers, and large display type - never used for body copy or captions, where it fails contrast.",
+      },
+      {
+        question: "Should caption and metadata text be gray?",
+        answer:
+          "A mid-to-dark gray works, but verify the exact shade against its background - light gray captions on a white background are one of the most common contrast failures on photography sites.",
+      },
+      {
+        question: "How is a creative/editorial photography palette different from a documentary one?",
+        answer:
+          "Creative and editorial portfolios have more room for one bold, unexpected accent (deep purple, electric pink) since the rest of the system stays neutral. Documentary and photojournalism portfolios typically stay fully muted - slate, warm gray, and a quiet mustard or olive accent - to keep focus on the subject matter.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for beauty salon websites", href: "/best-colors-for/beauty-salon-websites" },
+      { title: "Black color page", href: "/colors/black" },
+      { title: "Image color extractor", href: "/tools/image-colors" },
+      { title: "Color picker", href: "/tools/picker" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Gradient generator", href: "/tools/gradient" },
     ],
   },
 ];
