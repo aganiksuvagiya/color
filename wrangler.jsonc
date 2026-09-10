@@ -22,6 +22,16 @@
       "id": "2334e2af31c1469aa427d7f50425ce4f"
     }
   ],
+  "ratelimits": [
+    {
+      "name": "SLUG_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 30,
+        "period": 60
+      }
+    }
+  ],
   "images": {
     "binding": "IMAGES"
   },
