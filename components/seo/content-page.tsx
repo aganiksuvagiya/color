@@ -1,40 +1,10 @@
 import Link from "next/link";
 
-import { findClosestColorName } from "@/lib/color-names";
+import { getClosestNamedColors } from "@/lib/color-names";
 import type { ResolvedContentEntry } from "@/lib/seo/content";
 import { CopyHexButton } from "@/components/seo/copy-hex-button";
 import { PaletteColorStrip } from "@/components/seo/palette-color-strip";
 import { Header } from "@/components/header";
-
-function hexToHslValues(hex: string) {
-  const r = parseInt(hex.slice(1, 3), 16) / 255;
-  const g = parseInt(hex.slice(3, 5), 16) / 255;
-  const b = parseInt(hex.slice(5, 7), 16) / 255;
-  const max = Math.max(r, g, b), min = Math.min(r, g, b);
-  let h = 0, s = 0;
-  const l = (max + min) / 2;
-  if (max !== min) {
-    const d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-    if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
-    else if (max === g) h = ((b - r) / d + 2) / 6;
-    else h = ((r - g) / d + 4) / 6;
-  }
-  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
-}
-
-function hslToHex(h: number, s: number, l: number) {
-  s /= 100; l /= 100;
-  const a = s * Math.min(l, 1 - l);
-  const f = (n: number) => {
-    const k = (n + h / 30) % 12;
-    return Math.round(255 * (l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1)))
-      .toString(16).padStart(2, "0");
-  };
-  return `#${f(0)}${f(8)}${f(4)}`.toUpperCase();
-}
-
-function clamp(v: number, lo: number, hi: number) { return Math.max(lo, Math.min(hi, v)); }
 
 function isLight(hex: string) {
   const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
@@ -42,17 +12,7 @@ function isLight(hex: string) {
 }
 
 function getSimilarColors(hex: string) {
-  const { h, s, l } = hexToHslValues(hex);
-  return [
-    { dh: -25, ds:  5, dl:  12 },
-    { dh: -12, ds: 12, dl:  -8 },
-    { dh:  12, ds: -8, dl:   8 },
-    { dh:  25, ds:  8, dl: -12 },
-    { dh:   0, ds:-18, dl:  18 },
-  ].map(({ dh, ds, dl }) => {
-    const newHex = hslToHex((h + dh + 360) % 360, clamp(s + ds, 5, 95), clamp(l + dl, 8, 92));
-    return { hex: newHex, slug: newHex.slice(1).toLowerCase(), name: findClosestColorName(newHex) };
-  });
+  return getClosestNamedColors(hex, 5).map((color) => ({ hex: color.hex, slug: color.slug, name: color.name }));
 }
 
 type Breadcrumb = { name: string; href: string };
