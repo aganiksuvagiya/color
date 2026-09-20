@@ -1,5 +1,5 @@
 import { routeCollections } from "@/lib/seo/content";
-import { getProgrammaticColorSitemapPaths } from "@/lib/seo/programmatic";
+import { getProgrammaticBrandColorSlugs, getProgrammaticColorSitemapPaths } from "@/lib/seo/programmatic";
 import { siteConfig } from "@/lib/seo/site-config";
 
 type SitemapEntry = {
@@ -114,7 +114,12 @@ export const gradientsSitemap = dynamicEntries(
 );
 
 export const brandColorsSitemap = dynamicEntries(
-  routeCollections.brandColors.map((entry) => `/brand-colors/${entry.slug}`),
+  [
+    ...routeCollections.brandColors.map((entry) => `/brand-colors/${entry.slug}`),
+    ...getProgrammaticBrandColorSlugs()
+      .filter((slug) => !routeCollections.brandColors.some((entry) => entry.slug === slug))
+      .map((slug) => `/brand-colors/${slug}`),
+  ],
   "weekly",
   0.82,
 );

@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import type { Metadata } from "next";
 
 import { ContentPageView } from "@/components/seo/content-page";
 import { HubPageView } from "@/components/seo/hub-page";
 import { StructuredData } from "@/components/seo/structured-data";
 import { findResolvedEntry, getCollection, getHubByPath, isColorMeaningAuthored, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
-import { buildProgrammaticBrandColorEntry, buildProgrammaticColorEntry, getHexDuplicateCanonicalSlug, getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
+import { buildProgrammaticBrandColorEntry, buildProgrammaticColorEntry, getHexDuplicateCanonicalSlug, getProgrammaticBrandColorSlugs, getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
 import {
   buildArticleSchema,
   buildBreadcrumbSchema,
@@ -139,7 +140,10 @@ export function buildCollectionMetadata<
   // the same generator that powers /colors, so until they're individually authored
   // they'd otherwise duplicate that page - keep them working for visitors, but out
   // of the index.
-  const noindex = key === "colorMeanings" && !duplicateOfSlug && !isColorMeaningAuthored(slug);
+  const isUnauthoredHexColorPage =
+    key === "colors" && !duplicateOfSlug && getProgrammaticColorDescriptor(slug)?.mode === "hex";
+
+  const noindex = (key === "colorMeanings" && !duplicateOfSlug && !isColorMeaningAuthored(slug)) || isUnauthoredHexColorPage;
 
   return buildPageMetadata({
     title: entry.title,
@@ -173,7 +177,24 @@ function getAllCollections() {
   };
 }
 
-function findCollectionEntry<K extends keyof ReturnType<typeof getAllCollections>>(key: K, slug: string) {
+// generateMetadata and the page component both resolve the same entry for a given
+// request - cache() dedupes that work (which includes the expensive programmatic
+// color/related-links computation) instead of paying for it twice per request.
+const findCollectionEntry = cache(function findCollectionEntry<K extends keyof ReturnType<typeof getAllCollections>>(key: K, slug: string) {
+  if (key === "colors" || key === "colorMeanings") {
+    // A hex slug that isn't an exact duplicate of a named color (e.g. /colors/425bd7)
+    // is arbitrary - there are 16M+ possible values, and rendering+caching one per
+    // crawled guess caused real production incidents (Worker CPU limit hits, and
+    // Cloudflare KV "failed to set to cache" errors under crawl bursts). Treat these
+    // as a real 404 instead of a new page, before paying for any of the descriptor
+    // or content-resolution work below. Named colors and exact hex duplicates of a
+    // named color (which canonicalize instead of rendering their own page) still work.
+    const descriptor = getProgrammaticColorDescriptor(slug);
+    if (descriptor?.mode === "hex" && !getHexDuplicateCanonicalSlug(slug)) {
+      return undefined;
+    }
+  }
+
   if (key === "colors") {
     const programmatic = buildProgrammaticColorEntry(slug);
     if (!programmatic) return undefined;
@@ -213,7 +234,7 @@ function findCollectionEntry<K extends keyof ReturnType<typeof getAllCollections
   }
 
   return findResolvedEntry(key, slug);
-}
+});
 
 export function renderCollectionPage<
   K extends keyof ReturnType<typeof getAllCollections>,
@@ -292,5 +313,14 @@ export function renderEntryPage({
 }
 
 export function staticParamsFor<K extends keyof ReturnType<typeof getAllCollections>>(key: K) {
-  return getAllCollections()[key].map((entry) => ({ slug: entry.slug }));
+  const authoredSlugs = getAllCollections()[key].map((entry) => entry.slug);
+
+  // brandColors also has programmatic-only profiles (e.g. retail, education) with no
+  // hand-authored entry - include them so those pages get statically generated too.
+  if (key === "brandColors") {
+    const programmaticSlugs = getProgrammaticBrandColorSlugs().filter((slug) => !authoredSlugs.includes(slug));
+    return [...authoredSlugs, ...programmaticSlugs].map((slug) => ({ slug }));
+  }
+
+  return authoredSlugs.map((slug) => ({ slug }));
 }

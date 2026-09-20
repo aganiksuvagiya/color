@@ -474,6 +474,7 @@ const colors: ContentEntry[] = [
   {
     slug: "azure",
     title: "Azure Color - Hex #F0FFFF Meaning, Uses, and Palettes",
+    paletteColors: ["#0E7490", "#0891B2", "#67E8F9", "#CFFAFE", "#F0FFFF"],
     description: "Azure is a very light cyan-blue color (hex #F0FFFF) used for clean backgrounds, healthcare UIs, and calming digital experiences. Learn when and how to use azure in web design.",
     answer:
       "Azure (#F0FFFF) is a pale, almost-white cyan-blue that signals openness, clarity, and calm. It works best as a soft background tint, a card surface, or a light overlay in healthcare, wellness, SaaS, and clean UI designs. As a dominant or text color it is too light to pass contrast requirements.",
@@ -2558,6 +2559,55 @@ const explainers: ContentEntry[] = [
       { title: "What colors increase conversions?", href: "/guides/conversion-color-strategy" },
     ],
   },
+  {
+    slug: "why-gym-brands-go-black-and-orange",
+    title: "Why Every Gym Brand Looks the Same (Black, Orange, and a Little Red)",
+    description: "Walk into any gym's branding and you'll see the same three colors on repeat. Here's why the fitness industry converged on black-and-orange, and when it's actually the wrong choice.",
+    answer:
+      "Gym and performance brands converge on black-and-orange because the combination directly maps to how the category wants to feel: black signals seriousness and power, orange adds energy and urgency without red's alarm connotation. The pattern becomes a problem when a brand copies it without asking whether their actual audience wants intensity - wellness, recovery, and beginner-friendly fitness brands usually convert better with a completely different, calmer palette.",
+    intent: "informational",
+    keywords: ["why gym brands use black and orange", "fitness brand color psychology", "gym website color trend"],
+    sections: [
+      { title: "The category default isn't an accident", body: "Nike, Under Armour, Gold's Gym, and most boutique studios independently arrived at dark-plus-warm-accent palettes because it's a fast, legible signal: black reads as serious and premium, orange or red reads as energy and effort. A new gym brand copying this isn't being lazy so much as speaking a language its audience already understands." },
+      { title: "Where the lookalike palette stops working", body: "The moment a brand's actual positioning is recovery, beginner-friendliness, or wellness rather than intensity, the black-and-orange system works against it - it signals an intimidating, hardcore gym to exactly the audience that's most likely to be put off by that. Yoga studios and physical therapy brands that use gym colors are unconsciously filtering out their own customers." },
+      { title: "How to stand out inside a converged category", body: "If competing directly in the performance-fitness space, the move isn't abandoning black-and-orange - it's picking a distinct accent hue (electric blue, acid green, magenta) instead of the default orange, so the brand still reads as 'serious gym' but isn't visually interchangeable with every competitor's homepage." },
+    ],
+    faq: [
+      { question: "Do all fitness brands need to use black and orange?", answer: "No - that palette fits performance and intensity-focused brands. Wellness, yoga, and recovery-focused fitness brands typically convert better with soft greens and warm neutrals instead." },
+      { question: "How can a new gym brand stand out if everyone uses the same colors?", answer: "Keep the dark-plus-accent structure (it's a proven category signal) but swap the accent color for something less common than orange - electric blue or acid green still reads as energetic without blending into every other gym site." },
+    ],
+    relatedLinks: [
+      { title: "Best colors for fitness and gym websites", href: "/best-colors-for/fitness-websites" },
+      { title: "Orange color page", href: "/colors/orange" },
+      { title: "Black color page", href: "/colors/black" },
+      { title: "Color psychology explorer", href: "/tools/color-psychology-explorer" },
+    ],
+  },
+  {
+    slug: "why-blue-and-orange-works",
+    title: "Why Blue and Orange Shows Up Everywhere (It's Not Just Because They're Complementary)",
+    description: "Blue and orange is one of the most-used color pairings in film posters, sports branding, and SaaS UI. The complementary-colors explanation is only half the story.",
+    answer:
+      "Blue and orange works because it's complementary (opposite on the color wheel, so it creates maximum visual contrast) and because the two colors split cleanly by role: blue recedes and orange advances. That makes it unusually easy to build a clear visual hierarchy - blue for calm surfaces and trust, orange for the one thing you want someone to notice - which is why it shows up equally in film color grading, sports uniforms, and SaaS call-to-action buttons.",
+    intent: "informational",
+    keywords: ["why blue and orange colors work together", "blue and orange color combination", "blue orange complementary colors"],
+    sections: [
+      { title: "The complementary-contrast explanation (and its limit)", body: "Blue and orange sit opposite each other on the color wheel, which is the textbook reason they create strong visual contrast. That's true, but plenty of complementary pairs (like red-green) are considered much harder to use well - so wheel position alone doesn't explain why this specific pair became a design favorite." },
+      { title: "The part that actually makes it work: role separation", body: "Blue is a cool, receding color - it reads as background, structure, and calm. Orange is warm and advancing - it reads as foreground, action, and urgency. That built-in role split means designers can use blue for 90% of a layout (navigation, surfaces, body text) and orange for the 10% that needs to grab attention (a CTA button, a highlight), without the two colors fighting for the same visual job." },
+      { title: "Where you'll see it on purpose", body: "Sports and action-movie branding use blue-orange grading because it separates a subject (often warm-toned skin or a warm accent) from a cool background instantly, even at a glance. SaaS products use the same logic at UI scale: blue chrome and surfaces, one orange or amber CTA that's impossible to miss." },
+    ],
+    faq: [
+      { question: "Why do blue and orange look good together?", answer: "They're complementary (opposite on the color wheel, so contrast is maximized) and they naturally split roles - blue recedes as a calm background color, orange advances as an attention color - which makes hierarchy easy to build." },
+      { question: "Is blue and orange good for a call-to-action button?", answer: "Yes - it's one of the most effective combinations specifically because orange advances strongly against a blue backdrop, so a single orange button reads as the obvious next action without needing to be oversized or overly saturated." },
+      { question: "Does blue and orange work for every brand?", answer: "It works especially well for brands that want energy against a calm, trustworthy base - sports, SaaS, and product UI. It's a less natural fit for categories like luxury or wellness, where a lower-contrast, more muted palette usually fits the positioning better." },
+    ],
+    relatedLinks: [
+      { title: "Blue and Orange color combination", href: "/color-combinations/blue-and-orange" },
+      { title: "Blue color page", href: "/colors/blue" },
+      { title: "Orange color page", href: "/colors/orange" },
+      { title: "Color harmony generator", href: "/tools/color-harmony" },
+    ],
+  },
 ];
 
 const comparisons: ContentEntry[] = [
@@ -2653,6 +2703,7 @@ const bestColorsFor: ContentEntry[] = [
   {
     slug: "saas-websites",
     title: "Best Colors for SaaS Websites",
+    paletteColors: ["#1E3A8A", "#2563EB", "#5EEAD4", "#F59E0B", "#F8FAFC"],
     description: "A fast answer page covering the best colors, palettes, and gradients for SaaS sites targeting US buyers.",
     answer:
       "The best colors for SaaS websites are usually blue or indigo paired with calm neutrals and one clear accent color. This structure builds trust, improves readability, and keeps product demos easy to scan.",
@@ -2676,6 +2727,7 @@ const bestColorsFor: ContentEntry[] = [
   {
     slug: "fintech-brands",
     title: "Best Colors for Fintech Brands",
+    paletteColors: ["#1E3A8A", "#2563EB", "#16A34A", "#374151", "#F8FAFC"],
     description: "The best colors, combinations, and page patterns for fintech websites and product interfaces.",
     answer:
       "The best colors for fintech brands are deep blue, green, and disciplined neutrals. Blue builds trust, green supports growth, and neutral surfaces keep financial data legible and credible.",
@@ -2699,6 +2751,7 @@ const bestColorsFor: ContentEntry[] = [
   {
     slug: "healthcare-websites",
     title: "Best Colors for Healthcare Websites",
+    paletteColors: ["#1D4ED8", "#0D9488", "#BAE6FD", "#F8FAFC", "#F1F5F9"],
     description:
       "The best colors for healthcare websites are blue, teal, and white - colors that communicate trust, calm, and clinical clarity. Learn which palettes work for medical practices, health apps, and wellness brands.",
     answer:
@@ -2778,6 +2831,7 @@ const bestColorsFor: ContentEntry[] = [
   {
     slug: "ecommerce-conversions",
     title: "Best Colors for Ecommerce Conversions",
+    paletteColors: ["#1E293B", "#2563EB", "#F97316", "#FF6B4A", "#FFF8F0"],
     description: "A practical answer page for DTC and ecommerce teams choosing colors that improve action and trust.",
     answer:
       "The best ecommerce conversion colors usually combine trustworthy foundations with warm CTA accents. Use blue or dark neutrals for structure, then use orange, coral, or red selectively for promotional actions.",
@@ -3677,6 +3731,365 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Gradient generator", href: "/tools/gradient" },
     ],
   },
+  {
+    slug: "wedding-websites",
+    title: "Best Colors for Wedding and Bridal Websites",
+    paletteColors: ["#FAF6F0", "#F7DCDC", "#A8B99F", "#C9A961", "#2B2420"],
+    description:
+      "The best colors for wedding and bridal websites are soft blush, ivory, sage green, and warm gold - palettes that feel romantic and editorial without looking childish. Learn what works for planners, photographers, and venues.",
+    answer:
+      "The best colors for wedding websites - planners, photographers, venues, and bridal brands - build from a neutral ivory or cream base, add one soft romantic tone (blush pink or sage green), and use warm gold or deep burgundy sparingly as an accent for logos and dividers. The goal is elegance rather than sweetness: too much pink reads as juvenile, so the strongest wedding brands lean on neutral space and let a single accent color carry the romance.",
+    intent: "commercial",
+    keywords: [
+      "best colors for wedding website",
+      "wedding website color palette",
+      "bridal website colors",
+      "wedding planner website colors",
+      "wedding photography website palette",
+      "best colors for bridal brand",
+      "romantic website color scheme",
+      "wedding venue website colors",
+      "wedding website design colors",
+      "elegant wedding website palette",
+      "blush pink wedding color scheme",
+      "sage green wedding colors",
+      "wedding invitation color palette",
+      "luxury wedding brand colors",
+      "wedding website color inspiration",
+      "wedding color palette generator",
+    ],
+    sections: [
+      {
+        title: "Ivory and cream - the editorial foundation",
+        body: "Nearly every high-end wedding brand starts with warm off-white (#FAF6F0, #F5EFE6) instead of pure white. It reads as softer and more premium in print and on screen, and it gives blush, sage, or gold accents room to breathe without the page feeling clinical.",
+      },
+      {
+        title: "Blush and sage - romantic without being sweet",
+        body: "Dusty blush pink (#F7DCDC, #E8C4C4) signals romance while staying sophisticated if it's kept desaturated - bright bubblegum pink is what pushes a wedding site into juvenile territory. Sage green (#A8B99F) is the modern alternative for planners and venues that want a botanical, garden-wedding feel instead of a traditional pink one.",
+      },
+      {
+        title: "Gold and burgundy - the premium accent",
+        body: "Warm gold (#C9A961) or deep burgundy (#6B2737) used only in logos, dividers, and large display type signals a luxury or formal wedding brand. Both fail contrast at body-text sizes, so keep them decorative and set actual copy in a dark neutral instead.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid saturated, high-chroma pinks and purples - they read as prom or greeting-card rather than editorial. Avoid pairing more than one pastel with gold at once, which gets visually busy fast. Photographers and venues especially should keep the palette restrained so real photos, not UI color, carry the emotional weight of the page.",
+      },
+    ],
+    faq: [
+      {
+        question: "What are the best colors for a wedding website?",
+        answer:
+          "An ivory or cream base with one soft accent - blush pink or sage green - and gold or burgundy reserved for logos and dividers. This reads as elegant rather than themed, which matters for planners and venues serving a range of couples.",
+      },
+      {
+        question: "Is pink still a good choice for wedding brands?",
+        answer:
+          "Yes, if it's desaturated dusty or blush pink rather than bright pink. Muted tones feel romantic and editorial; saturated pink reads as juvenile or overly themed for a modern bridal brand.",
+      },
+      {
+        question: "What colors work for a wedding photography portfolio?",
+        answer:
+          "Keep the interface neutral - black, ivory, or warm gray - so the photography supplies the color. A single gold or blush accent in the logo and navigation is usually enough; the images should do the rest.",
+      },
+      {
+        question: "Should a wedding venue site use dark or light colors?",
+        answer:
+          "Light, warm neutrals work best for most venues since they photograph well against white dresses and daylight ceremony photos. A dark, moody palette (deep green or charcoal) can work for editorial or luxury venues, but it's a more specific brand choice than the default light palette.",
+      },
+      {
+        question: "Should wedding invitations match the website's color palette?",
+        answer:
+          "Yes - keeping invitations, save-the-dates, and the wedding website on the same two or three colors (usually the blush/sage/ivory base plus one gold or burgundy accent) makes the whole event feel designed rather than assembled from separate templates.",
+      },
+      {
+        question: "How do I generate a wedding color palette from my venue or florals?",
+        answer:
+          "Upload a photo of the venue, florals, or dress fabric to a color extraction tool to pull out the dominant tones, then round them into a clean 4-5 color palette - usually one neutral, one soft accent, and one deeper accent for text and dividers.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for photography websites", href: "/best-colors-for/photography-websites" },
+      { title: "Best colors for beauty salon websites", href: "/best-colors-for/beauty-salon-websites" },
+      { title: "Pink color page", href: "/colors/pink" },
+      { title: "Gold color page", href: "/colors/gold" },
+      { title: "Color palette generator", href: "/generator" },
+      { title: "Image color extractor", href: "/tools/image-colors" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+    ],
+  },
+  {
+    slug: "nonprofit-websites",
+    title: "Best Colors for Nonprofit and Charity Websites",
+    paletteColors: ["#0D9488", "#1E3A5F", "#F59E0B", "#FFFFFF", "#1A1A1A"],
+    description:
+      "The best colors for nonprofit websites combine a trustworthy base color with a warm action color for donation buttons - the exact hues depend on the cause, but the trust-plus-warmth pattern holds across most charities.",
+    answer:
+      "The best colors for nonprofit and charity websites pair a trust-building base color - teal, deep blue, or green depending on the cause - with one warm, high-contrast action color reserved for the donate button and other calls to action. Cause type should drive the base hue: environmental and conservation nonprofits lean green, health and medical charities lean blue or teal, human-rights and social-justice organizations often use purple or deep red, and education nonprofits commonly use blue and orange. In every case, the donate button needs its own dedicated color that appears nowhere else on the page.",
+    intent: "commercial",
+    keywords: [
+      "best colors for nonprofit website",
+      "charity website color palette",
+      "nonprofit branding colors",
+      "donation website colors",
+      "ngo website color scheme",
+      "best colors for charity brand",
+      "nonprofit website design colors",
+      "cause marketing color palette",
+    ],
+    sections: [
+      {
+        title: "Match the base color to the cause",
+        body: "Environmental and conservation nonprofits use green (#16A34A, #0D9488) because it directly signals the cause. Health and medical charities lean blue or teal (#1E3A5F, #0D9488) for calm and clinical trust. Human-rights and social-justice organizations often reach for purple or deep red to signal urgency and conviction. Education and youth nonprofits commonly pair blue with orange for an approachable, optimistic feel.",
+      },
+      {
+        title: "Give the donate button its own color",
+        body: "The single most important color decision on a nonprofit site is the donate button - it should use a warm, high-contrast color (orange #F59E0B or a bright accent) that doesn't appear anywhere else in the navigation or body content. If your accent color is already used for links or icons elsewhere, the donate button stops standing out exactly where it matters most.",
+      },
+      {
+        title: "Keep the rest of the palette restrained",
+        body: "Nonprofit sites lean on photography - people, places, impact - more than most commercial sites, so the UI palette should stay simple: one base color, one warm accent, and generous white or off-white space. A busy multi-color system competes with the photography and dilutes the emotional impact the images are meant to carry.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid using the same color for both the donate button and secondary UI elements like tags or badges - it trains visitors to ignore the exact color you want them to notice. Avoid cold, purely clinical blue-and-white systems for cause-driven charities where warmth and human connection matter more than institutional trust.",
+      },
+    ],
+    faq: [
+      {
+        question: "What color should a donate button be?",
+        answer:
+          "A warm, high-contrast color - usually orange or a bright accent - that is used nowhere else on the page. Reserving that color exclusively for the donate button is what makes it stand out at the moment a visitor is deciding whether to give.",
+      },
+      {
+        question: "What colors work best for environmental nonprofits?",
+        answer:
+          "Green is the default and for good reason - it directly signals the cause. Pair a mid-tone green with a warm accent (amber or orange) for calls to action, and use photography to carry most of the visual interest.",
+      },
+      {
+        question: "Should a nonprofit website use bright or muted colors?",
+        answer:
+          "Muted, trustworthy base colors work better for the overall site, with one bright, saturated color reserved for the donate button and key calls to action. An entirely bright, saturated palette can undercut the credibility a donor-facing site needs.",
+      },
+      {
+        question: "Do different causes need different color palettes?",
+        answer:
+          "Yes - health nonprofits typically use blue or teal for clinical trust, environmental causes use green, human-rights organizations often use purple or red for urgency, and education nonprofits favor blue and orange. Matching the base hue to the cause makes the brand feel intentional rather than generic.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
+      { title: "Green color page", href: "/colors/green" },
+      { title: "Teal color page", href: "/colors/teal" },
+      { title: "Orange color page", href: "/colors/orange" },
+      { title: "Color contrast guide", href: "/accessibility/color-contrast" },
+      { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
+    ],
+  },
+  {
+    slug: "travel-websites",
+    title: "Best Colors for Travel and Tourism Websites",
+    paletteColors: ["#0B6E8C", "#F4A340", "#2E8B7A", "#F5EDE0", "#1C1712"],
+    description:
+      "The best colors for travel and tourism websites depend on the destination type - ocean blue and sand for beach travel, deep green and earth tones for adventure travel, and navy with gold for luxury travel.",
+    answer:
+      "The best colors for travel and tourism websites follow the destination, not a single universal palette. Beach and resort travel uses ocean blue and warm sand tones to evoke the destination directly. Adventure and outdoor travel uses deep green, earthy brown, and burnt orange for a rugged, natural feel. Luxury and boutique travel uses navy or deep charcoal with a gold or champagne accent for an upscale editorial look. Across all three, high-quality destination photography should carry most of the visual interest - the UI palette should support it, not compete with it.",
+    intent: "commercial",
+    keywords: [
+      "best colors for travel website",
+      "travel agency website colors",
+      "tourism website color palette",
+      "travel blog color scheme",
+      "hotel website colors",
+      "best colors for travel brand",
+      "vacation website color palette",
+      "adventure travel website colors",
+    ],
+    sections: [
+      {
+        title: "Beach and resort - ocean blue and sand",
+        body: "Turquoise or ocean blue (#0B6E8C, #2196A8) paired with warm sand and cream (#F5EDE0) is the most direct way to signal a beach or resort destination before a visitor reads a word of copy. Keep the blue as the dominant tone and use sand as background and negative space rather than the other way around.",
+      },
+      {
+        title: "Adventure and outdoor - earth tones",
+        body: "Deep forest green (#2E8B7A, #1F5C4D), burnt orange (#D2691E), and warm brown communicate rugged, outdoor experiences - hiking, safari, mountain travel. This palette works because it borrows directly from the landscape itself rather than using travel-industry blue by default.",
+      },
+      {
+        title: "Luxury and boutique travel - navy and gold",
+        body: "Deep navy or charcoal (#1C1712, #1E293B) with a restrained gold or champagne accent (#C9A961) signals an upscale, curated travel experience - private tours, boutique hotels, luxury cruises. This is the opposite of the bright, saturated palette most budget and mass-market travel sites use, and that contrast is what makes it read as premium.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid an oversaturated rainbow of destination colors on one page - it reads as generic stock-photo travel rather than a specific brand. Avoid dark, moody palettes for budget or family travel brands, where bright, optimistic colors convert better. Let the primary CTA (book now, get a quote) use one consistent accent color across the whole site regardless of which destination palette is showing.",
+      },
+    ],
+    faq: [
+      {
+        question: "What colors work best for a travel agency website?",
+        answer:
+          "Ocean blue and warm sand for beach-focused agencies, deep green and earth tones for adventure travel, or navy and gold for luxury travel - the right choice depends on which destinations and traveler type the agency serves.",
+      },
+      {
+        question: "What color should the 'Book Now' button be on a travel site?",
+        answer:
+          "Pick one warm, high-contrast accent color (often orange or coral) and use it consistently for every booking CTA across the site, regardless of which destination's photography or palette is showing on that page.",
+      },
+      {
+        question: "Should a travel blog use bright colors?",
+        answer:
+          "A travel blog benefits from a simple, mostly neutral UI so destination photography supplies the color - one accent color for links and CTAs is usually enough, rather than a fully saturated multi-color system.",
+      },
+      {
+        question: "What colors work for luxury or boutique travel brands?",
+        answer:
+          "Deep navy, charcoal, or black with a restrained gold or champagne accent reads as upscale and curated - the same visual logic luxury fashion and hospitality brands use, applied to travel.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for photography websites", href: "/best-colors-for/photography-websites" },
+      { title: "Blue color page", href: "/colors/blue" },
+      { title: "Teal color page", href: "/colors/teal" },
+      { title: "Orange color page", href: "/colors/orange" },
+      { title: "Gradient generator", href: "/tools/gradient" },
+      { title: "Image color extractor", href: "/tools/image-colors" },
+    ],
+  },
+  {
+    slug: "automotive-websites",
+    title: "Best Colors for Automotive and Car Dealership Websites",
+    paletteColors: ["#1A1A1A", "#C41E3A", "#4A5568", "#FFFFFF", "#1E40AF"],
+    description:
+      "The best colors for automotive websites depend on the segment - black and red for performance brands, blue for trust-focused dealerships and service centers, and gray or silver for a technical, precision feel.",
+    answer:
+      "The best colors for automotive and car dealership websites split by segment. Performance and sports-car brands use black paired with red for intensity and speed. Mainstream dealerships and used-car marketplaces lean on blue for trust, since financing and used-vehicle purchases carry more buyer hesitation than most retail categories. Auto service and repair sites often combine blue with orange or yellow to signal both reliability and urgency (same-day service, quick turnaround). Gray and silver metallics work as a neutral backdrop across all three, echoing the vehicles themselves.",
+    intent: "commercial",
+    keywords: [
+      "best colors for car dealership website",
+      "automotive website color palette",
+      "car dealership website colors",
+      "auto repair website colors",
+      "car brand color palette",
+      "best colors for automotive brand",
+      "used car website colors",
+      "auto service website color scheme",
+    ],
+    sections: [
+      {
+        title: "Black and red - performance and speed",
+        body: "Performance, sports-car, and motorsport brands use black (#1A1A1A) as a dominant base with red (#C41E3A) as a high-energy accent - the same combination fitness and performance brands use, for the same reason: it signals intensity and power. Keep red as an accent for CTAs and highlights rather than large color fields.",
+      },
+      {
+        title: "Blue - trust for dealerships and financing",
+        body: "Mainstream and used-car dealerships benefit from blue (#1E40AF, #2563EB) more than any other automotive segment, because financing, trade-in value, and used-vehicle condition all require buyer trust that a purely aggressive palette doesn't build. Pair blue with white and light gray for a clean, credible retail feel.",
+      },
+      {
+        title: "Orange or yellow - service and urgency",
+        body: "Auto repair and quick-service brands (oil change, tire, inspection) often add orange or yellow to a blue or gray base to signal speed and responsiveness - same-day service, quick turnaround, 24-hour availability. This is a smaller accent role, not a base color, since too much orange or yellow reads as a warning rather than a service benefit.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid combining aggressive performance-brand colors (black plus red) with a used-car or budget dealership offer - the mismatch between the palette's promise and the price point undermines trust. Avoid low-contrast silver-on-white text, which is common on automotive sites trying to echo metallic paint finishes but fails accessibility for body copy.",
+      },
+    ],
+    faq: [
+      {
+        question: "What colors work best for a car dealership website?",
+        answer:
+          "Blue paired with white and light gray builds the trust needed for financing and used-vehicle decisions. Performance and luxury dealers can lean into black and red instead, but mainstream dealerships generally convert better with a trust-first blue palette.",
+      },
+      {
+        question: "What color scheme works for an auto repair shop website?",
+        answer:
+          "A blue or gray base for reliability, with orange or yellow used sparingly to signal speed and urgency - same-day service, quick turnaround. Keep the warm accent color limited to CTAs and service badges.",
+      },
+      {
+        question: "Why do performance car brands use black and red?",
+        answer:
+          "Black signals seriousness and precision, and red adds intensity and urgency - the same psychological pairing used in fitness and motorsport branding. It works because it matches the emotional promise of speed and performance.",
+      },
+      {
+        question: "Is silver or gray a good primary color for a car website?",
+        answer:
+          "Gray and silver work well as a neutral backdrop that echoes vehicle paint finishes, but they shouldn't carry body text - contrast against white or light backgrounds is often too low. Use gray for surfaces and dividers, and a darker neutral for actual copy.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for finance websites", href: "/best-colors-for/finance-websites" },
+      { title: "Blue color page", href: "/colors/blue" },
+      { title: "Red color page", href: "/colors/red" },
+      { title: "Black color page", href: "/colors/black" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Color palette generator", href: "/generator" },
+    ],
+  },
+  {
+    slug: "pet-websites",
+    title: "Best Colors for Pet Care and Veterinary Websites",
+    paletteColors: ["#3E8E9E", "#F4A340", "#7CB68C", "#FFF8EE", "#2B2420"],
+    description:
+      "The best colors for pet care and veterinary websites combine a calm, trustworthy base (teal or blue) with a warm, playful accent (orange or yellow) - clinical enough to feel credible, warm enough to feel like a pet brand.",
+    answer:
+      "The best colors for pet care and veterinary websites balance two things at once: enough clinical calm to feel credible as a medical or care provider, and enough warmth to feel approachable for pet owners. Veterinary clinics lean on teal or blue as a base, similar to human healthcare, but pair it with a warm accent - orange, yellow, or coral - to avoid feeling as sterile as a hospital. Pet product and food brands go further toward warmth, using earthy greens and browns to signal natural, wholesome ingredients. Doggy daycare, grooming, and boarding brands can lean playful with brighter, more saturated colors since the tone is closer to hospitality than medicine.",
+    intent: "commercial",
+    keywords: [
+      "best colors for pet website",
+      "veterinary website color palette",
+      "pet care website colors",
+      "vet clinic website colors",
+      "pet brand color palette",
+      "best colors for dog grooming website",
+      "pet food website colors",
+      "animal hospital website color scheme",
+    ],
+    sections: [
+      {
+        title: "Teal and blue - clinical trust without the cold hospital feel",
+        body: "Veterinary and pet-health brands use teal (#3E8E9E) or mid-blue more than any other base color because it borrows the same trust signals as human healthcare, without red's alarm associations. Pure clinical blue-and-white can feel sterile for a pet audience, so most successful vet sites warm it up with a secondary accent.",
+      },
+      {
+        title: "Orange and yellow - warmth and approachability",
+        body: "A warm accent (#F4A340 orange, or a softer coral) keeps a vet or pet-care brand from feeling like a human hospital. This accent works well on CTAs - book an appointment, shop now - and in illustrations or icons, where a purely clinical palette would feel unwelcoming to a worried pet owner.",
+      },
+      {
+        title: "Earthy green and brown - natural pet food and products",
+        body: "Pet food and product brands emphasizing natural or organic ingredients use sage or forest green (#7CB68C) and warm brown, the same visual language used in human natural-food branding. This signals ingredient quality more directly than a clinical teal-and-white palette would.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid an entirely cold, all-blue clinical palette for a pet brand - it under-serves the emotional, personal relationship pet owners have with their animals. Avoid overly saturated, cartoonish palettes for veterinary or medical pet services specifically, where some credibility signal still matters even in a warm, friendly system.",
+      },
+    ],
+    faq: [
+      {
+        question: "What are the best colors for a veterinary website?",
+        answer:
+          "Teal or blue as a base for clinical trust, paired with a warm accent like orange or coral so the site doesn't feel as sterile as a human hospital. This balance matters because pet owners are often anxious when visiting a vet's website.",
+      },
+      {
+        question: "What colors work for a pet food or pet product brand?",
+        answer:
+          "Earthy greens and warm browns signal natural, wholesome ingredients - the same visual language used in human natural-food branding, adapted for a pet audience.",
+      },
+      {
+        question: "Can a pet website use bright, playful colors?",
+        answer:
+          "Yes, especially for grooming, daycare, and boarding brands where the tone is closer to hospitality than medicine. Veterinary and health-focused pet brands should stay a bit more restrained to preserve credibility.",
+      },
+      {
+        question: "Why do vet websites avoid red?",
+        answer:
+          "Red carries alarm and emergency associations that can heighten anxiety for pet owners who are often already worried when visiting the site. Teal, blue, and green build calm and trust more effectively for this audience.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
+      { title: "Teal color page", href: "/colors/teal" },
+      { title: "Orange color page", href: "/colors/orange" },
+      { title: "Green color page", href: "/colors/green" },
+      { title: "Color psychology explorer", href: "/tools/color-psychology-explorer" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+    ],
+  },
 ];
 
 const faqs: ContentEntry[] = [
@@ -3954,7 +4367,7 @@ export const hubs: HubPage[] = [
     answer:
       "HueFlow's color hub maps every major color to brand meaning, UI use cases, accessibility guidance, Tailwind classes, CSS tokens, and related palettes so users and search engines can move from definition to application quickly.",
     goals: ["Look up any color by name", "See hex, RGB, and HSL values", "Jump to matching palettes and gradients"],
-    featuredLinks: colors.map((entry) => ({ title: entry.title, href: `/colors/${entry.slug}` })),
+    featuredLinks: colors.map((entry) => ({ title: entry.title, href: `/colors/${entry.slug}`, paletteColors: entry.paletteColors })),
   },
   {
     slug: "palettes",
@@ -3994,7 +4407,7 @@ export const hubs: HubPage[] = [
     answer:
       "Users often begin with emotional intent - trust, urgency, luxury, growth - before they search for palettes or specific tools. Color meaning pages meet them at that earlier stage with clear, useful answers.",
     goals: ["Understand what each color signals", "Compare psychology across colors", "Connect meaning to brand decisions"],
-    featuredLinks: colorMeaningEntries.map((entry) => ({ title: entry.title, href: `/color-meanings/${entry.slug}` })),
+    featuredLinks: colorMeaningEntries.map((entry) => ({ title: entry.title, href: `/color-meanings/${entry.slug}`, paletteColors: entry.paletteColors })),
   },
   {
     slug: "color-combinations",
@@ -4117,7 +4530,7 @@ export const hubs: HubPage[] = [
     answer:
       "Best-for pages answer the most practical color question a designer or marketer can ask: what colors actually work for this type of site or product.",
     goals: ["Get straight recommendations by industry", "See why each color works there", "Jump to a matching palette"],
-    featuredLinks: bestColorsFor.map((entry) => ({ title: entry.title, href: `/best-colors-for/${entry.slug}` })),
+    featuredLinks: bestColorsFor.map((entry) => ({ title: entry.title, href: `/best-colors-for/${entry.slug}`, paletteColors: entry.paletteColors })),
   },
   {
     slug: "faqs",
@@ -4479,7 +4892,13 @@ function buildAutomaticRelatedLinks(entry: ContentEntry) {
 }
 
 function mergeRelatedLinks(entry: ContentEntry) {
-  const supplemental = buildAutomaticRelatedLinks(entry);
+  // buildAutomaticRelatedLinks scans every entry across every collection (100+ items,
+  // each tokenized with a regex split) to find a handful of extra links - skip that
+  // scan once the entry already has a full set, since the result is sliced to 10
+  // anyway. This matters most for programmatic hex color pages (buildColorRelatedLinks
+  // already returns 8 links), which are also the highest-volume, most crawlable route
+  // on the site and were pushing Worker CPU time close to the platform's per-request limit.
+  const supplemental = entry.relatedLinks.length >= 8 ? [] : buildAutomaticRelatedLinks(entry);
   const merged = [...entry.relatedLinks, ...supplemental];
   const seen = new Set<string>();
 

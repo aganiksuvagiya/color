@@ -17,9 +17,10 @@ const FOOTER_LINKS = [
     links: [
       { href: "/palettes", label: "Color Palettes" },
       { href: "/color-combinations", label: "Color Combinations" },
-      { href: "/tools/tailwind-scale", label: "Color Shades" },
-      { href: "/explore", label: "Color Inspiration" },
       { href: "/gradients", label: "Gradients" },
+      { href: "/brand-colors", label: "Brand Colors" },
+      { href: "/tailwind", label: "Tailwind Colors" },
+      { href: "/css-colors", label: "CSS Colors" },
     ],
   },
   {
@@ -30,6 +31,19 @@ const FOOTER_LINKS = [
       { href: "/faqs", label: "FAQ" },
       { href: "/color-psychology", label: "Color Psychology" },
       { href: "/accessibility", label: "Accessibility" },
+      { href: "/web-design", label: "Web Design Colors" },
+      { href: "/marketing-colors", label: "Marketing Colors" },
+    ],
+  },
+  {
+    heading: "Guides",
+    links: [
+      { href: "/guides", label: "Guides" },
+      { href: "/best-colors-for", label: "Best Colors For" },
+      { href: "/comparisons", label: "Comparisons" },
+      { href: "/explainers", label: "Explainers" },
+      { href: "/resources", label: "Resource Library" },
+      { href: "/developer", label: "Developer Docs" },
     ],
   },
   {
@@ -56,7 +70,7 @@ export function Footer() {
               Find colors that feel right.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-5">
             {FOOTER_LINKS.map((group) => (
               <div key={group.heading}>
                 <p className="text-xs font-semibold uppercase tracking-wider text-[#1c1712]/35">

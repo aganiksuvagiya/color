@@ -34,11 +34,13 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   contrast: {
     slug: "contrast",
     path: "/tools/contrast",
-    title: "Contrast Checker",
+    title: "Color Contrast Checker — Free WCAG AA/AAA Tool",
     description:
-      "Free WCAG contrast checker — instantly see the contrast ratio, AA/AAA pass-fail, and fix suggestions for any two colors. No signup needed.",
+      "Free color contrast checker for websites — instantly see the contrast ratio, AA/AAA pass-fail, and fix suggestions for any two colors. No signup needed.",
     keywords: [
+      "color contrast checker",
       "contrast checker",
+      "website contrast checker",
       "wcag contrast checker",
       "color contrast ratio checker",
       "accessible text contrast tool",
@@ -49,18 +51,34 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "wcag 2.1 contrast ratio tool",
     ],
     answer:
-      "HueFlow's Contrast Checker helps teams test foreground and background colors against WCAG rules so buttons, text, dashboards, and landing pages stay readable for US web audiences.",
+      "HueFlow's Color Contrast Checker helps teams test foreground and background colors against WCAG rules so buttons, text, dashboards, and landing pages stay readable for US web audiences.",
     audience: "Product teams, marketers, and developers improving readable interfaces for US searchers and customers.",
     useCases: [
       "Check CTA button text before shipping a landing page",
       "Validate dashboard UI text for AA and AAA accessibility",
       "Compare brand colors against white or dark surfaces",
+      "Audit an existing website's contrast before a redesign or accessibility review",
     ],
     howToSteps: [
       "Enter or pick a foreground text color.",
       "Enter or pick a background color.",
       "Review the ratio, WCAG level, and preview text blocks.",
       "Adjust colors until the combination passes the target accessibility standard.",
+    ],
+    explainerHeading: "Understanding website contrast checking",
+    explainer: [
+      {
+        title: "What a contrast ratio means",
+        body: "The ratio compares the luminance of two colors, from 1:1 (identical, no contrast) to 21:1 (pure black on white). WCAG sets minimum ratios so text stays readable for users with low vision or color blindness.",
+      },
+      {
+        title: "AA vs AAA",
+        body: "AA is the baseline most sites target: 4.5:1 for normal text, 3:1 for large text (18pt+ or 14pt bold). AAA is stricter — 7:1 for normal text — and is often required for government or healthcare sites.",
+      },
+      {
+        title: "Where to check contrast on a website",
+        body: "Test body copy, button labels, form placeholders, links, and any text over images or gradients. These are the spots automated site audits and manual accessibility reviews flag most often.",
+      },
     ],
     faq: [
       {
@@ -72,6 +90,16 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
         question: "Why is contrast important for SEO and UX?",
         answer:
           "Poor contrast increases bounce risk, reduces readability, and weakens usability signals. Better readability supports engagement, accessibility, and crawl-friendly page quality.",
+      },
+      {
+        question: "What's the difference between AA and AAA contrast?",
+        answer:
+          "AA is the standard most websites aim for (4.5:1 normal text, 3:1 large text). AAA is a higher bar (7:1 normal text, 4.5:1 large text) used for sites that need stronger accessibility guarantees, like healthcare or government.",
+      },
+      {
+        question: "Is this contrast checker free to use on a live website?",
+        answer:
+          "Yes. Enter any two colors from your site's design — no signup, no limit on checks — and get an instant WCAG AA/AAA pass-fail with a one-click accessible fix suggestion.",
       },
     ],
     relatedLinks: [
@@ -139,11 +167,12 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   picker: {
     slug: "picker",
     path: "/tools/picker",
-    title: "Color Picker",
+    title: "Color Picker & Hue Picker — HEX, RGB, HSL",
     description:
-      "Free online color picker — click any color to instantly get HEX, RGB, and HSL values, plus shades, tints, and complementary palettes.",
+      "Free online color picker and hue picker — click any color to instantly get HEX, RGB, and HSL values, plus shades, tints, and complementary palettes.",
     keywords: [
       "color picker",
+      "hue picker",
       "hex color picker",
       "hsl color picker",
       "rgb color converter",
@@ -168,8 +197,12 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "Click any generated shade or tint to continue exploring.",
       "Copy the final value for design tokens, CSS, or Tailwind classes.",
     ],
-    explainerHeading: "Understanding HEX, RGB & HSL",
+    explainerHeading: "Understanding Hue, HEX, RGB & HSL",
     explainer: [
+      {
+        title: "Hue",
+        body: "Hue is the base color itself — where it sits on the 0-360° color wheel (0/360 = red, 120 = green, 240 = blue), independent of how light, dark, or saturated it is. A hue picker lets you lock in that underlying color first, then fine-tune saturation and lightness separately.",
+      },
       {
         title: "HEX",
         body: "A HEX code (like #2563EB) packs red, green, and blue into six characters, two per channel, from 00 to FF. It's the most common format in CSS, design tools, and brand guidelines because it's compact and unambiguous to copy-paste.",
@@ -184,6 +217,11 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       },
     ],
     faq: [
+      {
+        question: "What is a hue picker?",
+        answer:
+          "A hue picker lets you select a color by its position on the 0-360° color wheel first, then adjust saturation and lightness separately. This picker works as both a full color picker and a hue picker — pick a hue, then fine-tune it with the shade and tint options below.",
+      },
       {
         question: "Why use HSL when picking UI colors?",
         answer:
@@ -813,10 +851,11 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "tailwind-scale": {
     slug: "tailwind-scale",
     path: "/tools/tailwind-scale",
-    title: "Tailwind Color Scale Generator",
+    title: "Tailwind Color Generator — Hex to 50-950 Scale",
     description:
-      "Turn any hex color into a full Tailwind-style 50-950 shade scale, with a one-click copy as a ready-to-paste config object.",
+      "Free Tailwind color generator — turn any hex color into a full Tailwind-style 50-950 shade scale, with a one-click copy as a ready-to-paste config object.",
     keywords: [
+      "tailwind color generator",
       "tailwind color scale generator",
       "tailwind shades from hex",
       "generate tailwind color palette from color",
@@ -849,6 +888,11 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
         question: "Which step matches my original color exactly?",
         answer:
           "The step closest to your base color's actual lightness keeps your exact hex value; every other step is generated around it.",
+      },
+      {
+        question: "Is this a free Tailwind color generator?",
+        answer:
+          "Yes. Enter any hex code and get a full 50-950 Tailwind-compatible shade scale instantly, with no signup and a one-click copy as a ready-to-paste tailwind.config object.",
       },
     ],
     relatedLinks: [
@@ -936,6 +980,20 @@ export const blogPageContent = {
       category: "Guides",
       readTime: "6 min",
       href: "/guides/ai-website-color-strategy",
+    },
+    {
+      title: "Why Every Gym Brand Looks the Same",
+      excerpt: "Black, orange, and a little red - here's why fitness brands converge on the same palette, and when it's the wrong call.",
+      category: "Explainers",
+      readTime: "4 min",
+      href: "/explainers/why-gym-brands-go-black-and-orange",
+    },
+    {
+      title: "Why Blue and Orange Shows Up Everywhere",
+      excerpt: "It's not just because they're complementary - the real reason is how cleanly the two colors split visual roles.",
+      category: "Explainers",
+      readTime: "4 min",
+      href: "/explainers/why-blue-and-orange-works",
     },
     {
       title: "Why Blue Builds Trust",

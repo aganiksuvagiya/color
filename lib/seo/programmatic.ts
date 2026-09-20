@@ -3,13 +3,14 @@ import {
   findClosestColorName,
   findNamedColorByHex,
   findNamedColorBySlug,
+  getClosestNamedColors,
   getPopularHexSamples,
   getPopularNamedColorSlugs,
   namedColors,
   normalizeHexColor,
   type NamedColor,
 } from "@/lib/color-names";
-import { getContrastText, hexToHsl, isValidHex } from "@/lib/color-utils";
+import { getContrastText, hexToHsl, hslToHex, isValidHex } from "@/lib/color-utils";
 
 import { isColorMeaningAuthored, type ContentEntry } from "@/lib/seo/content";
 
@@ -205,6 +206,21 @@ function buildColorRelatedLinks(descriptor: ColorDescriptor) {
   ];
 }
 
+function describeSaturation(s: number) {
+  if (s < 15) return "nearly gray with very little saturation";
+  if (s < 40) return "muted and low-saturation";
+  if (s < 70) return "moderately saturated";
+  return "highly saturated and vivid";
+}
+
+function describeLightness(l: number) {
+  if (l < 20) return "very dark, close to black";
+  if (l < 40) return "dark";
+  if (l < 60) return "mid-toned";
+  if (l < 80) return "light";
+  return "very light, close to white";
+}
+
 function buildColorFaq(descriptor: ColorDescriptor, contrastRatio: number, wcagLevel: string) {
   return [
     {
@@ -240,6 +256,10 @@ export function buildProgrammaticColorEntry(slug: string): ContentEntry | null {
   const colorLabel = descriptor.mode === "hex" ? displayHex : descriptor.displayName;
   const titlePrefix = descriptor.mode === "hex" ? `${descriptor.hex.toLowerCase()} Color` : `${descriptor.displayName} Color`;
 
+  const toneDescription = `${describeSaturation(s)} and ${describeLightness(l)}`;
+  const complementaryHex = hslToHex((h + 180) % 360, s, l).toUpperCase();
+  const nearestColors = getClosestNamedColors(descriptor.hex, 3);
+
   return {
     slug,
     title: `${colorLabel} Color – Hex ${displayHex}, RGB, HSL, Shades & Palettes`,
@@ -269,6 +289,10 @@ export function buildProgrammaticColorEntry(slug: string): ContentEntry | null {
       {
         title: "Things to check before using it",
         body: `Test contrast before shipping text or buttons in this color, and avoid reusing the exact same shade for branding, alerts, and UI status all at once - that makes it harder for users to tell them apart.`,
+      },
+      {
+        title: "Saturation, lightness & similar shades",
+        body: `At ${s}% saturation and ${l}% lightness, ${descriptor.displayName.toLowerCase()} reads as ${toneDescription}. Its complementary color is ${complementaryHex} - useful for accent pairings. The closest named colors are ${nearestColors.map((c) => `${c.name} (${c.hex})`).join(", ")}, so compare swatches side by side before locking in the exact shade.`,
       },
     ],
     faq: buildColorFaq(descriptor, contrastOnWhite, wcagLevel),
@@ -302,6 +326,7 @@ export function buildProgrammaticColorEntry(slug: string): ContentEntry | null {
       { label: "Closest named color", value: descriptor.displayName },
       { label: "Hue family", value: descriptor.hueLabel },
       { label: "HSL", value: `${h} ${s}% ${l}%` },
+      { label: "Complementary color", value: complementaryHex },
       { label: "Text contrast", value: `${contrastOnWhite}:1 on white • ${wcagLevel} • prefers ${textColor} text on the swatch` },
     ],
     keyTakeaways: [
@@ -359,6 +384,10 @@ const industryProfiles: Record<string, { title: string; focus: string; colors: s
     gradients: ["apricot-launch", "ocean-depth"],
   },
 };
+
+export function getProgrammaticBrandColorSlugs(): string[] {
+  return Object.keys(industryProfiles);
+}
 
 export function buildProgrammaticBrandColorEntry(slug: string): ContentEntry | null {
   const profile = industryProfiles[slug];
