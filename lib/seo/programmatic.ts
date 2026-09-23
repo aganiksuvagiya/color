@@ -438,17 +438,21 @@ export function getHexDuplicateCanonicalSlug(slug: string): string | null {
 }
 
 export function getProgrammaticColorStaticParams() {
-  const nameParams = getPopularNamedColorSlugs(120).map((slug) => ({ slug }));
+  // All named colors now have authored /color-meanings content (see colorMeaningOverrides
+  // in content.ts), so every one of them is worth pre-rendering at build time rather than
+  // capping at a "popular" subset and leaving the rest to render on first request.
+  const nameParams = getPopularNamedColorSlugs(namedColors.length).map((slug) => ({ slug }));
   const hexParams = getPopularHexSamples(24).map((slug) => ({ slug }));
   return [...nameParams, ...hexParams];
 }
 
-export function getProgrammaticColorSitemapPaths(limit = 120) {
+export function getProgrammaticColorSitemapPaths(limit = namedColors.length) {
   // /colors/<name> is the canonical reference page for every named color.
   // /color-meanings/<name> is only included once it has real hand-written psychology
   // content - until then it renders (and works for direct visitors) but is noindexed,
   // so it's left out of the sitemap rather than asking search engines to crawl a
-  // near-duplicate of /colors.
+  // near-duplicate of /colors. All named colors are authored now, so in practice every
+  // /color-meanings/<name> path is included alongside its /colors/<name> counterpart.
   const namedPaths = namedColors.slice(0, limit).flatMap((color) => [
     `/colors/${color.slug}`,
     ...(isColorMeaningAuthored(color.slug) ? [`/color-meanings/${color.slug}`] : []),

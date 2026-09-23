@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { ContentPageView } from "@/components/seo/content-page";
 import { HubPageView } from "@/components/seo/hub-page";
 import { StructuredData } from "@/components/seo/structured-data";
-import { findResolvedEntry, getCollection, getHubByPath, isColorMeaningAuthored, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
+import { findResolvedEntry, getCollection, getColorMeaningOverride, getHubByPath, isColorMeaningAuthored, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
 import { buildProgrammaticBrandColorEntry, buildProgrammaticColorEntry, getHexDuplicateCanonicalSlug, getProgrammaticBrandColorSlugs, getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
 import {
   buildArticleSchema,
@@ -215,13 +215,30 @@ const findCollectionEntry = cache(function findCollectionEntry<K extends keyof R
     }
 
     const colorEntry = buildProgrammaticColorEntry(slug);
-    if (colorEntry) {
+    if (!colorEntry) return undefined;
+
+    // colorMeaningEntries only maps over the small hand-authored `colors` array (13
+    // base hues), so a named color added to colorMeaningOverrides without a matching
+    // `colors` entry (e.g. "gold", "steel-blue") won't be found by findResolvedEntry
+    // above - check the override map directly so its authored content (and not the
+    // generic programmatic title/sections) is what actually renders.
+    const override = getColorMeaningOverride(slug);
+    if (override) {
       return resolveContentEntry({
         ...colorEntry,
-        title: `${getProgrammaticColorDescriptor(slug)?.displayName ?? slug} Color Meaning`,
+        title: override.title,
+        description: override.description,
+        answer: override.answer,
+        sections: override.sections,
+        faq: override.faq,
+        keyTakeaways: override.keyTakeaways,
       });
     }
-    return undefined;
+
+    return resolveContentEntry({
+      ...colorEntry,
+      title: `${getProgrammaticColorDescriptor(slug)?.displayName ?? slug} Color Meaning`,
+    });
   }
 
   if (key === "brandColors") {

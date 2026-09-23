@@ -1064,7 +1064,7 @@ const brandColorEntries: ContentEntry[] = [
   },
 ];
 
-type ColorMeaningOverride = {
+export type ColorMeaningOverride = {
   title: string;
   description: string;
   answer: string;
@@ -1256,6 +1256,1657 @@ const colorMeaningOverrides: Record<string, ColorMeaningOverride> = {
       { question: "Why is azure common in healthcare interfaces?", answer: "It softens a layout without the starkness of pure white, which suits interfaces that need to feel calm rather than clinical or cold." },
     ],
   },
+  "light-yellow": {
+    title: "What Light Yellow Means in Color Psychology",
+    description: "Why light yellow keeps yellow's cheerfulness while losing its caution signal - and why that makes it a background color, not an accent.",
+    answer: "Light yellow strips out the high-visibility intensity that makes saturated yellow hard to use, keeping only the cheerful, optimistic part of the association. Where bright yellow grabs attention and warns, light yellow settles into the background and simply feels warm - which is why it shows up far more often as a soft surface tint than as a brand-defining accent.",
+    sections: [
+      { title: "The caution signal fades first", body: "Yellow's hazard association depends almost entirely on high saturation and contrast (think black-and-yellow warning tape). Pale yellow loses that contrast almost completely, so the caution reading disappears and only the warmth remains - useful for anyone who wants yellow's cheerfulness without its alarm." },
+      { title: "A background color, not a statement one", body: "Because it's so close to white in lightness, light yellow works the way azure or blush pink do - as a gentle surface tint on cards or sections rather than a color that carries the brand's identity on its own. It needs a deeper accent nearby to avoid feeling washed out." },
+    ],
+    faq: [
+      { question: "Is light yellow a good background color?", answer: "Yes - it adds warmth without the contrast problems of saturated yellow, making it a common choice for soft section backgrounds, notices, and highlight cards." },
+      { question: "Does light yellow still feel like a warning color?", answer: "No - the warning association depends on high saturation and strong contrast, both of which disappear at this lightness, leaving only yellow's cheerful, optimistic side." },
+    ],
+  },
+  "steel-blue": {
+    title: "What Steel Blue Means in Color Psychology",
+    description: "Why steel blue reads as technical and engineered rather than simply trustworthy, and where that precision comes from.",
+    answer: "Steel blue mutes blue's trust signal with a gray undertone borrowed from its namesake metal, which shifts the reading from 'friendly and safe' toward 'precise and engineered.' It's a common choice for developer tools, industrial products, and data-heavy interfaces that want to feel capable rather than approachable.",
+    sections: [
+      { title: "A metal reference, not a sky or water one", body: "Most blues draw their calm association from sky or ocean. Steel blue instead references a manufactured material, which is why it reads as more technical and less organic - closer to engineering than to nature." },
+      { title: "Trades warmth for credibility in a different register", body: "Pure blue signals general trust; steel blue signals competence and precision specifically. That's a narrower, more specific signal, which is exactly why it fits infrastructure, analytics, and B2B technical products better than consumer-facing brands trying to feel warm." },
+    ],
+    faq: [
+      { question: "How is steel blue different from regular blue?", answer: "Its gray undertone mutes blue's warmth and softness, shifting the reading toward technical precision and capability instead of general friendliness or trust." },
+      { question: "What kind of brands use steel blue well?", answer: "Developer tools, industrial and manufacturing brands, and data-heavy B2B products, where feeling precise and capable matters more than feeling warm or approachable." },
+    ],
+  },
+  "light-coral": {
+    title: "What Light Coral Means in Color Psychology",
+    description: "Why light coral blends red's warmth with pink's softness into a single approachable, energetic-but-friendly color.",
+    answer: "Light coral sits between red and pink, and it borrows from both without fully committing to either - it keeps red's warmth and energy but loses the alarm, and it keeps pink's softness but reads more lively and less delicate. That combination makes it a common choice for friendly, energetic consumer brands that want warmth without urgency.",
+    sections: [
+      { title: "Warm without being urgent", body: "Because coral sits further from pure red on the wheel, it loses red's stop-sign urgency almost entirely while keeping the warmth - useful for brands that want to feel energetic and inviting rather than alarming or aggressive." },
+      { title: "Livelier than pink, softer than red", body: "Coral reads as more playful and confident than pastel pink, but friendlier and less intense than saturated red - a middle ground that works well for lifestyle, wellness, and creator brands aiming for approachable energy." },
+    ],
+    faq: [
+      { question: "Is coral the same as pink or red?", answer: "No - it's a distinct blend that keeps red's warmth without its urgency and pink's softness without its delicacy, which is why it reads as energetic but friendly rather than alarming or overly sweet." },
+      { question: "What kind of brands use coral well?", answer: "Lifestyle, wellness, hospitality, and creator-focused brands that want to feel warm and inviting without leaning on red's intensity or pink's more delicate associations." },
+    ],
+  },
+  "indian-red": {
+    title: "What Indian Red Means in Color Psychology",
+    description: "Why Indian red reads as earthy and grounded rather than urgent, despite being a shade of red.",
+    answer: "Indian red is muted and brick-toned rather than pure and saturated, which shifts it away from red's usual urgency toward something closer to terracotta or clay - warm, grounded, and natural rather than alarming. The desaturation is what does the work: it's the same base hue as fire-engine red, but it reads like sun-baked earth instead.",
+    sections: [
+      { title: "Desaturation changes the emotional register entirely", body: "Pure red's urgency comes largely from its saturation and brightness. Indian red keeps the hue but mutes both, landing closer to brick, clay, and rust - materials associated with earth and craft rather than danger or alert." },
+      { title: "A natural-materials color, not an alert color", body: "Because it reads as earthy rather than urgent, Indian red fits pottery, textiles, artisan goods, and warm editorial palettes far better than it fits CTAs or warning states, where its muted tone would undercut the urgency those roles need." },
+    ],
+    faq: [
+      { question: "Does Indian red carry the same urgency as bright red?", answer: "No - its muted, brick-like tone reads as earthy and grounded rather than alarming, since urgency depends heavily on saturation, which this color deliberately lacks." },
+      { question: "What is Indian red best used for?", answer: "Warm, natural, craft-oriented palettes - textiles, pottery, artisan and editorial brands - rather than alerts or calls to action, where a more saturated red communicates urgency better." },
+    ],
+  },
+  "rosy-brown": {
+    title: "What Rosy Brown Means in Color Psychology",
+    description: "Why rosy brown reads as vintage and romantic rather than earthy or alarming, blending brown's warmth with pink's softness.",
+    answer: "Rosy brown sits at the intersection of brown and dusty pink, carrying brown's groundedness alongside a soft, faded warmth that reads as vintage or romantic rather than purely natural. It's a muted, low-saturation color, which is exactly why it feels nostalgic - closer to an old photograph's palette than a bold, modern one.",
+    sections: [
+      { title: "A muted blend, not a bold statement", body: "Low saturation is doing most of the emotional work here - rosy brown never reads as loud or urgent, because it's built from desaturated pink and brown rather than a saturated hue. That's what gives it a faded, romantic quality instead of an earthy or alarming one." },
+      { title: "Where it fits: editorial and vintage-leaning brands", body: "Wedding, beauty, and lifestyle brands reaching for a soft, nostalgic feel use rosy brown and similar dusty tones because the muted warmth reads as considered and romantic rather than flashy - it rarely works as a high-contrast accent." },
+    ],
+    faq: [
+      { question: "Is rosy brown the same as dusty rose?", answer: "Close - both are muted, low-saturation pink-browns. Rosy brown leans slightly more brown, dusty rose slightly more pink, but they read almost identically: soft, vintage, and romantic." },
+      { question: "What brands should use rosy brown?", answer: "Wedding, beauty, and lifestyle brands aiming for a soft, nostalgic, editorial feel - it's a muted supporting tone rather than a bold, attention-grabbing accent." },
+    ],
+  },
+  "medium-purple": {
+    title: "What Medium Purple Means in Color Psychology",
+    description: "Why medium purple reads as playful and creative rather than regal, unlike its deeper, more saturated relatives.",
+    answer: "Medium purple is lighter and less saturated than the deep violet historically tied to royalty, which shifts its reading from 'luxury and status' toward 'creative and approachable.' It keeps purple's imaginative quality but drops the formality, which is why it shows up so often in creative software, AI products, and youth-oriented brands rather than premium or luxury ones.",
+    sections: [
+      { title: "Less saturation, less formality", body: "Purple's royal, luxury association depends heavily on depth and saturation - deep violets and eggplants carry that weight. Medium purple is lighter and friendlier, which trades some of that gravitas for approachability and playfulness." },
+      { title: "A favorite for creative and AI-era brands", body: "Because it keeps purple's 'imaginative, different' quality without deep purple's formal weight, medium purple has become a common choice for creative tools, AI products, and youth brands that want to feel inventive without feeling exclusive or old-fashioned." },
+    ],
+    faq: [
+      { question: "Does medium purple feel luxurious like deep purple?", answer: "Not as much - luxury and royalty associations depend on depth and saturation, which medium purple lacks. It reads as creative and playful instead of formal or premium." },
+      { question: "Why do AI and creative tools often use medium purple?", answer: "It keeps purple's 'imaginative and different' signal while feeling more approachable and modern than deep violet, which fits products that want to feel inventive rather than exclusive." },
+    ],
+  },
+  "medium-sea-green": {
+    title: "What Medium Sea Green Means in Color Psychology",
+    description: "Why medium sea green reads as organic and calm rather than carrying green's usual 'go' or success signal.",
+    answer: "Medium sea green's blue undertone pulls it away from green's sharp 'go' and success associations toward something closer to ocean and coastal nature - calmer and more organic than the saturated greens used in UI success states. It reads as naturally calming rather than as a status or approval signal.",
+    sections: [
+      { title: "The blue undertone changes the signal", body: "Pure, yellow-leaning greens carry the strongest 'success' and 'go' associations because they're closest to traffic-light and checkmark green. Sea green's blue undertone shifts it toward ocean and coastal associations instead, which read as calm and natural rather than as a status signal." },
+      { title: "Nature-brand territory, not UI-status territory", body: "Because it doesn't carry the sharp 'approved' reading of UI green, medium sea green fits wellness, coastal, and nature-oriented brands better than it fits confirmation states or success badges, where a more yellow-leaning green communicates faster." },
+    ],
+    faq: [
+      { question: "Does medium sea green work for success or confirmation states?", answer: "Not ideally - its blue undertone softens the sharp 'approved' signal that yellow-leaning greens carry, so it reads more as calm and natural than as a clear status indicator." },
+      { question: "What brands suit medium sea green?", answer: "Wellness, coastal, and nature-oriented brands looking for a calm, organic feel rather than the energetic 'go' signal of a more saturated, yellow-leaning green." },
+    ],
+  },
+  gold: {
+    title: "What Gold Means in Color Psychology",
+    description: "Why gold signals achievement and value rather than simply visibility, unlike its close relative yellow.",
+    answer: "Gold shares yellow's hue family but reads through a completely different lens - value and achievement rather than caution or visibility. That shift comes from its direct reference to the metal itself: gold has stood for wealth, reward, and status across cultures for thousands of years, which is a far stronger and more specific association than yellow's simple high-visibility signal.",
+    sections: [
+      { title: "A material reference, not just a hue", body: "Unlike most color associations, gold's meaning is anchored to a real, universally valuable material rather than an abstract psychological reading - trophies, medals, and currency have reinforced the 'achievement and value' signal for millennia, making it unusually stable across cultures." },
+      { title: "Where it works, and where it overreaches", body: "Gold accents work well for awards, premium tiers, and milestone moments where 'earned value' is the actual message. Used as a large surface color or default UI accent, it can read as gaudy rather than premium - it's a color that needs restraint and a dark, neutral backdrop to land." },
+    ],
+    faq: [
+      { question: "How is gold different from yellow psychologically?", answer: "Yellow signals visibility and caution or cheerfulness; gold signals value and achievement, because of its direct, ancient association with the metal itself rather than an abstract brightness cue." },
+      { question: "When should a brand use gold?", answer: "For awards, premium tiers, and milestone or achievement moments, ideally as a restrained accent against a dark neutral - used broadly across a whole interface, it tends to read as gaudy rather than premium." },
+    ],
+  },
+  "light-blue": {
+    title: "What Light Blue Means in Color Psychology",
+    description: "Why light blue keeps blue's trust signal while losing its corporate coldness - and where that makes it work better than navy.",
+    answer: "Light blue keeps blue's core trust and calm association but trades the formal, corporate weight of navy or deep blue for something softer and more approachable. That shift makes it a common choice for healthcare, children's products, and consumer apps that need to feel safe and friendly rather than authoritative.",
+    sections: [
+      { title: "Trust without the boardroom", body: "Deep, saturated blues read as formal and institutional - banks, insurers, enterprise software. Light blue keeps the same underlying calm-and-safe signal but reads as gentler and more personal, which is why it shows up so often in pediatric healthcare and consumer wellness apps." },
+      { title: "A common second color, not just a tint", body: "Light blue frequently appears as a secondary or background color alongside a deeper blue or a warm accent - it does the calming work at a lower visual weight, leaving the deeper shade to carry brand recognition and the accent to carry action cues." },
+    ],
+    faq: [
+      { question: "Is light blue as trustworthy as navy or deep blue?", answer: "It carries the same underlying calm-and-safe association, just with less formal weight - navy reads institutional and authoritative, light blue reads gentle and approachable." },
+      { question: "Why do healthcare and children's brands prefer light blue?", answer: "It keeps blue's trust signal while feeling soft and non-threatening rather than clinical or corporate, which matters for audiences that need to feel reassured rather than impressed." },
+    ],
+  },
+  "dark-red": {
+    title: "What Dark Red Means in Color Psychology",
+    description: "Why dark red (maroon) reads as serious and refined rather than urgent, despite sharing red's base hue.",
+    answer: "Dark red loses most of bright red's urgency the moment it's deepened toward maroon or oxblood - the alarm signal depends heavily on brightness and saturation, both of which drop as the color darkens. What's left is a serious, weighty warmth closer to wine or leather than to a stop sign, which is why it reads as refined rather than alarming.",
+    sections: [
+      { title: "Depth removes the alarm, keeps the warmth", body: "Bright red's urgency comes from high brightness and saturation triggering fast visual attention. Darkening the same hue toward maroon keeps the warm undertone but loses that alarm trigger almost entirely, landing closer to wine, leather, and mahogany than to a warning color." },
+      { title: "A serious, premium register", body: "Because it reads as weighty rather than urgent, dark red suits premium, heritage, and formal brands - wine, leather goods, fine dining - far better than it suits alerts or CTAs, where its muted intensity would undercut the urgency those roles need." },
+    ],
+    faq: [
+      { question: "Does dark red still feel urgent like bright red?", answer: "No - urgency depends on brightness and saturation, both of which drop significantly in dark red, leaving a serious, warm tone closer to wine or leather than to an alarm color." },
+      { question: "What kind of brands suit dark red or maroon?", answer: "Premium, heritage, and formal categories - wine, leather goods, fine dining, and luxury heritage brands - where a serious, refined warmth fits better than red's usual urgency." },
+    ],
+  },
+  navy: {
+    title: "What Navy Means in Color Psychology",
+    description: "Why navy reads as authoritative and dependable rather than simply trustworthy, and how it differs from ordinary blue.",
+    answer: "Navy pushes blue's trust signal toward formal authority rather than general safety - it's dark enough to carry the weight of black's seriousness while keeping blue's calm, non-threatening base. That combination of gravity and approachability is exactly why it's the default uniform, institutional, and finance color across unrelated categories that all need to feel dependable.",
+    sections: [
+      { title: "Darker than trust, lighter than intimidating", body: "Pure black can feel severe or cold in a brand context; bright blue can feel too casual for institutions that need to be taken seriously. Navy sits precisely between the two - serious enough to signal authority, blue enough to stay approachable rather than intimidating." },
+      { title: "Why uniforms and institutions converge on it", body: "Naval and military uniforms, private schools, law firms, and banks independently landed on navy for the same reason: it reads as disciplined and dependable without red's aggression or black's coldness, making it the safest 'serious' choice across very different institutions." },
+    ],
+    faq: [
+      { question: "How is navy different from regular blue?", answer: "Navy is darker and carries more formal weight - it reads as authoritative and institutional, where a brighter blue reads as more general trust and approachability." },
+      { question: "Why do banks and law firms use navy so often?", answer: "It signals seriousness and discipline without black's coldness or red's aggression, which fits institutions that need to feel dependable and authoritative at the same time." },
+    ],
+  },
+  maroon: {
+    title: "What Maroon Means in Color Psychology",
+    description: "Why maroon reads as heritage and team identity rather than the wine-and-leather luxury of other dark reds.",
+    answer: "Maroon carries the same darkened, muted-urgency quality as other deep reds, but its dominant cultural association comes from a different place: sports teams, universities, and institutional branding rather than wine or fine leather. That heritage-and-loyalty reading is what separates it from a near-identical shade marketed as 'oxblood' or 'wine.'",
+    sections: [
+      { title: "Same hue family, different cultural anchor", body: "Maroon and dark red/oxblood are close enough in hex value to be nearly interchangeable, but maroon's dominant association in the US comes from decades of university and sports team branding (Texas A&M, Washington Redskins-era teams, Arizona State) rather than from luxury goods - the name itself carries institutional weight independent of the exact shade." },
+      { title: "Loyalty and tradition over premium polish", body: "Where dark red marketed as 'oxblood' or 'wine' leans toward luxury and refinement, maroon leans toward loyalty, tradition, and team identity - a subtle but real difference in connotation that matters for heritage brands, universities, and sports-adjacent products." },
+    ],
+    faq: [
+      { question: "Is maroon the same color as dark red?", answer: "They're extremely close in hex value, but the associations differ - maroon carries a sports and university heritage connotation, while dark red marketed as wine or oxblood leans toward luxury and refinement." },
+      { question: "Why do universities and sports teams use maroon?", answer: "It reads as serious and established without red's aggression, and decades of team branding have built a strong loyalty-and-tradition association specifically around the name 'maroon.'" },
+    ],
+  },
+  silver: {
+    title: "What Silver Means in Color Psychology",
+    description: "Why silver reads as precise and futuristic rather than simply neutral, unlike plain gray.",
+    answer: "Silver carries a metallic, reflective quality that plain gray doesn't - it implies value and precision engineering (silverware, jewelry, machined metal) rather than just sitting quietly in the background. That's why it shows up so heavily in tech and automotive branding, where 'precise and advanced' is a more useful signal than gray's simple neutrality.",
+    sections: [
+      { title: "A metal reference changes the read", body: "Like gold, silver borrows meaning from the actual material rather than functioning as an abstract hue - it implies machined precision, reflectivity, and a degree of value that flat gray, which has no material reference, doesn't carry on its own." },
+      { title: "The default 'advanced technology' color", body: "Consumer electronics and automotive brands lean on silver specifically because it reads as precise and futuristic without gold's overt luxury signal - it's a technical premium rather than a decorative one, which fits products built on engineering rather than craftsmanship." },
+    ],
+    faq: [
+      { question: "Is silver just a lighter shade of gray?", answer: "Not psychologically - its metallic, reflective association implies precision and value the way gold does, where flat gray has no material reference and reads as purely neutral." },
+      { question: "Why do tech and car brands use silver so often?", answer: "It signals advanced engineering and precision without gold's decorative luxury connotation, fitting products where the premium quality comes from technical capability rather than craftsmanship." },
+    ],
+  },
+  olive: {
+    title: "What Olive Means in Color Psychology",
+    description: "Why olive reads as rugged and utilitarian rather than growth-oriented, despite being a shade of green.",
+    answer: "Olive drops green's brightness and adds a muted, yellow-brown undertone, which strips out the 'go' and growth signal entirely and replaces it with something closer to military fatigues and worn canvas - practical and durable rather than fresh or approving. It's one of the few greens that reads as tough rather than natural or positive.",
+    sections: [
+      { title: "Desaturation removes the 'go' signal completely", body: "Green's approval and growth associations depend on brightness and saturation. Olive's muted, brownish cast removes both, landing closer to military and outdoor-gear color palettes than to anything resembling a checkmark or a healthy plant." },
+      { title: "Rugged and practical, not fresh or organic", body: "Because it reads as worn and utilitarian rather than vibrant, olive fits outdoor, military-adjacent, and workwear brands far better than wellness or growth-focused ones - it signals durability and practicality, not the health and optimism associated with brighter greens." },
+    ],
+    faq: [
+      { question: "Does olive carry green's 'growth' or 'go' association?", answer: "No - its muted, brownish cast removes the brightness that carries green's approval signal, leaving a rugged, utilitarian read closer to military gear than to nature or growth." },
+      { question: "What brands suit olive well?", answer: "Outdoor, workwear, and military-adjacent brands that want to signal durability and practicality - it's a poor fit for wellness or growth-focused brands looking for green's fresher associations." },
+    ],
+  },
+  cyan: {
+    title: "What Cyan Means in Color Psychology",
+    description: "Why cyan reads as digital and synthetic rather than natural, unlike its close relative teal.",
+    answer: "Cyan is a pure, highly saturated primary in the RGB and print color models, which gives it a distinctly manufactured, screen-native quality rather than any connection to water or sky. That synthetic brightness is exactly why it reads as digital and technical rather than calming the way teal or sky blue do.",
+    sections: [
+      { title: "A primary, not a natural blend", body: "Unlike teal or turquoise, which read as blends found in water and stone, cyan is one of the base primaries in digital color models (RGB, CMYK) - that technical origin is part of why it feels synthetic and screen-native rather than organic." },
+      { title: "Energetic and digital, not calming", body: "Because it's so saturated and bright, cyan reads as energetic and futuristic rather than soothing - it's common in tech, gaming, and data-visualization contexts where a punchy, digital-feeling accent is the goal, not a calm one." },
+    ],
+    faq: [
+      { question: "Is cyan the same as teal?", answer: "No - teal is muted and blended, reading as calm and natural. Cyan is a saturated primary color with a synthetic, screen-native quality that reads as energetic and digital rather than soothing." },
+      { question: "Why does cyan show up so often in tech branding?", answer: "Its high saturation and origin as a primary in digital color models give it a natively 'screen' feel, which fits tech, gaming, and data products wanting an energetic, futuristic accent." },
+    ],
+  },
+  magenta: {
+    title: "What Magenta Means in Color Psychology",
+    description: "Why magenta reads as bold and unconventional rather than simply pink, and where that intensity comes from.",
+    answer: "Magenta is a fully saturated primary in print and digital color models, sitting outside the visible light spectrum as a color our brains construct from red and blue signals together - which may be part of why it feels so deliberately artificial and attention-grabbing. It reads as bold and confident rather than soft, closer to a statement color than a background one.",
+    sections: [
+      { title: "A color your brain builds, not one light contains", body: "Magenta has no single wavelength of its own - it's what the brain perceives when red and blue receptors fire together without green. That slightly 'unnatural' construction is part of why it feels more deliberate and synthetic than a color like sky blue or forest green." },
+      { title: "Bold and gender-neutral, unlike softer pinks", body: "Where pastel pink reads as soft and traditionally feminine, magenta's saturation and intensity push it toward bold, confident, and increasingly gender-neutral territory - closer to a statement accent than a gentle one, which is why creative and beauty-tech brands reach for it over paler pinks." },
+    ],
+    faq: [
+      { question: "Is magenta just a bright pink?", answer: "It shares the same family but reads very differently - magenta's full saturation makes it bold and attention-grabbing, closer to a confident statement color than pink's softer, gentler associations." },
+      { question: "Why do creative and beauty-tech brands use magenta?", answer: "Its intensity reads as bold and modern rather than traditionally feminine, making it a common gender-neutral alternative to pastel pink for brands wanting to feel confident and distinctive." },
+    ],
+  },
+  coral: {
+    title: "What Coral Means in Color Psychology",
+    description: "Why coral reads as tropical and lively rather than simply warm, and how it differs from its softer cousin light coral.",
+    answer: "Coral's saturation puts it closer to full red-orange energy than its paler relative light coral - it reads as vibrant, summery, and lively, borrowing directly from its namesake reef color. Where light coral softens into approachable warmth, full coral stays energetic enough to feel tropical and celebratory rather than simply gentle.",
+    sections: [
+      { title: "More saturation, more energy", body: "Coral sits at a higher saturation than light coral, which keeps more of orange and red's warmth and energy intact - it reads as vibrant and alive rather than muted, closer to a beach sunset or a tropical reef than a soft pastel." },
+      { title: "A summer and hospitality signal", body: "Because of its direct reef and sunset associations, coral shows up heavily in travel, hospitality, and summer-collection branding - it signals warmth, vibrancy, and vacation energy in a way that's more specific than a generic warm accent color." },
+    ],
+    faq: [
+      { question: "How is coral different from light coral?", answer: "Coral is more saturated and energetic, closer to a tropical sunset; light coral is softer and paler, reading as gentle warmth rather than vibrant energy." },
+      { question: "What brands use coral well?", answer: "Travel, hospitality, and summer or resort-focused brands, where coral's reef and sunset associations signal vacation energy and warmth more specifically than a generic warm accent." },
+    ],
+  },
+  crimson: {
+    title: "What Crimson Means in Color Psychology",
+    description: "Why crimson reads as dramatic and romantic rather than alarming, despite being a deep, intense red.",
+    answer: "Crimson keeps red's intensity but adds a cooler, slightly purple-leaning depth that shifts the reading from alarm toward drama and romance - think velvet, wine, and theater curtains rather than stop signs. It's saturated enough to feel intense but too deep and cool-toned to trigger the same hazard association as bright red.",
+    sections: [
+      { title: "Depth and coolness soften the alarm signal", body: "Crimson's slightly blue-leaning undertone and greater depth compared to fire-engine red pull it away from red's sharpest, most urgent register - the intensity stays, but it reads as dramatic rather than as a warning." },
+      { title: "Theater, romance, and luxury textiles", body: "Crimson has a long association with velvet, theater curtains, and formal romantic gestures (roses, wine) - contexts where intensity is meant to feel passionate and dramatic rather than urgent, which is a genuinely different emotional register from a red alert or a stop sign." },
+    ],
+    faq: [
+      { question: "Does crimson feel as alarming as bright red?", answer: "No - its cooler, deeper undertone shifts the reading from alarm toward drama and intensity, closer to velvet or wine than to a warning color." },
+      { question: "What is crimson best used for?", answer: "Dramatic, romantic, or luxury contexts - theater, formal invitations, wine and velvet branding - where intense but non-alarming warmth fits better than bright red's urgency." },
+    ],
+  },
+  turquoise: {
+    title: "What Turquoise Means in Color Psychology",
+    description: "Why turquoise reads as tropical and vacation-adjacent rather than corporate-calm, unlike teal.",
+    answer: "Turquoise draws its association directly from tropical water and the gemstone itself, which gives it a vacation, travel, and adornment connotation that teal's more corporate, muted register doesn't carry. Both sit in the blue-green family, but turquoise reads as bright and escapist where teal reads as calm and professional.",
+    sections: [
+      { title: "A gemstone and ocean reference, not a corporate one", body: "Turquoise takes its name and association directly from a prized stone and tropical ocean water - both genuinely aspirational, vacation-coded references, which is different from teal's more muted, professional-healthcare-SaaS connotation." },
+      { title: "Bright and escapist, not calm and buttoned-up", body: "Because it's more saturated and directly tied to tropical imagery, turquoise fits travel, resort, and jewelry branding better than the calmer, more corporate contexts where teal excels - the two shouldn't be used interchangeably despite being visually close." },
+    ],
+    faq: [
+      { question: "Is turquoise the same as teal?", answer: "They're close in hue but read differently - turquoise is brighter and evokes tropical water and gemstones, while teal is more muted and reads as calm and professional." },
+      { question: "What brands suit turquoise?", answer: "Travel, resort, and jewelry brands benefit most from turquoise's bright, tropical, vacation-coded associations - it's a less natural fit for corporate or clinical contexts, where teal works better." },
+    ],
+  },
+  indigo: {
+    title: "What Indigo Means in Color Psychology",
+    description: "Why indigo reads as deep and contemplative rather than purely trustworthy or purely creative - a genuine blend of blue and purple.",
+    answer: "Indigo sits directly between blue and purple, carrying blue's calm alongside purple's introspective, creative depth - historically it's also one of the oldest and most labor-intensive dyes (true indigo, denim's origin dye), which adds a layer of craft and tradition to its psychological weight. It reads as deep and thoughtful rather than simply safe or simply imaginative.",
+    sections: [
+      { title: "A genuine blend, not a shade of either neighbor", body: "Indigo isn't just dark blue or light purple - it carries real qualities from both: blue's calm and stability alongside purple's introspection and creativity, landing on something closer to contemplative depth than either parent hue alone." },
+      { title: "An old, labor-intensive dye with real history", body: "Natural indigo dye was historically difficult and labor-intensive to produce (and is the origin dye for denim), which gives the color a craft-and-tradition undertone that few colors carry - useful for brands wanting depth and heritage rather than corporate polish." },
+    ],
+    faq: [
+      { question: "Is indigo closer to blue or purple?", answer: "It's a genuine blend rather than a lean toward either - it carries blue's calm and purple's introspective creativity simultaneously, which is what gives it a contemplative, thoughtful read." },
+      { question: "Why does indigo feel more 'crafted' than other blues?", answer: "Natural indigo dye was historically rare and labor-intensive to produce, and it's the origin dye for denim - that craft history gives the color a heritage undertone most blues don't carry." },
+    ],
+  },
+  lavender: {
+    title: "What Lavender Means in Color Psychology",
+    description: "Why lavender reads as gentle self-care rather than purple's creativity or luxury, despite being a pale purple.",
+    answer: "Lavender strips out most of purple's saturation, which removes the creative-and-premium signal almost entirely and replaces it with something closer to calm, softness, and self-care - reinforced directly by the actual lavender plant's association with relaxation and aromatherapy. It reads as gentle rather than imaginative or status-driven.",
+    sections: [
+      { title: "The plant reference does real work here", body: "Unlike most pale colors that simply mute their base hue, lavender is directly named after and associated with a plant used for centuries in calming, aromatherapy, and sleep contexts - that association transfers directly to the color, independent of its position on the color wheel." },
+      { title: "Self-care and gentleness, not creativity or luxury", body: "Where medium or deep purple signals creativity, imagination, or premium status, lavender's paleness and plant association pull it toward calm, softness, and self-care instead - it fits wellness, sleep, and beauty products better than it fits 'bold and imaginative' brand positioning." },
+    ],
+    faq: [
+      { question: "Does lavender carry purple's creative or luxury association?", answer: "Not much - its paleness removes most of purple's saturation-driven signal, and the direct plant association pulls it toward calm and self-care instead of creativity or status." },
+      { question: "What products suit lavender well?", answer: "Wellness, sleep, and beauty or self-care products benefit most from lavender's calming, plant-linked associations - it's a weaker fit for brands wanting to signal bold creativity or premium status." },
+    ],
+  },
+  "forest-green": {
+    title: "What Forest Green Means in Color Psychology",
+    description: "Why forest green reads as established and natural rather than the 'go' or growth signal of brighter greens.",
+    answer: "Forest green is deep and desaturated compared to the bright, yellow-leaning greens used in UI success states, which shifts its reading away from an active 'go' or growth signal toward something more settled - mature woodland, sustainability, and outdoor heritage rather than fresh sprouting growth. It reads as established nature rather than a status cue.",
+    sections: [
+      { title: "Depth changes green's job entirely", body: "Bright, saturated greens borrow their meaning from traffic lights and checkmarks - an active, learned 'proceed' signal. Forest green is too dark and desaturated to trigger that same association; instead it reads as mature, established nature, closer to a walk through old woodland than a success state." },
+      { title: "Sustainability and outdoor heritage", body: "Because it evokes mature trees and undisturbed landscape rather than fresh growth, forest green fits sustainability, outdoor, and conservation branding particularly well - it signals durability and environmental seriousness rather than the optimism of a brighter, younger-reading green." },
+    ],
+    faq: [
+      { question: "Does forest green work as a UI success or confirmation color?", answer: "Not as effectively as brighter greens - its depth removes the sharp 'go' signal that yellow-leaning greens carry, reading instead as mature and natural rather than as an active status cue." },
+      { question: "What brands suit forest green?", answer: "Sustainability, outdoor, and conservation-focused brands benefit most from its mature, established-nature associations, which read as durable and serious rather than fresh or energetic." },
+    ],
+  },
+  lime: {
+    title: "What Lime Means in Color Psychology",
+    description: "Why lime reads as electric and synthetic rather than natural, despite being a shade of green.",
+    answer: "Lime pushes green to its brightest, most saturated extreme, which pulls it away from anything resembling nature (unlike forest or sage green) and into artificial, high-visibility territory - think safety vests and energy drinks rather than plants. It's one of the most attention-grabbing colors available precisely because it looks manufactured rather than grown.",
+    sections: [
+      { title: "Too bright to read as natural", body: "Real foliage rarely reaches lime's saturation and brightness - that gap between the color and its supposed natural reference is exactly what makes it feel synthetic, electric, and manufactured rather than organic, similar to how neon colors in general read as artificial." },
+      { title: "High-visibility and youth-energy territory", body: "Lime's extreme visibility is a real, physical property (it's close to the peak of human daylight sensitivity), which is why it's used for safety gear and hazard markers as much as for youth-focused, energetic, gaming, or sports brands wanting maximum shelf and screen impact." },
+    ],
+    faq: [
+      { question: "Does lime feel natural like other greens?", answer: "No - its extreme brightness and saturation go well beyond what's found in real foliage, giving it a synthetic, electric quality closer to neon than to anything organic." },
+      { question: "Why is lime used for safety gear?", answer: "It sits near the peak of human daylight visual sensitivity, making it one of the most physically attention-grabbing colors available - the same property that makes it popular for energetic, youth-focused branding." },
+    ],
+  },
+  tomato: {
+    title: "What Tomato Means in Color Psychology",
+    description: "Why tomato reads as appetizing and food-driven rather than urgent, despite being a shade of orange-red.",
+    answer: "Tomato sits between red and orange, but its dominant association comes directly from the food itself rather than from red's alarm signal or orange's general energy - it reads as fresh, appetizing, and kitchen-adjacent. That direct food reference is what separates it psychologically from a nearly identical shade with a different name.",
+    sections: [
+      { title: "A food reference does the heavy lifting", body: "Like tan or chocolate, tomato borrows its meaning directly from an edible object rather than from abstract color theory - the name itself primes an appetite and freshness association before any cultural or physiological signal about red or orange kicks in." },
+      { title: "Warm and appetizing, not alarming", body: "Because the food association dominates, tomato reads as appetizing and fresh rather than urgent, which makes it a natural fit for food branding, kitchenware, and hospitality contexts where warmth and appetite appeal matter more than red's usual attention-grabbing intensity." },
+    ],
+    faq: [
+      { question: "Is tomato the same as orange-red?", answer: "Visually close, but the name changes the read - tomato's direct food association makes it feel appetizing and fresh, where an unnamed orange-red might just register as a warm, energetic accent." },
+      { question: "What brands suit tomato well?", answer: "Food, kitchenware, and hospitality brands benefit most from its direct appetite and freshness association, which is a more specific, food-appropriate signal than a generic warm orange or red." },
+    ],
+  },
+  plum: {
+    title: "What Plum Means in Color Psychology",
+    description: "Why plum reads as sophisticated and autumnal rather than purple's usual creativity or lavender's calm.",
+    answer: "Plum mutes purple toward a dusty, fruit-toned depth that reads as mature and seasonal rather than either purple's bold creativity or lavender's gentle calm - it borrows directly from the fruit's rich, slightly muted skin tone. That fruit reference gives it a sophisticated, autumn-fashion quality distinct from its brighter or paler purple relatives.",
+    sections: [
+      { title: "Muted depth, not brightness or paleness", body: "Where violet stays bright and lavender stays pale, plum sits in a dusty middle depth that reads as mature rather than youthful or gentle - closer to wine and eggplant than to anything playful or soft." },
+      { title: "A fashion and seasonal-palette favorite", body: "Plum's fruit-toned sophistication makes it a recurring favorite in fall and winter fashion and beauty palettes, where its combination of warmth and depth feels seasonally appropriate in a way brighter purples or pale lavender don't." },
+    ],
+    faq: [
+      { question: "How is plum different from lavender or violet?", answer: "Plum is dustier and deeper than both - lavender is pale and calming, violet is bright and playful, while plum reads as mature and sophisticated, closer to wine or eggplant." },
+      { question: "Why does plum show up so often in fall fashion?", answer: "Its muted, fruit-toned depth feels seasonally appropriate for autumn and winter palettes in a way that brighter or paler purples don't - it reads as rich and mature rather than bright or delicate." },
+    ],
+  },
+  violet: {
+    title: "What Violet Means in Color Psychology",
+    description: "Why violet reads as playful and whimsical rather than purple's regal weight, despite being close on the color wheel.",
+    answer: "Violet is brighter and more saturated than the deep purples historically tied to royalty, which shifts it toward something more playful and springlike - closer to flowers and childhood imagination than to status or luxury. It keeps purple's creative, imaginative quality but trades formality for lightness.",
+    sections: [
+      { title: "Brightness trades gravitas for playfulness", body: "Deep purple's luxury association depends on saturation and depth. Violet is lighter and more vivid, which loses that formal weight but gains a bright, springlike, almost floral quality - think violets and lilacs rather than royal robes." },
+      { title: "Imagination without the formality", body: "Violet keeps purple's core 'imaginative and different' signal but presents it as approachable and whimsical rather than exclusive or premium, which is why it shows up in children's products, creative tools, and playful consumer brands more than in luxury positioning." },
+    ],
+    faq: [
+      { question: "Is violet the same as purple?", answer: "They're related but read differently - purple (especially deep purple) carries formal, luxury weight, while violet is brighter and lighter, reading as playful and whimsical instead." },
+      { question: "What brands suit violet?", answer: "Children's products, creative tools, and playful consumer brands benefit from violet's bright, imaginative quality without needing purple's more formal, premium connotation." },
+    ],
+  },
+  "hot-pink": {
+    title: "What Hot Pink Means in Color Psychology",
+    description: "Why hot pink reads as bold and confident rather than soft, unlike pastel pink.",
+    answer: "Hot pink pushes pink to full saturation, which strips out the gentle, delicate quality of pastel pink entirely and replaces it with something loud, confident, and impossible to ignore - closer to magenta's boldness than to pink's traditional softness. It's a deliberate attention-getter, not a quiet, supportive color.",
+    sections: [
+      { title: "Saturation removes the softness completely", body: "Pastel pink's gentleness depends on low saturation. Hot pink is the opposite - full saturation strips away any delicacy and replaces it with maximum visual energy, which is why it reads as confident and bold rather than soft or traditionally feminine." },
+      { title: "Unapologetic, not shy", body: "Because it refuses to recede, hot pink has become a favorite for brands built around confidence and self-expression - beauty, fashion, and youth culture - that want to signal boldness rather than the softer, more restrained qualities associated with pastel pink." },
+    ],
+    faq: [
+      { question: "Does hot pink feel soft and feminine like pastel pink?", answer: "No - its full saturation removes pastel pink's gentleness entirely, replacing it with a bold, confident, attention-grabbing quality closer to magenta than to traditional soft pink." },
+      { question: "What brands use hot pink well?", answer: "Beauty, fashion, and youth-culture brands built around confidence and self-expression, where hot pink's boldness signals unapologetic energy rather than softness or restraint." },
+    ],
+  },
+  salmon: {
+    title: "What Salmon Means in Color Psychology",
+    description: "Why salmon reads as gentle and appetizing rather than tropical, unlike its closer relative coral.",
+    answer: "Salmon carries a softer, more muted warmth than coral - closer to the fish's actual flesh tone than to a vibrant reef - which gives it a gentle, appetizing, fashion-neutral quality rather than coral's tropical energy. It's warm enough to feel inviting but restrained enough to work as a genuinely versatile neutral.",
+    sections: [
+      { title: "Softer and more muted than coral", body: "Where coral stays vibrant and tropical, salmon pulls back in saturation toward something closer to its namesake fish - a gentler, more restrained warmth that reads as approachable rather than energetic or vacation-coded." },
+      { title: "An appetizing, versatile neutral", body: "Salmon's food reference and moderate warmth make it unusually versatile - gentle enough to pair with both cool and warm palettes, and appetizing enough to work naturally in food, hospitality, and lifestyle branding without coral's more specific tropical association." },
+    ],
+    faq: [
+      { question: "Is salmon the same as coral?", answer: "They're close but not identical - coral is brighter and reads as tropical and vibrant, while salmon is softer and more muted, closer to its namesake fish's gentle warmth." },
+      { question: "What makes salmon a versatile color choice?", answer: "Its moderate saturation and warmth let it pair well with both cool and warm palettes, and its food association gives it a gentle, appetizing quality useful across food, hospitality, and lifestyle branding." },
+    ],
+  },
+  chocolate: {
+    title: "What Chocolate Means in Color Psychology",
+    description: "Why chocolate reads as indulgent and comforting rather than simply earthy, thanks to its direct food association.",
+    answer: "Chocolate carries brown's grounded, reliable associations but adds a layer of indulgence and comfort borrowed directly from the food itself - it's richer and warmer than plain brown, reading as a treat rather than just a neutral, dependable backdrop. That food reference is what gives it emotional warmth that abstract brown lacks.",
+    sections: [
+      { title: "Richer and warmer than plain brown", body: "Chocolate sits deeper and warmer than a neutral brown, borrowing directness from the food - it signals indulgence and comfort in a way that a purely abstract brown, without the food reference, doesn't carry on its own." },
+      { title: "Comfort and treat, not just reliability", body: "Where plain brown signals dependability, chocolate adds a genuine emotional warmth - it's a common choice for comfort-food branding, cozy lifestyle products, and warm, inviting interiors that want richness rather than austere neutrality." },
+    ],
+    faq: [
+      { question: "Is chocolate just a shade of brown?", answer: "Technically yes, but the food association adds real emotional warmth - it reads as indulgent and comforting rather than simply neutral and dependable like plain brown." },
+      { question: "What products suit a chocolate color palette?", answer: "Comfort food, cozy lifestyle, and warm interior-adjacent brands benefit from chocolate's indulgent, comforting associations, which read richer and warmer than an abstract, unnamed brown." },
+    ],
+  },
+  sienna: {
+    title: "What Sienna Means in Color Psychology",
+    description: "Why sienna reads as authentic and artisanal rather than simply earthy, thanks to its roots as an artist's pigment.",
+    answer: "Sienna gets its name from natural iron-oxide earth pigments used by painters for centuries (raw and burnt sienna), which gives it a craft, authenticity, and artisanal quality that generic reddish-brown doesn't carry. It reads as a considered, earthy choice rather than a default neutral - closer to handmade pottery or fine art than to plain brown.",
+    sections: [
+      { title: "A genuine pigment history, not just a hue", body: "Sienna is named after natural earth pigments mined near Siena, Italy, and used in painting for centuries - that specific artisanal origin gives the color a craft and authenticity association that most browns, without a pigment history, simply don't have." },
+      { title: "Handmade and considered, not default", body: "Because of its art-pigment roots, sienna fits artisan goods, pottery, and craft-forward branding particularly well - it signals a deliberate, earthy authenticity rather than reading as a generic, default neutral the way plain brown or tan often does." },
+    ],
+    faq: [
+      { question: "Why does sienna feel more 'crafted' than other browns?", answer: "It's named after natural earth pigments used by painters for centuries, which gives it a genuine artisanal and craft association that generic reddish-browns don't carry." },
+      { question: "What brands suit sienna?", answer: "Artisan goods, pottery, and craft-forward brands benefit most from sienna's authentic, pigment-rooted earthiness, which reads as considered rather than a default neutral choice." },
+    ],
+  },
+  tan: {
+    title: "What Tan Means in Color Psychology",
+    description: "Why tan reads as timeless and versatile rather than earthy, functioning as a warm neutral rather than a statement color.",
+    answer: "Tan is warm but low-saturation enough to function primarily as a neutral rather than a statement hue - it reads as classic, versatile, and unpretentious, closer to canvas, khaki fabric, or sand than to any strong emotional signal. Its main job is usually to support other colors rather than lead.",
+    sections: [
+      { title: "A neutral with warmth, not a statement color", body: "Unlike sienna or chocolate, tan doesn't carry a strong food or craft reference - its low saturation keeps it firmly in neutral territory, just warmer than gray, which is why it works as a background or supporting tone rather than a brand-defining hue." },
+      { title: "Classic and unpretentious", body: "Tan's association with canvas, khaki, and natural fabric gives it a timeless, practical quality - it reads as dependable and unpretentious rather than trendy, which suits heritage, outdoor, and classic-menswear-adjacent brands particularly well." },
+    ],
+    faq: [
+      { question: "Is tan a neutral or a statement color?", answer: "Primarily a neutral - its low saturation keeps it in supporting-color territory, warmer than gray but without a strong emotional signal of its own." },
+      { question: "What brands suit a tan color palette?", answer: "Heritage, outdoor, and classic or menswear-adjacent brands benefit from tan's timeless, unpretentious, canvas-and-khaki associations." },
+    ],
+  },
+  khaki: {
+    title: "What Khaki Means in Color Psychology",
+    description: "Why khaki reads as practical and utilitarian rather than earthy, carrying a direct military and workwear heritage.",
+    answer: "Khaki takes its name and association directly from military uniform fabric, which gives it a practical, durable, no-nonsense quality distinct from a generic tan or beige. It reads as functional and dependable rather than decorative - a color chosen for utility first, aesthetics second.",
+    sections: [
+      { title: "A military and workwear origin", body: "Khaki's name comes directly from the dust-colored uniform fabric adopted by 19th-century military forces for practical camouflage and durability - that utilitarian origin still shapes how the color reads today, even far outside a military context." },
+      { title: "Function over decoration", body: "Because of its practical heritage, khaki fits workwear, outdoor gear, and utilitarian product branding particularly well - it signals durability and no-nonsense function rather than trying to make an emotional or decorative statement." },
+    ],
+    faq: [
+      { question: "Is khaki the same as tan or beige?", answer: "Visually close, but khaki carries a distinct military and workwear heritage that gives it a more utilitarian, practical read than tan or beige's softer, more general neutrality." },
+      { question: "What products suit khaki?", answer: "Workwear, outdoor gear, and utilitarian products benefit from khaki's practical, durable, military-rooted associations, which prioritize function over decorative appeal." },
+    ],
+  },
+  "royal-blue": {
+    title: "What Royal Blue Means in Color Psychology",
+    description: "Why royal blue reads as confident and vibrant rather than navy's institutional formality, despite both signaling authority.",
+    answer: "Royal blue keeps more brightness and saturation than navy, which trades some of navy's formal, institutional weight for confidence and vibrancy instead - it reads as bold and assured rather than buttoned-up. Both colors signal authority, but royal blue's energy makes it feel more modern and approachable than navy's deeper gravitas.",
+    sections: [
+      { title: "Brighter than navy, still authoritative", body: "Royal blue keeps enough saturation and brightness to feel vibrant and confident, unlike navy's near-black depth - it signals authority without navy's full institutional weight, landing somewhere between blue's general trust and navy's formality." },
+      { title: "Modern confidence over old-guard formality", body: "Because it's more vivid and energetic than navy, royal blue fits brands wanting to feel confident and modern rather than traditional or institutional - sports teams, tech products, and youth-oriented brands often prefer it over navy's more conservative weight." },
+    ],
+    faq: [
+      { question: "How is royal blue different from navy?", answer: "Royal blue is brighter and more saturated, reading as confident and vibrant, while navy is darker and reads as formal and institutional - both signal authority, but with very different energy levels." },
+      { question: "What brands suit royal blue?", answer: "Sports, tech, and youth-oriented brands that want to feel confident and modern benefit from royal blue's vibrancy, compared to navy's more conservative, institutional weight." },
+    ],
+  },
+  "sky-blue": {
+    title: "What Sky Blue Means in Color Psychology",
+    description: "Why sky blue reads as open and optimistic rather than clinical, carrying a direct weather and outdoor association.",
+    answer: "Sky blue draws its meaning directly from open air and clear weather, which gives it a spacious, optimistic quality distinct from light blue's more clinical, healthcare-adjacent softness. It reads as freedom and good weather rather than gentle reassurance - an outdoor reference rather than an indoor, caregiving one.",
+    sections: [
+      { title: "A weather reference, not a caregiving one", body: "Where light blue's softness reads as gentle and reassuring (fitting healthcare and children's products), sky blue's direct connection to open air and clear weather gives it a more expansive, optimistic quality - closer to freedom and good conditions than to comfort or care." },
+      { title: "Openness and possibility", body: "Sky blue's spacious, outdoor association makes it a natural fit for travel, outdoor recreation, and aspirational lifestyle brands wanting to signal openness and possibility, rather than the softer, more inward-facing reassurance that light blue communicates." },
+    ],
+    faq: [
+      { question: "How is sky blue different from light blue?", answer: "Sky blue carries a direct outdoor, clear-weather association that reads as open and optimistic, while light blue leans softer and more clinical, fitting healthcare and reassurance-driven contexts better." },
+      { question: "What brands suit sky blue?", answer: "Travel, outdoor recreation, and aspirational lifestyle brands benefit from sky blue's spacious, optimistic, open-air associations." },
+    ],
+  },
+  "midnight-blue": {
+    title: "What Midnight Blue Means in Color Psychology",
+    description: "Why midnight blue reads as premium and mysterious rather than institutional, going darker and richer than navy.",
+    answer: "Midnight blue pushes even deeper than navy, edging close to black while keeping just enough blue to feel rich rather than flat - that near-black depth gives it a premium, evening, slightly mysterious quality that navy's more workaday formality doesn't carry. It reads as luxurious and after-hours rather than institutional and daytime-practical.",
+    sections: [
+      { title: "Deeper than navy, closer to black", body: "Navy stays clearly blue and reads as formal daytime authority - banks, uniforms, institutions. Midnight blue pushes further into near-black territory, keeping just enough blue undertone to avoid reading as flat black, which gives it a richer, more atmospheric quality." },
+      { title: "Evening luxury, not daytime formality", body: "Because of its depth and subtlety, midnight blue fits premium, evening-oriented, and luxury contexts - fine jewelry, formal wear, upscale hospitality - where a rich, mysterious depth matters more than navy's practical, institutional daytime authority." },
+    ],
+    faq: [
+      { question: "How is midnight blue different from navy?", answer: "Midnight blue is darker and closer to black, giving it a rich, mysterious, evening-luxury quality, while navy stays clearly blue and reads as formal, practical, daytime authority." },
+      { question: "What brands suit midnight blue?", answer: "Premium, evening-oriented, and luxury brands - fine jewelry, formal wear, upscale hospitality - benefit from midnight blue's rich, atmospheric depth." },
+    ],
+  },
+  "dark-green": {
+    title: "What Dark Green Means in Color Psychology",
+    description: "Why dark green reads as understated wealth and stability rather than forest-green's rugged outdoor heritage.",
+    answer: "Dark green carries a long-standing 'money' association in Western culture (tied historically to currency and old-money aesthetics), which gives it a quiet, established wealth signal distinct from forest green's more rugged, outdoor-heritage reading. Both are deep, desaturated greens, but dark green leans toward finance and old-money interiors while forest green leans toward woodland and conservation.",
+    sections: [
+      { title: "The 'old money' association", body: "Dark green has a long history in banking, currency, and traditional wealthy interiors (think hunter green leather and mahogany libraries), which gives it a quiet, established-wealth signal that's more specific than forest green's outdoor, conservation-coded depth." },
+      { title: "Understated rather than rugged", body: "Where forest green evokes woodland and sustainability, dark green in a finance or interiors context signals discretion and stability - it's the color of old ledgers and private clubs more than hiking trails, even though the two hues sit close together." },
+    ],
+    faq: [
+      { question: "How is dark green different from forest green?", answer: "They're visually close, but dark green carries a stronger finance and 'old money' association, while forest green leans toward outdoor, woodland, and conservation associations." },
+      { question: "Why do finance and luxury interior brands use dark green?", answer: "Its long-standing association with currency and traditional wealthy aesthetics gives it a quiet, discreet, established-wealth signal that fits banking, private clubs, and upscale interiors." },
+    ],
+  },
+  "orange-red": {
+    title: "What Orange Red Means in Color Psychology",
+    description: "Why orange-red reads as the most urgent warm color available, closer to flame than to friendly orange.",
+    answer: "Orange-red sits at the hottest-looking point of the warm spectrum - close enough to pure red to keep urgency, close enough to orange to avoid a pure stop-sign alarm. It's the color of active flame and molten heat, which is why it reads as the most intense, energetic warm hue short of red itself.",
+    sections: [
+      { title: "The flame reference is doing real work", body: "Orange-red maps closely to the color of active fire and molten metal, which gives it a heat-and-energy intensity that neither pure orange's friendliness nor pure red's alarm fully captures on its own." },
+      { title: "Maximum warm-color energy", body: "Brands wanting the most energetic, attention-grabbing warm accent short of full red reach for orange-red - sports, energy drinks, and action-oriented CTAs - where friendly orange would feel too soft and red would feel too alarming." },
+    ],
+    faq: [
+      { question: "Is orange-red more like orange or red?", answer: "It borrows urgency from red and warmth from orange, landing as the most intense, energetic point on the warm spectrum short of pure red itself." },
+      { question: "What is orange-red best used for?", answer: "High-energy CTAs, sports, and action-oriented branding that want maximum warm-color intensity without red's full alarm signal." },
+    ],
+  },
+  "dark-orange": {
+    title: "What Dark Orange Means in Color Psychology",
+    description: "Why dark orange reads as rich and autumnal rather than playful, carrying more maturity than bright orange.",
+    answer: "Dark orange deepens standard orange toward harvest and autumn tones - pumpkin, turmeric, roasted squash - trading some of bright orange's youthful friendliness for a richer, more mature warmth. It still avoids red's alarm and yellow's caution, but reads as seasoned rather than energetic.",
+    sections: [
+      { title: "Harvest and autumn, not playground", body: "Bright orange skews toward friendly and youthful; deepening it shifts the reference point toward pumpkin, spice, and harvest imagery, which reads as seasonal and rich rather than simply cheerful." },
+      { title: "Warmth with more weight", body: "Dark orange keeps orange's approachability but adds gravitas, making it a fit for autumn-collection retail, spice and food branding, and any context wanting warmth without bright orange's more youthful energy." },
+    ],
+    faq: [
+      { question: "Is dark orange still a friendly, approachable color?", answer: "Yes, but with more maturity - it keeps orange's warmth while reading as richer and more seasonal, closer to harvest tones than to bright, youthful orange." },
+      { question: "What brands suit dark orange?", answer: "Autumn retail collections, spice and food branding, and any warm context wanting richness rather than bright orange's more playful energy." },
+    ],
+  },
+  "dark-khaki": {
+    title: "What Dark Khaki Means in Color Psychology",
+    description: "Why dark khaki reads as muted and utilitarian rather than earthy, sitting between khaki's practicality and olive's ruggedness.",
+    answer: "Dark khaki pushes standard khaki toward a deeper, more olive-leaning muted yellow, keeping khaki's practical, workwear heritage while adding some of olive's rugged seriousness. It reads as functional and understated rather than decorative - a working neutral rather than a statement color.",
+    sections: [
+      { title: "Between khaki and olive", body: "Dark khaki sits at the overlap of khaki's practical fabric heritage and olive's muted, military-adjacent seriousness, which gives it a slightly more rugged, understated read than standard khaki." },
+      { title: "A working neutral, not a decorative one", body: "Like khaki, its job is mostly functional - it fits workwear, outdoor, and utilitarian product branding where durability and practicality matter more than visual excitement." },
+    ],
+    faq: [
+      { question: "How is dark khaki different from khaki?", answer: "It's deeper and more olive-leaning, adding some of olive's rugged seriousness to khaki's practical, workwear-rooted neutrality." },
+      { question: "What products suit dark khaki?", answer: "Workwear, outdoor gear, and utilitarian branding that want a practical, understated neutral rather than a decorative statement color." },
+    ],
+  },
+  orchid: {
+    title: "What Orchid Means in Color Psychology",
+    description: "Why orchid reads as exotic and elegant rather than simply pink or purple, carrying a direct flower reference.",
+    answer: "Orchid borrows its name and association directly from the flower - exotic, delicate, and slightly rare in everyday context - which gives it a refined, elegant quality distinct from generic pink-purple blends. It sits between pink's softness and purple's creativity, tilted toward sophistication rather than either extreme.",
+    sections: [
+      { title: "A flower reference, not just a hue blend", body: "Orchids are widely perceived as exotic, delicate, and slightly luxurious flowers, and that association transfers directly to the color - it reads as refined and a little rare rather than as a generic pink-purple mix." },
+      { title: "Elegant middle ground", body: "Orchid balances pink's softness with purple's creativity without fully committing to either, making it a fit for beauty, floral, and boutique branding that wants to feel elegant and distinctive rather than conventional." },
+    ],
+    faq: [
+      { question: "Is orchid the same as pink or purple?", answer: "It's a genuine blend, but the flower association gives it an exotic, elegant quality that a generic pink-purple mix wouldn't carry on its own." },
+      { question: "What brands suit orchid?", answer: "Beauty, floral, and boutique brands benefit from orchid's refined, slightly exotic elegance, which stands out from more conventional pink or purple choices." },
+    ],
+  },
+  "light-pink": {
+    title: "What Light Pink Means in Color Psychology",
+    description: "Why light pink reads as gentle and nurturing rather than bold, functioning as one of the softest colors available.",
+    answer: "Light pink strips pink down to near-minimum saturation, which removes almost all of hot pink's boldness and leaves something closer to a whisper than a statement - gentle, nurturing, and delicate. It's one of the softest colors on the wheel, which is exactly why it's so strongly tied to infancy, tenderness, and quiet comfort.",
+    sections: [
+      { title: "About as soft as color gets", body: "At this low a saturation, light pink carries almost none of red's warmth or hot pink's boldness - it reads as gentle and quiet, which is why it's so consistently used for nurseries, tenderness, and delicate, comforting contexts." },
+      { title: "Nurturing rather than energetic", body: "Where hot pink demands attention, light pink recedes - it supports rather than leads, fitting baby products, gentle skincare, and any brand wanting to feel soft and reassuring rather than bold or confident." },
+    ],
+    faq: [
+      { question: "Is light pink the same as hot pink, just paler?", answer: "Technically the same hue family, but the low saturation removes almost all of hot pink's boldness, leaving a gentle, nurturing quality instead." },
+      { question: "What products suit light pink?", answer: "Baby products, gentle skincare, and any brand wanting to feel soft, delicate, and reassuring rather than bold or attention-grabbing." },
+    ],
+  },
+  firebrick: {
+    title: "What Firebrick Means in Color Psychology",
+    description: "Why firebrick reads as sturdy and architectural rather than dramatic, carrying a direct masonry reference.",
+    answer: "Firebrick takes its name from heat-resistant masonry brick, which gives it a grounded, structural quality distinct from crimson's theatrical depth or red's alarm - it reads as sturdy and built rather than urgent or romantic. The material reference does most of the psychological work here.",
+    sections: [
+      { title: "A building-material reference", body: "Named directly after heat-resistant brick, firebrick's association leans structural and durable rather than emotional - it's a muted, brick-toned red that reads as grounded and built rather than dramatic or alarming." },
+      { title: "Sturdy rather than urgent or romantic", body: "Because of its architectural roots, firebrick fits industrial, construction, and heritage-building branding better than it fits alerts, romance, or luxury contexts, where crimson or dark red would be a closer match." },
+    ],
+    faq: [
+      { question: "Is firebrick the same as crimson or dark red?", answer: "Visually similar, but firebrick's masonry reference gives it a structural, architectural quality that crimson's theatrical drama and dark red's luxury warmth don't carry." },
+      { question: "What brands suit firebrick?", answer: "Industrial, construction, and heritage-building brands benefit from firebrick's sturdy, material-rooted associations." },
+    ],
+  },
+  "dark-salmon": {
+    title: "What Dark Salmon Means in Color Psychology",
+    description: "Why dark salmon reads as understated and dusty rather than appetizing, muting salmon's gentle warmth further.",
+    answer: "Dark salmon pulls back salmon's brightness toward a dustier, more muted warm tone - still food-adjacent, but restrained enough to function as a quiet supporting neutral rather than an appetizing accent. It trades some of salmon's fresh warmth for understated sophistication.",
+    sections: [
+      { title: "More muted, less appetizing", body: "Where salmon stays fresh and gently appetizing, dark salmon's added muting pulls it toward a dustier, more restrained warmth that reads as sophisticated rather than food-adjacent." },
+      { title: "A quiet supporting tone", body: "Its understated warmth makes dark salmon a fit for muted, editorial color palettes wanting a warm neutral without salmon's brighter, more appetite-driven energy." },
+    ],
+    faq: [
+      { question: "Does dark salmon still feel appetizing like salmon?", answer: "Less so - the added muting pulls it toward understated sophistication rather than salmon's fresher, more appetite-driven warmth." },
+      { question: "What works well with dark salmon?", answer: "Muted, editorial color palettes that want a warm neutral tone without a bright or food-forward accent." },
+    ],
+  },
+  "saddle-brown": {
+    title: "What Saddle Brown Means in Color Psychology",
+    description: "Why saddle brown reads as rugged and equestrian rather than simply earthy, carrying a direct leather reference.",
+    answer: "Saddle brown borrows its name and warmth directly from tanned leather saddlery, which gives it a rugged, crafted, outdoor quality distinct from a generic brown - closer to worn leather and horseback riding gear than to plain earth or wood.",
+    sections: [
+      { title: "A leather and equestrian reference", body: "Saddle brown's name ties it directly to tanned leather and riding equipment, giving it a rugged, crafted quality that plain brown - without that specific material reference - doesn't carry." },
+      { title: "Outdoor craftsmanship over plain neutrality", body: "Because of its leather-and-saddlery roots, this color fits outdoor gear, leather goods, and heritage craftsmanship branding particularly well." },
+    ],
+    faq: [
+      { question: "Why does saddle brown feel more rugged than plain brown?", answer: "Its direct association with tanned leather and riding gear gives it a crafted, outdoor quality that a generic, unnamed brown doesn't carry." },
+      { question: "What brands suit saddle brown?", answer: "Outdoor gear, leather goods, and heritage craftsmanship brands benefit from its rugged, equestrian-rooted warmth." },
+    ],
+  },
+  "burly-wood": {
+    title: "What Burly Wood Means in Color Psychology",
+    description: "Why burly wood reads as rustic and warm rather than simply tan, carrying a direct timber-grain reference.",
+    answer: "Burly wood takes its name from the swirling, warm-toned grain patterns found in burl wood, which gives it a rustic, natural-material quality distinct from a flat, generic tan. It reads as crafted and organic rather than as a plain neutral backdrop.",
+    sections: [
+      { title: "A timber-grain reference", body: "Named after the distinctive swirling grain of burl wood, this color carries a natural, crafted-material quality that plain tan, without that specific reference, doesn't have on its own." },
+      { title: "Rustic warmth for craft-forward brands", body: "Its wood-grain association makes burly wood a fit for furniture, woodworking, and rustic-lifestyle branding wanting a warm, organic neutral with real material texture behind it." },
+    ],
+    faq: [
+      { question: "Is burly wood just a shade of tan?", answer: "Related, but its timber-grain reference gives it a more rustic, crafted-material quality than a flat, generic tan." },
+      { question: "What brands suit burly wood?", answer: "Furniture, woodworking, and rustic-lifestyle brands benefit from its warm, natural, wood-grain-rooted associations." },
+    ],
+  },
+  wheat: {
+    title: "What Wheat Means in Color Psychology",
+    description: "Why wheat reads as agricultural and wholesome rather than simply tan, carrying a direct harvest-field reference.",
+    answer: "Wheat borrows its warmth directly from ripened grain fields, which gives it a wholesome, agricultural quality - closer to bread, harvest, and natural food production than to a plain neutral tan. That food-and-farming reference adds genuine warmth a flat neutral lacks.",
+    sections: [
+      { title: "A harvest-field reference", body: "Named after ripened grain, wheat carries direct associations with agriculture, bread, and natural food production - a wholesome quality that a flat, unnamed tan doesn't inherently have." },
+      { title: "Wholesome rather than neutral", body: "This food-and-farming association makes wheat a fit for bakery, natural food, and agricultural branding wanting a warm, wholesome neutral rather than a purely decorative tan." },
+    ],
+    faq: [
+      { question: "How is wheat different from plain tan?", answer: "Its harvest-field reference gives it a wholesome, agricultural quality tied to bread and natural food, which a flat, unnamed tan doesn't carry." },
+      { question: "What brands suit wheat?", answer: "Bakery, natural food, and agricultural brands benefit from wheat's wholesome, harvest-rooted warmth." },
+    ],
+  },
+  "navajo-white": {
+    title: "What Navajo White Means in Color Psychology",
+    description: "Why Navajo white reads as warm and textile-rooted rather than plain ivory, carrying a woven-fabric reference.",
+    answer: "Navajo white leans warmer and slightly more golden than plain ivory or off-white, with a name tied to traditional Navajo textile and weaving traditions - a craft-and-heritage reference that gives it more warmth and texture than a generic pale neutral.",
+    sections: [
+      { title: "A textile-heritage reference", body: "Its name ties Navajo white to a specific weaving and craft tradition, giving it a warmer, more textured quality than a flat, unnamed off-white or ivory." },
+      { title: "Warm and crafted, not sterile", body: "This heritage reference makes Navajo white a fit for craft, textile, and warm-interior branding wanting a soft neutral with more depth than plain white or ivory." },
+    ],
+    faq: [
+      { question: "How is Navajo white different from ivory?", answer: "It leans warmer and more golden, with a name tied to traditional weaving that gives it a craft-and-texture quality plain ivory doesn't carry." },
+      { question: "What suits Navajo white?", answer: "Craft, textile, and warm-interior branding wanting a soft, textured neutral rather than a flat, sterile white." },
+    ],
+  },
+  bisque: {
+    title: "What Bisque Means in Color Psychology",
+    description: "Why bisque reads as soft and ceramic rather than simply peach, carrying a direct pottery reference.",
+    answer: "Bisque takes its name from unglazed, fired ceramic pottery, which gives it a soft, matte, handcrafted quality distinct from a generic pale peach. It reads as tactile and considered rather than purely decorative - closer to studio pottery than to a flat pastel.",
+    sections: [
+      { title: "A pottery reference, not just a peach tone", body: "Named after unglazed ceramic ware, bisque carries a matte, tactile, handcrafted quality that a generic pale peach or cream doesn't have on its own." },
+      { title: "Tactile warmth for craft and interior brands", body: "Its ceramic association makes bisque a fit for pottery, home goods, and craft-forward interior branding wanting a soft, considered neutral with real material texture." },
+    ],
+    faq: [
+      { question: "Is bisque just a pale peach color?", answer: "Related, but its ceramic-pottery reference gives it a matte, tactile, handcrafted quality that plain pale peach doesn't carry." },
+      { question: "What brands suit bisque?", answer: "Pottery, home goods, and craft-forward interior brands benefit from bisque's soft, tactile, ceramic-rooted warmth." },
+    ],
+  },
+  "peach-puff": {
+    title: "What Peach Puff Means in Color Psychology",
+    description: "Why peach puff reads as soft and sweet rather than simply pale orange, carrying a direct dessert reference.",
+    answer: "Peach puff borrows its gentle warmth from ripe peach flesh and pastry, giving it a soft, sweet, slightly nostalgic quality distinct from a generic pale orange. It reads as comforting and gentle rather than energetic - closer to a dessert than to a citrus fruit.",
+    sections: [
+      { title: "A fruit-and-pastry reference", body: "Its name ties peach puff to ripe fruit and baked goods, giving it a soft, sweet quality that a flat, unnamed pale orange doesn't carry on its own." },
+      { title: "Comforting rather than energetic", body: "This dessert-adjacent warmth makes peach puff a fit for bakery, comfort-food, and gentle lifestyle branding wanting softness over citrus energy." },
+    ],
+    faq: [
+      { question: "Is peach puff the same as light orange?", answer: "Related, but its fruit-and-pastry reference gives it a soft, sweet, comforting quality that plain pale orange doesn't have." },
+      { question: "What suits peach puff?", answer: "Bakery, comfort-food, and gentle lifestyle brands benefit from its soft, sweet, dessert-adjacent warmth." },
+    ],
+  },
+  "sandy-brown": {
+    title: "What Sandy Brown Means in Color Psychology",
+    description: "Why sandy brown reads as relaxed and coastal rather than simply tan, carrying a direct beach reference.",
+    answer: "Sandy brown draws its warmth directly from beach sand, which gives it a relaxed, sun-warmed, coastal quality distinct from a generic tan or khaki. It reads as easygoing and outdoor rather than formal or utilitarian.",
+    sections: [
+      { title: "A beach reference, not a workwear one", body: "Where khaki and tan lean utilitarian, sandy brown's direct beach-sand association gives it a relaxed, vacation-adjacent warmth instead - closer to a coastline than a uniform." },
+      { title: "Easygoing warmth for travel and lifestyle brands", body: "This coastal reference makes sandy brown a fit for travel, resort, and relaxed lifestyle branding wanting warmth without khaki's more practical, workwear-rooted seriousness." },
+    ],
+    faq: [
+      { question: "How is sandy brown different from tan or khaki?", answer: "Its direct beach-sand reference gives it a relaxed, coastal warmth, where tan and khaki lean more utilitarian and workwear-rooted." },
+      { question: "What brands suit sandy brown?", answer: "Travel, resort, and relaxed lifestyle brands benefit from its easygoing, sun-warmed, coastal associations." },
+    ],
+  },
+  goldenrod: {
+    title: "What Goldenrod Means in Color Psychology",
+    description: "Why goldenrod reads as autumnal and wild rather than metallic, carrying a direct wildflower reference.",
+    answer: "Goldenrod takes its name from the wildflower, not the metal, which gives it a natural, autumnal quality distinct from gold's achievement-and-value signal - closer to late-summer fields and harvest season than to trophies or currency.",
+    sections: [
+      { title: "A wildflower, not a metal, reference", body: "Unlike gold, which draws meaning from the precious metal, goldenrod is named after a common late-summer wildflower - its association is natural and seasonal rather than about value or achievement." },
+      { title: "Autumnal and grounded, not aspirational", body: "This plant-based origin makes goldenrod fit natural, seasonal, and harvest-themed branding better than premium or achievement-driven contexts, where gold itself is the stronger choice." },
+    ],
+    faq: [
+      { question: "Is goldenrod the same as gold?", answer: "No - gold references the precious metal and signals value and achievement, while goldenrod references a wildflower and reads as natural and seasonal instead." },
+      { question: "What brands suit goldenrod?", answer: "Natural, seasonal, and harvest-themed brands benefit from goldenrod's wildflower-rooted, autumnal warmth." },
+    ],
+  },
+  "dark-goldenrod": {
+    title: "What Dark Goldenrod Means in Color Psychology",
+    description: "Why dark goldenrod reads as antique and burnished rather than bright, deepening goldenrod toward aged bronze.",
+    answer: "Dark goldenrod pushes goldenrod's wildflower warmth toward a deeper, more burnished tone reminiscent of antique brass or aged bronze - it reads as vintage and weathered rather than fresh or metallic-bright, fitting heritage and antique-adjacent contexts.",
+    sections: [
+      { title: "Closer to aged metal than fresh flower", body: "The added depth pulls dark goldenrod away from goldenrod's fresh wildflower read and toward something closer to antique brass or weathered bronze - vintage rather than seasonal." },
+      { title: "Heritage and antique warmth", body: "This burnished quality suits antique, heritage, and vintage-collectible branding wanting a warm, aged tone rather than bright gold's polished value signal." },
+    ],
+    faq: [
+      { question: "How is dark goldenrod different from goldenrod?", answer: "It's deeper and more burnished, reading as antique and weathered rather than goldenrod's fresher, wildflower-toned warmth." },
+      { question: "What brands suit dark goldenrod?", answer: "Antique, heritage, and vintage-collectible brands benefit from its aged, burnished-bronze quality." },
+    ],
+  },
+  camel: {
+    title: "What Camel Means in Color Psychology",
+    description: "Why camel reads as classic and refined rather than simply tan, carrying a direct fashion-fabric reference.",
+    answer: "Camel takes its name from camel-hair coats, a long-standing menswear and outerwear staple, which gives it a timeless, refined fashion quality distinct from a generic tan. It reads as considered and classic rather than purely neutral.",
+    sections: [
+      { title: "A fashion-fabric reference", body: "Named after camel-hair coats, a menswear and outerwear staple for over a century, this color carries a refined fashion pedigree that plain tan, without that reference, doesn't have." },
+      { title: "Timeless rather than trend-driven", body: "This fashion heritage makes camel a fit for classic apparel, outerwear, and considered lifestyle branding wanting a warm neutral with real fashion credibility." },
+    ],
+    faq: [
+      { question: "Is camel just a shade of tan?", answer: "Related, but its camel-hair coat heritage gives it a refined, classic fashion quality that a generic, unnamed tan doesn't carry." },
+      { question: "What brands suit camel?", answer: "Classic apparel, outerwear, and considered lifestyle brands benefit from camel's timeless, fashion-rooted warmth." },
+    ],
+  },
+  "green-yellow": {
+    title: "What Green Yellow Means in Color Psychology",
+    description: "Why green-yellow reads as electric and budding rather than natural, sitting at the sharpest edge between the two hues.",
+    answer: "Green-yellow lands at the high-energy seam between green and yellow, keeping yellow's visibility and green's freshness at once - it reads as budding, electric, and slightly synthetic, closer to new spring growth caught in bright light than to either parent color alone.",
+    sections: [
+      { title: "The seam between two energetic hues", body: "Sitting exactly between yellow's visibility and green's growth signal, green-yellow amplifies both - it's one of the most electric, attention-grabbing colors in the green family." },
+      { title: "Budding energy, not settled nature", body: "It reads as new, sprouting growth caught in bright light rather than mature, settled greenery - useful for brands wanting maximum energy from a green-adjacent hue." },
+    ],
+    faq: [
+      { question: "Is green-yellow a natural-feeling color?", answer: "Less than most greens - its high brightness pushes it toward electric and synthetic rather than calm and natural." },
+      { question: "What brands suit green-yellow?", answer: "High-energy, youth-focused, or sports brands wanting maximum visual energy from a green-adjacent hue." },
+    ],
+  },
+  chartreuse: {
+    title: "What Chartreuse Means in Color Psychology",
+    description: "Why chartreuse reads as bold and unconventional rather than simply green, carrying a distinctive liqueur origin.",
+    answer: "Chartreuse takes its name from a French herbal liqueur with the same striking yellow-green hue, which gives the color an unconventional, slightly daring quality most greens don't carry. It's polarizing by design - too yellow to be a calm green, too green to be a clean yellow.",
+    sections: [
+      { title: "A liqueur reference, not a plant one", body: "Unlike most greens, which borrow meaning from foliage, chartreuse is named after a distinctive French liqueur - giving it an unconventional, almost acquired-taste quality that fits its polarizing visual intensity." },
+      { title: "Deliberately polarizing", body: "Its position between yellow and green makes chartreuse hard to use as a calm, natural tone - brands reach for it specifically because it's bold and unexpected, not despite that fact." },
+    ],
+    faq: [
+      { question: "Why is chartreuse considered a bold color choice?", answer: "It sits at an unusual point between yellow and green, making it too intense to read as calm nature and too green to read as clean yellow - a deliberately polarizing, attention-grabbing hue." },
+      { question: "What brands use chartreuse well?", answer: "Brands wanting a distinctive, unconventional accent that stands out precisely because it's harder to place than a standard green or yellow." },
+    ],
+  },
+  "lime-green": {
+    title: "What Lime Green Means in Color Psychology",
+    description: "Why lime green reads as fresh and energetic rather than fully synthetic, sitting between lime's electricity and green's nature.",
+    answer: "Lime green pulls back slightly from pure lime's maximum synthetic brightness while staying more vivid than a natural green, landing as fresh and energetic rather than either fully artificial or fully organic. It keeps enough brightness to feel modern without lime's extreme, safety-vest intensity.",
+    sections: [
+      { title: "Between electric and natural", body: "Lime green is more saturated than a typical natural green but not as extreme as pure lime, giving it an energetic freshness that reads as lively rather than purely synthetic." },
+      { title: "Modern and fresh, not natural or calm", body: "This balance makes lime green a common choice for fresh, modern, youth-oriented branding wanting energy without lime's full high-visibility intensity." },
+    ],
+    faq: [
+      { question: "Is lime green as synthetic-feeling as lime?", answer: "Less so - it pulls back slightly from lime's maximum brightness, reading as fresh and energetic rather than purely artificial." },
+      { question: "What brands suit lime green?", answer: "Fresh, modern, youth-oriented brands wanting energy and vibrancy without lime's extreme, high-visibility intensity." },
+    ],
+  },
+  "light-green": {
+    title: "What Light Green Means in Color Psychology",
+    description: "Why light green reads as gentle and approachable rather than clinical, softening green's 'go' signal into calm freshness.",
+    answer: "Light green mutes standard green's saturation, which softens its sharp 'go' and approval signal into something gentler and more approachable - fresh without being loud, natural without olive's ruggedness or mint's clinical coolness. It's an easy, friendly green.",
+    sections: [
+      { title: "Softer than a 'go' signal", body: "Lower saturation removes most of green's sharp, learned approval association, leaving a gentler freshness that reads as calm rather than as an active status cue." },
+      { title: "Approachable, not clinical", body: "Unlike mint or pale green's cooler, more clinical read, light green stays warm and friendly - a fit for wellness, natural food, and approachable lifestyle branding." },
+    ],
+    faq: [
+      { question: "Does light green still signal 'go' or approval like standard green?", answer: "Less strongly - its lower saturation softens that sharp association into a gentler, more general sense of freshness." },
+      { question: "What brands suit light green?", answer: "Wellness, natural food, and approachable lifestyle brands benefit from light green's gentle, friendly freshness." },
+    ],
+  },
+  "medium-spring-green": {
+    title: "What Medium Spring Green Means in Color Psychology",
+    description: "Why medium spring green reads as vivid new growth rather than settled nature, carrying peak-season energy.",
+    answer: "Medium spring green captures the vivid, slightly cool brightness of new growth at the height of spring - more energetic than a muted sage, cooler than a yellow-leaning green. It reads as a specific seasonal moment (new leaves, early growth) rather than green in the abstract.",
+    sections: [
+      { title: "A specific seasonal moment", body: "Its cool, vivid brightness evokes new spring growth specifically - fresh leaves and early-season foliage - rather than nature or greenery as a general concept." },
+      { title: "Energetic renewal", body: "This precise seasonal energy makes medium spring green a fit for renewal, growth, and fresh-start branding wanting more vividness than a muted, settled green." },
+    ],
+    faq: [
+      { question: "Does medium spring green feel calm like sage or forest green?", answer: "No - its brightness and coolness give it an energetic, new-growth quality rather than the settled calm of muted or deep greens." },
+      { question: "What brands suit medium spring green?", answer: "Renewal, growth, and fresh-start branding benefit from its vivid, new-season energy." },
+    ],
+  },
+  "sea-green": {
+    title: "What Sea Green Means in Color Psychology",
+    description: "Why sea green reads as calm and oceanic rather than tropical, sitting deeper and more muted than turquoise.",
+    answer: "Sea green pulls green toward ocean water with a deeper, more muted register than turquoise's bright tropical energy - it reads as calm, deep-water serenity rather than vacation brightness, closer to open ocean than to a resort pool.",
+    sections: [
+      { title: "Open ocean, not resort tropics", body: "Where turquoise evokes bright, shallow tropical water, sea green's deeper, more muted tone reads as open-ocean serenity instead - calmer and more contemplative." },
+      { title: "Serenity over vacation energy", body: "This deeper, calmer register makes sea green a fit for wellness, spa, and contemplative branding wanting oceanic calm without turquoise's brighter, more energetic vacation read." },
+    ],
+    faq: [
+      { question: "Is sea green the same as turquoise?", answer: "Both reference ocean water, but sea green is deeper and more muted, reading as calm and serene, while turquoise is brighter and reads as tropical and energetic." },
+      { question: "What brands suit sea green?", answer: "Wellness, spa, and contemplative brands benefit from sea green's deep, calm, oceanic serenity." },
+    ],
+  },
+  "olive-drab": {
+    title: "What Olive Drab Means in Color Psychology",
+    description: "Why olive drab reads as purely utilitarian rather than natural, carrying a direct military-uniform reference.",
+    answer: "Olive drab takes its name and association directly from military uniform and equipment color, pushing past olive's general ruggedness into something explicitly tactical and utilitarian. The word 'drab' is doing real work here - it's deliberately unremarkable, built for function over any visual appeal.",
+    sections: [
+      { title: "A military-issue reference", body: "Named directly after standard-issue military color, olive drab carries an explicitly tactical, utilitarian association stronger than olive's more general ruggedness." },
+      { title: "Deliberately unremarkable", body: "The 'drab' in its name signals intentional plainness - function over form - making it fit military-adjacent, tactical, and purely utilitarian product branding rather than anything decorative." },
+    ],
+    faq: [
+      { question: "How is olive drab different from olive?", answer: "It's more explicitly tactical and military-coded, where olive carries a broader rugged, outdoor-utilitarian read." },
+      { question: "What products suit olive drab?", answer: "Military-adjacent, tactical, and purely functional gear branding, where deliberate plainness is the point." },
+    ],
+  },
+  "dark-olive-green": {
+    title: "What Dark Olive Green Means in Color Psychology",
+    description: "Why dark olive green reads as camouflaged and tactical rather than simply muted, deepening olive toward concealment.",
+    answer: "Dark olive green pushes olive's muted ruggedness deeper still, landing close to camouflage and concealment coloring - it reads as tactical and blend-into-the-background rather than as a visible, decorative hue. It's one of the least attention-seeking colors available.",
+    sections: [
+      { title: "Built for concealment, not visibility", body: "Its depth and muting push dark olive green close to camouflage coloring - a color engineered to blend in rather than stand out, the opposite job of most brand colors." },
+      { title: "Tactical and understated", body: "This concealment-adjacent quality fits military, tactical gear, and rugged outdoor branding wanting to signal seriousness and function over any visual statement." },
+    ],
+    faq: [
+      { question: "Is dark olive green a good brand accent color?", answer: "Rarely - it's engineered to blend in rather than stand out, which makes it a poor attention-grabbing accent but a strong fit for tactical or camouflage-adjacent contexts." },
+      { question: "What suits dark olive green?", answer: "Military, tactical gear, and rugged outdoor brands wanting understated, function-first seriousness." },
+    ],
+  },
+  "medium-aquamarine": {
+    title: "What Medium Aquamarine Means in Color Psychology",
+    description: "Why medium aquamarine reads as serene and gemstone-precious rather than purely oceanic, carrying a jewelry reference.",
+    answer: "Medium aquamarine borrows its name from the gemstone, which adds a refined, precious quality to its clear, cool blue-green base - it reads as serene and valuable at once, closer to fine jewelry than to open water alone.",
+    sections: [
+      { title: "A gemstone reference adds refinement", body: "Named after the prized aquamarine gem, this color carries a clarity-and-value association beyond a simple ocean reference - precious as well as calming." },
+      { title: "Serene and refined together", body: "This dual quality makes medium aquamarine a fit for jewelry, refined beauty, and premium wellness branding wanting calm with a touch of preciousness." },
+    ],
+    faq: [
+      { question: "Is aquamarine just an ocean-inspired color?", answer: "It references open water, but its name also ties it to the gemstone, adding a refined, precious quality beyond a simple sea reference." },
+      { question: "What brands suit medium aquamarine?", answer: "Jewelry, refined beauty, and premium wellness brands benefit from its blend of serenity and preciousness." },
+    ],
+  },
+  "dark-sea-green": {
+    title: "What Dark Sea Green Means in Color Psychology",
+    description: "Why dark sea green reads as subdued and coastal rather than vivid, muting sea green further toward quiet calm.",
+    answer: "Dark sea green mutes sea green's already-calm register even further, landing as quiet and subdued rather than richly oceanic - closer to sea-worn driftwood or overcast coastline than to clear tropical water.",
+    sections: [
+      { title: "Muted past vividness", body: "The added desaturation pulls dark sea green away from any vivid ocean reference and toward something closer to weathered, overcast coastal tones - quiet rather than richly colored." },
+      { title: "Quiet coastal calm", body: "This subdued quality fits contemplative, minimalist, and coastal-adjacent branding wanting understated calm rather than a vivid tropical or oceanic statement." },
+    ],
+    faq: [
+      { question: "Is dark sea green vivid like turquoise?", answer: "No - it's deliberately muted, reading as quiet and subdued rather than vivid or tropical." },
+      { question: "What suits dark sea green?", answer: "Contemplative, minimalist, and coastal-adjacent brands wanting understated calm rather than vivid ocean energy." },
+    ],
+  },
+  "light-sea-green": {
+    title: "What Light Sea Green Means in Color Psychology",
+    description: "Why light sea green reads as fresh and coastal rather than deep or muted, sitting brighter and greener than teal.",
+    answer: "Light sea green keeps more brightness than sea green or teal, leaning slightly greener and fresher - it reads as an active, healthy coastline rather than deep or muted water, with a livelier energy than its darker relatives.",
+    sections: [
+      { title: "Brighter and greener than teal", body: "Where teal and sea green stay muted or deep, light sea green keeps enough brightness and green lean to feel fresh and active rather than calm-to-the-point-of-quiet." },
+      { title: "Active coastal energy", body: "This livelier register fits fresh, active, health-and-wellness branding wanting coastal calm with more energy than teal's more corporate, subdued register." },
+    ],
+    faq: [
+      { question: "How is light sea green different from teal?", answer: "It's brighter and greener, reading as fresh and active, where teal stays more muted and corporate-calm." },
+      { question: "What brands suit light sea green?", answer: "Fresh, active health-and-wellness brands wanting coastal energy with more liveliness than teal or sea green." },
+    ],
+  },
+  "yellow-green": {
+    title: "What Yellow Green Means in Color Psychology",
+    description: "Why yellow-green reads as natural budding growth rather than electric energy, sitting calmer than chartreuse.",
+    answer: "Yellow-green leans more toward plant and foliage reference than chartreuse's liqueur-driven boldness or green-yellow's electric brightness - it reads as natural new growth, closer to spring leaves than to a deliberately unconventional accent.",
+    sections: [
+      { title: "Closer to foliage than to a statement", body: "Yellow-green stays closer to natural plant tones than its brighter, more electric relatives, reading as budding growth rather than a bold or unconventional choice." },
+      { title: "Gentle natural energy", body: "This more grounded quality fits natural, garden, and spring-themed branding wanting fresh growth energy without chartreuse's deliberate boldness." },
+    ],
+    faq: [
+      { question: "Is yellow-green the same as chartreuse?", answer: "Close in hue, but yellow-green reads as more natural and plant-like, while chartreuse carries a bolder, more deliberately unconventional association." },
+      { question: "What suits yellow-green?", answer: "Natural, garden, and spring-themed brands wanting fresh growth energy in a more grounded register than chartreuse." },
+    ],
+  },
+  "lawn-green": {
+    title: "What Lawn Green Means in Color Psychology",
+    description: "Why lawn green reads as clean and suburban rather than wild, carrying a direct cut-grass reference.",
+    answer: "Lawn green borrows its brightness from freshly cut grass, which gives it a clean, maintained, suburban quality distinct from a wilder, more natural green - it reads as tended and orderly rather than untouched nature.",
+    sections: [
+      { title: "A cut-grass reference, not a wild one", body: "Named after manicured lawns rather than untouched foliage, this color carries a clean, maintained quality that wilder greens don't have - orderly rather than organic." },
+      { title: "Tended rather than untamed", body: "This maintained, suburban association fits landscaping, home-and-garden, and clean-cut lifestyle branding better than wilderness or conservation contexts." },
+    ],
+    faq: [
+      { question: "Does lawn green feel wild or natural?", answer: "Less so than other greens - its cut-grass reference gives it a clean, maintained, suburban quality rather than an untouched-nature feel." },
+      { question: "What brands suit lawn green?", answer: "Landscaping, home-and-garden, and clean-cut lifestyle brands benefit from its tended, orderly freshness." },
+    ],
+  },
+  aquamarine: {
+    title: "What Aquamarine Means in Color Psychology",
+    description: "Why aquamarine reads as clear and precious rather than purely oceanic, carrying a strong gemstone association.",
+    answer: "Aquamarine's meaning splits between open water and the prized gemstone that shares its name - both references reinforce clarity and calm, but the gem adds a refined, valuable quality that a plain ocean-blue-green wouldn't carry alone.",
+    sections: [
+      { title: "Two reinforcing references", body: "Aquamarine draws from both clear tropical water and a genuinely valuable gemstone, and both associations point the same direction - clarity and calm - which makes the color unusually coherent in what it signals." },
+      { title: "Clarity with real value attached", body: "The gemstone reference adds a refined, precious quality beyond plain ocean-blue-green, making aquamarine a fit for jewelry and premium wellness branding wanting clear, calm sophistication." },
+    ],
+    faq: [
+      { question: "Is aquamarine just an ocean color?", answer: "It references open water, but its shared name with a prized gemstone adds a refined, valuable quality beyond a simple sea reference." },
+      { question: "What brands suit aquamarine?", answer: "Jewelry and premium wellness brands benefit from aquamarine's blend of clarity, calm, and gemstone-level refinement." },
+    ],
+  },
+  "spring-green": {
+    title: "What Spring Green Means in Color Psychology",
+    description: "Why spring green reads as fresh renewal rather than settled nature, capturing a specific season's energy.",
+    answer: "Spring green captures the bright, slightly cool freshness of the season's first growth - it reads as renewal and new beginnings rather than mature, settled greenery, tied to a specific moment (early spring) rather than nature in general.",
+    sections: [
+      { title: "A specific seasonal signal", body: "Rather than representing green broadly, spring green evokes a precise moment - the earliest growth of the season - which gives it a renewal-and-beginnings quality distinct from a mature or muted green." },
+      { title: "Renewal over permanence", body: "This fresh-start energy fits new-product launches, renewal-themed campaigns, and spring-collection branding wanting to signal a beginning rather than an established, settled state." },
+    ],
+    faq: [
+      { question: "Does spring green mean the same as green in general?", answer: "No - it specifically evokes early-season new growth and renewal, which is a narrower, more energetic signal than green as a general concept." },
+      { question: "What brands suit spring green?", answer: "New-product launches, renewal campaigns, and spring-collection branding benefit from its fresh-start, new-beginnings energy." },
+    ],
+  },
+  "pale-green": {
+    title: "What Pale Green Means in Color Psychology",
+    description: "Why pale green reads as gentle wellness rather than growth or approval, softening green to near-minimum intensity.",
+    answer: "Pale green strips out nearly all of green's saturation, removing its 'go' and growth signals almost entirely and leaving a quiet, wellness-adjacent softness instead - closer to a gentle spa tone than to nature, approval, or energy.",
+    sections: [
+      { title: "Too soft for a 'go' signal", body: "At this low saturation, pale green carries almost none of standard green's approval or growth association - it reads as quiet and gentle rather than as an active status cue." },
+      { title: "A wellness tone, not a nature or status one", body: "This softness makes pale green a fit for spa, wellness, and gentle skincare branding wanting calm without borrowing green's more active 'growth' or 'approved' signals." },
+    ],
+    faq: [
+      { question: "Does pale green still signal growth or 'go' like standard green?", answer: "Barely - its low saturation removes most of that active signal, leaving a quiet, wellness-adjacent softness instead." },
+      { question: "What products suit pale green?", answer: "Spa, wellness, and gentle skincare products benefit from pale green's soft, calming quality." },
+    ],
+  },
+  "cadet-blue": {
+    title: "What Cadet Blue Means in Color Psychology",
+    description: "Why cadet blue reads as disciplined and understated rather than trustworthy, carrying a direct military-academy reference.",
+    answer: "Cadet blue takes its name from military academy uniform color, which gives it a disciplined, understated quality distinct from a general trust-blue - muted and gray-leaning enough to feel restrained rather than warm or inviting, closer to training and structure than to comfort.",
+    sections: [
+      { title: "A uniform reference, not an open-sky one", body: "Named after academy cadet uniforms, this muted, gray-leaning blue carries a disciplined, structured association rather than the open, natural calm of sky or water blues." },
+      { title: "Restrained rather than warm", body: "Its understated, slightly gray quality fits structured, disciplined branding - academic, institutional, or training-focused - better than consumer or wellness contexts wanting warmth." },
+    ],
+    faq: [
+      { question: "Is cadet blue the same as sky blue?", answer: "No - cadet blue is muted and gray-leaning with a disciplined, uniform-rooted association, where sky blue is brighter and reads as open and optimistic." },
+      { question: "What brands suit cadet blue?", answer: "Structured, disciplined, academic, or institutional branding benefits from cadet blue's restrained, uniform-coded quality." },
+    ],
+  },
+  "light-steel-blue": {
+    title: "What Light Steel Blue Means in Color Psychology",
+    description: "Why light steel blue reads as gentle precision rather than harsh technicality, softening steel blue's industrial edge.",
+    answer: "Light steel blue keeps steel blue's technical, engineered undertone but lightens it enough to feel gentle rather than harsh - precision without the industrial weight, useful for tech and data contexts that want to feel capable without seeming cold.",
+    sections: [
+      { title: "Precision without harshness", body: "The lighter value softens steel blue's industrial, manufactured quality into something more approachable, while keeping enough gray undertone to still read as technical and precise." },
+      { title: "A gentler technical blue", body: "This balance suits software interfaces, data visualization, and technical products wanting to feel capable and precise without steel blue's fuller industrial weight." },
+    ],
+    faq: [
+      { question: "How is light steel blue different from steel blue?", answer: "It's lighter and gentler, keeping some technical precision while losing steel blue's harsher, more industrial weight." },
+      { question: "What suits light steel blue?", answer: "Software interfaces and data-focused products wanting to feel precise and capable without a heavy industrial tone." },
+    ],
+  },
+  "light-sky-blue": {
+    title: "What Light Sky Blue Means in Color Psychology",
+    description: "Why light sky blue reads as gentle daytime calm rather than bold optimism, paling sky blue's open-air energy.",
+    answer: "Light sky blue softens sky blue's open, optimistic energy into something quieter and more gentle - still an outdoor, daytime reference, but calmer and less assertive, closer to a hazy morning than to a bright, cloudless afternoon.",
+    sections: [
+      { title: "Quieter than sky blue's optimism", body: "The paler value takes some energy out of sky blue's open-air association, leaving a gentler, more contemplative daytime calm rather than bold optimism." },
+      { title: "Soft rather than assertive", body: "This gentler register fits nursery, soft consumer, and quietly optimistic branding wanting daytime freshness without sky blue's fuller brightness." },
+    ],
+    faq: [
+      { question: "Is light sky blue as energetic as sky blue?", answer: "No - it's paler and quieter, reading as gentle daytime calm rather than sky blue's bolder, more open optimism." },
+      { question: "What brands suit light sky blue?", answer: "Nursery, soft consumer, and gently optimistic brands benefit from its quiet, hazy-morning calm." },
+    ],
+  },
+  "deep-sky-blue": {
+    title: "What Deep Sky Blue Means in Color Psychology",
+    description: "Why deep sky blue reads as vivid and energetic rather than calm, saturating sky blue toward electric brightness.",
+    answer: "Deep sky blue pushes sky blue's open-air reference toward much higher saturation, trading gentle calm for vivid, electric energy - it reads as bold and eye-catching rather than soothing, closer to a cloudless summer sky at its most intense than to a soft, hazy one.",
+    sections: [
+      { title: "Saturation trades calm for energy", body: "The higher saturation moves deep sky blue away from sky blue's soothing openness and toward something more vivid and attention-grabbing - still airy, but with real visual punch." },
+      { title: "Bold rather than soothing", body: "This vividness fits energetic, modern, tech-forward branding wanting blue's optimism with genuine visual intensity rather than sky blue's softer calm." },
+    ],
+    faq: [
+      { question: "Is deep sky blue calming like sky blue?", answer: "Less so - its higher saturation gives it a vivid, energetic quality rather than sky blue's softer, more soothing openness." },
+      { question: "What brands suit deep sky blue?", answer: "Energetic, modern, tech-forward brands wanting blue's optimism paired with real visual intensity." },
+    ],
+  },
+  "dodger-blue": {
+    title: "What Dodger Blue Means in Color Psychology",
+    description: "Why dodger blue reads as vibrant and athletic rather than purely optimistic, carrying a sports-team origin.",
+    answer: "Dodger blue takes its name from a well-known baseball team's uniform color, which gives it a vibrant, athletic, team-spirit quality distinct from a generic bright blue - energetic and competitive rather than simply cheerful.",
+    sections: [
+      { title: "A sports-team reference", body: "Its name ties dodger blue directly to team uniforms and athletic competition, giving it a vibrant, spirited quality tied to sport rather than to sky, water, or abstract optimism." },
+      { title: "Athletic energy over general cheer", body: "This sports heritage makes dodger blue a fit for athletic, team-spirit, and competitive branding wanting vibrant energy with a genuine competitive edge." },
+    ],
+    faq: [
+      { question: "Is dodger blue just a bright, cheerful blue?", answer: "It's bright, but its sports-team origin gives it a specifically athletic, competitive-spirit quality beyond generic cheerfulness." },
+      { question: "What brands suit dodger blue?", answer: "Athletic, team-spirit, and competitive brands benefit from dodger blue's vibrant, sport-rooted energy." },
+    ],
+  },
+  "cornflower-blue": {
+    title: "What Cornflower Blue Means in Color Psychology",
+    description: "Why cornflower blue reads as gentle and pastoral rather than urban or technical, carrying a direct wildflower reference.",
+    answer: "Cornflower blue borrows its softness directly from the wildflower, giving it a gentle, countryside quality distinct from sky blue's open-air optimism or steel blue's industrial precision - closer to a summer meadow than to weather or engineering.",
+    sections: [
+      { title: "A wildflower, not a sky or metal, reference", body: "Named after the cornflower plant, this color's association is pastoral and gentle rather than tied to open air or manufactured materials, giving it a distinctly countryside quality." },
+      { title: "Gentle and unhurried", body: "This flower-rooted softness fits countryside, artisanal, and gently nostalgic branding wanting a calm, pastoral blue rather than an energetic or technical one." },
+    ],
+    faq: [
+      { question: "Is cornflower blue the same as sky blue?", answer: "They're both gentle blues, but cornflower blue's wildflower reference gives it a pastoral, countryside quality, where sky blue leans more toward open-air optimism." },
+      { question: "What brands suit cornflower blue?", answer: "Countryside, artisanal, and gently nostalgic brands benefit from cornflower blue's soft, pastoral calm." },
+    ],
+  },
+  "medium-blue": {
+    title: "What Medium Blue Means in Color Psychology",
+    description: "Why medium blue reads as balanced and default rather than distinctive, functioning as blue's most neutral, all-purpose register.",
+    answer: "Medium blue sits at blue's most balanced point - not as dark and formal as navy, not as light and soft as sky or light blue - which makes it the most generically 'trustworthy' version of the hue, useful as a safe default rather than a deliberate, characterful choice.",
+    sections: [
+      { title: "The most 'default' blue", body: "Without leaning dark and formal or light and gentle, medium blue reads as the most generic, all-purpose version of blue's trust signal - useful precisely because it doesn't commit to a stronger, more specific register." },
+      { title: "Safe rather than distinctive", body: "This neutrality makes medium blue a reasonable default when no stronger positioning is needed, but a weaker choice for brands wanting to stand out through color alone." },
+    ],
+    faq: [
+      { question: "Is medium blue a good primary brand color?", answer: "It works as a safe, trustworthy default, but its lack of a specific register (unlike navy's formality or sky blue's openness) makes it less distinctive for brands wanting to stand out." },
+      { question: "When should a brand use medium blue instead of navy or light blue?", answer: "When a straightforward, all-purpose trust signal is needed without committing to navy's formal weight or light blue's softer, more specific gentleness." },
+    ],
+  },
+  "dark-blue": {
+    title: "What Dark Blue Means in Color Psychology",
+    description: "Why dark blue reads as formal and dependable rather than navy's full institutional weight, sitting one step lighter.",
+    answer: "Dark blue carries most of navy's formality and trust but without going quite as deep or as close to black - it reads as serious and dependable while staying slightly more approachable than navy's fuller institutional gravity.",
+    sections: [
+      { title: "Formal, but not maximally so", body: "Dark blue keeps enough depth to feel serious and trustworthy without navy's near-black weight, landing as dependable rather than fully institutional." },
+      { title: "A flexible formal default", body: "This makes dark blue a flexible choice for brands wanting to feel serious and credible without navy's heavier, more uniform-coded formality." },
+    ],
+    faq: [
+      { question: "Is dark blue the same as navy?", answer: "Close, but navy is typically deeper and more institutional-feeling, while dark blue stays slightly lighter and more broadly flexible." },
+      { question: "What brands suit dark blue over navy?", answer: "Brands wanting serious, dependable trust without navy's fuller institutional or uniform-coded weight." },
+    ],
+  },
+  "slate-blue": {
+    title: "What Slate Blue Means in Color Psychology",
+    description: "Why slate blue reads as muted sophistication rather than trust, carrying a direct stone reference.",
+    answer: "Slate blue borrows its muted, gray-leaning quality from slate rock, which pulls it away from blue's usual trust-and-calm signal toward something more sophisticated and understated - closer to natural stone than to sky or water.",
+    sections: [
+      { title: "A stone reference, not a sky one", body: "Named after slate rock, this color's muted gray undertone gives it a grounded, material quality distinct from the open, natural references most blues carry." },
+      { title: "Understated sophistication", body: "This muted quality fits sophisticated, minimalist, and design-forward branding wanting blue's calm with more restraint and less overt cheerfulness." },
+    ],
+    faq: [
+      { question: "Is slate blue as trustworthy-feeling as standard blue?", answer: "It carries some of that calm, but its muted, stone-like quality shifts the emphasis toward sophistication and restraint rather than straightforward trust." },
+      { question: "What brands suit slate blue?", answer: "Sophisticated, minimalist, and design-forward brands benefit from slate blue's muted, understated calm." },
+    ],
+  },
+  "medium-slate-blue": {
+    title: "What Medium Slate Blue Means in Color Psychology",
+    description: "Why medium slate blue reads as creative-tech and modern rather than purely calm, blending slate's restraint with purple's imagination.",
+    answer: "Medium slate blue adds more brightness and a purple lean to slate blue's muted stoniness, landing closer to a modern, creative-tech register - imaginative like purple, structured like blue, without either extreme's full weight.",
+    sections: [
+      { title: "A blend of restraint and imagination", body: "Its purple lean brings in some of purple's creative signal, while its blue base keeps a structured calm - a genuine blend rather than a lean toward either parent hue." },
+      { title: "A modern, creative-tech register", body: "This balance makes medium slate blue a common choice for modern software, creative tools, and tech brands wanting to feel both imaginative and structured at once." },
+    ],
+    faq: [
+      { question: "Is medium slate blue closer to blue or purple?", answer: "It's a genuine blend - purple's creativity and blue's structure combine rather than one dominating, which is what gives it a modern, creative-tech quality." },
+      { question: "What brands suit medium slate blue?", answer: "Modern software, creative tools, and tech brands benefit from its blend of imaginative and structured qualities." },
+    ],
+  },
+  "medium-turquoise": {
+    title: "What Medium Turquoise Means in Color Psychology",
+    description: "Why medium turquoise reads as balanced tropical calm rather than either teal's corporate register or bright turquoise's full vacation intensity.",
+    answer: "Medium turquoise sits between teal's muted professionalism and turquoise's full tropical brightness - calm enough to feel composed, bright enough to still evoke clear water and vacation ease, a workable middle ground between the two registers.",
+    sections: [
+      { title: "A middle point between teal and turquoise", body: "It keeps enough brightness to feel tropical and inviting without turquoise's maximum intensity, and enough calm to avoid teal's more corporate, muted register." },
+      { title: "Balanced rather than extreme", body: "This middle-ground quality makes medium turquoise a flexible choice for wellness and lifestyle brands wanting tropical calm without committing fully to either teal's professionalism or turquoise's vacation energy." },
+    ],
+    faq: [
+      { question: "Is medium turquoise closer to teal or turquoise?", answer: "It sits between them - calmer than full turquoise, brighter and more tropical than teal." },
+      { question: "What brands suit medium turquoise?", answer: "Wellness and lifestyle brands wanting a balanced, flexible middle ground between teal's professionalism and turquoise's vacation energy." },
+    ],
+  },
+  "dark-turquoise": {
+    title: "What Dark Turquoise Means in Color Psychology",
+    description: "Why dark turquoise reads as deep, serious tropical water rather than bright vacation energy, deepening turquoise's register.",
+    answer: "Dark turquoise keeps turquoise's tropical water reference but deepens it into something more serious and composed - closer to deep lagoon water than to a bright shallow pool, trading some vacation brightness for depth and gravity.",
+    sections: [
+      { title: "Deeper water, more gravity", body: "The added depth moves dark turquoise away from turquoise's bright, shallow-water associations toward something more serious and composed - still tropical, but weightier." },
+      { title: "Composed rather than purely playful", body: "This depth suits premium travel, resort, and composed lifestyle branding wanting tropical calm with more seriousness than bright turquoise's full vacation energy." },
+    ],
+    faq: [
+      { question: "Is dark turquoise as playful as turquoise?", answer: "Less so - its added depth gives it a more serious, composed quality than turquoise's brighter, more playful vacation energy." },
+      { question: "What brands suit dark turquoise?", answer: "Premium travel and composed lifestyle brands benefit from its deeper, more serious tropical-water associations." },
+    ],
+  },
+  "dark-cyan": {
+    title: "What Dark Cyan Means in Color Psychology",
+    description: "Why dark cyan reads as muted and composed rather than digital, losing cyan's synthetic brightness for depth.",
+    answer: "Dark cyan pulls back cyan's maximum saturation and brightness, losing most of its screen-native, synthetic energy and gaining a more composed, muted quality closer to deep water than to a digital interface.",
+    sections: [
+      { title: "Less digital, more composed", body: "The added depth removes most of cyan's synthetic, screen-native brightness, leaving a calmer, more natural-feeling blue-green instead." },
+      { title: "A quieter technical accent", body: "This composed quality makes dark cyan useful for tech and data products wanting a cooler accent without cyan's full high-energy, digital intensity." },
+    ],
+    faq: [
+      { question: "Does dark cyan still feel digital like cyan?", answer: "Much less so - the added depth removes most of cyan's synthetic brightness, leaving a calmer, more composed tone instead." },
+      { question: "What suits dark cyan?", answer: "Tech and data products wanting a cooler, quieter accent without cyan's full high-energy digital intensity." },
+    ],
+  },
+  "pale-turquoise": {
+    title: "What Pale Turquoise Means in Color Psychology",
+    description: "Why pale turquoise reads as soft and delicate rather than vibrant, softening turquoise into a gentle pastel.",
+    answer: "Pale turquoise strips out most of turquoise's saturation, keeping the cool, watery undertone while losing nearly all of its vacation-bright intensity - it reads as soft and delicate, closer to a gentle pastel than to tropical energy.",
+    sections: [
+      { title: "Watery undertone, pastel intensity", body: "The low saturation keeps pale turquoise's cool, water-adjacent quality while removing turquoise's brighter, more energetic vacation signal - a soft pastel rather than a vivid statement." },
+      { title: "Delicate rather than tropical", body: "This softness fits gentle nursery, delicate beauty, and quiet coastal branding wanting a cool pastel accent without turquoise's fuller vacation intensity." },
+    ],
+    faq: [
+      { question: "Is pale turquoise as vibrant as turquoise?", answer: "No - its low saturation strips out most of turquoise's brightness, leaving a soft, delicate pastel instead." },
+      { question: "What suits pale turquoise?", answer: "Gentle nursery, delicate beauty, and quiet coastal branding benefit from its soft, cool pastel quality." },
+    ],
+  },
+  "powder-blue": {
+    title: "What Powder Blue Means in Color Psychology",
+    description: "Why powder blue reads as soft and nostalgic rather than clinical, carrying a cosmetic and vintage-nursery reference.",
+    answer: "Powder blue takes its name from cosmetic face powder, giving it a soft, slightly vintage, delicate quality distinct from a clinical pale blue - closer to a gentle heirloom nursery palette than to modern healthcare softness.",
+    sections: [
+      { title: "A cosmetic and vintage reference", body: "Its powder-compact origin gives this pale blue a soft, slightly nostalgic quality tied to vintage beauty and classic nursery palettes rather than modern clinical softness." },
+      { title: "Gentle nostalgia over modern softness", body: "This vintage-adjacent gentleness fits heritage nursery, classic beauty, and nostalgic lifestyle branding wanting softness with a touch of old-fashioned charm." },
+    ],
+    faq: [
+      { question: "Is powder blue the same as light blue?", answer: "Related, but powder blue's cosmetic-and-vintage reference gives it a softer, more nostalgic quality than a plain, modern light blue." },
+      { question: "What brands suit powder blue?", answer: "Heritage nursery, classic beauty, and nostalgic lifestyle brands benefit from its soft, vintage-adjacent charm." },
+    ],
+  },
+  thistle: {
+    title: "What Thistle Means in Color Psychology",
+    description: "Why thistle reads as soft and muted rather than floral or bold, carrying a dusty, understated purple-gray quality.",
+    answer: "Thistle takes its name from the plant's pale, dusty purple bloom, giving it a soft, muted quality far removed from purple's boldness or orchid's exotic elegance - closer to a faded wildflower than to a deliberate creative or luxury statement.",
+    sections: [
+      { title: "A dusty wildflower reference", body: "Named after the thistle plant's muted, grayish-purple bloom, this color reads as soft and understated rather than vivid - a faded natural tone rather than a bold design choice." },
+      { title: "Quiet rather than expressive", body: "This muted quality fits gentle, understated, editorial branding wanting a soft purple-gray accent without purple's fuller creative or luxury signal." },
+    ],
+    faq: [
+      { question: "Is thistle a bold or subtle color?", answer: "Subtle - its dusty, muted quality reads as soft and understated rather than bold or expressive like standard purple." },
+      { question: "What suits thistle?", answer: "Gentle, understated, editorial branding wanting a soft purple-gray accent rather than a bold statement color." },
+    ],
+  },
+  "dark-orchid": {
+    title: "What Dark Orchid Means in Color Psychology",
+    description: "Why dark orchid reads as mysterious and intense rather than delicate, deepening orchid's exotic elegance.",
+    answer: "Dark orchid pushes orchid's flower-rooted elegance into deeper, more saturated territory - trading some of orchid's delicate refinement for a richer, more mysterious intensity, closer to dramatic evening florals than to a soft daytime bloom.",
+    sections: [
+      { title: "Deeper than a delicate bloom", body: "The added saturation and depth pull dark orchid away from orchid's lighter, more delicate elegance and toward something richer and more dramatic." },
+      { title: "Mysterious rather than gentle", body: "This intensity fits evening, dramatic, and boldly creative branding wanting orchid's exotic quality with more weight and mystery than the paler original." },
+    ],
+    faq: [
+      { question: "How is dark orchid different from orchid?", answer: "It's deeper and more saturated, reading as mysterious and dramatic rather than orchid's lighter, more delicate elegance." },
+      { question: "What brands suit dark orchid?", answer: "Evening, dramatic, and boldly creative brands benefit from dark orchid's rich, mysterious intensity." },
+    ],
+  },
+  "dark-slate-blue": {
+    title: "What Dark Slate Blue Means in Color Psychology",
+    description: "Why dark slate blue reads as moody and sophisticated rather than calm, deepening slate blue toward introspective depth.",
+    answer: "Dark slate blue pushes slate blue's muted stoniness deeper and closer to purple, landing as moody and introspective rather than simply calm - a sophisticated, slightly brooding tone that trades openness for depth.",
+    sections: [
+      { title: "Deeper and more purple-leaning", body: "The added depth and purple undertone move dark slate blue away from slate blue's straightforward muted calm and toward something more introspective and moody." },
+      { title: "Sophisticated brooding, not openness", body: "This depth fits sophisticated, moody, design-forward branding wanting a dark, contemplative blue-purple rather than an open or straightforwardly calm one." },
+    ],
+    faq: [
+      { question: "Is dark slate blue calming like slate blue?", answer: "Less straightforwardly - its added depth and purple lean give it a moodier, more introspective quality than slate blue's simpler muted calm." },
+      { question: "What suits dark slate blue?", answer: "Sophisticated, moody, design-forward brands wanting a dark, contemplative blue-purple tone." },
+    ],
+  },
+  "blue-violet": {
+    title: "What Blue Violet Means in Color Psychology",
+    description: "Why blue-violet reads as imaginative confidence rather than either blue's trust or violet's playfulness alone.",
+    answer: "Blue-violet sits close to the boundary between blue and purple, carrying blue's structured calm alongside violet's brighter, more playful creativity - a genuinely energetic, imaginative blend rather than a lean toward either parent hue.",
+    sections: [
+      { title: "A confident blend, not a lean", body: "Blue-violet keeps enough blue to feel structured and enough violet brightness to feel imaginative, landing as confidently creative rather than purely calm or purely playful." },
+      { title: "Imaginative and assured together", body: "This combination suits creative-tech, design, and imaginative consumer branding wanting energy and structure in the same color." },
+    ],
+    faq: [
+      { question: "Is blue-violet closer to blue or violet?", answer: "It's a genuine blend of both - blue's structure and violet's brighter creativity combine rather than one dominating." },
+      { question: "What brands suit blue-violet?", answer: "Creative-tech, design, and imaginative consumer brands benefit from its confident, structured-yet-playful quality." },
+    ],
+  },
+  "dark-violet": {
+    title: "What Dark Violet Means in Color Psychology",
+    description: "Why dark violet reads as intense creativity rather than playful lightness, deepening violet toward dramatic saturation.",
+    answer: "Dark violet pushes violet's bright, springlike playfulness into fully saturated, dramatic territory - it keeps the imaginative signal but trades lightness for intensity, closer to deep purple's creative weight than to violet's floral cheer.",
+    sections: [
+      { title: "Full saturation, full intensity", body: "The jump in saturation moves dark violet away from violet's light, floral playfulness and toward something bold and dramatic - imaginative, but with real visual weight behind it." },
+      { title: "Intense creativity, not light whimsy", body: "This intensity fits bold creative, entertainment, and dramatic branding wanting purple's imagination expressed at full volume rather than violet's lighter touch." },
+    ],
+    faq: [
+      { question: "Is dark violet the same as purple?", answer: "Very close - both signal creativity and imagination, though dark violet often reads slightly more vivid and saturated than a classic deep purple." },
+      { question: "What brands suit dark violet?", answer: "Bold creative, entertainment, and dramatic brands benefit from dark violet's intense, fully saturated imaginative signal." },
+    ],
+  },
+  "dark-magenta": {
+    title: "What Dark Magenta Means in Color Psychology",
+    description: "Why dark magenta reads as bold sophistication rather than magenta's full digital brightness, deepening its confident energy.",
+    answer: "Dark magenta keeps magenta's bold, deliberate confidence but trades brightness for depth - it reads as sophisticated and intense rather than loudly synthetic, closer to a rich wine-purple statement than to a bright, attention-grabbing digital accent.",
+    sections: [
+      { title: "Depth over brightness", body: "The added depth removes some of magenta's synthetic, screen-native brightness while keeping its bold, confident saturation - a more sophisticated register." },
+      { title: "Sophisticated boldness", body: "This balance fits premium creative and beauty branding wanting magenta's confidence with more depth and less of its brighter, digital-feeling edge." },
+    ],
+    faq: [
+      { question: "Is dark magenta as bold as magenta?", answer: "Yes, in saturation and confidence, but it reads as more sophisticated and less digitally synthetic than bright magenta." },
+      { question: "What suits dark magenta?", answer: "Premium creative and beauty brands wanting magenta's bold confidence with a more sophisticated, less digital edge." },
+    ],
+  },
+  "deep-pink": {
+    title: "What Deep Pink Means in Color Psychology",
+    description: "Why deep pink reads as confident and vivid rather than delicate, carrying full saturation without magenta's synthetic edge.",
+    answer: "Deep pink stays fully saturated like hot pink but leans a touch warmer and less synthetic than magenta, reading as vivid and confident while staying recognizably 'pink' rather than crossing into magenta's more digital-feeling territory.",
+    sections: [
+      { title: "Vivid but recognizably pink", body: "Deep pink keeps enough warmth to stay clearly within the pink family, unlike magenta's cooler, more synthetic-feeling saturation - vivid and bold without losing pink's core warmth." },
+      { title: "Confidence without losing warmth", body: "This combination suits beauty, fashion, and confident consumer branding wanting pink's warmth expressed with real saturation and energy." },
+    ],
+    faq: [
+      { question: "Is deep pink the same as hot pink?", answer: "Very close - both are fully saturated and confident, with deep pink sometimes reading slightly warmer and less neon than hot pink." },
+      { question: "What brands suit deep pink?", answer: "Beauty, fashion, and confident consumer brands benefit from deep pink's vivid, warm boldness." },
+    ],
+  },
+  "medium-violet-red": {
+    title: "What Medium Violet Red Means in Color Psychology",
+    description: "Why medium violet red reads as fashion-forward intensity rather than pure pink or pure purple, blending both at full saturation.",
+    answer: "Medium violet red combines pink's warmth with purple's depth at high saturation, landing as a bold, fashion-forward statement color - more complex and intense than a straightforward pink, with enough purple undertone to feel deliberate rather than simply bright.",
+    sections: [
+      { title: "A genuine pink-purple blend at full intensity", body: "Rather than leaning fully pink or fully purple, medium violet red keeps both in tension at high saturation, giving it a complex, fashion-forward quality distinct from either parent hue alone." },
+      { title: "Deliberate rather than default", body: "This complexity makes medium violet red a fit for fashion and beauty branding wanting a bold, considered accent rather than a straightforward pink or purple." },
+    ],
+    faq: [
+      { question: "Is medium violet red closer to pink or purple?", answer: "It's a genuine blend at high saturation, keeping both pink's warmth and purple's depth in tension rather than leaning toward either." },
+      { question: "What brands suit medium violet red?", answer: "Fashion and beauty brands wanting a bold, considered pink-purple accent benefit from its complex intensity." },
+    ],
+  },
+  "pale-violet-red": {
+    title: "What Pale Violet Red Means in Color Psychology",
+    description: "Why pale violet red reads as dusty romance rather than bold fashion, muting medium violet red toward vintage softness.",
+    answer: "Pale violet red mutes medium violet red's bold pink-purple blend into something dustier and more romantic - closer to faded rose petals than to a fashion statement, carrying the same complexity at a much gentler volume.",
+    sections: [
+      { title: "Same blend, lower volume", body: "It keeps the pink-purple complexity of its more saturated relative but at low intensity, which shifts the read from bold fashion statement to dusty, romantic softness." },
+      { title: "Vintage romance over boldness", body: "This gentler register fits vintage-inspired, romantic, and softly nostalgic branding wanting complexity without medium violet red's fuller intensity." },
+    ],
+    faq: [
+      { question: "Is pale violet red the same as dusty rose?", answer: "Very close - both are muted, dusty pink-purple blends that read as vintage and romantic rather than bold or fashion-forward." },
+      { question: "What suits pale violet red?", answer: "Vintage-inspired, romantic, and softly nostalgic brands benefit from its gentle, dusty complexity." },
+    ],
+  },
+  "medium-orchid": {
+    title: "What Medium Orchid Means in Color Psychology",
+    description: "Why medium orchid reads as balanced elegance rather than either orchid's full exotic intensity or dark orchid's drama.",
+    answer: "Medium orchid sits between orchid's lighter refinement and dark orchid's deeper drama, offering the flower's exotic elegance at a balanced, versatile intensity - refined without being either too soft or too heavy.",
+    sections: [
+      { title: "A balanced flower reference", body: "It keeps orchid's exotic, refined quality without leaning fully toward paleness or full saturation - a versatile middle point." },
+      { title: "Elegant and adaptable", body: "This balance makes medium orchid a flexible choice for beauty and boutique branding wanting refined elegance without committing to a lighter or deeper extreme." },
+    ],
+    faq: [
+      { question: "How is medium orchid different from orchid or dark orchid?", answer: "It sits between them - more saturated and confident than orchid, lighter and less dramatic than dark orchid." },
+      { question: "What brands suit medium orchid?", answer: "Beauty and boutique brands wanting refined, versatile elegance benefit from medium orchid's balanced intensity." },
+    ],
+  },
+  "rebecca-purple": {
+    title: "What Rebecca Purple Means in Color Psychology",
+    description: "Why Rebecca purple carries a unique personal-tribute story rather than a traditional cultural or material association.",
+    answer: "Rebecca purple is unusual among named colors: it was added to the CSS color standard in 2014 as a tribute to Eric Meyer's daughter Rebecca after her death, making it the only web color with a specific, documented personal story rather than a natural, material, or cultural reference.",
+    sections: [
+      { title: "A genuinely unique origin", body: "Unlike every other named color, which draws meaning from nature, material, or culture, Rebecca purple was added specifically as a personal memorial - a real story behind the name rather than an inherited association." },
+      { title: "Meaning through story, not convention", body: "Because its significance comes from a specific tribute rather than a broad cultural signal, Rebecca purple works best in contexts that can carry or reference that story, rather than as a default 'purple' choice." },
+    ],
+    faq: [
+      { question: "Why is Rebecca purple different from other named colors?", answer: "It's the only standard web color named as a personal tribute (to Eric Meyer's daughter Rebecca) rather than drawn from nature, material, or general culture." },
+      { question: "Should Rebecca purple be used just like any other purple?", answer: "It can be used as a standard purple visually, but its documented personal history gives it a meaningful story worth knowing if the color choice itself matters to a project." },
+    ],
+  },
+  "light-salmon": {
+    title: "What Light Salmon Means in Color Psychology",
+    description: "Why light salmon reads as soft and gentle rather than appetizing, paling salmon toward delicate warmth.",
+    answer: "Light salmon pulls back salmon's moderate warmth even further, landing as gentle and soft rather than appetizing or vibrant - closer to a pale sunrise or a soft skin tone than to the fish reference that anchors its more saturated relative.",
+    sections: [
+      { title: "Gentler than its food reference", body: "At this lightness, light salmon loses most of the direct appetite association that grounds salmon, reading instead as a soft, gentle warm pastel." },
+      { title: "Soft warmth for gentle contexts", body: "This gentleness fits nursery, soft beauty, and delicate lifestyle branding wanting warm pastel softness without a strong food or vibrancy signal." },
+    ],
+    faq: [
+      { question: "Does light salmon still feel food-related like salmon?", answer: "Barely - its paleness softens the association into a gentle warm pastel rather than an appetizing food reference." },
+      { question: "What suits light salmon?", answer: "Nursery, soft beauty, and delicate lifestyle brands benefit from its gentle warm pastel quality." },
+    ],
+  },
+  moccasin: {
+    title: "What Moccasin Means in Color Psychology",
+    description: "Why moccasin reads as soft and handcrafted rather than simply tan, carrying a direct leather-footwear reference.",
+    answer: "Moccasin borrows its warm, soft tan from traditional leather footwear, giving it a handcrafted, comfortable quality distinct from a flat neutral - closer to worn, supple leather than to a manufactured beige.",
+    sections: [
+      { title: "A footwear-craft reference", body: "Named after soft leather moccasin shoes, this color carries a handcrafted, comfortable quality that a generic tan or beige, without that specific reference, doesn't have." },
+      { title: "Comfortable and crafted", body: "This association fits craft leather goods, comfortable footwear, and artisanal branding wanting a warm neutral with real material texture." },
+    ],
+    faq: [
+      { question: "Is moccasin just a shade of tan?", answer: "Related, but its leather-footwear reference gives it a handcrafted, comfortable quality plain tan doesn't carry." },
+      { question: "What brands suit moccasin?", answer: "Craft leather goods, comfortable footwear, and artisanal brands benefit from moccasin's warm, handcrafted associations." },
+    ],
+  },
+  "pale-goldenrod": {
+    title: "What Pale Goldenrod Means in Color Psychology",
+    description: "Why pale goldenrod reads as gentle and vintage rather than wild, softening goldenrod's wildflower energy into a quiet pastel.",
+    answer: "Pale goldenrod mutes goldenrod's wildflower brightness into a soft, gentle pastel - it keeps a hint of the seasonal, natural reference but trades meadow energy for quiet, vintage-leaning softness.",
+    sections: [
+      { title: "A softened wildflower", body: "The lower saturation pulls pale goldenrod away from goldenrod's fuller autumnal energy and toward a gentler, more restrained pastel tone." },
+      { title: "Quiet vintage warmth", body: "This softness fits gentle, vintage-inspired, and quietly nostalgic branding wanting a warm pastel with a faint natural reference." },
+    ],
+    faq: [
+      { question: "Is pale goldenrod as vivid as goldenrod?", answer: "No - it's much softer and more muted, reading as a gentle pastel rather than goldenrod's fuller wildflower energy." },
+      { question: "What suits pale goldenrod?", answer: "Gentle, vintage-inspired, and quietly nostalgic brands benefit from its soft, warm pastel quality." },
+    ],
+  },
+  "papaya-whip": {
+    title: "What Papaya Whip Means in Color Psychology",
+    description: "Why papaya whip reads as tropical and creamy rather than simply pale, carrying a direct fruit-dessert reference.",
+    answer: "Papaya whip borrows its gentle warmth from tropical fruit and dessert imagery, giving it a soft, creamy, slightly exotic quality distinct from a flat pale neutral - closer to a fruit smoothie than to plain off-white.",
+    sections: [
+      { title: "A tropical fruit-and-dessert reference", body: "Its name ties papaya whip to tropical fruit and creamy dessert imagery, giving it a soft, slightly exotic warmth that a flat, unnamed pale tone doesn't carry." },
+      { title: "Soft and slightly exotic", body: "This tropical, dessert-adjacent quality fits food, beauty, and gentle lifestyle branding wanting a creamy pastel with a touch of exotic warmth." },
+    ],
+    faq: [
+      { question: "Is papaya whip just a pale cream color?", answer: "Related, but its tropical fruit-and-dessert reference gives it a softer, slightly exotic warmth than plain cream or off-white." },
+      { question: "What brands suit papaya whip?", answer: "Food, beauty, and gentle lifestyle brands benefit from papaya whip's soft, tropical-dessert warmth." },
+    ],
+  },
+  peru: {
+    title: "What Peru Means in Color Psychology",
+    description: "Why peru reads as earthy and artisanal rather than simply tan, carrying a geographic, terracotta-adjacent reference.",
+    answer: "Peru takes its name from the country's warm, earthy terracotta tones, giving it a well-traveled, artisanal quality distinct from a generic tan - closer to handmade pottery and woven textiles than to a flat neutral backdrop.",
+    sections: [
+      { title: "A geographic earth-tone reference", body: "Named after Peru's warm terracotta landscape and craft traditions, this color carries an artisanal, well-traveled quality that a generic tan doesn't have on its own." },
+      { title: "Artisanal warmth", body: "This geographic and craft association fits artisan goods, textile, and travel-inspired branding wanting an earthy, handmade-feeling warm neutral." },
+    ],
+    faq: [
+      { question: "Is peru just a shade of tan?", answer: "Related, but its geographic, terracotta-craft reference gives it a more artisanal, well-traveled quality than a flat, generic tan." },
+      { question: "What brands suit peru?", answer: "Artisan goods, textile, and travel-inspired brands benefit from peru's earthy, handmade-feeling warmth." },
+    ],
+  },
+  "blanched-almond": {
+    title: "What Blanched Almond Means in Color Psychology",
+    description: "Why blanched almond reads as toasted and gentle rather than simply pale, carrying a direct nut-and-food reference.",
+    answer: "Blanched almond borrows its pale warmth from lightly toasted almonds, giving it a gentle, food-adjacent quality distinct from a flat off-white - closer to a bakery shelf than to plain cream or ivory.",
+    sections: [
+      { title: "A toasted-nut reference", body: "Named after blanched, lightly toasted almonds, this color carries a warm, food-adjacent gentleness that a plain off-white or ivory, without that reference, doesn't have." },
+      { title: "Gentle bakery warmth", body: "This food association fits bakery, natural food, and warm interior branding wanting a soft, toasted-toned neutral rather than a flat, sterile pale color." },
+    ],
+    faq: [
+      { question: "Is blanched almond just an off-white?", answer: "Related, but its toasted-almond reference gives it a warmer, food-adjacent gentleness than a flat, generic off-white." },
+      { question: "What brands suit blanched almond?", answer: "Bakery, natural food, and warm interior brands benefit from blanched almond's soft, toasted warmth." },
+    ],
+  },
+  beige: {
+    title: "What Beige Means in Color Psychology",
+    description: "Why beige reads as safe and unremarkable rather than warm, functioning as design's most neutral, risk-free default.",
+    answer: "Beige is warm enough to avoid gray's coldness but too low-contrast to make any real statement, which is exactly why it became shorthand for 'safe' and even 'boring' in design criticism - it's the color chosen specifically to avoid drawing attention or provoking a reaction either way.",
+    sections: [
+      { title: "Designed to avoid a reaction", body: "Beige's low saturation and warm-neutral position mean it rarely provokes strong feeling in either direction - which is precisely why it's both a safe default and, in design criticism, shorthand for uninspired." },
+      { title: "Useful as a backdrop, risky as an identity", body: "As a supporting neutral, beige works well - unobtrusive and easy to build around. As a primary brand color, it risks reading as forgettable rather than deliberate." },
+    ],
+    faq: [
+      { question: "Why is beige often criticized as a 'boring' color?", answer: "Its low saturation and warm-neutral balance are specifically designed to avoid provoking a reaction, which makes it safe as a backdrop but forgettable as a primary identity color." },
+      { question: "Is beige ever a good primary brand color?", answer: "Rarely on its own - it works best as a supporting neutral rather than a color meant to carry a brand's identity or provoke recognition." },
+    ],
+  },
+  ivory: {
+    title: "What Ivory Means in Color Psychology",
+    description: "Why ivory reads as refined and warm rather than sterile, carrying a luxury-material reference distinct from plain white.",
+    answer: "Ivory borrows its warmth and refinement from elephant tusk and piano keys - genuinely luxurious historical materials - which gives it a softer, more premium quality than clinical white. It signals considered elegance rather than plain cleanliness.",
+    sections: [
+      { title: "A luxury-material reference", body: "Named after a historically prized material used in fine objects and instruments, ivory carries a refined warmth that plain white, without that reference, doesn't have." },
+      { title: "Warm elegance over sterile cleanliness", body: "This refined warmth makes ivory a common choice for premium stationery, bridal, and luxury branding wanting white's clarity with more softness and considered elegance." },
+    ],
+    faq: [
+      { question: "How is ivory different from plain white?", answer: "Its warmer undertone and luxury-material reference give it a refined, elegant quality, where plain white reads as more clinical and neutral." },
+      { question: "What brands suit ivory?", answer: "Premium stationery, bridal, and luxury brands benefit from ivory's warm, refined elegance." },
+    ],
+  },
+  snow: {
+    title: "What Snow Means in Color Psychology",
+    description: "Why snow reads as pure and crisp rather than warm, carrying a literal cold-weather reference distinct from ivory's warmth.",
+    answer: "Snow takes its association directly from fresh snowfall - clean, crisp, and cold rather than warm - which gives it a purity signal closer to winter freshness than to ivory's soft luxury or beige's understated neutrality.",
+    sections: [
+      { title: "A cold-weather reference", body: "Unlike ivory's warm material reference, snow draws directly from fresh, cold snowfall, giving it a crisp, clean purity rather than a soft, warm elegance." },
+      { title: "Crisp purity over soft warmth", body: "This cold-clean quality fits minimalist, winter, and crisp modern branding wanting purity with an edge of freshness rather than ivory's warmer refinement." },
+    ],
+    faq: [
+      { question: "Is snow the same as ivory or plain white?", answer: "No - snow's cold-weather reference gives it a crisp, clean purity, where ivory reads warmer and more luxurious, and plain white reads more neutral." },
+      { question: "What brands suit snow?", answer: "Minimalist, winter, and crisp modern brands benefit from snow's clean, cold-fresh purity." },
+    ],
+  },
+  honeydew: {
+    title: "What Honeydew Means in Color Psychology",
+    description: "Why honeydew reads as fresh and fruit-sweet rather than clinical, carrying a direct melon reference.",
+    answer: "Honeydew borrows its pale green-white from the melon, giving it a fresh, slightly sweet quality distinct from a clinical pale green or mint - closer to ripe fruit than to a medical or sterile context.",
+    sections: [
+      { title: "A fruit reference, not a clinical one", body: "Named after honeydew melon, this pale green carries a fresh, food-adjacent sweetness that mint or clinical pale green, without that fruit reference, don't have." },
+      { title: "Fresh sweetness for food and wellness branding", body: "This fruit association fits food, natural beauty, and fresh wellness branding wanting a pale green with genuine sweetness rather than clinical coolness." },
+    ],
+    faq: [
+      { question: "Is honeydew the same as mint or pale green?", answer: "Related, but its melon reference gives it a fresh, sweet food quality that mint's cooler, more clinical association doesn't carry." },
+      { question: "What brands suit honeydew?", answer: "Food, natural beauty, and fresh wellness brands benefit from honeydew's sweet, fruit-rooted freshness." },
+    ],
+  },
+  "mint-cream": {
+    title: "What Mint Cream Means in Color Psychology",
+    description: "Why mint cream reads as cool dessert freshness rather than clinical coolness, blending mint with a soft, creamy warmth.",
+    answer: "Mint cream combines mint's cool freshness with a soft, dessert-like creaminess, landing as gently refreshing rather than clinical - closer to a light dessert or spa treatment than to a medical or purely cool tone.",
+    sections: [
+      { title: "A dessert reference softens the coolness", body: "The 'cream' in mint cream adds a soft, food-adjacent warmth to mint's coolness, pulling it away from a purely clinical read and toward gentle refreshment." },
+      { title: "Gently refreshing, not sterile", body: "This balance fits spa, gentle beauty, and light dessert-adjacent branding wanting mint's freshness without a cold, clinical edge." },
+    ],
+    faq: [
+      { question: "Is mint cream as clinical-feeling as plain mint?", answer: "Less so - the creamy softness pulls it toward gentle refreshment rather than a purely cool, clinical read." },
+      { question: "What suits mint cream?", answer: "Spa, gentle beauty, and light dessert-adjacent brands benefit from mint cream's soft, refreshing quality." },
+    ],
+  },
+  "alice-blue": {
+    title: "What Alice Blue Means in Color Psychology",
+    description: "Why Alice blue carries a specific historical-personal reference rather than a generic sky or water association.",
+    answer: "Alice blue is named after Alice Roosevelt Longworth, whose favored pale blue dresses made the color fashionable in the early 1900s - a specific historical-personal origin that gives it a genteel, vintage elegance distinct from a generic pale sky blue.",
+    sections: [
+      { title: "A named-person reference", body: "Unlike most pale blues, which draw meaning from sky or water, Alice blue's origin traces to a specific historical figure's fashion influence, giving it a genteel, storied quality." },
+      { title: "Genteel vintage elegance", body: "This historical fashion association fits heritage, vintage-inspired, and genteel branding wanting a pale blue with real narrative depth behind it." },
+    ],
+    faq: [
+      { question: "Who is Alice blue named after?", answer: "Alice Roosevelt Longworth, whose fondness for pale blue dresses made the shade fashionable in the early 1900s." },
+      { question: "What brands suit Alice blue?", answer: "Heritage, vintage-inspired, and genteel brands benefit from Alice blue's storied, historically rooted elegance." },
+    ],
+  },
+  cornsilk: {
+    title: "What Cornsilk Means in Color Psychology",
+    description: "Why cornsilk reads as gentle and agricultural rather than simply pale yellow, carrying a direct corn-plant reference.",
+    answer: "Cornsilk borrows its pale warmth from the silky threads found on corn, giving it a gentle, agricultural quality distinct from a flat pale yellow - closer to a harvest field detail than to a generic pastel.",
+    sections: [
+      { title: "A plant-detail reference", body: "Named after the fine silk strands on corn, this pale yellow carries a specific, delicate agricultural association that a flat, unnamed pale yellow doesn't have." },
+      { title: "Gentle and natural", body: "This detail-rich plant reference fits natural food, agricultural, and gently rustic branding wanting a soft pale yellow with real texture behind it." },
+    ],
+    faq: [
+      { question: "Is cornsilk just pale yellow?", answer: "Related, but its corn-plant reference gives it a gentle, specifically agricultural quality that a flat, unnamed pale yellow doesn't carry." },
+      { question: "What brands suit cornsilk?", answer: "Natural food, agricultural, and gently rustic brands benefit from cornsilk's soft, plant-rooted warmth." },
+    ],
+  },
+  "lemon-chiffon": {
+    title: "What Lemon Chiffon Means in Color Psychology",
+    description: "Why lemon chiffon reads as sweet and airy rather than tart, carrying a direct dessert reference distinct from citrus itself.",
+    answer: "Lemon chiffon borrows its pale warmth from a light, airy dessert rather than from citrus fruit directly, giving it a sweet, delicate quality distinct from a sharper, more acidic lemon-yellow - closer to baked goods than to fruit.",
+    sections: [
+      { title: "A dessert reference, not a fruit one", body: "Named after a light, airy dessert rather than the lemon fruit itself, this pale yellow carries a sweet, delicate quality rather than citrus's sharper, more acidic association." },
+      { title: "Sweet and airy", body: "This dessert-adjacent softness fits bakery, gentle beauty, and light celebratory branding wanting pale yellow warmth without a sharp citrus edge." },
+    ],
+    faq: [
+      { question: "Does lemon chiffon feel tart like citrus yellow?", answer: "No - its dessert reference gives it a sweet, airy quality rather than a sharp, acidic citrus association." },
+      { question: "What suits lemon chiffon?", answer: "Bakery, gentle beauty, and light celebratory brands benefit from lemon chiffon's sweet, soft warmth." },
+    ],
+  },
+  "light-goldenrod-yellow": {
+    title: "What Light Goldenrod Yellow Means in Color Psychology",
+    description: "Why light goldenrod yellow reads as a soft, faded wildflower tone rather than bright or metallic, gently muting goldenrod.",
+    answer: "Light goldenrod yellow pales goldenrod's wildflower warmth into something softer and more faded - it keeps a whisper of the seasonal, natural reference while trading meadow brightness for a gentle, muted pastel quality.",
+    sections: [
+      { title: "A faded wildflower", body: "The added lightness softens goldenrod's fuller autumnal energy into a gentler, more muted pastel, while still carrying a faint natural, seasonal reference." },
+      { title: "Gentle and understated", body: "This softness fits quiet, vintage-inspired, and gently natural branding wanting a pale warm yellow without a strong or vivid statement." },
+    ],
+    faq: [
+      { question: "Is light goldenrod yellow the same as goldenrod?", answer: "Related but much softer - it fades goldenrod's fuller wildflower energy into a gentle, muted pastel." },
+      { question: "What suits light goldenrod yellow?", answer: "Quiet, vintage-inspired, and gently natural brands benefit from its soft, understated warmth." },
+    ],
+  },
+  seashell: {
+    title: "What Seashell Means in Color Psychology",
+    description: "Why seashell reads as delicate coastal warmth rather than plain cream, carrying a direct beach reference.",
+    answer: "Seashell borrows its pale warmth from the inside of a shell, giving it a delicate, coastal quality distinct from a flat cream or off-white - closer to a beach find than to a manufactured neutral.",
+    sections: [
+      { title: "A beach-object reference", body: "Named after the pale interior of a seashell, this color carries a delicate, natural coastal quality that a flat cream or off-white doesn't have on its own." },
+      { title: "Delicate coastal warmth", body: "This beach-object association fits coastal, delicate beauty, and gentle lifestyle branding wanting a warm neutral with a genuine natural reference." },
+    ],
+    faq: [
+      { question: "Is seashell just a cream or off-white color?", answer: "Related, but its beach-shell reference gives it a delicate, coastal quality that a flat cream or off-white doesn't carry." },
+      { question: "What brands suit seashell?", answer: "Coastal, delicate beauty, and gentle lifestyle brands benefit from seashell's soft, natural warmth." },
+    ],
+  },
+  "old-lace": {
+    title: "What Old Lace Means in Color Psychology",
+    description: "Why old lace reads as heirloom and vintage rather than plain cream, carrying a direct antique-textile reference.",
+    answer: "Old lace borrows its warm, aged quality directly from antique lace textiles, giving it a heirloom, vintage warmth distinct from a flat, modern cream - closer to a family keepsake than to a manufactured neutral.",
+    sections: [
+      { title: "An antique-textile reference", body: "Named after aged lace fabric, this color carries a heirloom, vintage warmth that a flat, modern cream doesn't have on its own." },
+      { title: "Heirloom warmth over modern neutrality", body: "This vintage-textile association fits bridal, heritage, and antique-inspired branding wanting a warm neutral with genuine old-world character." },
+    ],
+    faq: [
+      { question: "Is old lace just a cream color?", answer: "Related, but its antique-textile reference gives it a heirloom, vintage warmth that a flat, modern cream doesn't carry." },
+      { question: "What brands suit old lace?", answer: "Bridal, heritage, and antique-inspired brands benefit from old lace's warm, vintage character." },
+    ],
+  },
+  linen: {
+    title: "What Linen Means in Color Psychology",
+    description: "Why linen reads as natural and understated rather than plain cream, carrying a direct fabric reference.",
+    answer: "Linen borrows its warm, understated quality directly from unbleached linen fabric, giving it a natural, textural warmth distinct from a flat, manufactured cream - closer to raw, breathable cloth than to a synthetic neutral.",
+    sections: [
+      { title: "A natural-fabric reference", body: "Named after unbleached linen cloth, this color carries a natural, textural warmth that a flat, synthetic-feeling cream doesn't have on its own." },
+      { title: "Understated natural texture", body: "This fabric association fits natural, understated, and textural home and lifestyle branding wanting a warm neutral with genuine material honesty." },
+    ],
+    faq: [
+      { question: "Is linen just a shade of cream?", answer: "Related, but its natural-fabric reference gives it a textural, understated warmth that a flat, manufactured cream doesn't carry." },
+      { question: "What brands suit linen?", answer: "Natural, understated home and lifestyle brands benefit from linen's textural, honest warmth." },
+    ],
+  },
+  "antique-white": {
+    title: "What Antique White Means in Color Psychology",
+    description: "Why antique white reads as aged and refined rather than plain cream, carrying a heritage-object reference.",
+    answer: "Antique white borrows its warm, softly aged quality from vintage furniture and heirloom objects, giving it a refined, heritage warmth distinct from a flat modern cream - closer to a well-loved antique than to a new, manufactured neutral.",
+    sections: [
+      { title: "A heirloom-object reference", body: "Its name ties antique white to aged furniture and vintage objects, giving it a refined, heritage warmth that a flat, modern cream doesn't have on its own." },
+      { title: "Refined heritage warmth", body: "This antique association fits heritage furniture, vintage-inspired interiors, and refined traditional branding wanting a warm neutral with real character." },
+    ],
+    faq: [
+      { question: "Is antique white just a cream color?", answer: "Related, but its heirloom-object reference gives it a refined, aged warmth that a flat, modern cream doesn't carry." },
+      { question: "What brands suit antique white?", answer: "Heritage furniture, vintage-inspired interiors, and refined traditional brands benefit from antique white's aged warmth." },
+    ],
+  },
+  "misty-rose": {
+    title: "What Misty Rose Means in Color Psychology",
+    description: "Why misty rose reads as soft and dawn-like rather than romantic, carrying a fog-and-morning reference distinct from typical pink.",
+    answer: "Misty rose blends pink's softness with an atmospheric, foggy quality - closer to a hazy dawn sky than to a bold romantic pink. That weather reference gives it a quiet, contemplative gentleness rather than pink's more overt warmth.",
+    sections: [
+      { title: "A weather-and-dawn reference", body: "Unlike most pinks, which read as warm or romantic, misty rose's foggy, atmospheric name gives it a quieter, more contemplative softness - closer to weather than to emotion." },
+      { title: "Quiet gentleness over romance", body: "This atmospheric quality fits contemplative, gently minimalist, and softly beauty-adjacent branding wanting pink's softness with a quieter, more reflective mood." },
+    ],
+    faq: [
+      { question: "Is misty rose the same as pink?", answer: "Related, but its fog-and-dawn reference gives it a quieter, more atmospheric softness than a straightforward, warmer pink." },
+      { question: "What brands suit misty rose?", answer: "Contemplative, gently minimalist, and softly beauty-adjacent brands benefit from misty rose's quiet, atmospheric gentleness." },
+    ],
+  },
+  "dim-gray": {
+    title: "What Dim Gray Means in Color Psychology",
+    description: "Why dim gray reads as quietly understated rather than serious, sitting at a muted, low-contrast middle gray.",
+    answer: "Dim gray sits at a muted middle value - not as dark and weighty as dark gray, not as airy as light gray - which gives it a quietly understated, low-key neutrality useful as unobtrusive supporting text or structure rather than a statement.",
+    sections: [
+      { title: "A muted middle value", body: "Dim gray avoids both dark gray's weight and light gray's airiness, landing as a quiet, low-contrast neutral that recedes rather than asserts itself." },
+      { title: "Built to be unobtrusive", body: "This quiet quality makes dim gray a natural fit for secondary text, muted UI elements, and any context wanting structure without visual assertion." },
+    ],
+    faq: [
+      { question: "Is dim gray good for primary text?", answer: "Not usually - its muted, low-contrast quality suits secondary or supporting text better than a primary reading color, where higher contrast improves legibility." },
+      { question: "What is dim gray best used for?", answer: "Secondary text, muted UI elements, and structural roles wanting quiet neutrality rather than visual emphasis." },
+    ],
+  },
+  "dark-gray": {
+    title: "What Dark Gray Means in Color Psychology",
+    description: "Why dark gray reads as serious and modern rather than harsh, offering black's weight with more flexibility.",
+    answer: "Dark gray carries much of black's seriousness and authority but with slightly more warmth and flexibility - it's easier to pair with color and less visually harsh than pure black, which is why it's become a default for modern text and UI systems wanting weight without starkness.",
+    sections: [
+      { title: "Black's weight, more flexibility", body: "Dark gray keeps most of black's serious, authoritative quality while being easier to pair with accent colors and less visually harsh in large areas." },
+      { title: "The modern default for serious text", body: "This flexibility is why so many modern interfaces use dark gray instead of pure black for body text and primary UI elements - serious without starkness." },
+    ],
+    faq: [
+      { question: "Why do modern interfaces use dark gray instead of black for text?", answer: "Dark gray is easier to pair with accent colors and less visually harsh in large blocks than pure black, while keeping most of black's seriousness and authority." },
+      { question: "Is dark gray as authoritative as black?", answer: "Nearly - it keeps most of black's weight and seriousness with more flexibility and less starkness." },
+    ],
+  },
+  "light-gray": {
+    title: "What Light Gray Means in Color Psychology",
+    description: "Why light gray reads as airy and modern rather than cold, functioning as a soft, minimal supporting neutral.",
+    answer: "Light gray stays neutral without white's stark cleanliness or beige's warmth, giving it an airy, modern quality that's become a default for minimal, spacious UI and interior design - understated structure rather than either warmth or starkness.",
+    sections: [
+      { title: "Neither stark nor warm", body: "Light gray avoids both white's clinical starkness and beige's warmth, landing as a genuinely neutral, airy backdrop that doesn't compete with content or accent colors." },
+      { title: "The default modern minimal backdrop", body: "This true neutrality makes light gray a common choice for minimal UI, modern interiors, and any context wanting spacious structure without a strong emotional signal." },
+    ],
+    faq: [
+      { question: "Is light gray warmer or cooler than beige?", answer: "Cooler and more neutral - beige carries warmth, while light gray stays genuinely neutral without leaning warm or cold." },
+      { question: "What suits light gray?", answer: "Minimal UI, modern interiors, and any context wanting spacious, understated structure without a strong emotional signal." },
+    ],
+  },
+  gainsboro: {
+    title: "What Gainsboro Means in Color Psychology",
+    description: "Why gainsboro reads as elegant and refined rather than plain gray, carrying a named-artist reference.",
+    answer: "Gainsboro is named after 18th-century painter Thomas Gainsborough, known for pale, elegant portrait backgrounds - a specific artistic reference that gives this pale gray a refined, painterly quality distinct from a flat, generic light gray.",
+    sections: [
+      { title: "A painter reference", body: "Named after Thomas Gainsborough's signature pale, elegant portrait palettes, this gray carries an artistic, refined association that a flat, unnamed light gray doesn't have." },
+      { title: "Refined rather than plain", body: "This painterly heritage fits elegant, artistic, and refined branding wanting a pale neutral with genuine aesthetic pedigree." },
+    ],
+    faq: [
+      { question: "Why is gainsboro named after a painter?", answer: "It references Thomas Gainsborough's pale, elegant portrait backgrounds, giving the color an artistic, refined association." },
+      { question: "What brands suit gainsboro?", answer: "Elegant, artistic, and refined brands benefit from gainsboro's painterly, sophisticated pale-gray quality." },
+    ],
+  },
+  "white-smoke": {
+    title: "What White Smoke Means in Color Psychology",
+    description: "Why white smoke reads as soft and atmospheric rather than sterile, carrying a literal smoke-and-haze reference.",
+    answer: "White smoke borrows its softly warm-cool balance from drifting smoke, giving it an atmospheric, slightly hazy quality distinct from a flat, sterile off-white - closer to a soft-focus backdrop than to a clinical neutral.",
+    sections: [
+      { title: "An atmospheric reference", body: "Named after drifting smoke, this off-white carries a soft, hazy quality that a flat, sterile off-white doesn't have on its own." },
+      { title: "Soft-focus rather than sterile", body: "This atmospheric softness fits minimal, contemplative, and softly modern branding wanting a neutral backdrop with a touch of gentle texture." },
+    ],
+    faq: [
+      { question: "Is white smoke just an off-white color?", answer: "Related, but its smoke-and-haze reference gives it a soft, atmospheric quality that a flat, sterile off-white doesn't carry." },
+      { question: "What suits white smoke?", answer: "Minimal, contemplative, and softly modern brands benefit from white smoke's gentle, atmospheric texture." },
+    ],
+  },
+  "dark-slate-gray": {
+    title: "What Dark Slate Gray Means in Color Psychology",
+    description: "Why dark slate gray reads as serious and grounded rather than harsh, carrying a stone reference deeper than slate gray.",
+    answer: "Dark slate gray deepens slate gray's stone-rooted neutrality into something weightier and more serious - still grounded in a material reference rather than an abstract hue, but with enough depth to read as deliberate and substantial.",
+    sections: [
+      { title: "Deeper stone, more weight", body: "The added depth pushes dark slate gray further from a light, airy neutral and toward something substantial and grounded - still material-referenced, but heavier." },
+      { title: "Substantial rather than harsh", body: "This weight fits serious, grounded, design-forward branding wanting depth and structure without pure black's starkness." },
+    ],
+    faq: [
+      { question: "Is dark slate gray the same as black?", answer: "No - it keeps a stone-toned, material reference and slight color undertone that pure black lacks, reading as substantial rather than stark." },
+      { question: "What brands suit dark slate gray?", answer: "Serious, grounded, design-forward brands benefit from dark slate gray's weighty, material-rooted neutrality." },
+    ],
+  },
+  "slate-gray": {
+    title: "What Slate Gray Means in Color Psychology",
+    description: "Why slate gray reads as grounded and material rather than purely neutral, carrying a direct stone reference.",
+    answer: "Slate gray borrows its balanced, cool neutrality from slate rock, giving it a grounded, material quality distinct from an abstract, unnamed gray - it reads as structured and natural rather than manufactured or purely digital.",
+    sections: [
+      { title: "A stone reference, not an abstract neutral", body: "Named after slate rock, this gray carries a grounded, material quality that a generic, unnamed gray doesn't have - natural rather than manufactured." },
+      { title: "Structured and natural", body: "This material reference fits architectural, design-forward, and grounded branding wanting gray's neutrality with genuine natural-material weight." },
+    ],
+    faq: [
+      { question: "Is slate gray warmer or cooler than plain gray?", answer: "Cooler and more structured - its stone reference gives it a grounded, material quality rather than plain gray's more abstract neutrality." },
+      { question: "What brands suit slate gray?", answer: "Architectural, design-forward, and grounded brands benefit from slate gray's natural, material-rooted structure." },
+    ],
+  },
+  "light-slate-gray": {
+    title: "What Light Slate Gray Means in Color Psychology",
+    description: "Why light slate gray reads as gentle sophistication rather than plain gray, softening slate gray's stone weight.",
+    answer: "Light slate gray keeps slate gray's material, grounded quality but lightens it enough to feel gentle and airy rather than weighty - sophisticated neutrality without the fuller heaviness of darker stone-toned grays.",
+    sections: [
+      { title: "Lighter stone, less weight", body: "The added lightness softens slate gray's fuller material weight into something more gentle and airy, while keeping a hint of its structured, natural reference." },
+      { title: "Gentle sophistication", body: "This balance fits refined, minimal, design-forward branding wanting a sophisticated neutral that's light rather than heavy." },
+    ],
+    faq: [
+      { question: "How is light slate gray different from slate gray?", answer: "It's lighter and airier, keeping some of slate gray's grounded material quality while losing its fuller weight." },
+      { question: "What suits light slate gray?", answer: "Refined, minimal, design-forward brands benefit from light slate gray's gentle, sophisticated neutrality." },
+    ],
+  },
+  "light-cyan": {
+    title: "What Light Cyan Means in Color Psychology",
+    description: "Why light cyan reads as soft digital freshness rather than synthetic energy, paling cyan's bright intensity.",
+    answer: "Light cyan keeps cyan's cool, screen-native undertone but strips out most of its saturation, landing as soft and fresh rather than loudly digital - a gentler, more approachable version of cyan's technical brightness.",
+    sections: [
+      { title: "Cool undertone, softer intensity", body: "The lower saturation removes most of cyan's synthetic energy while keeping its cool, technical undertone - fresh rather than loud." },
+      { title: "Approachable rather than energetic", body: "This softer register fits gentle tech, clean digital, and soft wellness-adjacent branding wanting a cool accent without cyan's fuller digital intensity." },
+    ],
+    faq: [
+      { question: "Is light cyan as energetic as cyan?", answer: "No - its lower saturation softens cyan's synthetic brightness into something fresher and more approachable." },
+      { question: "What suits light cyan?", answer: "Gentle tech, clean digital, and soft wellness-adjacent brands benefit from light cyan's cool, approachable freshness." },
+    ],
+  },
+  "floral-white": {
+    title: "What Floral White Means in Color Psychology",
+    description: "Why floral white reads as delicate and petal-soft rather than plain cream, carrying a direct flower reference.",
+    answer: "Floral white borrows its warm softness from flower petals, giving it a delicate, organic quality distinct from a flat cream or ivory - closer to a fresh bloom than to a manufactured neutral.",
+    sections: [
+      { title: "A petal reference", body: "Named after flower petals, this color carries a delicate, organic softness that a flat, unnamed cream doesn't have on its own." },
+      { title: "Delicate rather than manufactured", body: "This floral association fits bridal, botanical, and delicate beauty branding wanting a soft warm neutral with a genuine natural reference." },
+    ],
+    faq: [
+      { question: "Is floral white just a cream color?", answer: "Related, but its petal reference gives it a delicate, organic softness that a flat, manufactured cream doesn't carry." },
+      { question: "What brands suit floral white?", answer: "Bridal, botanical, and delicate beauty brands benefit from floral white's soft, petal-rooted warmth." },
+    ],
+  },
+  "ghost-white": {
+    title: "What Ghost White Means in Color Psychology",
+    description: "Why ghost white reads as ethereal and cool rather than warm, carrying a spectral, otherworldly reference.",
+    answer: "Ghost white leans cool and faintly blue rather than warm, with a name that evokes something ethereal and spectral - it reads as otherworldly and quiet rather than the cozy warmth of ivory or antique white.",
+    sections: [
+      { title: "A spectral, otherworldly reference", body: "Unlike warm off-whites, ghost white's cool, faintly blue undertone and evocative name give it an ethereal, slightly otherworldly quality." },
+      { title: "Quiet and cool, not cozy", body: "This ethereal coolness fits minimal, tech-forward, and quietly futuristic branding wanting a pale neutral with a cool, spectral edge rather than warmth." },
+    ],
+    faq: [
+      { question: "Is ghost white warm or cool?", answer: "Cool - it leans faintly blue, giving it an ethereal, spectral quality rather than the cozy warmth of ivory or antique white." },
+      { question: "What brands suit ghost white?", answer: "Minimal, tech-forward, and quietly futuristic brands benefit from ghost white's cool, ethereal quality." },
+    ],
+  },
+  "lavender-blush": {
+    title: "What Lavender Blush Means in Color Psychology",
+    description: "Why lavender blush reads as delicately romantic rather than simply pink, blending blush warmth with a lavender undertone.",
+    answer: "Lavender blush combines pink's gentle warmth with a faint purple undertone borrowed from lavender, landing as delicately romantic and slightly more complex than a straightforward pale pink - soft with a hint of contemplative calm.",
+    sections: [
+      { title: "A blush-and-lavender blend", body: "Its faint purple undertone adds a touch of lavender's calm to blush's warmth, giving it more complexity than a straightforward pale pink." },
+      { title: "Delicately romantic", body: "This soft blend fits bridal, delicate beauty, and gently romantic branding wanting pink's warmth with a more contemplative, complex edge." },
+    ],
+    faq: [
+      { question: "Is lavender blush the same as pale pink?", answer: "Related, but its lavender undertone adds a touch of calm complexity that a straightforward pale pink doesn't have." },
+      { question: "What brands suit lavender blush?", answer: "Bridal, delicate beauty, and gently romantic brands benefit from lavender blush's soft, complex warmth." },
+    ],
+  },
 };
 
 // True when a color-meanings slug has genuinely distinct, hand-written psychology
@@ -1263,6 +2914,16 @@ const colorMeaningOverrides: Record<string, ColorMeaningOverride> = {
 // programmatic hex/RGB generator shared with /colors.
 export function isColorMeaningAuthored(slug: string): boolean {
   return Object.prototype.hasOwnProperty.call(colorMeaningOverrides, slug);
+}
+
+// Hand-written psychology content for a slug, if any. colorMeaningEntries only maps
+// over the small hand-authored `colors` array (13 base hues), so named colors added
+// to colorMeaningOverrides without a matching `colors` entry (e.g. "gold", "steel-blue")
+// need this direct lookup - otherwise they'd resolve via the generic programmatic
+// generator instead of their authored content, even though isColorMeaningAuthored
+// (and therefore their indexability) already reports them as authored.
+export function getColorMeaningOverride(slug: string): ColorMeaningOverride | undefined {
+  return colorMeaningOverrides[slug];
 }
 
 const colorMeaningEntries: ContentEntry[] = colors.map((entry) => {
