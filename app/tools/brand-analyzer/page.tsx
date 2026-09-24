@@ -25,7 +25,7 @@ export default function Page() {
       <StructuredData
         data={buildBreadcrumbSchema([
           { name: "Home", item: siteConfig.domain },
-          { name: "Tools", item: `${siteConfig.domain}/tools/brand-analyzer` },
+          { name: "Tools", item: `${siteConfig.domain}/tools` },
           { name: page.title, item: url },
         ])}
       />

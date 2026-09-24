@@ -25,10 +25,11 @@ export default function Page() {
       <StructuredData
         data={buildBreadcrumbSchema([
           { name: "Home", item: siteConfig.domain },
-          { name: "Tools", item: `${siteConfig.domain}/tools/image-colors` },
+          { name: "Tools", item: `${siteConfig.domain}/tools` },
           { name: page.title, item: url },
         ])}
       />
+      <h1 className="sr-only">{page.title}</h1>
       <ImageColorExtractor />
     </>
   );

@@ -341,10 +341,10 @@ export function GradientGenerator() {
             <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]"/>Color Tool
           </span>
           <h1 className="mt-2.5 font-display text-[2.4rem] font-black leading-none tracking-[-0.04em] sm:text-[3.2rem]">
-            Gradient Generator
+            CSS Gradient Generator
           </h1>
           <p className="mt-2 text-[14px] text-[#1c1712]/40">
-            Create beautiful CSS gradients with multiple color stops.
+            Create linear, radial, and conic CSS gradients and copy the code.
           </p>
         </motion.div>
 

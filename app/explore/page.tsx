@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Explore Palettes",
+  alternates: { canonical: "/explore" },
   description: "Endless color palettes generated fresh. Browse by mood and open any palette instantly in the generator.",
 };
 

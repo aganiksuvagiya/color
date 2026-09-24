@@ -67,7 +67,6 @@ export const staticPages = [
   page("/best-colors-for", "weekly", 0.84),
   page("/faqs", "weekly", 0.82),
   page("/resources", "weekly", 0.78),
-  page("/blog", "weekly", 0.8),
   page("/developer", "weekly", 0.84),
   page("/color-psychology", "weekly", 0.8),
   page("/about", "monthly", 0.5),

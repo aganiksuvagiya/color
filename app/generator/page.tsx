@@ -5,7 +5,8 @@ import { buildFaqSchema, buildHowToSchema, buildSoftwareApplicationSchema } from
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Color Palette Generator - Free Color Scheme Maker | HueFlow",
+  title: "Color Palette Generator - Free Color Scheme Maker",
+  alternates: { canonical: "/generator" },
   description:
     "Free color palette generator — pick a mood, shuffle, or lock colors to build beautiful palettes in seconds. Export as CSS, Tailwind, or JSON. No signup.",
   keywords: [
@@ -54,6 +55,7 @@ export default function Page() {
       <StructuredData data={buildSoftwareApplicationSchema()} />
       <StructuredData data={howToSchema} />
       <StructuredData data={faqSchema} />
+      <h1 className="sr-only">Color Palette Generator</h1>
       <Suspense>
         <GeneratorPage />
       </Suspense>

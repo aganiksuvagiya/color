@@ -5,7 +5,8 @@ import { siteConfig } from "@/lib/seo/site-config";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Trending Palettes | HueFlow",
+  title: "Trending Palettes",
+  alternates: { canonical: "/trends" },
   description: "Explore curated trending color palettes for SaaS, E-commerce, Mobile, and Branding projects.",
 };
 

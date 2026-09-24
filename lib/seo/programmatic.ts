@@ -12,7 +12,7 @@ import {
 } from "@/lib/color-names";
 import { getContrastText, hexToHsl, hslToHex, isValidHex } from "@/lib/color-utils";
 
-import { isColorMeaningAuthored, type ContentEntry } from "@/lib/seo/content";
+import { cssColorSlugs, isColorMeaningAuthored, type ContentEntry } from "@/lib/seo/content";
 
 type ColorDescriptor = {
   slug: string;
@@ -193,6 +193,7 @@ function buildColorRelatedLinks(descriptor: ColorDescriptor) {
   const familyPair = familyPairs[descriptor.hueFamily] ?? familyPairs.neutral;
   const baseColorSlug = descriptor.mode === "hex" ? descriptor.canonicalSlug : descriptor.slug;
   const display = descriptor.displayName;
+  const cssSlug = descriptor.hueFamily === "neutral" ? "black" : descriptor.hueFamily;
 
   return [
     { title: `${display} color meaning`, href: `/color-meanings/${baseColorSlug}`, label: "Related color meaning" },
@@ -201,7 +202,10 @@ function buildColorRelatedLinks(descriptor: ColorDescriptor) {
     { title: `${descriptor.hueLabel} brand colors`, href: `/brand-colors/${familyPair.brand}`, label: "Related branding guide" },
     { title: `${descriptor.hueLabel} accessibility guide`, href: "/accessibility/color-contrast", label: "Related accessibility guide" },
     { title: `${descriptor.hueLabel} Tailwind guide`, href: `/tailwind/${descriptor.hueFamily === "neutral" ? "black" : descriptor.hueFamily}`, label: "Related Tailwind page" },
-    { title: `${descriptor.hueLabel} CSS guide`, href: `/css-colors/${descriptor.hueFamily === "neutral" ? "black" : descriptor.hueFamily}`, label: "Related CSS page" },
+    // Only a few hue families have a /css-colors page - skip the link for the rest.
+    ...(cssColorSlugs.includes(cssSlug)
+      ? [{ title: `${descriptor.hueLabel} CSS guide`, href: `/css-colors/${cssSlug}`, label: "Related CSS page" }]
+      : []),
     { title: `${descriptor.hueLabel} strategy article`, href: `/guides/${familyPair.article}`, label: "Related article" },
   ];
 }

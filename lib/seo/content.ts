@@ -846,6 +846,7 @@ const gradients: ContentEntry[] = [
       { question: "Are gradients good for conversion pages?", answer: "Yes, when used to support hierarchy and brand personality rather than replacing clear layout structure." },
     ],
     relatedLinks: [
+      { title: "CSS gradient generator", href: "/tools/gradient" },
       { title: "SaaS trust palette", href: "/palettes/saas-trust-spectrum" },
       { title: "Blue color page", href: "/colors/blue" },
       { title: "UI color guidance", href: "/web-design" },
@@ -870,6 +871,7 @@ const gradients: ContentEntry[] = [
       { question: "What industries fit orange-red gradients?", answer: "DTC, events, hospitality, entertainment, and creator brands usually benefit most." },
     ],
     relatedLinks: [
+      { title: "CSS gradient generator", href: "/tools/gradient" },
       { title: "DTC energy stack palette", href: "/palettes/dtc-energy-stack" },
       { title: "Orange color meaning", href: "/colors/orange" },
       { title: "Marketing colors", href: "/marketing-colors" },
@@ -894,6 +896,7 @@ const gradients: ContentEntry[] = [
       { question: "Should gradients be used in dashboards?", answer: "Mostly as accents, hero cards, or banners rather than as the background for dense data." },
     ],
     relatedLinks: [
+      { title: "CSS gradient generator", href: "/tools/gradient" },
       { title: "Creative orbit palette", href: "/palettes/creative-orbit" },
       { title: "Purple color meaning", href: "/colors/purple" },
       { title: "AI website colors guide", href: "/guides/ai-website-color-strategy" },
@@ -918,6 +921,7 @@ const gradients: ContentEntry[] = [
       { question: "Can wellness colors still convert?", answer: "Yes, as long as the palette keeps enough contrast and hierarchy for calls to action." },
     ],
     relatedLinks: [
+      { title: "CSS gradient generator", href: "/tools/gradient" },
       { title: "Green color meaning", href: "/colors/green" },
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
       { title: "Accessible success states", href: "/accessibility/accessible-success-states" },
@@ -942,6 +946,7 @@ const gradients: ContentEntry[] = [
       { question: "Can gradients work for luxury websites?", answer: "Yes, especially when they are understated and paired with elegant typography and spacing." },
     ],
     relatedLinks: [
+      { title: "CSS gradient generator", href: "/tools/gradient" },
       { title: "Luxury editorial noir palette", href: "/palettes/luxury-editorial-noir" },
       { title: "Black color meaning", href: "/colors/black" },
       { title: "Luxury brand color guide", href: "/guides/luxury-brand-color-strategy" },
@@ -966,6 +971,7 @@ const gradients: ContentEntry[] = [
       { question: "Can rose gold feel professional?", answer: "Yes, especially when paired with restrained typography and clean white space. The key is not overusing the warmth." },
     ],
     relatedLinks: [
+      { title: "CSS gradient generator", href: "/tools/gradient" },
       { title: "Luxury editorial noir palette", href: "/palettes/luxury-editorial-noir" },
       { title: "Orange color meaning", href: "/colors/orange" },
       { title: "Luxury brand color strategy", href: "/guides/luxury-brand-color-strategy" },
@@ -990,6 +996,7 @@ const gradients: ContentEntry[] = [
       { question: "Can green gradients work for tech brands?", answer: "Yes, especially for climate tech, agritech, and wellness tech where the green signal aligns with the brand mission." },
     ],
     relatedLinks: [
+      { title: "CSS gradient generator", href: "/tools/gradient" },
       { title: "Green color meaning", href: "/colors/green" },
       { title: "Wellness nature calm palette", href: "/palettes/wellness-nature-calm" },
       { title: "Healthcare website colors guide", href: "/guides/best-colors-for-healthcare-websites-usa" },
@@ -1014,6 +1021,7 @@ const gradients: ContentEntry[] = [
       { question: "Can dark gradients work on mobile?", answer: "Yes, but reduce the saturation on the electric highlights slightly since they can feel more intense on OLED mobile screens." },
     ],
     relatedLinks: [
+      { title: "CSS gradient generator", href: "/tools/gradient" },
       { title: "SaaS trust spectrum palette", href: "/palettes/saas-trust-spectrum" },
       { title: "Blue color meaning", href: "/colors/blue" },
       { title: "SaaS product UI color guide", href: "/guides/saas-product-ui-color-guide" },
@@ -1038,6 +1046,7 @@ const gradients: ContentEntry[] = [
       { question: "Is orange good for onboarding?", answer: "Yes, orange can make onboarding feel welcoming and action-oriented when contrast is handled correctly." },
     ],
     relatedLinks: [
+      { title: "CSS gradient generator", href: "/tools/gradient" },
       { title: "Orange color meaning", href: "/colors/orange" },
       { title: "Startup website colors guide", href: "/guides/startup-website-color-strategy" },
       { title: "DTC energy stack palette", href: "/palettes/dtc-energy-stack" },
@@ -3536,7 +3545,9 @@ const tailwindEntries: ContentEntry[] = ["blue", "green", "purple", "orange", "b
   ],
 }));
 
-const cssColorEntries: ContentEntry[] = ["blue", "green", "purple", "orange", "black"].map((color) => ({
+export const cssColorSlugs = ["blue", "green", "purple", "orange", "black"];
+
+const cssColorEntries: ContentEntry[] = cssColorSlugs.map((color) => ({
   slug: color,
   title: `CSS ${color[0].toUpperCase()}${color.slice(1)} Color Guide`,
   description: `How to use ${color} in CSS variables, semantic tokens, and scalable interface systems.`,

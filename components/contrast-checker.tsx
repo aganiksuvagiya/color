@@ -106,7 +106,7 @@ export function ContrastChecker() {
               WCAG 2.1 · AA &amp; AAA · Free
             </span>
             <h1 className="font-display text-[2.8rem] font-bold leading-[1.04] tracking-[-0.05em] text-[#1c1712] sm:text-[3.6rem]">
-              Contrast Checker
+              Color Contrast Checker
             </h1>
             <p className="max-w-md text-base leading-7 text-[#1c1712]/45">
               Pick two colors and instantly see if they pass WCAG accessibility standards.

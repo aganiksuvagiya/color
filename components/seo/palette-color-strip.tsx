@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 
+import { findNamedColorByHex } from "@/lib/color-names";
+
 export function PaletteColorStrip({ colors, linkToColors }: { colors: string[]; linkToColors?: boolean }) {
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
 
@@ -29,7 +31,9 @@ export function PaletteColorStrip({ colors, linkToColors }: { colors: string[]; 
         const b = parseInt(hex.slice(5, 7), 16);
         const light = (r * 299 + g * 587 + b * 114) / 1000 > 160;
         const copied = copiedHex === hex;
-        const slug = hex.slice(1).toLowerCase();
+        // Only named colors have a /colors page - arbitrary hex slugs 404, so those
+        // swatches fall back to copy-on-click instead of linking to a dead URL.
+        const named = linkToColors ? findNamedColorByHex(hex) : undefined;
 
         const inner = (
           <div className="flex h-20 flex-col items-center justify-center gap-0.5 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -47,11 +51,11 @@ export function PaletteColorStrip({ colors, linkToColors }: { colors: string[]; 
           <span className="absolute right-0 top-1/4 h-1/2 w-px bg-black/10" />
         );
 
-        if (linkToColors) {
+        if (named) {
           return (
             <Link
               key={hex}
-              href={`/colors/${slug}`}
+              href={`/colors/${named.slug}`}
               className="group relative flex-1 min-w-0"
               style={{ backgroundColor: hex }}
               title={hex.toUpperCase()}

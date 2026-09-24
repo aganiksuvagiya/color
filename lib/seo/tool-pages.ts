@@ -34,12 +34,18 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   contrast: {
     slug: "contrast",
     path: "/tools/contrast",
-    title: "Color Contrast Checker — Free WCAG AA/AAA Tool",
+    title: "Color Contrast Checker & Analyzer — Free WCAG AA/AAA Tool",
     description:
-      "Free color contrast checker for websites — instantly see the contrast ratio, AA/AAA pass-fail, and fix suggestions for any two colors. No signup needed.",
+      "Free color contrast checker and analyzer: enter text and background colors to get the WCAG contrast ratio, AA/AAA pass or fail, and an accessible fix. Checks website readability instantly.",
     keywords: [
       "color contrast checker",
       "contrast checker",
+      "color contrast analyzer",
+      "colour contrast analyser",
+      "color readability checker",
+      "color contrast accessibility validator",
+      "contrast checker colors",
+      "color contrast checker for website",
       "website contrast checker",
       "wcag contrast checker",
       "color contrast ratio checker",
@@ -51,7 +57,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "wcag 2.1 contrast ratio tool",
     ],
     answer:
-      "HueFlow's Color Contrast Checker helps teams test foreground and background colors against WCAG rules so buttons, text, dashboards, and landing pages stay readable for US web audiences.",
+      "HueFlow's Color Contrast Checker is a free contrast analyzer and accessibility validator: enter a text color and a background color to get the WCAG contrast ratio (1:1 to 21:1) and an instant AA/AAA pass or fail. WCAG AA needs 4.5:1 for normal text and 3:1 for large text and UI components; AAA needs 7:1. If a pair fails, the checker suggests the closest accessible color.",
     audience: "Product teams, marketers, and developers improving readable interfaces for US searchers and customers.",
     useCases: [
       "Check CTA button text before shipping a landing page",
@@ -101,6 +107,26 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
         answer:
           "Yes. Enter any two colors from your site's design — no signup, no limit on checks — and get an instant WCAG AA/AAA pass-fail with a one-click accessible fix suggestion.",
       },
+      {
+        question: "What is a color contrast analyzer?",
+        answer:
+          "A color contrast analyzer (or colour contrast analyser) measures the luminance difference between a foreground and a background color and reports the WCAG contrast ratio. This tool works as a contrast analyzer, readability checker, and accessibility validator in one: it shows the ratio, the AA/AAA result for normal and large text, and a live text preview.",
+      },
+      {
+        question: "How is the WCAG contrast ratio calculated?",
+        answer:
+          "Each color's relative luminance (L) is calculated from its linearized RGB values: L = 0.2126 R + 0.7152 G + 0.0722 B. The contrast ratio is (L1 + 0.05) / (L2 + 0.05), where L1 is the lighter color. The result ranges from 1:1 (no contrast) to 21:1 (black on white).",
+      },
+      {
+        question: "Do buttons, icons, and form borders need contrast too?",
+        answer:
+          "Yes. WCAG 2.1 success criterion 1.4.11 (Non-text Contrast) requires at least 3:1 between UI components — button edges, input borders, focus rings, and meaningful icons — and the colors next to them. Button label text still needs 4.5:1 against the button fill.",
+      },
+      {
+        question: "Can I check the contrast of text on an image or gradient?",
+        answer:
+          "Check the text color against the lightest and darkest areas behind it - use the color picker to grab those colors from your design. If either fails, add a dark overlay or a solid text background. Contrast on images changes across the image, so the weakest area decides whether the text passes.",
+      },
     ],
     relatedLinks: [
       { title: "Accessible success states", href: "/accessibility/accessible-success-states" },
@@ -115,13 +141,17 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   gradient: {
     slug: "gradient",
     path: "/tools/gradient",
-    title: "Gradient Generator",
+    title: "CSS Gradient Generator — Linear, Radial & Conic (Free)",
     description:
-      "Free CSS gradient generator — pick colors, set angles, preview live, and copy the code instantly. Linear, radial, and conic gradients. No signup.",
+      "Free CSS gradient generator: pick colors, set the angle, preview live, and copy linear-gradient, radial-gradient, or conic-gradient code instantly. No signup.",
     keywords: [
-      "gradient generator",
       "css gradient generator",
+      "gradient generator",
+      "css generator gradient",
+      "css gradient code",
       "linear gradient generator",
+      "radial gradient generator",
+      "conic gradient generator",
       "marketing gradient tool",
       "ui gradient builder",
       "css gradient code generator",
@@ -130,7 +160,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "gradient generator for buttons",
     ],
     answer:
-      "HueFlow's Gradient Generator helps teams build production-ready CSS gradients for hero sections, product UI, and brand campaigns without manually writing gradient syntax.",
+      "HueFlow's CSS Gradient Generator builds linear, radial, and conic gradients visually and gives you copy-ready CSS such as background: linear-gradient(135deg, #6366F1, #EC4899). Pick your color stops, set the angle or shape, preview live, and paste the code into any stylesheet - no signup needed.",
     audience: "Designers, founders, and frontend teams building polished web interfaces for US users.",
     useCases: [
       "Create hero gradients for SaaS websites",
@@ -143,7 +173,47 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "Add, remove, or randomize color stops.",
       "Preview the output and copy the CSS for production use.",
     ],
+    explainerHeading: "CSS gradient syntax explained",
+    explainer: [
+      {
+        title: "linear-gradient()",
+        body: "Blends colors along a straight line. background: linear-gradient(90deg, #6366F1, #EC4899); runs left to right; change the angle (0deg = bottom to top, 180deg = top to bottom) to change the direction.",
+      },
+      {
+        title: "radial-gradient()",
+        body: "Spreads colors outward from a center point. background: radial-gradient(circle at center, #FDE68A, #F97316); use 'circle' or 'ellipse' and 'at <position>' to control the shape and origin.",
+      },
+      {
+        title: "conic-gradient()",
+        body: "Rotates colors around a center point, like a pie chart or color wheel. background: conic-gradient(from 0deg, #22D3EE, #A855F7, #22D3EE); repeat the first color at the end for a seamless loop.",
+      },
+    ],
     faq: [
+      {
+        question: "How do I create a gradient in CSS?",
+        answer:
+          "Use the background property with a gradient function, for example: background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);. The first value sets the direction and each color can take an optional stop position. This generator writes that code for you - pick colors, adjust the angle, and copy.",
+      },
+      {
+        question: "What is the difference between linear, radial, and conic gradients?",
+        answer:
+          "A linear gradient blends colors along a straight line at a set angle. A radial gradient spreads colors outward from a center point in a circle or ellipse. A conic gradient sweeps colors around a center point, like the hands of a clock.",
+      },
+      {
+        question: "Can I use CSS gradients as text color?",
+        answer:
+          "Yes. Set the gradient as the background, then clip it to the text: background: linear-gradient(90deg, #6366F1, #EC4899); -webkit-background-clip: text; background-clip: text; color: transparent;.",
+      },
+      {
+        question: "Do CSS gradients work in all browsers?",
+        answer:
+          "linear-gradient() and radial-gradient() work in every modern browser without prefixes. conic-gradient() is supported in all current versions of Chrome, Edge, Safari, and Firefox.",
+      },
+      {
+        question: "Are CSS gradients better than gradient images?",
+        answer:
+          "Usually, yes. CSS gradients are resolution-independent, scale to any screen size without blurring, add no extra HTTP request, and are easy to change later. Use an image only for complex textures or noise effects CSS can't produce.",
+      },
       {
         question: "When should a website use gradients instead of flat colors?",
         answer:

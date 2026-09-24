@@ -170,7 +170,8 @@ export function ColorPsychologyExplorer() {
                       </ul>
                     </div>
 
-                    {/* Link */}
+                    {/* Link - only named colors have a /colors page (arbitrary hex 404s) */}
+                    {!(descriptor.mode === "hex" && descriptor.canonicalSlug === descriptor.slug) && (
                     <div className="px-6 py-4">
                       <Link href={`/colors/${descriptor.canonicalSlug}`}
                         className="inline-flex items-center gap-1.5 rounded-xl border border-black/[0.08] bg-[#faf7f2] px-4 py-2.5 text-[12px] font-semibold text-[#1c1712]/60 transition hover:bg-[#f0ede8] hover:text-[#1c1712]">
@@ -180,6 +181,7 @@ export function ColorPsychologyExplorer() {
                         </svg>
                       </Link>
                     </div>
+                    )}
 
                   </motion.div>
                 ) : (

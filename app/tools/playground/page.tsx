@@ -3,7 +3,8 @@ import { Header } from "@/components/header";
 import { ColorPlayground } from "@/components/color-playground";
 
 export const metadata: Metadata = {
-  title: "Color Playground | HueFlow",
+  title: "Color Playground",
+  alternates: { canonical: "/tools/playground" },
   description: "Interactively adjust hue, saturation, lightness, and contrast to preview a live UI theme in real time.",
 };
 

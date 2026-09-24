@@ -3,7 +3,8 @@ import { Header } from "@/components/header";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Color Tools | HueFlow",
+  title: "Color Tools",
+  alternates: { canonical: "/tools" },
   description: "Free color tools for designers and developers - color mixer, contrast checker, gradient generator, image color extractor, and more.",
 };
 
