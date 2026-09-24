@@ -200,8 +200,16 @@ const findCollectionEntry = cache(function findCollectionEntry<K extends keyof R
     if (!programmatic) return undefined;
     const resolved = findResolvedEntry("colors", slug);
     // Always use programmatic title/description (has hex, RGB, HSL) but keep resolved content sections if they exist
+    const override = resolved?.colorPageOverride;
     const merged = resolved
-      ? resolveContentEntry({ ...programmatic, sections: (resolved as { sections?: ResolvedContentEntry["sections"] }).sections ?? programmatic.sections })
+      ? resolveContentEntry({
+          ...programmatic,
+          sections: (resolved as { sections?: ResolvedContentEntry["sections"] }).sections ?? programmatic.sections,
+          ...(override?.title && { title: override.title }),
+          ...(override?.description && { description: override.description }),
+          ...(override?.answer && { answer: override.answer }),
+          ...(override?.faq && { faq: [...override.faq, ...programmatic.faq] }),
+        })
       : resolveContentEntry(programmatic);
     return merged;
   }

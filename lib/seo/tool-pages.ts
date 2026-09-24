@@ -1031,7 +1031,7 @@ export const blogPageContent = {
       href: "/guides/homepage-color-mistakes-hurting-conversions",
     },
     {
-      title: "Best Colors for Healthcare Websites in the USA",
+      title: "Healthcare & Medical Website Color Palettes",
       excerpt: "A US-focused guide to choosing healthcare colors that feel calmer, clearer, and more credible for patients.",
       category: "Guides",
       readTime: "6 min",

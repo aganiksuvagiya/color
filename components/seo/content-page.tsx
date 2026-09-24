@@ -150,6 +150,27 @@ export function ContentPageView({
           {/* ── Main article ── */}
           <article className="min-w-0 flex-1 space-y-5">
 
+            {/* Ready-to-use palettes */}
+            {entry.palettes && entry.palettes.length > 0 && (
+              <div className="rounded-2xl bg-white p-7">
+                <h2 className="mb-1.5 text-[18px] font-bold text-[#1c1712]">Ready-to-Use Color Palettes</h2>
+                <p className="mb-6 text-[14px] leading-[1.7] text-[#1c1712]/50">Click any swatch to copy its hex code.</p>
+                <div className="space-y-8">
+                  {entry.palettes.map((palette) => (
+                    <div key={palette.name}>
+                      <h3 className="text-[15px] font-semibold text-[#1c1712]">{palette.name}</h3>
+                      <p className="mb-3 text-[13px] text-[#1c1712]/45">{palette.useCase}</p>
+                      <PaletteColorStrip colors={palette.colors}/>
+                      <p className="mt-2.5 font-mono text-[12px] uppercase tracking-wide text-[#1c1712]/55">
+                        {palette.colors.join(" · ")}
+                      </p>
+                      <p className="mt-2 text-[14px] leading-[1.7] text-[#1c1712]/60">{palette.note}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Key takeaways */}
             <div className="rounded-2xl bg-white p-7">
               <h2 className="mb-4 text-[18px] font-bold text-[#1c1712]">Key Takeaways</h2>

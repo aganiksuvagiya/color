@@ -1,6 +1,31 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 
+import { findNamedColorByHex, findNamedColorBySlug, normalizeHexColor } from "@/lib/color-names";
+
+const HEX_COLOR_ROUTE = /^\/(colors|color-meanings)\/([^/]+)\/?$/;
+
+// Arbitrary hex slugs (e.g. /color-meanings/1372f6) 404 in page-utils, but Next
+// still renders that 404 and tries to persist it to the KV incremental cache -
+// under crawl bursts that exhausts the KV write quota ("Failed to set to cache").
+// Answer them here instead, before any render or KV write. Named colors and hex
+// codes that duplicate a named color (which canonicalize) still pass through.
+function isArbitraryHexSlug(pathname: string) {
+  const match = HEX_COLOR_ROUTE.exec(pathname);
+  if (!match) return false;
+
+  let slug: string;
+  try {
+    slug = decodeURIComponent(match[2]).toLowerCase();
+  } catch {
+    return false;
+  }
+  if (findNamedColorBySlug(slug)) return false;
+
+  const hex = normalizeHexColor(slug);
+  return hex !== null && !findNamedColorByHex(hex);
+}
+
 // These routes render on-demand for any hex/slug not already built at build
 // time (dynamicParams = true, revalidate = false), so an uncached hit costs a
 // full render plus a permanent Workers KV write. A crawler enumerating many
@@ -29,6 +54,16 @@ export const config = {
 };
 
 export default async function middleware(request: NextRequest) {
+  if (isArbitraryHexSlug(request.nextUrl.pathname)) {
+    return new NextResponse("Not found", {
+      status: 404,
+      headers: {
+        "Cache-Control": "public, max-age=86400",
+        "X-Robots-Tag": "noindex",
+      },
+    });
+  }
+
   const { env } = getCloudflareContext();
   const rateLimiter = (env as Record<string, unknown>).SLUG_RATE_LIMITER as
     | { limit: (options: { key: string }) => Promise<{ success: boolean }> }

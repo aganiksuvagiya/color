@@ -53,6 +53,13 @@ type EntityRelation = {
   connectedTo: string;
 };
 
+type ReadyPalette = {
+  name: string;
+  useCase: string;
+  colors: string[];
+  note: string;
+};
+
 type AiSection = {
   title: "What is it?" | "Why it matters?" | "Best use cases" | "Examples" | "Common mistakes" | "Related topics";
   body: string;
@@ -79,6 +86,15 @@ export type ContentEntry = {
   aiSections?: AiSection[];
   citationBlocks?: string[];
   paletteColors?: string[];
+  palettes?: ReadyPalette[];
+  // /colors pages use the programmatic title/description/answer/FAQ by default -
+  // set this to override them for a color that targets a specific search intent.
+  colorPageOverride?: {
+    title?: string;
+    description?: string;
+    answer?: string;
+    faq?: FaqItem[];
+  };
 };
 
 export type HubPage = {
@@ -121,6 +137,7 @@ const colors: ContentEntry[] = [
       { title: "Blue in Tailwind", href: "/tailwind/blue" },
       { title: "Blue CSS guide", href: "/css-colors/blue" },
       { title: "Blue color meaning", href: "/color-meanings/blue" },
+      { title: "Healthcare website color palettes", href: "/guides/best-colors-for-healthcare-websites-usa" },
     ],
   },
   {
@@ -158,8 +175,36 @@ const colors: ContentEntry[] = [
     answer:
       "Red is strongest when you need urgency, intensity, or immediate attention. It works for promotions, alerts, and bold retail campaigns, but it should be used selectively because it increases visual tension quickly.",
     intent: "informational",
-    keywords: ["red color psychology", "red marketing color", "red call to action"],
+    keywords: ["red color psychology", "red marketing color", "red call to action", "ff0000 meaning", "#ff0000 color"],
+    colorPageOverride: {
+      title: "#FF0000 Meaning: Red Color Hex Code, RGB & Palettes",
+      description: "#FF0000 is pure red - the maximum red channel (255) with no green or blue. Learn what #FF0000 means, its RGB and HSL values, WCAG contrast, and when to use it in design.",
+      answer:
+        "#FF0000 is the hex code for pure red. It means the red channel is at its maximum (FF = 255) while green and blue are at zero, giving RGB(255, 0, 0) and HSL(0°, 100%, 50%). It is the brightest, most saturated red a screen can display, and it signals urgency, energy, danger, and attention.",
+      faq: [
+        {
+          question: "What does #FF0000 mean?",
+          answer: "#FF0000 is a hexadecimal color code: the first pair (FF) is red at 255, the maximum; the second (00) is green at 0; the third (00) is blue at 0. So #FF0000 means 'full red, no green, no blue' - pure red, RGB(255, 0, 0).",
+        },
+        {
+          question: "Is #FF0000 the same as 'red' in CSS?",
+          answer: "Yes. The CSS named color 'red' is exactly #FF0000, and so are rgb(255, 0, 0) and hsl(0, 100%, 50%). All four produce the same pure red.",
+        },
+        {
+          question: "Is #FF0000 accessible on a white background?",
+          answer: "Barely. #FF0000 on white has a contrast ratio of 4.0:1, just under the WCAG AA minimum of 4.5:1 for body text, so it only passes for large text. For red error messages or links, use a darker red like #CC0000 (5.9:1) or Tailwind's #DC2626.",
+        },
+      ],
+    },
     sections: [
+      {
+        title: "What #FF0000 means",
+        body: "#FF0000 is pure red in hexadecimal notation. Each pair of characters is one color channel from 00 (0) to FF (255): FF for red, 00 for green, 00 for blue. That makes it RGB(255, 0, 0), HSL(0°, 100%, 50%), and CMYK(0, 100, 100, 0) - the most intense red a standard screen can show. In CSS it is identical to the named color 'red'.",
+      },
+      {
+        title: "#FF0000 in UI design",
+        body: "Pure #FF0000 is rarely used as-is in modern interfaces because it vibrates against white and dark backgrounds and only reaches 4.0:1 contrast on white. Most design systems use slightly darker, less saturated reds for errors and destructive actions - for example #DC2626 or #CC0000 - and reserve #FF0000 for logos, video/record indicators, and bold marketing moments.",
+      },
       { title: "Urgency and attention", body: "Red draws the eye faster than calmer hues, which makes it useful for limited-time offers, error states, and high-energy campaigns." },
       { title: "Retail and food use cases", body: "Commerce, food, sports, and entertainment brands often use red to create appetite, momentum, and emotional intensity." },
       { title: "Balance matters", body: "Red-heavy layouts can feel aggressive. Pair it with softer neutrals or darker anchoring colors to keep the experience readable." },
@@ -363,6 +408,7 @@ const colors: ContentEntry[] = [
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
       { title: "Mint horizon gradient", href: "/gradients/mint-horizon" },
       { title: "Teal color meaning", href: "/color-meanings/teal" },
+      { title: "Healthcare website color palettes", href: "/guides/best-colors-for-healthcare-websites-usa" },
     ],
   },
   {
@@ -488,8 +534,38 @@ const colors: ContentEntry[] = [
       "azure color palette",
       "azure color in web design",
       "light blue color hex",
+      "azure blue hex",
+      "#007FFF color",
     ],
+    colorPageOverride: {
+      title: "Azure Color Hex Code: #007FFF vs #F0FFFF, Meaning & Palettes",
+      description: "Azure has two hex codes: bright azure blue #007FFF (RGB 0, 127, 255) and pale CSS azure #F0FFFF (RGB 240, 255, 255). See the difference, meaning, contrast, and palettes for each.",
+      answer:
+        "Azure has two common hex codes. Traditional azure is a bright sky blue, #007FFF (RGB 0, 127, 255), halfway between blue and cyan. CSS/HTML azure is a pale, almost-white cyan, #F0FFFF (RGB 240, 255, 255). Use #007FFF for accents, icons, and illustrations; use #F0FFFF as a soft background tint.",
+      faq: [
+        {
+          question: "What is the hex code for azure color?",
+          answer: "Azure has two hex codes. The traditional azure blue is #007FFF (RGB 0, 127, 255; HSL 210°, 100%, 50%). The CSS named color 'azure' is #F0FFFF (RGB 240, 255, 255), a very pale cyan-white. If you mean the bright sky-blue azure, use #007FFF.",
+        },
+        {
+          question: "Why is CSS azure almost white?",
+          answer: "The CSS/X11 color names were defined decades ago and many of them don't match their traditional meaning. CSS 'azure' (#F0FFFF) is a pale tint, while the azure used in art, heraldry, and color theory is the bright blue #007FFF. Writing 'azure' in CSS always gives you #F0FFFF.",
+        },
+        {
+          question: "Is #007FFF azure accessible on white?",
+          answer: "Not for body text. #007FFF on white has a contrast ratio of about 3.8:1, which passes WCAG AA only for large text (18px bold or 24px regular) and UI icons. For links and small text, use a darker azure like #0066CC (5.6:1 on white).",
+        },
+      ],
+    },
     sections: [
+      {
+        title: "Azure #007FFF vs CSS azure #F0FFFF",
+        body: "The word 'azure' names two very different colors. Traditional azure (#007FFF, RGB 0, 127, 255) is a vivid sky blue that sits exactly between blue and cyan on the color wheel - this is the azure of clear skies, flags, and heraldry. CSS azure (#F0FFFF, RGB 240, 255, 255) is the web's named color, a nearly white tint with a cyan cast. When a designer or client says 'azure blue' they almost always mean #007FFF; when you type 'azure' in CSS you get #F0FFFF.",
+      },
+      {
+        title: "How to use azure blue #007FFF",
+        body: "#007FFF is bright, energetic, and friendly - it works for tech, travel, and consumer app brands, and for icons, illustrations, highlights, and large headings. On white it reaches only 3.8:1 contrast, so it passes WCAG AA for large text and UI components but not for body text or small links. For accessible text, darken it to #0066CC (5.6:1), and pair #007FFF with navy (#0B3D91), white, and pale azure #F0FFFF for a full palette.",
+      },
       {
         title: "What azure communicates",
         body: "Azure sits between white and pale cyan on the color spectrum. It communicates openness, spaciousness, and calm - similar to a clear sky or clean water. In UI design it rarely carries strong emotional weight, which makes it useful as a neutral surface color that does not compete with primary brand colors.",
@@ -500,7 +576,7 @@ const colors: ContentEntry[] = [
       },
       {
         title: "Azure vs. light blue vs. sky blue",
-        body: "Azure (#F0FFFF) is nearly white with a cyan undertone. Light blue (#ADD8E6) is more distinctly blue. Sky blue (#87CEEB) is the most saturated of the three. For backgrounds, azure is the safest because it causes the least interference with content. For fills and accents, light blue or sky blue provide more visible color.",
+        body: "CSS azure (#F0FFFF) is nearly white with a cyan undertone. Light blue (#ADD8E6) is more distinctly blue. Sky blue (#87CEEB) is the most saturated of the three. For backgrounds, azure is the safest because it causes the least interference with content. For fills and accents, light blue or sky blue provide more visible color.",
       },
       {
         title: "Palettes that work with azure",
@@ -1037,6 +1113,7 @@ const brandColorEntries: ContentEntry[] = [
       { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
       { title: "Teal color meaning", href: "/colors/teal" },
       { title: "Accessibility guide", href: "/accessibility/color-contrast" },
+      { title: "Healthcare website color palettes", href: "/guides/best-colors-for-healthcare-websites-usa" },
     ],
   },
   {
@@ -3814,21 +3891,60 @@ const guides: ContentEntry[] = [
   },
   {
     slug: "best-colors-for-healthcare-websites-usa",
-    title: "Best Colors for Healthcare Websites in the USA (2025 Guide)",
-    description: "The best colors for healthcare websites - blue, teal, soft green, and calm neutrals - with guidance on palettes for hospitals, clinics, telehealth, dental, and wellness brands.",
+    title: "Healthcare & Medical Website Color Palettes (2026 Guide)",
+    description: "6 ready-to-use color palettes for healthcare and medical websites, with hex codes for hospitals, clinics, telehealth, dental, mental health, and pediatric care. All text colors pass WCAG AA.",
     answer:
-      "The best colors for healthcare websites in the USA are blue, teal, soft green, and calm neutrals like white and light gray. Blue signals trust and clinical stability. Teal and green add warmth without losing professionalism. Warm colors like orange or red should stay as small accents only.",
+      "The best color palette for a healthcare or medical website pairs a trustworthy blue or teal primary with white or light gray backgrounds and a dark slate text color. Soft green adds warmth for wellness and dental brands. Warm colors like orange should stay as small CTA accents only. Below are 6 copy-ready healthcare color palettes with hex codes.",
     intent: "informational",
     keywords: [
-      "best colors for healthcare websites",
-      "healthcare website colors usa",
-      "medical website color palette",
-      "doctor website color strategy",
-      "hospital website colors",
       "color palette for healthcare website",
+      "healthcare color palette",
+      "color palette for medical website",
+      "medical website color palette",
+      "best colors for healthcare websites",
+      "healthcare color palette hex codes",
+      "hospital website colors",
       "telehealth website colors",
       "dental website color scheme",
-      "clinic website color guide",
+      "clinic website color palette",
+    ],
+    palettes: [
+      {
+        name: "Hospital & Health System",
+        useCase: "Hospitals, health systems, and insurance-adjacent services",
+        colors: ["#0B3D91", "#1D4ED8", "#60A5FA", "#F8FAFC", "#0F172A"],
+        note: "Deep navy for headers and trust, #1D4ED8 for buttons (6.7:1 on white), light slate background, near-black body text.",
+      },
+      {
+        name: "Clinic & Family Practice",
+        useCase: "Primary care, family doctors, and outpatient clinics",
+        colors: ["#0F766E", "#14B8A6", "#CCFBF1", "#FFFFFF", "#1E293B"],
+        note: "Teal feels calmer and more human than pure blue. Use #0F766E for buttons and links (5.5:1 on white), and pale mint for section backgrounds.",
+      },
+      {
+        name: "Telehealth App",
+        useCase: "Virtual care, patient portals, and health apps",
+        colors: ["#2563EB", "#0EA5E9", "#E0F2FE", "#F8FAFC", "#C2410C"],
+        note: "Bright, product-style blues with one warm accent. Keep #C2410C (5.2:1 on white) only for the main 'Book a Visit' CTA.",
+      },
+      {
+        name: "Dental Practice",
+        useCase: "Dentists, orthodontists, and cosmetic dental clinics",
+        colors: ["#0369A1", "#7DD3FC", "#A7F3D0", "#FFFFFF", "#334155"],
+        note: "Lighter and fresher than hospital palettes. Sky blue and mint signal clean and fresh; use #0369A1 for buttons (5.9:1 on white).",
+      },
+      {
+        name: "Mental Health & Therapy",
+        useCase: "Therapists, counseling, and behavioral health platforms",
+        colors: ["#3E5C76", "#7FA99B", "#E8EFEA", "#FAF7F2", "#2F3E46"],
+        note: "Muted, desaturated tones feel private and safe. Warm off-white background instead of stark white; #3E5C76 for actions (7:1 on white).",
+      },
+      {
+        name: "Pediatric Care",
+        useCase: "Children's hospitals, pediatricians, and family health",
+        colors: ["#1E3A8A", "#3B82F6", "#34D399", "#FCD34D", "#FFF7ED"],
+        note: "Friendly and optimistic without losing trust. Keep yellow and green for illustrations and highlights; use navy for all text.",
+      },
     ],
     sections: [
       {
@@ -3877,6 +3993,14 @@ const guides: ContentEntry[] = [
         question: "What colors should healthcare websites avoid?",
         answer: "Avoid high-saturation red as a primary color (it reads as emergency or danger), aggressive orange as a dominant tone, and dark or low-contrast background colors that slow reading during stressful decision-making.",
       },
+      {
+        question: "What is the best color palette for a medical website?",
+        answer: "A strong medical website palette uses a trustworthy blue (such as #1D4ED8) or teal (#0F766E) as the primary, white or #F8FAFC as the background, and dark slate (#0F172A or #1E293B) for body text. Add one light tint for section backgrounds and, optionally, one warm accent for the booking button.",
+      },
+      {
+        question: "How many colors should a healthcare website use?",
+        answer: "Most healthcare websites work best with 4 to 5 colors: one primary brand color, one lighter supporting tint, a neutral background, a dark text color, and an optional accent for calls to action. More colors than that usually make medical sites feel busy and less trustworthy.",
+      },
     ],
     definitions: [
       {
@@ -3906,6 +4030,8 @@ const guides: ContentEntry[] = [
       { label: "Warm accent (orange/coral)", bestFor: "CTAs, scheduling, highlights only", strengths: "Draws attention to key actions", watchouts: "Too much warmth reads as promotional or unsafe" },
     ],
     relatedLinks: [
+      { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
+      { title: "Wellness nature calm palette", href: "/palettes/wellness-nature-calm" },
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
       { title: "Blue color meaning", href: "/colors/blue" },
       { title: "Green color meaning", href: "/colors/green" },
@@ -4195,6 +4321,7 @@ const explainers: ContentEntry[] = [
       { title: "What blue means in color psychology", href: "/color-meanings/blue" },
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
       { title: "Blue vs green for trust", href: "/comparisons/blue-vs-green-for-trust" },
+      { title: "Healthcare website color palettes", href: "/guides/best-colors-for-healthcare-websites-usa" },
     ],
   },
   {
@@ -4479,6 +4606,7 @@ const bestColorsFor: ContentEntry[] = [
       },
     ],
     relatedLinks: [
+      { title: "Healthcare & medical color palettes (hex codes)", href: "/guides/best-colors-for-healthcare-websites-usa" },
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
       { title: "SaaS trust spectrum palette", href: "/palettes/saas-trust-spectrum" },
       { title: "Teal color page", href: "/colors/teal" },
