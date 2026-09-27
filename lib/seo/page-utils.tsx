@@ -3,7 +3,7 @@ import { cache } from "react";
 import type { Metadata } from "next";
 
 import { ContentPageView } from "@/components/seo/content-page";
-import { HubPageView } from "@/components/seo/hub-page";
+import { HubPageView, type HubDirectory } from "@/components/seo/hub-page";
 import { StructuredData } from "@/components/seo/structured-data";
 import { findResolvedEntry, getCollection, getColorMeaningOverride, getHubByPath, isColorMeaningAuthored, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
 import { buildProgrammaticBrandColorEntry, buildProgrammaticColorEntry, getHexDuplicateCanonicalSlug, getProgrammaticBrandColorSlugs, getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
@@ -16,6 +16,7 @@ import {
   buildWebPageSchema,
 } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/seo/site-config";
+import { namedColors } from "@/lib/color-names";
 
 export function buildPageMetadata({
   title,
@@ -69,6 +70,35 @@ export function buildPageMetadata({
   };
 }
 
+// Hubs only feature hand-authored entries as cards, but /colors and /color-meanings
+// have a page for every named color (and /brand-colors has programmatic industry
+// pages). Without a link from the hub those pages sit in the sitemap with no internal
+// links, and Google leaves them as "Discovered - currently not indexed". List the rest
+// A-Z so every indexable page is reachable from its hub.
+function getHubDirectory(path: string, featuredHrefs: Set<string>): HubDirectory | undefined {
+  const byName = <T extends { title: string }>(items: T[]) => items.sort((a, b) => a.title.localeCompare(b.title));
+
+  if (path === "/colors" || path === "/color-meanings") {
+    const links = namedColors
+      .filter((color) => path === "/colors" || isColorMeaningAuthored(color.slug))
+      .map((color) => ({ title: color.name, href: `${path}/${color.slug}`, hex: color.hex }))
+      .filter((link) => !featuredHrefs.has(link.href));
+    return {
+      heading: path === "/colors" ? "All named colors A-Z" : "All color meanings A-Z",
+      links: byName(links),
+    };
+  }
+
+  if (path === "/brand-colors") {
+    const links = getProgrammaticBrandColorSlugs()
+      .map((slug) => ({ title: buildProgrammaticBrandColorEntry(slug)?.title ?? slug, href: `/brand-colors/${slug}` }))
+      .filter((link) => !featuredHrefs.has(link.href));
+    return links.length > 0 ? { heading: "More industries", links: byName(links) } : undefined;
+  }
+
+  return undefined;
+}
+
 export function renderHub(path: string) {
   const hub = getHubByPath(path);
 
@@ -77,6 +107,7 @@ export function renderHub(path: string) {
   }
 
   const url = `${siteConfig.domain}${hub.path}`;
+  const directory = getHubDirectory(hub.path, new Set(hub.featuredLinks.map((l) => l.href)));
 
   return (
     <>
@@ -95,7 +126,7 @@ export function renderHub(path: string) {
           { name: hub.title, item: url },
         ])}
       />
-      <HubPageView hub={hub} />
+      <HubPageView hub={hub} directory={directory} />
     </>
   );
 }

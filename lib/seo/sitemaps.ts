@@ -2,19 +2,18 @@ import { routeCollections } from "@/lib/seo/content";
 import { getProgrammaticBrandColorSlugs, getProgrammaticColorSitemapPaths } from "@/lib/seo/programmatic";
 import { siteConfig } from "@/lib/seo/site-config";
 
+// No <lastmod>: nothing tracks when each page's content actually changed, and a
+// lastmod of "now" on every request tells Google every URL changed constantly,
+// which makes it ignore lastmod for the whole site. Omitting it is the honest option.
 type SitemapEntry = {
   loc: string;
-  lastmod: string;
   changefreq: "daily" | "weekly" | "monthly";
   priority: number;
 };
 
-const now = new Date().toISOString();
-
 function page(path: string, changefreq: SitemapEntry["changefreq"], priority: number): SitemapEntry {
   return {
     loc: `${siteConfig.domain}${path}`,
-    lastmod: now,
     changefreq,
     priority,
   };
@@ -145,7 +144,7 @@ export function renderSitemapXml(entries: SitemapEntry[]) {
   const body = entries
     .map(
       (entry) =>
-        `<url><loc>${entry.loc}</loc><lastmod>${entry.lastmod}</lastmod><changefreq>${entry.changefreq}</changefreq><priority>${entry.priority.toFixed(1)}</priority></url>`,
+        `<url><loc>${entry.loc}</loc><changefreq>${entry.changefreq}</changefreq><priority>${entry.priority.toFixed(1)}</priority></url>`,
     )
     .join("");
 
@@ -155,7 +154,7 @@ export function renderSitemapXml(entries: SitemapEntry[]) {
 
 export function renderSitemapIndexXml(paths: string[]) {
   const body = paths
-    .map((path) => `<sitemap><loc>${siteConfig.domain}${path}</loc><lastmod>${now}</lastmod></sitemap>`)
+    .map((path) => `<sitemap><loc>${siteConfig.domain}${path}</loc></sitemap>`)
     .join("");
 
   return `<?xml version="1.0" encoding="UTF-8"?>` +

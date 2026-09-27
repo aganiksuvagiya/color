@@ -1,10 +1,19 @@
 import { defineCloudflareConfig } from "@opennextjs/cloudflare";
-import kvIncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/kv-incremental-cache";
+import staticAssetsIncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/static-assets-incremental-cache";
 
 export default defineCloudflareConfig({
-	// Persists rendered ISR/SSG pages (e.g. dynamic /colors, /color-meanings slugs)
-	// in Workers KV so repeat requests are served from cache instead of
-	// re-rendering on every hit - avoids exceeding the Workers Free plan's
-	// per-request CPU limit on long-tail dynamic pages.
-	incrementalCache: kvIncrementalCache,
+	// Serves prerendered pages from Workers static assets - no KV or R2 reads or
+	// writes, so deploys and crawl bursts can't hit the KV free-tier write quota.
+	// Every route uses `revalidate = false` and nothing calls revalidateTag, so a
+	// read-only cache is enough. Pages that aren't prerendered (named-color hex
+	// duplicates, 404 slugs) still render on demand; the stock cache logs an
+	// error for each of those writes, so set/delete are no-ops here instead.
+	// `name` must stay the same: the deploy step matches it to copy the cache
+	// files into assets. If ISR/revalidation is ever added, move to R2 instead.
+	incrementalCache: {
+		name: staticAssetsIncrementalCache.name,
+		get: (key, cacheType) => staticAssetsIncrementalCache.get(key, cacheType),
+		set: async () => {},
+		delete: async () => {},
+	},
 });

@@ -6,10 +6,9 @@ import { findNamedColorByHex, findNamedColorBySlug, normalizeHexColor } from "@/
 const HEX_COLOR_ROUTE = /^\/(colors|color-meanings)\/([^/]+)\/?$/;
 
 // Arbitrary hex slugs (e.g. /color-meanings/1372f6) 404 in page-utils, but Next
-// still renders that 404 and tries to persist it to the KV incremental cache -
-// under crawl bursts that exhausts the KV write quota ("Failed to set to cache").
-// Answer them here instead, before any render or KV write. Named colors and hex
-// codes that duplicate a named color (which canonicalize) still pass through.
+// still does a full render to produce that 404, and crawlers enumerate these by
+// the thousand. Answer them here instead, before any render work. Named colors
+// and hex codes that duplicate a named color (which canonicalize) still pass through.
 function isArbitraryHexSlug(pathname: string) {
   const match = HEX_COLOR_ROUTE.exec(pathname);
   if (!match) return false;
@@ -26,11 +25,11 @@ function isArbitraryHexSlug(pathname: string) {
   return hex !== null && !findNamedColorByHex(hex);
 }
 
-// These routes render on-demand for any hex/slug not already built at build
-// time (dynamicParams = true, revalidate = false), so an uncached hit costs a
-// full render plus a permanent Workers KV write. A crawler enumerating many
-// distinct slugs quickly burns the KV daily write quota and the per-request
-// CPU budget. Rate limit per client IP before any of that work happens.
+// These routes render on-demand for any slug not prerendered at build time
+// (dynamicParams = true), and those renders are never cached (the incremental
+// cache is read-only static assets), so a crawler enumerating many distinct
+// slugs burns the per-request CPU budget. Rate limit per client IP before any
+// of that work happens.
 export const config = {
   matcher: [
     "/colors/:slug",

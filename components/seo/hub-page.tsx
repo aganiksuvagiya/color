@@ -3,7 +3,12 @@ import Link from "next/link";
 import type { HubPage } from "@/lib/seo/content";
 import { Header } from "@/components/header";
 
-export function HubPageView({ hub }: { hub: HubPage }) {
+export type HubDirectory = {
+  heading: string;
+  links: { title: string; href: string; hex?: string }[];
+};
+
+export function HubPageView({ hub, directory }: { hub: HubPage; directory?: HubDirectory }) {
   return (
     <main className="min-h-screen text-[#1c1712]" style={{ backgroundColor: "#f8f4ef" }}>
       <Header />
@@ -114,6 +119,34 @@ export function HubPageView({ hub }: { hub: HubPage }) {
           ))}
         </div>
       </section>
+
+      {/* A-Z directory of every page not featured above */}
+      {directory && directory.links.length > 0 && (
+        <section className="mx-auto max-w-[1400px] px-6 pb-16 lg:px-8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-semibold tracking-[-0.03em] text-[#1c1712]">{directory.heading}</h2>
+            <span className="text-sm text-[#1c1712]/35">{directory.links.length} pages</span>
+          </div>
+          <ul className="grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-3 lg:grid-cols-5">
+            {directory.links.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-sm text-[#1c1712]/65 transition-colors hover:bg-black/[0.04] hover:text-[#1c1712]"
+                >
+                  {link.hex && (
+                    <span
+                      className="h-3.5 w-3.5 shrink-0 rounded-full ring-1 ring-inset ring-black/10"
+                      style={{ backgroundColor: link.hex }}
+                    />
+                  )}
+                  <span className="truncate">{link.title}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
     </main>
   );
 }
