@@ -1,0 +1,44 @@
+{
+  "provider": "heygen",
+  "speed": 1,
+  "lines": [
+    {
+      "id": "01",
+      "text": "It all starts with one color."
+    },
+    {
+      "id": "02",
+      "text": "Grow it into a palette."
+    },
+    {
+      "id": "03",
+      "text": "Explore every combination."
+    },
+    {
+      "id": "04",
+      "text": "Palettes. Gradients. Trends."
+    },
+    {
+      "id": "05",
+      "text": "Then build an entire design system."
+    },
+    {
+      "id": "06",
+      "text": "From one color to a finished design."
+    },
+    {
+      "id": "07",
+      "text": "One color. Infinite possibilities."
+    },
+    {
+      "id": "08",
+      "text": "HueFlow. Discover your next color."
+    }
+  ],
+  "bgm": {
+    "mode": "retrieve",
+    "query": "premium cinematic ambient product film — soft felt piano and airy synth pads, gentle pulse, slow elegant build to a warm resolve, Apple keynote feel",
+    "blob": "One color. Infinite possibilities.",
+    "arc": "Transformation cascade (Feature-Benefit Cascade) — One color → Palette → Combination → Discover → System → Design → Statement → Brand"
+  }
+}

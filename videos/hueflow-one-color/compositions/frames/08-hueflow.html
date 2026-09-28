@@ -1,0 +1,171 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "HF Avenir"; font-weight: 400; src: local("AvenirNext-Regular"), local("Avenir Next Regular"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 500; src: local("AvenirNext-Medium"), local("Avenir Next Medium"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 600; src: local("AvenirNext-DemiBold"), local("Avenir Next Demi Bold"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 700; src: local("AvenirNext-Bold"), local("Avenir Next Bold"); }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "HF Avenir", "Avenir Next", sans-serif;
+      color: #1C1712;
+    }
+    .clip { position: absolute; inset: 0; }
+
+    #brand-bg {
+      background:
+        radial-gradient(1300px 850px at 50% 32%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 70%),
+        radial-gradient(900px 520px at 50% 58%, rgba(252, 224, 184, 0.24), rgba(252, 224, 184, 0) 70%),
+        #FAF7F2;
+    }
+
+    #brand-word {
+      position: absolute;
+      left: 0;
+      width: 1920px;
+      top: 356px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 128px;
+      line-height: 1;
+      letter-spacing: 0.26em;
+      text-indent: 0.26em;
+      color: #1C1712;
+      white-space: nowrap;
+    }
+    #brand-word .brand-ch { display: inline-block; will-change: transform, opacity, filter; }
+
+    .brand-dot {
+      position: absolute;
+      left: 949px;
+      top: 519px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      box-shadow: 0 6px 16px rgba(28, 23, 18, 0.18);
+      will-change: transform, opacity;
+    }
+    #brand-bar {
+      position: absolute;
+      left: 800px;
+      top: 526px;
+      width: 320px;
+      height: 8px;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      transform-origin: 50% 50%;
+      will-change: transform, opacity;
+    }
+    #brand-bar i { flex: 1; display: block; }
+
+    #brand-tag {
+      position: absolute;
+      left: 0;
+      width: 1920px;
+      top: 578px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 40px;
+      letter-spacing: -0.01em;
+      color: #766F66;
+    }
+    #brand-tag .brand-w { display: inline-block; margin: 0 0.12em; will-change: transform, opacity, filter; }
+
+    #brand-url {
+      position: absolute;
+      left: 850px;
+      top: 668px;
+      width: 220px;
+      height: 58px;
+      border-radius: 100px;
+      background: #FFFFFF;
+      border: 1px solid rgba(28, 23, 18, 0.1);
+      box-shadow: 0 12px 30px rgba(28, 23, 18, 0.1);
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 56px;
+      text-align: center;
+      color: #1C1712;
+      overflow: hidden;
+      will-change: clip-path, opacity;
+    }
+    #brand-url-edge {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 58px;
+      background: #E8531F;
+      will-change: transform, opacity;
+    }
+  </style>
+
+  <div data-hf-id="hf-6dd0" id="root" data-composition-id="08-hueflow" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-12ux" id="brand-bg" class="clip" data-start="0" data-duration="4.022" data-track-index="0"></div>
+
+    <div data-hf-id="hf-vq55" id="brand-stage" class="clip" data-start="0" data-duration="4.022" data-track-index="1">
+      <div data-hf-id="hf-w569" id="brand-word"><span data-hf-id="hf-a5ks" class="brand-ch">H</span><span data-hf-id="hf-eiy3" class="brand-ch">U</span><span data-hf-id="hf-861n" class="brand-ch">E</span><span data-hf-id="hf-7rqm" class="brand-ch">F</span><span data-hf-id="hf-bqsw" class="brand-ch">L</span><span data-hf-id="hf-ajvt" class="brand-ch">O</span><span data-hf-id="hf-dqc1" class="brand-ch">W</span></div>
+
+      <div data-hf-id="hf-659i" class="brand-dot" id="brand-d0" style="background:#264653"></div>
+      <div data-hf-id="hf-6ejp" class="brand-dot" id="brand-d1" style="background:#2A9D8F"></div>
+      <div data-hf-id="hf-esm4" class="brand-dot" id="brand-d2" style="background:#E8531F"></div>
+      <div data-hf-id="hf-sa0p" class="brand-dot" id="brand-d3" style="background:#F4A261"></div>
+      <div data-hf-id="hf-4txo" class="brand-dot" id="brand-d4" style="background:#FCE0B8"></div>
+      <div data-hf-id="hf-owyw" id="brand-bar"><i data-hf-id="hf-upam" style="background:#264653"></i><i data-hf-id="hf-tc3m" style="background:#2A9D8F"></i><i data-hf-id="hf-4636" style="background:#E8531F"></i><i data-hf-id="hf-q5yo" style="background:#F4A261"></i><i data-hf-id="hf-p39c" style="background:#FCE0B8"></i></div>
+
+      <div data-hf-id="hf-ndb3" id="brand-tag"><span data-hf-id="hf-bda7" class="brand-w">Discover</span><span data-hf-id="hf-03bf" class="brand-w">your</span><span data-hf-id="hf-ryox" class="brand-w">next</span><span data-hf-id="hf-0g8b" class="brand-w">color.</span></div>
+
+      <div data-hf-id="hf-1tkv" id="brand-url">hueflow.site<div data-hf-id="hf-cjh2" id="brand-url-edge"></div></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // Retimed for the 30s voiced cut: authored against 3.5s, scaled to the synced 4.022s.
+      const K = 4.022 / 3.5;
+      const T = (x) => x * K;
+
+      // Dots start at the frame edges and converge to evenly spaced slots on the bar's line.
+      const FROM = [[-1100, -380], [-760, 420], [0, -560], [760, 420], [1100, -380]];
+      const SLOT = [-128, -64, 0, 64, 128];
+      gsap.set("#brand-bar", { scaleX: 0, opacity: 1 });
+      gsap.set("#brand-url-edge", { x: 0, opacity: 0 });
+
+      // Scene 1 (0.0–1.3s) — palette dots converge; the wordmark resolves; the dots become the bar.
+      FROM.forEach(function (f, i) {
+        tl.fromTo("#brand-d" + i,
+          { x: f[0], y: f[1], opacity: 0 },
+          { x: SLOT[i], y: 0, opacity: 1, duration: T(0.95), ease: "power3.out" }, T(0.05 + i * 0.04));
+      });
+      tl.fromTo("#brand-word .brand-ch",
+        { opacity: 0, y: 26, filter: "blur(12px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: T(0.75), ease: "power3.out", stagger: T(0.05) }, T(0.45));
+      tl.fromTo(".brand-dot", { opacity: 1 }, { opacity: 0, duration: T(0.3), ease: "power1.in", immediateRender: false }, T(1.05));
+      tl.fromTo("#brand-bar", { scaleX: 0 }, { scaleX: 1, duration: T(0.55), ease: "power3.out", immediateRender: false }, T(1.05));
+
+      // Scene 2 (1.3–2.4s) — the tagline.
+      tl.fromTo("#brand-tag .brand-w",
+        { opacity: 0, y: 16, filter: "blur(10px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: T(0.65), ease: "power3.out", stagger: T(0.08) }, T(1.35));
+
+      // Scene 3 (2.4–3.5s) — the URL pill wipes in left→right on an orange leading edge; hold; gentle exit.
+      tl.fromTo("#brand-url",
+        { clipPath: "inset(0% 100% 0% 0% round 100px)" },
+        { clipPath: "inset(0% 0% 0% 0% round 100px)", duration: T(0.55), ease: "power3.inOut" }, T(2.3));
+      tl.fromTo("#brand-url-edge", { x: 0, opacity: 1 }, { x: 214, opacity: 1, duration: T(0.55), ease: "power3.inOut", immediateRender: false }, T(2.3));
+      tl.fromTo("#brand-url-edge", { opacity: 1 }, { opacity: 0, duration: T(0.2), immediateRender: false }, T(2.85));
+
+      // Final frame only: fade the lockup to the canvas as the music ends.
+      tl.fromTo("#brand-stage", { opacity: 1 }, { opacity: 0, duration: T(0.4), ease: "power1.in" }, T(3.1));
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["08-hueflow"] = tl;
+    })();
+  </script>
+</template>

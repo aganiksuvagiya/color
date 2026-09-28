@@ -1,0 +1,343 @@
+{
+  "typography": [
+    {
+      "role": "display",
+      "fontFamily": "Avenir Next",
+      "fontSize": "60.8px",
+      "fontWeight": "700",
+      "lineHeight": "62.624px",
+      "letterSpacing": "-3.04px",
+      "color": "#1C1712",
+      "sampleText": "Find colors that feel right."
+    },
+    {
+      "role": "heading",
+      "fontFamily": "Avenir Next",
+      "fontSize": "49.6px",
+      "fontWeight": "600",
+      "lineHeight": "52.08px",
+      "letterSpacing": "-1.984px",
+      "color": "#1C1712",
+      "sampleText": "One place for everything color."
+    },
+    {
+      "role": "heading-3",
+      "fontFamily": "Avenir Next",
+      "fontSize": "30px",
+      "fontWeight": "600",
+      "lineHeight": "36px",
+      "letterSpacing": "-0.9px",
+      "color": "#1C1712",
+      "sampleText": "Designers"
+    },
+    {
+      "role": "body",
+      "fontFamily": "ui-monospace",
+      "fontSize": "24px",
+      "fontWeight": "700",
+      "lineHeight": "32px",
+      "letterSpacing": "-0.6px",
+      "color": "#000000",
+      "sampleText": "#E8531F"
+    },
+    {
+      "role": "heading-3",
+      "fontFamily": "Avenir Next",
+      "fontSize": "18px",
+      "fontWeight": "600",
+      "lineHeight": "28px",
+      "letterSpacing": "-0.36px",
+      "color": "#1C1712",
+      "sampleText": "Color Psychology"
+    },
+    {
+      "role": "link",
+      "fontFamily": "Avenir Next",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "lineHeight": "24px",
+      "letterSpacing": "normal",
+      "color": "#1C1712",
+      "sampleText": ""
+    },
+    {
+      "role": "label",
+      "fontFamily": "Avenir Next",
+      "fontSize": "12px",
+      "fontWeight": "500",
+      "lineHeight": "16px",
+      "letterSpacing": "normal",
+      "color": "oklab(0.208812 0.00486316 0.0114866 / 0.5)",
+      "sampleText": "Custom"
+    }
+  ],
+  "spacing": {
+    "observed": [
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      16,
+      20,
+      24,
+      32,
+      80,
+      160
+    ],
+    "baseUnit": 8
+  },
+  "radius": [
+    "8px",
+    "18px",
+    "20px",
+    "24px",
+    "28px",
+    "3.35544e+07px"
+  ],
+  "shadows": [
+    {
+      "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(28, 23, 18, 0.04) 0px 2px 16px 0px",
+      "count": 6
+    },
+    {
+      "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(28, 23, 18, 0.1) 0px 0px 0px 1px",
+      "count": 5
+    },
+    {
+      "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(28, 23, 18, 0.12) 0px 0px 0px 2px",
+      "count": 1
+    },
+    {
+      "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(28, 23, 18, 0.09) 0px 4px 16px 0px",
+      "count": 1
+    },
+    {
+      "value": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(28, 23, 18, 0.06) 0px 4px 20px 0px",
+      "count": 1
+    }
+  ],
+  "buttons": [
+    {
+      "label": "Sign in",
+      "background": "transparent",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "oklab(0.208812 0.00486316 0.0114866 / 0.7)",
+      "padding": "8px 16px",
+      "borderRadius": "3.35544e+07px",
+      "border": "1px solid oklab(0 0 0 / 0.08)",
+      "boxShadow": "none",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "height": "38px"
+    },
+    {
+      "label": "#F5F3EF",
+      "background": "#F5F3EF",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#1C1712",
+      "padding": "0px",
+      "borderRadius": "8px",
+      "border": "1px solid rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "83.1875px"
+    },
+    {
+      "label": "#E4E0D8",
+      "background": "#E4E0D8",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#1C1712",
+      "padding": "0px",
+      "borderRadius": "8px",
+      "border": "1px solid rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "83.2031px"
+    },
+    {
+      "label": "#C9C4B8",
+      "background": "#C9C4B8",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#1C1712",
+      "padding": "0px",
+      "borderRadius": "8px",
+      "border": "1px solid rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "83.2031px"
+    },
+    {
+      "label": "#8A857A",
+      "background": "#8A857A",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#1C1712",
+      "padding": "0px",
+      "borderRadius": "8px",
+      "border": "1px solid rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "83.2031px"
+    },
+    {
+      "label": "#1C1712",
+      "background": "#1C1712",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#1C1712",
+      "padding": "0px",
+      "borderRadius": "8px",
+      "border": "1px solid rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "83.2031px"
+    }
+  ],
+  "cards": [
+    {
+      "label": "card",
+      "background": "#F5F3EF",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#1C1712",
+      "padding": "0px",
+      "borderRadius": "8px",
+      "border": "1px solid rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "83.1875px"
+    },
+    {
+      "label": "card",
+      "background": "#E4E0D8",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#1C1712",
+      "padding": "0px",
+      "borderRadius": "8px",
+      "border": "1px solid rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "83.2031px"
+    },
+    {
+      "label": "card",
+      "background": "#C9C4B8",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#1C1712",
+      "padding": "0px",
+      "borderRadius": "8px",
+      "border": "1px solid rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "83.2031px"
+    },
+    {
+      "label": "card",
+      "background": "#8A857A",
+      "backgroundImage": "",
+      "backdropFilter": "",
+      "color": "#1C1712",
+      "padding": "0px",
+      "borderRadius": "8px",
+      "border": "1px solid rgba(0, 0, 0, 0)",
+      "boxShadow": "none",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "height": "83.2031px"
+    }
+  ],
+  "nav": {
+    "label": "navigation",
+    "background": "oklab(0.999994 0.0000455677 0.0000200868 / 0.6)",
+    "backgroundImage": "",
+    "backdropFilter": "blur(12px)",
+    "color": "#1C1712",
+    "padding": "12px 20px",
+    "borderRadius": "3.35544e+07px",
+    "border": "1px solid oklab(0 0 0 / 0.06)",
+    "boxShadow": "none",
+    "fontSize": "16px",
+    "fontWeight": "400",
+    "height": "66px"
+  },
+  "chips": [
+    {
+      "label": "Today's Challenge",
+      "background": "oklab(0.637676 0.153561 0.118686 / 0.1)",
+      "color": "#E8531F",
+      "padding": "4px 12px",
+      "borderRadius": "3.35544e+07px",
+      "border": "0px solid rgb(232, 83, 31)",
+      "boxShadow": "none",
+      "fontSize": "10px",
+      "fontWeight": "700",
+      "height": "23px"
+    },
+    {
+      "label": "Open →",
+      "background": "transparent",
+      "color": "oklab(0.208812 0.00486316 0.0114866 / 0.6)",
+      "padding": "6px 16px",
+      "borderRadius": "3.35544e+07px",
+      "border": "1px solid oklab(0 0 0 / 0.1)",
+      "boxShadow": "none",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "height": "34px"
+    },
+    {
+      "label": "Start creating",
+      "background": "oklab(0.999994 0.0000455678 0.0000200868 / 0.15)",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+      "padding": "6px 16px",
+      "borderRadius": "3.35544e+07px",
+      "border": "0px solid oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+      "boxShadow": "none",
+      "fontSize": "10px",
+      "fontWeight": "700",
+      "height": "27px"
+    }
+  ],
+  "statCells": [],
+  "tabs": [],
+  "backgrounds": [
+    {
+      "value": "linear-gradient(155deg, rgb(255, 138, 90) 0%, rgb(232, 83, 31) 55%, rgb(194, 58, 16) 100%)",
+      "area": 484509
+    },
+    {
+      "value": "radial-gradient(circle, rgb(255, 96, 32) 0%, rgba(0, 0, 0, 0) 70%)",
+      "area": 102400
+    },
+    {
+      "value": "radial-gradient(circle, rgb(255, 179, 138) 0%, rgba(0, 0, 0, 0) 70%)",
+      "area": 65536
+    }
+  ],
+  "glass": [
+    {
+      "backdropFilter": "blur(12px)",
+      "background": "oklab(0.999994 0.0000455677 0.0000200868 / 0.6)",
+      "border": "1px solid oklab(0 0 0 / 0.06)",
+      "borderRadius": "3.35544e+07px",
+      "boxShadow": "",
+      "area": 92400
+    }
+  ]
+}

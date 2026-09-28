@@ -1,0 +1,313 @@
+{
+  "tts_provider": "heygen",
+  "voice_id": "05f19352e8f74b0392a8f411eba40de1",
+  "bgm": {
+    "path": "assets/bgm/track.mp3",
+    "volume": 0.12,
+    "query": "premium cinematic ambient product film — soft felt piano and airy synth pads, gentle pulse, slow elegant build to a warm resolve, Apple keynote feel",
+    "mode": "retrieve",
+    "duration_s": 40
+  },
+  "bgm_pending": false,
+  "bgm_provider": "heygen",
+  "bgm_pid": null,
+  "bgm_log": null,
+  "bgm_mode": "retrieve",
+  "bgm_target_duration_s": null,
+  "bgm_seed_duration_s": null,
+  "bgm_loop_count": null,
+  "voices": [
+    {
+      "id": "01",
+      "path": "assets/voice/01.wav",
+      "duration_s": 2.873,
+      "words": [
+        {
+          "id": "w0",
+          "text": "It",
+          "start": 0.256,
+          "end": 0.427
+        },
+        {
+          "id": "w1",
+          "text": "all",
+          "start": 0.469,
+          "end": 0.725
+        },
+        {
+          "id": "w2",
+          "text": "starts",
+          "start": 0.853,
+          "end": 1.152
+        },
+        {
+          "id": "w3",
+          "text": "with",
+          "start": 1.365,
+          "end": 1.493
+        },
+        {
+          "id": "w4",
+          "text": "one",
+          "start": 1.579,
+          "end": 1.835
+        },
+        {
+          "id": "w5",
+          "text": "color.",
+          "start": 2.048,
+          "end": 2.823764172335601
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "path": "assets/voice/02.wav",
+      "duration_s": 2.952,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Grow",
+          "start": 0.299,
+          "end": 0.725
+        },
+        {
+          "id": "w1",
+          "text": "it",
+          "start": 0.811,
+          "end": 0.939
+        },
+        {
+          "id": "w2",
+          "text": "into",
+          "start": 1.195,
+          "end": 1.579
+        },
+        {
+          "id": "w3",
+          "text": "a",
+          "start": 2.005,
+          "end": 2.133
+        },
+        {
+          "id": "w4",
+          "text": "palette.",
+          "start": 2.176,
+          "end": 2.92281179138322
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "path": "assets/voice/03.wav",
+      "duration_s": 2.691,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Explore",
+          "start": 0.256,
+          "end": 0.896
+        },
+        {
+          "id": "w1",
+          "text": "every",
+          "start": 1.109,
+          "end": 1.408
+        },
+        {
+          "id": "w2",
+          "text": "combination.",
+          "start": 1.621,
+          "end": 2.6609523809523807
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "path": "assets/voice/04.wav",
+      "duration_s": 3.318,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Palettes.",
+          "start": 0.256,
+          "end": 1.067
+        },
+        {
+          "id": "w1",
+          "text": "Gradients.",
+          "start": 1.365,
+          "end": 2.197
+        },
+        {
+          "id": "w2",
+          "text": "Trends.",
+          "start": 2.56,
+          "end": 3.28
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "path": "assets/voice/05.wav",
+      "duration_s": 3.683,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Then",
+          "start": 0.299,
+          "end": 0.512
+        },
+        {
+          "id": "w1",
+          "text": "build",
+          "start": 0.811,
+          "end": 1.493
+        },
+        {
+          "id": "w2",
+          "text": "an",
+          "start": 1.664,
+          "end": 1.749
+        },
+        {
+          "id": "w3",
+          "text": "entire",
+          "start": 1.877,
+          "end": 2.261
+        },
+        {
+          "id": "w4",
+          "text": "design",
+          "start": 2.475,
+          "end": 2.645
+        },
+        {
+          "id": "w5",
+          "text": "system.",
+          "start": 2.944,
+          "end": 3.644
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "path": "assets/voice/06.wav",
+      "duration_s": 3.736,
+      "words": [
+        {
+          "id": "w0",
+          "text": "From",
+          "start": 0.299,
+          "end": 0.512
+        },
+        {
+          "id": "w1",
+          "text": "one",
+          "start": 0.597,
+          "end": 0.8107
+        },
+        {
+          "id": "w2",
+          "text": "color",
+          "start": 0.896,
+          "end": 1.109
+        },
+        {
+          "id": "w3",
+          "text": "to",
+          "start": 1.323,
+          "end": 1.9627
+        },
+        {
+          "id": "w4",
+          "text": "a",
+          "start": 2.091,
+          "end": 2.176
+        },
+        {
+          "id": "w5",
+          "text": "finished",
+          "start": 2.219,
+          "end": 2.4747
+        },
+        {
+          "id": "w6",
+          "text": "design.",
+          "start": 2.859,
+          "end": 3.682
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "path": "assets/voice/07.wav",
+      "duration_s": 3.997,
+      "words": [
+        {
+          "id": "w0",
+          "text": "One",
+          "start": 0.299,
+          "end": 0.597
+        },
+        {
+          "id": "w1",
+          "text": "color.",
+          "start": 0.853,
+          "end": 1.6
+        },
+        {
+          "id": "w2",
+          "text": "Infinite",
+          "start": 1.877,
+          "end": 2.645
+        },
+        {
+          "id": "w3",
+          "text": "possibilities.",
+          "start": 2.901,
+          "end": 3.947709750566893
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "path": "assets/voice/08.wav",
+      "duration_s": 3.422,
+      "words": [
+        {
+          "id": "w0",
+          "text": "HueFlow.",
+          "start": 0.256,
+          "end": 1.088
+        },
+        {
+          "id": "w1",
+          "text": "Discover",
+          "start": 1.408,
+          "end": 1.8347
+        },
+        {
+          "id": "w2",
+          "text": "your",
+          "start": 2.005,
+          "end": 2.176
+        },
+        {
+          "id": "w3",
+          "text": "next",
+          "start": 2.219,
+          "end": 2.4747
+        },
+        {
+          "id": "w4",
+          "text": "color.",
+          "start": 2.773,
+          "end": 3.185986394557823
+        }
+      ]
+    }
+  ],
+  "sfx": [],
+  "total_duration_s": 26.672
+}

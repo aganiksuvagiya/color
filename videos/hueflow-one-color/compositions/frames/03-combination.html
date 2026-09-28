@@ -1,0 +1,387 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "HF Avenir"; font-weight: 400; src: local("AvenirNext-Regular"), local("Avenir Next Regular"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 500; src: local("AvenirNext-Medium"), local("Avenir Next Medium"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 600; src: local("AvenirNext-DemiBold"), local("Avenir Next Demi Bold"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 700; src: local("AvenirNext-Bold"), local("Avenir Next Bold"); }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "HF Avenir", "Avenir Next", sans-serif;
+      color: #1C1712;
+    }
+    .clip { position: absolute; inset: 0; }
+
+    #combo-bg {
+      background:
+        radial-gradient(1200px 800px at 28% 18%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 70%),
+        radial-gradient(900px 700px at 70% 50%, rgba(252, 224, 184, 0.18), rgba(252, 224, 184, 0) 70%),
+        #FAF7F2;
+    }
+
+    #combo-headline {
+      position: absolute;
+      left: 160px;
+      top: 78px;
+      font-weight: 600;
+      font-size: 54px;
+      letter-spacing: -0.03em;
+      color: #1C1712;
+    }
+    #combo-headline .combo-word { display: inline-block; margin-right: 0.24em; will-change: transform, opacity, filter; }
+
+    /* Left: glass Color Harmony panel */
+    #combo-panel {
+      position: absolute;
+      left: 160px;
+      top: 190px;
+      width: 740px;
+      height: 690px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      box-shadow: 0 2px 6px rgba(28, 23, 18, 0.05), 0 28px 64px rgba(28, 23, 18, 0.14);
+      will-change: transform, opacity;
+    }
+    #combo-panel-title {
+      position: absolute;
+      left: 200px;
+      top: 222px;
+      font-weight: 600;
+      font-size: 26px;
+      letter-spacing: -0.01em;
+    }
+    #combo-panel-sub {
+      position: absolute;
+      left: 200px;
+      top: 258px;
+      font-weight: 500;
+      font-size: 17px;
+      color: #766F66;
+    }
+
+    /* Hue wheel centred on (530, 520), outer radius 215, ring 62px */
+    #combo-wheel {
+      position: absolute;
+      left: 315px;
+      top: 305px;
+      width: 430px;
+      height: 430px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg,
+        hsl(0, 82%, 58%), hsl(30, 88%, 56%), hsl(60, 85%, 55%), hsl(90, 62%, 50%), hsl(120, 55%, 46%),
+        hsl(150, 58%, 44%), hsl(180, 62%, 44%), hsl(210, 68%, 50%), hsl(240, 62%, 58%), hsl(270, 58%, 58%),
+        hsl(300, 58%, 58%), hsl(330, 72%, 58%), hsl(360, 82%, 58%));
+      -webkit-mask: radial-gradient(circle, transparent 152px, #000 153px);
+      mask: radial-gradient(circle, transparent 152px, #000 153px);
+      box-shadow: 0 18px 44px rgba(28, 23, 18, 0.12);
+      will-change: transform, opacity;
+    }
+    #combo-wheel-core {
+      position: absolute;
+      left: 390px;
+      top: 380px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(28, 23, 18, 0.06);
+      will-change: opacity;
+    }
+    /* Arms rotate around the wheel centre; each marker sits on the ring's mid radius (184px). */
+    .combo-arm {
+      position: absolute;
+      left: 530px;
+      top: 520px;
+      width: 0;
+      height: 0;
+      will-change: transform, opacity;
+    }
+    .combo-arm-line {
+      position: absolute;
+      left: -1px;
+      top: -168px;
+      width: 2px;
+      height: 168px;
+      background: rgba(28, 23, 18, 0.22);
+    }
+    .combo-marker {
+      position: absolute;
+      left: -15px;
+      top: -199px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 3px solid rgba(28, 23, 18, 0.55);
+      box-shadow: 0 4px 12px rgba(28, 23, 18, 0.22);
+    }
+    #combo-arm0 .combo-marker { left: -19px; top: -203px; width: 38px; height: 38px; border: 4px solid #E8531F; }
+
+    /* Mode chips */
+    .combo-chip {
+      position: absolute;
+      top: 770px;
+      height: 52px;
+      border-radius: 100px;
+      line-height: 50px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      color: #766F66;
+      border: 1px solid rgba(28, 23, 18, 0.1);
+      background: rgba(255, 255, 255, 0.7);
+    }
+    #combo-chip0 { left: 200px; width: 196px; }
+    #combo-chip1 { left: 408px; width: 160px; }
+    #combo-chip2 { left: 580px; width: 132px; }
+    #combo-chip-select {
+      position: absolute;
+      left: 200px;
+      top: 770px;
+      width: 196px;
+      height: 52px;
+      border-radius: 100px;
+      border: 2px solid #E8531F;
+      background: rgba(232, 83, 31, 0.08);
+      will-change: transform;
+      transform-origin: 0 50%;
+    }
+
+    /* Right: live palette cards. Three groups share the area x 1000–1760, y 250–730. */
+    #combo-mode {
+      position: absolute;
+      left: 1000px;
+      top: 196px;
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 0.14em;
+      color: #E8531F;
+    }
+    .combo-mode-word { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: opacity; }
+    .combo-group { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; will-change: opacity, transform; }
+    .combo-card {
+      position: absolute;
+      top: 250px;
+      height: 480px;
+      border-radius: 28px;
+      box-shadow: 0 1px 2px rgba(28, 23, 18, 0.05), 0 18px 40px rgba(28, 23, 18, 0.13);
+    }
+    .combo-hex {
+      position: absolute;
+      top: 752px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 19px;
+      letter-spacing: 0.12em;
+      font-variant-numeric: tabular-nums;
+      color: #6A635B;
+    }
+
+    /* Cursor (simulated-cursor component, frame-prefixed); tip at the element's top-left. */
+    #combo-cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 44px;
+      height: 44px;
+      z-index: 10;
+      filter: drop-shadow(0 8px 18px rgba(28, 23, 18, 0.22));
+      will-change: transform;
+    }
+    #combo-cursor svg { width: 100%; height: 100%; display: block; transform-origin: 12% 12%; }
+    .combo-pulse {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 64px;
+      height: 64px;
+      margin-left: -32px;
+      margin-top: -32px;
+      border-radius: 50%;
+      border: 2px solid rgba(232, 83, 31, 0.75);
+      z-index: 9;
+      will-change: transform, opacity;
+    }
+  </style>
+
+  <div data-hf-id="hf-y022" id="root" data-composition-id="03-combination" data-width="1920" data-height="1080" data-duration="3.491">
+    <div data-hf-id="hf-kocy" id="combo-bg" class="clip" data-start="0" data-duration="3.491" data-track-index="0"></div>
+
+    <div data-hf-id="hf-jiws" id="combo-stage" class="clip" data-start="0" data-duration="3.491" data-track-index="1">
+      <div data-hf-id="hf-f5xy" id="combo-headline">
+        <span data-hf-id="hf-gkux" class="combo-word">Explore</span><span data-hf-id="hf-udj9" class="combo-word">every</span><span data-hf-id="hf-1j31" class="combo-word">combination.</span>
+      </div>
+
+      <div data-hf-id="hf-tkms" id="combo-panel"></div>
+      <div data-hf-id="hf-i496" id="combo-panel-title">Color Harmony</div>
+      <div data-hf-id="hf-fs4f" id="combo-panel-sub">Complementary, analogous and triadic</div>
+      <div data-hf-id="hf-957z" id="combo-wheel"></div>
+      <div data-hf-id="hf-dvyt" id="combo-wheel-core"></div>
+
+      <div data-hf-id="hf-58ks" class="combo-arm" id="combo-arm4"><div data-hf-id="hf-ft1u" class="combo-arm-line"></div><div data-hf-id="hf-opqh" class="combo-marker"></div></div>
+      <div data-hf-id="hf-sq2b" class="combo-arm" id="combo-arm3"><div data-hf-id="hf-pxxy" class="combo-arm-line"></div><div data-hf-id="hf-sy0t" class="combo-marker"></div></div>
+      <div data-hf-id="hf-orya" class="combo-arm" id="combo-arm2"><div data-hf-id="hf-qc8z" class="combo-arm-line"></div><div data-hf-id="hf-u4xw" class="combo-marker"></div></div>
+      <div data-hf-id="hf-ktu9" class="combo-arm" id="combo-arm1"><div data-hf-id="hf-qqk0" class="combo-arm-line"></div><div data-hf-id="hf-tqmv" class="combo-marker"></div></div>
+      <div data-hf-id="hf-k26g" class="combo-arm" id="combo-arm0"><div data-hf-id="hf-nyet" class="combo-arm-line"></div><div data-hf-id="hf-uxjy" class="combo-marker"></div></div>
+
+      <div data-hf-id="hf-rh2x" id="combo-chip-select"></div>
+      <div data-hf-id="hf-o3ak" class="combo-chip" id="combo-chip0">Complementary</div>
+      <div data-hf-id="hf-7980" class="combo-chip" id="combo-chip1">Analogous</div>
+      <div data-hf-id="hf-q9fg" class="combo-chip" id="combo-chip2">Triadic</div>
+
+      <div data-hf-id="hf-vosv" id="combo-mode">
+        <span data-hf-id="hf-an42" class="combo-mode-word" id="combo-mode0">COMPLEMENTARY</span>
+        <span data-hf-id="hf-xlqy" class="combo-mode-word" id="combo-mode1">ANALOGOUS</span>
+        <span data-hf-id="hf-mgf2" class="combo-mode-word" id="combo-mode2">TRIADIC</span>
+      </div>
+
+      <!-- Complementary pair (live-synced to the handle) -->
+      <div data-hf-id="hf-7mtw" class="combo-group" id="combo-g0">
+        <div data-hf-id="hf-75js" class="combo-card" id="combo-pair-a" style="left:1000px;width:368px;background:#E8531F"></div>
+        <div data-hf-id="hf-svky" class="combo-card" id="combo-pair-b" style="left:1392px;width:368px;background:#1D4E89"></div>
+        <div data-hf-id="hf-cmam" class="combo-hex" id="combo-pair-ha" style="left:1000px;width:368px">#E8531F</div>
+        <div data-hf-id="hf-u7pe" class="combo-hex" id="combo-pair-hb" style="left:1392px;width:368px">#1D4E89</div>
+      </div>
+      <!-- Analogous five -->
+      <div data-hf-id="hf-8ehp" class="combo-group" id="combo-g1">
+        <div data-hf-id="hf-vusp" class="combo-card" style="left:1000px;width:140px;background:#D8342A"></div>
+        <div data-hf-id="hf-z94s" class="combo-card" style="left:1155px;width:140px;background:#E8531F"></div>
+        <div data-hf-id="hf-7qi6" class="combo-card" style="left:1310px;width:140px;background:#F28C28"></div>
+        <div data-hf-id="hf-1bd4" class="combo-card" style="left:1465px;width:140px;background:#F2B134"></div>
+        <div data-hf-id="hf-7zlz" class="combo-card" style="left:1620px;width:140px;background:#B8321F"></div>
+        <div data-hf-id="hf-z9m4" class="combo-hex" style="left:1000px;width:140px;font-size:16px">#D8342A</div>
+        <div data-hf-id="hf-okkv" class="combo-hex" style="left:1155px;width:140px;font-size:16px">#E8531F</div>
+        <div data-hf-id="hf-k08t" class="combo-hex" style="left:1310px;width:140px;font-size:16px">#F28C28</div>
+        <div data-hf-id="hf-4n9v" class="combo-hex" style="left:1465px;width:140px;font-size:16px">#F2B134</div>
+        <div data-hf-id="hf-1spq" class="combo-hex" style="left:1620px;width:140px;font-size:16px">#B8321F</div>
+      </div>
+      <!-- Triadic three -->
+      <div data-hf-id="hf-cclq" class="combo-group" id="combo-g2">
+        <div data-hf-id="hf-332q" class="combo-card" style="left:1000px;width:237px;background:#E8531F"></div>
+        <div data-hf-id="hf-53dz" class="combo-card" style="left:1261px;width:237px;background:#2E9E5B"></div>
+        <div data-hf-id="hf-39cm" class="combo-card" style="left:1522px;width:237px;background:#5B4BDB"></div>
+        <div data-hf-id="hf-i5r4" class="combo-hex" style="left:1000px;width:237px">#E8531F</div>
+        <div data-hf-id="hf-jft5" class="combo-hex" style="left:1261px;width:237px">#2E9E5B</div>
+        <div data-hf-id="hf-izmu" class="combo-hex" style="left:1522px;width:237px">#5B4BDB</div>
+      </div>
+
+      <div data-hf-id="hf-9nvb" class="combo-pulse" id="combo-pulse1"></div>
+      <div data-hf-id="hf-ysdo" class="combo-pulse" id="combo-pulse2"></div>
+      <div data-hf-id="hf-m95g" id="combo-cursor">
+        <svg data-hf-id="hf-fpqu" viewBox="0 0 24 24" width="44" height="44">
+          <path data-hf-id="hf-sxlg" d="M3 2.8 20.6 14 12.8 15.5 9 22 3 2.8Z" fill="#FFFFFF" stroke="rgba(28,23,18,0.55)" stroke-width="1.3" stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const CX = 530, CY = 520, R = 184;
+      const COMP_OFFSET = 197; // resting complement of hue 16 lands on the site's #1D4E89
+
+      function hslToHex(h, s, l) {
+        h = ((h % 360) + 360) % 360; s /= 100; l /= 100;
+        const k = (n) => (n + h / 30) % 12;
+        const a = s * Math.min(l, 1 - l);
+        const f = (n) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+        const to = (x) => Math.round(x * 255).toString(16).padStart(2, "0");
+        return ("#" + to(f(0)) + to(f(8)) + to(f(4))).toUpperCase();
+      }
+      // Anchor the live pair to the brand hexes exactly at rest (hue 16), interpolate hsl elsewhere.
+      function pairColors(h) {
+        const d = h - 16;
+        if (Math.abs(d) < 0.01) return ["#E8531F", "#1D4E89"];
+        return [hslToHex(h, 81, 52), hslToHex(h + COMP_OFFSET, 65, 33)];
+      }
+
+      const arm0 = document.getElementById("combo-arm0");
+      const arm1 = document.getElementById("combo-arm1");
+      const cursor = document.getElementById("combo-cursor");
+      const pa = document.getElementById("combo-pair-a");
+      const pb = document.getElementById("combo-pair-b");
+      const ha = document.getElementById("combo-pair-ha");
+      const hb = document.getElementById("combo-pair-hb");
+
+      function tipAt(h) {
+        const r = (h * Math.PI) / 180;
+        return { x: CX + R * Math.sin(r) + 4, y: CY - R * Math.cos(r) + 4 };
+      }
+      const hue = { h: 16 };
+      function applyHue() {
+        const h = hue.h;
+        gsap.set(arm0, { rotation: h });
+        gsap.set(arm1, { rotation: h + COMP_OFFSET });
+        const c = pairColors(h);
+        pa.style.background = c[0]; pb.style.background = c[1];
+        ha.textContent = c[0]; hb.textContent = c[1];
+        const p = tipAt(h);
+        gsap.set(cursor, { x: p.x, y: p.y });
+      }
+
+      // Retimed for the 30s voiced cut (2.991s, VO "Explore every combination."):
+      // one drag that carries the handle to the triadic position, then a single Triadic click.
+
+      // Baselines
+      gsap.set(["#combo-arm2", "#combo-arm3", "#combo-arm4"], { rotation: 16, opacity: 0 });
+      gsap.set("#combo-arm0", { rotation: 16 });
+      gsap.set("#combo-arm1", { rotation: 16 + COMP_OFFSET });
+      gsap.set(["#combo-g1", "#combo-g2"], { opacity: 0 });
+      gsap.set(["#combo-mode1", "#combo-mode2"], { opacity: 0 });
+      gsap.set("#combo-chip0", { color: "#E8531F" });
+      gsap.set(["#combo-chip1", "#combo-chip2"], { color: "#766F66" });
+      gsap.set("#combo-chip-select", { x: 0, scaleX: 1 });
+      gsap.set("#combo-cursor", { x: 2000, y: 1120 });
+      gsap.set(["#combo-pulse1", "#combo-pulse2"], { scale: 0.2, opacity: 0 });
+
+      // Scene 1 (0.0–0.6s) — panel, wheel and the complementary pair establish (entering under the push-slide).
+      tl.fromTo("#combo-panel", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.0);
+      tl.fromTo(["#combo-panel-title", "#combo-panel-sub"], { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out", stagger: 0.05 }, 0.08);
+      tl.fromTo(["#combo-wheel", "#combo-wheel-core"], { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.55, ease: "power3.out" }, 0.05);
+      tl.fromTo(["#combo-arm0", "#combo-arm1"], { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.3);
+      tl.fromTo([".combo-chip", "#combo-chip-select"], { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out", stagger: 0.04 }, 0.2);
+      tl.fromTo("#combo-mode", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.2);
+      tl.fromTo("#combo-g0", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.12);
+
+      // Scene 2 (0.5–1.75s) — the cursor grabs the handle and drags it round to the green hue;
+      // the complement arm and the pair cards recolour live in the same beat.
+      const start = tipAt(16);
+      tl.fromTo("#combo-cursor", { x: 2000, y: 1120 }, { x: start.x, y: start.y, duration: 0.5, ease: "power3.out", immediateRender: false }, 0.2);
+      tl.fromTo("#combo-cursor svg", { scale: 1 }, { scale: 0.88, duration: 0.1, ease: "power2.in" }, 0.72);
+      tl.fromTo(hue, { h: 16 }, { h: 136, duration: 0.95, ease: "power2.inOut", onUpdate: applyHue, immediateRender: false }, 0.8);
+      tl.fromTo("#combo-cursor svg", { scale: 0.88 }, { scale: 1, duration: 0.18, ease: "power3.out", immediateRender: false }, 1.78);
+
+      // The headline lands while the voice says it.
+      tl.fromTo("#combo-headline .combo-word",
+        { opacity: 0, y: 16, filter: "blur(8px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "power3.out", stagger: 0.09 }, 0.45);
+
+      // Scene 3 (1.8–2.99s) — click Triadic: markers settle at 120° steps, the three-card set lands, hold.
+      const chip2 = { x: 652, y: 800 };
+      const here = tipAt(136);
+      tl.fromTo("#combo-cursor", { x: here.x, y: here.y }, { x: chip2.x, y: chip2.y, duration: 0.38, ease: "power3.inOut", immediateRender: false }, 1.84);
+      tl.fromTo("#combo-cursor svg", { scale: 1 }, { scale: 0.88, duration: 0.08, ease: "power2.in", immediateRender: false }, 2.24);
+      tl.fromTo("#combo-cursor svg", { scale: 0.88 }, { scale: 1, duration: 0.18, ease: "power3.out", immediateRender: false }, 2.33);
+      tl.fromTo("#combo-pulse2", { x: chip2.x - 4, y: chip2.y - 4, scale: 0.2, opacity: 0.9 }, { x: chip2.x - 4, y: chip2.y - 4, scale: 2.2, opacity: 0, duration: 0.45, ease: "power2.out", immediateRender: false }, 2.27);
+      tl.fromTo("#combo-chip-select", { x: 0, scaleX: 1 }, { x: 380, scaleX: 132 / 196, duration: 0.36, ease: "power3.inOut", immediateRender: false }, 2.27);
+      tl.fromTo("#combo-chip0", { color: "#E8531F" }, { color: "#766F66", duration: 0.2, immediateRender: false }, 2.3);
+      tl.fromTo("#combo-chip2", { color: "#766F66" }, { color: "#E8531F", duration: 0.2, immediateRender: false }, 2.3);
+      tl.fromTo("#combo-arm1", { rotation: 136 + COMP_OFFSET }, { rotation: 256, duration: 0.4, ease: "power3.inOut", immediateRender: false }, 2.29);
+      tl.fromTo("#combo-arm2", { rotation: 136, opacity: 0 }, { rotation: 16, opacity: 1, duration: 0.4, ease: "power3.inOut", immediateRender: false }, 2.29);
+      tl.fromTo("#combo-g0", { opacity: 1, y: 0 }, { opacity: 0, y: -12, duration: 0.14, ease: "power2.in", immediateRender: false }, 2.29);
+      tl.fromTo("#combo-g2", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out", immediateRender: false }, 2.4);
+      tl.fromTo("#combo-mode0", { opacity: 1 }, { opacity: 0, duration: 0.12, immediateRender: false }, 2.29);
+      tl.fromTo("#combo-mode2", { opacity: 0 }, { opacity: 1, duration: 0.25, immediateRender: false }, 2.4);
+
+      window.__timelines["03-combination"] = tl;
+    })();
+  </script>
+</template>

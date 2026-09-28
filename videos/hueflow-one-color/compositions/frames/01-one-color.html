@@ -1,0 +1,175 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "HF Avenir"; font-weight: 400; src: local("AvenirNext-Regular"), local("Avenir Next Regular"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 500; src: local("AvenirNext-Medium"), local("Avenir Next Medium"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 600; src: local("AvenirNext-DemiBold"), local("Avenir Next Demi Bold"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 700; src: local("AvenirNext-Bold"), local("Avenir Next Bold"); }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "HF Avenir", "Avenir Next", sans-serif;
+      color: #1C1712;
+    }
+    .clip { position: absolute; inset: 0; }
+
+    #one-color-bg {
+      background:
+        radial-gradient(1200px 800px at 28% 18%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 70%),
+        radial-gradient(900px 700px at 50% 42%, rgba(252, 224, 184, 0.22), rgba(252, 224, 184, 0) 70%),
+        #FAF7F2;
+    }
+
+    /* Stage pushes in around the tile's centre (960, 430). Base tile size is 240/1.04 so the
+       landed visual size is exactly 240px at the end of the push (handoff contract). */
+    #one-color-stage {
+      transform-origin: 960px 430px;
+      will-change: transform;
+    }
+    #one-color-glow {
+      position: absolute;
+      left: 960px;
+      top: 430px;
+      width: 760px;
+      height: 760px;
+      margin-left: -380px;
+      margin-top: -380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(198, 62, 16, 0.95) 0%, rgba(232, 83, 31, 0.45) 28%, rgba(232, 83, 31, 0) 64%);
+      z-index: 1;
+      will-change: transform, opacity;
+    }
+    #one-color-tilewrap {
+      position: absolute;
+      left: 960px;
+      top: 430px;
+      width: 230.77px;
+      height: 230.77px;
+      margin-left: -115.385px;
+      margin-top: -115.385px;
+      z-index: 2;
+    }
+    #one-color-tile {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, #F0642E 0%, #E8531F 55%, #D9481A 100%);
+      overflow: hidden;
+      box-shadow: 0 1px 2px rgba(28, 23, 18, 0.06), 0 18px 40px rgba(28, 23, 18, 0.14), 0 40px 90px rgba(198, 62, 16, 0.18);
+      will-change: transform, border-radius;
+    }
+    #one-color-sheen {
+      position: absolute;
+      top: -20%;
+      left: 0;
+      width: 80%;
+      height: 140%;
+      background: linear-gradient(100deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.12) 30%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.12) 70%, rgba(255, 255, 255, 0) 100%);
+      transform: rotate(12deg);
+      will-change: transform, opacity;
+    }
+    #one-color-hex {
+      position: absolute;
+      left: 0;
+      width: 1920px;
+      top: 578px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.14em;
+      font-variant-numeric: tabular-nums;
+      color: #766F66;
+      z-index: 3;
+    }
+    #one-color-line {
+      position: absolute;
+      left: 0;
+      width: 1920px;
+      top: 650px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 54px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: #1C1712;
+      z-index: 3;
+    }
+    #one-color-line .one-color-word {
+      display: inline-block;
+      margin: 0 0.12em;
+      will-change: transform, opacity, filter;
+    }
+  </style>
+
+  <div data-hf-id="hf-i47q" id="root" data-composition-id="01-one-color" data-width="1920" data-height="1080" data-duration="4.274">
+    <div data-hf-id="hf-t3rr" id="one-color-bg" class="clip" data-start="0" data-duration="4.274" data-track-index="0"></div>
+
+    <div data-hf-id="hf-zv97" id="one-color-stage" class="clip" data-start="0" data-duration="4.274" data-track-index="1">
+      <div data-hf-id="hf-y555" id="one-color-glow"></div>
+      <div data-hf-id="hf-4bgq" id="one-color-tilewrap">
+        <div data-hf-id="hf-gjku" id="one-color-tile"><div data-hf-id="hf-5eu1" id="one-color-sheen"></div></div>
+      </div>
+      <div data-hf-id="hf-k1r8" id="one-color-hex">#E8531F</div>
+      <div data-hf-id="hf-ilpw" id="one-color-line">
+        <span data-hf-id="hf-j1bv" class="one-color-word">It</span><span class="one-color-word">all</span><span data-hf-id="hf-4yan" class="one-color-word">starts</span><span data-hf-id="hf-pt82" class="one-color-word">with</span><span data-hf-id="hf-zplq" class="one-color-word">one</span><span data-hf-id="hf-nud1" class="one-color-word">color.</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // Retimed for the 30s voiced cut: authored against 6s, scaled to the synced 3.774s.
+      const K = 3.774 / 6;
+      const T = (x) => x * K;
+
+      // Scene 1 (0.0–1.8s) — a point of colour swells into a tile; the glow lands on the same beat.
+      tl.fromTo("#one-color-tile",
+        { scale: 0.035, borderRadius: "50%" },
+        { scale: 1, borderRadius: "20px", duration: T(1.45), ease: "power3.out" }, T(0.25));
+      tl.fromTo("#one-color-glow",
+        { opacity: 0, scale: 0.8 },
+        { opacity: 0.3, scale: 1, duration: T(1.3), ease: "power2.out" }, T(0.4));
+
+      // Scene 2 (1.8–3.6s) — corners soften, one sheen pass, gentle push-in (front half only), hex fades up.
+      tl.fromTo("#one-color-tile",
+        { borderRadius: "20px" },
+        { borderRadius: "34.615px", duration: T(1.2), ease: "power2.inOut", immediateRender: false }, T(1.8));
+      gsap.set("#one-color-sheen", { x: -260, opacity: 0 });
+      tl.fromTo("#one-color-sheen", { x: -260 }, { x: 360, duration: T(1.3), ease: "none", immediateRender: false }, T(2.0));
+      tl.fromTo("#one-color-sheen", { opacity: 0 }, { opacity: 1, duration: T(0.35), ease: "power1.out" }, T(2.0));
+      tl.fromTo("#one-color-sheen", { opacity: 1 }, { opacity: 0, duration: T(0.35), ease: "power1.in", immediateRender: false }, T(2.95));
+      tl.fromTo("#one-color-stage",
+        { scale: 1 },
+        { scale: 1.04, duration: T(1.8), ease: "power2.inOut" }, T(1.8));
+      tl.fromTo("#one-color-hex",
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: T(0.8), ease: "power3.out" }, T(2.6));
+
+      // Scene 3 (3.6–6.0s) — the line reveals word by word, blur to sharp.
+      tl.fromTo("#one-color-line .one-color-word",
+        { opacity: 0, y: 18, filter: "blur(10px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: T(0.7), ease: "power3.out", stagger: T(0.11) }, T(2.9));
+
+      // Hold: barely visible jitter on the tile, enveloped to zero so it lands at rest for the handoff.
+      const wrap = document.getElementById("one-color-tilewrap");
+      const phase = { p: 0 };
+      const CYCLES = 0.9;
+      tl.to(phase, {
+        p: Math.PI * 2 * CYCLES,
+        duration: T(1.5),
+        ease: "none",
+        onUpdate: function () {
+          const t = phase.p / (Math.PI * 2 * CYCLES);
+          const env = t < 0.6 ? 1 : Math.max(0, (1 - t) / 0.4);
+          wrap.style.transform = "translateY(" + (Math.sin(phase.p) * 2 * env).toFixed(3) + "px)";
+        },
+      }, T(4.35));
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["01-one-color"] = tl;
+    })();
+  </script>
+</template>

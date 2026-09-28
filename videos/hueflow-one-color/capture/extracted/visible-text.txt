@@ -1,0 +1,172 @@
+[a] Palettes
+[a] Community
+[a] Resources
+[a] Generate palette
+[button] Sign in
+[span] The modern color workspace
+[h1] Find colors that
+[span] feel right.
+[p] Create palettes, check contrast, explore combinations — all in one place.
+[a] Create a palette
+[a] Explore colors →
+[p] Free to use · No account required
+[div] Today's Challenge
+[p] Spring garden bloom
+[p] Be the first to try it today
+[a] Try it in Generator
+[p] The workspace
+[h2] One place for everything color.
+[p] From your first color idea to a production-ready palette.
+[label] Custom
+[p] Palette Generator
+[p] #E8531F
+[p] colors
+[span] Open →
+[p] #E8531F
+[p] rgb(232, 83, 31)
+[p] Color Picker
+[p] Explore and copy precise colors.
+[span] HEX
+[span] #E8531F
+[span] RGB
+[span] rgb(232, 83, 31)
+[span] HSL
+[span] hsl(16, 81%, 52%)
+[p] Color Converter
+[p] HEX, RGB, HSL, and more.
+[span] AAA
+[p] 3.69
+[p] : 1 vs white
+[p] Contrast Checker
+[p] Make sure colors are accessible.
+[p] Color Shades
+[p] Generate tints, shades, and tones.
+[p] Discover
+[h2] Discover your next color.
+[p] Curated palette collections, built from real color moods.
+[span] Minimal
+[span] Warm
+[span] Cool
+[span] Luxury
+[span] Nature
+[span] Pastel
+[span] Bold
+[span] Dark
+[span] Modern
+[span] Trending
+[a] Explore all palettes →
+[p] Beyond palettes
+[h2] Go deeper into color.
+[h3] Color Psychology
+[p] Understand the feeling behind a color before it ships.
+[span] Explore
+[h3] Color Harmony
+[p] Find complementary, analogous, and triadic relationships.
+[span] Explore
+[h3] Accessibility
+[p] Check contrast and readability against WCAG standards.
+[span] Explore
+[h3] Shades & Variations
+[p] Build a complete tint-and-shade system from one color.
+[span] Explore
+[p] Color & Emotion
+[h2] Every palette has a feeling.
+[p] Explore palettes built around how colors make you feel — then open yours in the generator.
+[button] Calm
+[button] Energetic
+[button] Serene
+[button] Luxe
+[button] Playful
+[button] Bold
+[p] Calm
+[p] Still. Balanced. At ease.
+[span] Open in generator →
+[p] For everyone
+[h2] Built for people who work with color.
+[h3] Designers
+[p] Build visual systems, interfaces, and brand palettes faster, with harmony and contrast handled for you.
+[a] Open the generator
+[h3] Developers
+[p] Get production-ready HEX, RGB, HSL, and accessible color combinations, exportable straight into your stack.
+[a] Generate design tokens
+[h3] Brands
+[p] Explore palettes that communicate the right personality, or analyze the colors a brand already uses.
+[a] Analyze a brand
+[p] Design systems
+[h2] Start with one color. Build an entire system.
+[p] Every palette can grow into a full set of product-ready tokens.
+[p] Primary
+[p] #E8531F
+[p] Secondary
+[p] #DEB43F
+[p] Accent
+[p] #18B7F2
+[p] Background
+[p] #F8F7F7
+[p] Surface
+[p] #FFFFFF
+[p] Text
+[p] #241C19
+[p] Success
+[p] #2E9E5B
+[p] Warning
+[p] #E8A32E
+[p] Error
+[p] #D8433A
+[p] Why HueFlow
+[h2] Color should feel easier.
+[h3] Explore faster
+[p] Find useful combinations without endless trial and error.
+[h3] Create with confidence
+[p] Use harmony and accessibility tools together, not separately.
+[h3] Keep everything in one place
+[p] Generate, explore, test, and copy colors from one workspace.
+[h3] Made for real projects
+[p] Colors come in formats designers and developers can actually use.
+[p] Read
+[h2] Stories behind the colors.
+[span] Building a conversion-focused color strategy
+[span] Luxury brand color strategy, explained
+[span] Color psychology in web design
+[span] Best colors for SaaS, ecommerce, and more
+[span] Building an accessible color palette
+[span] Color combinations that actually work
+[p] FAQ
+[h2] A few things people usually ask.
+[p] Can't find what you're looking for? Feel free to reach out and we'll help you out.
+[h3] What is HueFlow?
+[p] HueFlow is a color workspace for discovering, generating, and exploring colors — a palette generator, picker, converter, and accessibility checker in one place.
+[h3] Is HueFlow free?
+[h3] What can I use HueFlow for?
+[h3] Can I generate color palettes?
+[h3] Can I check color contrast?
+[h3] Can I copy HEX, RGB, and HSL values?
+[div] Start creating
+[h2] Your colors are waiting.
+[p] Build a palette, check contrast, generate shades — all in one place, for free.
+[a] Create a palette
+[a] Explore colors →
+[p] Find colors that feel right.
+[a] Palette Generator
+[a] Color Picker
+[a] Color Converter
+[a] Contrast Checker
+[a] Color Trends
+[a] Color Palettes
+[a] Color Combinations
+[a] Gradients
+[a] Brand Colors
+[a] Tailwind Colors
+[a] CSS Colors
+[p] Resources
+[a] Color Guide
+[a] Color Psychology
+[a] Accessibility
+[a] Web Design Colors
+[a] Marketing Colors
+[a] Best Colors For
+[a] Comparisons
+[a] Explainers
+[a] Resource Library
+[a] Developer Docs
+[p] HueFlow. All rights reserved.

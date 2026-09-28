@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "projectDir": "/Users/user/Documents/Aganik_pro/color/videos/hueflow-one-color/capture",
+  "url": "https://hueflow.site",
+  "httpStatus": 200,
+  "title": "HueFlow | Colors, Palettes, Gradients, and Brand Color Strategy",
+  "screenshots": 11,
+  "assets": 6,
+  "dropped": {
+    "size-floor": 0,
+    "budget-exhausted": 0,
+    "cap-reached": 0,
+    "unavailable": 0
+  },
+  "detectedSections": 11,
+  "fonts": [
+    "Avenir Next"
+  ],
+  "fontsDetailed": [
+    {
+      "family": "Avenir Next",
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "variable": false
+    }
+  ],
+  "animations": {
+    "webAnimations": 0,
+    "cssDeclarations": 199,
+    "scrollTargets": 95,
+    "cdpAnimations": 119,
+    "canvases": 0
+  },
+  "warnings": [],
+  "lastPhase": {
+    "schema": "hyperframes.capture.phase.v1",
+    "phase": "complete",
+    "status": "completed",
+    "remainingMs": 82974
+  }
+}

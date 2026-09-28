@@ -1,0 +1,203 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "HF Avenir"; font-weight: 400; src: local("AvenirNext-Regular"), local("Avenir Next Regular"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 500; src: local("AvenirNext-Medium"), local("Avenir Next Medium"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 600; src: local("AvenirNext-DemiBold"), local("Avenir Next Demi Bold"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 700; src: local("AvenirNext-Bold"), local("Avenir Next Bold"); }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "HF Avenir", "Avenir Next", sans-serif;
+      color: #1C1712;
+    }
+    .clip { position: absolute; inset: 0; }
+
+    #disc-bg {
+      background:
+        radial-gradient(1400px 900px at 30% 15%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 70%),
+        radial-gradient(1000px 700px at 75% 70%, rgba(252, 224, 184, 0.2), rgba(252, 224, 184, 0) 70%),
+        #FAF7F2;
+    }
+
+    /* One virtual camera: a perspective stage + a world that tilts; layers pan at depth-scaled speeds. */
+    #disc-camera {
+      perspective: 1700px;
+      perspective-origin: 960px 480px;
+    }
+    #disc-world {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      transform-origin: 960px 480px;
+      will-change: transform;
+    }
+    .disc-layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; will-change: transform, filter; }
+    #disc-back { opacity: 0.62; filter: blur(3px); }
+    #disc-front { filter: blur(7px); opacity: 0.9; }
+
+    .disc-card {
+      position: absolute;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 2px 6px rgba(28, 23, 18, 0.05), 0 26px 60px rgba(28, 23, 18, 0.13);
+      padding: 18px;
+      will-change: transform, filter, opacity;
+    }
+    .disc-strip { display: flex; height: 100%; border-radius: 16px; overflow: hidden; }
+    .disc-strip i { flex: 1; display: block; }
+    .disc-label {
+      position: absolute;
+      left: 22px;
+      bottom: 14px;
+      font-weight: 600;
+      font-size: 22px;
+      color: #1C1712;
+    }
+    .disc-arrow {
+      position: absolute;
+      right: 22px;
+      bottom: 14px;
+      font-weight: 500;
+      font-size: 22px;
+      color: #766F66;
+    }
+    .disc-mid .disc-card { width: 360px; height: 330px; top: 318px; }
+    .disc-mid .disc-strip { height: 236px; }
+    .disc-back-card { width: 280px; height: 250px; top: 168px; }
+    .disc-back-card .disc-strip { height: 176px; }
+
+    #disc-grad { width: 380px !important; }
+    #disc-grad .disc-fill { height: 236px; border-radius: 16px; background: linear-gradient(135deg, #D9481A 0%, #E8531F 22%, #F4A261 58%, #FCE0B8 100%); }
+    #disc-picker { width: 380px !important; }
+    #disc-picker .disc-swatch { height: 96px; border-radius: 16px; background: #E8531F; }
+    .disc-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 14px;
+      font-size: 19px;
+      font-variant-numeric: tabular-nums;
+    }
+    .disc-row b { font-weight: 600; color: #766F66; letter-spacing: 0.1em; font-size: 15px; }
+    .disc-row span { font-weight: 500; color: #1C1712; }
+    #disc-radial .disc-strip { background: radial-gradient(circle at 35% 40%, #9FE3D6 0%, #2A9D8F 45%, #264653 100%); }
+
+    .disc-chip {
+      position: absolute;
+      top: 760px;
+      width: 190px;
+      height: 96px;
+      border-radius: 28px;
+      box-shadow: 0 18px 40px rgba(28, 23, 18, 0.14);
+    }
+
+    #disc-headline {
+      position: absolute;
+      left: 0;
+      width: 1920px;
+      top: 88px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 54px;
+      letter-spacing: -0.03em;
+      color: #1C1712;
+      z-index: 5;
+    }
+    #disc-headline .disc-word { display: inline-block; margin: 0 0.16em; will-change: transform, opacity, filter; }
+  </style>
+
+  <div data-hf-id="hf-nph8" id="root" data-composition-id="04-discover" data-width="1920" data-height="1080" data-duration="4.118">
+    <div data-hf-id="hf-ytje" id="disc-bg" class="clip" data-start="0" data-duration="4.118" data-track-index="0"></div>
+
+    <div data-hf-id="hf-vjft" id="disc-camera" class="clip" data-start="0" data-duration="4.118" data-track-index="1">
+      <div data-hf-id="hf-02hx" id="disc-world">
+        <!-- back layer: soft, slow -->
+        <div data-hf-id="hf-uj4m" class="disc-layer" id="disc-back">
+          <div data-hf-id="hf-6901" class="disc-card disc-back-card" style="left:40px"><div data-hf-id="hf-4lq2" class="disc-strip"><i data-hf-id="hf-eb5n" style="background:#F5F3EF"></i><i data-hf-id="hf-esrg" style="background:#E4E0D8"></i><i data-hf-id="hf-xhu3" style="background:#C9C4B8"></i><i data-hf-id="hf-w198" style="background:#8A857A"></i><i data-hf-id="hf-fh95" style="background:#1C1712"></i></div><div data-hf-id="hf-v9nh" class="disc-label">Minimal</div></div>
+          <div data-hf-id="hf-m8bc" class="disc-card disc-back-card" style="left:560px"><div data-hf-id="hf-s9lq" class="disc-strip"><i data-hf-id="hf-n4r0" style="background:#0B2545"></i><i data-hf-id="hf-uhcw" style="background:#13315C"></i><i data-hf-id="hf-jiaj" style="background:#1D4E89"></i><i data-hf-id="hf-snkf" style="background:#5DA9E9"></i><i data-hf-id="hf-t728" style="background:#CFE8FF"></i></div><div data-hf-id="hf-j73b" class="disc-label">Cool</div></div>
+          <div data-hf-id="hf-rrcy" class="disc-card disc-back-card" style="left:1080px"><div data-hf-id="hf-snwr" class="disc-strip"><i data-hf-id="hf-wm3j" style="background:#1F3B2C"></i><i data-hf-id="hf-hy4z" style="background:#3F6B3A"></i><i data-hf-id="hf-qx2z" style="background:#7FA36B"></i><i data-hf-id="hf-cv9g" style="background:#C9D8A7"></i><i data-hf-id="hf-znoj" style="background:#F1EDE0"></i></div><div data-hf-id="hf-wxgd" class="disc-label">Nature</div></div>
+          <div data-hf-id="hf-7ytz" class="disc-card disc-back-card" id="disc-radial" style="left:1600px"><div data-hf-id="hf-t27s" class="disc-strip"></div><div data-hf-id="hf-jq9l" class="disc-label">Radial</div></div>
+          <div data-hf-id="hf-9j5k" class="disc-card disc-back-card" style="left:2120px"><div data-hf-id="hf-qa2l" class="disc-strip"><i data-hf-id="hf-fjgm" style="background:#FF3B30"></i><i data-hf-id="hf-yyja" style="background:#FF9500"></i><i data-hf-id="hf-svxu" style="background:#FFCC00"></i><i data-hf-id="hf-ftix" style="background:#34C759"></i><i data-hf-id="hf-fsq8" style="background:#5856D6"></i></div><div data-hf-id="hf-0qwl" class="disc-label">Bold</div></div>
+          <div data-hf-id="hf-96it" class="disc-card disc-back-card" style="left:2640px"><div data-hf-id="hf-qodm" class="disc-strip"><i data-hf-id="hf-zbuo" style="background:#0D0D0D"></i><i data-hf-id="hf-7t9q" style="background:#1B1611"></i><i data-hf-id="hf-skfs" style="background:#2B2B2B"></i><i data-hf-id="hf-52e4" style="background:#444444"></i><i data-hf-id="hf-ljys" style="background:#6B6B6B"></i></div><div data-hf-id="hf-2vpq" class="disc-label">Dark</div></div>
+        </div>
+
+        <!-- mid layer: the sharp, readable cards -->
+        <div data-hf-id="hf-r1s3" class="disc-layer disc-mid" id="disc-mid">
+          <div data-hf-id="hf-m1zi" class="disc-card disc-m" style="left:200px"><div data-hf-id="hf-r2on" class="disc-strip"><i data-hf-id="hf-pfj8" style="background:#8B2E16"></i><i data-hf-id="hf-4636" style="background:#E8531F"></i><i data-hf-id="hf-omql" style="background:#F28C28"></i><i data-hf-id="hf-rdey" style="background:#F2B134"></i><i data-hf-id="hf-p39c" style="background:#FCE0B8"></i></div><div data-hf-id="hf-u07j" class="disc-label">Warm</div><div data-hf-id="hf-juw3" class="disc-arrow">→</div></div>
+          <div data-hf-id="hf-9s10" class="disc-card disc-m" style="left:620px"><div data-hf-id="hf-rgzo" class="disc-strip"><i data-hf-id="hf-g1pm" style="background:#111111"></i><i data-hf-id="hf-1vxo" style="background:#2B2118"></i><i data-hf-id="hf-c4qv" style="background:#B9924A"></i><i data-hf-id="hf-28fn" style="background:#D9C08C"></i><i data-hf-id="hf-dm6b" style="background:#F3EAD8"></i></div><div data-hf-id="hf-u5bb" class="disc-label">Luxury</div><div data-hf-id="hf-ms6b" class="disc-arrow">→</div></div>
+          <div data-hf-id="hf-2b43" class="disc-card disc-m" style="left:1040px"><div data-hf-id="hf-v1qx" class="disc-strip"><i data-hf-id="hf-ne6o" style="background:#F9D5E5"></i><i data-hf-id="hf-qd6z" style="background:#FCE1C9"></i><i data-hf-id="hf-jv6a" style="background:#FDF3C4"></i><i data-hf-id="hf-3xtr" style="background:#D5F0E3"></i><i data-hf-id="hf-s5hv" style="background:#D8E2F8"></i></div><div data-hf-id="hf-6xrf" class="disc-label">Pastel</div><div data-hf-id="hf-mdva" class="disc-arrow">→</div></div>
+          <div data-hf-id="hf-xm8d" class="disc-card disc-m" style="left:1460px"><div data-hf-id="hf-vg1y" class="disc-strip"><i data-hf-id="hf-tc3m" style="background:#2A9D8F"></i><i data-hf-id="hf-isos" style="background:#E9C46A"></i><i data-hf-id="hf-q5yo" style="background:#F4A261"></i><i data-hf-id="hf-5zmm" style="background:#E76F51"></i><i data-hf-id="hf-upam" style="background:#264653"></i></div><div data-hf-id="hf-6btn" class="disc-label">Trending</div><div data-hf-id="hf-lzk9" class="disc-arrow">→</div></div>
+          <div data-hf-id="hf-2kro" class="disc-card" id="disc-grad" style="left:1880px"><div data-hf-id="hf-ljbf" class="disc-fill"></div><div data-hf-id="hf-mnbt" class="disc-label">Linear gradient · 135°</div></div>
+          <div data-hf-id="hf-5egx" class="disc-card" id="disc-picker" style="left:2280px">
+            <div data-hf-id="hf-eg1w" class="disc-swatch"></div>
+            <div data-hf-id="hf-i2nw" class="disc-row"><b data-hf-id="hf-zbii">HEX</b><span data-hf-id="hf-k8ao">#E8531F</span></div>
+            <div data-hf-id="hf-ugl0" class="disc-row"><b data-hf-id="hf-we9o">RGB</b><span data-hf-id="hf-vbtd">232, 83, 31</span></div>
+            <div data-hf-id="hf-t9nx" class="disc-row"><b data-hf-id="hf-wao0">HSL</b><span data-hf-id="hf-4rp6">16°, 81%, 52%</span></div>
+            <div data-hf-id="hf-xam8" class="disc-label" style="bottom:auto;top:-40px;left:4px;font-size:20px;color:#6A635B">Color Picker</div>
+          </div>
+        </div>
+
+        <!-- front layer: blurred foreground chips, fastest -->
+        <div data-hf-id="hf-rrls" class="disc-layer" id="disc-front">
+          <div data-hf-id="hf-dx39" class="disc-chip" style="left:420px;background:#F4A261"></div>
+          <div data-hf-id="hf-ffgn" class="disc-chip" style="left:1520px;background:#2A9D8F"></div>
+          <div data-hf-id="hf-trpa" class="disc-chip" style="left:2620px;background:#5B4BDB"></div>
+          <div data-hf-id="hf-2lf7" class="disc-chip" style="left:3720px;background:#F2B134"></div>
+        </div>
+      </div>
+
+      <div data-hf-id="hf-lwav" id="disc-headline">
+        <span data-hf-id="hf-7lyn" class="disc-word">Palettes.</span><span data-hf-id="hf-kd1a" class="disc-word">Gradients.</span><span data-hf-id="hf-etv3" class="disc-word">Trends.</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // Retimed for the 30s voiced cut: authored against 6s, scaled to the synced 3.618s.
+      const K = 3.618 / 6;
+      const T = (x) => x * K;
+
+      // One camera state drives the whole world: pan progress p (0 → 1), tilt, and zoom.
+      const cam = { p: 0, tilt: -14, zoom: 1.22 };
+      const world = document.getElementById("disc-world");
+      const back = document.getElementById("disc-back");
+      const mid = document.getElementById("disc-mid");
+      const front = document.getElementById("disc-front");
+      function applyCam() {
+        // Mid layer travels +500 → -1300 (1800px); back at half speed, front at 1.6x.
+        const midX = 500 - 1800 * cam.p;
+        gsap.set(mid, { x: midX });
+        gsap.set(back, { x: 250 - 900 * cam.p });
+        gsap.set(front, { x: 800 - 2880 * cam.p });
+        gsap.set(world, { rotationY: cam.tilt, scale: cam.zoom });
+      }
+      applyCam();
+
+      // Scene 1 (0.0–1.6s) — angled close-up on "Warm"; the cards settle in, neighbours soft.
+      tl.fromTo(".disc-m, #disc-grad, #disc-picker", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: T(0.9), ease: "power3.out", stagger: T(0.06) }, T(0.05));
+      tl.fromTo(cam, { p: 0, tilt: -14, zoom: 1.22 }, { p: 0.08, tilt: -12, zoom: 1.2, duration: T(1.6), ease: "power2.out", onUpdate: applyCam }, T(0));
+
+      // Scene 2 (1.6–4.0s) — one slow lateral flight; the world tilts flat to straight-on.
+      tl.fromTo(cam, { p: 0.08, tilt: -12, zoom: 1.2 }, { p: 0.86, tilt: -2, zoom: 1.04, duration: T(2.4), ease: "power1.inOut", onUpdate: applyCam, immediateRender: false }, T(1.6));
+      // Light velocity blur on the foreground chips — peaks mid-travel, clears at the settle.
+      tl.fromTo(front, { filter: "blur(7px)" }, { filter: "blur(12px)", duration: T(1.2), ease: "power1.in" }, T(1.6));
+      tl.fromTo(front, { filter: "blur(12px)" }, { filter: "blur(7px)", duration: T(1.2), ease: "power1.out", immediateRender: false }, T(2.8));
+
+      // Scene 3 (4.0–6.0s) — decelerate into focus on the gradient + picker pair; rack focus off the rest.
+      tl.fromTo(cam, { p: 0.86, tilt: -2, zoom: 1.04 }, { p: 1, tilt: 0, zoom: 1, duration: T(1.4), ease: "power4.out", onUpdate: applyCam, immediateRender: false }, T(4.0));
+      tl.fromTo(".disc-m", { filter: "blur(0px)", opacity: 1 }, { filter: "blur(4px)", opacity: 0.55, duration: T(0.9), ease: "power2.out", immediateRender: false }, T(4.1));
+      tl.fromTo("#disc-headline .disc-word",
+        { opacity: 0, y: 18, filter: "blur(10px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: T(0.65), ease: "power3.out", stagger: T(0.38) }, T(4.15));
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["04-discover"] = tl;
+    })();
+  </script>
+</template>

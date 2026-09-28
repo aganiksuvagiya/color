@@ -1,0 +1,271 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "HF Avenir"; font-weight: 400; src: local("AvenirNext-Regular"), local("Avenir Next Regular"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 500; src: local("AvenirNext-Medium"), local("Avenir Next Medium"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 600; src: local("AvenirNext-DemiBold"), local("Avenir Next Demi Bold"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 700; src: local("AvenirNext-Bold"), local("Avenir Next Bold"); }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "HF Avenir", "Avenir Next", sans-serif;
+      color: #1C1712;
+    }
+    .clip { position: absolute; inset: 0; }
+
+    #palette-bg {
+      background:
+        radial-gradient(1200px 800px at 28% 18%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 70%),
+        radial-gradient(900px 700px at 50% 42%, rgba(252, 224, 184, 0.22), rgba(252, 224, 184, 0) 70%),
+        #FAF7F2;
+    }
+
+    /* Warm glow carried over from frame 1 (same size as frame 1's glow after its 1.04 push). */
+    #palette-glow {
+      position: absolute;
+      left: 960px;
+      top: 430px;
+      width: 790px;
+      height: 790px;
+      margin-left: -395px;
+      margin-top: -395px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(198, 62, 16, 0.95) 0%, rgba(232, 83, 31, 0.45) 28%, rgba(232, 83, 31, 0) 64%);
+      will-change: opacity, transform;
+    }
+
+    /* Glass Palette Generator card */
+    #palette-card {
+      position: absolute;
+      left: 260px;
+      top: 188px;
+      width: 1400px;
+      height: 470px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      box-shadow: 0 2px 6px rgba(28, 23, 18, 0.05), 0 28px 64px rgba(28, 23, 18, 0.14);
+      will-change: transform, opacity;
+    }
+    #palette-title {
+      position: absolute;
+      left: 300px;
+      top: 216px;
+      font-weight: 600;
+      font-size: 26px;
+      letter-spacing: -0.01em;
+      color: #1C1712;
+    }
+    #palette-meta {
+      position: absolute;
+      left: 300px;
+      top: 252px;
+      font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+      color: #766F66;
+    }
+    #palette-generate {
+      position: absolute;
+      left: 1466px;
+      top: 222px;
+      width: 156px;
+      height: 54px;
+      border-radius: 100px;
+      background: #E8531F;
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 54px;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(232, 83, 31, 0.28);
+      will-change: transform, opacity;
+    }
+
+    /* Five swatches, 240 x 240 on a 256px pitch, centred on x 960 (tile = centre slot). */
+    .palette-swatch {
+      position: absolute;
+      top: 310px;
+      width: 240px;
+      height: 240px;
+      border-radius: 36px;
+      box-shadow: 0 1px 2px rgba(28, 23, 18, 0.05), 0 14px 32px rgba(28, 23, 18, 0.12);
+      will-change: transform, opacity;
+    }
+    #palette-s0 { left: 328px; background: #264653; }
+    #palette-s1 { left: 584px; background: #2A9D8F; }
+    #palette-s2 { left: 840px; background: linear-gradient(145deg, #F0642E 0%, #E8531F 55%, #D9481A 100%); z-index: 3; box-shadow: 0 1px 2px rgba(28, 23, 18, 0.06), 0 18px 40px rgba(28, 23, 18, 0.14), 0 40px 90px rgba(198, 62, 16, 0.18); }
+    #palette-s3 { left: 1096px; background: #F4A261; }
+    #palette-s4 { left: 1352px; background: #FCE0B8; }
+
+    .palette-hex {
+      position: absolute;
+      top: 574px;
+      width: 240px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 19px;
+      letter-spacing: 0.12em;
+      font-variant-numeric: tabular-nums;
+      color: #766F66;
+      will-change: transform, opacity;
+    }
+    #palette-h0 { left: 328px; }
+    #palette-h1 { left: 584px; }
+    #palette-h2 { left: 840px; color: #1C1712; }
+    #palette-h3 { left: 1096px; }
+    #palette-h4 { left: 1352px; }
+
+    #palette-badge {
+      position: absolute;
+      left: 624px;
+      top: 406px;
+      width: 160px;
+      height: 44px;
+      border-radius: 100px;
+      background: rgba(0, 0, 0, 0.55);
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      line-height: 44px;
+      text-align: center;
+      z-index: 4;
+      will-change: transform, opacity;
+    }
+
+    #palette-headline {
+      position: absolute;
+      left: 0;
+      width: 1920px;
+      top: 88px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 54px;
+      letter-spacing: -0.03em;
+      color: #1C1712;
+    }
+    #palette-headline .palette-word {
+      display: inline-block;
+      margin: 0 0.12em;
+      will-change: transform, opacity, filter;
+    }
+
+    /* Cursor (simulated-cursor component, frame-prefixed). Tip sits at the element's top-left. */
+    #palette-cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 44px;
+      height: 44px;
+      z-index: 10;
+      filter: drop-shadow(0 8px 18px rgba(28, 23, 18, 0.22));
+      will-change: transform;
+    }
+    #palette-cursor svg { width: 100%; height: 100%; display: block; }
+    #palette-pulse {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 72px;
+      height: 72px;
+      margin-left: -36px;
+      margin-top: -36px;
+      border-radius: 50%;
+      border: 2px solid rgba(232, 83, 31, 0.75);
+      z-index: 9;
+      will-change: transform, opacity;
+    }
+  </style>
+
+  <div data-hf-id="hf-hkfa" id="root" data-composition-id="02-palette" data-width="1920" data-height="1080" data-duration="3.752">
+    <div data-hf-id="hf-2w2i" id="palette-bg" class="clip" data-start="0" data-duration="3.752" data-track-index="0"></div>
+
+    <div data-hf-id="hf-stcc" id="palette-stage" class="clip" data-start="0" data-duration="3.752" data-track-index="1">
+      <div data-hf-id="hf-vkkg" id="palette-glow"></div>
+      <div data-hf-id="hf-kt6h" id="palette-card"></div>
+      <div data-hf-id="hf-r35b" id="palette-title">Palette Generator</div>
+      <div data-hf-id="hf-mux7" id="palette-meta">#E8531F · 5 colors</div>
+      <div data-hf-id="hf-zwgt" id="palette-generate">Generate</div>
+
+      <div data-hf-id="hf-8afr" class="palette-swatch" id="palette-s0"></div>
+      <div data-hf-id="hf-4cbq" class="palette-swatch" id="palette-s1"></div>
+      <div data-hf-id="hf-zmjw" class="palette-swatch" id="palette-s3"></div>
+      <div data-hf-id="hf-n41f" class="palette-swatch" id="palette-s4"></div>
+      <div data-hf-id="hf-0e7p" class="palette-swatch" id="palette-s2"></div>
+
+      <div data-hf-id="hf-e93c" class="palette-hex" id="palette-h0">#264653</div>
+      <div data-hf-id="hf-ypsf" class="palette-hex" id="palette-h1">#2A9D8F</div>
+      <div data-hf-id="hf-k80e" class="palette-hex" id="palette-h2">#E8531F</div>
+      <div data-hf-id="hf-y0on" class="palette-hex" id="palette-h3">#F4A261</div>
+      <div data-hf-id="hf-jb4m" class="palette-hex" id="palette-h4">#FCE0B8</div>
+
+      <div data-hf-id="hf-t267" id="palette-badge">#2A9D8F</div>
+
+      <div data-hf-id="hf-z09b" id="palette-headline">
+        <span data-hf-id="hf-6uw0" class="palette-word">Grow</span><span data-hf-id="hf-94ye" class="palette-word">it</span><span data-hf-id="hf-ijg1" class="palette-word">into</span><span data-hf-id="hf-4ovy" class="palette-word">a</span><span data-hf-id="hf-3gfo" class="palette-word">palette.</span>
+      </div>
+
+      <div data-hf-id="hf-k5pi" id="palette-pulse"></div>
+      <div data-hf-id="hf-tlex" id="palette-cursor">
+        <svg data-hf-id="hf-fpqu" viewBox="0 0 24 24" width="44" height="44">
+          <path data-hf-id="hf-sxlg" d="M3 2.8 20.6 14 12.8 15.5 9 22 3 2.8Z" fill="#FFFFFF" stroke="rgba(28,23,18,0.55)" stroke-width="1.3" stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // Retimed for the 30s voiced cut: authored against 6s, scaled to the synced 3.252s.
+      const K = 3.252 / 6;
+      const T = (x) => x * K;
+
+      // Baselines for every element touched by more than one tween.
+      gsap.set("#palette-cursor", { x: 2000, y: 1120 });
+      gsap.set("#palette-pulse", { x: 1550, y: 252, scale: 0.2, opacity: 0 });
+      gsap.set("#palette-generate", { scale: 1 });
+      gsap.set("#palette-s1", { x: 256, y: 0, scale: 0.92, opacity: 0 });
+
+      // Scene 1 (0.0–1.4s) — the tile holds exactly as handed in; the glass card materialises around it.
+      tl.fromTo("#palette-glow", { opacity: 0.3, scale: 1 }, { opacity: 0.1, scale: 1.05, duration: T(1.4), ease: "power2.out" }, T(0.1));
+      tl.fromTo("#palette-card", { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: T(1.0), ease: "power3.out" }, T(0.15));
+      tl.fromTo(["#palette-title", "#palette-meta"], { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: T(0.7), ease: "power3.out", stagger: T(0.1) }, T(0.5));
+      tl.fromTo("#palette-generate", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: T(0.7), ease: "power3.out" }, T(0.7));
+      // Cursor arrives on a decelerating path, aimed a few px off the button centre.
+      tl.fromTo("#palette-cursor", { x: 2000, y: 1120 }, { x: 1552, y: 256, duration: T(0.95), ease: "power3.out", immediateRender: false }, T(0.55));
+
+      // Scene 2 (1.4–3.2s) — press "Generate": cursor and button compress together, one ripple.
+      tl.fromTo(["#palette-cursor svg", "#palette-generate"], { scale: 1 }, { scale: 0.9, duration: T(0.1), ease: "power2.in" }, T(1.5));
+      tl.fromTo(["#palette-cursor svg", "#palette-generate"], { scale: 0.9 }, { scale: 1, duration: T(0.22), ease: "power3.out", immediateRender: false }, T(1.6));
+      tl.fromTo("#palette-pulse", { scale: 0.2, opacity: 0.9 }, { scale: 2.4, opacity: 0, duration: T(0.55), ease: "power2.out", immediateRender: false }, T(1.56));
+
+      // Siblings unfold outward from behind the centre tile (inner pair first, then the outer pair).
+      tl.fromTo("#palette-s1", { x: 256, opacity: 0, scale: 0.92 }, { x: 0, opacity: 1, scale: 1, duration: T(0.9), ease: "power3.out", immediateRender: false }, T(1.68));
+      tl.fromTo("#palette-s3", { x: -256, opacity: 0, scale: 0.92 }, { x: 0, opacity: 1, scale: 1, duration: T(0.9), ease: "power3.out" }, T(1.68));
+      tl.fromTo("#palette-s0", { x: 512, opacity: 0, scale: 0.92 }, { x: 0, opacity: 1, scale: 1, duration: T(1.0), ease: "power3.out" }, T(1.78));
+      tl.fromTo("#palette-s4", { x: -512, opacity: 0, scale: 0.92 }, { x: 0, opacity: 1, scale: 1, duration: T(1.0), ease: "power3.out" }, T(1.78));
+      tl.fromTo(["#palette-h0", "#palette-h1", "#palette-h2", "#palette-h3", "#palette-h4"],
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: T(0.6), ease: "power3.out", stagger: T(0.07) }, T(2.35));
+
+      // Scene 3 (3.2–6.0s) — the line lands above the card, then the cursor inspects the teal swatch.
+      tl.fromTo("#palette-headline .palette-word",
+        { opacity: 0, y: 18, filter: "blur(10px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: T(0.7), ease: "power3.out", stagger: T(0.1) }, T(3.2));
+      tl.fromTo("#palette-cursor", { x: 1552, y: 256 }, { x: 718, y: 468, duration: T(0.95), ease: "power3.inOut", immediateRender: false }, T(4.15));
+      tl.fromTo("#palette-s1", { y: 0, scale: 1 }, { y: -12, scale: 1.03, duration: T(0.6), ease: "power3.out", immediateRender: false }, T(4.95));
+      tl.fromTo("#palette-badge", { opacity: 0, y: 6 }, { opacity: 1, y: -12, duration: T(0.6), ease: "power3.out" }, T(5.0));
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["02-palette"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,200 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    @font-face { font-family: "HF Avenir"; font-weight: 400; src: local("AvenirNext-Regular"), local("Avenir Next Regular"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 500; src: local("AvenirNext-Medium"), local("Avenir Next Medium"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 600; src: local("AvenirNext-DemiBold"), local("Avenir Next Demi Bold"); }
+    @font-face { font-family: "HF Avenir"; font-weight: 700; src: local("AvenirNext-Bold"), local("Avenir Next Bold"); }
+
+    #root {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: "HF Avenir", "Avenir Next", sans-serif;
+      color: #1C1712;
+    }
+    .clip { position: absolute; inset: 0; }
+
+    #sys-bg {
+      background:
+        radial-gradient(1300px 850px at 30% 16%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 70%),
+        radial-gradient(900px 600px at 50% 70%, rgba(252, 224, 184, 0.2), rgba(252, 224, 184, 0) 70%),
+        #FAF7F2;
+    }
+
+    #sys-strip {
+      position: absolute;
+      left: 640px;
+      top: 104px;
+      width: 640px;
+      height: 64px;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      box-shadow: 0 1px 2px rgba(28, 23, 18, 0.05), 0 14px 32px rgba(28, 23, 18, 0.12);
+      will-change: clip-path, opacity;
+    }
+    #sys-strip i { flex: 1; display: block; }
+
+    #sys-headline {
+      position: absolute;
+      left: 0;
+      width: 1920px;
+      top: 196px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 54px;
+      letter-spacing: -0.03em;
+      color: #1C1712;
+    }
+    #sys-headline .sys-word { display: inline-block; margin: 0 0.12em; will-change: transform, opacity, filter; }
+
+    /* 3 x 3 token grid: tiles 340 x 170, gap 24, origin (426, 310) */
+    #sys-grid { position: absolute; left: 426px; top: 310px; width: 1068px; height: 558px; }
+    .sys-tile {
+      position: absolute;
+      width: 340px;
+      height: 170px;
+      border-radius: 20px;
+      background: #FFFFFF;
+      box-shadow: 0 1px 2px rgba(28, 23, 18, 0.04), 0 12px 32px rgba(28, 23, 18, 0.08);
+      will-change: transform, opacity;
+    }
+    .sys-chip {
+      position: absolute;
+      left: 26px;
+      top: 40px;
+      width: 90px;
+      height: 90px;
+      border-radius: 18px;
+      box-shadow: inset 0 0 0 1px rgba(28, 23, 18, 0.08);
+    }
+    .sys-role {
+      position: absolute;
+      left: 140px;
+      top: 50px;
+      font-weight: 600;
+      font-size: 26px;
+      letter-spacing: -0.01em;
+      color: #1C1712;
+    }
+    .sys-hex {
+      position: absolute;
+      left: 140px;
+      top: 92px;
+      font-weight: 500;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      font-variant-numeric: tabular-nums;
+      color: #766F66;
+    }
+
+    #sys-badge {
+      position: absolute;
+      left: 1300px;
+      top: 484px;
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 100px;
+      background: #1C1712;
+      color: #FAF7F2;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 44px;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+      box-shadow: 0 12px 28px rgba(28, 23, 18, 0.22);
+      z-index: 4;
+      will-change: transform, opacity;
+    }
+    #sys-badge b { color: #F4A261; font-weight: 700; margin-left: 10px; letter-spacing: 0.06em; }
+    #sys-badge .sys-sep { opacity: 0.45; margin: 0 8px; }
+
+    #sys-sheen-mask {
+      position: absolute;
+      left: 426px;
+      top: 310px;
+      width: 1068px;
+      height: 558px;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 3;
+    }
+    #sys-sheen {
+      position: absolute;
+      top: -30%;
+      left: 0;
+      width: 260px;
+      height: 160%;
+      background: linear-gradient(100deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0) 100%);
+      transform: rotate(10deg);
+      mix-blend-mode: soft-light;
+      will-change: transform, opacity;
+    }
+  </style>
+
+  <div data-hf-id="hf-2ae4" id="root" data-composition-id="05-system" data-width="1920" data-height="1080" data-duration="4.483">
+    <div data-hf-id="hf-cm4x" id="sys-bg" class="clip" data-start="0" data-duration="4.483" data-track-index="0"></div>
+
+    <div data-hf-id="hf-n1k9" id="sys-stage" class="clip" data-start="0" data-duration="4.483" data-track-index="1">
+      <div data-hf-id="hf-pgnl" id="sys-strip"><i data-hf-id="hf-upam" style="background:#264653"></i><i data-hf-id="hf-tc3m" style="background:#2A9D8F"></i><i data-hf-id="hf-4636" style="background:#E8531F"></i><i data-hf-id="hf-q5yo" style="background:#F4A261"></i><i data-hf-id="hf-p39c" style="background:#FCE0B8"></i></div>
+
+      <div data-hf-id="hf-pa0x" id="sys-headline">
+        <span data-hf-id="hf-p7w3" class="sys-word">Build</span><span data-hf-id="hf-98t2" class="sys-word">an</span><span data-hf-id="hf-os3g" class="sys-word">entire</span><span data-hf-id="hf-v8p2" class="sys-word">system.</span>
+      </div>
+
+      <div data-hf-id="hf-zgwt" id="sys-grid">
+        <div data-hf-id="hf-ervx" class="sys-tile sys-r0" style="left:0;top:0"><div data-hf-id="hf-sxj9" class="sys-chip" style="background:#E8531F"></div><div data-hf-id="hf-sv02" class="sys-role">Primary</div><div data-hf-id="hf-pe3u" class="sys-hex">#E8531F</div></div>
+        <div data-hf-id="hf-u59w" class="sys-tile sys-r0" style="left:364px;top:0"><div data-hf-id="hf-86rr" class="sys-chip" style="background:#F4A261"></div><div data-hf-id="hf-f88u" class="sys-role">Secondary</div><div data-hf-id="hf-yif0" class="sys-hex">#F4A261</div></div>
+        <div data-hf-id="hf-8oag" class="sys-tile sys-r0" style="left:728px;top:0"><div data-hf-id="hf-fazt" class="sys-chip" style="background:#2A9D8F"></div><div data-hf-id="hf-t84a" class="sys-role">Accent</div><div data-hf-id="hf-oyka" class="sys-hex">#2A9D8F</div></div>
+        <div data-hf-id="hf-xdx0" class="sys-tile sys-r1" style="left:0;top:194px"><div data-hf-id="hf-qxk5" class="sys-chip" style="background:#FAF7F2"></div><div data-hf-id="hf-oimo" class="sys-role">Background</div><div data-hf-id="hf-xcla" class="sys-hex">#FAF7F2</div></div>
+        <div data-hf-id="hf-1fz9" class="sys-tile sys-r1" style="left:364px;top:194px"><div data-hf-id="hf-tkbf" class="sys-chip" style="background:#FFFFFF"></div><div data-hf-id="hf-zs5r" class="sys-role">Surface</div><div data-hf-id="hf-5950" class="sys-hex">#FFFFFF</div></div>
+        <div data-hf-id="hf-0ind" class="sys-tile sys-r1" style="left:728px;top:194px"><div data-hf-id="hf-nffy" class="sys-chip" style="background:#1C1712"></div><div data-hf-id="hf-gxkz" class="sys-role">Text</div><div data-hf-id="hf-5mof" class="sys-hex">#1C1712</div></div>
+        <div data-hf-id="hf-77jg" class="sys-tile sys-r2" style="left:0;top:388px"><div data-hf-id="hf-iwff" class="sys-chip" style="background:#2E9E5B"></div><div data-hf-id="hf-zlpb" class="sys-role">Success</div><div data-hf-id="hf-lol0" class="sys-hex">#2E9E5B</div></div>
+        <div data-hf-id="hf-aff9" class="sys-tile sys-r2" style="left:364px;top:388px"><div data-hf-id="hf-j4fn" class="sys-chip" style="background:#E9A23B"></div><div data-hf-id="hf-avd4" class="sys-role">Warning</div><div data-hf-id="hf-uqng" class="sys-hex">#E9A23B</div></div>
+        <div data-hf-id="hf-xd4x" class="sys-tile sys-r2" style="left:728px;top:388px"><div data-hf-id="hf-qt2h" class="sys-chip" style="background:#D64545"></div><div data-hf-id="hf-xcde" class="sys-role">Error</div><div data-hf-id="hf-d57i" class="sys-hex">#D64545</div></div>
+      </div>
+
+      <div data-hf-id="hf-ftsu" id="sys-badge">Aa<span data-hf-id="hf-045c" class="sys-sep">·</span>16.6:1<b data-hf-id="hf-9ntu">AAA</b></div>
+
+      <div data-hf-id="hf-loyh" id="sys-sheen-mask"><div data-hf-id="hf-1sug" id="sys-sheen"></div></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // Retimed for the 30s voiced cut: authored against 7s, scaled to the synced 3.983s.
+      const K = 3.983 / 7;
+      const T = (x) => x * K;
+      gsap.set("#sys-sheen", { x: -320, opacity: 0 });
+
+      // Scene 1 (0.0–1.3s) — the hero palette strip draws in, alone.
+      tl.fromTo("#sys-strip",
+        { clipPath: "inset(0% 100% 0% 0% round 20px)", opacity: 1 },
+        { clipPath: "inset(0% 0% 0% 0% round 20px)", duration: T(1.0), ease: "power3.inOut" }, T(0.15));
+
+      // Scene 2 (1.3–4.0s) — nine token tiles assemble, one row per soft pulse.
+      [".sys-r0", ".sys-r1", ".sys-r2"].forEach(function (row, i) {
+        tl.fromTo(row,
+          { opacity: 0, y: 28, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: T(0.8), ease: "power3.out", stagger: T(0.09) }, T(1.3 + i * 0.75));
+      });
+
+      // Scene 3 (4.0–5.6s) — the line lands; the real contrast badge settles on the Text tile.
+      tl.fromTo("#sys-headline .sys-word",
+        { opacity: 0, y: 18, filter: "blur(10px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: T(0.7), ease: "power3.out", stagger: T(0.1) }, T(4.0));
+      tl.fromTo("#sys-badge", { opacity: 0, scale: 0.6, y: 8 }, { opacity: 1, scale: 1, y: 0, duration: T(0.7), ease: "power3.out" }, T(4.85));
+
+      // Scene 4 (5.6–7.0s) — one soft sheen across the grid, then a dead-still hold.
+      tl.fromTo("#sys-sheen", { x: -320 }, { x: 1300, duration: T(1.2), ease: "none", immediateRender: false }, T(5.6));
+      tl.fromTo("#sys-sheen", { opacity: 0 }, { opacity: 1, duration: T(0.3), ease: "power1.out", immediateRender: false }, T(5.6));
+      tl.fromTo("#sys-sheen", { opacity: 1 }, { opacity: 0, duration: T(0.3), ease: "power1.in", immediateRender: false }, T(6.5));
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["05-system"] = tl;
+    })();
+  </script>
+</template>
