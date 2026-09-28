@@ -5890,6 +5890,346 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Contrast checker", href: "/tools/contrast" },
     ],
   },
+  {
+    slug: "insurance-websites",
+    title: "Best Colors for Insurance Websites",
+    paletteColors: ["#1E3A5F", "#0D9488", "#F8FAFC", "#4A5568", "#1A1A1A"],
+    description:
+      "The best colors for insurance websites are deep navy and teal - colors that signal security and reassurance rather than the growth-and-upside energy that finance brands use. Learn what actually builds confidence before someone buys a policy.",
+    answer:
+      "The best colors for insurance websites are navy or deep blue paired with teal and generous neutral space. Insurance is a reassurance sale, not a growth sale - buyers are managing risk and fear (accidents, illness, loss), not chasing returns - so the palette should feel protective and stable rather than optimistic or upward-trending. This is the key difference from fintech and investing brands, which lean on green and upward motion to signal gains.",
+    intent: "commercial",
+    keywords: [
+      "best colors for insurance website",
+      "insurance website color palette",
+      "insurance company branding colors",
+      "insurance agency website colors",
+      "life insurance website colors",
+      "best colors for insurance brand",
+      "insurance website design colors",
+      "auto insurance website colors",
+    ],
+    sections: [
+      {
+        title: "Navy - protection, not growth",
+        body: "Deep navy (#1E3A5F, #0F2540) is the strongest default for insurance because it reads as stable and protective without implying upside or excitement - exactly the tone needed when someone is thinking about what could go wrong, not what could go right. This is a meaningfully different job than the optimistic blue-to-green gradients fintech brands use.",
+      },
+      {
+        title: "Teal - reassurance without coldness",
+        body: "A teal or muted green-blue secondary (#0D9488) softens navy's formality just enough to feel human and reassuring, similar to how healthcare brands use teal. It works well for secondary actions, wellness-adjacent coverage (health, life), and sections that need to feel calmer than the primary navy.",
+      },
+      {
+        title: "Generous neutral space for dense information",
+        body: "Insurance sites carry more text and legal detail than most commercial sites - policy terms, coverage tiers, claims processes. Light neutral surfaces (#F8FAFC) and disciplined typography matter as much as the color choice itself, since a cluttered dense page undermines the calm the palette is trying to build.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid bright, high-energy colors (orange, bright red, lime) as primary tones - they undercut the reassurance the category depends on. Avoid copying fintech's green-forward growth palette, which sends the wrong emotional signal for a protection-and-risk product rather than a wealth-building one.",
+      },
+    ],
+    faq: [
+      {
+        question: "What are the best colors for an insurance website?",
+        answer:
+          "Navy or deep blue as the primary color, with teal as a softening secondary and generous light neutral space for dense policy information. This combination signals protection and stability rather than growth or excitement.",
+      },
+      {
+        question: "Should insurance websites use green like fintech brands do?",
+        answer:
+          "Not as the primary signal. Fintech uses green to imply growth and gains; insurance is fundamentally about risk protection, which navy and teal communicate more accurately than green's upward-trending association.",
+      },
+      {
+        question: "What color builds the most trust for a life insurance website specifically?",
+        answer:
+          "Deep navy paired with a warm neutral (not stark white) tends to work best - it needs to feel serious and protective without feeling cold or clinical, since life insurance decisions are emotionally weighted.",
+      },
+      {
+        question: "Is red ever appropriate on an insurance website?",
+        answer:
+          "Only as a small functional accent (form errors, urgent claim deadlines) - never as a brand color. Red's alarm association fights against the calm, protective tone the category needs.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for finance websites", href: "/best-colors-for/finance-websites" },
+      { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
+      { title: "Blue color page", href: "/colors/blue" },
+      { title: "Teal color page", href: "/colors/teal" },
+      { title: "Trust colors FAQ", href: "/faqs/trust-colors" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+    ],
+  },
+  {
+    slug: "coffee-shop-websites",
+    title: "Best Colors for Coffee Shop and Cafe Websites",
+    paletteColors: ["#3E2723", "#C9A66B", "#6F4E37", "#FFF8F0", "#8B5A2B"],
+    description:
+      "The best colors for coffee shop websites are dark roast brown, warm tan, and cream - colors that evoke the product directly and create the cozy, ritual feeling of a good cafe, distinct from a broader restaurant palette.",
+    answer:
+      "The best colors for coffee shop and cafe websites lean directly on the product itself - dark roasted brown, warm caramel tan, and cream - because coffee's own color palette already does most of the emotional work: warmth, craft, and ritual. This is narrower and cozier than a general restaurant palette, which has to cover a wider range of cuisines and moods.",
+    intent: "commercial",
+    keywords: [
+      "best colors for coffee shop website",
+      "cafe website color palette",
+      "coffee shop branding colors",
+      "coffee brand color palette",
+      "roastery website colors",
+      "best colors for cafe brand",
+      "coffee shop website design colors",
+      "espresso bar website colors",
+    ],
+    sections: [
+      {
+        title: "Dark roast brown - the product as the palette",
+        body: "Deep coffee brown (#3E2723, #4E342E) works as a base color specifically because it's literally the color of the product - it signals craft and quality more directly than an abstract brand color choice would in almost any other category.",
+      },
+      {
+        title: "Warm tan and caramel - the inviting layer",
+        body: "Caramel and tan tones (#C9A66B, #B08968) add the 'inviting cafe' warmth that pure dark brown alone can feel too heavy to carry on its own - think latte foam and wood tables rather than espresso alone.",
+      },
+      {
+        title: "Cream backgrounds over stark white",
+        body: "A warm cream or off-white background (#FFF8F0) keeps the whole palette cohesive and cozy, where stark white would clash with the warm brown-and-tan foreground and make the site feel more clinical than a coffee shop should.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid cool blues and grays as primary tones - they fight against coffee's inherently warm associations. Avoid going so dark across the entire page that text contrast and legibility suffer; reserve the deepest browns for accents and headers rather than full-page backgrounds.",
+      },
+    ],
+    faq: [
+      {
+        question: "What are the best colors for a coffee shop website?",
+        answer:
+          "Dark roast brown as a base, warm tan or caramel as a secondary, and cream (not stark white) backgrounds - a palette drawn directly from the product itself, which reads as authentic and inviting.",
+      },
+      {
+        question: "How is a coffee shop palette different from a general restaurant palette?",
+        answer:
+          "Restaurant palettes have to flex across many cuisines and moods. Coffee shops can lean narrowly on the product's own warm brown-and-tan tones, which creates a cozier, more specific identity than a broader food-service palette.",
+      },
+      {
+        question: "Should a coffee shop website use green?",
+        answer:
+          "A muted sage or olive green works well as a small accent for organic or sustainably sourced branding, but it shouldn't replace the core brown-and-tan warmth that signals the product itself.",
+      },
+      {
+        question: "Is black and white minimalism a good fit for a coffee brand?",
+        answer:
+          "It can work for a modern, minimalist roastery aesthetic, but it trades away coffee's natural warmth - best reserved for brands specifically going for an austere, design-forward identity rather than a cozy neighborhood cafe feel.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for restaurant websites", href: "/best-colors-for/restaurant-websites" },
+      { title: "Brown color page", href: "/colors/brown" },
+      { title: "Chocolate color meaning", href: "/color-meanings/chocolate" },
+      { title: "Tan color meaning", href: "/color-meanings/tan" },
+      { title: "Color palette generator", href: "/generator" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+    ],
+  },
+  {
+    slug: "yoga-and-wellness-studio-websites",
+    title: "Best Colors for Yoga and Wellness Studio Websites",
+    paletteColors: ["#84A98C", "#F5F0E8", "#B08968", "#E8DDD0", "#5C6B57"],
+    description:
+      "The best colors for yoga and wellness studio websites are soft sage green, warm beige, and muted earth tones - calm and grounded rather than the high-energy black-and-orange palette used by performance gyms.",
+    answer:
+      "The best colors for yoga and wellness studio websites build calm and groundedness rather than intensity - soft sage green, warm beige, and muted earth tones instead of the dark, high-contrast palettes performance gyms use. The distinction matters: gym branding sells effort and results, while yoga and wellness branding sells recovery and balance, and the palette needs to signal which one before a visitor reads a word of copy.",
+    intent: "commercial",
+    keywords: [
+      "best colors for yoga studio website",
+      "wellness studio website colors",
+      "yoga website color palette",
+      "meditation studio website colors",
+      "best colors for wellness brand",
+      "spa and yoga website colors",
+      "holistic wellness website colors",
+      "yoga brand color palette",
+    ],
+    sections: [
+      {
+        title: "Sage green - balance without sterility",
+        body: "Soft sage green (#84A98C, #9CAF88) is the clearest signal of calm and natural balance without reading as clinical the way a brighter or cooler green might - it's the color most associated with recovery-focused wellness branding for good reason.",
+      },
+      {
+        title: "Warm beige and earth tones - grounded, not clinical",
+        body: "Warm beige and muted terracotta (#B08968, #E8DDD0) keep the palette feeling grounded and organic rather than sterile - closer to natural materials (linen, clay, wood) than to a typical wellness-app blue-and-white system.",
+      },
+      {
+        title: "The opposite palette of a performance gym, deliberately",
+        body: "Where gym branding uses black, orange, and high contrast to signal intensity, yoga and wellness branding should do the reverse - light, muted, low-contrast palettes that signal rest and recovery. Copying gym colors actively undermines a wellness brand's positioning.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid black-and-orange or other high-intensity performance-fitness palettes entirely - they send exactly the wrong signal for a recovery-focused brand. Avoid neon or highly saturated accent colors, which conflict with the calm the rest of the palette is trying to build.",
+      },
+    ],
+    faq: [
+      {
+        question: "What are the best colors for a yoga studio website?",
+        answer:
+          "Soft sage green, warm beige, and muted earth tones - a calm, grounded palette that signals balance and recovery rather than the high-intensity black-and-orange system used by performance gyms.",
+      },
+      {
+        question: "Should a wellness studio use the same colors as a gym website?",
+        answer:
+          "No - gym palettes signal intensity and effort, while wellness and yoga branding needs to signal calm and recovery. Using gym colors on a yoga site sends a conflicting message to visitors.",
+      },
+      {
+        question: "What color works best for a meditation app or studio?",
+        answer:
+          "Muted sage green, soft lavender, or warm neutral tones work best - low-saturation colors that support stillness rather than colors that create visual energy or urgency.",
+      },
+      {
+        question: "Can a wellness brand use bold colors at all?",
+        answer:
+          "A single restrained accent (a muted terracotta or dusty rose) can work for CTAs, but the overall palette should stay low-saturation - bold, high-energy accents undercut the calm positioning.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for fitness and gym websites", href: "/best-colors-for/fitness-websites" },
+      { title: "Green color page", href: "/colors/green" },
+      { title: "Lavender color meaning", href: "/color-meanings/lavender" },
+      { title: "Why every gym brand looks the same", href: "/explainers/why-gym-brands-go-black-and-orange" },
+      { title: "Color psychology explorer", href: "/tools/color-psychology-explorer" },
+      { title: "Color palette generator", href: "/generator" },
+    ],
+  },
+  {
+    slug: "moving-company-websites",
+    title: "Best Colors for Moving Company Websites",
+    paletteColors: ["#1E40AF", "#F97316", "#374151", "#FFFFFF", "#1A1A1A"],
+    description:
+      "The best colors for moving company websites combine trustworthy blue with an energetic orange accent - reliability for handling someone's belongings, plus urgency for a category where visitors are usually booking against a deadline.",
+    answer:
+      "The best colors for moving company websites pair blue for logistics trust and reliability with orange for the action-oriented urgency most moving bookings carry - customers are almost always working against a moving date, which makes a clear, high-contrast CTA color especially important. Blue alone can feel too passive for a service that needs to convert quickly.",
+    intent: "commercial",
+    keywords: [
+      "best colors for moving company website",
+      "moving company branding colors",
+      "moving company website color palette",
+      "relocation company website colors",
+      "moving service website colors",
+      "best colors for logistics brand",
+      "moving company website design colors",
+      "long distance moving website colors",
+    ],
+    sections: [
+      {
+        title: "Blue - trust for handling someone's belongings",
+        body: "Blue (#1E40AF, #2563EB) is essential here because customers are trusting a company with their physical possessions - the same trust-building logic as logistics and delivery brands, where reliability has to be established before someone will book.",
+      },
+      {
+        title: "Orange - urgency for a deadline-driven booking",
+        body: "Unlike many trust-first categories, moving is usually booked against a fixed deadline (a lease end date, a closing date), which makes a warm, high-contrast CTA color like orange (#F97316) more important here than in a slower-consideration category like insurance or finance.",
+      },
+      {
+        title: "Dark neutrals for a professional, not budget, feel",
+        body: "Charcoal or dark gray (#374151) in navigation and structural elements helps a moving company avoid looking like a low-cost, fly-by-night operation - a real concern in a category where trust and professionalism directly affect booking decisions.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid an all-blue palette with no warm accent - it under-serves the urgency most visitors actually feel. Avoid cluttering the CTA color across multiple elements; reserve orange specifically for the booking or quote action so it stays unmistakable.",
+      },
+    ],
+    faq: [
+      {
+        question: "What are the best colors for a moving company website?",
+        answer:
+          "Blue for trust and reliability, paired with orange for urgency on the booking or quote CTA. Moving is usually a deadline-driven decision, so the CTA needs to stand out more than in a slower-consideration trust category.",
+      },
+      {
+        question: "Why does urgency matter more for moving companies than for other trust-based services?",
+        answer:
+          "Most moving bookings are tied to a fixed date (lease end, closing date), unlike insurance or finance decisions which can be made on a longer timeline - so the CTA needs stronger visual urgency to match how customers are actually making the decision.",
+      },
+      {
+        question: "Should a moving company use green?",
+        answer:
+          "Green can work as a secondary accent for eco-friendly or sustainable moving practices, but blue should remain the primary trust color - green alone doesn't carry the same logistics-reliability signal.",
+      },
+      {
+        question: "What color should the 'Get a Quote' button be?",
+        answer:
+          "A warm, high-contrast color like orange, used consistently and exclusively for that action across the site, so it's immediately recognizable regardless of which page a visitor lands on.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for construction websites", href: "/best-colors-for/construction-websites" },
+      { title: "Blue color page", href: "/colors/blue" },
+      { title: "Orange color page", href: "/colors/orange" },
+      { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Color palette generator", href: "/generator" },
+    ],
+  },
+  {
+    slug: "daycare-websites",
+    title: "Best Colors for Daycare and Childcare Websites",
+    paletteColors: ["#FDE68A", "#7DD3C0", "#93C5FD", "#FF8A65", "#1A1A1A"],
+    description:
+      "The best colors for daycare and childcare websites are soft, playful primaries - warm yellow, gentle teal, and sky blue - bright enough to feel joyful for kids, but muted enough to reassure the parents actually making the booking decision.",
+    answer:
+      "The best colors for daycare and childcare websites balance two different audiences at once: the palette needs to feel playful and warm to evoke a good environment for children, while staying calm and trustworthy enough to reassure the parents who are the actual decision-makers. Soft, slightly muted primaries - warm yellow, gentle teal, sky blue - hit both notes better than either fully saturated primary colors or an all-pastel palette alone.",
+    intent: "commercial",
+    keywords: [
+      "best colors for daycare website",
+      "childcare website color palette",
+      "preschool website colors",
+      "daycare branding colors",
+      "kindergarten website color scheme",
+      "best colors for childcare brand",
+      "nursery school website colors",
+      "child care center website colors",
+    ],
+    sections: [
+      {
+        title: "Soft primaries, not saturated ones",
+        body: "Fully saturated primary colors (think classic toy-box red, yellow, blue) can feel chaotic and overwhelming on a website, even though they signal 'for kids' clearly. Softened versions of the same hues - warm yellow (#FDE68A), gentle teal (#7DD3C0), sky blue (#93C5FD) - keep the playful signal while staying calm enough for a parent evaluating trust and safety.",
+      },
+      {
+        title: "Remember who is actually booking",
+        body: "Children aren't the website's audience - parents are, and parents are evaluating safety, care quality, and professionalism, not just fun. The palette has to read as warm and joyful without tipping into looking unserious or under-supervised.",
+      },
+      {
+        title: "One warm accent for energy and calls to action",
+        body: "A single warm accent like coral or soft orange (#FF8A65) works well for enrollment or tour-booking CTAs - it adds energy and warmth without needing to saturate the whole page in bright color.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid fully saturated, toy-box-bright palettes across the whole site - they can read as chaotic or unprofessional to the parent audience actually making the decision. Avoid cold, corporate blue-and-gray systems with no warmth at all, which under-serve the 'nurturing environment' message childcare brands need to send.",
+      },
+    ],
+    faq: [
+      {
+        question: "What are the best colors for a daycare website?",
+        answer:
+          "Soft, slightly muted primaries - warm yellow, gentle teal, and sky blue - rather than fully saturated toy-box colors. This balances playfulness for the idea of children with the calm trustworthiness parents need to feel before booking.",
+      },
+      {
+        question: "Why shouldn't a daycare website use bright, saturated colors everywhere?",
+        answer:
+          "Parents, not children, are the actual website audience and decision-makers - an overly saturated, chaotic-feeling palette can undercut the sense of a calm, well-run, professional environment that parents are evaluating.",
+      },
+      {
+        question: "What color works best for an enrollment or 'Book a Tour' button?",
+        answer:
+          "A warm accent like coral or soft orange stands out well against a softer primary palette without requiring the whole site to be saturated in bright color.",
+      },
+      {
+        question: "Should a childcare website use pink and blue for gender coding?",
+        answer:
+          "Generally no - most modern childcare and daycare branding avoids gendered color coding in favor of a shared, gender-neutral palette of soft primaries that works for all children equally.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for education websites", href: "/best-colors-for/education-websites" },
+      { title: "Yellow color page", href: "/colors/yellow" },
+      { title: "Teal color page", href: "/colors/teal" },
+      { title: "Color psychology explorer", href: "/tools/color-psychology-explorer" },
+      { title: "Color palette generator", href: "/generator" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+    ],
+  },
 ];
 
 const faqs: ContentEntry[] = [
