@@ -7,6 +7,18 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
     ],
   },
+  // "Shades of <color>" pages live at app/shades/[color] but are served at the
+  // search-phrase URL /shades-of-<color>; the /shades/<color> path 301s there so
+  // only one URL is ever indexed.
+  async rewrites() {
+    return [{ source: "/shades-of-:color", destination: "/shades/:color" }];
+  },
+  async redirects() {
+    return [
+      { source: "/shades-of-grey", destination: "/shades-of-gray", permanent: true },
+      { source: "/shades/:color", destination: "/shades-of-:color", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

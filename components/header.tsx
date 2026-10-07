@@ -9,6 +9,8 @@ import { awardPointsClient } from "@/lib/award-points-client";
 
 const MAIN_LINKS = [
   { href: "/colors", label: "Colors" },
+  // Desktop bar only from lg up: at md widths it pushed "Sign in" off-screen. Always in the mobile menu.
+  { href: "/shades", label: "Shades", desktopClass: "hidden lg:inline" },
   { href: "/palettes", label: "Palettes" },
   { href: "/trends", label: "Trends" },
   { href: "/community", label: "Community" },
@@ -92,7 +94,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
 
         <nav className="hidden items-center gap-6 text-[15px] font-medium text-[#1c1712]/65 md:flex">
           {MAIN_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className="transition-colors hover:text-[#1c1712]">
+            <Link key={link.href} href={link.href} className={`transition-colors hover:text-[#1c1712] ${"desktopClass" in link ? link.desktopClass : ""}`}>
               {link.label}
             </Link>
           ))}

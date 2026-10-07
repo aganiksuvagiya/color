@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+// Six balanced columns (5-6 links each). Privacy and Terms live only in the bottom bar.
 const FOOTER_LINKS = [
   {
     heading: "Product",
@@ -13,12 +14,21 @@ const FOOTER_LINKS = [
     ],
   },
   {
-    heading: "Explore",
+    heading: "Palettes",
     links: [
       { href: "/palettes", label: "Color Palettes" },
+      { href: "/color-palettes", label: "Palette Library" },
       { href: "/color-combinations", label: "Color Combinations" },
       { href: "/gradients", label: "Gradients" },
       { href: "/brand-colors", label: "Brand Colors" },
+    ],
+  },
+  {
+    heading: "Colors",
+    links: [
+      { href: "/shades", label: "Color Shades" },
+      { href: "/color-codes", label: "Color Codes" },
+      { href: "/color-meanings", label: "Color Meanings" },
       { href: "/tailwind", label: "Tailwind Colors" },
       { href: "/css-colors", label: "CSS Colors" },
     ],
@@ -26,7 +36,6 @@ const FOOTER_LINKS = [
   {
     heading: "Resources",
     links: [
-      { href: "/color-meanings", label: "Color Guide" },
       { href: "/blog", label: "Blog" },
       { href: "/faqs", label: "FAQ" },
       { href: "/color-psychology", label: "Color Psychology" },
@@ -51,48 +60,52 @@ const FOOTER_LINKS = [
     links: [
       { href: "/about", label: "About" },
       { href: "/contact", label: "Contact" },
-      { href: "/privacy", label: "Privacy" },
-      { href: "/terms", label: "Terms" },
     ],
   },
 ] as const;
 
+const BRAND_STRIP = ["#E8531F", "#F4A261", "#2A9D8F", "#1D4E89", "#1C1712"];
+
 export function Footer() {
   return (
-    <footer className="border-t border-black/8 bg-[#faf7f2] text-[#1c1712]">
+    <footer className="border-t border-black/8 bg-white text-[#1c1712]">
       <div className="mx-auto max-w-[1400px] px-6 py-16 sm:px-8">
-        <div className="flex flex-col gap-12 md:flex-row md:justify-between">
-          <div className="max-w-xs">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-[minmax(0,1.5fr)_repeat(6,minmax(0,1fr))]">
+          <div className="col-span-2 sm:col-span-3 lg:col-span-1 lg:pr-6">
             <Link href="/" className="inline-flex items-center">
               <Image src="/hueflow.svg" alt="HueFlow" width={104} height={22} className="[filter:brightness(0)_saturate(100%)]" />
             </Link>
-            <p className="mt-4 text-sm leading-relaxed text-[#1c1712]/55">
-              Find colors that feel right.
+            <p className="mt-4 max-w-xs text-sm leading-6 text-[#1c1712]/60">
+              A free color workspace: generate palettes, explore shades, check contrast and copy any color code.
             </p>
+            <div className="mt-5 flex h-2 w-40 overflow-hidden rounded-full" aria-hidden="true">
+              {BRAND_STRIP.map((hex) => (
+                <span key={hex} className="flex-1" style={{ backgroundColor: hex }} />
+              ))}
+            </div>
+            <Link
+              href="/generator"
+              className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-[#e8531f] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#d04717]"
+            >
+              Generate a palette →
+            </Link>
           </div>
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-5">
-            {FOOTER_LINKS.map((group) => (
-              <div key={group.heading}>
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#1c1712]/35">
-                  {group.heading}
-                </p>
-                <ul className="mt-4 space-y-2.5">
-                  {group.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-[#1c1712]/60 transition-colors hover:text-[#e8531f]"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {FOOTER_LINKS.map((group) => (
+            <div key={group.heading}>
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#1c1712]/55">{group.heading}</p>
+              <ul className="mt-4 space-y-2.5">
+                {group.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-sm text-[#1c1712]/65 transition-colors hover:text-[#e8531f]">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-        <div className="mt-6 flex flex-col gap-3 border-t border-black/8 pt-6 text-sm text-[#1c1712]/40 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-black/8 pt-6 text-sm text-[#1c1712]/45 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} HueFlow. All rights reserved.</p>
           <div className="flex gap-5">
             <Link href="/privacy" className="transition-colors hover:text-[#1c1712]">
@@ -100,9 +113,6 @@ export function Footer() {
             </Link>
             <Link href="/terms" className="transition-colors hover:text-[#1c1712]">
               Terms
-            </Link>
-            <Link href="/contact" className="transition-colors hover:text-[#1c1712]">
-              Contact
             </Link>
           </div>
         </div>

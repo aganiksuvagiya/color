@@ -13,6 +13,7 @@ import {
 import { getContrastText, hexToHsl, hslToHex, isValidHex } from "@/lib/color-utils";
 
 import { cssColorSlugs, isColorMeaningAuthored, type ContentEntry } from "@/lib/seo/content";
+import { colorFamily } from "@/lib/palette-library";
 
 type ColorDescriptor = {
   slug: string;
@@ -195,7 +196,14 @@ function buildColorRelatedLinks(descriptor: ColorDescriptor) {
   const display = descriptor.displayName;
   const cssSlug = descriptor.hueFamily === "neutral" ? "black" : descriptor.hueFamily;
 
+  // Every color page points into its family's shades page and palette-library tag
+  // (both cover the same 12 families that colorFamily() returns).
+  const family = colorFamily(descriptor.hex);
+  const familyName = family.charAt(0).toUpperCase() + family.slice(1);
+
   return [
+    { title: `Shades of ${familyName}`, href: `/shades-of-${family}`, label: "Related shades" },
+    { title: `${familyName} color palettes`, href: `/color-palettes/${family}`, label: "Related palette library" },
     { title: `${display} color meaning`, href: `/color-meanings/${baseColorSlug}`, label: "Related color meaning" },
     { title: `${descriptor.hueLabel} palettes`, href: `/palettes/${familyPair.palette}`, label: "Related palette" },
     { title: `${descriptor.hueLabel} gradients`, href: `/gradients/${familyPair.gradient}`, label: "Related gradient" },

@@ -1,6 +1,8 @@
 import { routeCollections } from "@/lib/seo/content";
 import { getProgrammaticBrandColorSlugs, getProgrammaticColorSitemapPaths } from "@/lib/seo/programmatic";
 import { siteConfig } from "@/lib/seo/site-config";
+import { colorPalettesPath, getLibraryTags } from "@/lib/palette-library";
+import { getShadeFamilies, shadesPath } from "@/lib/shades-data";
 
 // No <lastmod>: nothing tracks when each page's content actually changed, and a
 // lastmod of "now" on every request tells Google every URL changed constantly,
@@ -50,6 +52,9 @@ export const staticPages = [
   page("/tools/color-psychology-explorer", "monthly", 0.8),
   page("/tools/collage", "monthly", 0.76),
   page("/colors", "weekly", 0.92),
+  page("/shades", "weekly", 0.92),
+  page("/color-palettes", "weekly", 0.94),
+  page("/color-codes", "weekly", 0.9),
   page("/palettes", "weekly", 0.92),
   page("/gradients", "weekly", 0.9),
   page("/brand-colors", "weekly", 0.9),
@@ -77,6 +82,7 @@ export const staticPages = [
 export const sitemapFiles = [
   "/sitemap-pages.xml",
   "/sitemap-colors.xml",
+  "/sitemap-shades.xml",
   "/sitemap-palettes.xml",
   "/sitemap-gradients.xml",
   "/sitemap-brand-colors.xml",
@@ -99,10 +105,17 @@ export const colorsSitemap = dynamicEntries(
   0.8,
 );
 
-export const palettesSitemap = dynamicEntries(
-  routeCollections.palettes.map((entry) => `/palettes/${entry.slug}`),
+export const palettesSitemap = [
+  ...dynamicEntries(routeCollections.palettes.map((entry) => `/palettes/${entry.slug}`), "weekly", 0.82),
+  // Palette library tag pages (/color-palettes/pastel, /color-palettes/blue, ...).
+  ...dynamicEntries(getLibraryTags().map((tag) => colorPalettesPath(tag.slug)), "weekly", 0.88),
+];
+
+// "Shades of <color>" pages, served at their search-phrase URL (/shades-of-blue).
+export const shadesSitemap = dynamicEntries(
+  getShadeFamilies().map((family) => shadesPath(family.slug)),
   "weekly",
-  0.82,
+  0.9,
 );
 
 export const gradientsSitemap = dynamicEntries(

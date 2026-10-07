@@ -43,6 +43,17 @@ const DISCOVER_COLLECTIONS: { label: string; href: string; colors: string[] }[] 
   { label: "Trending", href: "/trends", colors: [] },
 ];
 
+// The highest-volume searches HueFlow now has pages for (see docs/GROWTH-PLAN.md).
+const POPULAR_LINKS = [
+  { href: "/shades-of-blue", label: "Shades of Blue", hex: "#1E90FF" },
+  { href: "/shades-of-pink", label: "Shades of Pink", hex: "#FF69B4" },
+  { href: "/shades-of-purple", label: "Shades of Purple", hex: "#9370DB" },
+  { href: "/shades-of-green", label: "Shades of Green", hex: "#2E8B57" },
+  { href: "/color-palettes/pastel", label: "Pastel Palettes", hex: "#FFD1DC" },
+  { href: "/color-palettes", label: "Palette Library", hex: "#E8531F" },
+  { href: "/color-codes", label: "Color Codes", hex: "#1C1712" },
+];
+
 const DEEPER_ITEMS = [
   {
     title: "Color Psychology",
@@ -158,6 +169,16 @@ const FAQS = [
 ];
 
 
+// Full-width #F5F5F5 band behind a section, alternating with the white page. The
+// section stays inside the centred container; the band is a pseudo-element that
+// spans the viewport. "isolate" keeps its -z-10 above <main>'s white background,
+// and <main> clips the 100vw overflow (overflow-x-clip keeps sticky elements working).
+const GRAY_BAND =
+  "relative isolate py-20 before:pointer-events-none before:absolute before:inset-y-0 before:left-1/2 before:-z-10 before:w-screen before:-translate-x-1/2 before:bg-[#f5f5f5]";
+
+// Accent bars on the "Why HueFlow" cards.
+const WHY_ACCENTS = ["#E8531F", "#1D4E89", "#3F6B3A", "#8B4A9C"];
+
 const BASE_SWATCHES = ["#E8531F", "#1D4E89", "#3F6B3A", "#8B4A9C", "#B9924A", "#0D0D0D"];
 
 const fadeUp: Variants = {
@@ -172,7 +193,7 @@ const stagger: Variants = {
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-center text-sm font-semibold uppercase tracking-[0.28em] text-[#1c1712]/45">{children}</p>
+    <p className="text-center text-xs font-semibold uppercase tracking-[0.24em] text-[#c2410c]">{children}</p>
   );
 }
 
@@ -275,7 +296,7 @@ export function HueFlowHomePage() {
   }
 
   return (
-    <main className="relative bg-[#faf7f2] text-[#1c1712]">
+    <main className="relative overflow-x-clip bg-white text-[#1c1712]">
       <StructuredData data={buildFaqSchema(FAQS)} />
       <Header isHome />
 
@@ -285,10 +306,10 @@ export function HueFlowHomePage() {
 
         {/* ============ HERO ============ */}
         <section aria-labelledby="hero-heading" className="relative mx-auto w-full max-w-[1400px]">
-          <div className="grid items-center gap-40 lg:grid-cols-[420px_1fr]">
+          <div className="grid items-center gap-16 lg:grid-cols-[480px_1fr] xl:gap-24">
 
             {/* Left: text content */}
-            <motion.div initial="hidden" animate="show" variants={stagger} className="text-left">
+            <motion.div initial={false} animate="show" variants={stagger} className="text-left">
 
               {/* Eyebrow */}
               <motion.div variants={fadeUp}>
@@ -302,7 +323,7 @@ export function HueFlowHomePage() {
               <motion.h1
                 id="hero-heading"
                 variants={fadeUp}
-                className="mt-5 font-display text-[2.8rem] font-bold leading-[1.03] tracking-[-0.05em] text-[#1c1712] sm:text-[3.4rem] lg:text-[3.8rem]"
+                className="mt-5 font-display text-[2.8rem] font-bold leading-[1.02] tracking-[-0.05em] text-[#1c1712] sm:text-[3.6rem] lg:text-[4.4rem]"
               >
                 Find colors that{" "}
                 <span style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
@@ -311,7 +332,7 @@ export function HueFlowHomePage() {
               </motion.h1>
 
               {/* Description */}
-              <motion.p variants={fadeUp} className="mt-5 max-w-[420px] text-[0.975rem] leading-[1.75] text-[#1c1712]/50">
+              <motion.p variants={fadeUp} className="mt-5 max-w-[440px] text-[1.075rem] leading-[1.7] text-[#1c1712]/60">
                 Create palettes, check contrast, explore combinations — all in one place.
               </motion.p>
 
@@ -333,7 +354,7 @@ export function HueFlowHomePage() {
               </motion.div>
 
               {/* Trust text */}
-              <motion.p variants={fadeUp} className="mt-4 text-xs text-[#1c1712]/30">
+              <motion.p variants={fadeUp} className="mt-4 text-xs text-[#1c1712]/50">
                 Free to use · No account required
               </motion.p>
 
@@ -365,9 +386,7 @@ export function HueFlowHomePage() {
               {stripColors.slice(0, 5).map((colors, si) => (
                 <motion.div
                   key={si}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.08 + si * 0.045, ease: [0.22, 1, 0.36, 1] }}
+                  initial={false}
                   className="flex flex-1 flex-col gap-1.5 overflow-hidden rounded-xl"
                 >
                   {colors.map((hex, i) => {
@@ -401,34 +420,55 @@ export function HueFlowHomePage() {
         </div>{/* end min-h viewport wrapper */}
 
         {/* ============ PRIMARY PRODUCT SECTION ============ */}
-        <section className="mt-20" id="tools">
+        <section className={`mt-20 ${GRAY_BAND}`} id="tools">
           <SectionHeading eyebrow="The workspace" title="One place for everything color." body="From your first color idea to a production-ready palette." />
 
           {/* Live color picker for the tool previews */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
-            {BASE_SWATCHES.map((hex) => (
-              <button
-                key={hex}
-                type="button"
-                onClick={() => setToolColor(hex)}
-                aria-label={`Preview tools with ${hex}`}
-                aria-pressed={toolColor === hex}
-                className={`h-8 w-8 rounded-full border-2 transition-all duration-200 hover:scale-110 ${
-                  toolColor === hex ? "scale-110 border-[#1c1712] shadow-[0_0_0_2px_rgba(28,23,18,0.12)]" : "border-white shadow-[0_0_0_1px_rgba(28,23,18,0.1)]"
-                }`}
-                style={{ backgroundColor: hex }}
-              />
-            ))}
-            <label className="flex cursor-pointer items-center gap-2 rounded-full border border-black/10 bg-white px-3 py-1 text-xs font-medium text-[#1c1712]/50 hover:border-black/20">
-              Custom
-              <input
-                type="color"
-                value={toolColor}
-                onChange={(e) => setToolColor(e.target.value)}
-                className="h-5 w-5 cursor-pointer overflow-hidden rounded-full border-0 bg-transparent p-0"
-                aria-label="Pick a custom color for tool previews"
-              />
-            </label>
+            {BASE_SWATCHES.map((hex) => {
+              const active = toolColor.toLowerCase() === hex.toLowerCase();
+              return (
+                <button
+                  key={hex}
+                  type="button"
+                  onClick={() => setToolColor(hex)}
+                  aria-label={`Preview tools with ${hex}`}
+                  aria-pressed={active}
+                  className={`flex h-9 w-9 items-center justify-center rounded-full transition-all duration-200 ${
+                    active
+                      ? "scale-105 ring-2 ring-[#1c1712] ring-offset-[3px] ring-offset-[#f5f5f5]"
+                      : "ring-1 ring-inset ring-black/10 hover:scale-110"
+                  }`}
+                  style={{ backgroundColor: hex }}
+                >
+                  {active && (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </button>
+              );
+            })}
+            {(() => {
+              // "Custom" turns into the active (dark) pill when the colour isn't one of the presets.
+              const customActive = !BASE_SWATCHES.some((h) => h.toLowerCase() === toolColor.toLowerCase());
+              return (
+                <label
+                  className={`flex cursor-pointer items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+                    customActive ? "border-[#1c1712] bg-[#1c1712] text-white" : "border-black/10 bg-white text-[#1c1712]/60 hover:border-black/20 hover:text-[#1c1712]"
+                  }`}
+                >
+                  Custom
+                  <input
+                    type="color"
+                    value={toolColor}
+                    onChange={(e) => setToolColor(e.target.value)}
+                    className="h-5 w-5 cursor-pointer overflow-hidden rounded-full border-0 bg-transparent p-0"
+                    aria-label="Pick a custom color for tool previews"
+                  />
+                </label>
+              );
+            })()}
           </div>
 
           <motion.div
@@ -512,7 +552,7 @@ export function HueFlowHomePage() {
                 href="/color-converter"
                 className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
               >
-                <div className="flex flex-1 flex-col justify-center gap-2 bg-[#f5f1ea] px-3 py-5 sm:px-5 sm:py-6">
+                <div className="flex flex-1 flex-col justify-center gap-2 bg-[#f6f5f3] px-3 py-5 sm:px-5 sm:py-6">
                   {[
                     { label: "HEX", value: toolColor.toUpperCase() },
                     { label: "RGB", value: hexToRgbString(toolColor) },
@@ -650,6 +690,21 @@ export function HueFlowHomePage() {
               Explore all palettes →
             </Link>
           </div>
+
+          {/* Popular searches: the shades, palette-library and color-code pages */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-[13px]">
+            <span className="mr-1 text-[#1c1712]/50">Popular:</span>
+            {POPULAR_LINKS.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="flex items-center gap-1.5 rounded-full border border-black/[0.08] bg-white py-1 pl-1 pr-3 text-[#1c1712]/65 transition hover:border-[#e8531f]/40 hover:text-[#e8531f]"
+              >
+                <span className="h-4 w-4 rounded-full border border-black/10" style={{ backgroundColor: l.hex }} />
+                {l.label}
+              </Link>
+            ))}
+          </div>
         </section>
 
         {/* ============ GO DEEPER ============ */}
@@ -678,7 +733,7 @@ export function HueFlowHomePage() {
                   </div>
                   <h3 className="text-lg font-semibold tracking-[-0.02em] text-[#1c1712]">{item.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-6 text-[#1c1712]/55">{item.body}</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#1c1712]/40 transition-colors group-hover:text-[#e8531f]">
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#1c1712]/55 transition-colors group-hover:text-[#e8531f]">
                     Explore <span className="transition-transform group-hover:translate-x-1">→</span>
                   </span>
                 </Link>
@@ -688,7 +743,7 @@ export function HueFlowHomePage() {
         </section>
 
         {/* ============ COLOR MOODS ============ */}
-        <section className="mt-28" id="moods">
+        <section className={`mt-28 ${GRAY_BAND}`} id="moods">
           <SectionHeading
             eyebrow="Color & Emotion"
             title="Every palette has a feeling."
@@ -705,8 +760,8 @@ export function HueFlowHomePage() {
                   onClick={() => setActiveMood(i)}
                   className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
                     isActive
-                      ? "border-[#e8531f]/30 bg-white shadow-[0_4px_16px_rgba(28,23,18,0.09)] text-[#1c1712]"
-                      : "border-transparent bg-black/[0.04] text-[#1c1712]/60 hover:bg-white hover:text-[#1c1712]"
+                      ? "border-[#1c1712] bg-[#1c1712] text-white shadow-[0_6px_18px_rgba(28,23,18,0.22)]"
+                      : "border-black/[0.08] bg-white text-[#1c1712]/65 hover:border-black/20 hover:text-[#1c1712]"
                   }`}
                 >
                   {mood.label}
@@ -810,7 +865,7 @@ export function HueFlowHomePage() {
                 <div className="h-20" style={{ backgroundColor: token.hex }} />
                 <div className="bg-white px-3 py-2.5">
                   <p className="text-xs font-semibold text-[#1c1712]">{token.name}</p>
-                  <p className="mt-0.5 font-mono text-[10px] text-[#1c1712]/45">{token.hex.toUpperCase()}</p>
+                  <p className="mt-0.5 font-mono text-[10px] text-[#1c1712]/55">{token.hex.toUpperCase()}</p>
                 </div>
               </div>
             ))}
@@ -818,14 +873,15 @@ export function HueFlowHomePage() {
         </section>
 
         {/* ============ WHY HUEFLOW ============ */}
-        <section className="mt-28" id="why">
+        <section className={`mt-28 ${GRAY_BAND}`} id="why">
           <SectionHeading eyebrow="Why HueFlow" title="Color should feel easier." />
 
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={stagger} className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            {WHY_HUEFLOW.map((item) => (
+            {WHY_HUEFLOW.map((item, i) => (
               <motion.div key={item.title} variants={fadeUp} className="rounded-[22px] border border-black/8 bg-white p-6">
+                <span className="mb-5 block h-1.5 w-10 rounded-full" style={{ backgroundColor: WHY_ACCENTS[i % WHY_ACCENTS.length] }} aria-hidden="true" />
                 <h3 className="text-base font-semibold tracking-[-0.02em] text-[#1c1712]">{item.title}</h3>
-                <p className="mt-2.5 text-sm leading-6 text-[#1c1712]/55">{item.body}</p>
+                <p className="mt-2.5 text-sm leading-6 text-[#1c1712]/60">{item.body}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -859,7 +915,7 @@ export function HueFlowHomePage() {
               transition={{ duration: 0.5 }}
               className="lg:sticky lg:top-28"
             >
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#1c1712]/45">FAQ</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#c2410c]">FAQ</p>
               <h2 className="mt-4 font-display text-[2rem] font-semibold leading-[1.05] tracking-[-0.04em] text-[#1c1712] sm:text-[2.6rem]">
                 A few things people usually ask.
               </h2>

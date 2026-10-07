@@ -21,6 +21,23 @@ function getIndustry(href: string): string {
 
 const INDUSTRIES = ["All", "SaaS", "Fintech", "Luxury", "DTC", "Creative", "Wellness", "Startup", "Dark"];
 
+// Kept as a short static list (not imported from lib/palette-library) so this
+// client component doesn't ship the whole library in its bundle.
+const LIBRARY_LINKS = [
+  { slug: "pastel", name: "Pastel", hex: "#FFD1DC" },
+  { slug: "neon", name: "Neon", hex: "#FF00A0" },
+  { slug: "earthy", name: "Earthy", hex: "#B85C38" },
+  { slug: "vintage", name: "Vintage", hex: "#E9B44C" },
+  { slug: "dark", name: "Dark", hex: "#0D1117" },
+  { slug: "minimal", name: "Minimal", hex: "#E5E5E5" },
+  { slug: "blue", name: "Blue", hex: "#1E90FF" },
+  { slug: "pink", name: "Pink", hex: "#FF69B4" },
+  { slug: "purple", name: "Purple", hex: "#9370DB" },
+  { slug: "green", name: "Green", hex: "#2E8B57" },
+  { slug: "summer", name: "Summer", hex: "#00B4D8" },
+  { slug: "autumn", name: "Autumn", hex: "#B85C1A" },
+];
+
 const TIPS = [
   { icon: "🎯", title: "Start with intent", body: "Pick your primary color based on the emotion you want — trust, energy, calm, or prestige." },
   { icon: "🔢", title: "Limit to 5 colors", body: "1–2 primaries, 1–2 neutrals, 1 accent. Fewer colors create more cohesion." },
@@ -338,6 +355,33 @@ export function PalettesHubView({ hub }: { hub: HubPage }) {
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* ── PALETTE LIBRARY ─────────────────────────────── */}
+      <section className="border-t border-black/6">
+        <div className="mx-auto max-w-[1400px] px-6 py-14 lg:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#E8531F]">Palette library</p>
+              <h2 className="text-[1.75rem] font-semibold tracking-[-0.03em] text-[#1c1712]">Browse 200+ palettes by style and color</h2>
+            </div>
+            <Link href="/color-palettes" className="rounded-full bg-[#1c1712] px-4 py-2 text-xs font-semibold text-white transition hover:bg-[#E8531F]">
+              Open the library →
+            </Link>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {LIBRARY_LINKS.map((l) => (
+              <Link
+                key={l.slug}
+                href={`/color-palettes/${l.slug}`}
+                className="flex items-center gap-2 rounded-full border border-black/10 bg-white py-1.5 pl-1.5 pr-3.5 text-[13px] text-[#1c1712]/70 transition hover:border-[#E8531F]/40 hover:text-[#E8531F]"
+              >
+                <span className="h-5 w-5 rounded-full border border-black/10" style={{ backgroundColor: l.hex }} />
+                {l.name}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

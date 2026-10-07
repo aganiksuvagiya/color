@@ -26,6 +26,7 @@ export default function robots(): MetadataRoute.Robots {
       `${siteConfig.domain}/sitemap.xml`,
       `${siteConfig.domain}/sitemap-pages.xml`,
       `${siteConfig.domain}/sitemap-colors.xml`,
+      `${siteConfig.domain}/sitemap-shades.xml`,
       `${siteConfig.domain}/sitemap-palettes.xml`,
       `${siteConfig.domain}/sitemap-gradients.xml`,
       `${siteConfig.domain}/sitemap-brand-colors.xml`,

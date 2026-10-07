@@ -18,6 +18,8 @@ function getSimilarColors(hex: string) {
 type Breadcrumb = { name: string; href: string };
 
 const relatedGroups = [
+  { label: "Shades",                     match: "/shades-of-" },
+  { label: "Palette library",            match: "/color-palettes/" },
   { label: "Related colors",             match: "/colors/" },
   { label: "Related color meanings",     match: "/color-meanings/" },
   { label: "Related color psychology",   match: "/color-psychology/" },
