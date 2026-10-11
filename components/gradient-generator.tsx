@@ -1,9 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
+import { SwatchStrip } from "@/components/seo/swatch-strip";
 import { toolPageContent } from "@/lib/seo/tool-pages";
 import { type SavedGradient } from "@/lib/storage";
 import { useGradientStorage } from "@/hooks/use-gradient-storage";
@@ -325,454 +326,417 @@ export function GradientGenerator() {
     window.addEventListener("keydown",fn); return ()=>window.removeEventListener("keydown",fn);
   },[previewPreset]);
 
-  const card = "rounded-3xl border border-black/[0.08] bg-white shadow-sm";
+  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+  const pill = (on: boolean) =>
+    `rounded-full px-3.5 py-1.5 text-[13px] font-semibold capitalize transition ${
+      on ? "bg-[#1c1712] text-white" : "bg-white text-[#1c1712]/60 ring-1 ring-black/[0.1] hover:text-[#1c1712] hover:ring-black/20"
+    }`;
+  const ghostBtn = "rounded-full px-3.5 py-1.5 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
+  const textInput = "rounded-lg px-2 py-1.5 font-mono text-[12px] font-semibold uppercase outline-none ring-1 ring-black/[0.12] transition focus:ring-black/30";
+  const sortedStops = [...stops].sort((a, b) => a.position - b.position);
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <main className="mx-auto w-full max-w-[960px] flex-1 px-4 pb-20 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
-
-        {/* ── Hero ── */}
-        <motion.div initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{duration:0.35}}
-          className="mb-8 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/40 shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]"/>Color Tool
-          </span>
-          <h1 className="mt-2.5 font-display text-[2.4rem] font-black leading-none tracking-[-0.04em] sm:text-[3.2rem]">
-            CSS Gradient Generator
-          </h1>
-          <p className="mt-2 text-[14px] text-[#1c1712]/40">
-            Create linear, radial, and conic CSS gradients and copy the code.
-          </p>
-        </motion.div>
-
-        {/* ── Preview + Interactive Stop Bar ── */}
-        <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:0.4,delay:0.05}}
-          className={`${card} mb-4 overflow-hidden`}>
-
-          <div className="h-[240px] w-full" style={{background: gradientStyle}}/>
-
-          {/* Stop bar label */}
-          <div className="flex items-center justify-between border-t border-black/[0.05] bg-[#faf7f2] px-4 py-1.5">
-            <span className="text-[9px] font-semibold text-[#1c1712]/30">
-              ↔ Drag stops to reposition
-            </span>
-            {stops.length < 5 && (
-              <span className="text-[9px] font-semibold text-[#1c1712]/30">
-                Click bar to add stop ({stops.length}/5)
-              </span>
-            )}
-          </div>
-
-          {/* Stop bar — drag markers or click to add */}
-          <div
-            ref={stopBarRef}
-            className="relative h-10 cursor-crosshair select-none"
-            style={{background: barStyle}}
-            onClick={handleBarClick}
-            onPointerMove={handleBarPointerMove}
-            onPointerUp={handleBarPointerUp}
-          >
-            {stops.map(stop => (
-              <div key={stop.id}
-                className="absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 touch-none"
-                style={{left:`${stop.position}%`}}
-                onPointerDown={e=>handleBarMarkerDown(e,stop.id)}
-                onClick={e=>e.stopPropagation()}>
-                {/* Drag handle marker */}
-                <div className="flex h-7 w-7 cursor-grab items-center justify-center rounded-full border-[2.5px] border-white shadow-[0_2px_8px_rgba(0,0,0,0.45)] transition-transform active:cursor-grabbing active:scale-95 hover:scale-110"
-                  style={{backgroundColor: stop.color}}>
-                  <div className="flex gap-[3px]">
-                    <div className="h-2.5 w-[1.5px] rounded-full bg-white/70"/>
-                    <div className="h-2.5 w-[1.5px] rounded-full bg-white/70"/>
-                    <div className="h-2.5 w-[1.5px] rounded-full bg-white/70"/>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* CSS output row */}
-          <div className="flex items-center justify-between px-5 py-3.5">
-            <code className="flex-1 truncate font-mono text-[11px] text-[#1c1712]/40">
-              {exportCode.css}
-            </code>
-            <div className="ml-4 flex shrink-0 items-center gap-2">
-              {saveMessage && <span className="text-[11px] font-semibold text-green-600">{saveMessage}</span>}
-              <button onClick={handleSaveGradient}
-                className="rounded-xl border border-black/[0.07] bg-[#faf7f2] px-3 py-1.5 text-[11px] font-semibold text-[#1c1712]/50 transition hover:bg-[#f0ede8]">
-                Save
-              </button>
-              <button onClick={()=>copy(exportCode.css)}
-                className={`rounded-xl px-3 py-1.5 text-[11px] font-semibold transition ${copied===exportCode.css?"bg-green-50 text-green-600 border border-green-200":"border border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/50 hover:bg-[#f0ede8]"}`}>
-                {copied===exportCode.css?"✓ Copied!":"Copy CSS"}
-              </button>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ── Controls grid ── */}
-        <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:0.4,delay:0.1}}
-          className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-
-          {/* Type + Compass + Angle */}
-          <div className={`${card} p-5`}>
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Gradient Type</p>
-            <div className="mb-5 flex gap-2">
-              {(["linear","radial","conic"] as GradientType[]).map(type=>(
-                <button key={type} onClick={()=>setGradientType(type)}
-                  className={`flex-1 rounded-xl py-2 text-[12px] font-semibold capitalize transition-all ${
-                    gradientType===type?"bg-[#1c1712] text-white shadow-sm":"border border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/50 hover:bg-[#f0ede8]"
-                  }`}>
-                  {type}
-                </button>
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Gradient Generator</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">CSS Gradient Generator</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {sortedStops.map((st) => (
+                <span key={st.id} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: st.color }} />
               ))}
+            </span>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">Linear, radial and conic gradients.</span> Drag the stops, tune the angle and copy CSS, Tailwind or SVG code.
+            </p>
+          </div>
+        </section>
+
+        {/* ── Preview + stop bar ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="w-full px-6 py-10 sm:px-8 lg:px-12">
+            <div className="overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
+              <div className="h-[260px] w-full sm:h-[320px]" style={{ background: gradientStyle }} />
+
+              <div className="flex items-center justify-between border-t border-black/[0.06] px-4 py-2 text-[12px] text-[#1c1712]/45">
+                <span>↔ Drag stops to reposition</span>
+                {stops.length < 5 && <span>Click the bar to add a stop ({stops.length}/5)</span>}
+              </div>
+
+              <div
+                ref={stopBarRef}
+                className="relative h-11 cursor-crosshair select-none"
+                style={{ background: barStyle }}
+                onClick={handleBarClick}
+                onPointerMove={handleBarPointerMove}
+                onPointerUp={handleBarPointerUp}
+              >
+                {stops.map((stop) => (
+                  <div
+                    key={stop.id}
+                    className="absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 touch-none"
+                    style={{ left: `${stop.position}%` }}
+                    onPointerDown={(e) => handleBarMarkerDown(e, stop.id)}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div
+                      className="flex h-7 w-7 cursor-grab items-center justify-center rounded-full border-[2.5px] border-white shadow-[0_2px_8px_rgba(0,0,0,0.45)] transition-transform hover:scale-110 active:scale-95 active:cursor-grabbing"
+                      style={{ backgroundColor: stop.color }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 border-t border-black/[0.06] px-5 py-3.5">
+                <code className="min-w-0 flex-1 truncate font-mono text-[12px] text-[#1c1712]/55">{exportCode.css}</code>
+                <div className="flex shrink-0 items-center gap-2">
+                  {saveMessage && <span className="text-[12px] font-semibold text-emerald-600">{saveMessage}</span>}
+                  <button onClick={handleSaveGradient} className={ghostBtn}>Save</button>
+                  <button onClick={() => copy(exportCode.css)} className="rounded-full bg-[#1c1712] px-4 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
+                    {copied === exportCode.css ? "✓ Copied" : "Copy CSS"}
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {(gradientType==="linear"||gradientType==="conic") && (<>
-              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Direction</p>
+            {/* Controls */}
+            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="rounded-2xl p-6 ring-1 ring-black/[0.07]">
+                <p className={label}>Gradient type</p>
+                <div role="tablist" aria-label="Gradient type" className="mt-3 flex flex-wrap gap-2">
+                  {(["linear", "radial", "conic"] as GradientType[]).map((type) => (
+                    <button key={type} role="tab" aria-selected={gradientType === type} onClick={() => setGradientType(type)} className={pill(gradientType === type)}>
+                      {type}
+                    </button>
+                  ))}
+                </div>
 
-              {/* Direction compass */}
-              <div className="mb-4 flex justify-center">
-                <div className="grid grid-cols-3 gap-1.5">
-                  {COMPASS.map(([a,label],i) =>
-                    a===null ? (
-                      <div key={i} className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#faf7f2]">
-                        <span className="font-mono text-[9px] font-bold text-[#1c1712]/40">{angle}°</span>
+                {(gradientType === "linear" || gradientType === "conic") && (
+                  <div className="mt-6">
+                    <p className={label}>Direction</p>
+                    <div className="mt-3 flex items-center gap-6">
+                      <div className="grid grid-cols-3 gap-1.5">
+                        {COMPASS.map(([a, arrow], i) =>
+                          a === null ? (
+                            <div key={i} className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1c1712]/[0.04]">
+                              <span className="font-mono text-[10px] font-bold text-[#1c1712]/55">{angle}°</span>
+                            </div>
+                          ) : (
+                            <button
+                              key={i}
+                              onClick={() => setAngle(a)}
+                              aria-label={`Angle ${a} degrees`}
+                              className={`h-9 w-9 rounded-lg text-[16px] transition ${
+                                angle === a ? "bg-[#1c1712] text-white" : "bg-white text-[#1c1712]/60 ring-1 ring-black/[0.1] hover:text-[#1c1712]"
+                              }`}
+                            >
+                              {arrow}
+                            </button>
+                          ),
+                        )}
                       </div>
-                    ) : (
-                      <button key={i} onClick={()=>setAngle(a)}
-                        className={`h-9 w-9 rounded-xl text-[16px] transition-all ${
-                          angle===a?"bg-[#1c1712] text-white shadow-sm":"border border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/60 hover:bg-[#f0ede8]"
-                        }`}>
-                        {label}
-                      </button>
-                    )
-                  )}
-                </div>
-              </div>
-
-              {/* Fine-tune slider */}
-              <div className="flex items-center gap-3">
-                <div className="relative flex-1">
-                  <div className="absolute inset-y-0 left-0 right-0 my-auto h-1.5 overflow-hidden rounded-full bg-black/[0.07]">
-                    <div className="h-full rounded-full bg-[#1c1712]/20" style={{width:`${(angle/360)*100}%`}}/>
+                      <div className="min-w-0 flex-1">
+                        <input
+                          type="range"
+                          min={0}
+                          max={360}
+                          value={angle}
+                          onChange={(e) => setAngle(Number(e.target.value))}
+                          aria-label="Angle"
+                          className="h-2 w-full cursor-pointer accent-[#1c1712]"
+                        />
+                        <p className="mt-1 font-mono text-[12px] text-[#1c1712]/50">{angle}°</p>
+                      </div>
+                    </div>
                   </div>
-                  <input type="range" min={0} max={360} value={angle}
-                    onChange={e=>setAngle(Number(e.target.value))}
-                    className="relative h-4 w-full cursor-pointer opacity-0"/>
-                </div>
-                <span className="w-9 text-right font-mono text-[11px] font-semibold text-[#1c1712]/45">{angle}°</span>
-              </div>
-            </>)}
-          </div>
-
-          {/* Color Stops */}
-          <div className={`${card} p-5`}>
-            <div className="mb-3 flex items-center justify-between">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">
-                Color Stops
-                <span className="ml-2 font-normal normal-case tracking-normal text-[#1c1712]/25">({stops.length}/5)</span>
-              </p>
-              <div className="flex gap-1.5">
-                <button onClick={randomize}
-                  className="rounded-xl border border-black/[0.07] bg-[#faf7f2] px-3 py-1.5 text-[10px] font-semibold text-[#1c1712]/45 transition hover:bg-[#f0ede8]">
-                  Randomize
-                </button>
-                {stops.length<5 && (
-                  <button onClick={addStop}
-                    className="rounded-xl border border-black/[0.07] bg-[#faf7f2] px-3 py-1.5 text-[10px] font-semibold text-[#1c1712]/45 transition hover:bg-[#f0ede8]">
-                    + Add
-                  </button>
                 )}
               </div>
-            </div>
 
-            <div className="space-y-2.5">
-              {[...stops].sort((a,b)=>a.position-b.position).map(stop=>(
-                <div key={stop.id} className="flex items-center gap-2">
-                  <label className="relative h-8 w-8 shrink-0 cursor-pointer overflow-hidden rounded-xl border border-black/[0.08] shadow-sm"
-                    style={{backgroundColor: stop.color}}>
-                    <input type="color" value={stop.color}
-                      onChange={e=>updateStop(stop.id,{color:e.target.value})}
-                      className="absolute inset-0 h-full w-full cursor-pointer opacity-0"/>
-                  </label>
-                  <input type="text" value={stop.color} maxLength={7}
-                    onChange={e=>{const v=e.target.value;if(/^#[0-9A-Fa-f]{0,6}$/.test(v))updateStop(stop.id,{color:v});}}
-                    className="w-[5.5rem] rounded-lg border border-black/[0.07] bg-[#faf7f2] px-2 py-1.5 font-mono text-[11px] font-semibold outline-none transition focus:border-black/15 focus:bg-white"/>
-                  <div className="relative min-w-0 flex-1">
-                    <div className="absolute inset-y-0 left-0 right-0 my-auto h-1 overflow-hidden rounded-full bg-black/[0.07]">
-                      <div className="h-full rounded-full" style={{width:`${stop.position}%`,backgroundColor:stop.color}}/>
-                    </div>
-                    <input type="range" min={0} max={100} value={stop.position}
-                      onChange={e=>updateStop(stop.id,{position:Number(e.target.value)})}
-                      className="relative h-4 w-full cursor-pointer opacity-0"/>
+              <div className="rounded-2xl p-6 ring-1 ring-black/[0.07]">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className={label}>
+                    Color stops <span className="ml-1 normal-case tracking-normal text-[#1c1712]/35">({stops.length}/5)</span>
+                  </p>
+                  <div className="flex gap-2">
+                    <button onClick={randomize} className={ghostBtn}>🎲 Randomize</button>
+                    {stops.length < 5 && <button onClick={addStop} className={ghostBtn}>+ Add</button>}
                   </div>
-                  <span className="w-8 shrink-0 text-right font-mono text-[10px] text-[#1c1712]/35">{stop.position}%</span>
-                  {stops.length>2 && (
-                    <button onClick={()=>removeStop(stop.id)}
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg text-[#1c1712]/25 transition hover:bg-[#faf7f2] hover:text-[#1c1712]/60">
-                      <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                      </svg>
-                    </button>
-                  )}
                 </div>
-              ))}
+
+                <div className="mt-4 space-y-3">
+                  {sortedStops.map((stop) => (
+                    <div key={stop.id} className="flex items-center gap-2.5">
+                      <label className="relative h-9 w-9 shrink-0 cursor-pointer overflow-hidden rounded-lg ring-1 ring-black/10" style={{ backgroundColor: stop.color }}>
+                        <input
+                          type="color"
+                          value={stop.color}
+                          onChange={(e) => updateStop(stop.id, { color: e.target.value })}
+                          aria-label="Stop color"
+                          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                        />
+                      </label>
+                      <input
+                        type="text"
+                        value={stop.color}
+                        maxLength={7}
+                        onChange={(e) => { const v = e.target.value; if (/^#[0-9A-Fa-f]{0,6}$/.test(v)) updateStop(stop.id, { color: v }); }}
+                        aria-label="Stop HEX"
+                        className={`w-24 ${textInput}`}
+                      />
+                      <input
+                        type="range"
+                        min={0}
+                        max={100}
+                        value={stop.position}
+                        onChange={(e) => updateStop(stop.id, { position: Number(e.target.value) })}
+                        aria-label="Stop position"
+                        className="h-2 min-w-0 flex-1 cursor-pointer accent-[#1c1712]"
+                      />
+                      <span className="w-9 shrink-0 text-right font-mono text-[12px] text-[#1c1712]/50">{stop.position}%</span>
+                      {stops.length > 2 && (
+                        <button
+                          onClick={() => removeStop(stop.id)}
+                          aria-label="Remove stop"
+                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#1c1712]/40 transition hover:bg-[#1c1712]/[0.06] hover:text-[#1c1712]"
+                        >
+                          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </motion.div>
+        </section>
 
-        {/* ── Swatch Strip ── */}
-        <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:0.4,delay:0.13}}
-          className={`${card} mb-4 overflow-hidden`}>
-          <div className="flex overflow-hidden rounded-t-3xl">
-            {swatchColors.map((hex,i)=>(
-              <div key={i}
-                className="group/swatch relative flex-1 transition-[flex] duration-300 hover:flex-[3]"
-                style={{backgroundColor:hex, minHeight:60}}>
-                <button onClick={()=>copy(hex)}
-                  className="absolute inset-0 flex items-end justify-center pb-2"
-                  aria-label={`Copy ${hex}`}>
-                  <span className="rounded-full bg-black/55 px-2.5 py-1 font-mono text-[9px] text-white opacity-0 transition-opacity duration-200 group-hover/swatch:opacity-100">
-                    {copied===hex?"✓ Copied":hex.toUpperCase()}
-                  </span>
-                </button>
-              </div>
-            ))}
+        {/* ── Gradient swatches ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+            <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
+              Colors along the gradient
+              <span className="h-px flex-1 bg-black/[0.06]" />
+            </h2>
+            <SwatchStrip colors={swatchColors.map((c) => c.toUpperCase())} height="h-24" copied={copied} onCopy={copy} className="rounded-2xl ring-1 ring-black/[0.07]" />
+            <p className="mt-3 text-[13px] text-[#1c1712]/45">12 evenly spaced samples. Hover for the HEX, click to copy.</p>
           </div>
-          <div className="flex border-t border-black/[0.05]">
-            {swatchColors.map((_,i)=>(
-              <div key={i} className="flex-1 py-1.5 text-center">
-                <span className="font-mono text-[7px] font-semibold text-[#1c1712]/25">
-                  {Math.round((i/(swatchColors.length-1))*100)}%
-                </span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+        </section>
 
         {/* ── Export ── */}
-        <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:0.4,delay:0.16}}
-          className={`${card} mb-8 overflow-hidden`}>
-          <div className="flex items-center justify-between border-b border-black/[0.06] px-5 py-4">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Export</p>
-            <div className="flex gap-1">
-              {(["css","tailwind","svg","inline"] as ExportTab[]).map(t=>(
-                <button key={t} onClick={()=>setExportTab(t)}
-                  className={`rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide transition ${
-                    exportTab===t?"bg-[#1c1712] text-white":"text-[#1c1712]/40 hover:bg-[#faf7f2]"
-                  }`}>
-                  {t}
-                </button>
-              ))}
+        <section className="border-t border-black/[0.06]">
+          <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Export</p>
+                <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Use it in your project</h2>
+              </div>
+              <div role="tablist" aria-label="Export format" className="flex flex-wrap gap-2">
+                {(["css", "tailwind", "svg", "inline"] as ExportTab[]).map((t) => (
+                  <button key={t} role="tab" aria-selected={exportTab === t} onClick={() => setExportTab(t)} className={`${pill(exportTab === t)} uppercase`}>
+                    {t}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="relative">
-            <pre className="max-h-52 overflow-x-auto px-5 py-4 font-mono text-[11px] leading-relaxed text-[#1c1712]/55 whitespace-pre-wrap break-all">
-              {exportCode[exportTab]}
-            </pre>
-            <div className="absolute right-4 top-4">
-              <button onClick={()=>copy(exportCode[exportTab])}
-                className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[10px] font-semibold transition ${
-                  copied===exportCode[exportTab]?"border-green-200 bg-green-50 text-green-600":"border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/45 hover:bg-[#f0ede8]"
-                }`}>
-                {copied===exportCode[exportTab]?"✓ Copied!":"Copy"}
+            <div className="relative mt-6 rounded-2xl bg-[#F5F5F5] ring-1 ring-black/[0.07]">
+              <pre className="max-h-60 overflow-auto whitespace-pre-wrap break-all px-5 py-5 pr-24 font-mono text-[12px] leading-relaxed text-[#1c1712]/75">{exportCode[exportTab]}</pre>
+              <button
+                onClick={() => copy(exportCode[exportTab])}
+                className="absolute right-4 top-4 rounded-full bg-[#1c1712] px-3.5 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]"
+              >
+                {copied === exportCode[exportTab] ? "✓ Copied" : "Copy"}
               </button>
             </div>
           </div>
-        </motion.div>
+        </section>
 
-        {/* ── Saved Gradients ── */}
-        {gradientsMounted&&savedGradients.length>0&&(
-          <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:0.4,delay:0.18}}
-            className="mb-8">
-            <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Saved Gradients</p>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {savedGradients.map(g=>(
-                <div key={g.id} className={`${card} overflow-hidden`}>
-                  <div className="h-20 w-full cursor-pointer transition hover:opacity-90"
-                    style={{background:g.preview}} onClick={()=>copy(g.css)}/>
-                  <div className="p-3">
-                    <p className="truncate text-[11px] font-semibold text-[#1c1712]">{g.name}</p>
-                    <div className="mt-2 flex gap-1.5">
-                      <button onClick={()=>copy(g.css)}
-                        className="flex-1 rounded-lg border border-black/[0.06] bg-[#faf7f2] py-1 text-[9px] font-semibold text-[#1c1712]/45 transition hover:bg-[#f0ede8]">
-                        Copy CSS
-                      </button>
-                      <button onClick={()=>handleDeleteGradient(g.id)}
-                        className="rounded-lg border border-red-100 bg-red-50 px-2 py-1 text-[9px] font-semibold text-red-400 transition hover:bg-red-100">
-                        Del
-                      </button>
+        {/* ── Saved gradients ── */}
+        {gradientsMounted && savedGradients.length > 0 && (
+          <section className="border-t border-black/[0.06]">
+            <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Yours</p>
+              <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Saved gradients</h2>
+              <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+                {savedGradients.map((g) => (
+                  <div key={g.id} className="overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
+                    <button className="block h-24 w-full transition hover:opacity-90" style={{ background: g.preview }} onClick={() => copy(g.css)} aria-label={`Copy CSS for ${g.name}`} />
+                    <div className="p-3.5">
+                      <p className="truncate text-[13px] font-semibold">{g.name}</p>
+                      <div className="mt-2.5 flex gap-1.5">
+                        <button onClick={() => copy(g.css)} className="flex-1 rounded-full py-1 text-[11px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712]">
+                          {copied === g.css ? "✓" : "Copy CSS"}
+                        </button>
+                        <button onClick={() => handleDeleteGradient(g.id)} className="rounded-full px-2.5 py-1 text-[11px] font-semibold text-red-600 ring-1 ring-red-200 transition hover:bg-red-50">
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </motion.div>
+          </section>
         )}
 
-        {/* ── Preset Gradients ── */}
-        <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:0.4,delay:0.2}}
-          className="mb-10">
-          <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Preset Gradients</p>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-            {apiGradients.map((preset,i)=>(
-              <motion.button key={`${preset.name}-${i}`}
-                initial={{opacity:0,y:12}} animate={{opacity:1,y:0}}
-                transition={{duration:0.3,delay:(i%12)*0.03}}
-                onClick={()=>openPreview(preset)}
-                className={`${card} overflow-hidden text-left transition hover:-translate-y-0.5 hover:shadow-md`}>
-                <div className="h-24 w-full" style={{background:presetToStyle(preset)}}/>
-                <div className="p-3">
-                  <p className="text-[11px] font-semibold text-[#1c1712]">{preset.name}</p>
-                  <p className="mt-0.5 truncate text-[9px] text-[#1c1712]/35">{preset.colors.join(" → ")}</p>
-                </div>
-              </motion.button>
-            ))}
-          </div>
-          {hasMoreGradients&&(
-            <div ref={gradientLoaderRef} className="flex justify-center py-10">
-              <div className="h-6 w-6 animate-spin rounded-full border-2 border-black/10 border-t-black/40"/>
+        {/* ── Preset gradients ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Presets</p>
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Preset gradients</h2>
+            <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">Click one to preview and tweak it, then use it as your gradient.</p>
+            <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+              {apiGradients.map((preset, i) => (
+                <button
+                  key={`${preset.name}-${i}`}
+                  onClick={() => openPreview(preset)}
+                  className="overflow-hidden rounded-2xl text-left ring-1 ring-black/[0.07] transition hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-18px_rgba(28,23,18,0.35)]"
+                >
+                  <div className="h-28 w-full" style={{ background: presetToStyle(preset) }} />
+                  <div className="p-3.5">
+                    <p className="truncate text-[14px] font-semibold">{preset.name}</p>
+                    <p className="mt-0.5 truncate font-mono text-[11px] uppercase text-[#1c1712]/45">{preset.colors.map((c) => c.replace("#", "")).join(" · ")}</p>
+                  </div>
+                </button>
+              ))}
             </div>
-          )}
-        </motion.div>
+            {hasMoreGradients && (
+              <div ref={gradientLoaderRef} className="flex justify-center py-10">
+                <div className="h-6 w-6 animate-spin rounded-full border-2 border-black/10 border-t-black/40" />
+              </div>
+            )}
+          </div>
+        </section>
 
-        <ToolPageSections config={toolPageContent.gradient}/>
+        <ToolPageSections config={toolPageContent.gradient} variant="new" />
       </main>
 
-      {/* ── Preset Preview Modal ── */}
-      <AnimatePresence>
-        {previewPreset&&(
-          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
-            onClick={()=>setPreviewPreset(null)}>
-            <motion.div initial={{opacity:0,y:16,scale:0.97}} animate={{opacity:1,y:0,scale:1}}
-              exit={{opacity:0,y:16,scale:0.97}} transition={{duration:0.2}}
-              onClick={e=>e.stopPropagation()}
-              className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-black/[0.08] bg-white shadow-2xl">
+      {/* ── Preset preview modal ── */}
+      {previewPreset && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${previewPreset.name} gradient preview`}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+          onClick={() => setPreviewPreset(null)}
+        >
+          <div onClick={(e) => e.stopPropagation()} className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl ring-1 ring-black/[0.07]">
+            <div className="h-52 w-full rounded-t-2xl sm:h-64" style={{ background: generateGradientStyle(previewType, previewAngle, previewStops) }} />
 
-              <div className="h-52 w-full rounded-t-3xl sm:h-64"
-                style={{background:generateGradientStyle(previewType,previewAngle,previewStops)}}/>
+            <div className="p-6">
+              <div className="mb-5 flex items-center justify-between">
+                <h2 className="text-[18px] font-semibold tracking-[-0.02em]">{previewPreset.name}</h2>
+                <button
+                  onClick={() => setPreviewPreset(null)}
+                  aria-label="Close preview"
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-[#1c1712]/55 ring-1 ring-black/[0.12] transition hover:text-[#1c1712]"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
 
-              <div className="p-6">
-                <div className="mb-5 flex items-center justify-between">
-                  <p className="text-[17px] font-bold text-[#1c1712]">{previewPreset.name}</p>
-                  <button onClick={()=>setPreviewPreset(null)}
-                    className="flex h-8 w-8 items-center justify-center rounded-xl border border-black/[0.08] bg-[#faf7f2] text-[#1c1712]/40 transition hover:bg-[#f0ede8]">
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                  </button>
+              <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <div>
+                  <p className={label}>Type</p>
+                  <div className="mt-2.5 flex flex-wrap gap-2">
+                    {(["linear", "radial", "conic"] as GradientType[]).map((type) => (
+                      <button key={type} onClick={() => setPreviewType(type)} className={pill(previewType === type)}>{type}</button>
+                    ))}
+                  </div>
+                  {(previewType === "linear" || previewType === "conic") && (
+                    <div className="mt-5">
+                      <p className={label}>Direction</p>
+                      <div className="mt-2.5 grid w-fit grid-cols-3 gap-1.5">
+                        {COMPASS.map(([a, arrow], i) =>
+                          a === null ? (
+                            <div key={i} className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1c1712]/[0.04]">
+                              <span className="font-mono text-[9px] font-bold text-[#1c1712]/55">{previewAngle}°</span>
+                            </div>
+                          ) : (
+                            <button
+                              key={i}
+                              onClick={() => setPreviewAngle(a)}
+                              aria-label={`Angle ${a} degrees`}
+                              className={`h-8 w-8 rounded-lg text-[15px] transition ${
+                                previewAngle === a ? "bg-[#1c1712] text-white" : "bg-white text-[#1c1712]/60 ring-1 ring-black/[0.1] hover:text-[#1c1712]"
+                              }`}
+                            >
+                              {arrow}
+                            </button>
+                          ),
+                        )}
+                      </div>
+                      <div className="mt-3 flex items-center gap-2">
+                        <input type="range" min={0} max={360} value={previewAngle} onChange={(e) => setPreviewAngle(Number(e.target.value))} aria-label="Angle" className="h-2 flex-1 accent-[#1c1712]" />
+                        <span className="w-9 text-right font-mono text-[11px] text-[#1c1712]/50">{previewAngle}°</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                <div className="mb-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  {/* Type + Compass */}
-                  <div>
-                    <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Type</p>
-                    <div className="mb-4 flex gap-1.5">
-                      {(["linear","radial","conic"] as GradientType[]).map(type=>(
-                        <button key={type} onClick={()=>setPreviewType(type)}
-                          className={`flex-1 rounded-xl py-2 text-[11px] font-semibold capitalize transition-all ${
-                            previewType===type?"bg-[#1c1712] text-white":"border border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/45 hover:bg-[#f0ede8]"
-                          }`}>
-                          {type}
-                        </button>
-                      ))}
+                <div>
+                  <div className="flex items-center justify-between">
+                    <p className={label}>Stops</p>
+                    <div className="flex gap-1.5">
+                      <button onClick={randomizePreview} className={ghostBtn}>Randomize</button>
+                      {previewStops.length < 5 && <button onClick={addPreviewStop} className={ghostBtn}>+ Add</button>}
                     </div>
-                    {(previewType==="linear"||previewType==="conic")&&(<>
-                      <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Direction</p>
-                      <div className="mb-3 flex justify-center">
-                        <div className="grid grid-cols-3 gap-1">
-                          {COMPASS.map(([a,label],i)=>
-                            a===null?(
-                              <div key={i} className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#faf7f2]">
-                                <span className="font-mono text-[8px] text-[#1c1712]/40">{previewAngle}°</span>
-                              </div>
-                            ):(
-                              <button key={i} onClick={()=>setPreviewAngle(a)}
-                                className={`h-8 w-8 rounded-lg text-[14px] transition-all ${
-                                  previewAngle===a?"bg-[#1c1712] text-white":"border border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/50 hover:bg-[#f0ede8]"
-                                }`}>
-                                {label}
-                              </button>
-                            )
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <input type="range" min={0} max={360} value={previewAngle}
-                          onChange={e=>setPreviewAngle(Number(e.target.value))}
-                          className="flex-1 accent-[#1c1712]"/>
-                        <span className="font-mono text-[10px] text-[#1c1712]/40">{previewAngle}°</span>
-                      </div>
-                    </>)}
                   </div>
-
-                  {/* Stops */}
-                  <div>
-                    <div className="mb-2 flex items-center justify-between">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Stops</p>
-                      <div className="flex gap-1.5">
-                        <button onClick={randomizePreview}
-                          className="rounded-lg border border-black/[0.07] bg-[#faf7f2] px-2 py-1 text-[9px] font-semibold text-[#1c1712]/40 transition hover:bg-[#f0ede8]">
-                          Randomize
-                        </button>
-                        {previewStops.length<5&&(
-                          <button onClick={addPreviewStop}
-                            className="rounded-lg border border-black/[0.07] bg-[#faf7f2] px-2 py-1 text-[9px] font-semibold text-[#1c1712]/40 transition hover:bg-[#f0ede8]">
-                            + Add
+                  <div className="mt-3 space-y-2.5">
+                    {previewStops.map((stop) => (
+                      <div key={stop.id} className="flex items-center gap-2">
+                        <label className="relative h-8 w-8 shrink-0 cursor-pointer overflow-hidden rounded-lg ring-1 ring-black/10" style={{ backgroundColor: stop.color }}>
+                          <input type="color" value={stop.color} onChange={(e) => updatePreviewStop(stop.id, { color: e.target.value })} aria-label="Stop color" className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
+                        </label>
+                        <input
+                          type="text"
+                          value={stop.color}
+                          maxLength={7}
+                          onChange={(e) => { const v = e.target.value; if (/^#[0-9A-Fa-f]{0,6}$/.test(v)) updatePreviewStop(stop.id, { color: v }); }}
+                          aria-label="Stop HEX"
+                          className={`w-20 ${textInput} text-[11px]`}
+                        />
+                        <input type="range" min={0} max={100} value={stop.position} onChange={(e) => updatePreviewStop(stop.id, { position: Number(e.target.value) })} aria-label="Stop position" className="h-2 min-w-0 flex-1 accent-[#1c1712]" />
+                        <span className="w-8 text-right font-mono text-[11px] text-[#1c1712]/45">{stop.position}%</span>
+                        {previewStops.length > 2 && (
+                          <button onClick={() => removePreviewStop(stop.id)} aria-label="Remove stop" className="flex h-6 w-6 items-center justify-center rounded-full text-[#1c1712]/40 hover:text-[#1c1712]">
+                            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
                           </button>
                         )}
                       </div>
-                    </div>
-                    <div className="space-y-2">
-                      {previewStops.map(stop=>(
-                        <div key={stop.id} className="flex items-center gap-2">
-                          <label className="relative h-7 w-7 shrink-0 cursor-pointer overflow-hidden rounded-lg border border-black/[0.08]"
-                            style={{backgroundColor:stop.color}}>
-                            <input type="color" value={stop.color}
-                              onChange={e=>updatePreviewStop(stop.id,{color:e.target.value})}
-                              className="absolute inset-0 h-full w-full cursor-pointer opacity-0"/>
-                          </label>
-                          <input type="text" value={stop.color} maxLength={7}
-                            onChange={e=>{const v=e.target.value;if(/^#[0-9A-Fa-f]{0,6}$/.test(v))updatePreviewStop(stop.id,{color:v});}}
-                            className="w-[4.5rem] rounded-lg border border-black/[0.07] bg-[#faf7f2] px-2 py-1 font-mono text-[10px] outline-none focus:border-black/15 focus:bg-white"/>
-                          <input type="range" min={0} max={100} value={stop.position}
-                            onChange={e=>updatePreviewStop(stop.id,{position:Number(e.target.value)})}
-                            className="min-w-0 flex-1 accent-[#1c1712]"/>
-                          <span className="w-7 text-right font-mono text-[9px] text-[#1c1712]/30">{stop.position}%</span>
-                          {previewStops.length>2&&(
-                            <button onClick={()=>removePreviewStop(stop.id)}
-                              className="flex h-5 w-5 items-center justify-center rounded text-[#1c1712]/25 hover:text-[#1c1712]/60">
-                              <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                              </svg>
-                            </button>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                    ))}
                   </div>
                 </div>
-
-                <div className="flex gap-2">
-                  <button onClick={handleUsePreview}
-                    className="flex-1 rounded-2xl bg-[#e8531f] py-3 text-[13px] font-semibold text-white shadow-[0_4px_14px_rgba(232,83,31,0.35)] transition hover:bg-[#c94518]">
-                    Use this gradient
-                  </button>
-                  <button onClick={handleCopyPreviewCss}
-                    className={`rounded-2xl border px-5 py-3 text-[13px] font-semibold transition ${previewCopied?"border-green-200 bg-green-50 text-green-600":"border-black/[0.08] bg-[#faf7f2] text-[#1c1712]/55 hover:bg-[#f0ede8]"}`}>
-                    {previewCopied?"✓ Copied":"Copy CSS"}
-                  </button>
-                </div>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+              <div className="flex gap-2">
+                <button onClick={handleUsePreview} className="flex-1 rounded-full bg-[#1c1712] py-2.5 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+                  Use this gradient
+                </button>
+                <button onClick={handleCopyPreviewCss} className="rounded-full px-5 py-2.5 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
+                  {previewCopied ? "✓ Copied" : "Copy CSS"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

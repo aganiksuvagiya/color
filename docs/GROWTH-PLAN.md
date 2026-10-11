@@ -99,6 +99,125 @@ Helpers in the same file: `getShadeFamily`, `getResolvedShades` (sorted light to
    - the sitemap lists every new page
 4. `npm run preview` (the OpenNext Cloudflare build) before any deploy.
 
+## Design updates (2026-10-08, owner-driven)
+
+- **Shades pages:** coolors-style layout.
+  - Full width.
+  - Family chips at the top.
+  - Wide swatches with the code on hover.
+  - Light / Medium / Dark group labels.
+  - A sticky toolbar with a white backdrop.
+  - A colored accent word in the heading (`getFamilyAccent` in `lib/shades-data.ts`).
+- **`/shades` hub:** cards show every shade, the accent name, counts and sample names. There's a new "Shade vs tint vs tone" explainer and a visible FAQ with schema.
+- **`/colors` hub:**
+  - Replaced the generic hub with `components/seo/colors-hub-page.tsx`.
+  - All 140 colors coolors-style, with in-page family filters, a HEX/RGB/HSL switch, Grid/List views and a visible FAQ.
+  - Open idea: `/colors` and `/color-codes` now overlap, so consider making `/color-codes` canonical to `/colors` or slimming it down.
+- **`/palettes`:** new `components/seo/palettes-landing.tsx`, replacing the deleted `palettes-hub-page.tsx`.
+  - Header with style chips linking into the library.
+  - The 8 curated brand palettes with an in-page industry filter.
+  - 9 popular library palettes.
+  - Style / color / season tiles, each with a unique preview.
+  - Tips and a visible FAQ.
+- **Shared swatch strip:** dense strips (more than 12 colors) widen 8× on hover, and the hovered stripe is raised so the hex pill isn't clipped.
+- **Homepage:**
+  - White theme, with `#F5F5F5` full-width bands on Workspace, Moods and Why.
+  - Hero renders visible without JS (`initial={false}`), which fixed a blank hero and the LCP.
+  - Orange (`#c2410c`) eyebrows.
+  - Dark active states on the mood tabs, and a ring + check on the color swatches.
+- **Footer (site-wide):** white, 6 balanced columns, a left block with a description, a brand strip and a "Generate a palette" button. Privacy and Terms appear once.
+
+## Redesign task: move every page to the new design (started 2026-10-08, updated 2026-10-11)
+
+**The task:** the owner is moving the whole site, page by page, to the new coolors-style design. Pages are done one at a time when the owner names a URL. **Reference page: `/palettes`** (`components/seo/palettes-landing.tsx`). Copy its structure for any new page.
+
+### Done (new design, none committed yet)
+
+| Page | URL(s) | Component |
+|---|---|---|
+| Homepage | `/` | `components/hueflow-homepage.tsx` |
+| Footer | site-wide | `components/footer.tsx` |
+| Colors hub | `/colors` | `components/seo/colors-hub-page.tsx` |
+| Shades hub | `/shades` | `components/seo/shades-page.tsx` (`ShadesHubView`) |
+| Shades pages (12) | `/shades-of-[color]` | `components/seo/shades-page.tsx` (`ShadesPageView`) |
+| Palettes landing | `/palettes` | `components/seo/palettes-landing.tsx` |
+| Trends (2026-10-11) | `/trends` | `components/trends-page.tsx` + `app/trends/page.tsx` |
+| Community (2026-10-11) | `/community` | `components/community-gallery.tsx` |
+| Color picker tool (2026-10-11) | `/tools/picker` | `components/color-picker.tsx` |
+| Contrast checker tool (2026-10-11) | `/tools/contrast` | `components/contrast-checker.tsx` |
+| Image colors tool (2026-10-11) | `/tools/image-colors` | `components/image-color-extractor.tsx` |
+| Palette visualizer tool (2026-10-11) | `/tools/palette-visualizer` | `components/palette-visualizer.tsx` |
+| Color mixer tool (2026-10-11) | `/tools/color-mixer` | `components/color-mixer-tool.tsx` |
+| Tailwind scale tool (2026-10-11) | `/tools/tailwind-scale` | `components/tailwind-scale-tool.tsx` |
+| Collage creator tool (2026-10-11) | `/tools/collage` | `components/collage-creator.tsx` + `app/tools/collage/page.tsx` (SEO config `collage` added to `lib/seo/tool-pages.ts`, with FAQ/HowTo/WebPage/Breadcrumb schema) |
+| Gradient generator tool (2026-10-11) | `/tools/gradient` | `components/gradient-generator.tsx` |
+
+`/tools/picker` also got new features (2026-10-11): "Surprise me" random color, EyeDropper "Pick from screen" (Chrome/Edge only), recent colors (localStorage key `hueflow-picker-recent`, max 10), WCAG contrast for white and black text, 6 color-harmony palettes with "Open in generator", and a shareable `?c=<hex>` link (read on mount, written with `history.replaceState`).
+
+Totals: 15 page types, 26 URLs.
+
+**Shared tool sections:** `components/seo/tool-page-sections.tsx` now has `variant="new"` (white, hairline sections, numbered steps, visible FAQ accordion, related links). Only `/tools/picker`, `/tools/contrast`, `/tools/image-colors`, `/tools/palette-visualizer`, `/tools/color-mixer`, `/tools/tailwind-scale`, `/tools/collage` and `/tools/gradient` use it so far. The other 8 tools still use the old cards. To convert a tool, rebuild its UI in the new design, then pass `variant="new"`.
+
+### `/trends` redesign (2026-10-11)
+- Rebuilt on the `/palettes` structure: header (breadcrumb, h1, dots, bold count line, category tabs and Shuffle), then ONE continuous 4-column palette grid (no per-category sections or titles; the owner asked for this), "Explore more palettes" tiles linking into `/color-palettes/<tag>`, tips and a visible FAQ.
+- `app/trends/page.tsx` now owns the FAQ and emits FAQ + breadcrumb + WebPage JSON-LD. `TrendsPage` takes `faq` and `explore` props.
+- Removed framer-motion and the cream `#faf7f2` background, so the page no longer renders blank before hydration.
+- Checked: `tsc` and `eslint` clean; one grid of 11 cards, 4 FAQ items, 12 tiles and the JSON-LD present on the page. Not yet checked: mobile width, shuffle and copy by hand.
+
+### Still on the old design (not started)
+- **Growth-plan pages (do these first):** `/color-palettes`, `/color-palettes/[tag]` (`components/seo/palette-library-page.tsx`), `/color-codes` (`components/seo/color-codes-page.tsx`)
+- **Single pages:** `/colors/[slug]`, `/palettes/[slug]`, `/css-colors(+slug)`, `/tailwind-colors`, `/tailwind/[slug]`
+- **Color topics:** `/color-meanings(+slug)`, `/color-psychology(+slug)`, `/color-combinations(+slug)`, `/brand-colors(+slug)`, `/marketing-colors`, `/gradients(+slug)`
+- **Content:** `/best-colors-for(+slug)`, `/guides(+slug)`, `/blog`, `/explainers(+slug)`, `/resources(+slug)`, `/faqs(+slug)`, `/comparisons(+slug)`, `/web-design`, `/accessibility(+slug)`, `/developer(+slug)`, `/explore`
+- **Info:** `/about`, `/contact`, `/privacy`, `/terms`
+- **Tools:** `/generator`, `/color-wheel`, `/color-picker`, `/color-converter`, `/color-palette-generator`, `/color-palette-from-image`, `/tools/*` (20+, all except `/tools/picker`, `/tools/contrast`, `/tools/image-colors`, `/tools/palette-visualizer`, `/tools/color-mixer`, `/tools/tailwind-scale`, `/tools/collage` and `/tools/gradient`)
+- **Header:** site-wide, unchanged. On mobile it fades in after load. Ask the owner before changing it.
+- I haven't opened each of these to confirm it's old. They're listed as old because they don't use the new components.
+
+### Recipe for converting a page (copy `/palettes`)
+1. Wrapper: `<main className="min-h-screen bg-white text-[#1c1712]"><Header />`.
+2. Header section: `px-6 pb-10 pt-28 sm:px-8 lg:px-12`, breadcrumb, `h1` (`text-[2.6rem] sm:text-[3.5rem] font-bold tracking-[-0.035em]`), stacked dots + bold count line (`hub-description`), then chips or tabs.
+3. Body: one `<section className="border-t border-black/[0.06]">` per block with `SectionTitle` (from `shades-page.tsx`).
+4. Palette cards: `SwatchStrip` + orange `#c2410c` eyebrow + name + hex codes + dark "Open in generator →" and outline "Copy all". Cards are `rounded-2xl ring-1 ring-black/[0.07]`.
+5. End with Tips (numbered cards) and a visible FAQ (`<details>`), and emit the same FAQ as JSON-LD from the server `page.tsx`.
+6. No framer-motion fade-ins and no cream backgrounds. Keep content server-visible.
+7. Keep `tsc` and `eslint` clean, then check the page in the browser.
+
+## Next session: start here (updated 2026-10-08)
+
+**State:**
+- Phases 1–4 and all the design updates above are built and checked on `feature/new-feature`.
+- **None of it is committed yet. Ask the owner before committing.**
+- Nothing is live. hueflow.site still runs `develop` at 5f9311a.
+
+**To do, in order:**
+1. **Commit** the work to `feature/new-feature` and push. Ask first. Leave out `tsconfig.tsbuildinfo` (build cache).
+2. **Remaining redesigns** in the same coolors-style system, if the owner wants them:
+   - `/color-palettes/[tag]` pages and `/color-palettes` hub (still the older card style)
+   - `/color-codes`
+3. **Overlap:** `/colors` and `/color-codes` now show the same 140 colors. Decide whether to canonicalize `/color-codes` to `/colors` or slim it down.
+4. **Header (site-wide):** on mobile it fades in after load, like the old hero did. Ask before changing it, since it affects every page.
+5. **Verify:**
+   - `npx tsc --noEmit`
+   - `npx eslint` on the changed files
+   - `npx next build`
+   - `opennextjs-cloudflare build` then `opennextjs-cloudflare preview`. Plain `wrangler dev` 404s SSG pages because it skips the cache populate.
+6. **Merge** `feature/new-feature` into `develop`. Ask first.
+7. **Deploy** from a clean `develop` with `npm run deploy`, only on request. Then submit the sitemap in Google Search Console.
+
+**Design system used (keep it consistent):**
+- White pages.
+- Full-width sections (`w-full px-6 sm:px-8 lg:px-12`).
+- Bold `h1` (`font-bold tracking-[-0.035em]`) with stacked preview dots and a bold count line.
+- Eyebrows in `#c2410c` (AA-safe orange).
+- Dark `#1c1712` active pills and buttons.
+- Coolors-style swatch cards: `aspect-[3/1]`, code on hover, name + copy/eye icons.
+- Shared pieces:
+  - `SwatchStrip`, `useCopy` in `components/seo/swatch-strip.tsx`
+  - `Segmented`, `SectionTitle`, `isLight`, `CopyIcon`, `EyeIcon` exported from `components/seo/shades-page.tsx`
+- Sticky toolbar at `lg:top-[86px]`, with a white backdrop while stuck.
+- Homepage gray bands are `#F5F5F5`.
+
 ## Status
 
 - [x] **Phase 1, shades pages** (built 2026-10-06, not committed yet)

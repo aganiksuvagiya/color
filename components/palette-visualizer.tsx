@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { useState } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
@@ -624,8 +624,7 @@ function ComponentShowcase({ neutral, primary, success, warning, accent, primary
   const LBL = `border-b px-4 py-2.5 text-[9px] font-bold uppercase tracking-[0.18em]`;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}
-      className="space-y-3">
+    <div className="space-y-4">
 
       {/* ── Row 1: Buttons + Badges ── */}
       <div className={C} style={{ borderColor: bd }}>
@@ -873,7 +872,7 @@ function ComponentShowcase({ neutral, primary, success, warning, accent, primary
         </div>
       </div>
 
-    </motion.div>
+    </div>
   );
 }
 
@@ -917,111 +916,92 @@ export function PaletteVisualizer() {
 
   const previewProps = { neutral, primary, success, warning, accent, primaryText };
 
+  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+  const actionBtn = "rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
+
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <AnimatePresence>
-        {(copied || copiedJson) && (
-          <motion.div key="toast" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 rounded-full border border-[#e8531f]/20 bg-[#e8531f]/10 px-5 py-2.5 text-sm font-semibold text-[#e8531f] shadow-[0_4px_20px_rgba(232,83,31,0.12)] whitespace-nowrap">
-            {copiedJson ? "✓ JSON tokens copied!" : "✓ CSS variables copied!"}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <main className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col px-4 pb-10 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
-
-        {/* Hero */}
-        <div className="mb-6 flex flex-col items-center gap-2 text-center sm:mb-8">
-          <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.24em] text-[#1c1712]/45 shadow-[0_1px_4px_rgba(28,23,18,0.06)]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]" />
-            Design Preview
-          </span>
-          <h1 className="font-display text-[2rem] font-bold leading-tight tracking-[-0.04em] text-[#1c1712] sm:text-[2.6rem]">
-            Palette Visualizer
-          </h1>
-          <p className="max-w-md text-sm leading-6 text-[#1c1712]/45 sm:text-[15px]">
-            Apply your palette to real UI components and see the result instantly. Pick colors, export CSS.
-          </p>
+      {(copied || copiedJson) && (
+        <div role="status" className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1c1712] px-5 py-2.5 text-[13px] font-semibold text-white shadow-lg">
+          {copiedJson ? "✓ JSON tokens copied" : "✓ CSS variables copied"}
         </div>
+      )}
 
-        {/* Color editor */}
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
-          className="mb-4 overflow-hidden rounded-2xl border border-black/[0.08] bg-white shadow-[0_1px_6px_rgba(28,23,18,0.06)]">
-          {/* Palette name header */}
-          <div className="flex items-center justify-between border-b border-black/[0.06] px-4 py-2.5">
-            <div className="flex items-center gap-2">
-              <div className="flex gap-1">
-                {palette.colors.map((c) => (
-                  <div key={c.role} className="h-3 w-3 rounded-full" style={{ backgroundColor: c.hex }} />
-                ))}
-              </div>
-              <span className="text-[11px] font-semibold text-[#1c1712]/60">{palette.label}</span>
-            </div>
-            <span className="text-[9px] font-medium text-[#1c1712]/30">Click any swatch to edit</span>
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Palette Visualizer</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Palette Visualizer</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {palette.colors.map((c) => (
+                <span key={c.role} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c.hex }} />
+              ))}
+            </span>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">See your palette on real UI.</span> Edit the five role colors, preview buttons, navigation, tables and charts, then export CSS or JSON tokens.
+            </p>
           </div>
-          <div className="flex flex-wrap items-stretch divide-x divide-black/[0.06]">
-            {palette.colors.map((color, i) => (
-              <motion.div key={color.role} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.06 }}
-                className="flex flex-1 flex-col items-center gap-2.5 px-4 py-4 min-w-[90px]">
-                <div className="group relative h-14 w-14 overflow-hidden rounded-xl border border-black/[0.10] shadow-[0_2px_8px_rgba(0,0,0,0.10)] transition-transform hover:scale-105"
-                  style={{ backgroundColor: color.hex }}>
-                  <input type="color" aria-label={`${ROLE_LABELS[color.role]} color`} value={color.hex}
-                    onChange={(e) => setRoleColor(color.role, e.target.value.toUpperCase())}
-                    className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
-                  {/* Pencil hint on hover */}
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
-                    style={{ backgroundColor: "rgba(0,0,0,0.25)" }}>
-                    <svg className="h-4 w-4 text-white drop-shadow" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/>
-                    </svg>
+        </section>
+
+        {/* ── Color editor ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="w-full px-6 py-10 sm:px-8 lg:px-12">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className={label}>Palette roles <span className="ml-2 normal-case tracking-normal text-[#1c1712]/35">Click a swatch to edit</span></p>
+              <div className="flex flex-wrap items-center gap-2">
+                <button onClick={randomize} className={actionBtn}>🎲 Randomize</button>
+                <button onClick={copyCss} className={actionBtn}>{copied ? "✓ Copied" : "Copy CSS"}</button>
+                <button onClick={copyJson} className={actionBtn}>{copiedJson ? "✓ Copied" : "Copy JSON"}</button>
+              </div>
+            </div>
+            <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+              {palette.colors.map((color) => (
+                <div key={color.role} className="overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
+                  <label className="group relative block h-28 cursor-pointer" style={{ backgroundColor: color.hex }}>
+                    <input
+                      type="color"
+                      aria-label={`${ROLE_LABELS[color.role]} color`}
+                      value={color.hex}
+                      onChange={(e) => setRoleColor(color.role, e.target.value.toUpperCase())}
+                      className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                    />
+                    <span className="pointer-events-none absolute inset-x-2 bottom-2 rounded-full bg-black/55 px-2 py-1 text-center text-[11px] font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
+                      Click to edit
+                    </span>
+                  </label>
+                  <div className="px-4 py-3">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{ROLE_LABELS[color.role]}</p>
+                    <p className="mt-1 truncate text-[14px] font-semibold">{color.name}</p>
+                    <p className="font-mono text-[11px] uppercase text-[#1c1712]/45">{color.hex}</p>
                   </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#1c1712]/35">{ROLE_LABELS[color.role]}</p>
-                  <p className="text-[11px] font-semibold text-[#1c1712]/70">{color.name}</p>
-                  <p className="font-mono text-[9px] text-[#1c1712]/30">{color.hex.toUpperCase()}</p>
-                </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full" style={{ backgroundColor: lighten(color.hex, 0.78) }}>
-                  <div className="h-1.5 rounded-full transition-all" style={{ backgroundColor: color.hex, width: "60%" }} />
-                </div>
-              </motion.div>
-            ))}
-            {/* Action buttons */}
-            <div className="flex min-w-[130px] flex-col items-center justify-center gap-2 px-4 py-4">
-              <button onClick={randomize}
-                className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-black/[0.08] bg-[#faf7f2] px-3 py-2 text-[11px] font-semibold text-[#1c1712]/50 transition hover:bg-[#f0ede8] hover:text-[#1c1712]/70">
-                <svg className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311h2.433a.75.75 0 000-1.5H3.989a.75.75 0 00-.75.75v4.242a.75.75 0 001.5 0v-2.43l.31.31a7 7 0 0011.712-3.138.75.75 0 00-1.449-.39zm1.23-3.723a.75.75 0 00.219-.53V2.929a.75.75 0 00-1.5 0V5.36l-.31-.31A7 7 0 003.239 8.188a.75.75 0 101.448.389A5.5 5.5 0 0113.89 6.11l.311.31h-2.432a.75.75 0 000 1.5h4.243a.75.75 0 00.53-.219z" clipRule="evenodd"/>
-                </svg>
-                Randomize
-              </button>
-              <button onClick={copyCss}
-                className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#e8531f]/20 bg-[#e8531f]/8 px-3 py-2 text-[11px] font-semibold text-[#e8531f] transition hover:bg-[#e8531f]/14">
-                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-                </svg>
-                {copied ? "Copied!" : "Copy CSS"}
-              </button>
-              <button onClick={copyJson}
-                className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-black/[0.08] bg-[#faf7f2] px-3 py-2 text-[11px] font-semibold text-[#1c1712]/50 transition hover:bg-[#f0ede8] hover:text-[#1c1712]/70">
-                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/>
-                </svg>
-                {copiedJson ? "Copied!" : "Copy JSON"}
-              </button>
+              ))}
             </div>
           </div>
-        </motion.div>
+        </section>
 
-        {/* Component Showcase */}
-        <ComponentShowcase {...previewProps} />
+        {/* ── Live preview ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Preview</p>
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Your palette on real components</h2>
+            <p className="mt-2 max-w-2xl text-[15px] leading-7 text-[#1c1712]/55">Every component below updates as you change a role color.</p>
+            <div className="mt-8">
+              <ComponentShowcase {...previewProps} />
+            </div>
+          </div>
+        </section>
 
-        <div className="mt-10">
-          <ToolPageSections config={toolPageContent["palette-visualizer"]} />
-        </div>
+        <ToolPageSections config={toolPageContent["palette-visualizer"]} variant="new" />
       </main>
     </div>
   );

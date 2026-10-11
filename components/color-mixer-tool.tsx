@@ -1,9 +1,10 @@
 "use client";
 // v2
-import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { useState, useRef, useCallback } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
+import { SwatchStrip } from "@/components/seo/swatch-strip";
 import { findClosestColorName } from "@/lib/color-names";
 import { getContrastText, isValidHex } from "@/lib/color-utils";
 import { toolPageContent } from "@/lib/seo/tool-pages";
@@ -68,249 +69,224 @@ export function ColorMixerTool() {
     exportTab === "tailwind" ? `// tailwind.config.js\ncolors: {\n${steps.map((h, i) => `  'mix-${i + 1}': '${h}',`).join("\n")}\n}` :
     JSON.stringify(Object.fromEntries(steps.map((h, i) => [`mix-${i + 1}`, h])), null, 2);
 
+  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+  const inputCls = "mt-1.5 w-full rounded-xl px-3 py-2 font-mono text-[13px] font-semibold outline-none ring-1 ring-black/[0.12] transition focus:ring-black/30";
+  const actionBtn = "rounded-full px-4 py-1.5 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
+  const scaleCss = `:root {\n${cssVars}\n}`;
+
+  const colorInput = (name: "A" | "B", value: string, valid: boolean, set: (v: string) => void) => (
+    <div className="flex flex-1 items-center gap-4 rounded-2xl p-4 ring-1 ring-black/[0.07]">
+      <label className="relative h-16 w-16 shrink-0 cursor-pointer overflow-hidden rounded-xl ring-1 ring-black/10 transition hover:scale-105" style={{ backgroundColor: valid ? value : "#ddd" }}>
+        <input
+          type="color"
+          value={valid ? value : "#888888"}
+          onChange={(e) => set(e.target.value.toUpperCase())}
+          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+          aria-label={`Pick color ${name}`}
+        />
+      </label>
+      <div className="min-w-0 flex-1">
+        <label htmlFor={`mix-${name}`} className={label}>Color {name}</label>
+        <input id={`mix-${name}`} type="text" value={value} onChange={(e) => set(e.target.value.toUpperCase())} maxLength={7} spellCheck={false} className={inputCls} />
+        <p className="mt-1.5 truncate text-[12px] text-[#1c1712]/45">{valid ? findClosestColorName(value) : "Enter a valid HEX"}</p>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      {/* ── Toast ── */}
-      <AnimatePresence>
-        {copied && (
-          <motion.div key="toast"
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 rounded-full border border-[#e8531f]/20 bg-[#e8531f]/10 px-5 py-2.5 text-sm font-semibold text-[#e8531f] shadow-[0_4px_20px_rgba(232,83,31,0.12)] whitespace-nowrap">
-            ✓ {copied.startsWith("#") ? `${copied.toUpperCase()} copied!` : "Copied!"}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {copied && (
+        <div role="status" className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1c1712] px-5 py-2.5 text-[13px] font-semibold text-white shadow-lg">
+          ✓ {copied.startsWith("#") ? `${copied.toUpperCase()} copied` : "Copied"}
+        </div>
+      )}
 
-      <main className="mx-auto w-full max-w-[880px] flex-1 px-4 pb-20 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
-
-        {/* ── Hero ── */}
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}
-          className="mb-7 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/40 shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]" />Color Tool
-          </span>
-          <h1 className="mt-2.5 font-display text-[2.6rem] font-black leading-none tracking-[-0.04em] sm:text-[3.4rem]">
-            Color Mixer
-          </h1>
-          <p className="mt-2 text-[14px] text-[#1c1712]/40">
-            Pick two colors — click the gradient to blend.
-          </p>
-        </motion.div>
-
-        {/* ── Main tool card ── */}
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.06 }}
-          className="mb-4 overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
-
-          {/* Color inputs row */}
-          <div className="flex items-stretch divide-x divide-black/[0.06]">
-
-            {/* Color A */}
-            <div className="flex flex-1 items-center gap-3 px-5 py-4">
-              <label className="group relative h-12 w-12 shrink-0 cursor-pointer overflow-hidden rounded-2xl border border-black/[0.10] shadow-md transition hover:scale-105"
-                style={{ backgroundColor: validA ? colorA : "#ddd" }}>
-                <input type="color" value={validA ? colorA : "#888888"}
-                  onChange={e => setColorA(e.target.value.toUpperCase())}
-                  className="absolute inset-0 h-full w-full opacity-0 cursor-pointer" />
-              </label>
-              <div className="min-w-0 flex-1">
-                <p className="mb-0.5 text-[9px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/30">Color A</p>
-                <input type="text" value={colorA} onChange={e => setColorA(e.target.value.toUpperCase())}
-                  maxLength={7}
-                  className="w-full rounded-lg border border-black/[0.07] bg-[#faf7f2] px-2.5 py-1.5 font-mono text-[12px] font-semibold outline-none transition focus:border-black/15 focus:bg-white" />
-                <p className="mt-0.5 truncate text-[10px] text-[#1c1712]/30">{validA ? findClosestColorName(colorA) : "—"}</p>
-              </div>
-            </div>
-
-            {/* Swap */}
-            <div className="flex items-center px-3">
-              <button onClick={() => { setColorA(colorB); setColorB(colorA); }}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/35 transition hover:bg-[#f0ede8]">
-                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 3M21 7.5H7.5"/>
-                </svg>
-              </button>
-            </div>
-
-            {/* Color B */}
-            <div className="flex flex-1 items-center gap-3 px-5 py-4">
-              <label className="group relative h-12 w-12 shrink-0 cursor-pointer overflow-hidden rounded-2xl border border-black/[0.10] shadow-md transition hover:scale-105"
-                style={{ backgroundColor: validB ? colorB : "#ddd" }}>
-                <input type="color" value={validB ? colorB : "#888888"}
-                  onChange={e => setColorB(e.target.value.toUpperCase())}
-                  className="absolute inset-0 h-full w-full opacity-0 cursor-pointer" />
-              </label>
-              <div className="min-w-0 flex-1">
-                <p className="mb-0.5 text-[9px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/30">Color B</p>
-                <input type="text" value={colorB} onChange={e => setColorB(e.target.value.toUpperCase())}
-                  maxLength={7}
-                  className="w-full rounded-lg border border-black/[0.07] bg-[#faf7f2] px-2.5 py-1.5 font-mono text-[12px] font-semibold outline-none transition focus:border-black/15 focus:bg-white" />
-                <p className="mt-0.5 truncate text-[10px] text-[#1c1712]/30">{validB ? findClosestColorName(colorB) : "—"}</p>
-              </div>
-            </div>
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Color Mixer</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Color Mixer</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {[colorA, mixed ?? colorA, colorB].map((c, i) => (
+                <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: valid ? c : "#ddd" }} />
+              ))}
+            </span>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">Blend any two colors.</span> Pick A and B, drag the gradient to set the ratio, and export a 9-step scale as CSS, Tailwind or JSON.
+            </p>
           </div>
+        </section>
 
-          {/* ── Gradient canvas ── */}
-          <div ref={canvasRef} onClick={handleCanvasClick}
-            className="relative mx-4 mb-4 cursor-crosshair overflow-hidden rounded-2xl"
-            style={{
-              height: 180,
-              background: valid ? `linear-gradient(to right, ${colorA}, ${colorB})` : "#e5e5e5",
-            }}>
+        {/* ── Mixer ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="w-full px-6 py-10 sm:px-8 lg:px-12">
+            <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+              {colorInput("A", colorA, validA, setColorA)}
+              <button
+                onClick={() => { setColorA(colorB); setColorB(colorA); }}
+                className="mx-auto flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#1c1712]/60 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25"
+                aria-label="Swap colors A and B"
+                title="Swap"
+              >
+                ⇄
+              </button>
+              {colorInput("B", colorB, validB, setColorB)}
+            </div>
 
-            {/* Ratio thumb */}
-            {valid && mixed && (
-              <div className="pointer-events-none absolute top-0 flex h-full flex-col items-center"
-                style={{ left: `${ratio}%`, transform: "translateX(-50%)" }}>
-                <div className="h-full w-px opacity-40" style={{ backgroundColor: mixedTc === "light" ? "#fff" : "#000" }} />
-                <div className="absolute top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-[3px] border-white shadow-xl"
-                  style={{ backgroundColor: mixed }}>
-                  <div className="flex gap-0.5">
-                    <div className="h-3 w-0.5 rounded-full" style={{ backgroundColor: mixedTc === "light" ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.4)" }} />
-                    <div className="h-3 w-0.5 rounded-full" style={{ backgroundColor: mixedTc === "light" ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.4)" }} />
-                  </div>
+            {/* Gradient canvas */}
+            <div
+              ref={canvasRef}
+              onClick={handleCanvasClick}
+              className="relative mt-5 h-52 cursor-crosshair overflow-hidden rounded-2xl ring-1 ring-black/[0.07] sm:h-60"
+              style={{ background: valid ? `linear-gradient(to right, ${colorA}, ${colorB})` : "#e5e5e5" }}
+            >
+              {valid && mixed && (
+                <div className="pointer-events-none absolute top-0 flex h-full flex-col items-center" style={{ left: `${ratio}%`, transform: "translateX(-50%)" }}>
+                  <div className="h-full w-px opacity-40" style={{ backgroundColor: mixedTc === "light" ? "#fff" : "#000" }} />
+                  <div className="absolute top-1/2 h-10 w-10 -translate-y-1/2 rounded-full border-[3px] border-white shadow-xl" style={{ backgroundColor: mixed }} />
                 </div>
+              )}
+              <div className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center">
+                <span className="rounded-full bg-black/55 px-3 py-1 text-[11px] font-semibold text-white">Click or drag to set ratio</span>
+              </div>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={ratio}
+                onChange={(e) => setRatio(Number(e.target.value))}
+                aria-label="Mix ratio"
+                className="absolute inset-0 h-full w-full cursor-crosshair opacity-0"
+              />
+            </div>
+
+            {/* Result */}
+            {mixed && (
+              <div className="mt-5 flex flex-wrap items-center gap-4 rounded-2xl p-4 ring-1 ring-black/[0.07]">
+                <div className="h-12 w-12 shrink-0 rounded-xl ring-1 ring-black/10" style={{ backgroundColor: mixed }} />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-[15px] font-semibold">{findClosestColorName(mixed)}</p>
+                  <p className="font-mono text-[12px] text-[#1c1712]/50">{mixed.toUpperCase()}{rgbM && ` · rgb(${rgbM.r}, ${rgbM.g}, ${rgbM.b})`}</p>
+                </div>
+                <span className="rounded-full bg-[#1c1712]/[0.05] px-3 py-1 text-[12px] font-semibold text-[#1c1712]/70">A {100 - ratio}% / B {ratio}%</span>
+                <button onClick={() => copy(mixed)} className={actionBtn}>{copied === mixed ? "✓ Copied" : "Copy HEX"}</button>
               </div>
             )}
-
-            {/* Hint */}
-            <div className="absolute bottom-3 left-0 right-0 flex justify-center">
-              <span className="rounded-full border border-white/30 bg-black/25 px-3 py-1 text-[9px] font-semibold text-white">
-                Click to set ratio
-              </span>
-            </div>
-
-            {/* Range slider overlay */}
-            <input type="range" min={0} max={100} value={ratio}
-              onChange={e => setRatio(Number(e.target.value))}
-              className="absolute inset-0 h-full w-full cursor-crosshair opacity-0" />
           </div>
+        </section>
 
-          {/* Result row */}
-          {mixed && (
-            <div className="mx-4 mb-4 flex items-center gap-3 overflow-hidden rounded-2xl border border-black/[0.06] bg-[#faf7f2] px-4 py-3">
-              <div className="h-10 w-10 shrink-0 rounded-xl border border-black/[0.08] shadow-md" style={{ backgroundColor: mixed }} />
-              <div className="flex-1 min-w-0">
-                <p className="truncate text-[12px] font-bold">{findClosestColorName(mixed)}</p>
-                <p className="font-mono text-[10px] text-[#1c1712]/40">{mixed.toUpperCase()} · {rgbM && `rgb(${rgbM.r}, ${rgbM.g}, ${rgbM.b})`}</p>
-              </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <span className="rounded-full bg-[#e8531f]/10 px-2.5 py-1 text-[10px] font-bold text-[#e8531f]">
-                  A {100 - ratio}% / B {ratio}%
-                </span>
-                <button onClick={() => copy(mixed)}
-                  className="rounded-lg border border-black/[0.07] bg-white px-3 py-1.5 text-[10px] font-semibold text-[#1c1712]/50 transition hover:bg-[#f0ede8]">
-                  {copied === mixed ? "✓" : "Copy"}
-                </button>
-              </div>
-            </div>
-          )}
-        </motion.div>
-
-        {/* ── 9-Step Scale ── */}
+        {/* ── 9-step scale ── */}
         {steps.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.12 }}
-            className="mb-4 overflow-hidden rounded-3xl border border-black/[0.08] shadow-sm">
-            <div className="flex items-center justify-between border-b border-black/[0.06] bg-white px-5 py-3.5">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">9-Step Scale</p>
-              <button onClick={() => copy(`:root {\n${cssVars}\n}`)}
-                className="flex items-center gap-1.5 rounded-lg border border-black/[0.07] bg-[#faf7f2] px-3 py-1.5 text-[10px] font-semibold text-[#1c1712]/45 transition hover:bg-[#f0ede8]">
-                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-                </svg>
-                {copied === `:root {\n${cssVars}\n}` ? "Copied!" : "Copy CSS"}
-              </button>
-            </div>
-            <div className="flex overflow-hidden">
-              {steps.map((hex, i) => (
-                <div key={i}
-                  className="group/swatch relative flex-1 transition-[flex] duration-300 hover:flex-[3]"
-                  style={{ backgroundColor: hex, minHeight: 110 }}>
-                  {/* MID badge */}
-                  {i === 4 && (
-                    <div className="absolute top-2 left-1/2 -translate-x-1/2 rounded-full border border-white/30 bg-black/25 px-1.5 py-0.5">
-                      <span className="text-[7px] font-bold text-white">MID</span>
-                    </div>
-                  )}
-                  <button onClick={() => copy(hex)}
-                    className="absolute inset-0 flex items-end justify-center pb-3"
-                    aria-label={`Copy ${hex}`}>
-                    <span className="rounded-full bg-black/55 px-2.5 py-1 font-mono text-[9px] text-white opacity-0 transition-opacity duration-200 group-hover/swatch:opacity-100">
-                      {copied === hex ? "✓ Copied" : hex.toUpperCase()}
-                    </span>
-                  </button>
+          <section className="border-t border-black/[0.06]">
+            <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Scale</p>
+                  <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">9-step blend</h2>
+                  <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">Even steps from A to B. Hover a swatch for its HEX, click to copy.</p>
                 </div>
-              ))}
+                <button onClick={() => copy(scaleCss)} className={actionBtn}>{copied === scaleCss ? "✓ Copied" : "Copy CSS"}</button>
+              </div>
+              <div className="mt-8">
+                <SwatchStrip colors={steps.map((h) => h.toUpperCase())} height="h-32" copied={copied} onCopy={copy} className="rounded-2xl ring-1 ring-black/[0.07]" />
+              </div>
             </div>
-          </motion.div>
+          </section>
         )}
 
-        {/* ── Color breakdown ── */}
+        {/* ── Breakdown ── */}
         {valid && mixed && (
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.16 }}
-            className="mb-4 grid grid-cols-3 gap-3">
-            {[
-              { label: "Color A", hex: colorA, rgb: rgbA },
-              { label: "Mix", hex: mixed, rgb: rgbM },
-              { label: "Color B", hex: colorB, rgb: rgbB },
-            ].map(s => (
-              <button key={s.label} onClick={() => copy(s.hex)}
-                className="group overflow-hidden rounded-2xl border border-black/[0.08] bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-                <div className="h-16 w-full transition-transform group-hover:scale-105" style={{ backgroundColor: s.hex }} />
-                <div className="p-3">
-                  <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#1c1712]/30">{s.label}</p>
-                  <p className="mt-0.5 truncate text-[11px] font-bold">{findClosestColorName(s.hex)}</p>
-                  <p className="font-mono text-[10px] text-[#1c1712]/40">{s.hex.toUpperCase()}</p>
-                  {s.rgb && (
-                    <div className="mt-2 space-y-1">
-                      {[["R", s.rgb.r, "#f87171"], ["G", s.rgb.g, "#4ade80"], ["B", s.rgb.b, "#60a5fa"]].map(([ch, val, col]) => (
-                        <div key={ch as string} className="flex items-center gap-1.5">
-                          <span className="w-2.5 text-[8px] font-bold text-[#1c1712]/25">{ch}</span>
-                          <div className="flex-1 overflow-hidden rounded-full bg-black/[0.05]" style={{ height: 4 }}>
-                            <div className="h-full rounded-full" style={{ width: `${((val as number) / 255) * 100}%`, backgroundColor: col as string }} />
-                          </div>
-                          <span className="w-5 text-right font-mono text-[8px] text-[#1c1712]/25">{val as number}</span>
+          <section className="border-t border-black/[0.06]">
+            <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+              <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
+                Color breakdown
+                <span className="h-px flex-1 bg-black/[0.06]" />
+              </h2>
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                {[
+                  { label: "Color A", hex: colorA, rgb: rgbA },
+                  { label: "Mix", hex: mixed, rgb: rgbM },
+                  { label: "Color B", hex: colorB, rgb: rgbB },
+                ].map((c) => (
+                  <button
+                    key={c.label}
+                    onClick={() => copy(c.hex)}
+                    className="overflow-hidden rounded-2xl text-left ring-1 ring-black/[0.07] transition hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-18px_rgba(28,23,18,0.35)]"
+                  >
+                    <div className="h-24 w-full" style={{ backgroundColor: c.hex }} />
+                    <div className="p-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{c.label}</p>
+                      <p className="mt-1 truncate text-[15px] font-semibold">{findClosestColorName(c.hex)}</p>
+                      <p className="font-mono text-[12px] uppercase text-[#1c1712]/50">{copied === c.hex ? "✓ Copied" : c.hex}</p>
+                      {c.rgb && (
+                        <div className="mt-3 space-y-1.5">
+                          {([["R", c.rgb.r, "#f87171"], ["G", c.rgb.g, "#4ade80"], ["B", c.rgb.b, "#60a5fa"]] as const).map(([ch, val, col]) => (
+                            <div key={ch} className="flex items-center gap-2">
+                              <span className="w-3 text-[10px] font-bold text-[#1c1712]/40">{ch}</span>
+                              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-black/[0.05]">
+                                <div className="h-full rounded-full" style={{ width: `${(val / 255) * 100}%`, backgroundColor: col }} />
+                              </div>
+                              <span className="w-7 text-right font-mono text-[10px] text-[#1c1712]/45">{val}</span>
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      )}
                     </div>
-                  )}
-                </div>
-              </button>
-            ))}
-          </motion.div>
-        )}
-
-        {/* ── Export ── */}
-        {steps.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.2 }}
-            className="mb-10 overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
-            <div className="flex items-center justify-between border-b border-black/[0.06] px-5 py-4">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Export</p>
-              <div className="flex gap-1">
-                {(["css", "tailwind", "json"] as const).map(t => (
-                  <button key={t} onClick={() => setExportTab(t)}
-                    className={`rounded-lg px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide transition ${exportTab === t ? "bg-[#1c1712] text-white" : "text-[#1c1712]/40 hover:bg-[#faf7f2]"}`}>
-                    {t}
                   </button>
                 ))}
               </div>
             </div>
-            <div className="relative">
-              <pre className="overflow-x-auto px-5 py-4 font-mono text-[11px] leading-relaxed text-[#1c1712]/55">
-                {exportCode}
-              </pre>
-              <div className="absolute right-4 top-4">
-                <button onClick={() => copy(exportCode)}
-                  className="flex items-center gap-1.5 rounded-lg border border-black/[0.07] bg-[#faf7f2] px-3 py-1.5 text-[10px] font-semibold text-[#1c1712]/45 transition hover:bg-[#f0ede8]">
-                  {copied === exportCode ? "✓ Copied!" : "Copy all"}
+          </section>
+        )}
+
+        {/* ── Export ── */}
+        {steps.length > 0 && (
+          <section className="border-t border-black/[0.06]">
+            <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Export</p>
+                  <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Use it in code</h2>
+                </div>
+                <div role="tablist" aria-label="Export format" className="flex gap-2">
+                  {(["css", "tailwind", "json"] as const).map((t) => {
+                    const on = exportTab === t;
+                    return (
+                      <button
+                        key={t}
+                        role="tab"
+                        aria-selected={on}
+                        onClick={() => setExportTab(t)}
+                        className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold uppercase transition ${
+                          on ? "bg-[#1c1712] text-white" : "bg-white text-[#1c1712]/60 ring-1 ring-black/[0.1] hover:text-[#1c1712] hover:ring-black/20"
+                        }`}
+                      >
+                        {t}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="relative mt-6 rounded-2xl bg-[#F5F5F5] ring-1 ring-black/[0.07]">
+                <pre className="overflow-x-auto px-5 py-5 font-mono text-[12px] leading-relaxed text-[#1c1712]/75">{exportCode}</pre>
+                <button onClick={() => copy(exportCode)} className="absolute right-4 top-4 rounded-full bg-[#1c1712] px-3.5 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
+                  {copied === exportCode ? "✓ Copied" : "Copy all"}
                 </button>
               </div>
             </div>
-          </motion.div>
+          </section>
         )}
 
-        <ToolPageSections config={toolPageContent["color-mixer"]} />
+        <ToolPageSections config={toolPageContent["color-mixer"]} variant="new" />
       </main>
     </div>
   );

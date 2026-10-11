@@ -1,8 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import { Header } from "./header";
+import { ToolPageSections } from "@/components/seo/tool-page-sections";
+import { toolPageContent } from "@/lib/seo/tool-pages";
 
 const MAX_SLOTS = 6;
 const CANVAS_SIZE = 1200;
@@ -96,140 +98,137 @@ export function CollageCreator() {
     setDownloading(false);
   }, [slots, cols, rows, gap]);
 
+  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <main className="mx-auto w-full max-w-[860px] flex-1 px-4 pb-20 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
-
-        {/* ── Hero ── */}
-        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}
-          className="mb-8 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/40 shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]" />Image Tool
-          </span>
-          <h1 className="mt-2.5 font-display text-[2.4rem] font-black leading-none tracking-[-0.04em] sm:text-[3.2rem]">
-            Collage Creator
-          </h1>
-          <p className="mt-2 text-[14px] text-[#1c1712]/40">
-            Combine up to 6 images into one collage and export as PNG.
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Collage Creator</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Collage Creator</h1>
+          <p className="mt-5 text-[16px] text-[#1c1712]/55">
+            <span className="font-semibold text-[#1c1712]/80">Combine up to 6 images into one collage.</span> Add your photos, set the gap and export a PNG. Images stay in your browser.
           </p>
-        </motion.div>
+        </section>
 
-        {/* ── Controls Card ── */}
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.05 }}
-          className="mb-4 overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
-          <div className="flex flex-wrap items-center gap-6 px-6 py-5">
-
-            {/* Image count */}
-            <div className="flex items-center gap-3">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/35">Images</p>
-              <div className="flex gap-1.5">
-                {[2, 3, 4, 5, 6].map((n) => (
-                  <button key={n} onClick={() => handleSlotCountChange(n)}
-                    className={`h-8 w-8 rounded-xl text-[12px] font-bold transition-all ${
-                      slotCount === n
-                        ? "bg-[#1c1712] text-white shadow-sm"
-                        : "border border-black/[0.08] bg-[#faf7f2] text-[#1c1712]/50 hover:bg-[#f0ede8]"
-                    }`}>
-                    {n}
-                  </button>
+        {/* ── Workspace ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="grid w-full gap-8 px-6 py-10 sm:px-8 lg:grid-cols-[1fr_320px] lg:px-12">
+            {/* Collage grid */}
+            <div className="mx-auto h-fit w-full max-w-[600px] overflow-hidden rounded-2xl bg-[#F5F5F5] ring-1 ring-black/[0.07]">
+              <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: `${gap}px`, padding: `${gap}px` }}>
+                {slots.slice(0, slotCount).map((slot) => (
+                  <div key={slot.id} className="group relative aspect-square overflow-hidden rounded-xl bg-white ring-1 ring-black/[0.07]">
+                    {slot.url ? (
+                      <>
+                        <img src={slot.url} alt={`Collage image ${slot.id + 1}`} className="h-full w-full object-cover" />
+                        <button
+                          onClick={() => handleRemove(slot.id)}
+                          aria-label={`Remove image ${slot.id + 1}`}
+                          className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-white/95 text-[#1c1712]/70 opacity-0 shadow-sm transition-opacity hover:text-[#1c1712] group-hover:opacity-100 focus:opacity-100"
+                        >
+                          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        onClick={() => fileInputRefs.current[slot.id]?.click()}
+                        className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-[#1c1712]/45 transition hover:bg-[#1c1712]/[0.03] hover:text-[#1c1712]"
+                      >
+                        <span className="text-2xl font-light leading-none">+</span>
+                        <span className="text-[12px] font-semibold">Add image</span>
+                      </button>
+                    )}
+                    <input
+                      ref={(el) => { fileInputRefs.current[slot.id] = el; }}
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleFileChange(slot.id, e)}
+                      className="hidden"
+                    />
+                  </div>
                 ))}
               </div>
             </div>
 
-            {/* Gap slider */}
-            <div className="flex flex-1 items-center gap-3">
-              <p className="shrink-0 text-[10px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/35">Gap</p>
-              <div className="relative flex-1">
-                <div className="absolute inset-y-0 left-0 right-0 my-auto h-1.5 overflow-hidden rounded-full bg-black/[0.07]">
-                  <div className="h-full rounded-full bg-[#1c1712]/20" style={{ width: `${(gap / 32) * 100}%` }} />
+            {/* Controls */}
+            <aside className="h-fit space-y-6 rounded-2xl p-6 ring-1 ring-black/[0.07]">
+              <div>
+                <p className={label}>Images</p>
+                <div role="tablist" aria-label="Number of images" className="mt-3 flex gap-2">
+                  {[2, 3, 4, 5, 6].map((n) => {
+                    const on = slotCount === n;
+                    return (
+                      <button
+                        key={n}
+                        role="tab"
+                        aria-selected={on}
+                        onClick={() => handleSlotCountChange(n)}
+                        className={`h-9 w-9 rounded-full text-[13px] font-semibold transition ${
+                          on ? "bg-[#1c1712] text-white" : "bg-white text-[#1c1712]/60 ring-1 ring-black/[0.1] hover:text-[#1c1712] hover:ring-black/20"
+                        }`}
+                      >
+                        {n}
+                      </button>
+                    );
+                  })}
                 </div>
-                <input type="range" min={0} max={32} value={gap}
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <label htmlFor="collage-gap" className={label}>Gap</label>
+                  <span className="font-mono text-[12px] font-semibold text-[#1c1712]/60">{gap}px</span>
+                </div>
+                <input
+                  id="collage-gap"
+                  type="range"
+                  min={0}
+                  max={32}
+                  value={gap}
                   onChange={(e) => setGap(Number(e.target.value))}
-                  className="relative h-4 w-full cursor-pointer opacity-0" />
+                  className="mt-3 h-2 w-full cursor-pointer accent-[#1c1712]"
+                />
               </div>
-              <span className="w-7 text-right font-mono text-[11px] font-semibold text-[#1c1712]/40">{gap}px</span>
-            </div>
 
-            {/* Progress */}
-            <div className="shrink-0 text-right">
-              <span className={`text-[11px] font-bold ${filledCount === slotCount ? "text-green-600" : "text-[#1c1712]/35"}`}>
-                {filledCount}/{slotCount} filled
-              </span>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ── Collage Grid ── */}
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}
-          className="mb-4 overflow-hidden rounded-3xl border border-black/[0.08] bg-white p-3 shadow-sm">
-          <div className="overflow-hidden rounded-2xl bg-[#faf7f2]"
-            style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: `${gap}px`, padding: `${gap}px` }}>
-            {slots.slice(0, slotCount).map((slot) => (
-              <div key={slot.id}
-                className="group relative aspect-square overflow-hidden rounded-xl border border-black/[0.06] bg-white">
-                {slot.url ? (
-                  <>
-                    <img src={slot.url} alt="" className="h-full w-full object-cover" />
-                    <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20" />
-                    <button onClick={() => handleRemove(slot.id)}
-                      className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-[#1c1712]/60 shadow-sm opacity-0 transition-opacity group-hover:opacity-100 hover:bg-white hover:text-[#1c1712]">
-                      <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                      </svg>
-                    </button>
-                  </>
-                ) : (
-                  <button onClick={() => fileInputRefs.current[slot.id]?.click()}
-                    className="flex h-full w-full flex-col items-center justify-center gap-2 border-2 border-dashed border-black/[0.10] transition-colors hover:border-[#e8531f]/40 hover:bg-[#e8531f]/[0.03]">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-black/[0.08] bg-white shadow-sm">
-                      <svg className="h-5 w-5 text-[#1c1712]/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
-                      </svg>
-                    </div>
-                    <span className="text-[10px] font-semibold text-[#1c1712]/30">Add image</span>
-                  </button>
-                )}
-                <input ref={(el) => { fileInputRefs.current[slot.id] = el; }}
-                  type="file" accept="image/*"
-                  onChange={(e) => handleFileChange(slot.id, e)}
-                  className="hidden" />
+              <div>
+                <p className={label}>Progress</p>
+                <p className="mt-2 text-[14px] font-semibold">
+                  <span className={filledCount === slotCount ? "text-emerald-600" : ""}>{filledCount}/{slotCount} filled</span>
+                </p>
+                <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-black/[0.06]">
+                  <div className="h-full rounded-full bg-[#1c1712] transition-all" style={{ width: `${(filledCount / slotCount) * 100}%` }} />
+                </div>
               </div>
-            ))}
-          </div>
-        </motion.div>
 
-        {/* ── Download Button ── */}
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.15 }}
-          className="flex items-center justify-between rounded-3xl border border-black/[0.08] bg-white px-6 py-4 shadow-sm">
-          <div>
-            <p className="text-[13px] font-bold text-[#1c1712]">Ready to export</p>
-            <p className="text-[11px] text-[#1c1712]/35">
-              {filledCount === 0 ? "Add at least one image to download" : `${filledCount} image${filledCount > 1 ? "s" : ""} · PNG · 1200px wide`}
-            </p>
+              <div className="border-t border-black/[0.07] pt-6">
+                <p className="text-[13px] text-[#1c1712]/55">
+                  {filledCount === 0 ? "Add at least one image to download." : `${filledCount} image${filledCount > 1 ? "s" : ""} · PNG · 1200px wide`}
+                </p>
+                <button
+                  onClick={handleDownload}
+                  disabled={filledCount === 0 || downloading}
+                  className="mt-3 w-full rounded-full bg-[#1c1712] px-5 py-2.5 text-[13px] font-semibold text-white transition hover:bg-[#c2410c] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#1c1712]"
+                >
+                  {downloading ? "Exporting…" : "Download PNG"}
+                </button>
+              </div>
+            </aside>
           </div>
-          <button onClick={handleDownload}
-            disabled={filledCount === 0 || downloading}
-            className="flex items-center gap-2 rounded-xl bg-[#e8531f] px-5 py-2.5 text-[13px] font-semibold text-white shadow-[0_4px_14px_rgba(232,83,31,0.35)] transition hover:bg-[#c94518] disabled:cursor-not-allowed disabled:opacity-35">
-            {downloading ? (
-              <>
-                <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
-                </svg>
-                Exporting…
-              </>
-            ) : (
-              <>
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
-                </svg>
-                Download PNG
-              </>
-            )}
-          </button>
-        </motion.div>
+        </section>
+
+        <ToolPageSections config={toolPageContent.collage} variant="new" />
       </main>
     </div>
   );

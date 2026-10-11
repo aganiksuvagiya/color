@@ -2,7 +2,105 @@ import Link from "next/link";
 
 import type { ToolPageSeoConfig } from "@/lib/seo/tool-pages";
 
-export function ToolPageSections({ config }: { config: ToolPageSeoConfig }) {
+/** New coolors-style sections (white, hairline-separated, visible FAQ). Opt in with `variant="new"`. */
+function ToolPageSectionsNew({ config }: { config: ToolPageSeoConfig }) {
+  const eyebrow = "text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]";
+  return (
+    <div className="text-[#1c1712]">
+      <section className="border-t border-black/[0.06]">
+        <div className="grid w-full gap-10 px-6 py-14 sm:px-8 lg:grid-cols-[1.2fr_1fr] lg:gap-20 lg:px-12">
+          <div>
+            <p className={eyebrow}>Direct answer</p>
+            <p className="hub-answer mt-3 text-[1.15rem] font-medium leading-8 tracking-[-0.01em]">{config.answer}</p>
+            <p className="mt-4 text-[14px] leading-7 text-[#1c1712]/50">{config.audience}</p>
+          </div>
+          <div>
+            <p className={eyebrow}>Best use cases</p>
+            <ul className="mt-3 space-y-2.5 text-[14px] leading-6 text-[#1c1712]/65">
+              {config.useCases.map((item) => (
+                <li key={item} className="flex items-start gap-2.5">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c2410c]" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-black/[0.06]">
+        <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+          <p className={eyebrow}>How to</p>
+          <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">How to use this tool</h2>
+          <ol className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {config.howToSteps.map((step, i) => (
+              <li key={step} className="rounded-xl p-5 ring-1 ring-black/[0.07]">
+                <span className="text-[12px] font-semibold text-[#c2410c]">0{i + 1}</span>
+                <p className="mt-1.5 text-[14px] leading-6 text-[#1c1712]/65">{step}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {config.explainer && config.explainer.length > 0 && (
+        <section className="border-t border-black/[0.06]">
+          <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+            <p className={eyebrow}>Explained</p>
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">{config.explainerHeading ?? "Understanding this tool"}</h2>
+            <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3">
+              {config.explainer.map((item) => (
+                <div key={item.title} className="rounded-xl p-5 ring-1 ring-black/[0.07]">
+                  <h3 className="text-[15px] font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-[14px] leading-6 text-[#1c1712]/60">{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className="border-t border-black/[0.06]">
+        <div className="grid w-full gap-12 px-6 py-14 sm:px-8 lg:grid-cols-[1.4fr_1fr] lg:gap-20 lg:px-12">
+          <div>
+            <p className={eyebrow}>FAQ</p>
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Frequently asked questions</h2>
+            <div className="mt-5 divide-y divide-black/[0.07] border-y border-black/[0.07]">
+              {config.faq.map((f) => (
+                <details key={f.question} className="group py-4">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold">
+                    {f.question}
+                    <span className="text-lg leading-none text-[#1c1712]/30 transition group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-2.5 text-[14px] leading-7 text-[#1c1712]/60">{f.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className={eyebrow}>Related</p>
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Related pages</h2>
+            <div className="mt-5 flex flex-col gap-2">
+              {config.relatedLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="flex items-center justify-between rounded-xl px-4 py-3 text-[14px] font-medium text-[#1c1712]/70 ring-1 ring-black/[0.07] transition hover:text-[#c2410c] hover:ring-black/20"
+                >
+                  {link.title}
+                  <span className="text-[#1c1712]/30">→</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+export function ToolPageSections({ config, variant }: { config: ToolPageSeoConfig; variant?: "new" }) {
+  if (variant === "new") return <ToolPageSectionsNew config={config} />;
   return (
     <section className="mt-10 space-y-5">
       {/* Direct answer */}

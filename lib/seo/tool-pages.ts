@@ -15,6 +15,7 @@ export type ToolPageSeoConfig = {
     | "color-mixer"
     | "colorblind-simulator"
     | "tailwind-scale"
+    | "collage"
     | "color-psychology-explorer";
   path: string;
   title: string;
@@ -866,6 +867,81 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Color harmony generator", href: "/tools/color-harmony" },
       { title: "Gradient generator", href: "/tools/gradient" },
       { title: "Color picker", href: "/tools/picker" },
+      { title: "Palette generator", href: "/generator" },
+    ],
+  },
+  collage: {
+    slug: "collage",
+    path: "/tools/collage",
+    title: "Collage Creator: Combine Photos into One Image (Free)",
+    description:
+      "Free online collage maker: add up to 6 photos, set the spacing and download one PNG. Runs in your browser, so your images are never uploaded.",
+    keywords: [
+      "collage creator",
+      "collage maker",
+      "photo collage maker",
+      "free collage maker online",
+      "combine images into one",
+      "image grid maker",
+      "photo grid",
+      "mood board collage",
+    ],
+    answer:
+      "HueFlow's Collage Creator combines up to 6 photos into a single grid image. Pick how many images you want, add them, set the gap between them and download the result as a PNG, all in your browser.",
+    audience: "Designers, marketers and creators building mood boards, product grids, social posts or brand inspiration boards.",
+    useCases: [
+      "Build a mood board or color inspiration board from several reference photos",
+      "Put product photos side by side for a social post or listing",
+      "Combine screenshots into a single image for a case study or presentation",
+      "Collect photos to pull a palette from with the image color extractor",
+    ],
+    howToSteps: [
+      "Choose how many images you want, from 2 to 6.",
+      "Click each empty slot and add a photo from your device.",
+      "Drag the gap slider to set the spacing between images.",
+      "Click Download PNG to save the finished collage.",
+    ],
+    explainerHeading: "How the collage is built",
+    explainer: [
+      {
+        title: "Grid layout",
+        body: "Collages with 2 to 4 images use two columns, and collages with 5 or 6 images use three columns. Each photo is cropped to fill its cell evenly.",
+      },
+      {
+        title: "Private by design",
+        body: "Photos are read and combined in your browser using a canvas. Nothing is uploaded to a server, so your images stay on your device.",
+      },
+      {
+        title: "Export quality",
+        body: "The collage exports as a 1200px wide PNG. Start from higher-resolution photos to keep the result sharp.",
+      },
+    ],
+    faq: [
+      {
+        question: "Is the collage maker free?",
+        answer: "Yes. It is free to use with no signup and no watermark on the exported PNG.",
+      },
+      {
+        question: "Are my photos uploaded anywhere?",
+        answer: "No. The collage is created in your browser, so your photos are never sent to HueFlow's servers.",
+      },
+      {
+        question: "How many photos can I combine?",
+        answer: "You can combine up to 6 photos in one collage. Choose between 2 and 6 slots.",
+      },
+      {
+        question: "What format does the collage download in?",
+        answer: "The collage downloads as a PNG that is 1200 pixels wide. The height depends on how many rows your layout has.",
+      },
+      {
+        question: "Can I get a color palette from my collage?",
+        answer: "Yes. Download the collage, then upload it to the image color extractor to pull a palette from all of its photos at once.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Image color extractor", href: "/tools/image-colors" },
+      { title: "Color palette from image", href: "/color-palette-from-image" },
+      { title: "Image recolor tool", href: "/tools/image-recolor" },
       { title: "Palette generator", href: "/generator" },
     ],
   },
