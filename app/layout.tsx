@@ -8,44 +8,54 @@ import { ConditionalFooter } from "@/components/conditional-footer";
 import { Providers } from "@/components/providers";
 import { ReferralCapture } from "@/components/referral-capture";
 import { buildOrganizationSchema, buildSoftwareApplicationSchema, buildWebSiteSchema } from "@/lib/seo/schema";
-import { siteConfig } from "@/lib/seo/site-config";
+import { indexableRobots, siteConfig } from "@/lib/seo/site-config";
 
 const GA_MEASUREMENT_ID = "G-5KWENXMSVQ";
+
+const defaultTitle = "HueFlow – Free Color Palette Generator & Color Tools";
+const defaultDescription =
+  "HueFlow is a free color palette generator and color toolkit: create palettes, pick colors, convert HEX, RGB and HSL, check WCAG contrast and build gradients. No signup.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.domain),
   title: {
-    default: "HueFlow | Colors, Palettes, Gradients, and Brand Color Strategy",
+    default: defaultTitle,
     template: `%s | ${siteConfig.name}`,
   },
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.domain }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "design",
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     shortcut: ["/favicon.svg"],
   },
-  description:
-    "Free color tools for designers & developers — palette generator, contrast checker, gradient builder, color meanings, and brand color guides. No signup needed.",
+  description: defaultDescription,
   keywords: [
     "HueFlow",
+    "HueFlow color palette generator",
     "HueFlow color tool",
-    "HueFlow palette generator",
+    "hueflow.site",
     "color palette generator",
-    "brand colors",
-    "color psychology",
+    "free color palette generator",
+    "color picker",
+    "color contrast checker",
+    "hex to rgb",
     "gradient generator",
-    "marketing colors",
-    "web design colors",
-    "design system colors",
-    "palette builder",
-    "accessible color scale",
+    "color palette from image",
+    "color wheel",
     "tailwind colors",
+    "color schemes",
   ],
   alternates: {
     canonical: siteConfig.domain,
   },
+  // Allow large image previews and full snippets, which also lets AI answer engines quote the page.
+  robots: indexableRobots,
   openGraph: {
-    title: "HueFlow | Colors, Palettes, Gradients, and Brand Color Strategy",
-    description:
-      "Free color tools for designers & developers — palette generator, contrast checker, gradient builder, color meanings, and brand color guides. No signup needed.",
+    title: defaultTitle,
+    description: defaultDescription,
     type: "website",
     siteName: siteConfig.name,
     url: siteConfig.domain,
@@ -53,9 +63,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HueFlow | Colors, Palettes, Gradients, and Brand Color Strategy",
-    description:
-      "Free color tools for designers & developers — palette generator, contrast checker, gradient builder, color meanings, and brand color guides. No signup needed.",
+    title: defaultTitle,
+    description: defaultDescription,
   },
 };
 

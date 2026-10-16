@@ -1,10 +1,11 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { useState } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
-import { isValidHex } from "@/lib/color-utils";
+import { hexToHsl, isValidHex } from "@/lib/color-utils";
+import { findClosestColorName } from "@/lib/color-names";
 import { generateHarmony, type HarmonyMode } from "@/lib/harmony";
 import { toolPageContent } from "@/lib/seo/tool-pages";
 
@@ -17,11 +18,40 @@ const MODES: { key: HarmonyMode; label: string; description: string }[] = [
   { key: "monochromatic",       label: "Monochromatic",       description: "Tints and shades of one hue. Safe, elegant, consistent." },
 ];
 
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const ghostBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
+
+const WHEEL = `conic-gradient(${Array.from({ length: 13 }, (_, i) => `hsl(${i * 30} 85% 55%)`).join(", ")})`;
+
+/** Hue ring with a dot for every color of the palette, joined by lines, so the rule is visible. */
+function HarmonyWheel({ hues, colors }: { hues: number[]; colors: string[] }) {
+  const r = 84;
+  const pos = (h: number) => {
+    const a = (h * Math.PI) / 180;
+    return { x: 100 + r * Math.sin(a), y: 100 - r * Math.cos(a) };
+  };
+  const pts = hues.map(pos);
+  return (
+    <div className="relative h-48 w-48 shrink-0" role="img" aria-label={`Hue positions: ${hues.map((h) => `${h} degrees`).join(", ")}`}>
+      <div className="absolute inset-0 rounded-full" style={{ background: WHEEL }} />
+      <div className="absolute inset-6 rounded-full bg-white" />
+      <svg viewBox="0 0 200 200" className="absolute inset-0 h-full w-full" aria-hidden="true">
+        {pts.length > 1 && (
+          <polygon points={pts.map((p) => `${p.x},${p.y}`).join(" ")} fill="rgba(28,23,18,0.05)" stroke="rgba(28,23,18,0.35)" strokeWidth="1.5" strokeLinejoin="round" />
+        )}
+        {pts.map((p, i) => (
+          <circle key={i} cx={p.x} cy={p.y} r={i === 0 ? 11 : 9} fill={colors[i]} stroke="#ffffff" strokeWidth="3" />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
 export function ColorHarmonyTool() {
   const [baseColor, setBaseColor] = useState("#4F46E5");
   const [hexInput, setHexInput]   = useState("#4F46E5");
   const [mode, setMode]           = useState<HarmonyMode>("complementary");
-  const [copiedHex, setCopiedHex] = useState<string | null>(null);
+  const [copied, setCopied]       = useState<string | null>(null);
 
   const valid   = isValidHex(baseColor);
   const palette = valid ? generateHarmony(baseColor, mode) : null;
@@ -29,159 +59,183 @@ export function ColorHarmonyTool() {
 
   function handleHexInput(val: string) {
     setHexInput(val);
-    if (isValidHex(val)) setBaseColor(val);
+    const n = val.startsWith("#") ? val : `#${val}`;
+    if (isValidHex(n) && n.length === 7) setBaseColor(n.toUpperCase());
   }
 
-  function copyHex(hex: string) {
-    navigator.clipboard.writeText(hex).then(() => {
-      setCopiedHex(hex);
-      setTimeout(() => setCopiedHex(null), 1800);
+  function copy(text: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(text);
+      setTimeout(() => setCopied((c) => (c === text ? null : c)), 1600);
     });
   }
 
+  const hexes = palette ? palette.colors.map((c) => c.hex.toUpperCase()) : [];
+  const hues = palette ? palette.colors.map((c) => hexToHsl(c.hex).h) : [];
+  const allHex = hexes.join(", ");
+  const generatorHref = `/generator?label=${encodeURIComponent(`${activeMode.label} ${findClosestColorName(baseColor)}`)}&c=${hexes.map((h) => h.slice(1)).join("-")}`;
+  const dots = hexes.length ? hexes : [baseColor];
+
   return (
-    <div className="min-h-screen bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <main className="mx-auto w-full max-w-[1040px] px-4 pb-20 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
+      {copied && (
+        <div role="status" className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1c1712] px-5 py-2.5 text-[13px] font-semibold text-white shadow-lg">
+          ✓ {copied.startsWith("#") && !copied.includes(",") ? `${copied.toUpperCase()} copied` : "Copied"}
+        </div>
+      )}
 
-        {/* Hero */}
-        <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.35 }}
-          className="mb-6 flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/40 shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]"/>Color Tool
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Color Harmony</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Color Harmony</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {dots.slice(0, 5).map((c, i) => (
+                <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
+              ))}
             </span>
-            <h1 className="font-display text-[2rem] font-black leading-none tracking-[-0.04em] sm:text-[2.6rem]">
-              Color Harmony
-            </h1>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">6 harmony rules, free.</span> Pick one base color and get a palette built on the color wheel, ready to copy or open in the generator.
+            </p>
           </div>
-          <p className="hidden text-[13px] text-[#1c1712]/40 sm:block sm:text-right sm:max-w-[220px]">
-            Generate beautiful palettes from a single base color using harmony rules.
-          </p>
-        </motion.div>
+        </section>
 
-        {/* Main card */}
-        <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.4, delay:0.05 }}
-          className="overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm lg:h-[580px]">
-          <div className="flex flex-col lg:flex-row lg:h-full">
+        {/* ── Workspace ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="grid w-full items-start gap-6 px-6 py-10 sm:px-8 lg:grid-cols-[360px_minmax(0,1fr)] lg:px-12">
+            {/* Base color + rule */}
+            <aside className="min-w-0 divide-y divide-black/[0.06] rounded-2xl ring-1 ring-black/[0.07] lg:sticky lg:top-24">
+              <div className="p-5 sm:p-6">
+                <label htmlFor="harmony-hex" className={label}>Base color</label>
+                <div className="mt-3 flex items-center gap-3">
+                  <label
+                    className="relative h-12 w-12 shrink-0 cursor-pointer overflow-hidden rounded-xl ring-1 ring-black/10 transition hover:ring-black/30"
+                    title="Open your system color picker"
+                  >
+                    <input
+                      type="color"
+                      value={valid ? baseColor.toLowerCase() : "#4f46e5"}
+                      onChange={(e) => { setBaseColor(e.target.value.toUpperCase()); setHexInput(e.target.value.toUpperCase()); }}
+                      className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                      aria-label="Pick the base color"
+                    />
+                    <span className="block h-full w-full" style={{ backgroundColor: valid ? baseColor : "#ddd" }} />
+                  </label>
+                  <input
+                    id="harmony-hex"
+                    type="text"
+                    value={hexInput}
+                    onChange={(e) => handleHexInput(e.target.value)}
+                    maxLength={7}
+                    spellCheck={false}
+                    placeholder="#4F46E5"
+                    className={`h-12 min-w-0 flex-1 rounded-xl px-4 font-mono text-[14px] font-semibold outline-none ring-1 transition focus:ring-2 ${
+                      !valid && hexInput.length > 1 ? "text-red-600 ring-red-300 focus:ring-red-500" : "text-[#1c1712] ring-black/[0.12] focus:ring-[#1c1712]"
+                    }`}
+                  />
+                </div>
+                <p className="mt-2 text-[13px] text-[#1c1712]/50">
+                  {valid ? findClosestColorName(baseColor) : "Enter a valid HEX, like #4F46E5."}
+                </p>
+              </div>
 
-            {/* ═══ LEFT — Color picker + mode list ═══ */}
-            <div className="flex flex-col border-b border-black/[0.06] lg:w-[240px] lg:shrink-0 lg:border-b-0 lg:border-r">
+              <div className="p-5 sm:p-6">
+                <p className={label}>Harmony rule</p>
+                <div className="mt-3 flex flex-wrap gap-2 lg:block lg:space-y-2" role="group" aria-label="Harmony rule">
+                  {MODES.map((m) => (
+                    <button
+                      key={m.key}
+                      onClick={() => setMode(m.key)}
+                      aria-pressed={mode === m.key}
+                      className={`rounded-xl px-4 py-3 text-left transition max-lg:rounded-full max-lg:py-2 lg:w-full ${
+                        mode === m.key ? "bg-[#1c1712]/[0.04] ring-2 ring-[#1c1712]" : "ring-1 ring-black/[0.08] hover:ring-black/25"
+                      }`}
+                    >
+                      <span className="block text-[14px] font-semibold">{m.label}</span>
+                      <span className="mt-0.5 hidden text-[13px] leading-5 text-[#1c1712]/55 lg:block">{m.description}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </aside>
 
-              {/* Color swatch picker */}
-              <label className="group relative block h-32 shrink-0 cursor-pointer overflow-hidden lg:h-40">
-                <div className="h-full w-full transition-[filter] group-hover:brightness-95"
-                  style={{ backgroundColor: valid ? baseColor : "#4F46E5" }}/>
-                <div className="absolute inset-0 flex items-end p-3">
-                  <div className="flex w-full items-center gap-2 rounded-xl bg-black/20 px-3 py-2 backdrop-blur-sm">
-                    <span className="font-mono text-[11px] font-semibold text-white/90">{baseColor.toUpperCase()}</span>
-                    <div className="ml-auto text-[9px] font-bold uppercase tracking-wider text-white/50">Click to pick</div>
+            {/* Palette */}
+            <div className="min-w-0">
+              {palette ? (
+                <div className="overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
+                  <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 sm:px-6">
+                    <div className="min-w-0 flex-1">
+                      <p className={label}>{activeMode.label} · {hexes.length} colors from {baseColor.toUpperCase()}</p>
+                      <p className="mt-1 max-w-xl text-[14px] leading-6 text-[#1c1712]/60">{activeMode.description}</p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button onClick={() => copy(allHex)} className={ghostBtn}>{copied === allHex ? "✓ Copied" : "Copy all HEX"}</button>
+                      <Link href={generatorHref} className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+                        Open in generator →
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:h-80 sm:flex-row">
+                    {palette.colors.map((color) => {
+                      const fg = color.text === "light" ? "#ffffff" : "#1c1712";
+                      const hex = color.hex.toUpperCase();
+                      return (
+                        <button
+                          key={`${color.name}-${hex}`}
+                          onClick={() => copy(hex)}
+                          aria-label={`Copy ${color.name} ${hex}`}
+                          className="flex min-h-[4.5rem] flex-1 items-center justify-between gap-3 p-4 text-left transition-[flex,background-color] duration-300 sm:flex-col sm:items-stretch sm:p-5 sm:hover:flex-[1.5]"
+                          style={{ backgroundColor: color.hex, color: fg }}
+                        >
+                          <span className="text-[12px] font-semibold uppercase tracking-[0.14em]" style={{ opacity: 0.75 }}>{color.name}</span>
+                          <span className="text-right sm:text-left">
+                            <span className="block font-mono text-[15px] font-semibold">{copied === hex ? "✓ Copied" : hex}</span>
+                            <span className="block truncate text-[12px]" style={{ opacity: 0.75 }}>{findClosestColorName(color.hex)}</span>
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="grid gap-6 border-t border-black/[0.06] p-5 sm:p-6 md:grid-cols-[auto_minmax(0,1fr)] md:items-center">
+                    <div className="mx-auto">
+                      <HarmonyWheel hues={hues} colors={hexes} />
+                    </div>
+                    <div>
+                      <p className={label}>Where they sit on the wheel</p>
+                      <ul className="mt-3 divide-y divide-black/[0.06]">
+                        {palette.colors.map((color, i) => (
+                          <li key={`${color.name}-${i}`} className="flex items-center gap-3 py-2.5">
+                            <span className="h-6 w-6 shrink-0 rounded-full ring-1 ring-black/10" style={{ backgroundColor: color.hex }} />
+                            <span className="min-w-0 flex-1 truncate text-[14px] font-semibold">{color.name}</span>
+                            <span className="font-mono text-[12px] uppercase text-[#1c1712]/50">{color.hex}</span>
+                            <span className="w-14 text-right font-mono text-[12px] font-semibold text-[#1c1712]/70">{hues[i]}°</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-                <input type="color" value={valid ? baseColor : "#4F46E5"}
-                  onChange={e => { setBaseColor(e.target.value); setHexInput(e.target.value); }}
-                  className="absolute inset-0 h-full w-full cursor-pointer opacity-0"/>
-              </label>
-
-              {/* Hex text input */}
-              <div className="border-b border-black/[0.06] px-4 py-2.5">
-                <input type="text" value={hexInput} onChange={e => handleHexInput(e.target.value)}
-                  maxLength={7} placeholder="#4F46E5"
-                  className={`w-full rounded-xl border px-3 py-2 font-mono text-[12px] outline-none transition-colors ${
-                    !isValidHex(hexInput) && hexInput.length > 1
-                      ? "border-red-200 bg-red-50 text-red-500"
-                      : "border-black/[0.08] bg-[#faf7f2] text-[#1c1712] focus:border-[#e8531f]/30"
-                  }`}/>
-              </div>
-
-              {/* Mode list */}
-              <div className="lg:flex-1 lg:overflow-y-auto">
-                {MODES.map((m, i) => (
-                  <button key={m.key} onClick={() => setMode(m.key)}
-                    className={`group w-full border-b border-black/[0.05] px-4 py-3 text-left transition-all last:border-b-0 ${
-                      mode === m.key
-                        ? "bg-[#e8531f]/[0.05] border-l-[3px] border-l-[#e8531f]"
-                        : "hover:bg-[#faf7f2]"
-                    }`}>
-                    <p className={`text-[12px] font-bold transition-colors ${
-                      mode === m.key ? "text-[#e8531f]" : "text-[#1c1712] group-hover:text-[#1c1712]"
-                    }`}>{m.label}</p>
-                    <p className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-[#1c1712]/35">{m.description}</p>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* ═══ RIGHT — Palette ═══ */}
-            <div className="flex min-w-0 flex-1 flex-col">
-
-              {/* Mode info bar */}
-              <div className="flex items-center gap-3 border-b border-black/[0.06] bg-[#faf7f2] px-5 py-3">
-                <div>
-                  <p className="text-[11px] font-black uppercase tracking-[0.15em] text-[#e8531f]">{activeMode.label}</p>
-                  <p className="text-[11px] text-[#1c1712]/45">{activeMode.description}</p>
-                </div>
-              </div>
-
-              {/* Palette strips — expandable on hover */}
-              {palette ? (
-                <div className="flex min-h-[240px] flex-1">
-                  {palette.colors.map((color) => {
-                    const light = color.text === "light";
-                    const textHi  = light ? "rgba(255,255,255,0.92)" : "rgba(0,0,0,0.75)";
-                    const textLo  = light ? "rgba(255,255,255,0.50)" : "rgba(0,0,0,0.38)";
-                    const isCopied = copiedHex === color.hex;
-                    return (
-                      <div key={color.role}
-                        className="group relative flex flex-1 flex-col justify-end p-3 transition-all duration-300 hover:flex-[2.2] sm:p-4"
-                        style={{ backgroundColor: color.hex }}>
-
-                        {/* Copy button */}
-                        <button onClick={() => copyHex(color.hex)}
-                          className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-lg opacity-0 transition-all group-hover:opacity-100"
-                          style={{ backgroundColor: light ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.35)" }}>
-                          <AnimatePresence mode="wait">
-                            {isCopied ? (
-                              <motion.svg key="check" initial={{ scale:0.5 }} animate={{ scale:1 }} exit={{ scale:0.5 }}
-                                className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}
-                                style={{ color: textHi }}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
-                              </motion.svg>
-                            ) : (
-                              <motion.svg key="copy" initial={{ scale:0.5 }} animate={{ scale:1 }} exit={{ scale:0.5 }}
-                                className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                                style={{ color: textHi }}>
-                                <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-                              </motion.svg>
-                            )}
-                          </AnimatePresence>
-                        </button>
-
-                        {/* Color info */}
-                        <div className="translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
-                          <p className="text-[10px] font-bold uppercase tracking-[0.12em]" style={{ color: textLo }}>
-                            {color.name}
-                          </p>
-                        </div>
-                        <p className="font-mono text-[11px] font-semibold uppercase" style={{ color: textHi }}>
-                          {color.hex}
-                        </p>
-                      </div>
-                    );
-                  })}
-                </div>
               ) : (
-                <div className="flex flex-1 items-center justify-center">
-                  <p className="text-[13px] text-[#1c1712]/30">Enter a valid hex color to generate a palette</p>
-                </div>
+                <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-[14px] font-semibold text-red-700">
+                  Enter a valid HEX color (like #4F46E5) to build a palette.
+                </p>
               )}
             </div>
-
           </div>
-        </motion.div>
+        </section>
 
-        <ToolPageSections config={toolPageContent["color-harmony"]}/>
+        <ToolPageSections config={toolPageContent["color-harmony"]} variant="new" />
       </main>
     </div>
   );

@@ -1,10 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Link from "next/link";
 import { useState } from "react";
 import { Header } from "./header";
+import { SwatchStrip, useCopy } from "@/components/seo/swatch-strip";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
-import { generateRandomPalette, getContrastText } from "@/lib/color-utils";
+import { generateRandomPalette, getContrastText, isValidHex } from "@/lib/color-utils";
 import { findClosestColorName } from "@/lib/color-names";
 import { simulateColorBlind, type ColorBlindType } from "@/lib/colorblind";
 import { toolPageContent } from "@/lib/seo/tool-pages";
@@ -22,14 +23,62 @@ const DEFAULT_PALETTE: Palette = {
 };
 
 const TYPES: { key: ColorBlindType | "normal"; label: string; desc: string }[] = [
-  { key: "normal",       label: "Normal",       desc: "Full color vision" },
-  { key: "protanopia",   label: "Protanopia",   desc: "Red-blind · ~1% of males" },
-  { key: "deuteranopia", label: "Deuteranopia", desc: "Green-blind · ~1% of males" },
-  { key: "tritanopia",   label: "Tritanopia",   desc: "Blue-blind · very rare" },
+  { key: "normal",       label: "Normal vision", desc: "Full color vision" },
+  { key: "protanopia",   label: "Protanopia",    desc: "Red-blind · about 1% of males" },
+  { key: "deuteranopia", label: "Deuteranopia",  desc: "Green-blind · about 1% of males" },
+  { key: "tritanopia",   label: "Tritanopia",    desc: "Blue-blind · very rare" },
 ];
+
+/** Colors closer than this (CIE76 ΔE) are hard to tell apart in a chart or legend. */
+const SIMILAR_BELOW = 20;
+
+function hexToLab(hex: string): [number, number, number] {
+  const lin = [1, 3, 5].map((i) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  const [r, g, b] = lin;
+  const x = (0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / 0.95047;
+  const y = 0.2126729 * r + 0.7151522 * g + 0.072175 * b;
+  const z = (0.0193339 * r + 0.119192 * g + 0.9503041 * b) / 1.08883;
+  const f = (t: number) => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116);
+  return [116 * f(y) - 16, 500 * (f(x) - f(y)), 200 * (f(y) - f(z))];
+}
+
+function deltaE(a: string, b: string) {
+  const [l1, a1, b1] = hexToLab(a);
+  const [l2, a2, b2] = hexToLab(b);
+  return Math.sqrt((l1 - l2) ** 2 + (a1 - a2) ** 2 + (b1 - b2) ** 2);
+}
+
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+
+function HexField({ value, onCommit }: { value: string; onCommit: (hex: string) => void }) {
+  // Shows half-typed text as a draft; a complete HEX is applied at once.
+  const [draft, setDraft] = useState<string | null>(null);
+  return (
+    <input
+      type="text"
+      value={draft ?? value.toUpperCase()}
+      maxLength={7}
+      spellCheck={false}
+      aria-label="HEX value"
+      onChange={(e) => {
+        let v = e.target.value.toUpperCase();
+        if (!v.startsWith("#")) v = `#${v}`;
+        const ok = isValidHex(v) && v.length === 7;
+        setDraft(ok ? null : v);
+        if (ok) onCommit(v.toLowerCase());
+      }}
+      onBlur={() => setDraft(null)}
+      className="h-10 w-[6.5rem] shrink-0 rounded-xl px-3 font-mono text-[13px] font-semibold text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition focus:ring-2 focus:ring-[#1c1712]"
+    />
+  );
+}
 
 export function ColorblindSimulatorTool() {
   const [palette, setPalette] = useState<Palette>(DEFAULT_PALETTE);
+  const { copied, copy } = useCopy();
 
   function setColor(index: number, hex: string) {
     setPalette(prev => ({
@@ -42,132 +91,149 @@ export function ColorblindSimulatorTool() {
 
   function randomize() { setPalette(generateRandomPalette()); }
 
+  const colors = palette.colors;
+
+  // Pairs that look different to most people but run together under a given vision type.
+  const confused = (type: ColorBlindType) => {
+    const sim = colors.map((c) => simulateColorBlind(c.hex, type));
+    const pairs: { a: number; b: number }[] = [];
+    for (let a = 0; a < colors.length; a++) {
+      for (let b = a + 1; b < colors.length; b++) {
+        if (deltaE(colors[a].hex, colors[b].hex) >= SIMILAR_BELOW && deltaE(sim[a], sim[b]) < SIMILAR_BELOW) pairs.push({ a, b });
+      }
+    }
+    return pairs;
+  };
+
   return (
-    <div className="min-h-screen bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <main className="mx-auto w-full max-w-[1040px] px-4 pb-20 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
+      {copied && (
+        <div role="status" className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1c1712] px-5 py-2.5 text-[13px] font-semibold text-white shadow-lg">
+          ✓ {copied} copied
+        </div>
+      )}
 
-        {/* Hero */}
-        <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.35 }}
-          className="mb-6 flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/40 shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]"/>Accessibility
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Colorblind Simulator</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Colorblind Simulator</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {colors.map((c, i) => (
+                <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c.hex }} />
+              ))}
             </span>
-            <h1 className="font-display text-[2rem] font-black leading-none tracking-[-0.04em] sm:text-[2.6rem]">
-              Colorblind Simulator
-            </h1>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">Check your palette for color vision deficiency, free.</span> See it under protanopia, deuteranopia and tritanopia, and find the colors that run together.
+            </p>
           </div>
-          <p className="hidden text-[13px] text-[#1c1712]/40 sm:block sm:text-right sm:max-w-[220px]">
-            Preview your palette under protanopia, deuteranopia, and tritanopia.
-          </p>
-        </motion.div>
+        </section>
 
-        {/* Main card */}
-        <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.4, delay:0.05 }}
-          className="overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
-          <div className="flex flex-col lg:flex-row">
-
-            {/* ═══ LEFT — Palette editor ═══ */}
-            <div className="flex flex-col border-b border-black/[0.06] lg:w-[220px] lg:shrink-0 lg:border-b-0 lg:border-r">
-
-              {/* Header */}
-              <div className="border-b border-black/[0.06] px-4 py-3">
-                <p className="text-[13px] font-bold text-[#1c1712]">Your Palette</p>
-                <p className="text-[10px] text-[#1c1712]/35">Click a swatch to edit</p>
+        {/* ── Workspace ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="grid w-full items-start gap-6 px-6 py-10 sm:px-8 lg:grid-cols-[340px_minmax(0,1fr)] lg:px-12">
+            {/* Palette editor */}
+            <aside className="min-w-0 rounded-2xl ring-1 ring-black/[0.07] lg:sticky lg:top-24">
+              <div className="px-5 pb-3 pt-5 sm:px-6">
+                <p className={label}>Your palette</p>
+                <p className="mt-1 text-[13px] text-[#1c1712]/50">Click a swatch or type a HEX to change it.</p>
               </div>
-
-              {/* Color rows */}
-              <div className="flex flex-row flex-wrap gap-0 lg:flex-col lg:flex-1">
-                {palette.colors.map((color, i) => (
-                  <label key={i} className="group relative flex cursor-pointer items-center gap-3 border-b border-black/[0.05] px-4 py-3 transition hover:bg-[#faf7f2] last:border-b-0 lg:last:border-b-0 w-full">
-                    {/* Swatch */}
-                    <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl border border-black/[0.08] shadow-sm transition group-hover:scale-105"
-                      style={{ backgroundColor: color.hex }}/>
-                    <input type="color" value={color.hex} onChange={e => setColor(i, e.target.value)}
-                      className="absolute inset-0 h-full w-full cursor-pointer opacity-0"/>
-                    {/* Info */}
-                    <div className="min-w-0">
-                      <p className="truncate text-[11px] font-semibold text-[#1c1712]">{color.name}</p>
-                      <p className="font-mono text-[10px] text-[#1c1712]/35">{color.hex.toUpperCase()}</p>
-                    </div>
-                  </label>
+              <ul className="divide-y divide-black/[0.06] border-t border-black/[0.06]">
+                {colors.map((color, i) => (
+                  <li key={i} className="flex items-center gap-3 px-5 py-3 sm:px-6">
+                    <label
+                      className="relative h-11 w-11 shrink-0 cursor-pointer overflow-hidden rounded-xl ring-1 ring-black/10 transition hover:ring-black/30"
+                      title="Open your system color picker"
+                    >
+                      <input
+                        type="color"
+                        value={color.hex.toLowerCase()}
+                        onChange={(e) => setColor(i, e.target.value)}
+                        className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                        aria-label={`Pick color ${i + 1}`}
+                      />
+                      <span className="block h-full w-full" style={{ backgroundColor: color.hex }} />
+                    </label>
+                    <span className="min-w-0 flex-1 truncate text-[14px] font-semibold">{color.name}</span>
+                    <HexField value={color.hex} onCommit={(hex) => setColor(i, hex)} />
+                  </li>
                 ))}
-              </div>
-
-              {/* Randomize */}
-              <div className="border-t border-black/[0.06] p-3">
-                <button onClick={randomize}
-                  className="flex w-full items-center justify-center gap-2 rounded-2xl border border-black/[0.08] bg-[#f7f4ef] py-2.5 text-[12px] font-semibold text-[#1c1712]/55 transition hover:bg-[#f0ede8] hover:text-[#1c1712]">
-                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </ul>
+              <div className="border-t border-black/[0.06] p-4 sm:px-6">
+                <button onClick={randomize} className="inline-flex items-center gap-2 rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+                  <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="4" />
+                    <circle cx="8.5" cy="8.5" r="1" fill="currentColor" />
+                    <circle cx="12" cy="12" r="1" fill="currentColor" />
+                    <circle cx="15.5" cy="15.5" r="1" fill="currentColor" />
                   </svg>
                   Randomize
                 </button>
               </div>
-            </div>
+            </aside>
 
-            {/* ═══ RIGHT — Simulation rows ═══ */}
-            <div className="flex min-w-0 flex-1 flex-col divide-y divide-black/[0.05]">
-              {TYPES.map((type, ti) => {
-                const simColors = palette.colors.map(c => ({
-                  ...c,
-                  simHex: type.key === "normal" ? c.hex : simulateColorBlind(c.hex, type.key),
-                }));
+            {/* Simulations */}
+            <div className="grid min-w-0 gap-4 md:grid-cols-2">
+              {TYPES.map((type) => {
                 const isNormal = type.key === "normal";
+                const simHexes = colors.map((c) => (type.key === "normal" ? c.hex : simulateColorBlind(c.hex, type.key)).toUpperCase());
+                const pairs = isNormal ? [] : confused(type.key as ColorBlindType);
                 return (
-                  <div key={type.key} className={`flex flex-col gap-3 px-5 py-4 ${isNormal ? "bg-[#faf7f2]" : ""}`}>
-                    {/* Row label */}
-                    <div className="flex items-center gap-2">
+                  <article key={type.key} className="min-w-0 overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
+                    <div className="flex items-start justify-between gap-3 px-5 pb-3 pt-4">
+                      <div className="min-w-0">
+                        <h2 className="text-[15px] font-semibold">{type.label}</h2>
+                        <p className="text-[13px] text-[#1c1712]/50">{type.desc}</p>
+                      </div>
                       {isNormal ? (
-                        <span className="rounded-full bg-[#1c1712]/[0.07] px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#1c1712]/50">
-                          Normal
-                        </span>
+                        <span className="shrink-0 rounded-full bg-[#1c1712]/[0.05] px-2.5 py-0.5 text-[11px] font-bold text-[#1c1712]/60">Reference</span>
+                      ) : pairs.length === 0 ? (
+                        <span className="shrink-0 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-600/20">✓ All clear</span>
                       ) : (
-                        <span className="rounded-full bg-[#e8531f]/10 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#e8531f]">
-                          {type.label}
+                        <span className="shrink-0 rounded-full bg-amber-50 px-2.5 py-0.5 text-[11px] font-bold text-amber-700 ring-1 ring-amber-600/25">
+                          {pairs.length} {pairs.length === 1 ? "pair" : "pairs"} run together
                         </span>
                       )}
-                      <span className="text-[10px] text-[#1c1712]/35">{type.desc}</span>
                     </div>
-
-                    {/* Color strips */}
-                    <div className="flex overflow-hidden rounded-2xl">
-                      {simColors.map((color, ci) => (
-                        <div key={ci} className="group relative flex h-16 flex-1 flex-col justify-end overflow-hidden sm:h-20"
-                          style={{ backgroundColor: color.simHex }}
-                          title={`${color.role}: ${color.simHex}`}>
-                          {/* Hex on hover */}
-                          <div className="absolute inset-x-0 bottom-0 translate-y-full bg-black/30 px-2 py-1.5 backdrop-blur-sm transition-transform duration-150 group-hover:translate-y-0">
-                            <p className="font-mono text-[9px] font-semibold text-white">{color.simHex.toUpperCase()}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Diff warning — show when colors look too similar */}
-                    {!isNormal && (() => {
-                      const hexes = simColors.map(c => c.simHex);
-                      const hasDup = hexes.some((a, ai) => hexes.some((b, bi) => ai !== bi && a === b));
-                      return hasDup ? (
-                        <p className="flex items-center gap-1.5 text-[10px] font-semibold text-amber-600">
-                          <svg className="h-3 w-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/>
-                          </svg>
-                          Some colors are indistinguishable under this vision type
-                        </p>
-                      ) : null;
-                    })()}
-                  </div>
+                    <SwatchStrip colors={simHexes} height="h-28" copied={copied} onCopy={copy} className="" />
+                    {!isNormal && (
+                      <div className="px-5 py-3.5">
+                        {pairs.length === 0 ? (
+                          <p className="text-[13px] text-[#1c1712]/55">Every color stays easy to tell apart.</p>
+                        ) : (
+                          <ul className="space-y-2">
+                            {pairs.map(({ a, b }) => (
+                              <li key={`${a}-${b}`} className="flex items-center gap-2 text-[13px]">
+                                <span className="flex -space-x-1">
+                                  <span className="h-4 w-4 rounded-full ring-2 ring-white" style={{ backgroundColor: simHexes[a] }} />
+                                  <span className="h-4 w-4 rounded-full ring-2 ring-white" style={{ backgroundColor: simHexes[b] }} />
+                                </span>
+                                <span className="min-w-0 truncate text-[#1c1712]/70">
+                                  <span className="font-semibold text-[#1c1712]">{colors[a].name}</span> and <span className="font-semibold text-[#1c1712]">{colors[b].name}</span> look alike
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    )}
+                  </article>
                 );
               })}
             </div>
-
           </div>
-        </motion.div>
+        </section>
 
-        <ToolPageSections config={toolPageContent["colorblind-simulator"]}/>
+        <ToolPageSections config={toolPageContent["colorblind-simulator"]} variant="new" />
       </main>
     </div>
   );

@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { Header } from "@/components/header";
 
@@ -15,63 +12,40 @@ const SUGGESTIONS = [
 
 export default function NotFound() {
   return (
-    <main className="relative min-h-screen bg-[#f0ede8] text-[#1c1712]">
+    <main className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <div className="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center px-4 pb-24 pt-24 text-center sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
-          <p
-            className="inline-block bg-clip-text font-mono text-6xl font-black tracking-[0.2em] text-transparent sm:text-7xl"
-            style={{ backgroundImage: "linear-gradient(90deg, #e8531f, #f97316, #e8531f)" }}
-          >
-            404
+      <section className="w-full px-6 pb-20 pt-36 sm:px-8 lg:px-12">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Error 404</p>
+        <h1 className="mt-3 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">This page doesn&apos;t exist</h1>
+        <div className="mt-5 flex max-w-2xl flex-wrap items-start gap-3">
+          <span className="mt-1.5 flex -space-x-1.5" aria-hidden="true">
+            {SUGGESTIONS.map((s) => (
+              <span key={s.href} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: s.hex }} />
+            ))}
+          </span>
+          <p className="min-w-0 flex-1 basis-72 text-[16px] leading-7 text-[#1c1712]/55">
+            That color isn&apos;t in the palette. The page may have moved or been renamed. Here are some places to start instead.
           </p>
-          <h1 className="mt-3 text-3xl font-black tracking-[-0.02em] text-[#1c1712] sm:text-4xl">
-            This page doesn&apos;t exist
-          </h1>
-          <p className="mx-auto mt-3 max-w-md text-[14px] text-[#1c1712]/45">
-            That color isn&apos;t in the palette. The page may have moved or been renamed — here are some places to start instead.
-          </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-8 grid w-full grid-cols-2 gap-2.5 sm:grid-cols-3"
-        >
+        <div className="mt-10 grid w-full max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3">
           {SUGGESTIONS.map((s) => (
             <Link
               key={s.href}
               href={s.href}
-              className="group flex items-center gap-3 rounded-xl border border-black/[0.08] bg-white px-4 py-3.5 text-left text-[13px] font-medium text-[#1c1712]/60 shadow-sm transition-all hover:-translate-y-0.5 hover:border-black/[0.12] hover:shadow-md hover:text-[#1c1712]"
+              className="group flex items-center gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold text-[#1c1712]/80 ring-1 ring-black/[0.08] transition hover:-translate-y-0.5 hover:bg-[#fafafa] hover:text-[#c2410c] hover:ring-black/25"
             >
-              <span
-                className="h-2 w-2 shrink-0 rounded-full transition-transform group-hover:scale-125"
-                style={{ backgroundColor: s.hex }}
-              />
+              <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: s.hex }} />
               {s.label}
             </Link>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <Link
-            href="/"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#e8531f] px-6 py-3 text-[13px] font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:opacity-90"
-          >
-            <span>←</span> Back to home
-          </Link>
-        </motion.div>
-      </div>
+        <Link href="/" className="mt-10 inline-flex items-center gap-2 rounded-full bg-[#1c1712] px-6 py-3 text-[14px] font-semibold text-white transition hover:bg-[#c2410c]">
+          <span aria-hidden="true">←</span> Back to home
+        </Link>
+      </section>
     </main>
   );
 }

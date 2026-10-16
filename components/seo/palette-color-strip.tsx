@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { findNamedColorByHex } from "@/lib/color-names";
 
+/** Same hover pattern as the palette pages: the hovered color widens and a dark pill shows its HEX. */
 export function PaletteColorStrip({ colors, linkToColors }: { colors: string[]; linkToColors?: boolean }) {
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
 
@@ -24,58 +25,33 @@ export function PaletteColorStrip({ colors, linkToColors }: { colors: string[]; 
   };
 
   return (
-    <div className="flex w-full overflow-hidden rounded-2xl ring-1 ring-inset ring-white/10">
+    <div className="flex h-24 w-full overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
       {colors.map((hex, i) => {
-        const r = parseInt(hex.slice(1, 3), 16);
-        const g = parseInt(hex.slice(3, 5), 16);
-        const b = parseInt(hex.slice(5, 7), 16);
-        const light = (r * 299 + g * 587 + b * 114) / 1000 > 160;
         const copied = copiedHex === hex;
         // Only named colors have a /colors page - arbitrary hex slugs 404, so those
         // swatches fall back to copy-on-click instead of linking to a dead URL.
         const named = linkToColors ? findNamedColorByHex(hex) : undefined;
+        const base = "group/swatch relative min-w-0 flex-1 transition-[flex] duration-300 hover:z-10 hover:flex-[2.4]";
 
-        const inner = (
-          <div className="flex h-20 flex-col items-center justify-center gap-0.5 px-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            {copied ? (
-              <p className={`text-[11px] font-semibold ${light ? "text-black/70" : "text-white/90"}`}>Copied!</p>
-            ) : (
-              <p className={`font-mono text-[11px] font-semibold uppercase truncate w-full text-center ${light ? "text-black/60" : "text-white/80"}`}>
-                {hex.toUpperCase()}
-              </p>
-            )}
-          </div>
-        );
-
-        const divider = i < colors.length - 1 && (
-          <span className="absolute right-0 top-1/4 h-1/2 w-px bg-black/10" />
+        const pill = (
+          <span className="absolute inset-x-0 bottom-2.5 flex justify-center">
+            <span className="whitespace-nowrap rounded-full bg-black/55 px-2.5 py-1 font-mono text-[10px] text-white opacity-0 transition-opacity duration-200 group-hover/swatch:opacity-100">
+              {copied ? "✓ Copied" : hex.toUpperCase()}
+            </span>
+          </span>
         );
 
         if (named) {
           return (
-            <Link
-              key={hex}
-              href={`/colors/${named.slug}`}
-              className="group relative flex-1 min-w-0"
-              style={{ backgroundColor: hex }}
-              title={hex.toUpperCase()}
-            >
-              {inner}
-              {divider}
+            <Link key={`${hex}-${i}`} href={`/colors/${named.slug}`} className={base} style={{ backgroundColor: hex }} title={`${named.name} ${hex.toUpperCase()}`}>
+              {pill}
             </Link>
           );
         }
 
         return (
-          <button
-            key={hex}
-            onClick={() => copy(hex)}
-            className="group relative flex-1 min-w-0 cursor-pointer"
-            style={{ backgroundColor: hex }}
-            title={`Copy ${hex.toUpperCase()}`}
-          >
-            {inner}
-            {divider}
+          <button key={`${hex}-${i}`} onClick={() => copy(hex)} className={`${base} cursor-pointer`} style={{ backgroundColor: hex }} title={`Copy ${hex.toUpperCase()}`}>
+            {pill}
           </button>
         );
       })}

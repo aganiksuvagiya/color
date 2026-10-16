@@ -1,11 +1,11 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useMemo } from "react";
+import Link from "next/link";
+import { useState, useMemo, type ReactNode } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { toolPageContent } from "@/lib/seo/tool-pages";
-import { generateTailwindScale, isValidHex } from "@/lib/color-utils";
+import { generateTailwindScale, getContrastText, isValidHex } from "@/lib/color-utils";
 
 type ColorEntry = { name: string; hex: string };
 type TypographyToken = { name: string; sizePx: number };
@@ -200,6 +200,28 @@ function generateOutput(
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const inputCls = "h-10 min-w-0 w-full rounded-xl px-3 text-[13px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/35 focus:ring-2 focus:ring-[#1c1712]";
+const card = "rounded-2xl ring-1 ring-black/[0.07]";
+const ghostBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
+
+function Svg({ children, size = 15 }: { children: ReactNode; size?: number }) {
+  return (
+    <svg width={size} height={size} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {children}
+    </svg>
+  );
+}
+
+function SmallTitle({ children }: { children: ReactNode }) {
+  return (
+    <h3 className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
+      {children}
+      <span className="h-px flex-1 bg-black/[0.06]" />
+    </h3>
+  );
+}
+
 export function DesignTokenGenerator() {
   const [colors, setColors] = useState<ColorEntry[]>(DEFAULT_COLORS);
   const [fontFamily, setFontFamily] = useState("'Inter', sans-serif");
@@ -218,7 +240,7 @@ export function DesignTokenGenerator() {
   const updateColor = (i: number, field: keyof ColorEntry, value: string) =>
     setColors(prev => prev.map((c,idx) => idx===i ? {...c,[field]:value} : c));
   const addColor = () => { if (colors.length >= 10) return; setColors(prev => [...prev, { name:"", hex:"#000000" }]); };
-  const removeColor = (i: number) => setColors(prev => prev.filter((_,idx) => idx!==i));
+  const removeColor = (i: number) => { setColors(prev => prev.filter((_,idx) => idx!==i)); setExpandedShade(null); };
 
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(output);
@@ -230,363 +252,314 @@ export function DesignTokenGenerator() {
     downloadFile(output, `design-tokens${ext}`);
   };
 
+  const validColors = colors.filter(c => isValidHex(c.hex));
   const primaryHex = colors.find(c => c.name === "primary")?.hex || colors[0]?.hex || "#4F46E5";
   const secondaryHex = colors.find(c => c.name === "secondary")?.hex || colors[1]?.hex || "#10B981";
   const accentHex = colors.find(c => c.name === "accent")?.hex || colors[2]?.hex || "#F59E0B";
   const baseTypo = typography.find(t => t.name === "base")?.sizePx || 16;
-  const lgTypo = typography.find(t => t.name === "lg")?.sizePx || 18;
-  const xlTypo = typography.find(t => t.name === "xl")?.sizePx || 20;
   const twoXlTypo = typography.find(t => t.name === "2xl")?.sizePx || 24;
   const smTypo = typography.find(t => t.name === "sm")?.sizePx || 14;
-
-  const card = "rounded-3xl border border-black/[0.08] bg-white shadow-sm";
+  const dots = (validColors.length ? validColors : DEFAULT_COLORS).slice(0, 5).map(c => c.hex);
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <main className="mx-auto w-full max-w-[960px] flex-1 px-4 pb-20 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
+      {copied && (
+        <div role="status" className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1c1712] px-5 py-2.5 text-[13px] font-semibold text-white shadow-lg">
+          ✓ {format} copied
+        </div>
+      )}
 
-        {/* ── Hero ── */}
-        <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.35 }}
-          className="mb-8 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/40 shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]"/>Design Tool
-          </span>
-          <h1 className="mt-2.5 font-display text-[2.4rem] font-black leading-none tracking-[-0.04em] sm:text-[3.2rem]">
-            Design Token Generator
-          </h1>
-          <p className="mt-2 text-[14px] text-[#1c1712]/40">
-            Export colors, typography & spacing as design tokens for any platform.
-          </p>
-        </motion.div>
-
-        <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.4, delay:0.05 }}
-          className="space-y-4">
-
-          {/* ── Colors ── */}
-          <div className={`${card} p-5 sm:p-6`}>
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Colors</p>
-              <div className="flex items-center gap-3">
-                {/* Shade generation toggle */}
-                <label className="flex cursor-pointer items-center gap-2">
-                  <div className={`relative h-5 w-9 rounded-full transition-colors ${generateShades ? "bg-[#e8531f]" : "bg-black/[0.12]"}`}
-                    onClick={() => setGenerateShades(v => !v)}>
-                    <div className={`absolute top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform ${generateShades ? "translate-x-4" : "translate-x-0.5"}`}/>
-                  </div>
-                  <span className="text-[10px] font-semibold text-[#1c1712]/45">Generate shades</span>
-                </label>
-                <span className="font-mono text-[10px] text-[#1c1712]/25">{colors.length}/10</span>
-              </div>
-            </div>
-
-            <div className="space-y-2.5">
-              <AnimatePresence mode="popLayout">
-                {colors.map((color, i) => {
-                  const shadeScale = generateShades && isValidHex(color.hex) ? generateTailwindScale(color.hex) : [];
-                  const isExpanded = expandedShade === i;
-                  return (
-                    <motion.div key={i} layout
-                      initial={{ opacity:0, scale:0.97 }} animate={{ opacity:1, scale:1 }}
-                      exit={{ opacity:0, scale:0.97 }} transition={{ duration:0.15 }}>
-                      <div className="flex items-center gap-2.5">
-                        <label className="relative h-9 w-9 shrink-0 cursor-pointer overflow-hidden rounded-xl border border-black/[0.10] shadow-sm"
-                          style={{ backgroundColor: color.hex }}>
-                          <input type="color" value={color.hex}
-                            onChange={e => updateColor(i,"hex",e.target.value)}
-                            className="absolute inset-0 h-full w-full cursor-pointer opacity-0"/>
-                        </label>
-                        <input type="text" value={color.name} onChange={e => updateColor(i,"name",e.target.value)}
-                          placeholder="Color name / role"
-                          className="min-w-0 flex-1 rounded-xl border border-black/[0.07] bg-[#faf7f2] px-3 py-2 text-[12px] text-[#1c1712] placeholder-[#1c1712]/25 outline-none transition focus:border-black/15 focus:bg-white"/>
-                        <input type="text" value={color.hex}
-                          onChange={e => { let v=e.target.value; if(!v.startsWith("#"))v="#"+v; updateColor(i,"hex",v); }}
-                          maxLength={7}
-                          className="w-24 shrink-0 rounded-xl border border-black/[0.07] bg-[#faf7f2] px-3 py-2 font-mono text-[12px] text-[#1c1712] outline-none transition focus:border-black/15 focus:bg-white"/>
-                        {generateShades && shadeScale.length > 0 && (
-                          <button onClick={() => setExpandedShade(isExpanded ? null : i)}
-                            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border text-[10px] font-bold transition ${isExpanded ? "border-[#e8531f]/20 bg-[#e8531f]/10 text-[#e8531f]" : "border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/40 hover:bg-[#f0ede8]"}`}>
-                            {isExpanded ? "▲" : "▼"}
-                          </button>
-                        )}
-                        <button onClick={() => removeColor(i)}
-                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-[#1c1712]/25 transition hover:bg-[#faf7f2] hover:text-[#1c1712]/60">
-                          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                          </svg>
-                        </button>
-                      </div>
-                      {/* Shade strip */}
-                      <AnimatePresence>
-                        {isExpanded && shadeScale.length > 0 && (
-                          <motion.div initial={{ opacity:0, height:0 }} animate={{ opacity:1, height:"auto" }}
-                            exit={{ opacity:0, height:0 }} transition={{ duration:0.2 }}
-                            className="mt-2 overflow-hidden">
-                            <div className="flex overflow-hidden rounded-xl">
-                              {shadeScale.map(({ step, hex }) => (
-                                <div key={step} className="group/sh relative flex-1" style={{ backgroundColor: hex, height: 36 }}>
-                                  <div className="absolute inset-x-0 bottom-0 flex justify-center pb-1 opacity-0 transition-opacity duration-150 group-hover/sh:opacity-100">
-                                    <span className="rounded-full bg-black/55 px-1.5 py-0.5 font-mono text-[7px] text-white">{step}</span>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-            </div>
-
-            {colors.length < 10 && (
-              <button onClick={addColor}
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-black/[0.10] py-2.5 text-[12px] font-semibold text-[#1c1712]/35 transition hover:border-black/20 hover:bg-[#faf7f2] hover:text-[#1c1712]/55">
-                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/>
-                </svg>
-                Add Color
-              </button>
-            )}
-          </div>
-
-          {/* ── Typography + Spacing ── */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {/* Typography */}
-            <div className={`${card} p-5`}>
-              <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Typography Scale</p>
-              <div className="mb-4 space-y-3">
-                <div>
-                  <label className="mb-1 block text-[9px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/30">Font Family</label>
-                  <input type="text" value={fontFamily} onChange={e => setFontFamily(e.target.value)}
-                    className="w-full rounded-xl border border-black/[0.07] bg-[#faf7f2] px-3 py-2 text-[12px] text-[#1c1712] outline-none transition focus:border-black/15 focus:bg-white"/>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="mb-1 block text-[9px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/30">Base Size (px)</label>
-                    <input type="number" min={10} max={32} value={baseFontSize}
-                      onChange={e => setBaseFontSize(Number(e.target.value)||16)}
-                      className="w-full rounded-xl border border-black/[0.07] bg-[#faf7f2] px-3 py-2 text-[12px] text-[#1c1712] outline-none transition focus:border-black/15 focus:bg-white"/>
-                  </div>
-                  <div>
-                    <label className="mb-1 block text-[9px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/30">Scale Ratio</label>
-                    <select value={scaleRatio} onChange={e => setScaleRatio(Number(e.target.value))}
-                      className="w-full rounded-xl border border-black/[0.07] bg-[#faf7f2] px-3 py-2 text-[12px] text-[#1c1712] outline-none transition focus:border-black/15 focus:bg-white">
-                      {SCALE_RATIOS.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-1.5 border-t border-black/[0.05] pt-3">
-                {typography.map(t => (
-                  <div key={t.name} className="flex items-center gap-3">
-                    <span className="w-9 shrink-0 font-mono text-[9px] font-semibold text-[#1c1712]/35">{t.name}</span>
-                    <span className="w-12 shrink-0 font-mono text-[9px] text-[#1c1712]/25">{t.sizePx}px</span>
-                    <span className="truncate font-semibold text-[#1c1712]/70" style={{ fontSize:`${Math.min(t.sizePx,36)}px`, fontFamily, lineHeight:1.1 }}>Aa</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Spacing */}
-            <div className={`${card} p-5`}>
-              <div className="mb-4 flex items-center justify-between">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Spacing Scale</p>
-                <div className="flex items-center gap-2">
-                  <label className="text-[9px] font-bold uppercase tracking-[0.12em] text-[#1c1712]/30">Base</label>
-                  <input type="number" min={1} max={16} value={spacingUnit}
-                    onChange={e => setSpacingUnit(Number(e.target.value)||4)}
-                    className="w-14 rounded-lg border border-black/[0.07] bg-[#faf7f2] px-2 py-1 text-center font-mono text-[12px] text-[#1c1712] outline-none focus:border-black/15 focus:bg-white"/>
-                  <span className="text-[9px] text-[#1c1712]/30">px</span>
-                </div>
-              </div>
-              <div className="max-h-72 space-y-1.5 overflow-y-auto">
-                {spacing.map(s => (
-                  <div key={s.name} className="flex items-center gap-3">
-                    <span className="w-6 shrink-0 font-mono text-[9px] font-semibold text-[#1c1712]/35">{s.name}</span>
-                    <span className="w-10 shrink-0 font-mono text-[9px] text-[#1c1712]/25">{s.valuePx}px</span>
-                    <div className="relative h-3 flex-1 overflow-hidden rounded-full bg-black/[0.06]">
-                      <div className="absolute left-0 top-0 h-full rounded-full bg-[#1c1712]/20 transition-all"
-                        style={{ width: s.valuePx===0 ? "2px" : `${Math.min((s.valuePx/256)*100,100)}%` }}/>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* ── Shadows + Border Radius ── */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {/* Shadows */}
-            <div className={`${card} p-5`}>
-              <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Shadow Tokens</p>
-              <div className="space-y-2.5">
-                {SHADOW_TOKENS.filter(s => s.name !== "none").map(s => (
-                  <div key={s.name} className="flex items-center gap-3">
-                    <span className="w-9 shrink-0 font-mono text-[9px] font-semibold text-[#1c1712]/40">{s.name}</span>
-                    <div className="flex h-8 flex-1 items-center justify-center rounded-xl bg-white" style={{ boxShadow: s.value }}>
-                      <span className="text-[9px] font-semibold text-[#1c1712]/25">shadow-{s.name}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Border Radius */}
-            <div className={`${card} p-5`}>
-              <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Border Radius Tokens</p>
-              <div className="grid grid-cols-4 gap-2">
-                {RADIUS_TOKENS.map(r => (
-                  <div key={r.name} className="flex flex-col items-center gap-1.5">
-                    <div className="h-10 w-10 border-2 border-[#1c1712]/20 bg-[#faf7f2]"
-                      style={{ borderRadius: r.value === "9999px" ? "9999px" : r.value }}/>
-                    <span className="font-mono text-[8px] font-semibold text-[#1c1712]/40">{r.name}</span>
-                    <span className="font-mono text-[7px] text-[#1c1712]/25">{r.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* ── Live Preview ── */}
-          <div className={`${card} overflow-hidden`}>
-            <div className="border-b border-black/[0.06] px-5 py-4">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Live Preview</p>
-            </div>
-            <div className="p-5">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-
-                {/* UI Card preview */}
-                <div className="rounded-2xl border border-black/[0.07] bg-[#faf7f2] p-4">
-                  <div style={{ fontFamily }}>
-                    <p style={{ fontSize: smTypo, color: "#1c1712", opacity:0.4, fontWeight:600, letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:6 }}>
-                      {colors[0]?.name || "primary"}
-                    </p>
-                    <p style={{ fontSize: twoXlTypo, color: "#1c1712", fontWeight:800, lineHeight:1.1, marginBottom:8 }}>
-                      Your Design System
-                    </p>
-                    <p style={{ fontSize: baseTypo, color: "#1c1712", opacity:0.5, marginBottom:16, lineHeight:1.5 }}>
-                      Tokens make it easy to maintain consistency across every platform.
-                    </p>
-                    <div className="flex gap-2 flex-wrap">
-                      <button style={{ backgroundColor: primaryHex, color:"#fff", fontSize: smTypo, fontWeight:700, padding:"8px 18px", borderRadius:8, border:"none", cursor:"default" }}>
-                        Primary
-                      </button>
-                      <button style={{ backgroundColor: secondaryHex, color:"#fff", fontSize: smTypo, fontWeight:700, padding:"8px 18px", borderRadius:8, border:"none", cursor:"default" }}>
-                        Secondary
-                      </button>
-                      <button style={{ backgroundColor: accentHex, color:"#fff", fontSize: smTypo, fontWeight:700, padding:"8px 18px", borderRadius:8, border:"none", cursor:"default" }}>
-                        Accent
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Token palette */}
-                <div className="space-y-3">
-                  {/* Color tokens */}
-                  <div>
-                    <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/30">Color Tokens</p>
-                    <div className="flex gap-1.5 flex-wrap">
-                      {colors.filter(c => isValidHex(c.hex)).map((c,i) => (
-                        <div key={i} className="flex flex-col items-center gap-1">
-                          <div className="h-8 w-8 rounded-xl border border-black/[0.08]" style={{ backgroundColor: c.hex }}/>
-                          <span className="font-mono text-[8px] text-[#1c1712]/35">{c.name||"—"}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Spacing preview */}
-                  <div>
-                    <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/30">Spacing</p>
-                    <div className="flex items-end gap-1">
-                      {[1,2,3,4,6,8,12].map(m => {
-                        const px = m * spacingUnit;
-                        return (
-                          <div key={m} className="flex flex-col items-center gap-1">
-                            <div className="w-4 rounded-sm bg-[#1c1712]/15" style={{ height: `${Math.min(px, 64)}px` }}/>
-                            <span className="font-mono text-[7px] text-[#1c1712]/25">{px}px</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  {/* Typography preview */}
-                  <div>
-                    <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/30">Type Scale</p>
-                    <div className="space-y-0.5" style={{ fontFamily }}>
-                      {[{ name:"2xl", size: twoXlTypo }, { name:"xl", size: xlTypo }, { name:"lg", size: lgTypo }, { name:"base", size: baseTypo }].map(t => (
-                        <div key={t.name} className="flex items-center gap-2">
-                          <span className="w-7 font-mono text-[8px] text-[#1c1712]/25">{t.name}</span>
-                          <span className="font-semibold text-[#1c1712]/60" style={{ fontSize: t.size, lineHeight:1.2 }}>Aa</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ── Format selector ── */}
-          <div className={`${card} p-5`}>
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Export Format</p>
-            <div className="flex flex-wrap gap-2">
-              {FORMATS.map(f => (
-                <button key={f} onClick={() => setFormat(f)}
-                  className={`rounded-xl px-3.5 py-1.5 text-[12px] font-semibold transition-all ${
-                    format===f ? "bg-[#1c1712] text-white shadow-sm" : "border border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/50 hover:bg-[#f0ede8]"
-                  }`}>
-                  {f}
-                </button>
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Design Tokens</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Design Token Generator</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {dots.map((c, i) => (
+                <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
+            </span>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">8 export formats, free.</span> Set your colors, type scale and spacing, then copy or download tokens for CSS, SCSS, Tailwind, JSON, Figma, Swift, Kotlin or Flutter.
+            </p>
+          </div>
+        </section>
+
+        {/* ── Workspace: inputs on the left, generated code on the right ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="grid w-full items-start gap-6 px-6 py-10 sm:px-8 lg:grid-cols-2 lg:px-12">
+            <div className="space-y-6">
+              {/* Colors */}
+              <div className={`${card} p-5 sm:p-6`}>
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <p className={label}>
+                    Colors <span className="ml-2 font-mono normal-case tracking-normal text-[#1c1712]/35">{colors.length}/10</span>
+                  </p>
+                  <button
+                    role="switch"
+                    aria-checked={generateShades}
+                    onClick={() => setGenerateShades(v => !v)}
+                    className="flex items-center gap-2.5 text-[13px] font-semibold text-[#1c1712]/65 transition hover:text-[#1c1712]"
+                  >
+                    <span className={`relative h-5 w-9 rounded-full transition-colors ${generateShades ? "bg-[#1c1712]" : "bg-black/15"}`}>
+                      <span className={`absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform ${generateShades ? "translate-x-4" : "translate-x-0"}`} />
+                    </span>
+                    Generate shades
+                  </button>
+                </div>
+
+                <div className="mt-5 space-y-3">
+                  {colors.map((color, i) => {
+                    const ok = isValidHex(color.hex);
+                    const shadeScale = generateShades && ok ? generateTailwindScale(color.hex) : [];
+                    const isExpanded = expandedShade === i && shadeScale.length > 0;
+                    return (
+                      <div key={i} className="max-sm:border-b max-sm:border-black/[0.06] max-sm:pb-3 max-sm:last:border-b-0 max-sm:last:pb-0">
+                        <div className="flex flex-wrap items-center gap-2.5">
+                          <label className="relative h-10 w-10 shrink-0 cursor-pointer overflow-hidden rounded-xl ring-1 ring-black/10 transition hover:ring-black/30" style={{ backgroundColor: ok ? color.hex : "#ddd" }} title="Open your system color picker">
+                            <input
+                              type="color"
+                              value={ok ? color.hex.toLowerCase() : "#000000"}
+                              onChange={e => updateColor(i, "hex", e.target.value.toUpperCase())}
+                              className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                              aria-label={`Pick color ${i + 1}`}
+                            />
+                          </label>
+                          <input
+                            type="text"
+                            value={color.name}
+                            onChange={e => updateColor(i, "name", e.target.value)}
+                            placeholder="Name, e.g. primary"
+                            aria-label={`Name of color ${i + 1}`}
+                            className={`${inputCls} !w-auto !min-w-[8rem] flex-1`}
+                          />
+                          <input
+                            type="text"
+                            value={color.hex}
+                            onChange={e => { let v = e.target.value; if (!v.startsWith("#")) v = "#" + v; updateColor(i, "hex", v); }}
+                            maxLength={7}
+                            spellCheck={false}
+                            aria-label={`HEX of color ${i + 1}`}
+                            className={`${inputCls} !w-28 shrink-0 font-mono`}
+                          />
+                          {shadeScale.length > 0 && (
+                            <button
+                              onClick={() => setExpandedShade(isExpanded ? null : i)}
+                              aria-expanded={isExpanded}
+                              aria-label="Show shades"
+                              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition ${isExpanded ? "bg-[#1c1712] text-white" : "text-[#1c1712]/50 ring-1 ring-black/[0.12] hover:text-[#1c1712] hover:ring-black/25"}`}
+                            >
+                              <Svg><path d={isExpanded ? "M6 15l6-6 6 6" : "M6 9l6 6 6-6"} /></Svg>
+                            </button>
+                          )}
+                          <button
+                            onClick={() => removeColor(i)}
+                            aria-label={`Remove color ${i + 1}`}
+                            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-[#1c1712]/35 transition hover:bg-black/[0.04] hover:text-[#1c1712]"
+                          >
+                            <Svg><path d="M6 18L18 6M6 6l12 12" /></Svg>
+                          </button>
+                        </div>
+                        {isExpanded && (
+                          <div className="mt-2.5 flex overflow-hidden rounded-xl ring-1 ring-black/[0.07]">
+                            {shadeScale.map(({ step, hex }) => (
+                              <div key={step} className="flex h-11 flex-1 items-end justify-center pb-1" style={{ backgroundColor: hex }} title={`${slugify(color.name) || "color"}-${step}: ${hex}`}>
+                                <span className="font-mono text-[9px] font-semibold" style={{ color: getContrastText(hex) === "light" ? "rgba(255,255,255,0.85)" : "rgba(0,0,0,0.55)" }}>{step}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {colors.length < 10 && (
+                  <button onClick={addColor} className={`${ghostBtn} mt-5`}>
+                    <Svg><path d="M12 4v16m8-8H4" /></Svg>
+                    Add color
+                  </button>
+                )}
+              </div>
+
+              {/* Typography + spacing */}
+              <div className={`${card} p-5 sm:p-6`}>
+                <p className={label}>Typography</p>
+                <div className="mt-4 space-y-4">
+                  <div>
+                    <label htmlFor="dt-font" className={label}>Font family</label>
+                    <input id="dt-font" type="text" value={fontFamily} onChange={e => setFontFamily(e.target.value)} className={`${inputCls} mt-1.5`} />
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="dt-base" className={label}>Base size (px)</label>
+                      <input id="dt-base" type="number" min={10} max={32} value={baseFontSize} onChange={e => setBaseFontSize(Number(e.target.value) || 16)} className={`${inputCls} mt-1.5`} />
+                    </div>
+                    <div>
+                      <label htmlFor="dt-ratio" className={label}>Scale ratio</label>
+                      <select id="dt-ratio" value={scaleRatio} onChange={e => setScaleRatio(Number(e.target.value))} className={`${inputCls} mt-1.5`}>
+                        {SCALE_RATIOS.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 border-t border-black/[0.06] pt-5">
+                  <p className={label}>Spacing</p>
+                  <div className="mt-4 flex items-end gap-3">
+                    <div className="w-32">
+                      <label htmlFor="dt-space" className={label}>Base unit (px)</label>
+                      <input id="dt-space" type="number" min={1} max={16} value={spacingUnit} onChange={e => setSpacingUnit(Number(e.target.value) || 4)} className={`${inputCls} mt-1.5 font-mono`} />
+                    </div>
+                    <p className="pb-2.5 text-[13px] text-[#1c1712]/50">4px matches Tailwind. Steps run from 0 to {64 * spacingUnit}px.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Generated tokens */}
+            <div className={`${card} flex flex-col overflow-hidden lg:sticky lg:top-24`}>
+              <div className="flex flex-wrap items-center justify-between gap-3 px-5 pb-3 pt-5 sm:px-6">
+                <div>
+                  <p className={label}>Generated tokens</p>
+                  <p className="mt-1 font-mono text-[12px] text-[#1c1712]/45">design-tokens{FORMAT_EXT[format]}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button onClick={handleDownload} className={ghostBtn}>
+                    <Svg><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></Svg>
+                    Download
+                  </button>
+                  <button onClick={copyToClipboard} className="inline-flex items-center gap-2 rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+                    <Svg><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" /></Svg>
+                    {copied ? "✓ Copied" : "Copy all"}
+                  </button>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2 border-b border-black/[0.06] px-5 pb-4 sm:px-6" role="group" aria-label="Export format">
+                {FORMATS.map(f => (
+                  <button
+                    key={f}
+                    onClick={() => setFormat(f)}
+                    aria-pressed={format === f}
+                    className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${
+                      format === f ? "bg-[#1c1712] text-white" : "text-[#1c1712]/65 ring-1 ring-black/[0.12] hover:text-[#1c1712] hover:ring-black/25"
+                    }`}
+                  >
+                    {f}
+                  </button>
+                ))}
+              </div>
+              <pre className="h-[26rem] overflow-auto bg-[#F5F5F5] px-5 py-4 font-mono text-[12px] leading-relaxed text-[#1c1712]/75 sm:px-6 lg:h-[calc(100vh-22rem)] lg:min-h-[26rem]"><code>{output}</code></pre>
             </div>
           </div>
+        </section>
 
-          {/* ── Output ── */}
-          <motion.div layout className={`${card} overflow-hidden`}>
-            <div className="flex items-center justify-between border-b border-black/[0.06] px-5 py-4">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Generated Tokens</p>
-                <p className="mt-0.5 text-[10px] text-[#1c1712]/25">{format} · {FORMAT_EXT[format]}</p>
+        {/* ── Tokens at a glance ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Preview</p>
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Your tokens at a glance</h2>
+            <p className="mt-2 max-w-2xl text-[15px] leading-7 text-[#1c1712]/55">Everything above updates live: colors, type scale, spacing, plus the shadow and radius tokens included in every export.</p>
+
+            <div className="mt-8 grid items-start gap-6 lg:grid-cols-3">
+              <div className="space-y-6">
+                <div>
+                  <SmallTitle>UI sample</SmallTitle>
+                  <div className={`${card} p-5`} style={{ fontFamily }}>
+                    <p style={{ fontSize: smTypo, opacity: 0.45, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>{colors[0]?.name || "primary"}</p>
+                    <p style={{ fontSize: twoXlTypo, fontWeight: 800, lineHeight: 1.1, marginBottom: 8 }}>Your Design System</p>
+                    <p style={{ fontSize: baseTypo, opacity: 0.55, marginBottom: 16, lineHeight: 1.5 }}>Tokens keep every platform consistent.</p>
+                    <div className="flex flex-wrap gap-2">
+                      {[["Primary", primaryHex], ["Secondary", secondaryHex], ["Accent", accentHex]].map(([name, hex]) => (
+                        <span key={name} style={{ backgroundColor: hex, color: getContrastText(hex) === "light" ? "#fff" : "#1c1712", fontSize: smTypo, fontWeight: 700, padding: "8px 16px", borderRadius: 8 }}>{name}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <SmallTitle>Color tokens</SmallTitle>
+                  <div className="flex flex-wrap gap-3">
+                    {validColors.map((c, i) => (
+                      <div key={i} className="flex items-center gap-2 rounded-full py-1 pl-1 pr-3 ring-1 ring-black/[0.1]">
+                        <span className="h-6 w-6 rounded-full ring-1 ring-black/10" style={{ backgroundColor: c.hex }} />
+                        <span className="text-[13px] font-semibold">{c.name || "unnamed"}</span>
+                        <span className="font-mono text-[11px] uppercase text-[#1c1712]/45">{c.hex}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                {/* Download */}
-                <button onClick={handleDownload}
-                  className="flex items-center gap-1.5 rounded-xl border border-black/[0.07] bg-[#faf7f2] px-3 py-1.5 text-[11px] font-semibold text-[#1c1712]/50 transition hover:bg-[#f0ede8]">
-                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
-                  </svg>
-                  Download {FORMAT_EXT[format]}
-                </button>
-                {/* Copy */}
-                <button onClick={copyToClipboard}
-                  className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-[11px] font-semibold transition ${
-                    copied ? "border-green-200 bg-green-50 text-green-600" : "border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/50 hover:bg-[#f0ede8]"
-                  }`}>
-                  {copied ? (
-                    <><svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>Copied!</>
-                  ) : (
-                    <><svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy all</>
-                  )}
-                </button>
+
+              <div className="space-y-6">
+                <div>
+                  <SmallTitle>Type scale</SmallTitle>
+                  <div className="space-y-2">
+                    {typography.map(t => (
+                      <div key={t.name} className="flex items-baseline gap-3">
+                        <span className="w-10 shrink-0 font-mono text-[12px] font-semibold text-[#1c1712]/55">{t.name}</span>
+                        <span className="w-16 shrink-0 font-mono text-[12px] text-[#1c1712]/40">{t.sizePx}px</span>
+                        <span className="truncate font-semibold" style={{ fontSize: `${Math.min(t.sizePx, 36)}px`, fontFamily, lineHeight: 1.15 }}>Aa</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <SmallTitle>Spacing</SmallTitle>
+                  <div className="max-h-72 space-y-1.5 overflow-y-auto pr-1">
+                    {spacing.map(s => (
+                      <div key={s.name} className="flex items-center gap-3">
+                        <span className="w-7 shrink-0 font-mono text-[12px] font-semibold text-[#1c1712]/55">{s.name}</span>
+                        <span className="w-14 shrink-0 font-mono text-[12px] text-[#1c1712]/40">{s.valuePx}px</span>
+                        <span className="relative h-2.5 flex-1 overflow-hidden rounded-full bg-black/[0.06]">
+                          <span className="absolute left-0 top-0 h-full rounded-full bg-[#1c1712]/70 transition-all" style={{ width: s.valuePx === 0 ? "2px" : `${Math.min((s.valuePx / 256) * 100, 100)}%` }} />
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <SmallTitle>Shadows</SmallTitle>
+                  <div className="space-y-3">
+                    {SHADOW_TOKENS.filter(s => s.name !== "none").map(s => (
+                      <div key={s.name} className="flex items-center gap-3">
+                        <span className="w-10 shrink-0 font-mono text-[12px] font-semibold text-[#1c1712]/55">{s.name}</span>
+                        <div className="flex h-10 flex-1 items-center justify-center rounded-xl bg-white" style={{ boxShadow: s.value }}>
+                          <span className="text-[12px] font-semibold text-[#1c1712]/40">shadow-{s.name}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <SmallTitle>Border radius</SmallTitle>
+                  <div className="grid grid-cols-4 gap-3">
+                    {RADIUS_TOKENS.map(r => (
+                      <div key={r.name} className="flex flex-col items-center gap-1.5">
+                        <div className="h-12 w-12 border-2 border-[#1c1712]/25 bg-[#fafafa]" style={{ borderRadius: r.value }} />
+                        <span className="font-mono text-[12px] font-semibold text-[#1c1712]/55">{r.name}</span>
+                        <span className="font-mono text-[11px] text-[#1c1712]/40">{r.value === "9999px" ? "full" : r.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            <AnimatePresence mode="wait">
-              <motion.pre key={format}
-                initial={{ opacity:0, y:6 }} animate={{ opacity:1, y:0 }}
-                exit={{ opacity:0, y:-6 }} transition={{ duration:0.18 }}
-                className="max-h-72 overflow-x-auto overflow-y-auto px-5 py-4 font-mono text-[11px] leading-relaxed text-[#1c1712]/55">
-                <code>{output}</code>
-              </motion.pre>
-            </AnimatePresence>
-          </motion.div>
-
-        </motion.div>
-        <ToolPageSections config={toolPageContent["design-tokens"]}/>
+        <ToolPageSections config={toolPageContent["design-tokens"]} variant="new" />
       </main>
     </div>
   );

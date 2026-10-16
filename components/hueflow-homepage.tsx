@@ -160,11 +160,12 @@ const STORIES: { href: string; title: string }[] = [
 ];
 
 const FAQS = [
-  { question: "What is HueFlow?", answer: "HueFlow is a color workspace for discovering, generating, and exploring colors — a palette generator, picker, converter, and accessibility checker in one place." },
-  { question: "Is HueFlow free?", answer: "Yes. The generator and every tool in the toolkit are free to use, with no account required to start." },
-  { question: "What can I use HueFlow for?", answer: "Building color palettes and schemes, converting between HEX, RGB, and HSL, checking contrast, generating shades, and finding color inspiration for products and brands." },
-  { question: "Can I generate color palettes?", answer: "Yes. Generate a random palette, start from a mood or industry prompt, or build one from a single base color." },
-  { question: "Can I check color contrast?", answer: "Yes. The contrast checker and accessibility panel flag any color pairing that fails WCAG AA or AAA." },
+  { question: "What is HueFlow?", answer: "HueFlow (hueflow.site) is a free online color palette generator and color toolkit for designers, developers, and marketers. It brings a palette generator, color picker, color converter, WCAG contrast checker, gradient generator, color wheel, and image palette extractor together in one place." },
+  { question: "Is HueFlow free?", answer: "Yes. The palette generator and every tool in the toolkit are free to use, with no account or signup required to start." },
+  { question: "How do I generate a color palette with HueFlow?", answer: "Open the generator, press the spacebar or Shuffle to create a new palette, lock the colors you like, and regenerate the rest. You can also start from a mood, a base color, or an uploaded image, then export the palette as CSS variables, a Tailwind config, JSON, or a PNG image." },
+  { question: "Can I get a color palette from an image?", answer: "Yes. Upload a photo to HueFlow's color palette from image tool and it extracts the dominant colors as HEX, RGB, and HSL codes that you can copy or open in the generator." },
+  { question: "How do I check color contrast for accessibility?", answer: "Enter a text color and a background color in the contrast checker. HueFlow shows the WCAG contrast ratio and whether the pair passes AA (4.5:1 for normal text, 3:1 for large text) or AAA (7:1 for normal text, 4.5:1 for large text), and suggests an accessible fix when it fails." },
+  { question: "How do I convert HEX to RGB, HSL, or CMYK?", answer: "Use the color converter: enter a HEX code and see the RGB, HSL, CMYK, and OKLCH values instantly, with one-click copy. Dedicated converters such as HEX to RGB, RGB to HEX, and HEX to HSL are also available." },
   { question: "Can I copy HEX, RGB, and HSL values?", answer: "Yes. Click any color anywhere on HueFlow to copy its value, or open a palette in the generator to export it in multiple formats." },
 ];
 
@@ -315,7 +316,7 @@ export function HueFlowHomePage() {
               <motion.div variants={fadeUp}>
                 <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.24em] text-[#1c1712]/48 shadow-[0_1px_4px_rgba(28,23,18,0.06)]">
                   <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#e8531f]" aria-hidden="true" />
-                  The modern color workspace
+                  HueFlow · Free color palette generator
                 </span>
               </motion.div>
 
@@ -333,7 +334,7 @@ export function HueFlowHomePage() {
 
               {/* Description */}
               <motion.p variants={fadeUp} className="mt-5 max-w-[440px] text-[1.075rem] leading-[1.7] text-[#1c1712]/60">
-                Create palettes, check contrast, explore combinations — all in one place.
+                HueFlow is a free color palette generator and color toolkit — create palettes, pick colors, convert HEX, RGB and HSL, and check contrast in one place.
               </motion.p>
 
               {/* CTAs */}

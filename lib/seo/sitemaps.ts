@@ -1,3 +1,4 @@
+import { converterSlugList } from "@/lib/seo/converter-specs";
 import { routeCollections } from "@/lib/seo/content";
 import { getProgrammaticBrandColorSlugs, getProgrammaticColorSitemapPaths } from "@/lib/seo/programmatic";
 import { siteConfig } from "@/lib/seo/site-config";
@@ -38,6 +39,9 @@ export const staticPages = [
   page("/color-wheel", "weekly", 0.9),
   page("/color-palette-from-image", "weekly", 0.88),
   page("/color-converter", "monthly", 0.88),
+  ...converterSlugList.map((slug) => page(`/${slug}`, "monthly", 0.86)),
+  page("/random-color-generator", "monthly", 0.84),
+  page("/color-name-finder", "monthly", 0.82),
   page("/tools/animation", "monthly", 0.76),
   page("/tools/brand-analyzer", "monthly", 0.76),
   page("/tools/contrast-fixer", "monthly", 0.76),

@@ -3,14 +3,12 @@ import type { Metadata } from "next";
 
 import { ShadesPageView } from "@/components/seo/shades-page";
 import { StructuredData } from "@/components/seo/structured-data";
-import { getContrastRatio } from "@/lib/accessibility";
-import { hexToHsl } from "@/lib/color-utils";
 import { findNamedColorByHex } from "@/lib/color-names";
 import { getCollection } from "@/lib/seo/content";
 import { buildPageMetadata } from "@/lib/seo/page-utils";
 import { buildBreadcrumbSchema, buildCollectionPageSchema, buildFaqSchema, buildWebPageSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/seo/site-config";
-import { getResolvedShades, getShadeFamilies, getShadeFamily, shadesPath } from "@/lib/shades-data";
+import { getFamilyAccent, getResolvedShades, getShadeFamilies, getShadeFamily, shadesPath } from "@/lib/shades-data";
 
 // Served at /shades-of-<color> via the rewrite in next.config.ts.
 export const revalidate = false;
@@ -60,16 +58,7 @@ export default async function ShadesPage({ params }: { params: Promise<{ color: 
     { title: "Contrast checker", href: "/tools/contrast" },
   ].filter((l): l is { title: string; href: string } => Boolean(l));
 
-  // Heading accent: the family's signature color if it is readable on white,
-  // otherwise its most vivid readable shade. The heading is large text, so WCAG AA
-  // needs 3:1. White and gray have no vivid shade and fall back to ink.
-  const readable = (hex: string) => getContrastRatio(hex, "#FFFFFF") >= 3;
-  const accent = readable(family.hex)
-    ? family.hex
-    : shades
-        .map((sh) => ({ hex: sh.hex, sat: hexToHsl(sh.hex).s, l: sh.lightness }))
-        .filter((c) => c.sat >= 35 && readable(c.hex))
-        .sort((a, b) => b.sat - a.sat || b.l - a.l)[0]?.hex ?? "#1C1712";
+  const accent = getFamilyAccent(family);
 
   // All 12 families as chips across the top; the current one is highlighted.
   const families = getShadeFamilies().map((f) => ({ slug: f.slug, name: f.name, hex: f.hex, href: shadesPath(f.slug), active: f.slug === family.slug }));

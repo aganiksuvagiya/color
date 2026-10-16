@@ -15,7 +15,10 @@ export type ToolPageSeoConfig = {
     | "color-mixer"
     | "colorblind-simulator"
     | "tailwind-scale"
-    | "color-psychology-explorer";
+    | "collage"
+    | "color-psychology-explorer"
+    | "random-color-generator"
+    | "color-name-finder";
   path: string;
   title: string;
   description: string;
@@ -237,7 +240,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   picker: {
     slug: "picker",
     path: "/tools/picker",
-    title: "Color Picker & Hue Picker — HEX, RGB, HSL",
+    title: "Color Picker Tool: Eyedropper, HSL Sliders & Recent Colors",
     description:
       "Free online color picker and hue picker — click any color to instantly get HEX, RGB, and HSL values, plus shades, tints, and complementary palettes.",
     keywords: [
@@ -333,9 +336,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   tailwind: {
     slug: "tailwind",
     path: "/tools/tailwind",
-    title: "Tailwind CSS Colors",
+    title: "Tailwind Colors Explorer: Search & Copy Any Shade",
     description:
-      "Browse the Tailwind CSS palette, search color families, copy HEX values, and map shades for product UI, landing pages, and design systems.",
+      "Search every Tailwind CSS color family, copy HEX values and class names, and map 50-950 shades for product UI, landing pages and design systems.",
     keywords: [
       "tailwind css colors",
       "tailwind color palette",
@@ -417,9 +420,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "design-tokens": {
     slug: "design-tokens",
     path: "/tools/design-tokens",
-    title: "Design Token Generator",
+    title: "Design Token Generator for CSS, Tailwind & Figma",
     description:
-      "Export palette roles into CSS variables, Tailwind, JSON, Figma tokens, Swift, Kotlin, and Flutter formats for scalable design systems.",
+      "Free design token generator: export color palettes, type and spacing scales as CSS variables, Tailwind, JSON, Figma tokens, Swift, Kotlin and Flutter.",
     keywords: [
       "design token generator",
       "color token generator",
@@ -467,9 +470,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "image-colors": {
     slug: "image-colors",
     path: "/tools/image-colors",
-    title: "Image Color Extractor",
+    title: "Image Color Picker: Extract Colors from Any Image",
     description:
-      "Upload an image, extract dominant colors, and turn visual inspiration into palettes for websites, branding, and product design.",
+      "Free image color picker: upload a photo, click anywhere for the HEX, RGB and HSL code, and extract dominant colors into a palette. Runs in your browser.",
     keywords: [
       "image color extractor",
       "extract colors from image",
@@ -519,9 +522,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "brand-analyzer": {
     slug: "brand-analyzer",
     path: "/tools/brand-analyzer",
-    title: "Brand Color Analyzer",
+    title: "Brand Color Analyzer: Find the Colors a Website Uses",
     description:
-      "Analyze a website screenshot, extract visible brand colors, and review dominant tones for competitors, inspiration, and brand audits.",
+      "Enter a website URL to extract its brand colors and dominant tones. A free brand color analyzer for competitor research, inspiration and brand audits.",
     keywords: [
       "brand color analyzer",
       "website color extractor",
@@ -570,9 +573,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   animation: {
     slug: "animation",
     path: "/tools/animation",
-    title: "Color Animation Generator",
+    title: "CSS Color Animation & Animated Gradient Generator",
     description:
-      "Create animated CSS gradients and color transitions with production-ready keyframes for hero sections, landing pages, and interactive UI.",
+      "Create animated CSS gradients and color transitions with copy-ready keyframes for hero sections, landing pages and interactive UI. Free, no signup.",
     keywords: [
       "color animation generator",
       "css gradient animation generator",
@@ -620,9 +623,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "contrast-fixer": {
     slug: "contrast-fixer",
     path: "/tools/contrast-fixer",
-    title: "Smart Contrast Fixer",
+    title: "Contrast Fixer: Make Colors WCAG Accessible",
     description:
-      "Automatically suggest accessible color fixes that preserve brand intent while improving contrast for text, buttons, and interface elements.",
+      "Automatically fix low-contrast colors to meet WCAG AA or AAA while keeping your brand look. Free accessible color fixer for text, buttons and UI.",
     keywords: [
       "contrast fixer",
       "accessible color fixer",
@@ -670,9 +673,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "image-recolor": {
     slug: "image-recolor",
     path: "/tools/image-recolor",
-    title: "SVG Image Recolor",
+    title: "SVG Recolor Tool: Change SVG Colors Online",
     description:
-      "Upload an SVG icon or illustration, swap any of its colors, preview the result instantly, and export your recolored file.",
+      "Free SVG recolor tool: upload an SVG icon or illustration, swap any of its colors, preview the result and download the recolored file.",
     keywords: [
       "svg color changer",
       "recolor svg online",
@@ -721,9 +724,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "palette-visualizer": {
     slug: "palette-visualizer",
     path: "/tools/palette-visualizer",
-    title: "Palette Visualizer",
+    title: "Palette Visualizer: Preview Colors on a Website",
     description:
-      "Apply a color palette to a real website layout with a nav, hero, feature cards, and footer to see how it feels before you commit to it.",
+      "Apply a color palette to a real website, dashboard, app UI and component layout to see how it looks before you commit. Free palette visualizer.",
     keywords: [
       "palette visualizer",
       "color palette visualizer",
@@ -773,9 +776,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "color-harmony": {
     slug: "color-harmony",
     path: "/tools/color-harmony",
-    title: "Color Harmony Generator",
+    title: "Color Scheme Generator from One Base Color",
     description:
-      "Generate complementary, analogous, triadic, tetradic, split-complementary, and monochromatic color palettes from a single base color.",
+      "Generate complementary, analogous, triadic, tetradic, split-complementary and monochromatic color schemes from a single base color. Free, no signup.",
     keywords: [
       "color harmony generator",
       "complementary colors",
@@ -823,9 +826,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "color-mixer": {
     slug: "color-mixer",
     path: "/tools/color-mixer",
-    title: "Color Mixer",
+    title: "Color Mixer: Blend Two Colors Online",
     description:
-      "Blend two colors together and generate a smooth 9-step color scale between them, with a one-click midpoint mix.",
+      "Free online color mixer: blend two colors, get the midpoint mix and a 9-step color scale between them, with HEX, RGB and HSL codes to copy.",
     keywords: [
       "color mixer",
       "color blender",
@@ -869,12 +872,87 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Palette generator", href: "/generator" },
     ],
   },
+  collage: {
+    slug: "collage",
+    path: "/tools/collage",
+    title: "Collage Creator: Combine Photos into One Image (Free)",
+    description:
+      "Free online collage maker: add up to 6 photos, set the spacing and download one PNG. Runs in your browser, so your images are never uploaded.",
+    keywords: [
+      "collage creator",
+      "collage maker",
+      "photo collage maker",
+      "free collage maker online",
+      "combine images into one",
+      "image grid maker",
+      "photo grid",
+      "mood board collage",
+    ],
+    answer:
+      "HueFlow's Collage Creator combines up to 6 photos into a single grid image. Pick how many images you want, add them, set the gap between them and download the result as a PNG, all in your browser.",
+    audience: "Designers, marketers and creators building mood boards, product grids, social posts or brand inspiration boards.",
+    useCases: [
+      "Build a mood board or color inspiration board from several reference photos",
+      "Put product photos side by side for a social post or listing",
+      "Combine screenshots into a single image for a case study or presentation",
+      "Collect photos to pull a palette from with the image color extractor",
+    ],
+    howToSteps: [
+      "Choose how many images you want, from 2 to 6.",
+      "Click each empty slot and add a photo from your device.",
+      "Drag the gap slider to set the spacing between images.",
+      "Click Download PNG to save the finished collage.",
+    ],
+    explainerHeading: "How the collage is built",
+    explainer: [
+      {
+        title: "Grid layout",
+        body: "Collages with 2 to 4 images use two columns, and collages with 5 or 6 images use three columns. Each photo is cropped to fill its cell evenly.",
+      },
+      {
+        title: "Private by design",
+        body: "Photos are read and combined in your browser using a canvas. Nothing is uploaded to a server, so your images stay on your device.",
+      },
+      {
+        title: "Export quality",
+        body: "The collage exports as a 1200px wide PNG. Start from higher-resolution photos to keep the result sharp.",
+      },
+    ],
+    faq: [
+      {
+        question: "Is the collage maker free?",
+        answer: "Yes. It is free to use with no signup and no watermark on the exported PNG.",
+      },
+      {
+        question: "Are my photos uploaded anywhere?",
+        answer: "No. The collage is created in your browser, so your photos are never sent to HueFlow's servers.",
+      },
+      {
+        question: "How many photos can I combine?",
+        answer: "You can combine up to 6 photos in one collage. Choose between 2 and 6 slots.",
+      },
+      {
+        question: "What format does the collage download in?",
+        answer: "The collage downloads as a PNG that is 1200 pixels wide. The height depends on how many rows your layout has.",
+      },
+      {
+        question: "Can I get a color palette from my collage?",
+        answer: "Yes. Download the collage, then upload it to the image color extractor to pull a palette from all of its photos at once.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Image color extractor", href: "/tools/image-colors" },
+      { title: "Color palette from image", href: "/color-palette-from-image" },
+      { title: "Image recolor tool", href: "/tools/image-recolor" },
+      { title: "Palette generator", href: "/generator" },
+    ],
+  },
   "colorblind-simulator": {
     slug: "colorblind-simulator",
     path: "/tools/colorblind-simulator",
-    title: "Color Blind Simulator",
+    title: "Color Blind Simulator: Test Palettes for Color Blindness",
     description:
-      "Preview any palette under protanopia, deuteranopia, and tritanopia to catch colors that become indistinguishable for color-blind users.",
+      "Preview any palette under protanopia, deuteranopia and tritanopia to catch colors that become hard to tell apart for color-blind users. Free online tool.",
     keywords: [
       "color blind simulator",
       "color blindness simulator online",
@@ -975,9 +1053,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "color-psychology-explorer": {
     slug: "color-psychology-explorer",
     path: "/tools/color-psychology-explorer",
-    title: "Color Psychology Explorer",
+    title: "Color Psychology Explorer: Meaning of Any Color",
     description:
-      "Pick any color and instantly see what it signals psychologically, which industries use it best, and real use cases for branding and UI.",
+      "Pick any color and see what it signals psychologically, which industries use it best, and real branding and UI use cases. Free color meaning explorer.",
     keywords: [
       "color psychology explorer",
       "color psychology tool",
@@ -1018,6 +1096,170 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Color meanings hub", href: "/color-meanings" },
       { title: "Color harmony generator", href: "/tools/color-harmony" },
       { title: "Colors hub", href: "/colors" },
+    ],
+  },
+  "random-color-generator": {
+    slug: "random-color-generator",
+    path: "/random-color-generator",
+    title: "Random Color Generator: Get a Random Hex Color Code",
+    description:
+      "Free random color generator: press space to get a random color with its HEX, RGB, HSL, CMYK and OKLCH codes, or generate a random color palette. Copy any code.",
+    keywords: [
+      "random color generator",
+      "random hex color generator",
+      "random color picker",
+      "random color palette generator",
+      "random color code",
+      "random hex code",
+      "random rgb color generator",
+      "color randomizer",
+      "random color palette",
+      "random pastel color generator",
+    ],
+    answer:
+      "A random color generator picks a color at random and shows its HEX, RGB and HSL code so you can copy it. HueFlow's generator also names the color, can limit results to pastel, vivid, muted, dark or light tones, and creates a five-color random palette with color locking.",
+    audience:
+      "For designers hunting for a starting point, developers who need placeholder or test colors, teachers, artists and anyone who wants a quick color idea.",
+    useCases: [
+      "Find an unexpected starting color for a new design",
+      "Get placeholder or test colors for UI code and demos",
+      "Break out of a color rut with a random palette",
+      "Generate random colors for games, charts and creative projects",
+    ],
+    howToSteps: [
+      "Press the Space bar or click Generate to get a random color.",
+      "Choose Color or Palette mode, and pick a style such as pastel, vivid or dark to narrow the results.",
+      "In palette mode, lock the colors you like and generate again to replace only the rest.",
+      "Click any HEX, RGB, HSL, CMYK or OKLCH value to copy it, or open the palette in the full generator.",
+    ],
+    explainerHeading: "How the random colors are chosen",
+    explainer: [
+      {
+        title: "Any color",
+        body: "In Any mode the red, green and blue channels are each picked at random from 0 to 255, so all 16,777,216 colors in the sRGB range are possible.",
+      },
+      {
+        title: "Styled randomness",
+        body: "Pastel, vivid, muted, dark and light modes pick a random hue and then limit saturation and lightness in HSL, which gives random colors that still look usable.",
+      },
+      {
+        title: "Random is not harmonious",
+        body: "A random palette has no built-in color harmony. Check text contrast and refine the palette in the generator before using it in a design.",
+      },
+    ],
+    faq: [
+      {
+        question: "How does the random color generator work?",
+        answer:
+          "It picks random red, green and blue values (or a random hue with limited saturation and lightness in the pastel, vivid, muted, dark and light styles) and shows the result as a HEX code plus RGB, HSL, CMYK and OKLCH values.",
+      },
+      {
+        question: "Is the random hex color truly random?",
+        answer:
+          "It uses your browser's pseudo-random number generator, which is random enough for design, testing and inspiration. It is not meant for security or cryptography.",
+      },
+      {
+        question: "Can I generate a random color palette?",
+        answer:
+          "Yes. Switch to Palette mode to get five random colors, lock the ones you like, and generate again to replace only the unlocked colors. You can open the result in the HueFlow palette generator to export it.",
+      },
+      {
+        question: "Can I get random pastel colors?",
+        answer:
+          "Yes. Choose the Pastel style and the generator limits saturation and lightness so every result is a soft, light color. Vivid, muted, dark and light styles work the same way.",
+      },
+      {
+        question: "How many random colors are possible?",
+        answer:
+          "In Any mode there are 16,777,216 possible colors (256 x 256 x 256), which is every color a standard sRGB screen can show.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Color palette generator", href: "/generator" },
+      { title: "Color picker", href: "/color-picker" },
+      { title: "Color converter", href: "/color-converter" },
+      { title: "Color wheel", href: "/color-wheel" },
+      { title: "Color name finder", href: "/color-name-finder" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+    ],
+  },
+  "color-name-finder": {
+    slug: "color-name-finder",
+    path: "/color-name-finder",
+    title: "Color Name Finder: What Color Is This Hex Code?",
+    description:
+      "Free color name finder: enter any HEX, RGB or HSL code to see the closest color name, its HEX, RGB, HSL, CMYK and OKLCH values, and similar named colors.",
+    keywords: [
+      "color name finder",
+      "what color is this hex code",
+      "hex to color name",
+      "color name from hex",
+      "name that color",
+      "color namer",
+      "color name identifier",
+      "what is the name of this color",
+      "rgb to color name",
+    ],
+    answer:
+      "To find the name of a color, enter its HEX, RGB or HSL code and HueFlow compares it with 140 standard named colors, such as the CSS and X11 color names, and shows the closest match with its HEX, RGB, HSL, CMYK and OKLCH values plus other nearby names.",
+    audience:
+      "For designers, developers and writers who have a color code and need its name, or want a readable name for a design token or palette.",
+    useCases: [
+      "Name the colors in a palette or design system",
+      "Find out what color a hex code is",
+      "Pick readable color names for CSS variables and tokens",
+      "Compare a color against nearby named colors",
+    ],
+    howToSteps: [
+      "Type or paste a HEX, RGB or HSL code, or pick a color with the color picker.",
+      "Read the closest color name and how exact the match is.",
+      "Check the similar named colors, and open any name for its full color page.",
+      "Copy the HEX, RGB, HSL, CMYK or OKLCH value you need.",
+    ],
+    explainerHeading: "How color names are matched",
+    explainer: [
+      {
+        title: "Closest named color",
+        body: "HueFlow measures the distance between your color and each of 140 named colors in RGB space and returns the nearest one, so there is always an answer.",
+      },
+      {
+        title: "Exact versus approximate",
+        body: "When the code is exactly a named color, the tool says so. Otherwise the name is the closest match, not the official name of that exact code.",
+      },
+      {
+        title: "Which names are used",
+        body: "The names come from the standard CSS and X11 color list plus common design names, so they are readable in code and in conversation.",
+      },
+    ],
+    faq: [
+      {
+        question: "How do I find the name of a hex color?",
+        answer:
+          "Enter the HEX code in the color name finder. HueFlow shows the closest named color, and tells you when the code is an exact match for a named color.",
+      },
+      {
+        question: "Does every hex code have a name?",
+        answer:
+          "Only a limited number of hex codes have an official name, such as the 140 CSS color names. For every other code the tool shows the closest named color instead.",
+      },
+      {
+        question: "Which color names does HueFlow use?",
+        answer:
+          "Standard CSS and X11 color names plus common design names, 140 colors in total, each with its own page showing HEX, RGB, HSL and usage.",
+      },
+      {
+        question: "Can I enter RGB or HSL instead of HEX?",
+        answer:
+          "Yes. Enter RGB values such as 59, 130, 246 or HSL values such as 217, 91%, 60%. The tool detects the format and converts it before matching the name.",
+      },
+    ],
+    relatedLinks: [
+      { title: "All named colors", href: "/colors" },
+      { title: "Color codes chart", href: "/color-codes" },
+      { title: "Color picker", href: "/color-picker" },
+      { title: "Color converter", href: "/color-converter" },
+      { title: "Random color generator", href: "/random-color-generator" },
+      { title: "Shades of color", href: "/shades" },
     ],
   },
 };

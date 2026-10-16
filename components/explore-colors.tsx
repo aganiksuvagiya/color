@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
@@ -165,203 +164,166 @@ export function ExploreColors() {
     setHueFilter(prev => prev !== null && Math.abs(prev - hue) < 12 ? null : hue);
   }
 
+  const chipBase = "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition";
+
   return (
-    <div className="min-h-screen text-[#1c1712]" style={{ backgroundColor: "#f8f4ef" }}>
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <main className="mx-auto max-w-[1400px] px-4 pt-24 pb-24 sm:px-6 sm:pt-36 lg:px-8">
-
-        {/* Page header */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.12 }}
-          className="mb-10 text-center"
-        >
-          <div className="inline-flex items-center gap-2 rounded-full border border-black/8 bg-white px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-[#1c1712]/45 mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#E8531F]" />
-            Infinite Palettes
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Explore</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Explore Palettes</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {["#E8531F", "#4080D0", "#50A840", "#E00050", "#D8A0C8"].map((c) => (
+                <span key={c} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
+              ))}
+            </span>
+            <p className="hub-description text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">Endless palettes, generated fresh.</span> Scroll to discover more, click a color to copy it, or open any palette in the generator.
+            </p>
           </div>
-          <h1 className="font-display text-4xl font-semibold tracking-[-0.04em] sm:text-5xl text-[#1c1712]">
-            Explore Palettes
-          </h1>
-          <p className="mx-auto mt-3 max-w-lg text-base text-[#1c1712]/45">
-            Endless color palettes, generated fresh. Scroll down to discover more.
-          </p>
-        </motion.div>
+        </section>
 
-        {/* Search + Sort + Reshuffle */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-5 flex items-center gap-2.5 max-w-xl mx-auto"
-        >
-          <div className="relative flex-1">
-            <svg className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1c1712]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="text"
-              placeholder="Search palette names..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-full border border-black/10 bg-white py-2.5 pl-11 pr-4 text-sm text-[#1c1712] placeholder-[#1c1712]/30 outline-none transition-colors focus:border-black/20 focus:shadow-[0_0_0_3px_rgba(232,83,31,0.08)]"
-            />
-          </div>
-          {/* Sort */}
-          <div className="relative">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as SortBy)}
-              className="h-10 rounded-full border border-black/10 bg-white pl-3.5 pr-8 text-sm text-[#1c1712]/65 outline-none transition-colors hover:border-black/16 cursor-pointer appearance-none"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231c171260' stroke-width='2.5' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "right 10px center",
-              }}
-            >
-              <option value="random">Random</option>
-              <option value="az">A → Z</option>
-              <option value="za">Z → A</option>
-            </select>
-          </div>
-          <button
-            onClick={reshuffle}
-            title="Generate new set"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white text-[#1c1712]/45 hover:border-black/16 hover:text-[#1c1712] transition-colors"
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-              <path d="M1 4v6h6M23 20v-6h-6"/>
-              <path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/>
-            </svg>
-          </button>
-        </motion.div>
-
-        {/* Category filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.26 }}
-          className="mb-5 flex flex-wrap justify-center gap-2"
-        >
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.name}
-              onClick={() => setActiveCategory(cat.name)}
-              className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
-                activeCategory === cat.name
-                  ? cat.name === "Trending"
-                    ? "bg-gradient-to-r from-[#ff7a45] to-[#e8531f] text-white shadow-sm"
-                    : "bg-[#1c1712] text-white shadow-sm"
-                  : "border border-black/10 bg-white text-[#1c1712]/55 hover:border-black/16 hover:text-[#1c1712]"
-              }`}
-            >
-              {cat.name === "Trending" ? (
-                <span className="text-[13px] leading-none">🔥</span>
-              ) : cat.dot ? (
-                <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: cat.dot }} />
-              ) : null}
-              {cat.name}
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Hue filter bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mb-6 max-w-xl mx-auto"
-        >
-          <div className="flex items-center gap-3">
-            <span className="text-xs text-[#1c1712]/40 shrink-0 w-20">Filter by hue</span>
-            <div
-              onClick={handleHueBarClick}
-              className="relative flex-1 h-3 rounded-full cursor-crosshair shadow-[inset_0_1px_3px_rgba(0,0,0,0.12)]"
-              style={{ background: "linear-gradient(to right, hsl(0,75%,55%), hsl(30,75%,55%), hsl(60,75%,55%), hsl(90,75%,50%), hsl(120,75%,45%), hsl(150,75%,45%), hsl(180,75%,45%), hsl(210,75%,55%), hsl(240,75%,55%), hsl(270,75%,55%), hsl(300,75%,55%), hsl(330,75%,55%), hsl(360,75%,55%))" }}
-              title="Click to filter by hue · click again to clear"
-            >
-              {hueFilter !== null && (
-                <div
-                  className="absolute top-1/2 h-5 w-5 rounded-full border-[2.5px] border-white shadow-[0_2px_8px_rgba(0,0,0,0.28)]"
+        {/* ── Toolbar ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="z-20 border-b border-black/[0.06] bg-white/95 backdrop-blur lg:sticky lg:top-[86px]">
+            <div className="w-full space-y-3 px-6 py-4 sm:px-8 lg:px-12">
+              <div className="flex flex-wrap items-center gap-3">
+                <label className="relative block w-full sm:w-80">
+                  <span className="sr-only">Search palette names</span>
+                  <svg className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1c1712]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Search palette names"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="h-10 w-full rounded-full bg-white pl-10 pr-4 text-[14px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/40 focus:ring-2 focus:ring-[#1c1712]"
+                  />
+                </label>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as SortBy)}
+                  aria-label="Sort palettes"
+                  className="h-10 cursor-pointer appearance-none rounded-full bg-white pl-4 pr-9 text-[13px] font-semibold text-[#1c1712]/70 outline-none ring-1 ring-black/[0.12] transition hover:ring-black/25 focus:ring-2 focus:ring-[#1c1712]"
                   style={{
-                    left: `${(hueFilter / 360) * 100}%`,
-                    transform: "translate(-50%, -50%)",
-                    backgroundColor: `hsl(${hueFilter}, 80%, 55%)`,
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231c171299' stroke-width='2.5' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 12px center",
                   }}
-                />
-              )}
-            </div>
-            <div className="w-12 flex justify-end">
-              {hueFilter !== null && (
-                <button
-                  onClick={() => setHueFilter(null)}
-                  className="text-xs text-[#1c1712]/40 hover:text-[#E8531F] transition-colors"
                 >
-                  Clear
+                  <option value="random">Random</option>
+                  <option value="az">A → Z</option>
+                  <option value="za">Z → A</option>
+                </select>
+                <button
+                  onClick={reshuffle}
+                  className="inline-flex h-10 items-center gap-2 rounded-full px-4 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+                    <path d="M1 4v6h6M23 20v-6h-6" />
+                    <path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15" />
+                  </svg>
+                  New set
                 </button>
-              )}
-            </div>
-          </div>
-        </motion.div>
+                <p className="text-[13px] text-[#1c1712]/50 lg:ml-auto">
+                  {visible.length} palettes{hueFilter !== null ? " matching this hue" : " loaded"}
+                </p>
+              </div>
 
-        {/* Count */}
-        <p className="mb-5 text-center text-xs text-[#1c1712]/30">
-          {visible.length} palettes{hueFilter !== null ? " matching hue" : " loaded"} · {hueFilter !== null ? "clear filter to see all" : "scroll for more"}
-        </p>
+              <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+                <div className="flex flex-wrap gap-2" role="group" aria-label="Palette category">
+                  {CATEGORIES.map((cat) => (
+                    <button
+                      key={cat.name}
+                      onClick={() => setActiveCategory(cat.name)}
+                      aria-pressed={activeCategory === cat.name}
+                      className={`${chipBase} ${
+                        activeCategory === cat.name ? "bg-[#1c1712] text-white" : "text-[#1c1712]/65 ring-1 ring-black/[0.12] hover:text-[#1c1712] hover:ring-black/25"
+                      }`}
+                    >
+                      {cat.dot && <span className="h-2 w-2 shrink-0 rounded-full ring-1 ring-white/40" style={{ backgroundColor: cat.dot }} />}
+                      {cat.name}
+                    </button>
+                  ))}
+                </div>
 
-        {/* Loading skeleton */}
-        {initialLoading ? (
-          <div className="columns-2 gap-3 sm:columns-3 md:columns-4">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="mb-3 break-inside-avoid rounded-2xl border border-black/8 bg-white overflow-hidden animate-pulse">
-                <div className={`${["h-28","h-36","h-52"][i % 3]} bg-black/6`} />
-                <div className="px-3.5 py-3">
-                  <div className="h-3 w-24 rounded-full bg-black/8 mb-2" />
-                  <div className="h-2.5 w-14 rounded-full bg-black/6" />
+                <div className="flex min-w-[16rem] flex-1 items-center gap-3 lg:max-w-md">
+                  <span className="shrink-0 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">Hue</span>
+                  <div
+                    onClick={handleHueBarClick}
+                    className="relative h-3 flex-1 cursor-crosshair rounded-full ring-1 ring-black/[0.08]"
+                    style={{ background: "linear-gradient(to right, hsl(0,75%,55%), hsl(30,75%,55%), hsl(60,75%,55%), hsl(90,75%,50%), hsl(120,75%,45%), hsl(150,75%,45%), hsl(180,75%,45%), hsl(210,75%,55%), hsl(240,75%,55%), hsl(270,75%,55%), hsl(300,75%,55%), hsl(330,75%,55%), hsl(360,75%,55%))" }}
+                    title="Click to filter by hue · click again to clear"
+                    role="presentation"
+                  >
+                    {hueFilter !== null && (
+                      <div
+                        className="absolute top-1/2 h-5 w-5 rounded-full border-[3px] border-white shadow-[0_1px_5px_rgba(0,0,0,0.4)]"
+                        style={{ left: `${(hueFilter / 360) * 100}%`, transform: "translate(-50%, -50%)", backgroundColor: `hsl(${hueFilter}, 80%, 55%)` }}
+                      />
+                    )}
+                  </div>
+                  <div className="flex w-12 justify-end">
+                    {hueFilter !== null && (
+                      <button onClick={() => setHueFilter(null)} className="text-[13px] font-semibold text-[#c2410c] hover:underline">Clear</button>
+                    )}
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
-        ) : visible.length === 0 ? (
-          /* Empty state */
-          <div className="flex flex-col items-center justify-center py-24 text-center">
-            <div className="mb-5 flex gap-2">
-              {["#E8B4A0","#B4C8E8","#A0E8B4","#E8E0A0","#D4A0E8"].map((c, i) => (
-                <div key={i} className="h-10 w-10 rounded-xl opacity-50" style={{ backgroundColor: c }} />
-              ))}
             </div>
-            <p className="text-base font-semibold text-[#1c1712]">No palettes found</p>
-            <p className="mt-1.5 text-sm text-[#1c1712]/45">
-              {search ? `No results for "${search}"` : "Try a different hue or category"}
-            </p>
-            <button
-              onClick={() => { setSearch(""); setHueFilter(null); }}
-              className="mt-5 rounded-full border border-black/12 bg-white px-5 py-2 text-sm font-medium text-[#1c1712]/70 hover:border-black/20 hover:text-[#1c1712] transition-colors"
-            >
-              Clear filters
-            </button>
           </div>
-        ) : (
-          /* Masonry grid */
-          <div className="columns-2 gap-3 sm:columns-3 md:columns-4">
-            {visible.map((palette, i) => (
-              <div key={palette.id} className="mb-3 break-inside-avoid">
-                <PaletteCard palette={palette} index={i} />
-              </div>
-            ))}
-          </div>
-        )}
 
-        {/* Infinite scroll sentinel */}
-        {!initialLoading && visible.length > 0 && (
-          <div ref={loaderRef} className="flex justify-center py-14">
-            {loading && (
-              <div className="h-6 w-6 animate-spin rounded-full border-2 border-black/10 border-t-[#E8531F]" />
+          <div className="w-full px-6 py-10 sm:px-8 lg:px-12">
+            {initialLoading ? (
+              <div className="columns-2 gap-4 sm:columns-3 lg:columns-4 2xl:columns-5">
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <div key={i} className="mb-4 animate-pulse overflow-hidden rounded-2xl ring-1 ring-black/[0.07] break-inside-avoid">
+                    <div className={`${["h-28", "h-36", "h-52"][i % 3]} bg-black/[0.05]`} />
+                    <div className="px-3.5 py-3">
+                      <div className="mb-2 h-3 w-24 rounded-full bg-black/[0.07]" />
+                      <div className="h-2.5 w-14 rounded-full bg-black/[0.05]" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : visible.length === 0 ? (
+              <div className="py-16">
+                <p className="text-[1.1rem] font-semibold">No palettes found</p>
+                <p className="mt-1.5 text-[15px] text-[#1c1712]/55">{search ? `No results for "${search}".` : "Try a different hue or category."}</p>
+                <button
+                  onClick={() => { setSearch(""); setHueFilter(null); }}
+                  className="mt-5 rounded-full px-5 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25"
+                >
+                  Clear filters
+                </button>
+              </div>
+            ) : (
+              <div className="columns-2 gap-4 sm:columns-3 lg:columns-4 2xl:columns-5">
+                {visible.map((palette) => (
+                  <div key={palette.id} className="mb-4 break-inside-avoid">
+                    <PaletteCard palette={palette} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Infinite scroll sentinel */}
+            {!initialLoading && visible.length > 0 && (
+              <div ref={loaderRef} className="flex justify-center py-14">
+                {loading && <div className="h-6 w-6 animate-spin rounded-full border-2 border-black/10 border-t-[#1c1712]" />}
+              </div>
             )}
           </div>
-        )}
+        </section>
       </main>
     </div>
   );
@@ -515,14 +477,10 @@ function ShareButton({ palette }: { palette: GeneratedPalette }) {
         Share
       </button>
 
-      <AnimatePresence>
+      
         {open && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 4 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 4 }}
-            transition={{ duration: 0.12 }}
-            className="absolute bottom-full right-0 mb-2 w-52 rounded-xl border border-black/8 bg-white py-1.5 shadow-[0_8px_32px_rgba(28,23,18,0.14)]"
+          <div
+            className="absolute bottom-full right-0 mb-2 w-52 rounded-xl bg-white py-1.5 shadow-[0_8px_32px_rgba(28,23,18,0.14)] ring-1 ring-black/[0.08]"
           >
             <button
               onClick={() => share("link")}
@@ -554,20 +512,14 @@ function ShareButton({ palette }: { palette: GeneratedPalette }) {
                 {typeof window !== "undefined" ? `${window.location.origin}${paletteUrl(palette)}`.replace("https://", "") : ""}
               </p>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+      
     </div>
   );
 }
 
-function PaletteCard({
-  palette,
-  index,
-}: {
-  palette: GeneratedPalette;
-  index: number;
-}) {
+function PaletteCard({ palette }: { palette: GeneratedPalette }) {
   const [copiedStripe, setCopiedStripe] = useState<number | null>(null);
   const [hoveredStripe, setHoveredStripe] = useState<number | null>(null);
   const [saved, setSaved] = useState(false);
@@ -615,11 +567,8 @@ function PaletteCard({
   const stripH = STRIP_H[palette.size];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: Math.min((index % BATCH_SIZE) * 0.02, 0.48) }}
-      className="group rounded-2xl border border-black/8 bg-white overflow-visible hover:border-black/14 transition-colors duration-200 hover:shadow-[0_8px_28px_rgba(28,23,18,0.10)] hover:-translate-y-0.5"
+    <div
+      className="group rounded-2xl bg-white ring-1 ring-black/[0.07] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-18px_rgba(28,23,18,0.35)] hover:ring-black/20"
       style={{ position: "relative", zIndex: menuOpen ? 40 : undefined }}
     >
       {/* Color strip */}
@@ -639,18 +588,18 @@ function PaletteCard({
               transition: "width 0.28s cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           >
-            <AnimatePresence>
+            
               {copiedStripe === ci && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}
+                <div
                   className="absolute inset-0 flex items-center justify-center"
                   style={{ backgroundColor: isLight(col.hex) ? "rgba(0,0,0,0.22)" : "rgba(255,255,255,0.22)" }}>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"
                     style={{ color: isLight(col.hex) ? "rgba(0,0,0,0.75)" : "rgba(255,255,255,0.95)" }}>
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
+            
           </button>
         ))}
 
@@ -731,14 +680,10 @@ function PaletteCard({
               </svg>
             </button>
 
-            <AnimatePresence>
+            
               {menuOpen && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: -4 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -4 }}
-                  transition={{ duration: 0.12 }}
-                  className="absolute right-0 top-full z-10 mt-1.5 w-56 rounded-xl border border-black/8 bg-white py-1.5 shadow-[0_8px_32px_rgba(28,23,18,0.14)]"
+                <div
+                  className="absolute right-0 top-full z-10 mt-1.5 w-56 rounded-xl bg-white py-1.5 shadow-[0_8px_32px_rgba(28,23,18,0.14)] ring-1 ring-black/[0.08]"
                 >
                   {/* Open in Generator */}
                   <Link
@@ -842,20 +787,16 @@ function PaletteCard({
                     </svg>
                     Download as image
                   </button>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
+            
           </div>
         </div>
       </div>
 
       {/* Fullscreen portal */}
       {fullscreen && typeof document !== "undefined" && createPortal(
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+        <div
           className="fixed inset-0 z-[200] flex flex-col"
           onClick={() => setFullscreen(false)}
         >
@@ -882,8 +823,7 @@ function PaletteCard({
               <Link
                 href={paletteUrl(palette)}
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02]"
-                style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
+                className="inline-flex items-center gap-2 rounded-full bg-[#1c1712] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#c2410c]"
               >
                 Open in Generator
               </Link>
@@ -897,9 +837,9 @@ function PaletteCard({
               </button>
             </div>
           </div>
-        </motion.div>,
+        </div>,
         document.body
       )}
-    </motion.div>
+    </div>
   );
 }

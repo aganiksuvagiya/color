@@ -1,9 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Link from "next/link";
 import { useState, useCallback } from "react";
 import { hexToHsl, hslToHex, isValidHex } from "@/lib/color-utils";
 import { Header } from "@/components/header";
+import { Faq, RelatedLinks, eyebrow } from "@/components/seo/page-ui";
+import { converterPairSpecs } from "@/lib/seo/converter-specs";
 
 function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
   const clean = hex.replace("#", "");
@@ -23,10 +25,29 @@ function getContrastColor(hex: string): string {
   const rgb = hexToRgb(hex);
   if (!rgb) return "#ffffff";
   const lum = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
-  return lum > 0.5 ? "#000000" : "#ffffff";
+  return lum > 0.5 ? "#1c1712" : "#ffffff";
 }
 
 type Tab = "hex-to-rgb" | "rgb-to-hex" | "hex-to-hsl" | "hsl-to-hex";
+
+const FAQ = [
+  { question: "How do I convert HEX to RGB?", answer: "Enter any HEX code above and it instantly shows the RGB equivalent. Click Copy to grab it." },
+  { question: "How do I convert RGB to HEX?", answer: 'Switch to the "RGB → HEX" tab, enter your R, G, B values (0–255), and get the HEX code instantly.' },
+  { question: "What is HSL color format?", answer: "HSL = Hue (0–360°), Saturation (0–100%), Lightness (0–100%). Easier to adjust in code than HEX or RGB." },
+  { question: "Which format should I use in CSS?", answer: "HEX for most cases. rgba() when you need transparency. HSL when adjusting brightness programmatically." },
+];
+
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const inputCls = "mt-1.5 h-11 w-full min-w-0 rounded-xl px-4 font-mono text-[14px] font-semibold text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/35 focus:ring-2 focus:ring-[#1c1712]";
+
+function CopyIcon() {
+  return (
+    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="9" y="9" width="13" height="13" rx="2" />
+      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+    </svg>
+  );
+}
 
 export function ColorConverter() {
   const [tab, setTab] = useState<Tab>("hex-to-rgb");
@@ -39,7 +60,7 @@ export function ColorConverter() {
   const copy = useCallback((text: string, key: string) => {
     navigator.clipboard.writeText(text);
     setCopied(key);
-    setTimeout(() => setCopied(null), 1500);
+    setTimeout(() => setCopied((c) => (c === key ? null : c)), 1500);
   }, []);
 
   function handleHexChange(val: string) {
@@ -80,6 +101,8 @@ export function ColorConverter() {
   const rgbStr = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
   const hslStr = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
   const hexUpper = hex.toUpperCase();
+  const fg = getContrastColor(hex);
+  const resultText = tab === "hex-to-rgb" ? rgbStr : tab === "hex-to-hsl" ? hslStr : hexUpper;
 
   const tabs: { key: Tab; label: string }[] = [
     { key: "hex-to-rgb", label: "HEX → RGB" },
@@ -88,188 +111,162 @@ export function ColorConverter() {
     { key: "hsl-to-hex", label: "HSL → HEX" },
   ];
 
-  const inputCls = "w-full rounded-xl border border-black/[0.08] bg-[#faf7f2] px-4 py-3 font-mono text-sm text-[#1c1712] placeholder-[#1c1712]/25 outline-none focus:border-[#e8531f]/30 transition-colors";
-  const labelCls = "mb-1.5 block text-[11px] font-semibold uppercase tracking-widest text-[#1c1712]/35";
-  const resultCls = "flex items-center justify-between rounded-xl border border-black/[0.07] bg-[#faf7f2] px-4 py-3";
+  const rows = [
+    { label: "HEX", value: hexUpper },
+    { label: "RGB", value: rgbStr },
+    { label: "HSL", value: hslStr },
+    { label: "R", value: String(rgb.r) },
+    { label: "G", value: String(rgb.g) },
+    { label: "B", value: String(rgb.b) },
+  ];
 
   return (
-    <div className="min-h-screen bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <main className="mx-auto max-w-3xl px-4 pb-20 pt-24 sm:px-6 sm:pt-28">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-
-          {/* Header */}
-          <div className="mb-8">
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/30">Tool</p>
-            <h1 className="mb-2 text-[2rem] font-black tracking-[-0.02em] text-[#1c1712] sm:text-[2.6rem]">Color Converter</h1>
-            <p className="text-[14px] text-[#1c1712]/45">Convert HEX to RGB, RGB to HEX, HEX to HSL — instant results, copy with one click.</p>
-          </div>
-
-          {/* Color preview */}
-          <div
-            className="mb-6 flex h-28 items-center justify-center rounded-2xl border border-black/[0.08] text-xl font-bold tracking-wider shadow-sm transition-colors duration-300"
-            style={{ backgroundColor: hex, color: getContrastColor(hex) }}
-          >
-            {hexUpper}
-          </div>
-
-          {/* Tabs */}
-          <div className="mb-5 flex w-fit items-center gap-1 rounded-xl border border-black/[0.07] bg-white p-1 shadow-sm">
-            {tabs.map((t) => (
-              <button
-                key={t.key}
-                onClick={() => setTab(t.key)}
-                className={`relative rounded-lg px-3.5 py-1.5 text-[13px] font-medium transition-colors ${
-                  tab === t.key ? "bg-[#1c1712] text-white" : "text-[#1c1712]/40 hover:text-[#1c1712]"
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Converter card */}
-          <div className="mb-5 rounded-2xl border border-black/[0.08] bg-white p-6 shadow-sm">
-            {(tab === "hex-to-rgb" || tab === "hex-to-hsl") && (
-              <div className="space-y-5">
-                <div>
-                  <label className={labelCls}>HEX color code</label>
-                  <div className="flex gap-2">
-                    <label className="relative flex h-11 w-11 shrink-0 cursor-pointer overflow-hidden rounded-xl border border-black/[0.08]">
-                      <input type="color" value={hex} onChange={(e) => handleHexChange(e.target.value)} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
-                      <div className="h-full w-full" style={{ backgroundColor: hex }} />
-                    </label>
-                    <input
-                      type="text"
-                      value={hexInput}
-                      onChange={(e) => handleHexChange(e.target.value)}
-                      placeholder="#3B82F6"
-                      className={inputCls}
-                      maxLength={7}
-                    />
-                  </div>
-                </div>
-                <div className="border-t border-black/[0.06] pt-5">
-                  <p className={labelCls}>Result</p>
-                  <div className={resultCls}>
-                    <span className="font-mono text-sm text-[#1c1712]">{tab === "hex-to-rgb" ? rgbStr : hslStr}</span>
-                    <button
-                      onClick={() => copy(tab === "hex-to-rgb" ? rgbStr : hslStr, "result")}
-                      className={`text-xs font-semibold transition-colors ${copied === "result" ? "text-emerald-600" : "text-[#e8531f] hover:opacity-70"}`}
-                    >
-                      {copied === "result" ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {tab === "rgb-to-hex" && (
-              <div className="space-y-5">
-                <div className="grid grid-cols-3 gap-3">
-                  {(["r", "g", "b"] as const).map((ch) => (
-                    <div key={ch}>
-                      <label className={labelCls}>{ch.toUpperCase()} (0–255)</label>
-                      <input
-                        type="number"
-                        min={0}
-                        max={255}
-                        value={rgb[ch]}
-                        onChange={(e) => handleRgbChange(ch, e.target.value)}
-                        className={inputCls}
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div className="border-t border-black/[0.06] pt-5">
-                  <p className={labelCls}>Result</p>
-                  <div className={resultCls}>
-                    <span className="font-mono text-sm text-[#1c1712]">{hexUpper}</span>
-                    <button onClick={() => copy(hexUpper, "result")} className={`text-xs font-semibold transition-colors ${copied === "result" ? "text-emerald-600" : "text-[#e8531f] hover:opacity-70"}`}>
-                      {copied === "result" ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {tab === "hsl-to-hex" && (
-              <div className="space-y-5">
-                <div className="grid grid-cols-3 gap-3">
-                  {(["h", "s", "l"] as const).map((ch) => (
-                    <div key={ch}>
-                      <label className={labelCls}>{ch.toUpperCase()} {ch === "h" ? "(0–360)" : "(0–100)"}</label>
-                      <input
-                        type="number"
-                        min={0}
-                        max={ch === "h" ? 360 : 100}
-                        value={hsl[ch]}
-                        onChange={(e) => handleHslChange(ch, e.target.value)}
-                        className={inputCls}
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div className="border-t border-black/[0.06] pt-5">
-                  <p className={labelCls}>Result</p>
-                  <div className={resultCls}>
-                    <span className="font-mono text-sm text-[#1c1712]">{hexUpper}</span>
-                    <button onClick={() => copy(hexUpper, "result")} className={`text-xs font-semibold transition-colors ${copied === "result" ? "text-emerald-600" : "text-[#e8531f] hover:opacity-70"}`}>
-                      {copied === "result" ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* All values at once */}
-          <div className="mb-8 rounded-2xl border border-black/[0.08] bg-white p-6 shadow-sm">
-            <p className="mb-4 text-[13px] font-semibold text-[#1c1712]/55">
-              All formats for <span className="font-mono text-[#1c1712]">{hexUpper}</span>
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Color Converter</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Color Converter</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {["#3B82F6", hex, "#10B981"].map((c, i) => (
+                <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
+              ))}
+            </span>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">Instant, free, copy with one click.</span> Convert HEX to RGB, RGB to HEX and HEX to HSL.
             </p>
-            <div className="space-y-2">
-              {[
-                { label: "HEX", value: hexUpper },
-                { label: "RGB", value: rgbStr },
-                { label: "HSL", value: hslStr },
-                { label: "R", value: String(rgb.r) },
-                { label: "G", value: String(rgb.g) },
-                { label: "B", value: String(rgb.b) },
-              ].map(({ label, value }) => (
-                <div key={label} className={resultCls}>
-                  <div className="flex items-center gap-3">
-                    <span className="w-10 text-[11px] font-bold uppercase tracking-wider text-[#1c1712]/30">{label}</span>
-                    <span className="font-mono text-sm text-[#1c1712]">{value}</span>
-                  </div>
-                  <button onClick={() => copy(value, label)} className={`text-xs font-semibold transition-colors ${copied === label ? "text-emerald-600" : "text-[#1c1712]/30 hover:text-[#e8531f]"}`}>
-                    {copied === label ? "✓" : "Copy"}
+          </div>
+        </section>
+
+        {/* ── Workspace ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="grid w-full items-start gap-6 px-6 py-10 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:px-12">
+            {/* Convert */}
+            <div className="min-w-0 rounded-2xl ring-1 ring-black/[0.07]">
+              <div className="p-5 sm:p-6">
+                <div className="flex flex-wrap gap-2" role="group" aria-label="Conversion">
+                  {tabs.map((t) => (
+                    <button
+                      key={t.key}
+                      onClick={() => setTab(t.key)}
+                      aria-pressed={tab === t.key}
+                      className={`rounded-full px-4 py-1.5 text-[13px] font-semibold transition ${
+                        tab === t.key ? "bg-[#1c1712] text-white" : "text-[#1c1712]/65 ring-1 ring-black/[0.12] hover:text-[#1c1712] hover:ring-black/25"
+                      }`}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-6">
+                  {(tab === "hex-to-rgb" || tab === "hex-to-hsl") && (
+                    <div>
+                      <label htmlFor="conv-hex" className={label}>HEX color code</label>
+                      <div className="flex items-center gap-3">
+                        <label className="relative mt-1.5 h-11 w-11 shrink-0 cursor-pointer overflow-hidden rounded-xl ring-1 ring-black/10 transition hover:ring-black/30" title="Open your system color picker">
+                          <input type="color" value={hex.toLowerCase()} onChange={(e) => handleHexChange(e.target.value)} className="absolute inset-0 h-full w-full cursor-pointer opacity-0" aria-label="Pick a color" />
+                          <span className="block h-full w-full" style={{ backgroundColor: hex }} />
+                        </label>
+                        <input id="conv-hex" type="text" value={hexInput} onChange={(e) => handleHexChange(e.target.value)} placeholder="#3B82F6" className={inputCls} maxLength={7} spellCheck={false} />
+                      </div>
+                    </div>
+                  )}
+
+                  {tab === "rgb-to-hex" && (
+                    <div className="grid grid-cols-3 gap-3">
+                      {(["r", "g", "b"] as const).map((ch) => (
+                        <div key={ch}>
+                          <label htmlFor={`conv-${ch}`} className={label}>{ch.toUpperCase()} (0–255)</label>
+                          <input id={`conv-${ch}`} type="number" min={0} max={255} value={rgb[ch]} onChange={(e) => handleRgbChange(ch, e.target.value)} className={inputCls} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {tab === "hsl-to-hex" && (
+                    <div className="grid grid-cols-3 gap-3">
+                      {(["h", "s", "l"] as const).map((ch) => (
+                        <div key={ch}>
+                          <label htmlFor={`conv-${ch}`} className={label}>{ch.toUpperCase()} {ch === "h" ? "(0–360)" : "(0–100)"}</label>
+                          <input id={`conv-${ch}`} type="number" min={0} max={ch === "h" ? 360 : 100} value={hsl[ch]} onChange={(e) => handleHslChange(ch, e.target.value)} className={inputCls} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="border-t border-black/[0.06] p-5 sm:p-6">
+                <p className={label}>Result</p>
+                <div className="mt-2.5 flex items-center justify-between gap-3 rounded-xl bg-[#1c1712]/[0.04] px-4 py-3.5">
+                  <span className="min-w-0 truncate font-mono text-[18px] font-semibold">{resultText}</span>
+                  <button
+                    onClick={() => copy(resultText, "result")}
+                    className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]"
+                  >
+                    <CopyIcon />
+                    {copied === "result" ? "✓ Copied" : "Copy"}
                   </button>
                 </div>
-              ))}
+              </div>
+            </div>
+
+            {/* The color and every format */}
+            <div className="min-w-0 overflow-hidden rounded-2xl bg-white ring-1 ring-black/[0.07]">
+              <div className="flex min-h-[10rem] items-end p-5 transition-colors duration-300 sm:p-6" style={{ backgroundColor: hex, color: fg }}>
+                <span className="font-mono text-3xl font-semibold tracking-[0.06em]">{hexUpper}</span>
+              </div>
+              <ul className="divide-y divide-black/[0.06]">
+                {rows.map(({ label: l, value }) => (
+                  <li key={l}>
+                    <button onClick={() => copy(value, l)} className="group flex w-full items-center gap-4 px-5 py-3 text-left transition hover:bg-[#fafafa] sm:px-6">
+                      <span className="w-8 shrink-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{l}</span>
+                      <span className="min-w-0 flex-1 truncate font-mono text-[13px] font-semibold text-[#1c1712]/85">{copied === l ? "✓ Copied" : value}</span>
+                      <span className="text-[#1c1712]/25 transition group-hover:text-[#1c1712]/70"><CopyIcon /></span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
+        </section>
 
-          {/* FAQ */}
-          <div>
-            <h2 className="mb-4 text-[17px] font-bold text-[#1c1712]">Common questions</h2>
-            <div className="space-y-3">
-              {[
-                { q: "How do I convert HEX to RGB?", a: "Enter any HEX code above and it instantly shows the RGB equivalent. Click Copy to grab it." },
-                { q: "How do I convert RGB to HEX?", a: 'Switch to the "RGB → HEX" tab, enter your R, G, B values (0–255), and get the HEX code instantly.' },
-                { q: "What is HSL color format?", a: "HSL = Hue (0–360°), Saturation (0–100%), Lightness (0–100%). Easier to adjust in code than HEX or RGB." },
-                { q: "Which format should I use in CSS?", a: "HEX for most cases. rgba() when you need transparency. HSL when adjusting brightness programmatically." },
-              ].map(({ q, a }) => (
-                <div key={q} className="rounded-2xl border border-black/[0.08] bg-white p-5 shadow-sm">
-                  <p className="mb-1.5 text-[13px] font-bold text-[#1c1712]">{q}</p>
-                  <p className="text-[13px] leading-relaxed text-[#1c1712]/50">{a}</p>
-                </div>
-              ))}
+        {/* ── FAQ ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+            <p className={eyebrow}>FAQ</p>
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Common questions</h2>
+            <div className="mt-6 max-w-4xl">
+              <Faq items={FAQ} />
             </div>
           </div>
+        </section>
 
-        </motion.div>
+        <section className="border-t border-black/[0.06]">
+          <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+            <p className={eyebrow}>Dedicated converters</p>
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Convert between HEX, RGB, HSL, CMYK and OKLCH</h2>
+            <p className="mt-3 max-w-3xl text-[15px] leading-7 text-[#1c1712]/60">
+              Each page has a live converter, the formula with a worked example, a table of common colors and answers to the usual questions.
+            </p>
+            <div className="mt-6">
+              <RelatedLinks
+                links={converterPairSpecs.map(([from, to]) => ({
+                  title: `${from.toUpperCase()} to ${to.toUpperCase()}`,
+                  href: `/${from}-to-${to}`,
+                }))}
+              />
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );

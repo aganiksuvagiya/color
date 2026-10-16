@@ -64,6 +64,22 @@ const FOOTER_LINKS = [
   },
 ] as const;
 
+// Crawlable links to the dedicated converter pages and the keyword landing pages.
+const CONVERTER_LINKS = [
+  { href: "/hex-to-rgb", label: "HEX to RGB" },
+  { href: "/rgb-to-hex", label: "RGB to HEX" },
+  { href: "/hex-to-hsl", label: "HEX to HSL" },
+  { href: "/hsl-to-hex", label: "HSL to HEX" },
+  { href: "/rgb-to-hsl", label: "RGB to HSL" },
+  { href: "/hex-to-cmyk", label: "HEX to CMYK" },
+  { href: "/rgb-to-cmyk", label: "RGB to CMYK" },
+  { href: "/hex-to-oklch", label: "HEX to OKLCH" },
+  { href: "/random-color-generator", label: "Random Color Generator" },
+  { href: "/color-name-finder", label: "Color Name Finder" },
+  { href: "/color-wheel", label: "Color Wheel" },
+  { href: "/color-palette-from-image", label: "Color Palette from Image" },
+];
+
 const BRAND_STRIP = ["#E8531F", "#F4A261", "#2A9D8F", "#1D4E89", "#1C1712"];
 
 export function Footer() {
@@ -105,7 +121,15 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-12 flex flex-col gap-3 border-t border-black/8 pt-6 text-sm text-[#1c1712]/45 sm:flex-row sm:items-center sm:justify-between">
+        <nav aria-label="Popular color tools" className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-black/8 pt-6 text-[13px]">
+          <span className="font-semibold uppercase tracking-wider text-[#1c1712]/55">Popular tools</span>
+          {CONVERTER_LINKS.map((link) => (
+            <Link key={link.href} href={link.href} className="text-[#1c1712]/60 transition-colors hover:text-[#e8531f]">
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="mt-6 flex flex-col gap-3 border-t border-black/8 pt-6 text-sm text-[#1c1712]/45 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} HueFlow. All rights reserved.</p>
           <div className="flex gap-5">
             <Link href="/privacy" className="transition-colors hover:text-[#1c1712]">

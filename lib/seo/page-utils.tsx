@@ -15,7 +15,7 @@ import {
   buildHowToSchema,
   buildWebPageSchema,
 } from "@/lib/seo/schema";
-import { siteConfig } from "@/lib/seo/site-config";
+import { indexableRobots, siteConfig } from "@/lib/seo/site-config";
 import { namedColors } from "@/lib/color-names";
 
 export function buildPageMetadata({
@@ -44,7 +44,7 @@ export function buildPageMetadata({
     alternates: {
       canonical: `${siteConfig.domain}${canonicalPath ?? path}`,
     },
-    robots: noindex ? { index: false, follow: true } : undefined,
+    robots: noindex ? { index: false, follow: true } : indexableRobots,
     openGraph: {
       title,
       description,
@@ -131,6 +131,75 @@ export function renderHub(path: string) {
   );
 }
 
+// Search-facing title and description per hub. The on-page H1 stays the short hub name
+// ("Colors", "Color Palettes"); the <title> carries the phrase people actually search for.
+const hubSeo: Record<string, { title: string; description: string }> = {
+  "/colors": {
+    title: "Color Names & Hex Codes: 140+ Colors",
+    description: "Browse 140+ named colors with HEX, RGB and HSL codes, meanings, accessibility notes, Tailwind classes and matching palettes. A free color reference.",
+  },
+  "/palettes": {
+    title: "Color Palettes for Websites, Brands & Apps",
+    description: "Curated color palettes for SaaS, fintech, luxury, ecommerce and AI brands. Copy hex codes or open any color palette in the free HueFlow generator.",
+  },
+  "/gradients": {
+    title: "CSS Gradients: Free Gradient Colors & Generator",
+    description: "Browse named CSS gradients with ready-to-copy code for websites, apps and landing pages, or build your own in the free gradient generator.",
+  },
+  "/brand-colors": {
+    title: "Brand Color Palettes by Industry & Company",
+    description: "See the color palettes behind SaaS, fintech, healthcare, luxury and iconic brands, and learn how to choose brand colors for your own business.",
+  },
+  "/color-meanings": {
+    title: "Color Meanings: What Each Color Symbolizes",
+    description: "Color meanings and symbolism: what red, blue, green, yellow, purple and more communicate in branding, marketing and web design.",
+  },
+  "/color-combinations": {
+    title: "Color Combinations That Work Well Together",
+    description: "Find color combinations that work: two-color pairings with hex codes, brand examples and when to use each in websites and campaigns.",
+  },
+  "/accessibility": {
+    title: "Accessible Colors: WCAG Contrast Guides",
+    description: "Guides to WCAG color contrast, accessible color palettes, status colors and readable UI design. Learn AA vs AAA and how to fix failing contrast.",
+  },
+  "/web-design": {
+    title: "Web Design Colors: Color Schemes for Websites",
+    description: "Choose website color schemes for landing pages, SaaS sites, hero sections and navigation, with palettes and UI hierarchy tips.",
+  },
+  "/marketing-colors": {
+    title: "Marketing Colors for Conversions & Trust",
+    description: "Marketing color strategy for conversions, trust and urgency across ads, email, landing pages and packaging, with palettes you can copy.",
+  },
+  "/css-colors": {
+    title: "CSS Colors: Variables, Tokens & Theming Guide",
+    description: "CSS color guides for custom properties, design tokens, theming and scalable design-system colors, with copy-ready code.",
+  },
+  "/guides": {
+    title: "Color Guides: Color Theory & Brand Color Selection",
+    description: "In-depth color guides covering color theory, color selection for websites and brands, and practical palette-building steps.",
+  },
+  "/explainers": {
+    title: "Color Theory Explained: Quick Answers",
+    description: "Short, clear explainers on color theory, branding and design fundamentals. One color question answered thoroughly per page.",
+  },
+  "/comparisons": {
+    title: "Color Comparisons: Which Color Should You Choose?",
+    description: "Side-by-side color comparisons that help you choose between colors, color categories and brand color strategies.",
+  },
+  "/faqs": {
+    title: "Color FAQs: Answers to Common Color Questions",
+    description: "Short answers to the color questions designers and developers ask most: HEX vs RGB, contrast ratios, palettes, color meanings and more.",
+  },
+  "/developer": {
+    title: "Developer Color Guides: Design Tokens & CSS Variables",
+    description: "Design tokens, CSS custom properties, Figma variables and platform color constants for engineering teams, with copy-ready examples.",
+  },
+  "/color-psychology": {
+    title: "Color Psychology in Marketing & Product Design",
+    description: "How color affects perception, trust, urgency and decisions across marketing and product design, with practical examples.",
+  },
+};
+
 export function buildHubMetadata(path: string): Metadata {
   const hub = getHubByPath(path);
 
@@ -142,9 +211,11 @@ export function buildHubMetadata(path: string): Metadata {
     });
   }
 
+  const seo = hubSeo[hub.path];
+
   return buildPageMetadata({
-    title: hub.title,
-    description: hub.description,
+    title: seo?.title ?? hub.title,
+    description: seo?.description ?? hub.description,
     path: hub.path,
   });
 }

@@ -5,15 +5,31 @@ import { siteConfig } from "@/lib/seo/site-config";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      // Allow major AI search bots full access to content
+      // Allow major search engines, AI search bots and link-preview fetchers full access to content
       {
-        userAgent: ["GPTBot", "ChatGPT-User", "Claude-SearchBot", "ClaudeBot", "PerplexityBot", "Applebot", "Google-Extended", "Googlebot", "Bingbot"],
+        userAgent: [
+          "GPTBot",
+          "ChatGPT-User",
+          "OAI-SearchBot",
+          "Claude-SearchBot",
+          "Claude-User",
+          "ClaudeBot",
+          "PerplexityBot",
+          "Perplexity-User",
+          "DuckAssistBot",
+          "Applebot",
+          "Applebot-Extended",
+          "Google-Extended",
+          "Googlebot",
+          "Bingbot",
+          "facebookexternalhit",
+        ],
         allow: "/",
         disallow: ["/admin", "/api/", "/opengraph-image"],
       },
       // Block known scrapers that don't contribute to search/AI value
       {
-        userAgent: ["CCBot", "omgili", "omgilibot", "facebookexternalhit"],
+        userAgent: ["CCBot", "omgili", "omgilibot"],
         disallow: "/",
       },
       {

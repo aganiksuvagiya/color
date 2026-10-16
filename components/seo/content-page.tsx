@@ -4,6 +4,7 @@ import { getClosestNamedColors } from "@/lib/color-names";
 import type { ResolvedContentEntry } from "@/lib/seo/content";
 import { CopyHexButton } from "@/components/seo/copy-hex-button";
 import { PaletteColorStrip } from "@/components/seo/palette-color-strip";
+import { Breadcrumbs, Faq, SmallTitle, eyebrow } from "@/components/seo/page-ui";
 import { Header } from "@/components/header";
 
 function isLight(hex: string) {
@@ -34,6 +35,23 @@ const relatedGroups = [
   { label: "Related articles",           match: "/" },
 ] as const;
 
+const h2 = "text-[1.5rem] font-semibold leading-tight tracking-[-0.025em]";
+const body = "text-[16px] leading-8 text-[#1c1712]/70";
+const block = "border-t border-black/[0.07] py-10 first:border-t-0 first:pt-0";
+
+function Bullets({ items }: { items: string[] }) {
+  return (
+    <ul className="space-y-3">
+      {items.map((t) => (
+        <li key={t} className="flex items-start gap-3 text-[15px] leading-7 text-[#1c1712]/70">
+          <span className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#c2410c]" />
+          {t}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export function ContentPageView({
   entry,
   breadcrumbs,
@@ -45,6 +63,7 @@ export function ContentPageView({
 }) {
   const hexFact      = entry.quickFacts.find((f) => f.label === "Hex");
   const originalHex  = hexFact?.value ?? null;
+  const light        = originalHex ? isLight(originalHex) : false;
   const similarColors = originalHex
     ? [
         { hex: originalHex, slug: originalHex.slice(1).toLowerCase(), name: entry.quickFacts.find(f => f.label === "Closest named color")?.value ?? originalHex },
@@ -64,180 +83,146 @@ export function ContentPageView({
     .filter((g) => g.links.length > 0);
 
   return (
-    <main className="min-h-screen bg-[#f0ede8] text-[#1c1712]">
+    <main className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      {/* ── Hero ── */}
-      <section className="border-b border-black/[0.06] bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-10 pt-28 lg:px-8">
+      {/* ── Header ── */}
+      <section className="w-full px-6 pb-12 pt-28 sm:px-8 lg:px-12">
+        <Breadcrumbs items={breadcrumbs.map((b) => ({ title: b.name, href: b.href }))} />
 
-          {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[12px] text-[#1c1712]/40">
-            {breadcrumbs.map((item, i) => (
-              <span key={item.href} className="flex items-center gap-2">
-                <Link href={item.href} className="transition hover:text-[#1c1712]/70">{item.name}</Link>
-                {i < breadcrumbs.length - 1 && <span className="text-[#1c1712]/20">/</span>}
+        {originalHex && (
+          <div
+            className="mt-8 flex min-h-[11rem] flex-col justify-end rounded-2xl p-5 ring-1 ring-black/[0.07] sm:min-h-[14rem] sm:p-6"
+            style={{ backgroundColor: originalHex }}
+          >
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="font-mono text-xl font-semibold uppercase tracking-[0.08em]" style={{ color: light ? "rgba(28,23,18,0.7)" : "rgba(255,255,255,0.85)" }}>
+                {originalHex.toUpperCase()}
               </span>
-            ))}
-          </nav>
-
-          {/* Color swatch */}
-          {originalHex && (
-            <div className="mt-6">
-              <div className="h-36 w-full overflow-hidden rounded-2xl border border-black/[0.08] shadow-sm sm:h-44"
-                style={{ backgroundColor: originalHex }}/>
-              <div className="mt-3 flex items-center gap-3">
-                <span className="font-mono text-[14px] font-semibold uppercase text-[#1c1712]/55">
-                  {originalHex.toUpperCase()}
-                </span>
-                <CopyHexButton hex={originalHex}/>
-              </div>
+              <CopyHexButton hex={originalHex} tone={light ? "dark" : "light"} />
             </div>
-          )}
-
-          <h1 className="mt-5 text-4xl font-black tracking-[-0.04em] text-[#1c1712] sm:text-5xl">{entry.title}</h1>
-          <p className="mt-4 max-w-4xl text-[16px] leading-8 text-[#1c1712]/50">{entry.description}</p>
-
-          {/* Palette strip */}
-          {entry.paletteColors && entry.paletteColors.length > 0 && (
-            <div className="mt-8">
-              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/30">
-                {originalHex ? "Palette colors" : "Color shades"}
-              </p>
-              <PaletteColorStrip colors={entry.paletteColors} linkToColors={!originalHex}/>
-            </div>
-          )}
-
-          {/* Similar colors */}
-          {similarColors.length > 0 && (
-            <div className="mt-8">
-              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/30">Similar colors</p>
-              <div className="flex w-full overflow-hidden rounded-2xl border border-black/[0.08] shadow-sm">
-                {similarColors.map((c, i) => {
-                  const light = isLight(c.hex);
-                  return (
-                    <Link key={c.hex} href={`/colors/${c.slug}`}
-                      className="group relative min-w-0 flex-1"
-                      style={{ backgroundColor: c.hex }}>
-                      <div className="flex h-20 flex-col items-center justify-center gap-0.5 px-2 opacity-0 transition-opacity group-hover:opacity-100">
-                        <p className={`w-full truncate text-center font-mono text-[11px] font-semibold uppercase ${light ? "text-black/60" : "text-white/80"}`}>
-                          {c.hex.toUpperCase()}
-                        </p>
-                        <p className={`w-full truncate text-center text-[10px] ${light ? "text-black/45" : "text-white/55"}`}>
-                          {c.name}
-                        </p>
-                      </div>
-                      {i < similarColors.length - 1 && (
-                        <span className="absolute right-0 top-1/4 h-1/2 w-px bg-black/10"/>
-                      )}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Answer box */}
-          <div className="mt-8 rounded-2xl border border-[#e8531f]/20 bg-[#e8531f]/[0.05] p-6">
-            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#e8531f]">{answerLabel}</p>
-            <p className="mt-3 text-[15px] leading-8 text-[#1c1712]/75">{entry.answer}</p>
           </div>
+        )}
+
+        <h1 className="mt-8 max-w-5xl text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">{entry.title}</h1>
+        <p className="mt-5 max-w-4xl text-[16px] leading-7 text-[#1c1712]/55">{entry.description}</p>
+
+        {entry.paletteColors && entry.paletteColors.length > 0 && (
+          <div className="mt-10">
+            <SmallTitle>{originalHex ? "Palette colors" : "Color shades"}</SmallTitle>
+            <PaletteColorStrip colors={entry.paletteColors} linkToColors={!originalHex} />
+          </div>
+        )}
+
+        {similarColors.length > 0 && (
+          <div className="mt-10">
+            <SmallTitle>Similar colors</SmallTitle>
+            <div className="flex h-24 w-full overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
+              {similarColors.map((c) => (
+                <Link
+                  key={c.hex}
+                  href={`/colors/${c.slug}`}
+                  className="group/swatch relative min-w-0 flex-1 transition-[flex] duration-300 hover:z-10 hover:flex-[2.4]"
+                  style={{ backgroundColor: c.hex }}
+                  title={`${c.name} ${c.hex.toUpperCase()}`}
+                >
+                  <span className="absolute inset-x-0 bottom-2.5 flex justify-center px-1">
+                    <span className="max-w-full truncate whitespace-nowrap rounded-full bg-black/55 px-2.5 py-1 font-mono text-[10px] text-white opacity-0 transition-opacity duration-200 group-hover/swatch:opacity-100">
+                      {c.hex.toUpperCase()} · {c.name}
+                    </span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="mt-12 max-w-4xl">
+          <p className={eyebrow}>{answerLabel}</p>
+          <p className="hub-answer mt-3 text-[1.2rem] font-medium leading-9 tracking-[-0.01em]">{entry.answer}</p>
         </div>
       </section>
 
       {/* ── Body ── */}
-      <section className="mx-auto max-w-5xl px-6 py-10 lg:px-8">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
-
-          {/* ── Main article ── */}
-          <article className="min-w-0 flex-1 space-y-5">
-
-            {/* Ready-to-use palettes */}
+      <section className="border-t border-black/[0.06]">
+        <div className="grid w-full gap-12 px-6 py-14 sm:px-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-16 lg:px-12">
+          {/* Article */}
+          <article className="min-w-0 max-w-4xl">
             {entry.palettes && entry.palettes.length > 0 && (
-              <div className="rounded-2xl bg-white p-7">
-                <h2 className="mb-1.5 text-[18px] font-bold text-[#1c1712]">Ready-to-Use Color Palettes</h2>
-                <p className="mb-6 text-[14px] leading-[1.7] text-[#1c1712]/50">Click any swatch to copy its hex code.</p>
-                <div className="space-y-8">
+              <div className={block}>
+                <h2 className={h2}>Ready-to-Use Color Palettes</h2>
+                <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">Click any swatch to copy its hex code.</p>
+                <div className="mt-8 space-y-6">
                   {entry.palettes.map((palette) => (
-                    <div key={palette.name}>
-                      <h3 className="text-[15px] font-semibold text-[#1c1712]">{palette.name}</h3>
-                      <p className="mb-3 text-[13px] text-[#1c1712]/45">{palette.useCase}</p>
-                      <PaletteColorStrip colors={palette.colors}/>
-                      <p className="mt-2.5 font-mono text-[12px] uppercase tracking-wide text-[#1c1712]/55">
-                        {palette.colors.join(" · ")}
-                      </p>
-                      <p className="mt-2 text-[14px] leading-[1.7] text-[#1c1712]/60">{palette.note}</p>
+                    <div key={palette.name} className="rounded-2xl p-5 ring-1 ring-black/[0.07] sm:p-6">
+                      <h3 className="text-[1.05rem] font-semibold">{palette.name}</h3>
+                      <p className="mb-4 text-[14px] text-[#1c1712]/55">{palette.useCase}</p>
+                      <PaletteColorStrip colors={palette.colors} />
+                      <p className="mt-3 font-mono text-[12px] uppercase tracking-wide text-[#1c1712]/50">{palette.colors.join(" · ")}</p>
+                      <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/65">{palette.note}</p>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Key takeaways */}
-            <div className="rounded-2xl bg-white p-7">
-              <h2 className="mb-4 text-[18px] font-bold text-[#1c1712]">Key Takeaways</h2>
-              <ul className="space-y-3">
-                {entry.keyTakeaways.map((t) => (
-                  <li key={t} className="flex items-start gap-3 text-[15px] leading-[1.7] text-[#1c1712]/65">
-                    <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#1c1712]/30"/>
-                    {t}
-                  </li>
-                ))}
-              </ul>
+            <div className={block}>
+              <h2 className={h2}>Key Takeaways</h2>
+              <div className="mt-5">
+                <Bullets items={entry.keyTakeaways} />
+              </div>
               {entry.quickFacts.length > 0 && (
-                <div className="mt-5 space-y-2 border-t border-black/[0.07] pt-5">
+                <dl className="mt-7 grid gap-x-8 gap-y-1 rounded-2xl p-5 ring-1 ring-black/[0.07] sm:grid-cols-2">
                   {entry.quickFacts.map((fact) => (
-                    <p key={fact.label} className="text-[14px] leading-[1.65] text-[#1c1712]/65">
-                      <strong className="font-semibold text-[#1c1712]">{fact.label}:</strong>{" "}{fact.value}
-                    </p>
+                    <div key={fact.label} className="flex items-baseline gap-2 border-b border-black/[0.05] py-2 text-[14px] last:border-0 sm:[&:nth-last-child(2):nth-child(odd)]:border-0">
+                      <dt className="shrink-0 font-semibold">{fact.label}:</dt>
+                      <dd className="min-w-0 break-words text-[#1c1712]/65">{fact.value}</dd>
+                    </div>
                   ))}
-                </div>
+                </dl>
               )}
             </div>
 
-            {/* Bottom-line summary */}
-            <div className="rounded-2xl bg-white p-7">
-              <h2 className="mb-3 text-[18px] font-bold text-[#1c1712]">{entry.expertSummary.title}</h2>
-              <p className="text-[15px] leading-[1.8] text-[#1c1712]/65">{entry.expertSummary.body}</p>
+            <div className={block}>
+              <h2 className={h2}>{entry.expertSummary.title}</h2>
+              <p className={`${body} mt-4`}>{entry.expertSummary.body}</p>
             </div>
 
-            {/* Definitions */}
-            <div className="rounded-2xl bg-white p-7">
-              <h2 className="mb-5 text-[18px] font-bold text-[#1c1712]">Core Definitions</h2>
-              <div className="space-y-5">
+            <div className={block}>
+              <h2 className={h2}>Core Definitions</h2>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {entry.definitions.map((item) => (
-                  <div key={item.term}>
-                    <h3 className="mb-1.5 text-[15px] font-semibold text-[#1c1712]">{item.term}</h3>
-                    <p className="text-[14px] leading-[1.75] text-[#1c1712]/60">{item.definition}</p>
+                  <div key={item.term} className="rounded-xl p-5 ring-1 ring-black/[0.07]">
+                    <h3 className="text-[15px] font-semibold">{item.term}</h3>
+                    <p className="mt-1.5 text-[14px] leading-6 text-[#1c1712]/65">{item.definition}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Pros / Cons */}
-            <div className="rounded-2xl bg-white p-7">
-              <h2 className="mb-5 text-[18px] font-bold text-[#1c1712]">Pros &amp; Cons</h2>
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <div>
-                  <p className="mb-3 text-[13px] font-semibold text-[#1c1712]">Pros</p>
-                  <ul className="space-y-2.5">
+            <div className={block}>
+              <h2 className={h2}>Pros &amp; Cons</h2>
+              <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                <div className="rounded-xl p-5 ring-1 ring-black/[0.07]">
+                  <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-emerald-700">Pros</p>
+                  <ul className="space-y-3">
                     {entry.prosCons.pros.map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-[14px] leading-[1.7] text-[#1c1712]/60">
-                        <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#1c1712]/30"/>
+                      <li key={item} className="flex items-start gap-2.5 text-[14px] leading-6 text-[#1c1712]/70">
+                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[11px] font-bold text-emerald-700" aria-hidden="true">✓</span>
                         {item}
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-4 text-[13px] leading-[1.6] text-[#1c1712]/40">
+                  <p className="mt-4 text-[13px] leading-6 text-[#1c1712]/45">
                     <strong className="font-semibold text-[#1c1712]/60">Note:</strong> Consider your use case before applying.
                   </p>
                 </div>
-                <div>
-                  <p className="mb-3 text-[13px] font-semibold text-[#1c1712]">Cons</p>
-                  <ul className="space-y-2.5">
+                <div className="rounded-xl p-5 ring-1 ring-black/[0.07]">
+                  <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-red-700">Cons</p>
+                  <ul className="space-y-3">
                     {entry.prosCons.cons.map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-[14px] leading-[1.7] text-[#1c1712]/60">
-                        <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#1c1712]/30"/>
+                      <li key={item} className="flex items-start gap-2.5 text-[14px] leading-6 text-[#1c1712]/70">
+                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-100 text-[11px] font-bold text-red-600" aria-hidden="true">✕</span>
                         {item}
                       </li>
                     ))}
@@ -246,50 +231,48 @@ export function ContentPageView({
               </div>
             </div>
 
-            {/* AI sections */}
             {entry.aiSections.length > 0 && (
-              <div className="rounded-2xl bg-white p-7">
-                <div className="space-y-6">
+              <div className={block}>
+                <div className="space-y-7">
                   {entry.aiSections.map((section) => (
                     <div key={section.title}>
-                      <h3 className="mb-2 text-[16px] font-semibold text-[#1c1712]">{section.title}</h3>
-                      <p className="text-[14px] leading-[1.8] text-[#1c1712]/60">{section.body}</p>
+                      <h3 className="text-[1.1rem] font-semibold tracking-[-0.01em]">{section.title}</h3>
+                      <p className={`${body} mt-2`}>{section.body}</p>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Content sections */}
             {entry.sections.map((section, si) => (
-              <div key={section.title} className="rounded-2xl bg-white p-7">
-                <h2 className="mb-4 text-[18px] font-bold text-[#1c1712]">
-                  {si + 1}. {section.title}
+              <div key={section.title} className={block}>
+                <h2 className={h2}>
+                  <span className="mr-3 text-[#c2410c]">{String(si + 1).padStart(2, "0")}</span>
+                  {section.title}
                 </h2>
-                <p className="text-[15px] leading-[1.8] text-[#1c1712]/65">{section.body}</p>
+                <p className={`${body} mt-4`}>{section.body}</p>
               </div>
             ))}
 
-            {/* Comparison table */}
             {entry.comparisonRows && (
-              <div className="rounded-2xl bg-white p-7">
-                <h2 className="mb-5 text-[18px] font-bold text-[#1c1712]">Comparison</h2>
-                <div className="overflow-x-auto">
-                  <table className="min-w-full text-left">
+              <div className={block}>
+                <h2 className={h2}>Comparison</h2>
+                <div className="mt-6 overflow-x-auto rounded-2xl ring-1 ring-black/[0.07]">
+                  <table className="w-full min-w-[640px] text-left">
                     <thead>
-                      <tr className="border-b border-black/[0.08]">
+                      <tr className="border-b border-black/[0.07] bg-[#fafafa]">
                         {["Option","Best for","Strengths","Watchouts"].map(h => (
-                          <th key={h} className="pb-3 pr-6 text-[11px] font-semibold text-[#1c1712]/40">{h}</th>
+                          <th key={h} className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1c1712]/45">{h}</th>
                         ))}
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-black/[0.06]">
                       {entry.comparisonRows.map((row) => (
                         <tr key={row.label}>
-                          <td className="py-3 pr-6 text-[13px] font-semibold text-[#1c1712]">{row.label}</td>
-                          <td className="py-3 pr-6 text-[13px] text-[#1c1712]/55">{row.bestFor}</td>
-                          <td className="py-3 pr-6 text-[13px] text-[#1c1712]/55">{row.strengths}</td>
-                          <td className="py-3 text-[13px] text-[#1c1712]/55">{row.watchouts}</td>
+                          <td className="px-4 py-3 text-[14px] font-semibold">{row.label}</td>
+                          <td className="px-4 py-3 text-[14px] text-[#1c1712]/65">{row.bestFor}</td>
+                          <td className="px-4 py-3 text-[14px] text-[#1c1712]/65">{row.strengths}</td>
+                          <td className="px-4 py-3 text-[14px] text-[#1c1712]/65">{row.watchouts}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -298,59 +281,50 @@ export function ContentPageView({
               </div>
             )}
 
-            {/* Examples */}
             {entry.examples && (
-              <div className="rounded-2xl bg-white p-7">
-                <h2 className="mb-5 text-[18px] font-bold text-[#1c1712]">Examples</h2>
-                <div className="space-y-5">
+              <div className={block}>
+                <h2 className={h2}>Examples</h2>
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
                   {entry.examples.map((example) => (
-                    <div key={example.title}>
-                      <h3 className="mb-1.5 text-[15px] font-semibold text-[#1c1712]">{example.title}</h3>
-                      <p className="text-[14px] leading-[1.75] text-[#1c1712]/60">{example.body}</p>
+                    <div key={example.title} className="rounded-xl p-5 ring-1 ring-black/[0.07]">
+                      <h3 className="text-[15px] font-semibold">{example.title}</h3>
+                      <p className="mt-1.5 text-[14px] leading-6 text-[#1c1712]/65">{example.body}</p>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Citations */}
             {entry.citationBlocks.length > 0 && (
-              <div className="rounded-2xl bg-white p-7">
-                <h2 className="mb-5 text-[18px] font-bold text-[#1c1712]">Key Quotes</h2>
-                <div className="space-y-4">
-                  {entry.citationBlocks.map((block) => (
-                    <blockquote key={block}
-                      className="border-l-[3px] border-[#1c1712]/20 pl-5 text-[14px] italic leading-[1.8] text-[#1c1712]/55">
-                      {block}
+              <div className={block}>
+                <h2 className={h2}>Key Quotes</h2>
+                <div className="mt-6 space-y-5">
+                  {entry.citationBlocks.map((quote) => (
+                    <blockquote key={quote} className="border-l-2 border-[#c2410c] pl-5 text-[15px] italic leading-7 text-[#1c1712]/65">
+                      {quote}
                     </blockquote>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* FAQ */}
-            <div className="rounded-2xl bg-white p-7">
-              <h2 className="mb-6 text-[18px] font-bold text-[#1c1712]">Frequently Asked Questions</h2>
-              <div className="space-y-6">
-                {entry.faq.map((item) => (
-                  <div key={item.question}>
-                    <h3 className="mb-2 text-[15px] font-semibold text-[#1c1712]">{item.question}</h3>
-                    <p className="text-[14px] leading-[1.8] text-[#1c1712]/60">{item.answer}</p>
-                  </div>
-                ))}
+            <div className={block}>
+              <p className={eyebrow}>FAQ</p>
+              <h2 className={`${h2} mt-2`}>Frequently Asked Questions</h2>
+              <div className="mt-6">
+                <Faq items={entry.faq} />
               </div>
             </div>
           </article>
 
-          {/* ── Sidebar ── */}
-          <aside className="w-full shrink-0 space-y-5 lg:sticky lg:top-6 lg:w-[240px] lg:self-start">
-
+          {/* Sidebar */}
+          <aside className="min-w-0 space-y-8 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
             {entry.entityRelations.length > 0 && (
-              <div className="rounded-2xl bg-white p-5">
-                <p className="mb-4 text-[12px] font-semibold text-[#1c1712]">Related Concepts</p>
+              <div>
+                <SmallTitle>Related concepts</SmallTitle>
                 <div className="space-y-3">
                   {entry.entityRelations.map((rel) => (
-                    <p key={`${rel.entity}-${rel.connectedTo}`} className="text-[13px] leading-[1.6] text-[#1c1712]/60">
+                    <p key={`${rel.entity}-${rel.connectedTo}`} className="text-[14px] leading-6 text-[#1c1712]/65">
                       <strong className="font-semibold text-[#1c1712]">{rel.entity}</strong>{" "}
                       {rel.relationship}{" "}
                       <strong className="font-semibold text-[#1c1712]">{rel.connectedTo}</strong>
@@ -360,16 +334,38 @@ export function ContentPageView({
               </div>
             )}
 
+            {originalHex && (
+              <div>
+                <SmallTitle>Use {originalHex.toUpperCase()}</SmallTitle>
+                <ul className="space-y-1">
+                  {[
+                    { title: "Convert HEX to RGB", href: "/hex-to-rgb" },
+                    { title: "Convert HEX to HSL", href: "/hex-to-hsl" },
+                    { title: "Convert HEX to CMYK", href: "/hex-to-cmyk" },
+                    { title: "Convert HEX to OKLCH", href: "/hex-to-oklch" },
+                    { title: "Check text contrast", href: "/tools/contrast" },
+                    { title: "Find a color name", href: "/color-name-finder" },
+                  ].map((link) => (
+                    <li key={link.href}>
+                      <Link href={link.href} className="group flex items-start justify-between gap-3 rounded-lg px-3 py-2 text-[14px] leading-5 text-[#1c1712]/70 transition hover:bg-[#1c1712]/[0.04] hover:text-[#1c1712]">
+                        {link.title}
+                        <span className="shrink-0 text-[#1c1712]/30 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {groupedLinks.map((group) => (
-              <div key={group.label} className="rounded-2xl bg-white p-5">
-                <p className="mb-3 text-[12px] font-semibold text-[#1c1712]">{group.label}</p>
+              <div key={group.label}>
+                <SmallTitle>{group.label}</SmallTitle>
                 <ul className="space-y-1">
                   {group.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href}
-                        className="flex items-start gap-2.5 py-1 text-[13px] text-[#1c1712]/55 transition hover:text-[#1c1712]">
-                        <span className="mt-[9px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#1c1712]/25"/>
+                      <Link href={link.href} className="group flex items-start justify-between gap-3 rounded-lg px-3 py-2 text-[14px] leading-5 text-[#1c1712]/70 transition hover:bg-[#1c1712]/[0.04] hover:text-[#c2410c]">
                         {link.title}
+                        <span className="shrink-0 text-[#1c1712]/30 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
                       </Link>
                     </li>
                   ))}

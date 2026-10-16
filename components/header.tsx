@@ -34,6 +34,9 @@ const TOOL_LINKS = [
   { href: "/tools/tailwind-scale", label: "Tailwind Scale Generator" },
   { href: "/tools/color-psychology-explorer", label: "Color Psychology Explorer" },
   { href: "/tools/collage", label: "Collage Creator" },
+  { href: "/color-converter", label: "Color Converter" },
+  { href: "/random-color-generator", label: "Random Color Generator" },
+  { href: "/color-name-finder", label: "Color Name Finder" },
 ];
 
 export function Header({ isHome = false }: { isHome?: boolean } = {}) {

@@ -5,9 +5,9 @@ import { buildBreadcrumbSchema, buildFaqSchema, buildWebPageSchema } from "@/lib
 import { siteConfig } from "@/lib/seo/site-config";
 
 export const metadata: Metadata = {
-  title: "Color Converter - HEX to RGB, RGB to HEX, HSL Converter",
+  title: "Color Converter: HEX, RGB, HSL, CMYK & OKLCH Online",
   description:
-    "Free online color converter. Convert HEX to RGB, RGB to HEX, HEX to HSL, and more. Instant results with copy-to-clipboard - no signup needed.",
+    "Free online color converter: convert HEX to RGB, RGB to HEX, HSL, CMYK and OKLCH with a live preview and one-click copy. Instant results, no signup.",
   keywords: [
     "color converter",
     "hex to rgb",
@@ -21,6 +21,10 @@ export const metadata: Metadata = {
     "hex to rgb converter",
     "rgb to hex converter",
     "color format converter",
+    "hex to cmyk",
+    "rgb to cmyk",
+    "hex to oklch",
+    "oklch converter",
   ],
   alternates: { canonical: `${siteConfig.domain}/color-converter` },
   openGraph: {

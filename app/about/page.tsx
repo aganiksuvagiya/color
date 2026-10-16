@@ -3,22 +3,27 @@ import type { Metadata } from "next";
 import { StaticPage } from "@/components/static-page";
 import { StructuredData } from "@/components/seo/structured-data";
 import { buildPageMetadata } from "@/lib/seo/page-utils";
-import { buildOrganizationSchema, buildWebPageSchema } from "@/lib/seo/schema";
+import { buildAboutPageSchema, buildBreadcrumbSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/seo/site-config";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "About",
+  title: "About HueFlow: Free Color Palette Generator & Tools",
   description:
-    "HueFlow is a color platform for designers, developers, and marketers - palettes, gradients, accessibility tools, and brand color guidance in one place.",
+    "HueFlow is a free color palette generator and color toolkit for designers, developers and marketers: palettes, color picker, converter, contrast checker, gradients and brand color guidance.",
   path: "/about",
 });
 
 export default function AboutPage() {
   return (
     <>
-      <StructuredData data={buildOrganizationSchema()} />
-      <StructuredData data={buildWebPageSchema({ title: "About HueFlow", description: "HueFlow is a color platform for designers, developers, and marketers.", url: `${siteConfig.domain}/about` })} />
+      <StructuredData data={buildAboutPageSchema({ title: "About HueFlow", description: "HueFlow is a free color palette generator and color toolkit for designers, developers, and marketers.", url: `${siteConfig.domain}/about` })} />
+      <StructuredData data={buildBreadcrumbSchema([{ name: "Home", item: siteConfig.domain }, { name: "About HueFlow", item: `${siteConfig.domain}/about` }])} />
     <StaticPage title="About HueFlow">
+      <p>
+        <strong>HueFlow</strong> (hueflow.site) is a free online color palette generator and color toolkit.
+        It is a web app that runs in the browser with no signup, so you can generate palettes, pick and
+        convert colors, check contrast and build gradients without installing anything.
+      </p>
       <p>
         HueFlow is a color platform built for the people who work with color
         every day - designers, developers, and marketers. It brings palettes,
@@ -26,6 +31,20 @@ export default function AboutPage() {
         color guidance together in one place, so you can go from &quot;what
         color should this be?&quot; to implementation-ready values in minutes.
       </p>
+
+      <h2>HueFlow at a Glance</h2>
+      <ul>
+        <li><strong>What it is:</strong> a free color palette generator and color toolkit for the web.</li>
+        <li><strong>Who it is for:</strong> designers, developers, marketers, and anyone choosing colors for a website, app, or brand.</li>
+        <li><strong>Cost:</strong> free to use, with no account required to start.</li>
+        <li>
+          <strong>Main tools:</strong> <a href="/generator">color palette generator</a>,{" "}
+          <a href="/color-picker">color picker</a>, <a href="/color-converter">color converter</a>,{" "}
+          <a href="/tools/contrast">contrast checker</a>, <a href="/tools/gradient">gradient generator</a>,{" "}
+          <a href="/color-wheel">color wheel</a>, and <a href="/color-palette-from-image">color palette from image</a>.
+        </li>
+        <li><strong>Color formats:</strong> HEX, RGB, HSL, HSB, CMYK, and OKLCH.</li>
+      </ul>
 
       <h2>What You&apos;ll Find Here</h2>
       <ul>

@@ -5,10 +5,10 @@ import { buildFaqSchema, buildHowToSchema, buildSoftwareApplicationSchema } from
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Color Palette Generator - Free Color Scheme Maker",
+  title: "Color Scheme Generator: Lock, Shuffle & Export Palettes",
   alternates: { canonical: "/generator" },
   description:
-    "Free color palette generator — pick a mood, shuffle, or lock colors to build beautiful palettes in seconds. Export as CSS, Tailwind, or JSON. No signup.",
+    "HueFlow's palette maker: press space to generate color schemes, lock colors you like, start from a mood, base color or image, and export as CSS, Tailwind or JSON. Free, no signup.",
   keywords: [
     "color palette generator",
     "best color palette generator",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "online color palette generator",
   ],
   openGraph: {
-    title: "Color Palette Generator - Free Color Scheme Maker | HueFlow",
+    title: "Color Scheme Generator: Lock, Shuffle & Export Palettes | HueFlow",
     description:
       "Free color palette generator. Create beautiful color schemes, brand palettes, and UI color systems in seconds.",
     type: "website",

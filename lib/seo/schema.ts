@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/seo/site-config";
+import { siteConfig, socialProfiles } from "@/lib/seo/site-config";
 
 type Crumb = {
   name: string;
@@ -10,19 +10,63 @@ type FaqItem = {
   answer: string;
 };
 
+// Stable @ids let every page's JSON-LD point at the same Organization / WebSite / app entity,
+// so search engines and LLMs resolve "HueFlow" to one brand instead of treating each page's
+// block as a separate thing.
+export const organizationId = `${siteConfig.domain}/#organization`;
+export const websiteId = `${siteConfig.domain}/#website`;
+export const appId = `${siteConfig.domain}/#app`;
+
+const brandAlternateNames = ["Hue Flow", "HueFlow Color Tool", "HueFlow color palette generator", "hueflow.site"];
+
+export const siteFeatureList = [
+  "Color palette generator with color locking, shuffle and undo",
+  "Color picker with HEX, RGB, HSL, HSB and CMYK values",
+  "Color converter: HEX to RGB, RGB to HEX, HSL, CMYK and OKLCH",
+  "WCAG color contrast checker with accessibility auto-fix",
+  "Color palette from image extractor",
+  "CSS gradient generator (linear, radial, conic)",
+  "Color wheel and color harmony tool (complementary, analogous, triadic, tetradic)",
+  "Colorblind simulator (protanopia, deuteranopia, tritanopia)",
+  "Tailwind CSS color scale generator and Tailwind colors reference",
+  "Design token generator (color, typography, spacing)",
+  "Random color generator",
+  "Palette export as CSS variables, Tailwind config, JSON and PNG",
+];
+
 export function buildOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": organizationId,
     name: siteConfig.name,
-    alternateName: "HueFlow Color Tool",
+    alternateName: brandAlternateNames,
     url: siteConfig.domain,
     logo: {
       "@type": "ImageObject",
-      url: `${siteConfig.domain}/favicon.svg`,
+      url: `${siteConfig.domain}/apple-icon`,
+      width: 180,
+      height: 180,
     },
     description: siteConfig.description,
+    slogan: "Find colors that feel right.",
+    knowsAbout: [
+      "Color palettes",
+      "Color theory",
+      "Color contrast and WCAG accessibility",
+      "CSS gradients",
+      "Tailwind CSS colors",
+      "Color conversion (HEX, RGB, HSL, CMYK, OKLCH)",
+      "Brand color strategy",
+    ],
     areaServed: "US",
+    ...(socialProfiles.length > 0 ? { sameAs: socialProfiles } : {}),
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      email: "suvagiyaaganik@gmail.com",
+      availableLanguage: "English",
+    },
   };
 }
 
@@ -30,17 +74,13 @@ export function buildWebSiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": websiteId,
     name: siteConfig.name,
+    alternateName: ["HueFlow Color Tool", "Hue Flow", "hueflow.site"],
     url: siteConfig.domain,
     description: siteConfig.description,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${siteConfig.domain}/explore?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
+    inLanguage: "en-US",
+    publisher: { "@id": organizationId },
   };
 }
 
@@ -48,26 +88,67 @@ export function buildSoftwareApplicationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
+    "@id": appId,
     name: siteConfig.name,
+    alternateName: ["HueFlow Color Tool", "Hue Flow"],
     applicationCategory: "DesignApplication",
-    operatingSystem: "Web",
+    applicationSubCategory: "Color palette generator",
+    operatingSystem: "Any (web browser)",
+    browserRequirements: "Requires JavaScript. Works in current Chrome, Edge, Firefox and Safari.",
+    isAccessibleForFree: true,
     url: siteConfig.domain,
     description: siteConfig.description,
+    inLanguage: "en-US",
+    publisher: { "@id": organizationId },
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
     },
-    featureList: [
-      "Prompt-based color palette generator",
-      "WCAG contrast checker and accessibility auto-fix",
-      "Colorblind simulation",
-      "Gradient generator (linear, radial, conic)",
-      "Color animation / CSS keyframe generator",
-      "Image and website color extraction",
-      "Design token generator (color, typography, spacing)",
-      "Tailwind and CSS color export",
-    ],
+    featureList: siteFeatureList,
+  };
+}
+
+/** A single tool page (converter, random color generator, ...) as a free web app that is part of HueFlow. */
+export function buildWebApplicationSchema({
+  name,
+  description,
+  url,
+  featureList,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  featureList?: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name,
+    description,
+    url,
+    applicationCategory: "DesignApplication",
+    operatingSystem: "Any (web browser)",
+    browserRequirements: "Requires JavaScript",
+    isAccessibleForFree: true,
+    inLanguage: "en-US",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    isPartOf: { "@id": appId },
+    publisher: { "@id": organizationId },
+    ...(featureList ? { featureList } : {}),
+  };
+}
+
+export function buildAboutPageSchema({ title, description, url }: { title: string; description: string; url: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: title,
+    description,
+    url,
+    isPartOf: { "@id": websiteId },
+    about: { "@id": organizationId },
+    inLanguage: "en-US",
   };
 }
 
@@ -86,7 +167,8 @@ export function buildWebPageSchema({
     name: title,
     description,
     url,
-    isPartOf: siteConfig.domain,
+    isPartOf: { "@id": websiteId },
+    inLanguage: "en-US",
   };
 }
 

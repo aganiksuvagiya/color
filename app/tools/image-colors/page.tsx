@@ -29,7 +29,6 @@ export default function Page() {
           { name: page.title, item: url },
         ])}
       />
-      <h1 className="sr-only">{page.title}</h1>
       <ImageColorExtractor />
     </>
   );

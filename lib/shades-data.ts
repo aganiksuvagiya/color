@@ -1,3 +1,4 @@
+import { getContrastRatio } from "./accessibility";
 import { hexToHsl } from "./color-utils";
 
 // "Shades of <color>" pages (/shades-of-blue, ...). Shade names use the common
@@ -449,4 +450,20 @@ export function getResolvedShades(family: ShadeFamily): Shade[] {
 
 export function shadesPath(slug: string) {
   return `/shades-of-${slug}`;
+}
+
+/**
+ * Readable accent for a family's name in headings: the family's signature color if it
+ * reads on white, otherwise its most vivid readable shade. Headings are large text, so
+ * WCAG AA needs 3:1. White and gray have no vivid shade and fall back to ink.
+ */
+export function getFamilyAccent(family: ShadeFamily): string {
+  const readable = (hex: string) => getContrastRatio(hex, "#FFFFFF") >= 3;
+  if (readable(family.hex)) return family.hex;
+  return (
+    getResolvedShades(family)
+      .map((sh) => ({ hex: sh.hex, sat: hexToHsl(sh.hex).s, l: sh.lightness }))
+      .filter((c) => c.sat >= 35 && readable(c.hex))
+      .sort((a, b) => b.sat - a.sat || b.l - a.l)[0]?.hex ?? "#1C1712"
+  );
 }

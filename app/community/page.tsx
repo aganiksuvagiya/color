@@ -5,7 +5,8 @@ import { CommunityGallery } from "@/components/community-gallery";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Community Palettes",
+  title: "Community Color Palettes Shared by Designers",
+  alternates: { canonical: "/community" },
   description: "Browse color palettes shared by the HueFlow community — real palettes made by real users, ready to copy or remix in the generator.",
 };
 

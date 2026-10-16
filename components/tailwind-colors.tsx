@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Link from "next/link";
 import { useState, useCallback } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
+import { hexToHsl } from "@/lib/color-utils";
 import { toolPageContent } from "@/lib/seo/tool-pages";
 
 const tailwindColors: Record<string, Record<string, string>> = {
@@ -33,120 +34,210 @@ const tailwindColors: Record<string, Record<string, string>> = {
 
 const shadeKeys = ["50","100","200","300","400","500","600","700","800","900","950"];
 
+const GROUPS: { id: string; label: string; names: string[] | null }[] = [
+  { id: "all", label: "All", names: null },
+  { id: "gray", label: "Grays", names: ["slate", "gray", "zinc", "neutral", "stone"] },
+  { id: "warm", label: "Warm", names: ["red", "orange", "amber", "yellow"] },
+  { id: "green", label: "Greens", names: ["lime", "green", "emerald", "teal"] },
+  { id: "blue", label: "Blues", names: ["cyan", "sky", "blue", "indigo"] },
+  { id: "purple", label: "Purples", names: ["violet", "purple", "fuchsia", "pink", "rose"] },
+];
+
+type Format = "hex" | "rgb" | "hsl" | "class";
+const FORMATS: { id: Format; label: string }[] = [
+  { id: "hex", label: "HEX" },
+  { id: "rgb", label: "RGB" },
+  { id: "hsl", label: "HSL" },
+  { id: "class", label: "Class" },
+];
+
 function isLight(hex: string): boolean {
   const r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
   return (0.299*r + 0.587*g + 0.114*b)/255 > 0.55;
 }
 
+function formatValue(hex: string, name: string, shade: string, f: Format) {
+  if (f === "hex") return hex.toUpperCase();
+  if (f === "class") return `${name}-${shade}`;
+  if (f === "rgb") {
+    return `rgb(${parseInt(hex.slice(1, 3), 16)}, ${parseInt(hex.slice(3, 5), 16)}, ${parseInt(hex.slice(5, 7), 16)})`;
+  }
+  const { h, s, l } = hexToHsl(hex);
+  return `hsl(${h}, ${s}%, ${l}%)`;
+}
+
+const DOTS = [tailwindColors.indigo["600"], tailwindColors.sky["500"], tailwindColors.emerald["500"], tailwindColors.amber["500"], tailwindColors.rose["500"]];
+const familyCount = Object.keys(tailwindColors).length;
+
 export function TailwindColors() {
   const [search, setSearch] = useState("");
+  const [group, setGroup] = useState("all");
+  const [format, setFormat] = useState<Format>("hex");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
-  const handleCopy = useCallback((hex: string, key: string) => {
-    navigator.clipboard.writeText(hex);
+  const handleCopy = useCallback((text: string, key: string) => {
+    navigator.clipboard.writeText(text);
     setCopiedKey(key);
-    setTimeout(() => setCopiedKey(null), 1500);
+    setTimeout(() => setCopiedKey((k) => (k === key ? null : k)), 1500);
   }, []);
 
-  const families = Object.entries(tailwindColors).filter(([name]) =>
-    name.toLowerCase().includes(search.toLowerCase())
+  const active = GROUPS.find((g) => g.id === group) ?? GROUPS[0];
+  const q = search.trim().toLowerCase();
+  const families = Object.entries(tailwindColors).filter(
+    ([name]) => (!active.names || active.names.includes(name)) && name.toLowerCase().includes(q)
   );
 
+  const copiedLabel = copiedKey?.startsWith("css:") ? "✓ CSS copied" : "✓ Copied";
+
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <main className="mx-auto w-full max-w-[1100px] flex-1 px-4 pb-20 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
+      {copiedKey && (
+        <div role="status" className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1c1712] px-5 py-2.5 text-[13px] font-semibold text-white shadow-lg">
+          {copiedLabel}
+        </div>
+      )}
 
-        {/* ── Hero ── */}
-        <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.35 }}
-          className="mb-8 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/40 shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]"/>Color Reference
-          </span>
-          <h1 className="mt-2.5 font-display text-[2.4rem] font-black leading-none tracking-[-0.04em] sm:text-[3.2rem]">
-            Tailwind CSS Colors
-          </h1>
-          <p className="mt-2 text-[14px] text-[#1c1712]/40">
-            The complete Tailwind CSS v4 color palette — click any shade to copy.
-          </p>
-        </motion.div>
-
-        {/* ── Search ── */}
-        <motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.35, delay:0.05 }}
-          className="mb-6">
-          <div className="relative mx-auto max-w-sm">
-            <svg className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1c1712]/30"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-            <input type="text" placeholder="Search colors…" value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="w-full rounded-2xl border border-black/[0.08] bg-white py-2.5 pl-10 pr-4 text-[13px] text-[#1c1712] placeholder-[#1c1712]/30 shadow-sm outline-none transition focus:border-black/15"/>
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Tailwind Colors</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Tailwind CSS Colors</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {DOTS.map((c, i) => (
+                <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
+              ))}
+            </span>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">{familyCount} families, {familyCount * shadeKeys.length} shades.</span> The full Tailwind CSS v4 palette. Click any shade to copy it as HEX, RGB, HSL or a class name.
+            </p>
           </div>
-        </motion.div>
+        </section>
 
-        {/* ── Color families ── */}
-        <div className="space-y-2.5">
-          {families.map(([name, shades], fi) => (
-            <motion.div key={name}
-              initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }}
-              transition={{ duration:0.3, delay:0.03 * Math.min(fi, 12) }}
-              className="overflow-hidden rounded-2xl border border-black/[0.07] bg-white shadow-sm">
+        {/* ── Toolbar + families ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="z-20 border-b border-black/[0.06] bg-white/95 backdrop-blur lg:sticky lg:top-[86px]">
+            <div className="flex w-full flex-wrap items-center gap-3 px-6 py-4 sm:px-8 lg:px-12">
+              <label className="relative block w-full sm:w-64">
+                <span className="sr-only">Search Tailwind colors</span>
+                <svg className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1c1712]/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search colors"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="h-10 w-full rounded-full bg-white pl-10 pr-4 text-[14px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/40 focus:ring-2 focus:ring-[#1c1712]"
+                />
+              </label>
 
-              {/* Name row */}
-              <div className="flex items-center justify-between px-4 py-2 border-b border-black/[0.05]">
-                <span className="text-[11px] font-bold capitalize tracking-wide text-[#1c1712]/60">{name}</span>
-                <span className="font-mono text-[9px] text-[#1c1712]/25">{shades["500"]}</span>
+              <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Color group">
+                {GROUPS.map((g) => (
+                  <button
+                    key={g.id}
+                    onClick={() => setGroup(g.id)}
+                    aria-pressed={group === g.id}
+                    className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${
+                      group === g.id ? "bg-[#1c1712] text-white" : "text-[#1c1712]/65 ring-1 ring-black/[0.12] hover:text-[#1c1712] hover:ring-black/25"
+                    }`}
+                  >
+                    {g.label}
+                  </button>
+                ))}
               </div>
 
-              {/* Swatch strip — palettes hover pattern */}
-              <div className="flex overflow-hidden">
-                {shadeKeys.map(shade => {
-                  const hex = shades[shade];
-                  const key = `${name}-${shade}`;
-                  const light = isLight(hex);
-                  const isCopied = copiedKey === key;
+              <div className="flex items-center gap-2 lg:ml-auto" role="group" aria-label="Copy format">
+                <span className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">Copy as</span>
+                <div className="flex rounded-full p-0.5 ring-1 ring-black/[0.12]">
+                  {FORMATS.map((f) => (
+                    <button
+                      key={f.id}
+                      onClick={() => setFormat(f.id)}
+                      aria-pressed={format === f.id}
+                      className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${
+                        format === f.id ? "bg-[#1c1712] text-white" : "text-[#1c1712]/65 hover:text-[#1c1712]"
+                      }`}
+                    >
+                      {f.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <div className="w-full px-6 py-8 sm:px-8 lg:px-12">
+            <p className="mb-5 text-[14px] font-semibold text-[#1c1712]/80">
+              {families.length} {families.length === 1 ? "family" : "families"}
+              <span className="font-normal text-[#1c1712]/45"> · {families.length * shadeKeys.length} shades</span>
+            </p>
+
+            {families.length > 0 ? (
+              <div className="grid gap-4 lg:grid-cols-2">
+                {families.map(([name, shades]) => {
+                  const css = `@theme {\n${shadeKeys.map((s) => `  --color-${name}-${s}: ${shades[s]};`).join("\n")}\n}`;
                   return (
-                    <div key={shade}
-                      className="group/swatch relative flex-1 transition-[flex] duration-300 hover:flex-[3]"
-                      style={{ backgroundColor: hex, minHeight: 56 }}>
-                      <button onClick={() => handleCopy(hex, key)}
-                        className="absolute inset-0 flex flex-col items-center justify-between px-1 py-2"
-                        aria-label={`Copy ${name}-${shade} ${hex}`}>
-                        <span className="font-mono text-[8px] font-bold opacity-0 transition-opacity duration-200 group-hover/swatch:opacity-100"
-                          style={{ color: light ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.7)" }}>
-                          {shade}
-                        </span>
-                        <span className="rounded-full bg-black/55 px-2 py-0.5 font-mono text-[8px] text-white opacity-0 transition-opacity duration-200 group-hover/swatch:opacity-100">
-                          {isCopied ? "✓ Copied" : hex.toUpperCase()}
-                        </span>
-                      </button>
-                    </div>
+                    <article key={name} className="overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
+                      <div className="flex items-center justify-between gap-3 px-4 py-3">
+                        <div className="flex min-w-0 items-center gap-2.5">
+                          <span className="h-3.5 w-3.5 shrink-0 rounded-full ring-1 ring-black/10" style={{ backgroundColor: shades["500"] }} />
+                          <h2 className="text-[15px] font-semibold capitalize">{name}</h2>
+                          <span className="font-mono text-[12px] uppercase text-[#1c1712]/45">{shades["500"]}</span>
+                        </div>
+                        <button
+                          onClick={() => handleCopy(css, `css:${name}`)}
+                          className="shrink-0 rounded-full px-3 py-1 text-[12px] font-semibold text-[#1c1712]/65 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25"
+                        >
+                          Copy CSS
+                        </button>
+                      </div>
+                      <div className="flex h-24 overflow-hidden">
+                        {shadeKeys.map((shade) => {
+                          const hex = shades[shade];
+                          const key = `${name}-${shade}`;
+                          const light = isLight(hex);
+                          const value = formatValue(hex, name, shade, format);
+                          return (
+                            <div key={shade} className="group/swatch relative flex-1 transition-[flex] duration-300 hover:z-10 hover:flex-[3]" style={{ backgroundColor: hex }}>
+                              <button
+                                onClick={() => handleCopy(value, key)}
+                                className="absolute inset-0 flex flex-col items-center justify-between px-1 py-2.5"
+                                aria-label={`Copy ${name}-${shade}: ${value}`}
+                              >
+                                <span className="font-mono text-[10px] font-semibold" style={{ color: light ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.8)" }}>
+                                  {shade}
+                                </span>
+                                <span className="max-w-full truncate whitespace-nowrap rounded-full bg-black/55 px-2 py-0.5 font-mono text-[10px] text-white opacity-0 transition-opacity duration-200 group-hover/swatch:opacity-100">
+                                  {copiedKey === key ? "✓ Copied" : value}
+                                </span>
+                              </button>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </article>
                   );
                 })}
               </div>
+            ) : (
+              <p className="text-[15px] text-[#1c1712]/55">
+                No colors match &ldquo;{search}&rdquo;.{" "}
+                <button onClick={() => { setSearch(""); setGroup("all"); }} className="font-semibold text-[#c2410c] hover:underline">Clear filters</button>
+              </p>
+            )}
+          </div>
+        </section>
 
-              {/* Shade labels */}
-              <div className="flex border-t border-black/[0.05]">
-                {shadeKeys.map(shade => (
-                  <div key={shade} className="flex-1 py-1 text-center">
-                    <span className="font-mono text-[7px] font-semibold text-[#1c1712]/25">{shade}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-
-          {families.length === 0 && (
-            <div className="py-20 text-center text-[13px] text-[#1c1712]/35">
-              No colors matching &ldquo;{search}&rdquo;
-            </div>
-          )}
-        </div>
-
-        <ToolPageSections config={toolPageContent.tailwind}/>
+        <ToolPageSections config={toolPageContent.tailwind} variant="new" />
       </main>
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import Link from "next/link";
+import { useState, type ReactNode } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { generateRandomPalette } from "@/lib/color-utils";
@@ -624,8 +624,7 @@ function ComponentShowcase({ neutral, primary, success, warning, accent, primary
   const LBL = `border-b px-4 py-2.5 text-[9px] font-bold uppercase tracking-[0.18em]`;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}
-      className="space-y-3">
+    <div className="space-y-4">
 
       {/* ── Row 1: Buttons + Badges ── */}
       <div className={C} style={{ borderColor: bd }}>
@@ -873,15 +872,32 @@ function ComponentShowcase({ neutral, primary, success, warning, accent, primary
         </div>
       </div>
 
-    </motion.div>
+    </div>
   );
 }
 
 // ── Main Component ───────────────────────────────────────────────────────────
+type View = "website" | "dashboard" | "app" | "components";
+
+const VIEWS: { id: View; label: string; url: string }[] = [
+  { id: "website", label: "Website", url: "hueflow.site" },
+  { id: "dashboard", label: "Dashboard", url: "brandly.app/overview" },
+  { id: "app", label: "App UI", url: "brandly.app/design" },
+  { id: "components", label: "Components", url: "brandly.app/ui-kit" },
+];
+
+function PaletteIcon({ children }: { children: ReactNode }) {
+  return (
+    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {children}
+    </svg>
+  );
+}
+
 export function PaletteVisualizer() {
   const [palette, setPalette] = useState<Palette>(DEFAULT_PALETTE);
-  const [copied, setCopied] = useState(false);
-  const [copiedJson, setCopiedJson] = useState(false);
+  const [view, setView] = useState<View>("website");
+  const [copied, setCopied] = useState<"css" | "json" | null>(null);
 
   function setRoleColor(role: SemanticRole, hex: string) {
     setPalette((prev) => ({
@@ -894,18 +910,14 @@ export function PaletteVisualizer() {
 
   function randomize() { setPalette(generateRandomPalette()); }
 
-  async function copyCss() {
-    const vars = palette.colors.map((c) => `  --color-${c.role}: ${c.hex};`).join("\n");
-    await navigator.clipboard.writeText(`:root {\n${vars}\n}`);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  }
-
-  async function copyJson() {
-    const tokens = Object.fromEntries(palette.colors.map((c) => [`color-${c.role}`, c.hex]));
-    await navigator.clipboard.writeText(JSON.stringify(tokens, null, 2));
-    setCopiedJson(true);
-    setTimeout(() => setCopiedJson(false), 1500);
+  async function copyAs(kind: "css" | "json") {
+    const text =
+      kind === "css"
+        ? `:root {\n${palette.colors.map((c) => `  --color-${c.role}: ${c.hex};`).join("\n")}\n}`
+        : JSON.stringify(Object.fromEntries(palette.colors.map((c) => [`color-${c.role}`, c.hex])), null, 2);
+    await navigator.clipboard.writeText(text);
+    setCopied(kind);
+    setTimeout(() => setCopied((c) => (c === kind ? null : c)), 1500);
   }
 
   const neutral     = getByRole(palette, "neutral");
@@ -916,112 +928,135 @@ export function PaletteVisualizer() {
   const primaryText = getTextColor(palette, "primary");
 
   const previewProps = { neutral, primary, success, warning, accent, primaryText };
+  const current = VIEWS.find((v) => v.id === view) ?? VIEWS[0];
+
+  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+  const actionBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <AnimatePresence>
-        {(copied || copiedJson) && (
-          <motion.div key="toast" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 rounded-full border border-[#e8531f]/20 bg-[#e8531f]/10 px-5 py-2.5 text-sm font-semibold text-[#e8531f] shadow-[0_4px_20px_rgba(232,83,31,0.12)] whitespace-nowrap">
-            {copiedJson ? "✓ JSON tokens copied!" : "✓ CSS variables copied!"}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <main className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col px-4 pb-10 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
-
-        {/* Hero */}
-        <div className="mb-6 flex flex-col items-center gap-2 text-center sm:mb-8">
-          <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.24em] text-[#1c1712]/45 shadow-[0_1px_4px_rgba(28,23,18,0.06)]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]" />
-            Design Preview
-          </span>
-          <h1 className="font-display text-[2rem] font-bold leading-tight tracking-[-0.04em] text-[#1c1712] sm:text-[2.6rem]">
-            Palette Visualizer
-          </h1>
-          <p className="max-w-md text-sm leading-6 text-[#1c1712]/45 sm:text-[15px]">
-            Apply your palette to real UI components and see the result instantly. Pick colors, export CSS.
-          </p>
+      {copied && (
+        <div role="status" className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1c1712] px-5 py-2.5 text-[13px] font-semibold text-white shadow-lg">
+          {copied === "json" ? "✓ JSON tokens copied" : "✓ CSS variables copied"}
         </div>
+      )}
 
-        {/* Color editor */}
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
-          className="mb-4 overflow-hidden rounded-2xl border border-black/[0.08] bg-white shadow-[0_1px_6px_rgba(28,23,18,0.06)]">
-          {/* Palette name header */}
-          <div className="flex items-center justify-between border-b border-black/[0.06] px-4 py-2.5">
-            <div className="flex items-center gap-2">
-              <div className="flex gap-1">
-                {palette.colors.map((c) => (
-                  <div key={c.role} className="h-3 w-3 rounded-full" style={{ backgroundColor: c.hex }} />
-                ))}
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Palette Visualizer</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Palette Visualizer</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {palette.colors.map((c) => (
+                <span key={c.role} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c.hex }} />
+              ))}
+            </span>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">See your palette on real UI.</span> Edit the five role colors and watch a website, dashboard, app screen and UI kit update live, then copy CSS or JSON tokens.
+            </p>
+          </div>
+        </section>
+
+        {/* ── Workspace: palette on the left, live preview on the right ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="grid w-full gap-6 px-6 py-10 sm:px-8 lg:grid-cols-[320px_minmax(0,1fr)] lg:px-12">
+            {/* Palette roles */}
+            <aside className="flex flex-col rounded-2xl ring-1 ring-black/[0.07] lg:sticky lg:top-24 lg:self-start">
+              <div className="px-5 pb-3 pt-5">
+                <p className={label}>Palette roles</p>
+                <p className="mt-1 text-[13px] text-[#1c1712]/50">Click a swatch to change it.</p>
               </div>
-              <span className="text-[11px] font-semibold text-[#1c1712]/60">{palette.label}</span>
-            </div>
-            <span className="text-[9px] font-medium text-[#1c1712]/30">Click any swatch to edit</span>
-          </div>
-          <div className="flex flex-wrap items-stretch divide-x divide-black/[0.06]">
-            {palette.colors.map((color, i) => (
-              <motion.div key={color.role} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.06 }}
-                className="flex flex-1 flex-col items-center gap-2.5 px-4 py-4 min-w-[90px]">
-                <div className="group relative h-14 w-14 overflow-hidden rounded-xl border border-black/[0.10] shadow-[0_2px_8px_rgba(0,0,0,0.10)] transition-transform hover:scale-105"
-                  style={{ backgroundColor: color.hex }}>
-                  <input type="color" aria-label={`${ROLE_LABELS[color.role]} color`} value={color.hex}
-                    onChange={(e) => setRoleColor(color.role, e.target.value.toUpperCase())}
-                    className="absolute inset-0 h-full w-full cursor-pointer opacity-0" />
-                  {/* Pencil hint on hover */}
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
-                    style={{ backgroundColor: "rgba(0,0,0,0.25)" }}>
-                    <svg className="h-4 w-4 text-white drop-shadow" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/>
-                    </svg>
-                  </div>
-                </div>
-                <div className="text-center">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#1c1712]/35">{ROLE_LABELS[color.role]}</p>
-                  <p className="text-[11px] font-semibold text-[#1c1712]/70">{color.name}</p>
-                  <p className="font-mono text-[9px] text-[#1c1712]/30">{color.hex.toUpperCase()}</p>
-                </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full" style={{ backgroundColor: lighten(color.hex, 0.78) }}>
-                  <div className="h-1.5 rounded-full transition-all" style={{ backgroundColor: color.hex, width: "60%" }} />
-                </div>
-              </motion.div>
-            ))}
-            {/* Action buttons */}
-            <div className="flex min-w-[130px] flex-col items-center justify-center gap-2 px-4 py-4">
-              <button onClick={randomize}
-                className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-black/[0.08] bg-[#faf7f2] px-3 py-2 text-[11px] font-semibold text-[#1c1712]/50 transition hover:bg-[#f0ede8] hover:text-[#1c1712]/70">
-                <svg className="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311h2.433a.75.75 0 000-1.5H3.989a.75.75 0 00-.75.75v4.242a.75.75 0 001.5 0v-2.43l.31.31a7 7 0 0011.712-3.138.75.75 0 00-1.449-.39zm1.23-3.723a.75.75 0 00.219-.53V2.929a.75.75 0 00-1.5 0V5.36l-.31-.31A7 7 0 003.239 8.188a.75.75 0 101.448.389A5.5 5.5 0 0113.89 6.11l.311.31h-2.432a.75.75 0 000 1.5h4.243a.75.75 0 00.53-.219z" clipRule="evenodd"/>
-                </svg>
-                Randomize
-              </button>
-              <button onClick={copyCss}
-                className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#e8531f]/20 bg-[#e8531f]/8 px-3 py-2 text-[11px] font-semibold text-[#e8531f] transition hover:bg-[#e8531f]/14">
-                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-                </svg>
-                {copied ? "Copied!" : "Copy CSS"}
-              </button>
-              <button onClick={copyJson}
-                className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-black/[0.08] bg-[#faf7f2] px-3 py-2 text-[11px] font-semibold text-[#1c1712]/50 transition hover:bg-[#f0ede8] hover:text-[#1c1712]/70">
-                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/>
-                </svg>
-                {copiedJson ? "Copied!" : "Copy JSON"}
-              </button>
-            </div>
-          </div>
-        </motion.div>
+              <ul className="divide-y divide-black/[0.06] border-t border-black/[0.06]">
+                {palette.colors.map((color) => (
+                  <li key={color.role} className="flex items-center gap-3 px-5 py-3">
+                    <label
+                      className="relative h-12 w-12 shrink-0 cursor-pointer overflow-hidden rounded-xl ring-1 ring-black/10 transition hover:ring-black/30"
+                      title="Open your system color picker"
+                    >
+                      <input
+                        type="color"
+                        aria-label={`${ROLE_LABELS[color.role]} color`}
+                        value={color.hex}
+                        onChange={(e) => setRoleColor(color.role, e.target.value.toUpperCase())}
+                        className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                      />
+                      <span className="block h-full w-full" style={{ backgroundColor: color.hex }} />
+                    </label>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{ROLE_LABELS[color.role]}</p>
+                      <p className="truncate text-[14px] font-semibold leading-5">{color.name}</p>
+                    </div>
+                    <p className="font-mono text-[12px] uppercase text-[#1c1712]/50">{color.hex}</p>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-wrap gap-2 border-t border-black/[0.06] p-4">
+                <button onClick={randomize} className="inline-flex items-center gap-2 rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+                  <PaletteIcon>
+                    <rect x="3" y="3" width="18" height="18" rx="4" />
+                    <circle cx="8.5" cy="8.5" r="1" fill="currentColor" />
+                    <circle cx="12" cy="12" r="1" fill="currentColor" />
+                    <circle cx="15.5" cy="15.5" r="1" fill="currentColor" />
+                  </PaletteIcon>
+                  Randomize
+                </button>
+                <button onClick={() => copyAs("css")} className={actionBtn}>{copied === "css" ? "✓ Copied" : "Copy CSS"}</button>
+                <button onClick={() => copyAs("json")} className={actionBtn}>{copied === "json" ? "✓ Copied" : "Copy JSON"}</button>
+              </div>
+            </aside>
 
-        {/* Component Showcase */}
-        <ComponentShowcase {...previewProps} />
+            {/* Live preview */}
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Preview type">
+                {VIEWS.map((v) => (
+                  <button
+                    key={v.id}
+                    role="tab"
+                    aria-selected={view === v.id}
+                    onClick={() => setView(v.id)}
+                    className={`rounded-full px-4 py-1.5 text-[13px] font-semibold transition ${
+                      view === v.id ? "bg-[#1c1712] text-white" : "text-[#1c1712]/65 ring-1 ring-black/[0.12] hover:text-[#1c1712] hover:ring-black/25"
+                    }`}
+                  >
+                    {v.label}
+                  </button>
+                ))}
+                <span className="ml-auto text-[13px] text-[#1c1712]/45">Updates live as you edit</span>
+              </div>
 
-        <div className="mt-10">
-          <ToolPageSections config={toolPageContent["palette-visualizer"]} />
-        </div>
+              <div className="mt-4 overflow-hidden rounded-2xl ring-1 ring-black/[0.1]">
+                <div className="flex items-center gap-3 border-b border-black/[0.07] bg-[#f5f5f5] px-4 py-2.5" aria-hidden="true">
+                  <span className="flex gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-black/15" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-black/15" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-black/15" />
+                  </span>
+                  <span className="mx-auto w-full max-w-xs truncate rounded-full bg-white px-4 py-1 text-center text-[11px] text-[#1c1712]/50 ring-1 ring-black/[0.06]">
+                    {current.url}
+                  </span>
+                  <span className="w-10" />
+                </div>
+                <div role="tabpanel" className={view === "components" ? "h-[34rem] overflow-y-auto bg-[#f5f5f5] p-4 sm:p-5 lg:h-[40rem]" : "h-[34rem] lg:h-[40rem]"}>
+                  {view === "website" && <MarketingPreview {...previewProps} />}
+                  {view === "dashboard" && <DashboardPreview {...previewProps} />}
+                  {view === "app" && <ProductPreview {...previewProps} />}
+                  {view === "components" && <ComponentShowcase {...previewProps} />}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <ToolPageSections config={toolPageContent["palette-visualizer"]} variant="new" />
       </main>
     </div>
   );

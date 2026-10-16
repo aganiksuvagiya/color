@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useCallback, useMemo, useId, useEffect, useRef } from "react";
+import Link from "next/link";
+import { useState, useCallback, useMemo, useId, useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { toolPageContent } from "@/lib/seo/tool-pages";
@@ -17,10 +17,10 @@ interface PresetAnimation {
 }
 
 /* ── Constants ── */
-const ANIMATION_TYPES: { value: AnimationType; label: string; icon: string }[] = [
-  { value: "gradient-shift", label: "Gradient Shift", icon: "⇄" },
-  { value: "color-pulse",    label: "Color Pulse",    icon: "◉" },
-  { value: "hue-rotate",     label: "Hue Rotate",     icon: "↻" },
+const ANIMATION_TYPES: { value: AnimationType; label: string }[] = [
+  { value: "gradient-shift", label: "Gradient Shift" },
+  { value: "color-pulse",    label: "Color Pulse" },
+  { value: "hue-rotate",     label: "Hue Rotate" },
 ];
 const DIRECTIONS: { value: Direction; label: string }[] = [
   { value: "normal", label: "Normal" },
@@ -44,6 +44,16 @@ const PRESETS: PresetAnimation[] = [
 ];
 
 let nextId = 3;
+
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const hexInput = "h-10 w-28 rounded-xl px-3 font-mono text-[13px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition focus:ring-2 focus:ring-[#1c1712]";
+const ghostBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25 disabled:cursor-not-allowed disabled:opacity-40";
+const THUMB =
+  "[&::-webkit-slider-runnable-track]:bg-transparent [&::-moz-range-track]:bg-transparent " +
+  "[&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full " +
+  "[&::-webkit-slider-thumb]:border-[3px] [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:bg-[#1c1712] [&::-webkit-slider-thumb]:shadow-[0_1px_5px_rgba(0,0,0,0.4)] " +
+  "[&::-moz-range-thumb]:box-border [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:rounded-full " +
+  "[&::-moz-range-thumb]:border-[3px] [&::-moz-range-thumb]:border-solid [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:bg-[#1c1712] [&::-moz-range-thumb]:shadow-[0_1px_5px_rgba(0,0,0,0.4)]";
 
 /* ── CSS generation ── */
 function buildKeyframesAndStyle(
@@ -72,42 +82,129 @@ function buildKeyframesAndStyle(
   }
 }
 
-/* ── Animated Preset Chip ── */
-function PresetChip({ preset, active, onClick }: { preset: PresetAnimation; active: boolean; onClick: () => void }) {
-  const id = useId().replace(/:/g,"");
-  const anim = `pc_${id}`;
-  const { keyframes, elementCss } = buildKeyframesAndStyle(anim, preset.type, preset.colors, preset.duration, preset.direction, preset.easing);
+/* ── Small UI pieces ── */
+function Svg({ children, size = 15 }: { children: ReactNode; size?: number }) {
   return (
-    <button onClick={onClick}
-      className={`group relative shrink-0 overflow-hidden rounded-xl border transition-all ${
-        active ? "border-[#e8531f]/50 shadow-[0_0_0_2px_rgba(232,83,31,0.25)]" : "border-black/[0.07] hover:border-black/[0.14] hover:shadow-md"
-      }`} style={{ width: 88 }}>
-      <style>{`${keyframes}\n${elementCss.replace(".animated-element","#"+id)}`}</style>
-      <div id={id} style={{ height: 52 }}/>
-      <div className={`px-2 py-1.5 text-left ${active ? "bg-[#e8531f]/[0.06]" : "bg-white"}`}>
-        <p className={`text-[10px] font-bold leading-tight ${active ? "text-[#e8531f]" : "text-[#1c1712]"}`}>{preset.name}</p>
-      </div>
-    </button>
+    <svg width={size} height={size} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {children}
+    </svg>
   );
 }
 
-/* ── Mini toggle group ── */
-function ToggleGroup<T extends string>({
-  options, value, onChange,
-}: { options: { value: T; label: string }[]; value: T; onChange: (v: T) => void }) {
+const CopyIcon = () => (
+  <Svg>
+    <rect x="9" y="9" width="13" height="13" rx="2" />
+    <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+  </Svg>
+);
+
+function Segmented<T extends string>({ options, value, onChange, name }: { options: { value: T; label: string }[]; value: T; onChange: (v: T) => void; name: string }) {
   return (
-    <div className="flex gap-1">
+    <div role="group" aria-label={name} className="flex flex-wrap gap-2">
       {options.map(o => (
-        <button key={o.value} onClick={() => onChange(o.value)}
-          className={`flex-1 rounded-lg border py-1.5 text-[10px] font-semibold transition-all ${
-            value===o.value ? "border-[#e8531f]/20 bg-[#e8531f] text-white shadow-[0_2px_8px_rgba(232,83,31,0.28)]" : "border-black/[0.06] bg-[#faf7f2] text-[#1c1712]/40 hover:bg-[#f0ede8]"
-          }`}>
+        <button
+          key={o.value}
+          onClick={() => onChange(o.value)}
+          aria-pressed={value === o.value}
+          className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${
+            value === o.value ? "bg-[#1c1712] text-white" : "text-[#1c1712]/65 ring-1 ring-black/[0.12] hover:text-[#1c1712] hover:ring-black/25"
+          }`}
+        >
           {o.label}
         </button>
       ))}
     </div>
   );
 }
+
+function DurationSlider({ value, onChange }: { value: number; onChange: (v: number) => void }) {
+  const pct = ((value - 1) / 9) * 100;
+  return (
+    <div className="relative h-5">
+      <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 overflow-hidden rounded-full bg-black/[0.08]">
+        <div className="h-full rounded-full bg-[#1c1712]" style={{ width: `${pct}%` } as CSSProperties} />
+      </div>
+      <input
+        type="range"
+        min={1}
+        max={10}
+        step={0.5}
+        value={value}
+        onChange={e => onChange(parseFloat(e.target.value))}
+        aria-label="Duration in seconds"
+        className={`absolute inset-0 h-5 w-full cursor-pointer appearance-none bg-transparent focus-visible:outline-none focus-visible:[&::-webkit-slider-thumb]:ring-2 focus-visible:[&::-webkit-slider-thumb]:ring-[#1c1712] ${THUMB}`}
+      />
+    </div>
+  );
+}
+
+function ColorRows({ stops, onChange, onRemove, onAdd }: { stops: ColorStop[]; onChange: (id: number, hex: string) => void; onRemove: (id: number) => void; onAdd: () => void }) {
+  const hexes = stops.map(s => s.color);
+  return (
+    <div>
+      <div className="flex items-center justify-between gap-3">
+        <p className={label}>Colors <span className="ml-2 font-mono normal-case tracking-normal text-[#1c1712]/35">{stops.length}/6</span></p>
+        <button onClick={onAdd} disabled={stops.length >= 6} className={ghostBtn.replace("px-4 py-2", "px-3.5 py-1.5")}>
+          <Svg size={13}><path d="M12 4v16m8-8H4" /></Svg>
+          Add color
+        </button>
+      </div>
+      <div className="mt-3 h-2 overflow-hidden rounded-full ring-1 ring-black/[0.06]" style={{ background: `linear-gradient(90deg, ${hexes.join(",")})` }} />
+      <div className="mt-4 space-y-2.5">
+        {stops.map((stop, i) => (
+          <div key={stop.id} className="flex items-center gap-2.5">
+            <label className="relative h-10 w-10 shrink-0 cursor-pointer overflow-hidden rounded-xl ring-1 ring-black/10 transition hover:ring-black/30" style={{ backgroundColor: stop.color }} title="Open your system color picker">
+              <input
+                type="color"
+                value={stop.color.length === 7 ? stop.color : "#000000"}
+                onChange={e => onChange(stop.id, e.target.value)}
+                className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                aria-label={`Pick color ${i + 1}`}
+              />
+            </label>
+            <input
+              type="text"
+              value={stop.color}
+              maxLength={7}
+              spellCheck={false}
+              aria-label={`HEX of color ${i + 1}`}
+              onChange={e => { const v = e.target.value; if (/^#[0-9A-Fa-f]{0,6}$/.test(v)) onChange(stop.id, v); }}
+              className={hexInput}
+            />
+            <button
+              onClick={() => onRemove(stop.id)}
+              disabled={stops.length <= 2}
+              aria-label={`Remove color ${i + 1}`}
+              className="ml-auto flex h-10 w-10 items-center justify-center rounded-xl text-[#1c1712]/35 transition hover:bg-black/[0.04] hover:text-[#1c1712] disabled:opacity-25 disabled:hover:bg-transparent"
+            >
+              <Svg><path d="M6 18L18 6M6 6l12 12" /></Svg>
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Animated preset tile ── */
+function PresetChip({ preset, active, onClick }: { preset: PresetAnimation; active: boolean; onClick: () => void }) {
+  const id = useId().replace(/:/g,"");
+  const anim = `pc_${id}`;
+  const { keyframes, elementCss } = buildKeyframesAndStyle(anim, preset.type, preset.colors, preset.duration, preset.direction, preset.easing);
+  return (
+    <button
+      onClick={onClick}
+      aria-pressed={active}
+      className={`group overflow-hidden rounded-xl text-left transition ${active ? "ring-2 ring-[#1c1712]" : "ring-1 ring-black/[0.1] hover:ring-black/30"}`}
+    >
+      <style>{`${keyframes}\n${elementCss.replace(".animated-element","#"+id)}`}</style>
+      <div id={id} style={{ height: 52 }} />
+      <p className="bg-white px-2.5 py-1.5 text-[12px] font-semibold">{preset.name}</p>
+    </button>
+  );
+}
+
+const typeName = (t: AnimationType) => ANIMATION_TYPES.find(a => a.value === t)?.label ?? "";
 
 /* ── Component ── */
 export function ColorAnimationGenerator() {
@@ -163,6 +260,7 @@ export function ColorAnimationGenerator() {
     setColors(previewColors.map((c,i) => ({ id:i+1, color:c.color })));
     setAnimType(previewType); setDuration(previewDuration);
     setDirection(previewDirection); setEasing(previewEasing);
+    setActivePreset(null);
     setPreviewPreset(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [previewColors, previewType, previewDuration, previewDirection, previewEasing]);
@@ -245,345 +343,213 @@ export function ColorAnimationGenerator() {
     navigator.clipboard.writeText(fullCss).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); });
   }, [fullCss]);
 
-  const typeLabel = ANIMATION_TYPES.find(t => t.value === animType)?.label ?? "";
-  const typeIcon  = ANIMATION_TYPES.find(t => t.value === animType)?.icon ?? "";
+  const chip = "rounded-full bg-[#1c1712]/[0.05] px-3 py-1 text-[12px] font-semibold text-[#1c1712]/70";
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <main className="mx-auto w-full max-w-[1040px] flex-1 px-4 pb-20 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
+      {(copied || previewCopied) && (
+        <div role="status" className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1c1712] px-5 py-2.5 text-[13px] font-semibold text-white shadow-lg">
+          ✓ CSS copied
+        </div>
+      )}
 
-        {/* ── Inline hero ── */}
-        <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.35 }}
-          className="mb-6 flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/40 shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]"/>Animation Tool
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Color Animation</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Color Animation Generator</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {hexColors.slice(0, 5).map((c, i) => (
+                <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
+              ))}
             </span>
-            <h1 className="font-display text-[2rem] font-black leading-none tracking-[-0.04em] sm:text-[2.6rem]">
-              Color Animation Generator
-            </h1>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">Live CSS animations, free.</span> Pick colors and a motion style, watch it loop, then copy the keyframes.
+            </p>
           </div>
-          <p className="hidden text-[13px] text-[#1c1712]/40 sm:block sm:text-right sm:max-w-[220px]">
-            Live CSS gradient animations with instant export
-          </p>
-        </motion.div>
+        </section>
 
-        <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.4, delay:0.05 }}>
-
-          {/* ── Split layout: canvas left, controls right ── */}
-          <div className="flex min-w-0 flex-col gap-4 lg:flex-row lg:items-start">
-
-            {/* ═══ LEFT — Stage (canvas + info) ═══ */}
-            <div className="flex min-w-0 flex-col gap-4 lg:w-[56%] lg:flex-shrink-0">
-
-              {/* Canvas card */}
-              <div className="overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
+        {/* ── Workspace ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="grid w-full items-start gap-6 px-6 py-10 sm:px-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:px-12">
+            {/* Stage + CSS */}
+            <div className="min-w-0 space-y-6">
+              <div className="overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
                 <style>{previewStyleTag}</style>
-
-                {/* Animated canvas */}
-                <div id={`canvas_${uid}`} className="h-48 w-full sm:h-64 lg:h-[360px]"/>
-
-                {/* Swatch strip */}
-                <div className="flex overflow-hidden border-t border-black/[0.06]">
-                  {hexColors.map((hex, i) => (
-                    <div key={i} className="group/sw relative flex-1 transition-[flex] duration-300 hover:flex-[3]"
-                      style={{ backgroundColor: hex, height: 36 }}>
-                      <div className="absolute inset-x-0 bottom-0 flex justify-center pb-1 opacity-0 transition-opacity duration-150 group-hover/sw:opacity-100">
-                        <span className="rounded-full bg-black/55 px-2 py-0.5 font-mono text-[8px] text-white">{hex.toUpperCase()}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Status + copy bar */}
-                <div className="flex items-center gap-2 overflow-x-auto bg-[#faf7f2] px-4 py-2.5" style={{ scrollbarWidth:"none" }}>
-                  <span className="flex shrink-0 items-center gap-1 rounded-full bg-[#1c1712]/[0.06] px-2.5 py-1 text-[10px] font-bold whitespace-nowrap text-[#1c1712]/55">
-                    <span>{typeIcon}</span>{typeLabel}
-                  </span>
-                  <span className="shrink-0 whitespace-nowrap text-[10px] text-[#1c1712]/25">{duration}s · {direction}</span>
-                  <div className="ml-auto shrink-0">
-                    <button onClick={copyToClipboard}
-                      className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-[11px] font-semibold whitespace-nowrap transition ${
-                        copied ? "border-green-200 bg-green-50 text-green-600" : "border-black/[0.07] bg-white text-[#1c1712]/50 hover:bg-white/60"
-                      }`}>
-                      {copied
-                        ? <><svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>Copied!</>
-                        : <><svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy CSS</>
-                      }
-                    </button>
-                  </div>
+                <div id={`canvas_${uid}`} className="h-64 w-full sm:h-80 lg:h-[24rem]" />
+                <div className="flex flex-wrap items-center gap-2 border-t border-black/[0.06] bg-white px-4 py-3">
+                  <span className={chip}>{typeName(animType)}</span>
+                  <span className={chip}>{duration}s</span>
+                  <span className={chip}>{direction}</span>
+                  <span className={chip}>{easing}</span>
                 </div>
               </div>
 
-              {/* CSS output */}
-              <div className="overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
-                <div className="border-b border-black/[0.06] px-4 py-3">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Generated CSS</p>
+              <div className="overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
+                <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-5">
+                  <p className={label}>Generated CSS</p>
+                  <button onClick={copyToClipboard} className="inline-flex items-center gap-2 rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+                    <CopyIcon />
+                    {copied ? "✓ Copied" : "Copy CSS"}
+                  </button>
                 </div>
-                <pre className="max-h-44 overflow-y-auto px-4 py-3.5 font-mono text-[10px] leading-relaxed text-[#1c1712]/50">
-                  <code>{fullCss}</code>
-                </pre>
+                <pre className="max-h-60 overflow-auto bg-[#F5F5F5] px-4 py-4 font-mono text-[12px] leading-relaxed text-[#1c1712]/75 sm:px-5"><code>{fullCss}</code></pre>
               </div>
             </div>
 
-            {/* ═══ RIGHT — Controls ═══ */}
-            <div className="flex min-w-0 flex-1 flex-col gap-3">
-
-              {/* Preset chips */}
-              <div className="overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
-                <div className="border-b border-black/[0.06] px-4 py-3">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Presets</p>
-                </div>
-                <div className="flex gap-2 overflow-x-auto px-4 py-3" style={{ scrollbarWidth:"none" }}>
+            {/* Controls */}
+            <div className="min-w-0 divide-y divide-black/[0.06] rounded-2xl ring-1 ring-black/[0.07]">
+              <div className="p-5 sm:p-6">
+                <p className={label}>Presets</p>
+                <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-4">
                   {PRESETS.map(p => (
-                    <PresetChip key={p.name} preset={p} active={activePreset===p.name} onClick={() => applyPreset(p)}/>
+                    <PresetChip key={p.name} preset={p} active={activePreset === p.name} onClick={() => applyPreset(p)} />
                   ))}
                 </div>
               </div>
 
-              {/* Color stops */}
-              <div className="overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
-                <div className="flex items-center justify-between border-b border-black/[0.06] px-4 py-3">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Colors</p>
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-[9px] text-[#1c1712]/20">{colors.length}/6</span>
-                    <button onClick={addColor} disabled={colors.length >= 6}
-                      className="flex items-center gap-1 rounded-lg border border-black/[0.06] bg-[#faf7f2] px-2.5 py-1 text-[10px] font-semibold text-[#1c1712]/40 transition hover:bg-[#f0ede8] disabled:opacity-25">
-                      <svg className="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/></svg>
-                      Add
-                    </button>
-                  </div>
-                </div>
-                <div className="px-4 pt-3 pb-1">
-                  {/* Gradient preview bar */}
-                  <div className="mb-3 h-2 overflow-hidden rounded-full"
-                    style={{ background:`linear-gradient(90deg, ${hexColors.join(",")})` }}/>
-                  <AnimatePresence mode="popLayout">
-                    {colors.map(stop => (
-                      <motion.div key={stop.id} layout
-                        initial={{ opacity:0, x:-8 }} animate={{ opacity:1, x:0 }}
-                        exit={{ opacity:0, x:8 }} transition={{ duration:0.12 }}
-                        className="mb-2 flex items-center gap-2">
-                        <label className="relative h-8 w-8 shrink-0 cursor-pointer overflow-hidden rounded-lg border border-black/[0.09] shadow-sm"
-                          style={{ backgroundColor: stop.color }}>
-                          <input type="color" value={stop.color}
-                            onChange={e => updateColor(stop.id, e.target.value)}
-                            className="absolute inset-0 h-full w-full cursor-pointer opacity-0"/>
-                        </label>
-                        <input type="text" value={stop.color} maxLength={7}
-                          onChange={e => { const v=e.target.value; if(/^#[0-9A-Fa-f]{0,6}$/.test(v)) updateColor(stop.id,v); }}
-                          className="w-20 rounded-lg border border-black/[0.06] bg-[#faf7f2] px-2.5 py-1.5 font-mono text-[11px] text-[#1c1712] outline-none transition focus:border-black/14 focus:bg-white"/>
-                        <div className="flex-1"/>
-                        <button onClick={() => removeColor(stop.id)} disabled={colors.length <= 2}
-                          className="flex h-6 w-6 items-center justify-center rounded-lg text-[#1c1712]/20 transition hover:bg-[#faf7f2] hover:text-[#1c1712]/50 disabled:opacity-15">
-                          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-                        </button>
-                      </motion.div>
-                    ))}
-                  </AnimatePresence>
+              <div className="p-5 sm:p-6">
+                <ColorRows stops={colors} onChange={updateColor} onRemove={removeColor} onAdd={addColor} />
+              </div>
+
+              <div className="p-5 sm:p-6">
+                <p className={label}>Type</p>
+                <div className="mt-3">
+                  <Segmented options={ANIMATION_TYPES} value={animType} onChange={setAnimType} name="Animation type" />
                 </div>
               </div>
 
-              {/* Animation type */}
-              <div className="overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
-                <div className="border-b border-black/[0.06] px-4 py-3">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Type</p>
-                </div>
-                <div className="grid grid-cols-3 gap-2 px-4 py-3">
-                  {ANIMATION_TYPES.map(t => (
-                    <button key={t.value} onClick={() => setAnimType(t.value)}
-                      className={`flex flex-col items-center gap-1 rounded-2xl border py-3 transition-all ${
-                        animType===t.value ? "border-[#e8531f]/20 bg-[#e8531f] text-white shadow-[0_2px_10px_rgba(232,83,31,0.28)]" : "border-black/[0.06] bg-[#faf7f2] text-[#1c1712]/45 hover:bg-[#f0ede8]"
-                      }`}>
-                      <span className="text-[16px] leading-none">{t.icon}</span>
-                      <span className="text-[9px] font-bold leading-tight text-center">{t.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Timing controls */}
-              <div className="overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
-                <div className="border-b border-black/[0.06] px-4 py-3">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">Timing</p>
-                </div>
-                <div className="space-y-4 px-4 py-3.5">
-                  {/* Duration */}
-                  <div>
-                    <div className="mb-1.5 flex items-center justify-between">
-                      <span className="text-[10px] font-semibold text-[#1c1712]/40">Duration</span>
-                      <span className="font-mono text-[11px] font-bold text-[#1c1712]">{duration}s</span>
-                    </div>
-                    <div className="relative h-3">
-                      <div className="absolute inset-y-0 left-0 right-0 my-auto h-1.5 overflow-hidden rounded-full bg-black/[0.06]">
-                        <div className="h-full rounded-full bg-[#e8531f]" style={{ width:`${((duration-1)/9)*100}%` }}/>
-                      </div>
-                      <input type="range" min={1} max={10} step={0.5} value={duration}
-                        onChange={e => setDuration(parseFloat(e.target.value))}
-                        className="relative h-3 w-full cursor-pointer opacity-0"/>
-                    </div>
+              <div className="space-y-5 p-5 sm:p-6">
+                <div>
+                  <div className="flex items-center justify-between">
+                    <p className={label}>Duration</p>
+                    <span className="font-mono text-[13px] font-semibold">{duration}s</span>
                   </div>
-                  {/* Direction */}
-                  <div>
-                    <span className="mb-1.5 block text-[10px] font-semibold text-[#1c1712]/40">Direction</span>
-                    <ToggleGroup options={DIRECTIONS} value={direction} onChange={setDirection}/>
+                  <div className="mt-3">
+                    <DurationSlider value={duration} onChange={setDuration} />
                   </div>
-                  {/* Easing */}
-                  <div>
-                    <span className="mb-1.5 block text-[10px] font-semibold text-[#1c1712]/40">Easing</span>
-                    <ToggleGroup options={EASINGS} value={easing} onChange={setEasing}/>
-                  </div>
+                </div>
+                <div>
+                  <p className={label}>Direction</p>
+                  <div className="mt-3"><Segmented options={DIRECTIONS} value={direction} onChange={setDirection} name="Direction" /></div>
+                </div>
+                <div>
+                  <p className={label}>Easing</p>
+                  <div className="mt-3"><Segmented options={EASINGS} value={easing} onChange={setEasing} name="Easing" /></div>
                 </div>
               </div>
             </div>
           </div>
+        </section>
 
-          {/* ── More Animations ── */}
-          {(morePresets.length > 0 || loadingMore) && (
-            <div className="mt-4 overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
-              <div className="border-b border-black/[0.06] px-5 py-4">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#1c1712]/35">More Animations</p>
-              </div>
-              <div className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-4">
+        {/* ── More animations ── */}
+        {(morePresets.length > 0 || loadingMore) && (
+          <section className="border-t border-black/[0.06]">
+            <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Library</p>
+              <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">More animations</h2>
+              <p className="mt-2 max-w-2xl text-[15px] leading-7 text-[#1c1712]/55">Open any one to tweak its colors and timing, then use it above or copy the CSS.</p>
+              <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                 {morePresets.map((preset, i) => (
-                  <motion.button key={`${preset.name}-${i}`}
-                    initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }}
-                    transition={{ duration:0.3, delay:(i%8)*0.04 }}
+                  <button
+                    key={`${preset.name}-${i}`}
                     onClick={() => openPreview(preset)}
-                    className="group overflow-hidden rounded-2xl border border-black/[0.07] bg-[#faf7f2] text-left transition-all hover:-translate-y-0.5 hover:shadow-md">
-                    <div className="h-14 w-full" style={{ background:`linear-gradient(135deg, ${preset.colors.join(",")})` }}/>
-                    <div className="px-3 py-2.5">
-                      <p className="text-[12px] font-semibold text-[#1c1712]">{preset.name}</p>
-                      <p className="text-[10px] text-[#1c1712]/35">
-                        {preset.type==="gradient-shift"?"Gradient Shift":preset.type==="color-pulse"?"Color Pulse":"Hue Rotate"}
-                      </p>
+                    className="group overflow-hidden rounded-2xl text-left ring-1 ring-black/[0.07] transition hover:-translate-y-0.5 hover:ring-black/25"
+                  >
+                    <div className="h-20 w-full" style={{ background: `linear-gradient(135deg, ${preset.colors.join(",")})` }} />
+                    <div className="px-3.5 py-3">
+                      <p className="truncate text-[14px] font-semibold">{preset.name}</p>
+                      <p className="text-[12px] text-[#1c1712]/45">{typeName(preset.type)}</p>
                     </div>
-                  </motion.button>
+                  </button>
                 ))}
               </div>
               {hasMorePresets && (
-                <div ref={moreLoaderRef} className="flex justify-center pb-6">
-                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-black/10 border-t-[#e8531f]"/>
+                <div ref={moreLoaderRef} className="flex justify-center pt-8">
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-black/10 border-t-[#1c1712]" />
                 </div>
               )}
             </div>
-          )}
+          </section>
+        )}
 
-        </motion.div>
-        <ToolPageSections config={toolPageContent.animation}/>
+        <ToolPageSections config={toolPageContent.animation} variant="new" />
       </main>
 
-      {/* ── Preset Preview Modal ── */}
-      <AnimatePresence>
-        {previewPreset && (
-          <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
-            onClick={() => setPreviewPreset(null)}>
-            <motion.div initial={{ opacity:0, y:16, scale:0.97 }} animate={{ opacity:1, y:0, scale:1 }}
-              exit={{ opacity:0, y:16, scale:0.97 }} transition={{ duration:0.2 }}
-              onClick={e => e.stopPropagation()}
-              className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-3xl border border-black/[0.08] bg-white shadow-2xl">
-
-              <div className="flex items-center justify-between border-b border-black/[0.06] px-6 py-5">
-                <div>
-                  <p className="text-[16px] font-bold text-[#1c1712]">{previewPreset.name}</p>
-                  <p className="text-[11px] text-[#1c1712]/40">Customize and use this animation</p>
-                </div>
-                <button onClick={() => setPreviewPreset(null)}
-                  className="flex h-8 w-8 items-center justify-center rounded-xl border border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/40 transition hover:bg-[#f0ede8]">
-                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                  </svg>
-                </button>
+      {/* ── Preset preview modal ── */}
+      {previewPreset && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${previewPreset.name} animation`}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+          onClick={() => setPreviewPreset(null)}
+        >
+          <div onClick={e => e.stopPropagation()} className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl">
+            <div className="flex items-center justify-between gap-4 px-6 py-5">
+              <div>
+                <p className="text-[18px] font-bold tracking-[-0.02em]">{previewPreset.name}</p>
+                <p className="text-[13px] text-[#1c1712]/50">Customize it, then use it or copy the CSS.</p>
               </div>
+              <button onClick={() => setPreviewPreset(null)} aria-label="Close" className="flex h-10 w-10 items-center justify-center rounded-full text-[#1c1712]/55 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
+                <Svg><path d="M6 18L18 6M6 6l12 12" /></Svg>
+              </button>
+            </div>
 
-              <style>{previewModalStyleTag}</style>
-              <div id={`pm_${uid}`} className="w-full" style={{ height: 180 }}/>
+            <style>{previewModalStyleTag}</style>
+            <div id={`pm_${uid}`} className="h-44 w-full" />
 
-              <div className="grid grid-cols-1 gap-5 px-6 py-5 sm:grid-cols-2">
+            <div className="grid gap-6 px-6 py-6 sm:grid-cols-2">
+              <ColorRows
+                stops={previewColors}
+                onChange={(id, hex) => setPreviewColors(prev => prev.map(c => c.id === id ? { ...c, color: hex } : c))}
+                onRemove={id => setPreviewColors(prev => (prev.length > 2 ? prev.filter(c => c.id !== id) : prev))}
+                onAdd={() => setPreviewColors(prev => (prev.length >= 6 ? prev : [...prev, { id: nextId++, color: `#${Math.floor(Math.random()*16777215).toString(16).padStart(6,"0")}` }]))}
+              />
+              <div className="space-y-5">
                 <div>
-                  <div className="mb-3 flex items-center justify-between">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/35">Colors</p>
-                    <button onClick={() => setPreviewColors(prev => { if(prev.length>=6) return prev; return [...prev,{id:nextId++,color:`#${Math.floor(Math.random()*16777215).toString(16).padStart(6,"0")}`}]; })}
-                      disabled={previewColors.length>=6}
-                      className="rounded-lg border border-black/[0.06] bg-[#faf7f2] px-2.5 py-1 text-[10px] font-semibold text-[#1c1712]/40 hover:bg-[#f0ede8] disabled:opacity-25">
-                      + Add
-                    </button>
-                  </div>
-                  <div className="mb-3 h-2 overflow-hidden rounded-full"
-                    style={{ background:`linear-gradient(90deg, ${previewHexColors.join(",")})` }}/>
-                  <div className="space-y-2">
-                    {previewColors.map(stop => (
-                      <div key={stop.id} className="flex items-center gap-2">
-                        <label className="relative h-7 w-7 shrink-0 cursor-pointer overflow-hidden rounded-lg border border-black/[0.09]" style={{ backgroundColor: stop.color }}>
-                          <input type="color" value={stop.color}
-                            onChange={e => setPreviewColors(prev => prev.map(c => c.id===stop.id?{...c,color:e.target.value}:c))}
-                            className="absolute inset-0 h-full w-full cursor-pointer opacity-0"/>
-                        </label>
-                        <input type="text" value={stop.color} maxLength={7}
-                          onChange={e => { const v=e.target.value; if(/^#[0-9A-Fa-f]{0,6}$/.test(v)) setPreviewColors(prev => prev.map(c => c.id===stop.id?{...c,color:v}:c)); }}
-                          className="w-20 rounded-lg border border-black/[0.06] bg-[#faf7f2] px-2 py-1 font-mono text-[10px] text-[#1c1712] outline-none focus:border-black/14"/>
-                        {previewColors.length>2 && (
-                          <button onClick={() => setPreviewColors(prev => prev.filter(c => c.id!==stop.id))}
-                            className="ml-auto flex h-5.5 w-5.5 items-center justify-center rounded text-[#1c1712]/20 hover:text-[#1c1712]/50">
-                            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-                          </button>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+                  <p className={label}>Type</p>
+                  <div className="mt-3"><Segmented options={ANIMATION_TYPES} value={previewType} onChange={setPreviewType} name="Animation type" /></div>
                 </div>
                 <div>
-                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/35">Settings</p>
-                  <div className="mb-3 grid grid-cols-3 gap-1.5">
-                    {ANIMATION_TYPES.map(t => (
-                      <button key={t.value} onClick={() => setPreviewType(t.value)}
-                        className={`flex flex-col items-center gap-0.5 rounded-xl border py-2 text-[9px] font-bold transition-all ${previewType===t.value?"border-[#e8531f]/20 bg-[#e8531f] text-white shadow-[0_2px_8px_rgba(232,83,31,0.28)]":"border-black/[0.06] bg-[#faf7f2] text-[#1c1712]/40 hover:bg-[#f0ede8]"}`}>
-                        <span className="text-[13px]">{t.icon}</span>{t.label}
-                      </button>
-                    ))}
+                  <div className="flex items-center justify-between">
+                    <p className={label}>Duration</p>
+                    <span className="font-mono text-[13px] font-semibold">{previewDuration}s</span>
                   </div>
-                  <div className="mb-3">
-                    <div className="mb-1.5 flex justify-between text-[10px]">
-                      <span className="font-semibold text-[#1c1712]/40">Duration</span>
-                      <span className="font-mono font-bold text-[#1c1712]">{previewDuration}s</span>
-                    </div>
-                    <div className="relative h-3">
-                      <div className="absolute inset-y-0 left-0 right-0 my-auto h-1.5 overflow-hidden rounded-full bg-black/[0.06]">
-                        <div className="h-full rounded-full bg-[#e8531f]" style={{ width:`${((previewDuration-1)/9)*100}%` }}/>
-                      </div>
-                      <input type="range" min={1} max={10} step={0.5} value={previewDuration}
-                        onChange={e => setPreviewDuration(parseFloat(e.target.value))}
-                        className="relative h-3 w-full cursor-pointer opacity-0"/>
-                    </div>
-                  </div>
-                  <div className="mb-2.5">
-                    <span className="mb-1.5 block text-[10px] font-semibold text-[#1c1712]/40">Direction</span>
-                    <ToggleGroup options={DIRECTIONS} value={previewDirection} onChange={setPreviewDirection}/>
-                  </div>
-                  <div>
-                    <span className="mb-1.5 block text-[10px] font-semibold text-[#1c1712]/40">Easing</span>
-                    <ToggleGroup options={EASINGS} value={previewEasing} onChange={setPreviewEasing}/>
-                  </div>
+                  <div className="mt-3"><DurationSlider value={previewDuration} onChange={setPreviewDuration} /></div>
+                </div>
+                <div>
+                  <p className={label}>Direction</p>
+                  <div className="mt-3"><Segmented options={DIRECTIONS} value={previewDirection} onChange={setPreviewDirection} name="Direction" /></div>
+                </div>
+                <div>
+                  <p className={label}>Easing</p>
+                  <div className="mt-3"><Segmented options={EASINGS} value={previewEasing} onChange={setPreviewEasing} name="Easing" /></div>
                 </div>
               </div>
+            </div>
 
-              <div className="flex gap-2.5 border-t border-black/[0.06] px-6 py-4">
-                <button onClick={handleUsePreview}
-                  className="flex-1 rounded-2xl bg-[#e8531f] py-2.5 text-[13px] font-bold text-white shadow-[0_4px_14px_rgba(232,83,31,0.28)] transition hover:bg-[#c94518]">
-                  Use this animation
-                </button>
-                <button onClick={handleCopyPreviewCss}
-                  className={`rounded-2xl border px-5 py-2.5 text-[13px] font-semibold transition ${previewCopied?"border-green-200 bg-green-50 text-green-600":"border-black/[0.07] bg-[#faf7f2] text-[#1c1712]/55 hover:bg-[#f0ede8]"}`}>
-                  {previewCopied?"Copied!":"Copy CSS"}
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <div className="flex flex-wrap gap-3 border-t border-black/[0.06] px-6 py-4">
+              <button onClick={handleUsePreview} className="rounded-full bg-[#1c1712] px-6 py-2.5 text-[14px] font-semibold text-white transition hover:bg-[#c2410c]">
+                Use this animation
+              </button>
+              <button onClick={handleCopyPreviewCss} className={ghostBtn}>
+                <CopyIcon />
+                {previewCopied ? "✓ Copied" : "Copy CSS"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

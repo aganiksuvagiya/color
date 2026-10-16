@@ -1,36 +1,55 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Header } from "./header";
+import { SwatchStrip, useCopy } from "@/components/seo/swatch-strip";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { getContrastText, isValidHex } from "@/lib/color-utils";
+import { generateHarmony } from "@/lib/harmony";
+import { colorFamily } from "@/lib/palette-library";
 import { getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
 import { toolPageContent } from "@/lib/seo/tool-pages";
 
 const QUICK_PICKS = [
-  "#EF4444", "#F97316", "#EAB308", "#22C55E",
-  "#14B8A6", "#3B82F6", "#8B5CF6", "#EC4899",
+  { hex: "#EF4444", name: "Red" },
+  { hex: "#F97316", name: "Orange" },
+  { hex: "#EAB308", name: "Yellow" },
+  { hex: "#22C55E", name: "Green" },
+  { hex: "#14B8A6", name: "Teal" },
+  { hex: "#3B82F6", name: "Blue" },
+  { hex: "#8B5CF6", name: "Purple" },
+  { hex: "#EC4899", name: "Pink" },
 ];
 
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const ghostBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
+
+/** "trust, stability, and product clarity" -> chips. Falls back to null when the text is not a tidy list. */
+function keywords(text: string): string[] | null {
+  const parts = text.split(/,\s*(?:and\s+)?|\s+and\s+/).map((p) => p.trim()).filter(Boolean);
+  if (parts.length < 2 || parts.length > 6 || parts.some((p) => p.length > 32)) return null;
+  return parts;
+}
+
 export function ColorPsychologyExplorer() {
-  const [hex, setHex]         = useState("#3B82F6");
+  const [hex, setHex] = useState("#3B82F6");
   const [hexInput, setHexInput] = useState("#3B82F6");
+  const { copied, copy } = useCopy();
 
   const descriptor = useMemo(() => {
     if (!isValidHex(hex)) return null;
     return getProgrammaticColorDescriptor(hex.slice(1).toLowerCase());
   }, [hex]);
 
-  const textColor = descriptor ? getContrastText(descriptor.hex) : "light";
-  const onLight   = textColor === "dark";
-  const textHi    = onLight ? "rgba(0,0,0,0.82)"  : "rgba(255,255,255,0.92)";
-  const textLo    = onLight ? "rgba(0,0,0,0.42)"  : "rgba(255,255,255,0.50)";
+  const light = descriptor ? getContrastText(descriptor.hex) === "dark" : false;
+  const fg = light ? "#1c1712" : "#ffffff";
+  const muted = light ? "rgba(28,23,18,0.6)" : "rgba(255,255,255,0.75)";
 
   function handleHexInput(val: string) {
     setHexInput(val);
-    if (isValidHex(val)) setHex(val);
+    const n = val.startsWith("#") ? val : `#${val}`;
+    if (isValidHex(n) && n.length === 7) setHex(n.toUpperCase());
   }
 
   function pickColor(c: string) {
@@ -38,172 +57,188 @@ export function ColorPsychologyExplorer() {
     setHexInput(c);
   }
 
+  const pairing = descriptor ? generateHarmony(descriptor.hex, "complementary").colors.map((c) => c.hex.toUpperCase()) : [];
+  const family = descriptor ? colorFamily(descriptor.hex) : "";
+  const familyName = family.charAt(0).toUpperCase() + family.slice(1);
+  const words = descriptor ? keywords(descriptor.psychology) : null;
+  const hasGuide = descriptor ? !(descriptor.mode === "hex" && descriptor.canonicalSlug === descriptor.slug) : false;
+  const dots = descriptor ? [descriptor.hex, ...pairing.slice(0, 3)] : [hex];
+
   return (
-    <div className="min-h-screen bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <main className="mx-auto w-full max-w-[1040px] px-4 pb-20 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
+      {copied && (
+        <div role="status" className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1c1712] px-5 py-2.5 text-[13px] font-semibold text-white shadow-lg">
+          ✓ {copied} copied
+        </div>
+      )}
 
-        {/* Hero */}
-        <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.35 }}
-          className="mb-6 flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/40 shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]"/>Psychology
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">Color Psychology</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Color Psychology Explorer</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {dots.map((c, i) => (
+                <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
+              ))}
             </span>
-            <h1 className="font-display text-[2rem] font-black leading-none tracking-[-0.04em] sm:text-[2.6rem]">
-              Color Psychology
-            </h1>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">What does your color say? Free.</span> Pick any color to see what it signals, which brands use it, and what it pairs with.
+            </p>
           </div>
-          <p className="hidden text-[13px] text-[#1c1712]/40 sm:block sm:text-right sm:max-w-[220px]">
-            Pick any color and see what it signals — psychologically and for branding.
-          </p>
-        </motion.div>
+        </section>
 
-        {/* Main card */}
-        <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.4, delay:0.05 }}
-          className="overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm">
-          <div className="flex flex-col lg:flex-row lg:min-h-[520px]">
-
-            {/* ═══ LEFT — Color display + picker ═══ */}
-            <div className="flex flex-col lg:w-[280px] lg:shrink-0">
-
-              {/* Large color swatch */}
-              <AnimatePresence mode="wait">
-                <motion.label key={descriptor?.hex ?? hex}
-                  initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
-                  transition={{ duration:0.2 }}
-                  className="group relative block min-h-[180px] cursor-pointer lg:flex-1"
-                  style={{ backgroundColor: isValidHex(hex) ? hex : "#3B82F6" }}>
-
-                  {/* Overlay info */}
-                  {descriptor && (
-                    <div className="absolute inset-x-0 bottom-0 p-5">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: textLo }}>
-                        {descriptor.hueLabel}
-                      </p>
-                      <p className="text-[22px] font-black leading-tight tracking-[-0.02em]" style={{ color: textHi }}>
-                        {descriptor.displayName}
-                      </p>
-                      <p className="font-mono text-[11px]" style={{ color: textLo }}>
-                        {descriptor.hex.toUpperCase()}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Pick hint */}
-                  <div className="absolute right-3 top-3 rounded-lg px-2.5 py-1 text-[10px] font-semibold opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100"
-                    style={{ backgroundColor: onLight ? "rgba(0,0,0,0.18)" : "rgba(255,255,255,0.22)", color: textHi }}>
-                    Click to pick
-                  </div>
-
-                  <input type="color" value={isValidHex(hex) ? hex : "#3B82F6"}
-                    onChange={e => pickColor(e.target.value)}
-                    className="absolute inset-0 h-full w-full cursor-pointer opacity-0"/>
-                </motion.label>
-              </AnimatePresence>
-
-              {/* Hex input */}
-              <div className="border-t border-black/[0.06] px-4 py-3">
-                <input type="text" value={hexInput} onChange={e => handleHexInput(e.target.value)}
-                  maxLength={7} placeholder="#3B82F6"
-                  className={`w-full rounded-xl border px-3 py-2 font-mono text-[12px] outline-none transition-colors ${
-                    !isValidHex(hexInput) && hexInput.length > 1
-                      ? "border-red-200 bg-red-50 text-red-500"
-                      : "border-black/[0.08] bg-[#faf7f2] text-[#1c1712] focus:border-[#e8531f]/30"
-                  }`}/>
+        {/* ── Workspace ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="grid w-full items-start gap-6 px-6 py-10 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:px-12">
+            {/* Color chip + picker */}
+            <div className="min-w-0 overflow-hidden rounded-2xl ring-1 ring-black/[0.07] lg:sticky lg:top-24">
+              <div
+                className="flex min-h-[15rem] flex-col justify-between p-5 transition-colors duration-150 sm:min-h-[20rem] sm:p-6"
+                style={{ backgroundColor: isValidHex(hex) ? hex : "#3B82F6", color: fg }}
+              >
+                <span
+                  className="w-fit rounded-full px-3 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em]"
+                  style={{ color: muted, backgroundColor: light ? "rgba(28,23,18,0.07)" : "rgba(255,255,255,0.16)", border: `1px solid ${light ? "rgba(28,23,18,0.16)" : "rgba(255,255,255,0.3)"}` }}
+                >
+                  {descriptor?.hueLabel ?? "Color"}
+                </span>
+                <div>
+                  <p className="text-4xl font-bold leading-[1.05] tracking-[-0.035em] sm:text-5xl">{descriptor?.displayName ?? "Pick a color"}</p>
+                  <button
+                    onClick={() => copy(hex.toUpperCase())}
+                    className="mt-2 font-mono text-xl font-semibold tracking-[0.08em] transition hover:opacity-80"
+                    style={{ color: muted }}
+                    aria-label={`Copy ${hex.toUpperCase()}`}
+                  >
+                    {hex.toUpperCase()}
+                  </button>
+                </div>
               </div>
 
-              {/* Quick picks */}
-              <div className="border-t border-black/[0.06] px-4 pb-4 pt-3">
-                <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.18em] text-[#1c1712]/30">Quick picks</p>
-                <div className="grid grid-cols-8 gap-1.5 lg:grid-cols-4">
-                  {QUICK_PICKS.map(c => (
-                    <button key={c} onClick={() => pickColor(c)}
-                      className={`aspect-square rounded-xl border-2 transition-all hover:scale-110 hover:shadow-md ${
-                        hex.toUpperCase() === c.toUpperCase()
-                          ? "border-[#e8531f] shadow-[0_0_0_2px_rgba(232,83,31,0.2)]"
-                          : "border-transparent"
+              <div className="space-y-5 p-5 sm:p-6">
+                <div>
+                  <label htmlFor="psy-hex" className={label}>Your color</label>
+                  <div className="mt-2.5 flex items-center gap-3">
+                    <label className="relative h-11 w-11 shrink-0 cursor-pointer overflow-hidden rounded-xl ring-1 ring-black/10 transition hover:ring-black/30" title="Open your system color picker">
+                      <input
+                        type="color"
+                        value={isValidHex(hex) ? hex.toLowerCase() : "#3b82f6"}
+                        onChange={(e) => pickColor(e.target.value.toUpperCase())}
+                        className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                        aria-label="Pick a color"
+                      />
+                      <span className="block h-full w-full" style={{ backgroundColor: isValidHex(hex) ? hex : "#ddd" }} />
+                    </label>
+                    <input
+                      id="psy-hex"
+                      type="text"
+                      value={hexInput}
+                      onChange={(e) => handleHexInput(e.target.value)}
+                      maxLength={7}
+                      spellCheck={false}
+                      placeholder="#3B82F6"
+                      className={`h-11 min-w-0 flex-1 rounded-xl px-4 font-mono text-[14px] font-semibold outline-none ring-1 transition focus:ring-2 ${
+                        !isValidHex(hexInput) && hexInput.length > 1 ? "text-red-600 ring-red-300 focus:ring-red-500" : "text-[#1c1712] ring-black/[0.12] focus:ring-[#1c1712]"
                       }`}
-                      style={{ backgroundColor: c }}
-                      title={c}/>
-                  ))}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <p className={label}>Quick picks</p>
+                  <div className="mt-2.5 grid grid-cols-8 gap-2">
+                    {QUICK_PICKS.map((c) => {
+                      const on = hex.toUpperCase() === c.hex;
+                      return (
+                        <button
+                          key={c.hex}
+                          onClick={() => pickColor(c.hex)}
+                          aria-label={`Use ${c.name} ${c.hex}`}
+                          aria-pressed={on}
+                          title={c.name}
+                          className={`aspect-square rounded-xl transition hover:scale-105 ${on ? "ring-2 ring-[#1c1712] ring-offset-2" : "ring-1 ring-black/10"}`}
+                          style={{ backgroundColor: c.hex }}
+                        />
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* ═══ RIGHT — Psychology info ═══ */}
-            <div className="flex min-w-0 flex-1 flex-col border-t border-black/[0.06] lg:border-l lg:border-t-0">
-              <AnimatePresence mode="wait">
-                {descriptor ? (
-                  <motion.div key={descriptor.hex}
-                    initial={{ opacity:0, x:8 }} animate={{ opacity:1, x:0 }} exit={{ opacity:0, x:-8 }}
-                    transition={{ duration:0.22 }}
-                    className="flex flex-1 flex-col divide-y divide-black/[0.05] p-0">
-
-                    {/* Psychology */}
-                    <div className="px-6 py-5">
-                      <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-[#e8531f]/70">Psychology</p>
-                      <p className="text-[14px] leading-relaxed text-[#1c1712]/70">
-                        This color signals <span className="font-semibold text-[#1c1712]">{descriptor.psychology}</span>.
-                      </p>
+            {/* What it signals */}
+            {descriptor ? (
+              <div className="min-w-0 divide-y divide-black/[0.06] rounded-2xl ring-1 ring-black/[0.07]">
+                <div className="p-5 sm:p-6">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">What it signals</p>
+                  <p className="mt-3 text-[1.15rem] font-medium leading-8 tracking-[-0.01em]">
+                    {descriptor.displayName} signals {descriptor.psychology}.
+                  </p>
+                  {words && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {words.map((w) => (
+                        <span key={w} className="rounded-full bg-[#1c1712]/[0.05] px-3 py-1 text-[13px] font-semibold text-[#1c1712]/70">{w}</span>
+                      ))}
                     </div>
+                  )}
+                </div>
 
-                    {/* Best for */}
-                    <div className="px-6 py-5">
-                      <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-[#e8531f]/70">Best for</p>
-                      <p className="text-[14px] leading-relaxed text-[#1c1712]/70">
-                        Commonly used in <span className="font-semibold text-[#1c1712]">{descriptor.branding}</span>.
-                      </p>
-                    </div>
+                <div className="p-5 sm:p-6">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Best for</p>
+                  <p className="mt-3 text-[15px] leading-7 text-[#1c1712]/70">
+                    Commonly used in <span className="font-semibold text-[#1c1712]">{descriptor.branding}</span>.
+                  </p>
+                </div>
 
-                    {/* Use cases */}
-                    <div className="flex-1 px-6 py-5">
-                      <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.2em] text-[#e8531f]/70">Use cases</p>
-                      <ul className="space-y-2">
-                        {descriptor.useCases.map(useCase => (
-                          <li key={useCase} className="flex items-start gap-2.5 text-[13px] text-[#1c1712]/65">
-                            <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#e8531f]/40"/>
-                            {useCase}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                <div className="p-5 sm:p-6">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Use cases</p>
+                  <ul className="mt-3 space-y-2.5">
+                    {descriptor.useCases.map((useCase) => (
+                      <li key={useCase} className="flex items-start gap-2.5 text-[14px] leading-6 text-[#1c1712]/70">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#c2410c]" />
+                        {useCase}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-                    {/* Link - only named colors have a /colors page (arbitrary hex 404s) */}
-                    {!(descriptor.mode === "hex" && descriptor.canonicalSlug === descriptor.slug) && (
-                    <div className="px-6 py-4">
-                      <Link href={`/colors/${descriptor.canonicalSlug}`}
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-black/[0.08] bg-[#faf7f2] px-4 py-2.5 text-[12px] font-semibold text-[#1c1712]/60 transition hover:bg-[#f0ede8] hover:text-[#1c1712]">
-                        Full {descriptor.displayName} color guide
-                        <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                        </svg>
-                      </Link>
-                    </div>
-                    )}
+                <div className="p-5 sm:p-6">
+                  <p className={label}>Pairs well with</p>
+                  <div className="mt-3 overflow-hidden rounded-xl ring-1 ring-black/[0.07]">
+                    <SwatchStrip colors={pairing} height="h-16" copied={copied} onCopy={copy} className="" />
+                  </div>
+                  <p className="mt-2 text-[13px] text-[#1c1712]/50">Complementary colors from the color wheel. Click one to copy it.</p>
+                </div>
 
-                  </motion.div>
-                ) : (
-                  <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }}
-                    className="flex flex-1 items-center justify-center p-12 text-center">
-                    <div>
-                      <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-black/[0.08] bg-[#faf7f2]">
-                        <svg className="h-6 w-6 text-[#1c1712]/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                      </div>
-                      <p className="text-[13px] text-[#1c1712]/35">Enter a valid hex color to explore its psychology</p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
+                <div className="flex flex-wrap gap-2 p-5 sm:p-6">
+                  {hasGuide && (
+                    <Link href={`/colors/${descriptor.canonicalSlug}`} className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+                      Full {descriptor.displayName} guide →
+                    </Link>
+                  )}
+                  <Link href={`/shades-of-${family}`} className={ghostBtn}>Shades of {familyName}</Link>
+                  <Link href={`/color-palettes/${family}`} className={ghostBtn}>{familyName} palettes</Link>
+                </div>
+              </div>
+            ) : (
+              <p role="alert" className="h-fit rounded-xl bg-red-50 px-4 py-3 text-[14px] font-semibold text-red-700">
+                Enter a valid HEX color (like #3B82F6) to explore what it signals.
+              </p>
+            )}
           </div>
-        </motion.div>
+        </section>
 
-        <ToolPageSections config={toolPageContent["color-psychology-explorer"]}/>
+        <ToolPageSections config={toolPageContent["color-psychology-explorer"]} variant="new" />
       </main>
     </div>
   );

@@ -27,7 +27,7 @@ const FORMATS: { key: Format; label: string }[] = [
 
 const code = (s: Shade, f: Format) => (f === "hex" ? s.hex : f === "rgb" ? s.rgb : s.hsl);
 
-function Segmented<T extends string>({ value, options, onChange, label }: { value: T; options: { key: T; label: string; count?: number }[]; onChange: (v: T) => void; label: string }) {
+export function Segmented<T extends string>({ value, options, onChange, label }: { value: T; options: { key: T; label: string; count?: number }[]; onChange: (v: T) => void; label: string }) {
   return (
     <div role="tablist" aria-label={label} className="inline-flex rounded-full bg-[#1c1712]/[0.06] p-1">
       {options.map((o) => (
@@ -48,7 +48,7 @@ function Segmented<T extends string>({ value, options, onChange, label }: { valu
   );
 }
 
-function SectionTitle({ eyebrow, title, body }: { eyebrow: string; title: string; body?: string }) {
+export function SectionTitle({ eyebrow, title, body }: { eyebrow: string; title: string; body?: string }) {
   return (
     <div className="max-w-2xl">
       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">{eyebrow}</p>
@@ -61,18 +61,18 @@ function SectionTitle({ eyebrow, title, body }: { eyebrow: string; title: string
 type ViewShade = Shade & { colorSlug?: string };
 type FamilyNav = FamilyChip & { active: boolean };
 
-function isLight(hex: string) {
+export function isLight(hex: string) {
   const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
   return (r * 299 + g * 587 + b * 114) / 1000 > 160;
 }
 
-const CopyIcon = () => (
+export const CopyIcon = () => (
   <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
     <rect x="9" y="9" width="13" height="13" rx="2" />
     <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
   </svg>
 );
-const EyeIcon = () => (
+export const EyeIcon = () => (
   <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
     <circle cx="12" cy="12" r="3" />
@@ -347,38 +347,103 @@ export function ShadesPageView({
   );
 }
 
-export function ShadesHubView({ families }: { families: (FamilyChip & { count: number; strip: string[] })[] }) {
+type HubFamilyCard = FamilyChip & { count: number; palettes: number; accent: string; strip: string[]; samples: string[] };
+
+export function ShadesHubView({
+  families,
+  totalShades,
+  scales,
+  faq,
+}: {
+  families: HubFamilyCard[];
+  totalShades: number;
+  scales: { key: string; label: string; rule: string; colors: string[] }[];
+  faq: ShadeFaq[];
+}) {
   const { copied, copy } = useCopy();
   return (
     <main className="min-h-screen bg-white text-[#1c1712]">
       <Header />
-      <section className="bg-white">
-        <div className="w-full px-6 sm:px-8 lg:px-12 pb-12 pt-28">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
-            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
-            <span className="text-[#1c1712]/20">/</span>
-            <span className="text-[#1c1712]/60">Shades</span>
-          </nav>
-          <h1 className="mt-8 text-[2.75rem] font-black leading-[1.02] tracking-[-0.045em] sm:text-6xl">Color Shades</h1>
-          <p className="mt-5 max-w-3xl text-[17px] leading-8 text-[#1c1712]/60">
-            Named shades of every major color - blue, pink, purple, green and more - with HEX, RGB and HSL codes, ready palettes and one-click copy.
+
+      {/* ── Header (same pattern as /colors and the shades pages) ── */}
+      <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+          <span className="text-[#1c1712]/20">/</span>
+          <span className="text-[#1c1712]/60">Shades</span>
+        </nav>
+        <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Color Shades</h1>
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <span className="flex -space-x-1.5" aria-hidden="true">
+            {families.slice(0, 6).map((f) => (
+              <span key={f.slug} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: f.hex }} />
+            ))}
+          </span>
+          <p className="text-[16px] text-[#1c1712]/55">
+            <span className="font-semibold text-[#1c1712]/80">{families.length} color families · {totalShades} named shades</span> with HEX, RGB and HSL codes and ready palettes.
           </p>
         </div>
       </section>
-      <div className="grid w-full grid-cols-1 gap-x-6 gap-y-10 px-6 py-16 sm:grid-cols-2 sm:px-8 lg:grid-cols-3 lg:px-12 xl:grid-cols-4">
-        {families.map((f) => (
-          <div key={f.slug}>
-            <SwatchStrip colors={f.strip} height="h-32" copied={copied} onCopy={copy} className="rounded-2xl" />
-            <Link href={f.href} className="group mt-4 flex items-center justify-between">
-              <div>
-                <h2 className="text-[16px] font-semibold transition group-hover:text-[#e8531f]">Shades of {f.name}</h2>
-                <p className="text-[13px] text-[#1c1712]/45">{f.count} named shades</p>
+
+      {/* ── Family cards ── */}
+      <section className="w-full px-6 pb-16 sm:px-8 lg:px-12">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+          {families.map((f) => (
+            <article key={f.slug} className="group overflow-hidden rounded-2xl ring-1 ring-black/[0.07] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-18px_rgba(28,23,18,0.35)]">
+              {/* Every shade in the family; hover widens one, click copies it */}
+              <SwatchStrip colors={f.strip} height="h-36" copied={copied} onCopy={copy} className="" />
+              <Link href={f.href} className="flex items-end justify-between gap-4 p-5">
+                <div className="min-w-0">
+                  <h2 className="text-[19px] font-semibold tracking-[-0.02em]">
+                    Shades of <span style={{ color: f.accent }}>{f.name}</span>
+                  </h2>
+                  <p className="mt-1 text-[13px] text-[#1c1712]/55">
+                    {f.count} shades · {f.palettes} palettes
+                  </p>
+                  <p className="mt-2 truncate text-[12px] text-[#1c1712]/40">{f.samples.join(" · ")} …</p>
+                </div>
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full ring-1 ring-black/[0.1] text-[#1c1712]/50 transition group-hover:bg-[#1c1712] group-hover:text-white group-hover:ring-[#1c1712]">
+                  →
+                </span>
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Tint vs shade vs tone ── */}
+      <section className="border-t border-black/[0.06]">
+        <div className="w-full px-6 py-16 sm:px-8 lg:px-12">
+          <SectionTitle eyebrow="The basics" title="Shade vs tint vs tone" body="Three ways to change one color. Here is the same blue (#1E90FF) stepped each way - click any swatch to copy it." />
+          <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-3">
+            {scales.map((sc) => (
+              <div key={sc.key}>
+                <SwatchStrip colors={sc.colors} height="h-24" copied={copied} onCopy={copy} className="rounded-xl" />
+                <h3 className="mt-4 text-[16px] font-semibold">{sc.label}</h3>
+                <p className="text-[13px] text-[#1c1712]/55">{sc.rule}</p>
               </div>
-              <span className="text-[#1c1712]/30 transition group-hover:translate-x-1 group-hover:text-[#e8531f]">→</span>
-            </Link>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section className="border-t border-black/[0.06]">
+        <div className="grid w-full gap-12 px-6 py-16 sm:px-8 lg:grid-cols-[1fr_1.4fr] lg:gap-20 lg:px-12">
+          <SectionTitle eyebrow="FAQ" title="Questions about color shades" body="Can't find a color? Every shade page also links to matching palettes and the full color codes chart." />
+          <div className="divide-y divide-black/[0.07] border-y border-black/[0.07]">
+            {faq.map((f) => (
+              <details key={f.question} className="group py-4">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold">
+                  {f.question}
+                  <span className="text-lg leading-none text-[#1c1712]/30 transition group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-2.5 text-[14px] leading-7 text-[#1c1712]/60">{f.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

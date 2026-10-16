@@ -1,13 +1,18 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Header } from "./header";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { findClosestColorName } from "@/lib/color-names";
 import { toolPageContent } from "@/lib/seo/tool-pages";
 
 const HEX_PATTERN = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\b/g;
+
+const QUICK_COLORS = [
+  "#e8531f", "#1c1712", "#6366f1", "#10b981", "#f59e0b", "#ec4899",
+  "#3b82f6", "#ffffff", "#ef4444", "#8b5cf6", "#06b6d4", "#84cc16",
+];
 
 function normalizeHex(hex: string): string {
   if (hex.length === 4) {
@@ -38,6 +43,40 @@ function applyRecolor(svg: string, colorMap: Record<string, string>): string {
     result = result.replace(new RegExp(escaped, "gi"), to);
   }
   return result;
+}
+
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const ghostBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-[#1c1712]/70 disabled:hover:ring-black/[0.12]";
+
+function Svg({ children }: { children: ReactNode }) {
+  return (
+    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {children}
+    </svg>
+  );
+}
+
+function HexField({ value, onCommit }: { value: string; onCommit: (hex: string) => void }) {
+  // While the user types a half-finished value we show their draft; a valid HEX is committed at once.
+  const [draft, setDraft] = useState<string | null>(null);
+  return (
+    <input
+      type="text"
+      value={draft ?? value.toUpperCase()}
+      maxLength={7}
+      spellCheck={false}
+      aria-label="New HEX color"
+      onChange={(e) => {
+        let v = e.target.value.toUpperCase();
+        if (!v.startsWith("#")) v = `#${v}`;
+        const ok = /^#[0-9A-F]{6}$/.test(v);
+        setDraft(ok ? null : v);
+        if (ok) onCommit(v.toLowerCase());
+      }}
+      onBlur={() => setDraft(null)}
+      className="h-10 w-full min-w-0 rounded-xl px-3 font-mono text-[13px] font-semibold text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition focus:ring-2 focus:ring-[#1c1712]"
+    />
+  );
 }
 
 export function SvgImageRecolor() {
@@ -79,6 +118,7 @@ export function SvgImageRecolor() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]; if (file) processFile(file);
+    e.target.value = "";
   };
 
   const loadDemo = useCallback(async () => {
@@ -117,238 +157,190 @@ export function SvgImageRecolor() {
     });
   }
 
-  const hasChanges = Object.keys(colorMap).length > 0;
   const changedCount = Object.keys(colorMap).length;
+  const hasChanges = changedCount > 0;
+  const currentOf = (hex: string) => colorMap[hex] ?? hex;
+  const dots = (originalColors.length ? originalColors.map(currentOf) : ["#6366f1", "#10b981", "#f59e0b"]).slice(0, 5);
 
   return (
-    <div className="min-h-screen bg-[#f0ede8] text-[#1c1712]">
+    <div className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <main className="mx-auto w-full max-w-[1040px] px-4 pb-20 pt-20 sm:px-6 sm:pt-24 lg:pt-28">
+      {copied && (
+        <div role="status" className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1c1712] px-5 py-2.5 text-[13px] font-semibold text-white shadow-lg">
+          ✓ SVG code copied
+        </div>
+      )}
 
-        {/* ── Hero ── */}
-        <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.35 }}
-          className="mb-6 flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <span className="mb-2 inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/40 shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#e8531f]"/>SVG Tool
+      <main>
+        {/* ── Header ── */}
+        <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <span className="text-[#1c1712]/20">/</span>
+            <span className="text-[#1c1712]/60">SVG Recolor</span>
+          </nav>
+          <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">SVG Image Recolor</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <span className="flex -space-x-1.5" aria-hidden="true">
+              {dots.map((c, i) => (
+                <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
+              ))}
             </span>
-            <h1 className="font-display text-[2rem] font-black leading-none tracking-[-0.04em] sm:text-[2.6rem]">
-              Image Recolor
-            </h1>
+            <p className="text-[16px] text-[#1c1712]/55">
+              <span className="font-semibold text-[#1c1712]/80">Free, and your file never leaves the browser.</span> Upload an SVG, swap any of its colors, then copy the code or download it.
+            </p>
           </div>
-          <p className="hidden text-[13px] text-[#1c1712]/40 sm:block sm:text-right sm:max-w-[200px]">
-            Upload an SVG and swap any color with one click
-          </p>
-        </motion.div>
+        </section>
 
-        <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.4, delay:0.05 }}>
+        {/* ── Workspace ── */}
+        <section className="border-t border-black/[0.06]">
+          <div className="grid w-full items-start gap-6 px-6 py-10 sm:px-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:px-12">
+            {/* Preview */}
+            <div
+              className={`min-w-0 overflow-hidden rounded-2xl transition ${dragging ? "ring-2 ring-[#1c1712]" : "ring-1 ring-black/[0.07]"}`}
+              onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+              onDragLeave={() => setDragging(false)}
+              onDrop={handleDrop}
+            >
+              {recoloredSvg ? (
+                <div
+                  className="flex min-h-[18rem] items-center justify-center p-6 sm:min-h-[26rem] sm:p-10 [&_svg]:h-auto [&_svg]:max-h-[22rem] [&_svg]:max-w-full"
+                  style={{
+                    backgroundColor: "#ffffff",
+                    backgroundImage: "linear-gradient(45deg, #f3f3f3 25%, transparent 25%, transparent 75%, #f3f3f3 75%), linear-gradient(45deg, #f3f3f3 25%, transparent 25%, transparent 75%, #f3f3f3 75%)",
+                    backgroundSize: "20px 20px",
+                    backgroundPosition: "0 0, 10px 10px",
+                  }}
+                  dangerouslySetInnerHTML={{ __html: recoloredSvg }}
+                />
+              ) : (
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex w-full flex-col items-center justify-center gap-2 px-6 py-20 text-center transition hover:bg-[#fafafa]"
+                >
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full text-[#1c1712]/55 ring-1 ring-black/[0.12]">
+                    <Svg><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></Svg>
+                  </span>
+                  <span className="text-[15px] font-semibold">Drop an SVG here, or click to upload</span>
+                  <span className="text-[13px] text-[#1c1712]/50">SVG files only</span>
+                </button>
+              )}
 
-          {/* ── Single unified card: sidebar + preview ── */}
-          <div className="overflow-hidden rounded-3xl border border-black/[0.08] bg-white shadow-sm lg:h-[580px]">
-            <div className="flex flex-col lg:flex-row lg:h-full">
-
-              {/* ═══ LEFT SIDEBAR ═══ */}
-              <div className="flex flex-col border-b border-black/[0.06] lg:w-[260px] lg:shrink-0 lg:border-b-0 lg:border-r">
-
-                {/* Sidebar header */}
-                <div className="flex items-center justify-between border-b border-black/[0.06] px-4 py-3">
-                  <div>
-                    <p className="text-[13px] font-bold text-[#1c1712]">Image Colors</p>
-                    {originalColors.length > 0 && (
-                      <p className="text-[10px] text-[#1c1712]/35">{originalColors.length} colors found</p>
-                    )}
-                  </div>
-                  {hasChanges && (
-                    <button onClick={resetAll}
-                      className="rounded-lg border border-black/[0.07] bg-[#faf7f2] px-2.5 py-1 text-[10px] font-semibold text-[#1c1712]/45 transition hover:bg-[#f0ede8]">
-                      Reset
-                    </button>
-                  )}
-                </div>
-
-                {/* Scrollable: swatch grid + edit color */}
-                <div className="px-4 py-3 lg:flex-1 lg:overflow-y-auto">
-                  {originalColors.length === 0 ? (
-                    <p className="mt-4 text-center text-[11px] text-[#1c1712]/30">Upload an SVG to see its colors</p>
-                  ) : (
-                    <>
-                      <p className="mb-2 text-[10px] text-[#1c1712]/30">Click a color to edit</p>
-                      <div className="grid grid-cols-8 gap-1.5 sm:grid-cols-10 lg:grid-cols-5">
-                        {originalColors.map(hex => {
-                          const current = colorMap[hex] ?? hex;
-                          const isSelected = selectedColor === hex;
-                          return (
-                            <button key={hex} onClick={() => setSelectedColor(hex)}
-                              title={`${findClosestColorName(current)} ${current}`}
-                              className={`relative aspect-square overflow-hidden rounded-xl border-2 transition-all duration-150 hover:scale-105 ${
-                                isSelected ? "border-[#e8531f] shadow-[0_0_0_2px_rgba(232,83,31,0.2)]" : "border-transparent hover:border-black/10"
-                              }`}
-                              style={{ backgroundColor: current }}>
-                              {colorMap[hex] && (
-                                <span className="absolute right-0.5 top-0.5 h-2 w-2 rounded-full bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.2)]"/>
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </>
-                  )}
-
-                  {/* Edit color — inline below swatches */}
-                  <AnimatePresence>
-                    {selectedColor && originalColors.length > 0 && (
-                      <motion.div initial={{ opacity:0, height:0 }} animate={{ opacity:1, height:"auto" }}
-                        exit={{ opacity:0, height:0 }} className="mt-4 overflow-hidden">
-                        <div className="rounded-2xl border border-black/[0.07] bg-[#faf7f2] p-3">
-                          {/* before → after row */}
-                          <div className="flex items-center gap-2">
-                            <div className="h-8 w-8 shrink-0 rounded-xl border border-black/[0.10] shadow-sm" style={{ backgroundColor: selectedColor }}/>
-                            <div className="flex flex-col">
-                              <span className="font-mono text-[9px] text-[#1c1712]/35">{selectedColor.toUpperCase()}</span>
-                              <span className="text-[9px] text-[#1c1712]/25">original</span>
-                            </div>
-                            <svg className="mx-1 h-3 w-3 shrink-0 text-[#1c1712]/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                            </svg>
-                            {/* Clickable new color */}
-                            <label className="group relative cursor-pointer">
-                              <div className="h-8 w-8 rounded-xl border-2 border-[#e8531f]/30 shadow-sm transition group-hover:brightness-90"
-                                style={{ backgroundColor: colorMap[selectedColor] ?? selectedColor }}/>
-                              <input type="color" value={colorMap[selectedColor] ?? selectedColor}
-                                onChange={e => setReplacement(selectedColor, e.target.value)}
-                                className="absolute inset-0 h-full w-full cursor-pointer opacity-0"/>
-                            </label>
-                            <div className="flex flex-col">
-                              <span className="font-mono text-[9px] font-semibold text-[#1c1712]/60">{(colorMap[selectedColor] ?? selectedColor).toUpperCase()}</span>
-                              <span className="text-[9px] text-[#1c1712]/25">new</span>
-                            </div>
-                            {colorMap[selectedColor] && (
-                              <button onClick={() => resetColor(selectedColor)}
-                                className="ml-auto shrink-0 text-[9px] text-[#1c1712]/30 transition hover:text-[#e8531f]">✕</button>
-                            )}
-                          </div>
-
-                          {/* Color name */}
-                          <p className="mt-2 text-[10px] font-semibold text-[#1c1712]/50">
-                            {findClosestColorName(colorMap[selectedColor] ?? selectedColor)}
-                          </p>
-
-                          {/* Quick palette */}
-                          <div className="mt-2 grid grid-cols-6 gap-1">
-                            {["#e8531f","#1c1712","#6366f1","#10b981","#f59e0b","#ec4899",
-                              "#3b82f6","#ffffff","#ef4444","#8b5cf6","#06b6d4","#84cc16"].map(c => (
-                              <button key={c} onClick={() => setReplacement(selectedColor, c)}
-                                className={`h-6 rounded-md border transition-all hover:scale-110 ${
-                                  (colorMap[selectedColor] ?? selectedColor) === c
-                                    ? "border-[#e8531f]/60 shadow-[0_0_0_1.5px_rgba(232,83,31,0.25)]"
-                                    : c === "#ffffff" ? "border-black/[0.15]" : "border-transparent"
-                                }`}
-                                style={{ backgroundColor: c }} title={c}/>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* Sidebar bottom actions */}
-                <div className="flex flex-col gap-2 border-t border-black/[0.06] p-3">
-                  <button onClick={() => fileInputRef.current?.click()}
-                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#1c1712] py-2.5 text-[12px] font-bold text-white transition hover:bg-[#1c1712]/80">
-                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-                    </svg>
-                    Upload SVG
+              <div className="flex flex-wrap items-center gap-2 border-t border-black/[0.06] bg-white px-4 py-3">
+                <button onClick={() => fileInputRef.current?.click()} className={ghostBtn}>
+                  <Svg><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></Svg>
+                  Upload SVG
+                </button>
+                <button onClick={loadDemo} className={ghostBtn}>Try demo</button>
+                {recoloredSvg && <span className="hidden truncate font-mono text-[12px] text-[#1c1712]/45 sm:inline">{fileName}.svg</span>}
+                <div className="ml-auto flex flex-wrap items-center gap-2">
+                  <button onClick={copySvgCode} disabled={!recoloredSvg} className={ghostBtn}>Copy SVG</button>
+                  <button
+                    onClick={handleDownload}
+                    disabled={!recoloredSvg}
+                    className="inline-flex items-center gap-2 rounded-full bg-[#1c1712] px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c] disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    <Svg><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></Svg>
+                    Download
                   </button>
-                  <button onClick={loadDemo}
-                    className="flex w-full items-center justify-center gap-1.5 rounded-2xl border border-black/[0.08] bg-[#f7f4ef] py-2 text-[11px] font-semibold text-[#1c1712]/50 transition hover:bg-[#f0ede8] hover:text-[#1c1712]/70">
-                    Try demo SVG
-                  </button>
-                  <input ref={fileInputRef} type="file" accept=".svg,image/svg+xml" onChange={handleFileChange} className="hidden"/>
                 </div>
+                <input ref={fileInputRef} type="file" accept=".svg,image/svg+xml" onChange={handleFileChange} className="hidden" />
               </div>
+            </div>
 
-              {/* ═══ RIGHT — Preview + toolbar ═══ */}
-              <div className="flex flex-1 flex-col min-w-0">
-
-                {/* Preview area */}
-                {recoloredSvg ? (
-                  <div className="flex min-h-[260px] flex-1 items-center justify-center overflow-hidden bg-white p-6 sm:p-8 [&_svg]:h-auto [&_svg]:max-h-full [&_svg]:max-w-full"
-                    dangerouslySetInnerHTML={{ __html: recoloredSvg }}/>
-                ) : (
-                  <div
-                    onDragOver={e => { e.preventDefault(); setDragging(true); }}
-                    onDragLeave={() => setDragging(false)}
-                    onDrop={handleDrop}
-                    onClick={() => fileInputRef.current?.click()}
-                    className={`flex min-h-[260px] flex-1 cursor-pointer flex-col items-center justify-center border-2 border-dashed transition-all ${
-                      dragging ? "border-[#e8531f]/40 bg-[#e8531f]/[0.02]" : "border-transparent hover:border-black/[0.08]"
-                    }`}>
-                    <div className={`mb-3 flex h-14 w-14 items-center justify-center rounded-2xl border transition-all ${
-                      dragging ? "border-[#e8531f]/20 bg-[#e8531f]/10" : "border-black/[0.08] bg-[#f7f4ef]"
-                    }`}>
-                      <svg className={`h-7 w-7 transition-colors ${dragging ? "text-[#e8531f]" : "text-[#1c1712]/20"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                      </svg>
-                    </div>
-                    <p className="text-[13px] font-semibold text-[#1c1712]/35">Drop SVG here or click to upload</p>
-                    <p className="mt-1 text-[11px] text-[#1c1712]/20">SVG files only</p>
-                  </div>
+            {/* Colors */}
+            <div className="min-w-0 rounded-2xl ring-1 ring-black/[0.07]">
+              <div className="flex items-center justify-between gap-3 px-5 pb-3 pt-5 sm:px-6">
+                <div>
+                  <p className={label}>Colors in this image</p>
+                  <p className="mt-1 text-[13px] text-[#1c1712]/50">
+                    {originalColors.length} found{hasChanges ? ` · ${changedCount} changed` : ""}
+                  </p>
+                </div>
+                {hasChanges && (
+                  <button onClick={resetAll} className={ghostBtn.replace("px-4 py-2", "px-3.5 py-1.5")}>
+                    <Svg><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></Svg>
+                    Reset all
+                  </button>
                 )}
-
-                {/* Bottom toolbar */}
-                <div className="flex items-center justify-between border-t border-black/[0.06] bg-[#faf7f2] px-4 py-2.5">
-                  {/* Left: file info + reset */}
-                  <div className="flex items-center gap-2">
-                    {hasChanges && (
-                      <button onClick={resetAll} title="Reset all changes"
-                        className="flex h-7 w-7 items-center justify-center rounded-lg border border-black/[0.07] bg-white text-[#1c1712]/40 transition hover:bg-[#f0ede8] hover:text-[#1c1712]/70">
-                        <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                        </svg>
-                      </button>
-                    )}
-                    <button onClick={() => fileInputRef.current?.click()}
-                      className="flex h-7 items-center gap-1.5 rounded-lg border border-black/[0.07] bg-white px-3 text-[11px] font-semibold text-[#1c1712]/50 transition hover:bg-[#f0ede8]">
-                      <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-                      </svg>
-                      Open file
-                    </button>
-                    {recoloredSvg && (
-                      <span className="hidden font-mono text-[10px] text-[#1c1712]/25 sm:inline">{fileName}.svg</span>
-                    )}
-                  </div>
-
-                  {/* Right: copy + download */}
-                  <div className="flex items-center gap-2">
-                    <button onClick={copySvgCode} disabled={!recoloredSvg}
-                      className={`flex h-7 items-center gap-1.5 rounded-lg border px-3 text-[11px] font-semibold transition disabled:opacity-30 ${
-                        copied ? "border-green-200 bg-green-50 text-green-600" : "border-black/[0.07] bg-white text-[#1c1712]/45 hover:bg-[#f0ede8]"
-                      }`}>
-                      {copied
-                        ? <><svg className="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>Copied!</>
-                        : "Copy SVG"
-                      }
-                    </button>
-                    <button onClick={handleDownload} disabled={!recoloredSvg}
-                      className="flex h-7 items-center gap-1.5 rounded-lg bg-[#e8531f] px-4 text-[11px] font-bold text-white shadow-[0_2px_8px_rgba(232,83,31,0.30)] transition hover:bg-[#c94518] disabled:opacity-30">
-                      <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-                      </svg>
-                      Download
-                    </button>
-                  </div>
-                </div>
               </div>
 
+              {originalColors.length === 0 ? (
+                <p className="border-t border-black/[0.06] px-5 py-5 text-[14px] leading-6 text-[#1c1712]/55 sm:px-6">
+                  {originalSvg
+                    ? "No HEX colors found in this file. This tool swaps #RRGGBB and #RGB values, so named colors like \"red\" are left as they are."
+                    : "Upload an SVG to see its colors here."}
+                </p>
+              ) : (
+                <ul className="max-h-[22rem] space-y-2 overflow-y-auto border-t border-black/[0.06] px-5 py-4 sm:px-6">
+                  {originalColors.map((hex) => {
+                    const current = currentOf(hex);
+                    const changed = colorMap[hex] !== undefined;
+                    const selected = selectedColor === hex;
+                    return (
+                      <li key={hex}>
+                        <button
+                          onClick={() => setSelectedColor(hex)}
+                          aria-pressed={selected}
+                          className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition ${
+                            selected ? "bg-[#1c1712]/[0.04] ring-2 ring-[#1c1712]" : "ring-1 ring-black/[0.08] hover:ring-black/25"
+                          }`}
+                        >
+                          <span className="h-9 w-9 shrink-0 rounded-lg ring-1 ring-black/10" style={{ backgroundColor: hex }} title={`Original ${hex.toUpperCase()}`} />
+                          <span className="text-[#1c1712]/30" aria-hidden="true">→</span>
+                          <span className="h-9 w-9 shrink-0 rounded-lg ring-1 ring-black/10" style={{ backgroundColor: current }} title={`Now ${current.toUpperCase()}`} />
+                          <span className="min-w-0 flex-1">
+                            <span className="block font-mono text-[13px] font-semibold uppercase">{current}</span>
+                            <span className="block truncate text-[12px] text-[#1c1712]/45">{findClosestColorName(current)}</span>
+                          </span>
+                          {changed && <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-600/20">Changed</span>}
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+
+              {selectedColor && originalColors.includes(selectedColor) && (
+                <div className="border-t border-black/[0.06] px-5 py-5 sm:px-6">
+                  <p className={label}>Change {selectedColor.toUpperCase()} to</p>
+                  <div className="mt-3 flex items-center gap-2.5">
+                    <label className="relative h-10 w-10 shrink-0 cursor-pointer overflow-hidden rounded-xl ring-1 ring-black/10 transition hover:ring-black/30" style={{ backgroundColor: currentOf(selectedColor) }} title="Open your system color picker">
+                      <input
+                        type="color"
+                        value={currentOf(selectedColor).toLowerCase()}
+                        onChange={(e) => setReplacement(selectedColor, e.target.value)}
+                        className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                        aria-label="Pick a new color"
+                      />
+                    </label>
+                    <HexField value={currentOf(selectedColor)} onCommit={(hex) => setReplacement(selectedColor, hex)} />
+                    {colorMap[selectedColor] !== undefined && (
+                      <button onClick={() => resetColor(selectedColor)} className={ghostBtn.replace("px-4 py-2", "px-3.5 py-2.5")}>Reset</button>
+                    )}
+                  </div>
+                  <div className="mt-4 grid grid-cols-6 gap-2 sm:grid-cols-12 lg:grid-cols-6 xl:grid-cols-12">
+                    {QUICK_COLORS.map((c) => (
+                      <button
+                        key={c}
+                        onClick={() => setReplacement(selectedColor, c)}
+                        title={c}
+                        aria-label={`Use ${c}`}
+                        className={`h-8 rounded-lg ring-1 transition hover:scale-110 ${currentOf(selectedColor).toLowerCase() === c ? "ring-2 ring-[#1c1712]" : "ring-black/15"}`}
+                        style={{ backgroundColor: c }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </motion.div>
+        </section>
 
-        <ToolPageSections config={toolPageContent["image-recolor"]}/>
+        <ToolPageSections config={toolPageContent["image-recolor"]} variant="new" />
       </main>
     </div>
   );
