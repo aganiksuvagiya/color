@@ -18,16 +18,16 @@ export function ColorBlindPanel({ palette }: Props) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl"
+      className="rounded-2xl border border-black/[0.08] bg-white p-4 shadow-[0_1px_6px_rgba(28,23,18,0.06)]"
     >
-      <p className="mb-3 text-sm font-medium text-white/50">Color Blindness Simulation</p>
+      <p className="mb-3 text-sm font-medium text-[#1c1712]/55">Color Blindness Simulation</p>
 
       <div className="space-y-3">
         {types.map((t) => (
           <div key={t.key} className="flex items-center gap-3">
             <div className="w-28 shrink-0">
-              <p className="text-xs font-medium text-white/60">{t.label}</p>
-              <p className="text-[10px] text-white/25">{t.desc}</p>
+              <p className="text-xs font-medium text-[#1c1712]/65">{t.label}</p>
+              <p className="text-[10px] text-[#1c1712]/35">{t.desc}</p>
             </div>
             <div className="flex flex-1 gap-1">
               {palette.colors.map((color, i) => {

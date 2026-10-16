@@ -13,14 +13,14 @@ type Props = {
 export function SavedPalettes({ palettes, onLoad, onDelete }: Props) {
   if (palettes.length === 0) {
     return (
-      <div className="rounded-2xl border border-white/8 bg-white/3 p-8 text-center backdrop-blur-xl">
-        <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white/5">
-          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className="text-white/20">
+      <div className="rounded-2xl border border-black/[0.08] bg-white p-8 text-center shadow-[0_1px_6px_rgba(28,23,18,0.06)]">
+        <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#1c1712]/[0.05]">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className="text-[#1c1712]/25">
             <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
             <path d="M17 21v-8H7v8M7 3v5h8" />
           </svg>
         </div>
-        <p className="text-sm text-white/25">No saved palettes yet. Generate one and hit Save.</p>
+        <p className="text-sm text-[#1c1712]/35">No saved palettes yet. Generate one and hit Save.</p>
       </div>
     );
   }
@@ -28,14 +28,14 @@ export function SavedPalettes({ palettes, onLoad, onDelete }: Props) {
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2">
-        <div className="flex h-6 w-6 items-center justify-center rounded-md bg-white/8">
-          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className="text-white/40">
+        <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#1c1712]/[0.06]">
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className="text-[#1c1712]/45">
             <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
           </svg>
         </div>
-        <p className="text-sm font-medium text-white/50">Saved palettes ({palettes.length})</p>
+        <p className="text-sm font-medium text-[#1c1712]/55">Saved palettes ({palettes.length})</p>
       </div>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3">
         <AnimatePresence>
           {palettes.map((p) => (
             <motion.div
@@ -44,11 +44,11 @@ export function SavedPalettes({ palettes, onLoad, onDelete }: Props) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="group rounded-2xl border border-white/10 bg-gradient-to-b from-white/8 to-white/3 p-4 shadow-lg shadow-black/10 backdrop-blur-xl transition-colors hover:border-white/15"
+              className="group rounded-2xl border border-black/[0.08] bg-white p-4 shadow-[0_1px_6px_rgba(28,23,18,0.06)] transition-shadow hover:shadow-[0_4px_16px_rgba(28,23,18,0.10)]"
             >
               <div className="mb-3 flex items-center justify-between">
-                <p className="text-xs font-semibold text-white/70">{p.label}</p>
-                <p className="text-[10px] text-white/20">
+                <p className="text-xs font-semibold text-[#1c1712]/70">{p.label}</p>
+                <p className="text-[10px] text-[#1c1712]/30">
                   {new Date(p.savedAt).toLocaleDateString()}
                 </p>
               </div>
@@ -66,13 +66,13 @@ export function SavedPalettes({ palettes, onLoad, onDelete }: Props) {
               <div className="flex gap-2">
                 <button
                   onClick={() => onLoad(p)}
-                  className="flex-1 rounded-xl bg-white/8 px-3 py-2 text-xs font-medium text-white/60 transition-all hover:bg-white/14 hover:text-white/80"
+                  className="flex-1 rounded-xl border border-black/[0.08] bg-[#faf7f2] px-3 py-2 text-xs font-medium text-[#1c1712]/60 transition-all hover:bg-[#f0ebe4] hover:text-[#1c1712]"
                 >
                   Load
                 </button>
                 <button
                   onClick={() => onDelete(p.id)}
-                  className="rounded-xl bg-white/5 px-3 py-2 text-xs font-medium text-red-400/50 transition-all hover:bg-red-500/10 hover:text-red-400"
+                  className="rounded-xl border border-red-200/60 bg-red-50/60 px-3 py-2 text-xs font-medium text-red-500/70 transition-all hover:bg-red-50 hover:text-red-600"
                 >
                   Delete
                 </button>
