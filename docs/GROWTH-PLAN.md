@@ -131,7 +131,7 @@ Helpers in the same file: `getShadeFamily`, `getResolvedShades` (sorted light to
 
 **The task:** the owner is moving the whole site, page by page, to the new coolors-style design. Pages are done one at a time when the owner names a URL. **Reference page: `/palettes`** (`components/seo/palettes-landing.tsx`). Copy its structure for any new page.
 
-### Done (new design, none committed yet)
+### Done (new design, live since 2026-10-17)
 
 | Page | URL(s) | Component |
 |---|---|---|
@@ -216,7 +216,7 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 6. No framer-motion fade-ins and no cream backgrounds. Keep content server-visible.
 7. Keep `tsc` and `eslint` clean, then check the page in the browser.
 
-## SEO, AEO, GEO and LLM push (2026-10-17, committed in the commit "Redesign all pages in the new design and add SEO, AEO, GEO and LLM work")
+## SEO, AEO, GEO and LLM push (2026-10-17, live)
 
 **Ask from the owner:** research what the US top 10 use for the main keywords, add those keywords, make "hueflow" the strong brand keyword, and complete SEO, AEO (answer engines), GEO (generative engines) and LLMO (llms.txt etc.), adding features where needed.
 
@@ -254,29 +254,45 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 
 **Checks run:** `tsc` and `eslint` clean on all changed files; JSON-LD parses on the home, converter, tool, about and generator pages; `/hex-to-rgb`, `/oklch-to-rgb` etc. return 200, `/convert/hex-to-rgb` 308, unknown pair 404; sitemap lists the 16 new URLs; mobile width (375) has no horizontal overflow on the converter page. Not run: `npm run build` / `npm run preview` (the dev server shares `.next`), so check the rewrite regex in the OpenNext build before deploying.
 
-## Next session: start here (updated 2026-10-17)
+## Next session: start here (updated 2026-10-19)
 
 **State:**
-- Phases 1–4, the redesign of every page except `/generator` and the header, and the SEO/AEO/GEO/LLM push (section above) are built and checked on `feature/new-feature`.
-- **Committed on `feature/new-feature` as the commit "Redesign all pages in the new design and add SEO, AEO, GEO and LLM work" (2026-10-17); not pushed.** `tsconfig.tsbuildinfo` (build cache) was left out on purpose. Ask the owner before pushing, merging or deploying.
-- Nothing is live. hueflow.site still runs `develop` at 5f9311a.
+- Phases 1–4, the redesign of every page except `/generator` and the header, and the SEO/AEO/GEO/LLM push are **live on hueflow.site** (deployed 2026-10-17, worker version `6790adae`).
+- Git: `feature/new-feature` was merged into `develop` (fast-forward) and both are pushed; `develop` and `origin/develop` were at `82a78d8` at deploy time. A merge with the remote copy of `feature/new-feature` had conflicts in 7 files; the local (newer) versions were kept, the remote commit was an older snapshot of the same redesign.
+- Deploy used `npx opennextjs-cloudflare build` then `npx opennextjs-cloudflare deploy` from a clean `develop`, with the dev server stopped first. The build logs "Failed to copy node_modules/ansi-regex / strip-ansi" errors; they did not stop the build or the live site.
+- Checked live after the deploy: home, 14 converter pages, `/random-color-generator`, `/color-name-finder`, `/llms.txt`, `/llms-full.txt`, `/robots.txt` and the sitemaps return 200; `/convert/hex-to-rgb` returns 308 to `/hex-to-rgb`; an unknown pair returns 404; `sitemap-pages.xml` lists the 16 new URLs (71 URLs in total); `/community` canonical is correct.
+- This docs update is uncommitted on `develop`. **`develop` must be clean before the next deploy**, so commit or discard it first (ask the owner).
 
 **To do, in order:**
-1. **Push** `feature/new-feature` (committed, not pushed). Ask first.
-2. **Owner decisions still open:**
+1. **Owner decisions still open:**
    - `/generator` (`components/generator/*`, full-screen app, framer-motion): redesign fully, only the chrome around the palette, or leave.
    - Header (site-wide, fades in after load on mobile): change or leave.
    - Overlapping pages: `/color-picker` vs `/tools/picker`, `/colors` vs `/color-codes`, `/tailwind` vs `/tailwind-colors` vs `/tools/tailwind`.
    - Optional: "HueFlow vs Coolors" / "Coolors alternative" pages (need verified comparison points from the owner).
-3. **Owner actions outside the code** (see "Needs the owner" in the SEO section): real social profile URLs into `socialProfiles`, Google Search Console and Bing Webmaster verification plus sitemap submit, backlinks and directory listings.
+2. **Owner actions outside the code** (see "Needs the owner" in the SEO section): real social profile URLs into `socialProfiles`, Google Search Console and Bing Webmaster verification plus sitemap submit and "Request indexing" for the new pages, backlinks and directory listings. Not confirmed as done.
+3. **Ads** (see the "Ads" section below): waiting for the Adsterra ad code.
 4. **Not yet checked:** the signed-in view of `/profile` (score, streak, invite row, sign-out dialog; needs a login), and the `/colorblind` matrices in `lib/colorblind.ts` (inaccurate, separate task).
-5. **Verify before any deploy:**
+5. **Before any deploy** (only on request, from a clean `develop`):
    - `npx tsc --noEmit`
    - `npx eslint` on the changed files (quote paths with `[` in them, and use `xargs` in zsh)
-   - `npx next build` with the dev server stopped (they share `.next`)
-   - `opennextjs-cloudflare build` then `opennextjs-cloudflare preview`. Check the converter rewrite (`/hex-to-rgb` etc.) and `/llms-full.txt` there. Plain `wrangler dev` 404s SSG pages because it skips the cache populate.
-6. **Merge** `feature/new-feature` into `develop`. Ask first.
-7. **Deploy** from a clean `develop` with `npm run deploy`, only on request. Then submit the sitemap in Google Search Console.
+   - Stop the dev server first (it shares `.next` with the build), then `npx opennextjs-cloudflare build` and `npx opennextjs-cloudflare deploy` (or `npm run deploy`).
+
+## Ads (status 2026-10-19, nothing built yet)
+
+- **Google AdSense** is already on the site: the script in `app/layout.tsx` (`ca-pub-1726872213486410`, commit 308418b) and `public/ads.txt`. There is no `<ins class="adsbygoogle">` unit anywhere, so ads depend on AdSense Auto ads (check that setting in AdSense so it does not clash with other networks). Whether the AdSense account is approved is not known from the code.
+- **Adsterra:** nothing in the code or the git history (all branches). In the Adsterra dashboard the site `hueflow.site` is **Approved** with 3 ad units, all **Inactive** (they need the code on the site, then RESUBMIT): Banner 160x300 (id 30897084), Banner 300x250 (id 30912817), Native Banner (id 30766784).
+- **Plan agreed with the owner's questions so far:** use only the **300x250** banner; skip 160x300 and Native Banner for now (poor fit, clickbait risk).
+- **Placement plan** (one reusable `AdSlot` client component, lazy-loaded when near the viewport, 250px of space reserved to avoid layout shift, labeled "Advertisement", rendered in only one place per breakpoint because hidden slots still run their scripts), dropped into the shared templates so every page gets one:
+  - content pages (`components/seo/content-page.tsx`): desktop sidebar; mobile between Key Takeaways and the next block
+  - hubs (`components/seo/hub-page.tsx`, `colors-hub-page.tsx`, `palettes-landing.tsx`): after the featured grid
+  - tool pages (`ToolPageSections` in `components/seo/tool-page-sections.tsx`): between "How to use" and the FAQ
+  - converter pages (`components/seo/converter-page.tsx`): after "How to convert"
+  - landing pages (`components/seo/tool-landing.tsx`): between features and FAQ
+  - shades, color-palettes, color-codes, trends: after the first grid, never between palette cards
+  - homepage: one slot in the lower half
+  - **never:** `/generator`, `/profile`, `/about`, `/contact`, `/privacy`, `/terms`, 404, above the fold, inside a tool UI. Max 1 per page (2 on long content pages).
+- **Needed from the owner:** the Adsterra ad code for the 300x250 unit (dashboard, row menu, "Get code"); it carries a unique key, so it can't be generated. Also update `/privacy` to mention Google AdSense and Adsterra cookies.
+- Risks to remember: third-party ad scripts can hurt Core Web Vitals (hence the lazy load and reserved space), and Adsterra can serve low-quality ads; test on one page type first.
 
 **Design system used (keep it consistent):**
 - White pages.
@@ -293,7 +309,7 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 
 ## Status
 
-- [x] **Phase 1, shades pages** (built 2026-10-06, not committed yet)
+- [x] **Phase 1, shades pages** (built 2026-10-06, live since 2026-10-17)
   - [x] Data: `lib/shades-data.ts` (12 colors, 25–38 shades each, 4 palettes, 4 FAQs)
   - [x] View: `components/seo/shades-page.tsx` (`ShadesPageView`, `ShadesHubView`)
   - [x] Routes: `app/shades/[color]/page.tsx`, `app/shades/page.tsx`; rewrites and redirects in `next.config.ts`
@@ -313,7 +329,7 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
     - Simpler cards: swatch, name and code. The tint scale section was removed.
     - Palettes sit in a 2-column grid. Guide and FAQ sit side by side. Other families appear as chips.
     - The `/shades` hub got the same cleaner style.
-- [x] **Phase 2, palette library and tag pages** (built 2026-10-07, not committed yet)
+- [x] **Phase 2, palette library and tag pages** (built 2026-10-07, live since 2026-10-17)
   - [x] Data: `lib/palette-library.ts`
     - 220 palettes and 24 tags: 8 styles, 4 seasons, 12 colors
     - Color tags are computed by `colorFamily()`
@@ -327,7 +343,7 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
     - `tsc` and `eslint` are clean, and `next build` passes (static)
     - All tag pages return 200, and unknown tags return 404
     - "Copy all", per-color copy and "Open in generator" work, with no console errors
-- [x] **Phase 3, color chart and color-page links** (built 2026-10-07, not committed yet)
+- [x] **Phase 3, color chart and color-page links** (built 2026-10-07, live since 2026-10-17)
   - [x] `/color-codes`: `app/color-codes/page.tsx` and `components/seo/color-codes-page.tsx`
     - all 140 named colors, grouped into 12 families with `colorFamily()`, sorted light to dark
     - tiles link to `/colors/[slug]`
@@ -341,7 +357,7 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
     - `/color-codes` lists 140 rows
     - navy → blue, tomato → red and camel → brown links are correct
     - no console errors
-- [x] **Phase 4, sitemaps, navigation and homepage links** (built 2026-10-07, not committed yet)
+- [x] **Phase 4, sitemaps, navigation and homepage links** (built 2026-10-07, live since 2026-10-17)
   - [x] Sitemaps
     - New `app/sitemap-shades.xml/route.ts` (12 URLs), added to the index (`sitemapFiles`) and to `app/robots.ts`
     - `palettesSitemap` now includes the 24 `/color-palettes/<tag>` pages
@@ -361,8 +377,8 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
     - unknown slugs return 404
     - Note: plain `wrangler dev` without the cache-populate step shows the SSG pages as 404. That's a test-setup artifact; `npm run deploy` populates the cache.
 - [x] **Redesign of every page to the new design** (2026-10-08 to 2026-10-17, committed in the commit "Redesign all pages in the new design and add SEO, AEO, GEO and LLM work"): all pages except `/generator` and the header (see "Done" and the notes above)
-- [x] **SEO, AEO, GEO and LLM push** (2026-10-17, committed in the commit "Redesign all pages in the new design and add SEO, AEO, GEO and LLM work"): brand entity schema, keyword titles, 14 converter pages, random color generator, color name finder, `llms.txt` + `llms-full.txt`, robots, sitemap, internal links (see the section above)
+- [x] **SEO, AEO, GEO and LLM push** (2026-10-17, live): brand entity schema, keyword titles, 14 converter pages, random color generator, color name finder, `llms.txt` + `llms-full.txt`, robots, sitemap, internal links (see the section above)
 - [ ] Owner actions: social profile URLs, Search Console and Bing verification, backlinks
 - [ ] `/generator` and header redesign (owner decision)
-- [ ] Merge into `develop` (owner approval)
-- [ ] Deploy from `develop` (owner approval)
+- [ ] Adsterra 300x250 ads (waiting for the ad code, see the Ads section)
+- [x] Merged into `develop` and deployed live on 2026-10-17 (worker version `6790adae`)
