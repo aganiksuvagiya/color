@@ -37,6 +37,8 @@ const TOOL_LINKS = [
   { href: "/color-converter", label: "Color Converter" },
   { href: "/random-color-generator", label: "Random Color Generator" },
   { href: "/color-name-finder", label: "Color Name Finder" },
+  { href: "/color-wheel", label: "Color Wheel" },
+  { href: "/color-mixing-chart", label: "Color Mixing Chart" },
 ];
 
 export function Header({ isHome = false }: { isHome?: boolean } = {}) {

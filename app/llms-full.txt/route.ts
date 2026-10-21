@@ -1,4 +1,5 @@
 import { converterPairs } from "@/lib/seo/converter-pages";
+import { colorMixing, colorWheel, pastelColors } from "@/lib/seo/guide-pages";
 import { siteConfig } from "@/lib/seo/site-config";
 import { toolPageContent } from "@/lib/seo/tool-pages";
 
@@ -42,6 +43,12 @@ export async function GET() {
     t.howToSteps.forEach((s, i) => out.push(`${i + 1}. ${s}`));
     out.push("", "FAQ:");
     t.faq.forEach((f) => out.push(`Q: ${f.question}`, `A: ${f.answer}`, ""));
+  }
+
+  out.push("## Color guides and references", "");
+  for (const g of [colorMixing, colorWheel, pastelColors]) {
+    out.push(`### ${g.title}`, `URL: ${d}${g.path}`, "", g.answer, "");
+    out.push(...g.faq.flatMap((f) => [`Q: ${f.question}`, `A: ${f.answer}`, ""]));
   }
 
   out.push("## Color converters", "");

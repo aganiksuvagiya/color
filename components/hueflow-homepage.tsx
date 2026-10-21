@@ -49,7 +49,10 @@ const POPULAR_LINKS = [
   { href: "/shades-of-pink", label: "Shades of Pink", hex: "#FF69B4" },
   { href: "/shades-of-purple", label: "Shades of Purple", hex: "#9370DB" },
   { href: "/shades-of-green", label: "Shades of Green", hex: "#2E8B57" },
-  { href: "/color-palettes/pastel", label: "Pastel Palettes", hex: "#FFD1DC" },
+  { href: "/pastel-colors", label: "Pastel Colors", hex: "#FFD1DC" },
+  { href: "/color-wheel", label: "Color Wheel", hex: "#FFE600" },
+  { href: "/color-mixing-chart", label: "Color Mixing Chart", hex: "#FF8000" },
+  { href: "/color-palettes/pastel", label: "Pastel Palettes", hex: "#F4C2C2" },
   { href: "/color-palettes", label: "Palette Library", hex: "#E8531F" },
   { href: "/color-codes", label: "Color Codes", hex: "#1C1712" },
 ];

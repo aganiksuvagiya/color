@@ -77,6 +77,8 @@ const CONVERTER_LINKS = [
   { href: "/random-color-generator", label: "Random Color Generator" },
   { href: "/color-name-finder", label: "Color Name Finder" },
   { href: "/color-wheel", label: "Color Wheel" },
+  { href: "/color-mixing-chart", label: "Color Mixing Chart" },
+  { href: "/pastel-colors", label: "Pastel Colors" },
   { href: "/color-palette-from-image", label: "Color Palette from Image" },
 ];
 

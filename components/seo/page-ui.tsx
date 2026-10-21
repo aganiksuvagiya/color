@@ -46,7 +46,8 @@ export function Dots({ colors }: { colors: string[] }) {
   );
 }
 
-export function Faq({ items, openFirst = true }: { items: { question: string; answer: string }[]; openFirst?: boolean }) {
+/** `wide` lets the answers run to a wider line length (for pages whose FAQ spans the full content width). */
+export function Faq({ items, openFirst = true, wide = false }: { items: { question: string; answer: string }[]; openFirst?: boolean; wide?: boolean }) {
   return (
     <div className="divide-y divide-black/[0.08] border-y border-black/[0.08]">
       {items.map((f, i) => (
@@ -59,7 +60,7 @@ export function Faq({ items, openFirst = true }: { items: { question: string; an
               </svg>
             </span>
           </summary>
-          <p className="-mt-1 max-w-3xl pb-6 pr-12 text-[15px] leading-7 text-[#1c1712]/65">{f.answer}</p>
+          <p className={`-mt-1 pb-6 pr-12 text-[15px] leading-7 text-[#1c1712]/65 ${wide ? "max-w-5xl" : "max-w-3xl"}`}>{f.answer}</p>
         </details>
       ))}
     </div>

@@ -254,6 +254,29 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 
 **Checks run:** `tsc` and `eslint` clean on all changed files; JSON-LD parses on the home, converter, tool, about and generator pages; `/hex-to-rgb`, `/oklch-to-rgb` etc. return 200, `/convert/hex-to-rgb` 308, unknown pair 404; sitemap lists the 16 new URLs; mobile width (375) has no horizontal overflow on the converter page. Not run: `npm run build` / `npm run preview` (the dev server shares `.next`), so check the rewrite regex in the OpenNext build before deploying.
 
+## Top 3 keyword pages (2026-10-21, branch `feature/top3-pages`, not committed)
+
+**Ask from the owner:** study the US search results for color topics, find what people search, and build the top 3 pages that should reach at least 300 impressions a day.
+
+**What the research showed** (web search tool, summaries only: no real rank or volume numbers, so the sizes below are estimates to check in Search Console):
+- Who ranks for the "what colors make X" cluster: small art blogs (artstudiolife, thegraphicsfairy, hunker). No interactive tool, just text recipes.
+- "color wheel / primary secondary tertiary colors": Adobe's blog and many scraped "printable chart" pages. No interactive wheel with schemes and codes.
+- "pastel colors / pastel hex codes": picsart, htmlcolorcodes single-color pages, colorswall; the same name maps to different hex codes on different sites.
+- "complementary color calculator": planetcalc, jumk.de, bushe.co: bare calculators with no explanation.
+- Earlier research (this file, top section) put "pastel colors" at about 79K searches a month in the US. The color wheel and "what colors make" clusters are estimated at tens of thousands a month each (not measured).
+
+**The 3 pages (all new design, answer-first, FAQ + HowTo/FAQPage/WebApplication/Speakable/Breadcrumb schema, mobile checked at 375px):**
+1. `/color-mixing-chart` (`components/color-mixing-chart.tsx`, math in `lib/color-mixing.ts`): mixer in three models (paint RYB with the Gosset-Chen trilinear model, light RGB, ink CMYK), 20 "What colors make X?" recipe cards (each an H3 question with a direct answer, "Try it" loads it into the mixer), primary/secondary/tertiary, light and ink tables, tips, 8 FAQs. Swatches are on-screen estimates and the page says so.
+2. `/color-wheel` (rebuilt; was a thin landing page): interactive 12-color artist (RYB) and screen (RGB) wheels, scheme picker (complementary, split, analogous, triadic, two tetradics) with the wheel positions marked, a calculator that gives every scheme for any HEX, primary/secondary/tertiary tables with codes, warm vs cool, why the complement of red differs by wheel, 9 FAQs. Data in `lib/color-wheel.ts` (the 12 hex values are HueFlow's own curated picks, not an official standard).
+3. `/pastel-colors` (`components/pastel-colors-page.tsx`, data in `lib/pastel-colors.ts`): 47 pastel colors in 8 groups with HEX/RGB/HSL switch, a pastel maker (mix any color with white, plus the CSS `color-mix()` and HSL equivalents), pastel palettes from the palette library, 6 combinations, a real WCAG contrast table (dark text passes, white text fails), 8 FAQs, ItemList schema.
+- Text for the three pages lives in `lib/seo/guide-pages.ts` (FAQ, steps, answers), so the pages, schema and `/llms-full.txt` stay in sync. Page files must not export extra names, so keep text there.
+- Wired in: sitemap (`staticPages`), `/llms.txt`, `/llms-full.txt`, header Tools menu, footer "Popular tools", homepage "Popular" row, `/tools` index, color-mixer related links.
+- Fixed on the way: grid items holding wide tables need `min-w-0`, or the whole mobile page widens (seen on `/color-wheel`).
+
+**Honest expectation:** nothing here can guarantee 300 impressions a day. A new page is usually indexed within days to a few weeks, and impressions follow the ranking, so reaching 300 a day depends on ranking on page 1 or 2 for the cluster. Check in Search Console (Performance, filter by page) 2 to 4 weeks after the pages are indexed. If a page is indexed but under 100 impressions a day, the next levers are backlinks, a few long-tail sub-pages (for example `/what-colors-make-brown`, `/pastel-pink`) and more internal links from high-traffic pages.
+
+**Before it counts:** commit, merge into `develop`, deploy (owner decides), then in Search Console "Request indexing" for the 3 URLs and submit `sitemap.xml`.
+
 ## Next session: start here (updated 2026-10-19)
 
 **State:**
@@ -269,10 +292,11 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
    - Header (site-wide, fades in after load on mobile): change or leave.
    - Overlapping pages: `/color-picker` vs `/tools/picker`, `/colors` vs `/color-codes`, `/tailwind` vs `/tailwind-colors` vs `/tools/tailwind`.
    - Optional: "HueFlow vs Coolors" / "Coolors alternative" pages (need verified comparison points from the owner).
-2. **Owner actions outside the code** (see "Needs the owner" in the SEO section): real social profile URLs into `socialProfiles`, Google Search Console and Bing Webmaster verification plus sitemap submit and "Request indexing" for the new pages, backlinks and directory listings. Not confirmed as done.
-3. **Ads** (see the "Ads" section below): waiting for the Adsterra ad code.
-4. **Not yet checked:** the signed-in view of `/profile` (score, streak, invite row, sign-out dialog; needs a login), and the `/colorblind` matrices in `lib/colorblind.ts` (inaccurate, separate task).
-5. **Before any deploy** (only on request, from a clean `develop`):
+2. **Top 3 pages (above)** are built on `feature/top3-pages` and uncommitted: review, commit, merge into `develop`, deploy.
+3. **Owner actions outside the code** (see "Needs the owner" in the SEO section): real social profile URLs into `socialProfiles`, Google Search Console and Bing Webmaster verification plus sitemap submit and "Request indexing" for the new pages, backlinks and directory listings. Not confirmed as done.
+4. **Ads** (see the "Ads" section below): waiting for the Adsterra ad code.
+5. **Not yet checked:** the signed-in view of `/profile` (score, streak, invite row, sign-out dialog; needs a login), and the `/colorblind` matrices in `lib/colorblind.ts` (inaccurate, separate task).
+6. **Before any deploy** (only on request, from a clean `develop`):
    - `npx tsc --noEmit`
    - `npx eslint` on the changed files (quote paths with `[` in them, and use `xargs` in zsh)
    - Stop the dev server first (it shares `.next` with the build), then `npx opennextjs-cloudflare build` and `npx opennextjs-cloudflare deploy` (or `npm run deploy`).

@@ -866,6 +866,8 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       },
     ],
     relatedLinks: [
+      { title: "Color mixing chart", href: "/color-mixing-chart" },
+      { title: "Pastel colors", href: "/pastel-colors" },
       { title: "Color harmony generator", href: "/tools/color-harmony" },
       { title: "Gradient generator", href: "/tools/gradient" },
       { title: "Color picker", href: "/tools/picker" },

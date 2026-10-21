@@ -21,6 +21,38 @@ const tools = [
     tag: "New",
   },
   {
+    href: "/color-mixing-chart",
+    title: "Color Mixing Chart",
+    description: "What colors make brown, purple, pink and more, with a paint, light and ink mixer.",
+    icon: (
+      <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+        <circle cx="9" cy="9" r="6" /><circle cx="15" cy="9" r="6" /><circle cx="12" cy="15" r="6" />
+      </svg>
+    ),
+    tag: "New",
+  },
+  {
+    href: "/color-wheel",
+    title: "Color Wheel",
+    description: "Interactive 12-color wheel with complementary, analogous and triadic schemes.",
+    icon: (
+      <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+        <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="3.5" /><path d="M12 3v5.5M12 15.5V21M3 12h5.5M15.5 12H21" />
+      </svg>
+    ),
+  },
+  {
+    href: "/pastel-colors",
+    title: "Pastel Colors",
+    description: "47 pastel colors with names, hex codes and palettes, plus a pastel maker.",
+    icon: (
+      <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+        <path d="M12 3c4 4 6 7 6 10a6 6 0 11-12 0c0-3 2-6 6-10z" />
+      </svg>
+    ),
+    tag: "New",
+  },
+  {
     href: "/color-name-finder",
     title: "Color Name Finder",
     description: "Enter a hex, RGB or HSL code and find the closest named color.",
