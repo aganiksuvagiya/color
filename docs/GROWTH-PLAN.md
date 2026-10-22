@@ -288,11 +288,41 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 **How it's built:** `/blog/[slug]` (static, `dynamicParams = false`), metadata and FAQ/sources in `lib/blog/posts.ts`, bodies in `components/blog/posts/<slug>.tsx`, layout in `components/blog/blog-article.tsx` (short answer box, sticky table of contents, FAQ, sources, related), blocks in `components/blog/blog-blocks.tsx`. Schema: BlogPosting (with dates and image), FAQPage, Speakable, BreadcrumbList. Added to the `/blog` index (with real cover colors), `sitemap-blog.xml`, `/llms.txt` and `/llms-full.txt`.
 - Byline is "By the HueFlow team". If the owner wants a named author (better for E-E-A-T), add a real name and an author page; don't invent one.
 
-## Build blocker: Next.js 15 is out of support (2026-10-21)
+## Build blocker: Next.js 15 is out of support (2026-10-21, fixed by the Next 16 upgrade below)
 
 - `opennextjs-cloudflare build` now refuses Next 15.5.x: "Next.js version 15.5.23 is not supported by the Next.js team" (Next 15 was released 2024-10-21 and OpenNext enforces a 2-year support window). The 2026-10-17 deploy worked, the 2026-10-21 one did not.
 - **Workaround used (owner approved):** `npx opennextjs-cloudflare build --dangerouslyUseUnsupportedNextVersion`, then plain `npx opennextjs-cloudflare deploy` (the deploy command rejects that flag, because it passes unknown flags on to wrangler).
 - This only skips the version check. The site already runs Next 15.5.23, and unsupported releases get no security patches, so **upgrading Next (to 16) is a to-do on its own branch**: check middleware, `next lint`, `next.config.ts`, `@opennextjs/cloudflare` and React compatibility, then run the full build and a preview before deploying.
+
+### Next 16 upgrade (2026-10-23, branch `upgrade/next-16`, cut from `develop` at `b18ef48`, merged into `develop`)
+
+**Versions:** `next` 16.4.2, `eslint-config-next` and `@next/eslint-plugin-next` 16.4.2, `@opennextjs/cloudflare` 1.20.13 (it needs `next` >=16.4.1 and `wrangler` ^4.148), `wrangler` 4.152.0. React stays 19.2.7, and `next-auth` 5.0.0-beta.32 already allows Next 16.
+
+**What changed:**
+- `package.json`: `build` is `next build --webpack`, and `dev` / `dev:clean` use `next dev --webpack`. Next 16 builds with Turbopack by default, but Turbopack's file tracing leaves out puppeteer's `bidi` files (dynamic `webpackIgnore` imports, pulled in by `app/api/brand-colors/route.ts`), and the OpenNext bundle step then fails with `Could not resolve "../bidi/bidi.js"`. Webpack traces them exactly as the Next 15 build did.
+- `lint` is `eslint .` (`next lint` was removed in Next 16; official codemod). `eslint.config.js` also ignores `.open-next` and `.wrangler`.
+- `middleware.ts` is **kept, not renamed to `proxy.ts`**. Next 16 still runs `middleware.ts` on the edge runtime and only logs a deprecation warning. `proxy.ts` always runs on Node.js, and OpenNext's own build log calls Node.js middleware on Cloudflare "experimental, not officially maintained". The rate limiter and the arbitrary-hex 404 are unchanged.
+- `app/layout.tsx`: `<html data-scroll-behavior="smooth">`. Without it, Next 16 would smooth-scroll to the top on every route change (Next 15 turned smooth scrolling off during navigation).
+- `components/header.tsx`: logo `priority` became `preload` (`priority` is deprecated in 16 and does the same thing).
+- `tsconfig.json` (`jsx: "react-jsx"`, `.next/dev/types` include) and `next-env.d.ts` were rewritten by `next build`. That is expected.
+- No change was needed in `next.config.ts` (rewrites, redirects, headers and images all work as before). The async request API codemod found nothing: every `params` is already a `Promise`.
+
+**Verified on the branch:**
+- `npx tsc --noEmit` passes, and `npx eslint .` shows 0 errors (2 old warnings).
+- `npx opennextjs-cloudflare build` passes **without** `--dangerouslyUseUnsupportedNextVersion`.
+- In `npx opennextjs-cloudflare preview`, these return 200: `/`, `/generator`, `/hex-to-rgb`, `/rgb-to-hex`, `/shades-of-blue`, `/blog`, both blog posts, `/llms.txt`, `/llms-full.txt`, `/sitemap.xml`, `/sitemap-pages.xml`, `/robots.txt`, `/colors/red`, `/colors/ff0000`, `/palettes`, `/profile`, `/community`, `/opengraph-image`.
+- Redirects: `/convert/hex-to-rgb`, `/shades/blue` and `/shades-of-grey` return 308 to the right place.
+- 404s: unknown paths, `/blog/no-such-post` and `/shades-of-notacolor` return 404. `/colors/1372f6` returns the middleware's 404 with `noindex` and a 1-day cache.
+- The rate limiter answers 429 with `Retry-After: 60` after 30 slug requests a minute, and other routes keep working.
+- With a dummy `AUTH_SECRET`, the sign-in page shows "Sign in with Google", `/api/auth/session` returns `null`, and signing in redirects to Google. Without `.dev.vars`, the auth routes return 500 (missing secret), as on Next 15.
+- In the browser, home, `/generator`, `/hex-to-rgb` (typing a HEX code works) and the blog post have no console errors, and client-side navigation works.
+- `npm audit`: 17 issues (0 critical), down from 21 (2 critical). `next`, `wrangler`, `miniflare`, `undici` and `sharp` are no longer flagged. The rest are tooling dependencies.
+
+**Still open:**
+- Later: move to `proxy.ts` once OpenNext supports Node.js middleware properly.
+- Later: switch to Turbopack builds. The brand-colors puppeteer route blocks this, and it can't launch Chrome on Workers anyway.
+- Seen on Next 15 too, so not caused by the upgrade: on-demand 404s from dynamic slug routes (for example `/colors/not-a-real-color`) send an empty HTML body, and the "page doesn't exist" content is only in the RSC payload.
+- Next 16 `next dev` writes to `.next/dev`, so a dev server and a build no longer overwrite each other. Two dev servers still do.
 
 ## Next session: start here (updated 2026-10-19)
 
@@ -310,14 +340,14 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
    - Overlapping pages: `/color-picker` vs `/tools/picker`, `/colors` vs `/color-codes`, `/tailwind` vs `/tailwind-colors` vs `/tools/tailwind`.
    - Optional: "HueFlow vs Coolors" / "Coolors alternative" pages (need verified comparison points from the owner).
 2. **Top 3 pages (above)** are live. Owner: request indexing in Search Console.
-   - **Upgrade Next.js** (see the build blocker above), on its own branch.
+   - **Upgrade Next.js**: done and merged into `develop` (see "Next 16 upgrade" above).
 3. **Owner actions outside the code** (see "Needs the owner" in the SEO section): real social profile URLs into `socialProfiles`, Google Search Console and Bing Webmaster verification plus sitemap submit and "Request indexing" for the new pages, backlinks and directory listings. Not confirmed as done.
 4. **Ads** (see the "Ads" section below): waiting for the Adsterra ad code.
 5. **Not yet checked:** the signed-in view of `/profile` (score, streak, invite row, sign-out dialog; needs a login), and the `/colorblind` matrices in `lib/colorblind.ts` (inaccurate, separate task).
 6. **Before any deploy** (only on request, from a clean `develop`):
    - `npx tsc --noEmit`
    - `npx eslint` on the changed files (quote paths with `[` in them, and use `xargs` in zsh)
-   - Stop the dev server first (it shares `.next` with the build), then `npx opennextjs-cloudflare build --dangerouslyUseUnsupportedNextVersion` and `npx opennextjs-cloudflare deploy` (plain `npm run deploy` fails on the Next version check until Next is upgraded).
+   - Run `npm install` if `package-lock.json` changed, then `npx opennextjs-cloudflare build` and `npx opennextjs-cloudflare deploy` (or `npm run deploy`). Since Next 16 no `--dangerouslyUseUnsupportedNextVersion` flag is needed.
 
 ## Ads (status 2026-10-19, nothing built yet)
 
