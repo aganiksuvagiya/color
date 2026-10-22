@@ -1,3 +1,4 @@
+import { blogPath, blogPosts } from "@/lib/blog/posts";
 import { clusterIdeas } from "@/lib/seo/content";
 import { converterPairs } from "@/lib/seo/converter-pages";
 import { siteConfig } from "@/lib/seo/site-config";
@@ -69,6 +70,9 @@ export async function GET() {
     link("Developer docs", "/developer", "Design tokens, CSS custom properties and Figma variables"),
     link("FAQs", "/faqs", "Short answers to common color questions"),
     link("Blog", "/blog", "Color strategy articles"),
+    "",
+    "## Blog",
+    ...blogPosts.map((p) => link(p.crumb, blogPath(p.slug), p.description)),
     "",
     "## About",
     link("About HueFlow", "/about", "What HueFlow is and who it is for"),

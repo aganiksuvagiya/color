@@ -14,6 +14,8 @@ const CATEGORY_HUE: Record<string, number> = {
   Explainers: 160,
   Comparisons: 38,
   "Best Colors": 330,
+  Trends: 95,
+  "Color Pairings": 222,
 };
 
 const eyebrow = "text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]";
@@ -26,6 +28,7 @@ function hashOf(text: string) {
 
 /** Five swatches built from the category hue, nudged per article. Deterministic, so server and client match. */
 function coverColors(article: Article) {
+  if ("cover" in article && article.cover) return article.cover;
   const base = (CATEGORY_HUE[article.category] ?? 20) + ((hashOf(article.title) % 41) - 20);
   return [
     `hsl(${base} 55% 26%)`,

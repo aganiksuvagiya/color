@@ -1282,6 +1282,22 @@ export const blogPageContent = {
     "HueFlow's resource library helps US-focused teams learn how color affects trust, readability, conversion, and brand clarity across SaaS, fintech, ecommerce, AI, and modern marketing websites.",
   featuredArticles: [
     {
+      title: "Color of the Year 2027: Every Pick So Far",
+      excerpt: "Sherwin-Williams Celery, Benjamin Moore Webster Green, Behr Grounded, Valspar Cottage Door and more, side by side with HEX codes.",
+      category: "Trends",
+      readTime: "9 min",
+      href: "/blog/color-of-the-year-2027",
+      cover: ["#E0DDBD", "#64806C", "#615E50", "#7A8F97", "#A6613C"],
+    },
+    {
+      title: "What Colors Go With Navy Blue? 18 Pairings",
+      excerpt: "From white and camel to mustard, coral and blush: 18 navy pairings with HEX codes, contrast checks and ready palettes.",
+      category: "Color Pairings",
+      readTime: "8 min",
+      href: "/blog/colors-that-go-with-navy-blue",
+      cover: ["#1F2A44", "#F5EFE0", "#C19A6B", "#E1AD01", "#FF7F50"],
+    },
+    {
       title: "Conversion Color Strategy",
       excerpt: "Learn how color hierarchy supports trust, CTA clarity, and better landing page conversion decisions.",
       category: "Guides",

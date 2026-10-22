@@ -1,3 +1,4 @@
+import { blogPath, blogPosts } from "@/lib/blog/posts";
 import { converterSlugList } from "@/lib/seo/converter-specs";
 import { routeCollections } from "@/lib/seo/content";
 import { getProgrammaticBrandColorSlugs, getProgrammaticColorSitemapPaths } from "@/lib/seo/programmatic";
@@ -157,7 +158,7 @@ export const guidesSitemap = dynamicEntries(
   0.78,
 );
 
-export const blogSitemap = [page("/blog", "weekly", 0.8)];
+export const blogSitemap = [page("/blog", "weekly", 0.8), ...blogPosts.map((p) => page(blogPath(p.slug), "weekly", 0.85))];
 
 export function renderSitemapXml(entries: SitemapEntry[]) {
   const body = entries

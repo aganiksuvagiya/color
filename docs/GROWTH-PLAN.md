@@ -254,7 +254,7 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 
 **Checks run:** `tsc` and `eslint` clean on all changed files; JSON-LD parses on the home, converter, tool, about and generator pages; `/hex-to-rgb`, `/oklch-to-rgb` etc. return 200, `/convert/hex-to-rgb` 308, unknown pair 404; sitemap lists the 16 new URLs; mobile width (375) has no horizontal overflow on the converter page. Not run: `npm run build` / `npm run preview` (the dev server shares `.next`), so check the rewrite regex in the OpenNext build before deploying.
 
-## Top 3 keyword pages (2026-10-21, branch `feature/top3-pages`, not committed)
+## Top 3 keyword pages (2026-10-21, live: worker version `537dfb53`)
 
 **Ask from the owner:** study the US search results for color topics, find what people search, and build the top 3 pages that should reach at least 300 impressions a day.
 
@@ -275,7 +275,24 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 
 **Honest expectation:** nothing here can guarantee 300 impressions a day. A new page is usually indexed within days to a few weeks, and impressions follow the ranking, so reaching 300 a day depends on ranking on page 1 or 2 for the cluster. Check in Search Console (Performance, filter by page) 2 to 4 weeks after the pages are indexed. If a page is indexed but under 100 impressions a day, the next levers are backlinks, a few long-tail sub-pages (for example `/what-colors-make-brown`, `/pastel-pink`) and more internal links from high-traffic pages.
 
-**Before it counts:** commit, merge into `develop`, deploy (owner decides), then in Search Console "Request indexing" for the 3 URLs and submit `sitemap.xml`.
+**Status:** merged into `develop` (3d9af70), pushed and deployed on 2026-10-21; the 3 URLs return 200 on hueflow.site and are in the sitemap and `/llms.txt`. **Next step is the owner's:** in Search Console, "Request indexing" for `/color-mixing-chart`, `/color-wheel` and `/pastel-colors`. Then check Performance by page after 2 to 4 weeks.
+
+## Blog posts (2026-10-23, branch `feature/blog-posts`, not committed)
+
+**Ask from the owner:** two unique, human-sounding blog posts on the most-searched US color topics, aiming for the top 5.
+
+**Picked (from web research, no keyword-tool numbers):**
+1. `/blog/color-of-the-year-2027`: the "color of the year 2027" cluster peaks September to December, and brand-by-brand queries (Sherwin-Williams, Benjamin Moore, Behr, Valspar, Pantone) all feed it. Competitors are trackers on Homes & Gardens, colorcombinations.org and kooihaus; our edge is the side-by-side table with HEX values labeled by source, the computed patterns (4 of 9 picks green; 4 of 6 coded picks at 14% saturation or less), real WCAG contrast numbers for using each color on screens, and palettes. **Facts checked on 2026-10-23** (sources listed on the page). Pantone 2027 is not out yet (usually early December): update the post and `updated` date when it lands, and add any new brand picks.
+2. `/blog/colors-that-go-with-navy-blue`: evergreen "what colors go with navy blue" queries; the results are full of templated spam pages on .edu/.gov subdomains plus Livingetc and Homes & Gardens. Ours: 18 pairings in 5 groups, each a two-tone card with the measured contrast against #1F2A44, 6 five-color palettes with generator links, outfit/room/website advice, colors to be careful with.
+
+**How it's built:** `/blog/[slug]` (static, `dynamicParams = false`), metadata and FAQ/sources in `lib/blog/posts.ts`, bodies in `components/blog/posts/<slug>.tsx`, layout in `components/blog/blog-article.tsx` (short answer box, sticky table of contents, FAQ, sources, related), blocks in `components/blog/blog-blocks.tsx`. Schema: BlogPosting (with dates and image), FAQPage, Speakable, BreadcrumbList. Added to the `/blog` index (with real cover colors), `sitemap-blog.xml`, `/llms.txt` and `/llms-full.txt`.
+- Byline is "By the HueFlow team". If the owner wants a named author (better for E-E-A-T), add a real name and an author page; don't invent one.
+
+## Build blocker: Next.js 15 is out of support (2026-10-21)
+
+- `opennextjs-cloudflare build` now refuses Next 15.5.x: "Next.js version 15.5.23 is not supported by the Next.js team" (Next 15 was released 2024-10-21 and OpenNext enforces a 2-year support window). The 2026-10-17 deploy worked, the 2026-10-21 one did not.
+- **Workaround used (owner approved):** `npx opennextjs-cloudflare build --dangerouslyUseUnsupportedNextVersion`, then plain `npx opennextjs-cloudflare deploy` (the deploy command rejects that flag, because it passes unknown flags on to wrangler).
+- This only skips the version check. The site already runs Next 15.5.23, and unsupported releases get no security patches, so **upgrading Next (to 16) is a to-do on its own branch**: check middleware, `next lint`, `next.config.ts`, `@opennextjs/cloudflare` and React compatibility, then run the full build and a preview before deploying.
 
 ## Next session: start here (updated 2026-10-19)
 
@@ -292,14 +309,15 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
    - Header (site-wide, fades in after load on mobile): change or leave.
    - Overlapping pages: `/color-picker` vs `/tools/picker`, `/colors` vs `/color-codes`, `/tailwind` vs `/tailwind-colors` vs `/tools/tailwind`.
    - Optional: "HueFlow vs Coolors" / "Coolors alternative" pages (need verified comparison points from the owner).
-2. **Top 3 pages (above)** are built on `feature/top3-pages` and uncommitted: review, commit, merge into `develop`, deploy.
+2. **Top 3 pages (above)** are live. Owner: request indexing in Search Console.
+   - **Upgrade Next.js** (see the build blocker above), on its own branch.
 3. **Owner actions outside the code** (see "Needs the owner" in the SEO section): real social profile URLs into `socialProfiles`, Google Search Console and Bing Webmaster verification plus sitemap submit and "Request indexing" for the new pages, backlinks and directory listings. Not confirmed as done.
 4. **Ads** (see the "Ads" section below): waiting for the Adsterra ad code.
 5. **Not yet checked:** the signed-in view of `/profile` (score, streak, invite row, sign-out dialog; needs a login), and the `/colorblind` matrices in `lib/colorblind.ts` (inaccurate, separate task).
 6. **Before any deploy** (only on request, from a clean `develop`):
    - `npx tsc --noEmit`
    - `npx eslint` on the changed files (quote paths with `[` in them, and use `xargs` in zsh)
-   - Stop the dev server first (it shares `.next` with the build), then `npx opennextjs-cloudflare build` and `npx opennextjs-cloudflare deploy` (or `npm run deploy`).
+   - Stop the dev server first (it shares `.next` with the build), then `npx opennextjs-cloudflare build --dangerouslyUseUnsupportedNextVersion` and `npx opennextjs-cloudflare deploy` (plain `npm run deploy` fails on the Next version check until Next is upgraded).
 
 ## Ads (status 2026-10-19, nothing built yet)
 

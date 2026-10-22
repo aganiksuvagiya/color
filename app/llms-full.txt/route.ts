@@ -1,3 +1,4 @@
+import { blogPath, blogPosts } from "@/lib/blog/posts";
 import { converterPairs } from "@/lib/seo/converter-pages";
 import { colorMixing, colorWheel, pastelColors } from "@/lib/seo/guide-pages";
 import { siteConfig } from "@/lib/seo/site-config";
@@ -43,6 +44,12 @@ export async function GET() {
     t.howToSteps.forEach((s, i) => out.push(`${i + 1}. ${s}`));
     out.push("", "FAQ:");
     t.faq.forEach((f) => out.push(`Q: ${f.question}`, `A: ${f.answer}`, ""));
+  }
+
+  out.push("## Blog", "");
+  for (const p of blogPosts) {
+    out.push(`### ${p.title}`, `URL: ${d}${blogPath(p.slug)}`, `Updated: ${p.updated}`, "", p.answer, "");
+    out.push(...p.faq.flatMap((f) => [`Q: ${f.question}`, `A: ${f.answer}`, ""]));
   }
 
   out.push("## Color guides and references", "");
