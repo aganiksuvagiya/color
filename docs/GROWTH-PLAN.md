@@ -294,7 +294,13 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 - **Workaround used (owner approved):** `npx opennextjs-cloudflare build --dangerouslyUseUnsupportedNextVersion`, then plain `npx opennextjs-cloudflare deploy` (the deploy command rejects that flag, because it passes unknown flags on to wrangler).
 - This only skips the version check. The site already runs Next 15.5.23, and unsupported releases get no security patches, so **upgrading Next (to 16) is a to-do on its own branch**: check middleware, `next lint`, `next.config.ts`, `@opennextjs/cloudflare` and React compatibility, then run the full build and a preview before deploying.
 
-### Next 16 upgrade (2026-10-23, branch `upgrade/next-16`, cut from `develop` at `b18ef48`, merged into `develop`)
+### Next 16 upgrade (2026-10-23, branch `upgrade/next-16`, cut from `develop` at `b18ef48`, merged into `develop`, live)
+
+**Live since 2026-10-23:** worker version `d4ea240b`, deployed from `develop` at `93c48e4` with a plain `npx opennextjs-cloudflare build` (no flag) and `npx opennextjs-cloudflare deploy`. The previous worker, `ac5a3a02` (Next 15, blog posts), is the rollback target. On the live site after the deploy:
+- Every route in the list below returns the same status and size as in the preview.
+- `/colors/1372f6` returns the middleware 404 (`noindex`, 1-day cache).
+- With the real secrets, `/api/auth/session` returns `null` and the sign-in page shows "Sign in with Google".
+- Home and `/generator` have no console errors.
 
 **Versions:** `next` 16.4.2, `eslint-config-next` and `@next/eslint-plugin-next` 16.4.2, `@opennextjs/cloudflare` 1.20.13 (it needs `next` >=16.4.1 and `wrangler` ^4.148), `wrangler` 4.152.0. React stays 19.2.7, and `next-auth` 5.0.0-beta.32 already allows Next 16.
 
