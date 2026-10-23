@@ -25,6 +25,7 @@ export function buildPageMetadata({
   keywords,
   canonicalPath,
   noindex,
+  imagePath = "/opengraph-image",
 }: {
   title: string;
   description: string;
@@ -34,8 +35,11 @@ export function buildPageMetadata({
   canonicalPath?: string;
   /** Set for pages that duplicate another page's content closely enough that they shouldn't compete in search results. The page itself still works normally for visitors. */
   noindex?: boolean;
+  /** Share image for this page. The explicit image here wins over a segment's own opengraph-image file, so pages with their own image must pass its path. */
+  imagePath?: string;
 }): Metadata {
   const url = `${siteConfig.domain}${path}`;
+  const imageUrl = `${siteConfig.domain}${imagePath}`;
 
   return {
     title,
@@ -54,7 +58,7 @@ export function buildPageMetadata({
       locale: siteConfig.locale,
       images: [
         {
-          url: `${siteConfig.domain}/opengraph-image`,
+          url: imageUrl,
           width: 1200,
           height: 630,
           alt: `${siteConfig.name} - ${title}`,
@@ -65,7 +69,7 @@ export function buildPageMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [`${siteConfig.domain}/opengraph-image`],
+      images: [imageUrl],
     },
   };
 }
@@ -254,6 +258,8 @@ export function buildCollectionMetadata<
     path: `${pathPrefix}/${entry.slug}`,
     canonicalPath: duplicateOfSlug ? `${pathPrefix}/${duplicateOfSlug}` : undefined,
     noindex,
+    // Industry pages have a prerendered share image with their own title and palettes.
+    imagePath: key === "bestColorsFor" ? `${pathPrefix}/${entry.slug}/opengraph-image` : undefined,
   });
 }
 

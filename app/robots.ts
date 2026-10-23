@@ -22,10 +22,28 @@ export default function robots(): MetadataRoute.Robots {
           "Google-Extended",
           "Googlebot",
           "Bingbot",
-          "facebookexternalhit",
         ],
         allow: "/",
         disallow: ["/admin", "/api/", "/opengraph-image"],
+      },
+      // Link-preview fetchers need the share images (/opengraph-image and the per-page ones);
+      // the bots that obey robots.txt (X, LinkedIn, Pinterest...) show no image without this.
+      {
+        userAgent: [
+          "facebookexternalhit",
+          "Facebot",
+          "Twitterbot",
+          "LinkedInBot",
+          "Pinterestbot",
+          "Slackbot",
+          "Slackbot-LinkExpanding",
+          "Discordbot",
+          "WhatsApp",
+          "TelegramBot",
+          "redditbot",
+        ],
+        allow: "/",
+        disallow: ["/admin", "/api/"],
       },
       // Block known scrapers that don't contribute to search/AI value
       {

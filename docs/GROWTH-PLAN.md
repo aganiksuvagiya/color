@@ -338,6 +338,16 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 - No console errors, and no horizontal scroll at 375px.
 - To measure: compare the 28 days after 2026-10-23 with the 28 days before, page by page (Search Console Pages filter). Use the 16 untouched `/best-colors-for` pages as the comparison group.
 
+**Share images (2026-10-23, follow-up on the same branch, not deployed yet):**
+- **Site-wide image.** The old dark `/opengraph-image` used for every page is redrawn in the light design: white background, "Find colors that feel right.", and a palette strip. The shared frame is `components/seo/og-frame.tsx`.
+- **Industry pages.** Every `/best-colors-for/<slug>` page now has its own image (`app/best-colors-for/[slug]/opengraph-image.tsx`) with the page title, the "N ... Color Palettes" line in orange, and its first 3 palettes. Pages without palettes show their color strip instead.
+  - All 24 images are prerendered at build time.
+  - An unknown slug returns 404 (`dynamicParams = false`).
+- **Font.** Inter regular and bold, fetched from Google Fonts at build time. If that fetch fails, the images fall back to the default font.
+- **Metadata.** `buildPageMetadata` sets the share image explicitly, and an explicit image wins over a segment's own `opengraph-image` file. That is why the old `/colors/[slug]/opengraph-image` (old dark design, rendered per request) was never used. Pages with their own image must pass `imagePath`.
+- **robots.txt.** It blocked `/opengraph-image` for every bot, so link-preview bots that obey robots.txt (X, LinkedIn, Pinterest) could not show the image. A new group lets the link-preview bots fetch everything except `/admin` and `/api/`. Search and AI bots still skip `/opengraph-image`.
+- **After deploy.** Old previews stay cached in WhatsApp, Facebook and LinkedIn. To refresh one, re-scrape it in the Facebook Sharing Debugger or the LinkedIn Post Inspector; new shares pick up the new image.
+
 **Why (Search Console, 3 months to 2026-10-21):**
 - 450 clicks, 24.3K impressions, average position 43.4.
 - About 311 clicks (69%) came from "hueflow" / "hue flow" searches. Google sends almost no new visitors yet.
