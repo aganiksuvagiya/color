@@ -1,3 +1,5 @@
+import { industryPaletteSets } from "./industry-palettes";
+
 type FaqItem = {
   question: string;
   answer: string;
@@ -53,11 +55,34 @@ type EntityRelation = {
   connectedTo: string;
 };
 
-type ReadyPalette = {
+/** Which job each palette color does on a website - lets a page preview the palette and compute its real WCAG contrast. Every role is one of the palette's colors. */
+export type PaletteRoles = {
+  primary: string;
+  secondary: string;
+  accent: string;
+  background: string;
+  text: string;
+};
+
+export type ReadyPalette = {
   name: string;
   useCase: string;
   colors: string[];
   note: string;
+  roles?: PaletteRoles;
+};
+
+/** Sample copy for the website preview drawn with each palette, written for the page's industry. */
+export type PalettePreviewCopy = {
+  brand: string;
+  nav: string[];
+  badge: string;
+  headline: string;
+  body: string;
+  cta: string;
+  link: string;
+  cardTitle: string;
+  cardBody: string;
 };
 
 type AiSection = {
@@ -87,6 +112,7 @@ export type ContentEntry = {
   citationBlocks?: string[];
   paletteColors?: string[];
   palettes?: ReadyPalette[];
+  palettePreview?: PalettePreviewCopy;
   // /colors pages use the programmatic title/description/answer/FAQ by default -
   // set this to override them for a color that targets a specific search intent.
   colorPageOverride?: {
@@ -137,7 +163,7 @@ const colors: ContentEntry[] = [
       { title: "Blue in Tailwind", href: "/tailwind/blue" },
       { title: "Blue CSS guide", href: "/css-colors/blue" },
       { title: "Blue color meaning", href: "/color-meanings/blue" },
-      { title: "Healthcare website color palettes", href: "/guides/best-colors-for-healthcare-websites-usa" },
+      { title: "Healthcare website color palettes", href: "/best-colors-for/healthcare-websites" },
     ],
   },
   {
@@ -408,7 +434,7 @@ const colors: ContentEntry[] = [
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
       { title: "Mint horizon gradient", href: "/gradients/mint-horizon" },
       { title: "Teal color meaning", href: "/color-meanings/teal" },
-      { title: "Healthcare website color palettes", href: "/guides/best-colors-for-healthcare-websites-usa" },
+      { title: "Healthcare website color palettes", href: "/best-colors-for/healthcare-websites" },
     ],
   },
   {
@@ -622,7 +648,7 @@ const colors: ContentEntry[] = [
     relatedLinks: [
       { title: "Blue color meaning", href: "/colors/blue" },
       { title: "Teal color meaning", href: "/colors/teal" },
-      { title: "Healthcare website color guide", href: "/guides/best-colors-for-healthcare-websites-usa" },
+      { title: "Healthcare website color guide", href: "/best-colors-for/healthcare-websites" },
       { title: "Color contrast checker", href: "/tools/contrast" },
       { title: "WCAG contrast guide", href: "/accessibility/color-contrast" },
       { title: "Cool color palettes", href: "/palettes/fintech-growth-grid" },
@@ -748,7 +774,7 @@ const palettes: ContentEntry[] = [
     relatedLinks: [
       { title: "Green color meaning", href: "/colors/green" },
       { title: "Mint horizon gradient", href: "/gradients/mint-horizon" },
-      { title: "Healthcare website colors guide", href: "/guides/best-colors-for-healthcare-websites-usa" },
+      { title: "Healthcare website colors guide", href: "/best-colors-for/healthcare-websites" },
     ],
   },
   {
@@ -999,7 +1025,7 @@ const gradients: ContentEntry[] = [
       { title: "CSS gradient generator", href: "/tools/gradient" },
       { title: "Green color meaning", href: "/colors/green" },
       { title: "Wellness nature calm palette", href: "/palettes/wellness-nature-calm" },
-      { title: "Healthcare website colors guide", href: "/guides/best-colors-for-healthcare-websites-usa" },
+      { title: "Healthcare website colors guide", href: "/best-colors-for/healthcare-websites" },
     ],
   },
   {
@@ -1122,7 +1148,7 @@ const brandColorEntries: ContentEntry[] = [
       { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
       { title: "Teal color meaning", href: "/colors/teal" },
       { title: "Accessibility guide", href: "/accessibility/color-contrast" },
-      { title: "Healthcare website color palettes", href: "/guides/best-colors-for-healthcare-websites-usa" },
+      { title: "Healthcare website color palettes", href: "/best-colors-for/healthcare-websites" },
     ],
   },
   {
@@ -3901,159 +3927,6 @@ const guides: ContentEntry[] = [
     ],
   },
   {
-    slug: "best-colors-for-healthcare-websites-usa",
-    title: "Healthcare & Medical Website Color Palettes (2026 Guide)",
-    description: "6 ready-to-use color palettes for healthcare and medical websites, with hex codes for hospitals, clinics, telehealth, dental, mental health, and pediatric care. All text colors pass WCAG AA.",
-    answer:
-      "The best color palette for a healthcare or medical website pairs a trustworthy blue or teal primary with white or light gray backgrounds and a dark slate text color. Soft green adds warmth for wellness and dental brands. Warm colors like orange should stay as small CTA accents only. Below are 6 copy-ready healthcare color palettes with hex codes.",
-    intent: "informational",
-    keywords: [
-      "color palette for healthcare website",
-      "healthcare color palette",
-      "color palette for medical website",
-      "medical website color palette",
-      "best colors for healthcare websites",
-      "healthcare color palette hex codes",
-      "hospital website colors",
-      "telehealth website colors",
-      "dental website color scheme",
-      "clinic website color palette",
-    ],
-    palettes: [
-      {
-        name: "Hospital & Health System",
-        useCase: "Hospitals, health systems, and insurance-adjacent services",
-        colors: ["#0B3D91", "#1D4ED8", "#60A5FA", "#F8FAFC", "#0F172A"],
-        note: "Deep navy for headers and trust, #1D4ED8 for buttons (6.7:1 on white), light slate background, near-black body text.",
-      },
-      {
-        name: "Clinic & Family Practice",
-        useCase: "Primary care, family doctors, and outpatient clinics",
-        colors: ["#0F766E", "#14B8A6", "#CCFBF1", "#FFFFFF", "#1E293B"],
-        note: "Teal feels calmer and more human than pure blue. Use #0F766E for buttons and links (5.5:1 on white), and pale mint for section backgrounds.",
-      },
-      {
-        name: "Telehealth App",
-        useCase: "Virtual care, patient portals, and health apps",
-        colors: ["#2563EB", "#0EA5E9", "#E0F2FE", "#F8FAFC", "#C2410C"],
-        note: "Bright, product-style blues with one warm accent. Keep #C2410C (5.2:1 on white) only for the main 'Book a Visit' CTA.",
-      },
-      {
-        name: "Dental Practice",
-        useCase: "Dentists, orthodontists, and cosmetic dental clinics",
-        colors: ["#0369A1", "#7DD3FC", "#A7F3D0", "#FFFFFF", "#334155"],
-        note: "Lighter and fresher than hospital palettes. Sky blue and mint signal clean and fresh; use #0369A1 for buttons (5.9:1 on white).",
-      },
-      {
-        name: "Mental Health & Therapy",
-        useCase: "Therapists, counseling, and behavioral health platforms",
-        colors: ["#3E5C76", "#7FA99B", "#E8EFEA", "#FAF7F2", "#2F3E46"],
-        note: "Muted, desaturated tones feel private and safe. Warm off-white background instead of stark white; #3E5C76 for actions (7:1 on white).",
-      },
-      {
-        name: "Pediatric Care",
-        useCase: "Children's hospitals, pediatricians, and family health",
-        colors: ["#1E3A8A", "#3B82F6", "#34D399", "#FCD34D", "#FFF7ED"],
-        note: "Friendly and optimistic without losing trust. Keep yellow and green for illustrations and highlights; use navy for all text.",
-      },
-    ],
-    sections: [
-      {
-        title: "Why blue still leads healthcare design",
-        body: "Blue remains the safest healthcare default because it signals stability, clinical professionalism, and trustworthiness. Hospitals, clinics, telehealth platforms, and insurance-adjacent services benefit most - patients feel the site is organized and safe before reading a single word.",
-      },
-      {
-        title: "Teal and green reduce emotional friction",
-        body: "Teal and softer greens help healthcare brands feel more human and less institutional. They work especially well for wellness, pediatrics, mental health, dental, and patient-experience brands that want calm reassurance without a cold corporate feel.",
-      },
-      {
-        title: "White and light gray as foundation colors",
-        body: "Clean white and light gray (#F8FAFC or similar) create the neutral foundation most healthcare UIs need. They support readability for long-form content - procedure descriptions, FAQs, insurance details - and give brand colors room to breathe without crowding the reading experience.",
-      },
-      {
-        title: "Warm colors should stay secondary",
-        body: "Orange, coral, or warm yellow can highlight scheduling CTAs or progress indicators, but should never dominate. In healthcare, too much warmth reads as promotional - which conflicts with the reassurance users need during important decisions.",
-      },
-      {
-        title: "Accessibility matters more in healthcare than trendiness",
-        body: "Healthcare sites often serve older users, stressed visitors, and people on mobile making urgent decisions. WCAG AA contrast (4.5:1 for body text) is a baseline requirement, not a stretch goal. Buttons must be clear, states must be obvious, and form fields must be easy to read under any lighting condition.",
-      },
-      {
-        title: "Telehealth and mental health need extra calm",
-        body: "Telehealth and mental health platforms benefit from muted palettes - desaturated teal, soft navy, or sage green - over bright primaries. The color system itself should signal that this is a safe, private space rather than a high-energy product.",
-      },
-    ],
-    faq: [
-      {
-        question: "What color builds trust for medical websites?",
-        answer: "Blue is the strongest trust color for medical and healthcare websites. It feels organized, stable, and professional - all qualities patients look for when choosing a provider or making health decisions online.",
-      },
-      {
-        question: "Can healthcare websites use green?",
-        answer: "Yes. Green works well for wellness, dental, pediatric, and mental health brands that want to feel restorative and supportive. Pair it with strong neutrals and verify WCAG contrast on all text elements.",
-      },
-      {
-        question: "What is the best color palette for a doctor's website?",
-        answer: "A clean blue or teal primary, white or light gray background, and dark neutral text usually works best. Add one warm accent color for CTAs like 'Book Appointment' to draw attention without creating anxiety.",
-      },
-      {
-        question: "Should hospital websites use dark mode?",
-        answer: "Most hospital and clinic websites are better served by a clean light theme. Dark mode can work for patient portals or apps used at night, but standard marketing and booking pages benefit from the clarity and legibility of light backgrounds.",
-      },
-      {
-        question: "What colors should healthcare websites avoid?",
-        answer: "Avoid high-saturation red as a primary color (it reads as emergency or danger), aggressive orange as a dominant tone, and dark or low-contrast background colors that slow reading during stressful decision-making.",
-      },
-      {
-        question: "What is the best color palette for a medical website?",
-        answer: "A strong medical website palette uses a trustworthy blue (such as #1D4ED8) or teal (#0F766E) as the primary, white or #F8FAFC as the background, and dark slate (#0F172A or #1E293B) for body text. Add one light tint for section backgrounds and, optionally, one warm accent for the booking button.",
-      },
-      {
-        question: "How many colors should a healthcare website use?",
-        answer: "Most healthcare websites work best with 4 to 5 colors: one primary brand color, one lighter supporting tint, a neutral background, a dark text color, and an optional accent for calls to action. More colors than that usually make medical sites feel busy and less trustworthy.",
-      },
-    ],
-    definitions: [
-      {
-        term: "Healthcare trust colors",
-        definition: "Colors that help medical websites feel credible, calm, and easy to trust during important patient decisions.",
-      },
-      {
-        term: "Patient-friendly palette",
-        definition: "A color system designed to reduce stress, preserve readability, and keep booking or inquiry paths visually clear.",
-      },
-    ],
-    prosCons: {
-      pros: [
-        "Blue and teal make healthcare brands feel stable and reassuring.",
-        "Soft green can add warmth without losing professionalism.",
-        "Calmer palettes usually support better reading and mobile usability.",
-      ],
-      cons: [
-        "Overusing blue can make a healthcare brand feel generic.",
-        "Warm accents can feel too promotional if they dominate the page.",
-      ],
-    },
-    comparisonRows: [
-      { label: "Blue", bestFor: "Hospitals, clinics, telehealth, insurance-adjacent services", strengths: "Trust and clarity", watchouts: "Can feel generic if unsupported" },
-      { label: "Teal/green", bestFor: "Wellness, dental, mental health, modern care brands", strengths: "Calm and human warmth", watchouts: "Needs strong contrast and structure" },
-      { label: "White/light gray", bestFor: "All healthcare sites as a neutral base", strengths: "Clean, readable, professional", watchouts: "Needs strong brand accent to avoid feeling plain" },
-      { label: "Warm accent (orange/coral)", bestFor: "CTAs, scheduling, highlights only", strengths: "Draws attention to key actions", watchouts: "Too much warmth reads as promotional or unsafe" },
-    ],
-    relatedLinks: [
-      { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
-      { title: "Wellness nature calm palette", href: "/palettes/wellness-nature-calm" },
-      { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
-      { title: "Blue color meaning", href: "/colors/blue" },
-      { title: "Green color meaning", href: "/colors/green" },
-      { title: "Teal color meaning", href: "/colors/teal" },
-      { title: "Accessible success states", href: "/accessibility/accessible-success-states" },
-      { title: "WCAG color contrast guide", href: "/accessibility/color-contrast" },
-      { title: "Why blue builds trust", href: "/explainers/why-blue-builds-trust" },
-      { title: "Color contrast checker tool", href: "/tools/contrast" },
-    ],
-  },
-  {
     slug: "color-trends-2026",
     title: "Web Design Color Trends for 2026",
     description: "What's actually showing up in new website launches this year, and which trends are worth adopting versus skipping.",
@@ -4332,7 +4205,7 @@ const explainers: ContentEntry[] = [
       { title: "What blue means in color psychology", href: "/color-meanings/blue" },
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
       { title: "Blue vs green for trust", href: "/comparisons/blue-vs-green-for-trust" },
-      { title: "Healthcare website color palettes", href: "/guides/best-colors-for-healthcare-websites-usa" },
+      { title: "Healthcare website color palettes", href: "/best-colors-for/healthcare-websites" },
     ],
   },
   {
@@ -4549,25 +4422,32 @@ const bestColorsFor: ContentEntry[] = [
   },
   {
     slug: "healthcare-websites",
-    title: "Best Colors for Healthcare Websites",
+    title: "Best Colors for Healthcare Websites: 8 Medical Color Palettes",
     paletteColors: ["#1D4ED8", "#0D9488", "#BAE6FD", "#F8FAFC", "#F1F5F9"],
     description:
-      "The best colors for healthcare websites are blue, teal, and white - colors that communicate trust, calm, and clinical clarity. Learn which palettes work for medical practices, health apps, and wellness brands.",
+      "8 healthcare color palettes with hex codes for hospitals, clinics, telehealth, dental, mental health, pediatric, pharmacy, and senior care websites, each with a preview and WCAG contrast.",
+    ...industryPaletteSets["healthcare-websites"],
     answer:
-      "The best colors for healthcare websites are blue, teal, green, and neutral whites. Blue is the strongest trust signal in medical and clinical contexts. Teal and green support wellness and recovery associations. White and light grays keep interfaces legible and clean. Avoid dark or heavily saturated palettes in primary healthcare UI - they can feel alarming rather than reassuring.",
+      "The best colors for healthcare and medical websites are a trustworthy blue or teal for buttons and navigation, white or light gray backgrounds, and dark slate text. Blue is the strongest trust signal in clinical settings. Teal and soft green add calm for wellness, dental, and mental health brands. Warm colors like orange should stay a small accent for the main booking button, and red belongs only in genuine alerts.",
     intent: "commercial",
     keywords: [
       "best colors for healthcare website",
-      "healthcare website colors",
+      "healthcare color palette",
       "color palette for healthcare website",
+      "color palette for medical website",
+      "medical website color palette",
+      "healthcare website colors",
       "medical website colors",
       "best colors for medical websites",
-      "healthcare brand colors",
+      "healthcare color palette hex codes",
+      "hospital website colors",
+      "clinic website color palette",
+      "telehealth website colors",
       "health app color palette",
     ],
     quickFacts: [
       { label: "Primary", value: "#1D4ED8 (deep blue) - navigation, headers, primary CTAs" },
-      { label: "Secondary", value: "#0D9488 (teal) - wellness sections, secondary actions" },
+      { label: "Secondary", value: "#0F766E (deep teal) - wellness sections and secondary buttons" },
       { label: "Accent / surface", value: "#F8FAFC (light gray) - backgrounds and cards" },
       { label: "Contrast check", value: "#1D4ED8 text on white is 6.7:1 (WCAG AA) - safe for body copy and CTA labels" },
     ],
@@ -4578,11 +4458,23 @@ const bestColorsFor: ContentEntry[] = [
       },
       {
         title: "Teal and green - wellness and recovery",
-        body: "Teal and medium green support associations with health, growth, and recovery. They're a natural complement to blue in healthcare palettes - slightly warmer, less clinical. Use teal for secondary actions and wellness-focused sections. Avoid very bright greens, which can read as playful or promotional rather than medical.",
+        body: "Teal and medium green support associations with health, growth, and recovery. They're a natural complement to blue in healthcare palettes - slightly warmer, less clinical. Use teal for secondary actions and wellness-focused sections, and they work especially well for pediatrics, mental health, dental, and patient-experience brands. Avoid very bright greens, which can read as playful or promotional rather than medical.",
       },
       {
         title: "White and neutral surfaces",
-        body: "Clean white and light gray surfaces (#F8FAFC, #F1F5F9) improve readability for health information, reduce cognitive load, and create the clinical clarity patients expect. Dense or dark backgrounds are common in tech but typically wrong for patient-facing healthcare interfaces.",
+        body: "Clean white and light gray surfaces (#F8FAFC, #F1F5F9) improve readability for health information, reduce cognitive load, and create the clinical clarity patients expect. They support long-form content - procedure descriptions, FAQs, insurance details - and give brand colors room to breathe. Dense or dark backgrounds are common in tech but typically wrong for patient-facing healthcare interfaces.",
+      },
+      {
+        title: "Warm colors should stay secondary",
+        body: "Orange, coral, or warm yellow can highlight scheduling CTAs or progress indicators, but should never dominate. In healthcare, too much warmth reads as promotional - which conflicts with the reassurance users need during important decisions.",
+      },
+      {
+        title: "Accessibility matters more in healthcare than trendiness",
+        body: "Healthcare sites often serve older users, stressed visitors, and people on mobile making urgent decisions. WCAG AA contrast (4.5:1 for body text) is a baseline requirement, not a stretch goal. Buttons must be clear, states must be obvious, and form fields must be easy to read under any lighting condition.",
+      },
+      {
+        title: "Telehealth and mental health need extra calm",
+        body: "Telehealth and mental health platforms benefit from muted palettes - desaturated teal, soft navy, or sage green - over bright primaries. The color system itself should signal that this is a safe, private space rather than a high-energy product.",
       },
       {
         title: "What to avoid",
@@ -4596,14 +4488,24 @@ const bestColorsFor: ContentEntry[] = [
           "Blue is the strongest choice for healthcare websites because it signals trust, reliability, and calm. Pair it with light neutrals and a teal or green secondary color for a complete healthcare palette.",
       },
       {
+        question: "What is the best color palette for a medical website?",
+        answer:
+          "A strong medical website palette uses a trustworthy blue (such as #1D4ED8) or teal (#0F766E) as the primary, white or #F8FAFC as the background, and dark slate (#0F172A or #1E293B) for body text. Add one light tint for section backgrounds and, optionally, one warm accent for the booking button.",
+      },
+      {
         question: "What colors should healthcare websites avoid?",
         answer:
-          "Avoid heavy red in non-alert contexts, neon or oversaturated colors, and dark backgrounds on patient-facing pages. These undermine the trust and calm that healthcare brands need to communicate.",
+          "Avoid heavy red outside alert states, neon or oversaturated colors, aggressive orange as a dominant tone, and dark or low-contrast backgrounds on patient-facing pages. These undermine the trust and calm that healthcare brands need to communicate.",
       },
       {
         question: "Can healthcare websites use green?",
         answer:
-          "Yes - medium greens and teals work well as secondary colors in healthcare palettes. They support wellness and recovery associations. Avoid very bright or lime greens, which feel more playful than clinical.",
+          "Yes - medium greens and teals work well as secondary colors in healthcare palettes, especially for wellness, dental, pediatric, and mental health brands. Avoid very bright or lime greens, which feel more playful than clinical, and check WCAG contrast on any text.",
+      },
+      {
+        question: "What is the best color palette for a doctor's website?",
+        answer:
+          "A clean blue or teal primary, white or light gray background, and dark neutral text usually works best. Add one warm accent color for CTAs like 'Book Appointment' to draw attention without creating anxiety.",
       },
       {
         question: "What color palette works for a health app?",
@@ -4615,17 +4517,55 @@ const bestColorsFor: ContentEntry[] = [
         answer:
           "Most hospital and clinic sites lead with a deep or mid-range blue for the header and navigation, a lighter blue or teal for secondary sections, and near-white gray surfaces for content. Red is reserved strictly for emergency or urgent-care call-outs, never general navigation.",
       },
+      {
+        question: "Should hospital websites use dark mode?",
+        answer:
+          "Most hospital and clinic websites are better served by a clean light theme. Dark mode can work for patient portals or apps used at night, but standard marketing and booking pages benefit from the clarity and legibility of light backgrounds.",
+      },
+      {
+        question: "How many colors should a healthcare website use?",
+        answer:
+          "Most healthcare websites work best with 4 to 5 colors: one primary brand color, one lighter supporting tint, a neutral background, a dark text color, and an optional accent for calls to action. More colors than that usually make medical sites feel busy and less trustworthy.",
+      },
+    ],
+    definitions: [
+      {
+        term: "Healthcare trust colors",
+        definition: "Colors that help medical websites feel credible, calm, and easy to trust during important patient decisions.",
+      },
+      {
+        term: "Patient-friendly palette",
+        definition: "A color system designed to reduce stress, preserve readability, and keep booking or inquiry paths visually clear.",
+      },
+    ],
+    prosCons: {
+      pros: [
+        "Blue and teal make healthcare brands feel stable and reassuring.",
+        "Soft green can add warmth without losing professionalism.",
+        "Calmer palettes usually support better reading and mobile usability.",
+      ],
+      cons: [
+        "Overusing blue can make a healthcare brand feel generic.",
+        "Warm accents can feel too promotional if they dominate the page.",
+      ],
+    },
+    comparisonRows: [
+      { label: "Blue", bestFor: "Hospitals, clinics, telehealth, insurance-adjacent services", strengths: "Trust and clarity", watchouts: "Can feel generic if unsupported" },
+      { label: "Teal/green", bestFor: "Wellness, dental, mental health, modern care brands", strengths: "Calm and human warmth", watchouts: "Needs strong contrast and structure" },
+      { label: "White/light gray", bestFor: "All healthcare sites as a neutral base", strengths: "Clean, readable, professional", watchouts: "Needs strong brand accent to avoid feeling plain" },
+      { label: "Warm accent (orange/coral)", bestFor: "CTAs, scheduling, highlights only", strengths: "Draws attention to key actions", watchouts: "Too much warmth reads as promotional or unsafe" },
     ],
     relatedLinks: [
-      { title: "Healthcare & medical color palettes (hex codes)", href: "/guides/best-colors-for-healthcare-websites-usa" },
+      { title: "Best colors for dental websites", href: "/best-colors-for/dental-websites" },
       { title: "Healthcare brand colors", href: "/brand-colors/healthcare" },
-      { title: "SaaS trust spectrum palette", href: "/palettes/saas-trust-spectrum" },
+      { title: "Wellness nature calm palette", href: "/palettes/wellness-nature-calm" },
       { title: "Teal color page", href: "/colors/teal" },
       { title: "Azure color page", href: "/colors/azure" },
-      { title: "Color psychology in UI design", href: "/color-psychology/color-psychology-in-ui-design" },
+      { title: "Why blue builds trust", href: "/explainers/why-blue-builds-trust" },
+      { title: "WCAG color contrast guide", href: "/accessibility/color-contrast" },
       { title: "Contrast checker", href: "/tools/contrast" },
-      { title: "Color picker", href: "/tools/picker" },
       { title: "Palette generator", href: "/generator" },
+      { title: "Color picker", href: "/tools/picker" },
     ],
   },
   {
@@ -4654,10 +4594,11 @@ const bestColorsFor: ContentEntry[] = [
   },
   {
     slug: "restaurant-websites",
-    title: "Best Colors for Restaurant Websites",
+    title: "Best Colors for Restaurant Websites: 6 Restaurant Color Palettes",
     paletteColors: ["#DC2626", "#EA580C", "#3D1F0F", "#B8860B", "#0D0D0D"],
     description:
-      "The best colors for restaurant websites are warm reds, earthy oranges, and deep browns - colors that stimulate appetite and communicate warmth. Learn which palettes work for fine dining, fast casual, and food delivery brands.",
+      "6 restaurant color palettes with hex codes for fast casual, fine dining, Italian, Mexican, farm-to-table, and sushi restaurants, each with a preview and WCAG contrast.",
+    ...industryPaletteSets["restaurant-websites"],
     answer:
       "The best colors for restaurant websites depend on the dining style. Warm reds and oranges stimulate appetite and create energy - ideal for fast casual and delivery. Deep browns, creams, and burgundy communicate warmth and quality for full-service restaurants. Fine dining often uses black, gold, and ivory for a premium feel. Avoid cool blues and bright greens as primary colors - they suppress appetite and feel inconsistent with food experiences.",
     intent: "commercial",
@@ -4720,10 +4661,11 @@ const bestColorsFor: ContentEntry[] = [
   },
   {
     slug: "real-estate-websites",
-    title: "Best Colors for Real Estate Websites",
+    title: "Best Colors for Real Estate Websites: 6 Realtor Color Palettes",
     paletteColors: ["#1E3A5F", "#1E40AF", "#64748B", "#B8860B", "#F8FAFC"],
     description:
-      "The best colors for real estate websites are navy, deep blue, and neutral grays - colors that signal trust, stability, and professionalism. Learn which palettes work for property listings, agents, and luxury real estate brands.",
+      "6 real estate color palettes with hex codes for luxury agents, brokerages, coastal markets, commercial property, and land sales, each with a website preview.",
+    ...industryPaletteSets["real-estate-websites"],
     answer:
       "The best colors for real estate websites are navy and deep blue for trust, neutral gray and white for clarity and space, and gold or warm accents for premium positioning. Real estate buyers make large, high-trust decisions - the color system needs to reinforce reliability and competence before anything else. Avoid playful or overly energetic palettes that feel inconsistent with the seriousness of the transaction.",
     intent: "commercial",
@@ -4786,10 +4728,11 @@ const bestColorsFor: ContentEntry[] = [
   },
   {
     slug: "fitness-websites",
-    title: "Best Colors for Fitness and Gym Websites",
+    title: "Best Colors for Fitness and Gym Websites: 6 Gym Color Palettes",
     paletteColors: ["#1A1A1A", "#F97316", "#DC2626", "#84A98C", "#F5F0E8"],
     description:
-      "The best colors for fitness websites are bold black, energetic orange, and high-contrast red - colors that communicate strength, intensity, and motivation. Learn which palettes work for gyms, personal trainers, and fitness apps.",
+      "6 gym and fitness color palettes with hex codes for big-box gyms, dark-mode training brands, boutique studios, CrossFit boxes, and personal trainers, each with a preview.",
+    ...industryPaletteSets["fitness-websites"],
     answer:
       "The best colors for fitness and gym websites use high contrast and energy as their foundation. Black or very dark charcoal creates a sense of power and seriousness. Orange and red add intensity and motivate action. Bright white or near-white provides the contrast that makes everything feel sharp. Wellness and yoga brands often go a different direction - softer greens, warm neutrals, and calm blues - because their goal is recovery and balance rather than intensity.",
     intent: "commercial",
@@ -4852,10 +4795,11 @@ const bestColorsFor: ContentEntry[] = [
   },
   {
     slug: "education-websites",
-    title: "Best Colors for Education Websites",
+    title: "Best Colors for Education Websites: 6 School Color Palettes",
     paletteColors: ["#2563EB", "#16A34A", "#FBBF24", "#0D9488", "#D97706"],
     description:
-      "The best colors for education websites are blue, green, and warm yellow - colors that signal trust, growth, and encouragement. Learn which palettes work for schools, e-learning platforms, tutoring brands, and universities.",
+      "6 education color palettes with hex codes for universities, K-12 schools, e-learning platforms, preschools, and libraries, each with a website preview and WCAG contrast.",
+    ...industryPaletteSets["education-websites"],
     answer:
       "The best colors for education websites combine trust and optimism. Blue signals reliability and seriousness - important for institutions that need to feel credible. Green signals growth and learning progress. Warm yellow and amber add encouragement and approachability without losing credibility. University websites often lean formal with navy and white. E-learning platforms tend toward brighter palettes with more color variety to signal an engaging, accessible experience.",
     intent: "commercial",
@@ -5013,9 +4957,10 @@ const bestColorsFor: ContentEntry[] = [
   },
   {
     slug: "law-firm-websites",
-    title: "Best Colors for Law Firm Websites",
+    title: "Best Colors for Law Firm Websites: 6 Legal Color Palettes",
     description:
-      "The best colors for law firm websites are navy, charcoal, and gold - colors that signal authority, trust, and professionalism. Explore five ready-to-use legal color palettes with HEX codes for litigation, corporate, family, and estate law practices.",
+      "6 law firm color palettes with hex codes for corporate, personal injury, family law, boutique, and estate planning firms, each with a website preview and WCAG contrast.",
+    ...industryPaletteSets["law-firm-websites"],
     answer:
       "The best colors for law firm websites are deep navy, charcoal, and slate, paired with a restrained gold or burgundy accent for CTAs and highlights. These colors communicate authority, discretion, and financial seriousness - qualities clients look for before trusting a firm with a case. Practice area matters too: litigation firms often lean darker and bolder, while family and estate law firms benefit from a warmer, more approachable version of the same palette.",
     intent: "commercial",
@@ -5057,28 +5002,6 @@ const bestColorsFor: ContentEntry[] = [
         body: "Avoid bright or saturated colors as primaries - they undercut the seriousness clients expect. Avoid using red as a primary brand color outside of urgent/emergency legal services, where it can work, but it reads as alarming for general practice. Avoid low-contrast gray-on-gray text, which is a frequent readability failure on legal sites built around \"minimal\" templates.",
       },
     ],
-    examples: [
-      {
-        title: "Traditional Authority",
-        body: "Primary #1E3A5F (navy), Secondary #475569 (slate), Accent #B8860B (gold), Background #FAF7F2 (warm white), Text #1C1712 (charcoal). The safest default for general practice, corporate, and litigation firms wanting a classic, courthouse-adjacent feel.",
-      },
-      {
-        title: "Modern Corporate",
-        body: "Primary #1F2937 (charcoal), Secondary #3B82F6 (steel blue), Accent #94A3B8 (silver), Background #F8FAFC (off white), Text #111827 (near black). Fits corporate law, IP, and business litigation firms that want to feel current rather than old-guard.",
-      },
-      {
-        title: "Premium Boutique",
-        body: "Primary #1C1712 (near-black), Secondary #7F1D1D (burgundy), Accent #C9A84C (soft gold), Background #F5F0E8 (ivory), Text #1C1712. Suited to high-end boutique firms - white-collar defense, M&A, private wealth law - positioning on exclusivity rather than volume.",
-      },
-      {
-        title: "Approachable Family Law",
-        body: "Primary #0F766E (deep teal), Secondary #6B7280 (warm gray), Accent #D97706 (amber), Background #FDF6E3 (cream), Text #1C1712. Warmer and softer for family law, divorce, and estate planning, where clients need reassurance more than intimidation.",
-      },
-      {
-        title: "Litigation Bold",
-        body: "Primary #991B1B (deep red), Secondary #1F2937 (charcoal), Accent #B8860B (gold), Background #FFFFFF (white), Text #111827. A higher-contrast, more assertive system for trial and litigation-focused firms that want to project strength - use the red sparingly (header/accent only), never as a body-text or full-background color.",
-      },
-    ],
     faq: [
       {
         question: "What is the best color for a law firm website?",
@@ -5117,9 +5040,10 @@ const bestColorsFor: ContentEntry[] = [
   },
   {
     slug: "dental-websites",
-    title: "Best Colors for Dental Websites",
+    title: "Best Colors for Dental Websites: 6 Dental Color Palettes",
     description:
-      "The best colors for dental websites are sky blue, mint, and clean white - colors that feel modern, calm, and family-friendly. Explore five dental practice color palettes with HEX codes, from clinical-clean to warm and family-oriented.",
+      "6 dental color palettes with hex codes for general, cosmetic, pediatric, orthodontic, and family practices, each shown on a sample website with its WCAG contrast.",
+    ...industryPaletteSets["dental-websites"],
     answer:
       "The best colors for dental websites are light blue and mint paired with clean white and soft neutrals - a lighter, friendlier version of the trust-blue used across healthcare. Dental practices need to feel clean and modern without the heavier, more clinical tone hospitals use, since most visitors are booking a routine or cosmetic appointment rather than dealing with a medical emergency.",
     intent: "commercial",
@@ -5161,28 +5085,6 @@ const bestColorsFor: ContentEntry[] = [
         body: "Avoid using light sky blue as body text - it fails contrast on almost any light background (verified above). Avoid all-white designs with no color anchor, which can feel sterile rather than modern. Avoid red for anything except a genuine emergency-appointment CTA, since it reads as alarming in a routine-care context.",
       },
     ],
-    examples: [
-      {
-        title: "Clean Clinical",
-        body: "Primary #0EA5E9 (sky blue), Secondary #FFFFFF (white), Accent #14B8A6 (mint), Background #F1F5F9 (light gray), Text #1C1712 (charcoal). The safest, most common default for general and multi-location dental practices.",
-      },
-      {
-        title: "Calm Modern",
-        body: "Primary #0D9488 (teal), Secondary #7DD3FC (soft blue), Accent #FB7185 (coral, CTA only), Background #FFFFFF, Text #334155 (slate). A slightly warmer alternative for practices wanting to feel less corporate than a dental-chain look.",
-      },
-      {
-        title: "Family Friendly",
-        body: "Primary #38BDF8 (sunny blue), Secondary #34D399 (mint green), Accent #FBBF24 (warm yellow, used only on dark surfaces), Background #FFFDF7 (cream), Text #1C1712. Built for pediatric and family practices - brighter and friendlier, but keep yellow off white backgrounds since it fails contrast there.",
-      },
-      {
-        title: "Premium Cosmetic Dentistry",
-        body: "Primary #1F2937 (charcoal), Secondary #D4AF6A (champagne), Accent #2DD4BF (soft teal), Background #FAF7F2 (ivory), Text #111827 (near black). Positions implants, veneers, and whitening services closer to a med-spa than a clinic.",
-      },
-      {
-        title: "Minimal Modern Practice",
-        body: "Primary #FFFFFF (white), Secondary #64748B (slate), Accent #10B981 (mint), Background #F8FAFC (light gray), Text #1C1712. A restrained, design-forward option for boutique or single-dentist practices wanting to feel current rather than clinical.",
-      },
-    ],
     faq: [
       {
         question: "What is the best color for a dental website?",
@@ -5212,7 +5114,7 @@ const bestColorsFor: ContentEntry[] = [
     ],
     relatedLinks: [
       { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
-      { title: "Healthcare website color guide", href: "/guides/best-colors-for-healthcare-websites-usa" },
+      { title: "Healthcare website color guide", href: "/best-colors-for/healthcare-websites" },
       { title: "Teal color page", href: "/colors/teal" },
       { title: "Color picker", href: "/tools/picker" },
       { title: "Contrast checker", href: "/tools/contrast" },
@@ -5960,10 +5862,11 @@ const bestColorsFor: ContentEntry[] = [
   },
   {
     slug: "coffee-shop-websites",
-    title: "Best Colors for Coffee Shop and Cafe Websites",
+    title: "Best Colors for Coffee Shop Websites: 6 Cafe Color Palettes",
     paletteColors: ["#3E2723", "#C9A66B", "#6F4E37", "#FFF8F0", "#8B5A2B"],
     description:
-      "The best colors for coffee shop websites are dark roast brown, warm tan, and cream - colors that evoke the product directly and create the cozy, ritual feeling of a good cafe, distinct from a broader restaurant palette.",
+      "6 coffee shop and cafe color palettes with hex codes, from classic roastery browns to matcha greens and moody espresso bars, each shown on a sample website.",
+    ...industryPaletteSets["coffee-shop-websites"],
     answer:
       "The best colors for coffee shop and cafe websites lean directly on the product itself - dark roasted brown, warm caramel tan, and cream - because coffee's own color palette already does most of the emotional work: warmth, craft, and ritual. This is narrower and cozier than a general restaurant palette, which has to cover a wider range of cuisines and moods.",
     intent: "commercial",

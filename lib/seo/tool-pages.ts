@@ -1362,10 +1362,10 @@ export const blogPageContent = {
     },
     {
       title: "Healthcare & Medical Website Color Palettes",
-      excerpt: "A US-focused guide to choosing healthcare colors that feel calmer, clearer, and more credible for patients.",
+      excerpt: "8 healthcare color palettes with hex codes, each shown on a sample website, plus which colors build patient trust.",
       category: "Guides",
       readTime: "6 min",
-      href: "/guides/best-colors-for-healthcare-websites-usa",
+      href: "/best-colors-for/healthcare-websites",
     },
     {
       title: "Web Design Color Trends for 2026",

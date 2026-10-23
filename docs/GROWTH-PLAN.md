@@ -330,6 +330,55 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 - Seen on Next 15 too, so not caused by the upgrade: on-demand 404s from dynamic slug routes (for example `/colors/not-a-real-color`) send an empty HTML body, and the "page doesn't exist" content is only in the RSC payload.
 - Next 16 `next dev` writes to `.next/dev`, so a dev server and a build no longer overwrite each other. Two dev servers still do.
 
+## Industry palette pages (2026-10-23, branch `feature/industry-palettes` from `develop` `7831b52`, not committed or deployed)
+
+**Why (Search Console, 3 months to 2026-10-21):**
+- 450 clicks, 24.3K impressions, average position 43.4.
+- About 311 clicks (69%) came from "hueflow" / "hue flow" searches. Google sends almost no new visitors yet.
+- Indexing is not the problem: 411 pages indexed, 119 not (data from 2026-10-16). The 12 noindex pages are on purpose (`/profile`, unauthored color-meaning and hex pages).
+- The non-brand searches closest to page 1 were the healthcare and medical website palettes:
+
+| Query | Impressions | Position |
+|---|---|---|
+| healthcare color palette | 112 | 25.9 |
+| best colors for healthcare website | 105 | 26.0 |
+| color palette for healthcare website | 82 | 30.0 |
+| color palette for medical website | ~81 | ~38 |
+| color palette for education website | 9 | 14.2 |
+| best color for coffee shop | 3 | 13.3 |
+
+- Two of our pages competed for the healthcare searches: `/best-colors-for/healthcare-websites` and `/guides/best-colors-for-healthcare-websites-usa`.
+- The contrast checker searches have lots of impressions but sit at positions 80–98 against WebAIM and others, so they are not worth chasing yet.
+
+**What changed:**
+- **Healthcare merge.** The guide's palettes, sections, FAQ, definitions, pros/cons and comparison table moved into `/best-colors-for/healthcare-websites`, which now has 8 palettes. The guide entry is gone, and its URL 308s to the industry page (`next.config.ts`). Every internal link to the guide now points at the industry page.
+- **8 industry pages** (healthcare, dental, education, fitness, coffee shop, restaurant, real estate, law firm):
+  - new titles ("Best Colors for X Websites: N ... Color Palettes") and descriptions;
+  - 50 ready palettes in total, stored in `lib/seo/industry-palettes.ts`.
+- **Palette roles.** Each palette names the job of every color: primary, secondary, accent, background, text. `components/seo/industry-palette-card.tsx` uses them to:
+  - draw a small sample website with industry copy;
+  - list the roles;
+  - compute and show WCAG contrast for body text, button label and links;
+  - link to `/generator` with the palette loaded.
+- **Contrast.** Every palette has AAA body text and at least AA for buttons, links, badges and cards. A script checked this against the data file. Check new palettes the same way before adding them.
+- **Dental and law firm.** Their text-only palette "examples" were replaced by the previewed palettes.
+- **Sidebar.** Related links to `/best-colors-for/...` now appear under "Colors by industry". Before, the sidebar silently dropped them.
+
+**Verified (OpenNext build and preview):**
+- `tsc` and `eslint` are clean.
+- All 8 pages return 200 with the new title, description, self canonical and FAQ schema.
+- The old guide URL returns 308, and it is no longer in the sitemap.
+- No palette shows a "Fail" badge.
+- "Open in generator" loads the palette and its label.
+- Dark palettes (Dark Mode Gym, Fine Dining, Espresso Bar) pick the right label colors.
+- At mobile width (375px) there is no horizontal scroll, and the preview stacks under the swatches.
+- Watch out: each page links to several other `/best-colors-for/` pages, and Next prefetches them, so clicking around the local preview quickly hits the exact 30-a-minute slug rate limiter ("Too many requests"). Live, the limiter is approximate and much looser.
+
+**Next:**
+- After deploy, request indexing for the 8 pages in Search Console.
+- Watch the queries above for 2–4 weeks.
+- If positions improve, give the other 16 `/best-colors-for` pages the same treatment.
+
 ## Next session: start here (updated 2026-10-19)
 
 **State:**

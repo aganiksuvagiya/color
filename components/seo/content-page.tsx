@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getClosestNamedColors } from "@/lib/color-names";
 import type { ResolvedContentEntry } from "@/lib/seo/content";
 import { CopyHexButton } from "@/components/seo/copy-hex-button";
+import { IndustryPaletteCard } from "@/components/seo/industry-palette-card";
 import { PaletteColorStrip } from "@/components/seo/palette-color-strip";
 import { Breadcrumbs, Faq, SmallTitle, eyebrow } from "@/components/seo/page-ui";
 import { Header } from "@/components/header";
@@ -32,6 +33,7 @@ const relatedGroups = [
   { label: "CSS guides",                 match: "/css-colors/" },
   { label: "Developer guides",           match: "/developer/" },
   { label: "Color tools",                match: "/tools/" },
+  { label: "Colors by industry",         match: "/best-colors-for/" },
   { label: "Related articles",           match: "/" },
 ] as const;
 
@@ -150,10 +152,16 @@ export function ContentPageView({
           <article className="min-w-0 max-w-4xl">
             {entry.palettes && entry.palettes.length > 0 && (
               <div className={block}>
-                <h2 className={h2}>Ready-to-Use Color Palettes</h2>
-                <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">Click any swatch to copy its hex code.</p>
+                <h2 className={h2}>{entry.palettes.length} Ready-to-Use Color Palettes</h2>
+                <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">
+                  {entry.palettes.some((palette) => palette.roles)
+                    ? "Each palette is shown on a sample website, with the job of every color and its WCAG contrast. Click any swatch to copy its hex code."
+                    : "Click any swatch to copy its hex code."}
+                </p>
                 <div className="mt-8 space-y-6">
-                  {entry.palettes.map((palette) => (
+                  {entry.palettes.map((palette) => palette.roles ? (
+                    <IndustryPaletteCard key={palette.name} palette={palette} roles={palette.roles} copy={entry.palettePreview} />
+                  ) : (
                     <div key={palette.name} className="rounded-2xl p-5 ring-1 ring-black/[0.07] sm:p-6">
                       <h3 className="text-[1.05rem] font-semibold">{palette.name}</h3>
                       <p className="mb-4 text-[14px] text-[#1c1712]/55">{palette.useCase}</p>

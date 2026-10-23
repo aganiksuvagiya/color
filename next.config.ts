@@ -28,6 +28,8 @@ const nextConfig: NextConfig = {
       { source: "/convert/:pair", destination: "/:pair", permanent: true },
       { source: "/shades-of-grey", destination: "/shades-of-gray", permanent: true },
       { source: "/shades/:color", destination: "/shades-of-:color", permanent: true },
+      // Merged into the industry page so the two stop competing for the same searches.
+      { source: "/guides/best-colors-for-healthcare-websites-usa", destination: "/best-colors-for/healthcare-websites", permanent: true },
     ];
   },
   async headers() {
