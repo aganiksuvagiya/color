@@ -330,7 +330,13 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 - Seen on Next 15 too, so not caused by the upgrade: on-demand 404s from dynamic slug routes (for example `/colors/not-a-real-color`) send an empty HTML body, and the "page doesn't exist" content is only in the RSC payload.
 - Next 16 `next dev` writes to `.next/dev`, so a dev server and a build no longer overwrite each other. Two dev servers still do.
 
-## Industry palette pages (2026-10-23, branch `feature/industry-palettes` from `develop` `7831b52`, not committed or deployed)
+## Industry palette pages (2026-10-23, branch `feature/industry-palettes`, merged into `develop` at `5ef6dbd`, live)
+
+**Live since 2026-10-23:** worker version `e2aafe79`, deployed from `develop` at `5ef6dbd`. The rollback target is `d4ea240b`. On the live site:
+- All 8 pages return 200 with the new titles and all their previews (8 for healthcare, 6 for the others), and no palette shows a "Fail" badge.
+- The old guide URL returns 308 to `/best-colors-for/healthcare-websites` and is no longer in `sitemap-guides.xml`.
+- No console errors, and no horizontal scroll at 375px.
+- To measure: compare the 28 days after 2026-10-23 with the 28 days before, page by page (Search Console Pages filter). Use the 16 untouched `/best-colors-for` pages as the comparison group.
 
 **Why (Search Console, 3 months to 2026-10-21):**
 - 450 clicks, 24.3K impressions, average position 43.4.
