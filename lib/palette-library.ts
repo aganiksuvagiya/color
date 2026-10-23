@@ -18,7 +18,7 @@ export type LibraryTag = {
 };
 
 type StyleTag = "pastel" | "neon" | "earthy" | "vintage" | "dark" | "minimal" | "bright" | "luxury";
-type SeasonTag = "spring" | "summer" | "autumn" | "winter";
+type SeasonTag = "spring" | "summer" | "autumn" | "winter" | "christmas";
 type RawPalette = [name: string, colors: string[], tags: (StyleTag | SeasonTag)[]];
 
 export type LibraryPalette = { id: string; name: string; colors: string[]; tags: string[] };
@@ -283,8 +283,29 @@ const RAW: RawPalette[] = [
   ["Halloween", ["#0B0B0B", "#FF6D00", "#FF9E00", "#7B2CBF", "#3C096C"], ["autumn", "dark"]],
   ["Frosty Morning", ["#F8FBFF", "#DCEBF7", "#B6D0E2", "#7FA3C0", "#45627D"], ["winter", "pastel"]],
   ["Winter Pine", ["#0F2E1F", "#1F4D35", "#5E8B6F", "#E5EFE9", "#B22234"], ["winter"]],
-  ["Holiday Classic", ["#B3001B", "#255C35", "#F5F5F5", "#D4AF37", "#1B1B1B"], ["winter", "luxury"]],
+  ["Holiday Classic", ["#B3001B", "#255C35", "#F5F5F5", "#D4AF37", "#1B1B1B"], ["winter", "christmas", "luxury"]],
   ["Snowfall", ["#FFFFFF", "#F0F4F8", "#D9E2EC", "#9FB3C8", "#334E68"], ["winter", "minimal"]],
+  // Christmas: hand-made for /color-palettes/christmas; refresh the set each autumn.
+  ["Candy Cane", ["#C8102E", "#FFFFFF", "#F4D7D7", "#2F5D3A", "#8B0000"], ["christmas", "winter", "bright"]],
+  ["Evergreen & Gold", ["#0B3D2E", "#14532D", "#C9A227", "#F5EFE0", "#7A1F2B"], ["christmas", "winter", "luxury"]],
+  ["Nordic Christmas", ["#FFFFFF", "#E8E4DC", "#B23A3A", "#2E4A3F", "#1F2A30"], ["christmas", "winter", "minimal"]],
+  ["Rustic Farmhouse Christmas", ["#8B2E2E", "#4A5D3A", "#D8C3A5", "#F2EDE4", "#5C4033"], ["christmas", "winter", "earthy"]],
+  ["Blue Christmas", ["#0B1F3A", "#1E3A8A", "#C0C7D1", "#E8EEF6", "#F5F7FA"], ["christmas", "winter"]],
+  ["Pink Christmas", ["#E75480", "#F7B2C4", "#FCE4EC", "#2F5D50", "#D4AF37"], ["christmas", "winter"]],
+  ["Gingerbread House", ["#8B5A2B", "#C68642", "#F3E5D0", "#B22222", "#FFFFFF"], ["christmas", "winter", "earthy"]],
+  ["Vintage Christmas", ["#A4161A", "#3A5A40", "#E9D8A6", "#CA6702", "#F4F1DE"], ["christmas", "winter", "vintage"]],
+  ["Black & Gold Holiday", ["#0D0D0D", "#1F1F1F", "#B8860B", "#D4AF37", "#F5F0E6"], ["christmas", "winter", "luxury", "dark"]],
+  ["Winter Wonderland", ["#FFFFFF", "#DCEBF7", "#A9C6E8", "#C0C0C0", "#2C3E50"], ["christmas", "winter", "minimal"]],
+  ["Poinsettia", ["#9B111E", "#D7263D", "#1B4332", "#F6E7CB", "#E0A800"], ["christmas", "winter"]],
+  ["Mistletoe", ["#E8F0E3", "#9DBF8E", "#4F772D", "#31572C", "#C1121F"], ["christmas", "winter", "earthy"]],
+  ["Hot Cocoa", ["#3E2723", "#6D4C41", "#D7B899", "#FFF8F0", "#C62828"], ["christmas", "winter", "earthy"]],
+  ["Velvet Burgundy", ["#4A0E1C", "#7A1F2B", "#B76E79", "#E8D5C4", "#C9A227"], ["christmas", "winter", "luxury"]],
+  ["Frosted Pine", ["#1F4D35", "#4E7D63", "#A8C5B5", "#EEF4F1", "#C0C0C0"], ["christmas", "winter"]],
+  ["Silent Night", ["#0B132B", "#1C2541", "#3A506B", "#E0E1DD", "#F4D35E"], ["christmas", "winter", "dark"]],
+  ["Sugar Plum", ["#5B2A86", "#9A48D0", "#F1C6E7", "#FFF0F5", "#D4AF37"], ["christmas", "winter"]],
+  ["Cozy Plaid", ["#9E1B32", "#1D3B2A", "#2B2D42", "#E9C46A", "#F1FAEE"], ["christmas", "winter"]],
+  ["Modern Minimal Christmas", ["#F7F7F5", "#DADAD5", "#8A9A86", "#2F3E36", "#B33A3A"], ["christmas", "winter", "minimal"]],
+  ["Christmas Morning", ["#FFF8E7", "#F2C14E", "#D1495B", "#2E6E5E", "#0E2A2F"], ["christmas", "winter", "bright"]],
 ];
 
 function slugify(name: string) {
@@ -425,6 +446,17 @@ const tags: LibraryTag[] = [
     faq: [
       { question: "What colors represent winter?", answer: "Ice blue (#DCEBF7), frost (#F0F4F8), silver (#C0C0C0), pine green (#1F4D35), navy (#0B132B) and holiday red (#B22234)." },
       { question: "What is a Christmas color palette?", answer: "A classic Christmas palette uses red (#B3001B), green (#255C35), gold (#D4AF37) and white (#F5F5F5)." },
+    ],
+  },
+  {
+    slug: "christmas", name: "Christmas", kind: "season", hex: "#B3001B",
+    intro: "Christmas color palettes start from the classic red, green, gold and white, then branch out into Nordic whites, rustic plaid, blue and silver, pink, and black and gold.",
+    tips: "Red and green are hard to tell apart for people with red-green color blindness, so never let them carry meaning on their own, and never set red text on green. Let white or cream fill most of the space, use a deep green or burgundy for text, and keep gold for small accents.",
+    faq: [
+      { question: "What are the traditional Christmas colors?", answer: "Red, green, gold and white. Typical hex codes are Christmas red #B3001B, evergreen #255C35, gold #D4AF37 and snow white #F5F5F5." },
+      { question: "What are the hex codes for Christmas colors?", answer: "A classic set is #B3001B (red), #255C35 (evergreen), #D4AF37 (gold), #F5F5F5 (white) and #1B1B1B (near black). For a softer, modern look try #B33A3A, #2F3E36, #8A9A86 and #F7F7F5." },
+      { question: "What do the Christmas colors mean?", answer: "Green stands for evergreen trees and life through the winter, red for holly berries and warmth, gold for light and the star, and white for snow and peace." },
+      { question: "What colors go with red and green for Christmas?", answer: "Gold, cream, white and silver soften red and green; burgundy and deep pine make them richer; a warm wood brown makes them feel rustic." },
     ],
   },
   // ── Colors ──

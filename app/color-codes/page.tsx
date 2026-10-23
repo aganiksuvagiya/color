@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ColorCodesView, type ChartFamily } from "@/components/seo/color-codes-page";
 import { StructuredData } from "@/components/seo/structured-data";
 import { namedColors } from "@/lib/color-names";
+import { formatCmyk, parseHex } from "@/lib/color-convert";
 import { colorFamily } from "@/lib/palette-library";
 import { buildPageMetadata } from "@/lib/seo/page-utils";
 import { buildBreadcrumbSchema, buildCollectionPageSchema, buildFaqSchema, buildWebPageSchema } from "@/lib/seo/schema";
@@ -14,15 +15,16 @@ export const revalidate = false;
 const FAMILY_ORDER = ["red", "pink", "orange", "yellow", "brown", "green", "teal", "blue", "purple", "white", "gray", "black"];
 
 const total = namedColors.length;
-const title = `Color Codes Chart: ${total} Named Colors with HEX, RGB & HSL`;
-const description = `HTML color codes for ${total} named colors - HEX, RGB and HSL values grouped by color family, with one-click copy and a page for every color.`;
+const title = `Color Codes: HEX, RGB, HSL & CMYK for ${total} Named Colors`;
+const description = `A table of HTML color codes for ${total} named colors - HEX, RGB, HSL and CMYK side by side, filterable by color family, with one-click copy.`;
 const intro =
-  "A color code is how screens and software describe a color. HEX codes like #FF6347 are the most common on the web; RGB writes the same color as red, green and blue values from 0 to 255, and HSL as hue, saturation and lightness. Every named color below shows all three - click any code to copy it, or open a color for shades, palettes and contrast checks.";
+  "A color code is how screens, software and printers describe a color. HEX codes like #FF6347 are the most common on the web; RGB writes the same color as red, green and blue values from 0 to 255, HSL as hue, saturation and lightness, and CMYK as the cyan, magenta, yellow and black inks a printer would use. The table below gives all four for every named color - click any code to copy it.";
 
 const faq = [
   { question: "What is a HEX color code?", answer: "A HEX color code is a # followed by six hexadecimal digits: two each for red, green and blue. #FF0000 is pure red, #00FF00 pure green, #0000FF pure blue, #000000 black and #FFFFFF white." },
   { question: "How do I convert a HEX code to RGB?", answer: "Split the six digits into three pairs and convert each pair from base 16 to base 10. For #FF6347: FF = 255, 63 = 99, 47 = 71, so the color is rgb(255, 99, 71). HueFlow's color converter does this instantly." },
   { question: "What is the difference between HEX, RGB and HSL?", answer: "They describe the same colors in different ways. HEX and RGB both store red, green and blue amounts; HSL stores hue (0-360°), saturation and lightness, which makes it easier to create lighter or darker versions of a color." },
+  { question: "What is a CMYK color code?", answer: "CMYK describes a color as percentages of cyan, magenta, yellow and black ink, the way printers mix it. The CMYK values here are straight conversions from RGB; for exact print color, check with your printer, because real results depend on the paper and ink profile." },
   { question: "Can I use these color names in CSS?", answer: "Most of them, yes - names like Tomato, SteelBlue or RebeccaPurple are built into CSS, so color: tomato; works. A few common design names (such as Camel) are not CSS keywords, so use their HEX code instead." },
 ];
 
@@ -43,7 +45,7 @@ export default function ColorCodesPage() {
       .filter((c) => colorFamily(c.hex) === slug)
       .map((c) => ({ c, s: resolveShade(c.name, c.hex) }))
       .sort((a, b) => b.s.lightness - a.s.lightness)
-      .map(({ c, s }) => ({ name: c.name, slug: c.slug, hex: s.hex, rgb: s.rgb, hsl: s.hsl })),
+      .map(({ c, s }) => ({ name: c.name, slug: c.slug, hex: s.hex, rgb: s.rgb, hsl: s.hsl, cmyk: formatCmyk(parseHex(s.hex)!) })),
   })).filter((f) => f.colors.length > 0);
 
   return (

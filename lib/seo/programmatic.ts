@@ -12,7 +12,7 @@ import {
 } from "@/lib/color-names";
 import { getContrastText, hexToHsl, hslToHex, isValidHex } from "@/lib/color-utils";
 
-import { cssColorSlugs, isColorMeaningAuthored, type ContentEntry } from "@/lib/seo/content";
+import { cssColorSlugs, isColorMeaningIndexable, type ContentEntry } from "@/lib/seo/content";
 import { colorFamily } from "@/lib/palette-library";
 
 type ColorDescriptor = {
@@ -460,14 +460,11 @@ export function getProgrammaticColorStaticParams() {
 
 export function getProgrammaticColorSitemapPaths(limit = namedColors.length) {
   // /colors/<name> is the canonical reference page for every named color.
-  // /color-meanings/<name> is only included once it has real hand-written psychology
-  // content - until then it renders (and works for direct visitors) but is noindexed,
-  // so it's left out of the sitemap rather than asking search engines to crawl a
-  // near-duplicate of /colors. All named colors are authored now, so in practice every
-  // /color-meanings/<name> path is included alongside its /colors/<name> counterpart.
+  // /color-meanings/<name> is only included for the 13 hand-written base hues; the rest
+  // render for visitors but are noindexed as near-duplicates of /colors/<name>.
   const namedPaths = namedColors.slice(0, limit).flatMap((color) => [
     `/colors/${color.slug}`,
-    ...(isColorMeaningAuthored(color.slug) ? [`/color-meanings/${color.slug}`] : []),
+    ...(isColorMeaningIndexable(color.slug) ? [`/color-meanings/${color.slug}`] : []),
   ]);
 
   // Hex-code slugs that just re-spell an already-named color (e.g. "000000" for

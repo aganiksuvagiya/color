@@ -297,7 +297,7 @@ export function ColorPicker() {
     }
   };
 
-  const copyLink = () => copy(`${window.location.origin}/tools/picker?c=${hex.slice(1)}`);
+  const copyLink = () => copy(`${window.location.origin}/color-picker?c=${hex.slice(1)}`);
 
   const contrastCards = [
     { label: "White text", text: "#ffffff", ratio: contrastRatio(hex, "#ffffff") },
@@ -460,7 +460,7 @@ export function ColorPicker() {
                   )}
                   <button onClick={copyLink} className={ghostBtn}>
                     <LinkIcon />
-                    {copied?.includes("/tools/picker?c=") ? "✓ Link copied" : "Copy share link"}
+                    {copied?.includes("/color-picker?c=") ? "✓ Link copied" : "Copy share link"}
                   </button>
                 </div>
               </div>

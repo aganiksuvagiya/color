@@ -7,7 +7,7 @@ import { StructuredData } from "@/components/seo/structured-data";
 import { ConditionalFooter } from "@/components/conditional-footer";
 import { Providers } from "@/components/providers";
 import { ReferralCapture } from "@/components/referral-capture";
-import { buildOrganizationSchema, buildSoftwareApplicationSchema, buildWebSiteSchema } from "@/lib/seo/schema";
+import { buildOrganizationSchema, buildWebSiteSchema } from "@/lib/seo/schema";
 import { indexableRobots, siteConfig } from "@/lib/seo/site-config";
 
 const GA_MEASUREMENT_ID = "G-5KWENXMSVQ";
@@ -95,7 +95,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </Script>
         <StructuredData data={buildWebSiteSchema()} />
         <StructuredData data={buildOrganizationSchema()} />
-        <StructuredData data={buildSoftwareApplicationSchema()} />
         <Suspense fallback={null}>
           <ReferralCapture />
         </Suspense>

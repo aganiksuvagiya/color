@@ -5,6 +5,7 @@ import type { ComponentType } from "react";
 import { BlogArticle } from "@/components/blog/blog-article";
 import { ColorOfTheYear2027Post } from "@/components/blog/posts/color-of-the-year-2027";
 import { NavyBluePost } from "@/components/blog/posts/colors-that-go-with-navy-blue";
+import { CeleryPost, CottageDoorPost, GroundedPost, WebsterGreenPost } from "@/components/blog/posts/paint-picks-2027";
 import { StructuredData } from "@/components/seo/structured-data";
 import { blogPath, blogPosts, getBlogPost } from "@/lib/blog/posts";
 import { buildPageMetadata } from "@/lib/seo/page-utils";
@@ -14,6 +15,10 @@ import { siteConfig } from "@/lib/seo/site-config";
 const BODIES: Record<string, ComponentType> = {
   "color-of-the-year-2027": ColorOfTheYear2027Post,
   "colors-that-go-with-navy-blue": NavyBluePost,
+  "sherwin-williams-celery": CeleryPost,
+  "benjamin-moore-webster-green": WebsterGreenPost,
+  "behr-grounded": GroundedPost,
+  "valspar-cottage-door": CottageDoorPost,
 };
 
 export const dynamicParams = false;

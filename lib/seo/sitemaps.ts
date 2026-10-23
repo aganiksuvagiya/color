@@ -6,20 +6,35 @@ import { siteConfig } from "@/lib/seo/site-config";
 import { colorPalettesPath, getLibraryTags } from "@/lib/palette-library";
 import { getShadeFamilies, shadesPath } from "@/lib/shades-data";
 
-// No <lastmod>: nothing tracks when each page's content actually changed, and a
-// lastmod of "now" on every request tells Google every URL changed constantly,
-// which makes it ignore lastmod for the whole site. Omitting it is the honest option.
+// <lastmod> only where we know the real date of the last significant content change: a
+// lastmod of "now" on every request tells Google every URL changed constantly, which makes
+// it ignore lastmod for the whole site. Add a page here (YYYY-MM-DD) whenever its content
+// changes substantially; blog posts use their own `updated` date.
+const contentUpdatedOn: Record<string, string> = {
+  "/best-colors-for/healthcare-websites": "2026-10-23",
+  "/best-colors-for/dental-websites": "2026-10-23",
+  "/best-colors-for/education-websites": "2026-10-23",
+  "/best-colors-for/fitness-websites": "2026-10-23",
+  "/best-colors-for/coffee-shop-websites": "2026-10-23",
+  "/best-colors-for/restaurant-websites": "2026-10-23",
+  "/best-colors-for/real-estate-websites": "2026-10-23",
+  "/best-colors-for/law-firm-websites": "2026-10-23",
+  "/color-palettes/christmas": "2026-10-23",
+};
+
 type SitemapEntry = {
   loc: string;
   changefreq: "daily" | "weekly" | "monthly";
   priority: number;
+  lastmod?: string;
 };
 
-function page(path: string, changefreq: SitemapEntry["changefreq"], priority: number): SitemapEntry {
+function page(path: string, changefreq: SitemapEntry["changefreq"], priority: number, lastmod = contentUpdatedOn[path]): SitemapEntry {
   return {
     loc: `${siteConfig.domain}${path}`,
     changefreq,
     priority,
+    ...(lastmod ? { lastmod } : {}),
   };
 }
 
@@ -30,10 +45,8 @@ export const staticPages = [
   page("/trends", "weekly", 0.82),
   page("/tools", "monthly", 0.88),
   page("/tools/playground", "monthly", 0.8),
-  page("/tools/picker", "monthly", 0.76),
   page("/tools/gradient", "monthly", 0.8),
   page("/tools/contrast", "monthly", 0.8),
-  page("/tools/tailwind", "monthly", 0.8),
   page("/tailwind-colors", "monthly", 0.88),
   page("/color-palette-generator", "weekly", 0.92),
   page("/color-picker", "weekly", 0.9),
@@ -158,13 +171,13 @@ export const guidesSitemap = dynamicEntries(
   0.78,
 );
 
-export const blogSitemap = [page("/blog", "weekly", 0.8), ...blogPosts.map((p) => page(blogPath(p.slug), "weekly", 0.85))];
+export const blogSitemap = [page("/blog", "weekly", 0.8), ...blogPosts.map((p) => page(blogPath(p.slug), "weekly", 0.85, p.updated))];
 
 export function renderSitemapXml(entries: SitemapEntry[]) {
   const body = entries
     .map(
       (entry) =>
-        `<url><loc>${entry.loc}</loc><changefreq>${entry.changefreq}</changefreq><priority>${entry.priority.toFixed(1)}</priority></url>`,
+        `<url><loc>${entry.loc}</loc>${entry.lastmod ? `<lastmod>${entry.lastmod}</lastmod>` : ""}<changefreq>${entry.changefreq}</changefreq><priority>${entry.priority.toFixed(1)}</priority></url>`,
     )
     .join("");
 

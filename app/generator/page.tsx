@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { GeneratorPage } from "@/components/generator/generator-page";
 import { StructuredData } from "@/components/seo/structured-data";
-import { buildFaqSchema, buildHowToSchema, buildSoftwareApplicationSchema } from "@/lib/seo/schema";
+import { buildSoftwareApplicationSchema } from "@/lib/seo/schema";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -31,30 +31,12 @@ export const metadata: Metadata = {
   },
 };
 
-const howToSchema = buildHowToSchema({
-  title: "How to Generate a Color Palette",
-  description: "Create a beautiful color palette using HueFlow's free palette generator.",
-  steps: [
-    "Go to HueFlow's Color Palette Generator at hueflow.site/generator.",
-    "Choose a mood or color theme, or click Shuffle for a random palette.",
-    "Lock colors you like and regenerate to refine the palette.",
-    "Export your palette as CSS, Tailwind, JSON, or image.",
-  ],
-});
-
-const faqSchema = buildFaqSchema([
-  { question: "Is HueFlow's color palette generator free?", answer: "Yes, HueFlow's color palette generator is completely free with no signup required." },
-  { question: "How do I export a color palette?", answer: "Click the Export button after generating a palette. You can export as CSS variables, Tailwind config, JSON, or PNG image." },
-  { question: "Can I generate palettes from an image?", answer: "Yes, use HueFlow's Image Color Extractor tool to generate a palette from any uploaded photo." },
-  { question: "What color formats does HueFlow support?", answer: "HueFlow supports HEX, RGB, HSL, HSB, CMYK, and Tailwind color class formats." },
-]);
-
 export default function Page() {
   return (
     <>
+      {/* No FAQ/HowTo markup here: the full-screen app shows neither, and Google's rules
+          forbid marking up content that isn't visible on the page. */}
       <StructuredData data={buildSoftwareApplicationSchema()} />
-      <StructuredData data={howToSchema} />
-      <StructuredData data={faqSchema} />
       <h1 className="sr-only">Color Palette Generator</h1>
       <Suspense>
         <GeneratorPage />

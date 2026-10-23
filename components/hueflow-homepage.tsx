@@ -513,7 +513,7 @@ export function HueFlowHomePage() {
             {/* Color Picker — live color + formats */}
             <motion.div variants={fadeUp} className="col-span-1">
               <Link
-                href="/tools/picker"
+                href="/color-picker"
                 className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
               >
                 <div className="relative flex flex-1 items-center justify-center overflow-hidden px-3 py-6 sm:px-6 sm:py-8" style={{ backgroundColor: toolColor }}>

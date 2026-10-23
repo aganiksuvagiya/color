@@ -185,15 +185,16 @@ export function buildArticleSchema({
   datePublished?: string;
   dateModified?: string;
 }) {
-  const today = new Date().toISOString().split("T")[0];
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: title,
     description,
     mainEntityOfPage: url,
-    datePublished: datePublished ?? today,
-    dateModified: dateModified ?? today,
+    // Only real dates: defaulting to "today" stamped every page with its build or request
+    // date, which Google's helpful-content guidance treats as faking freshness.
+    ...(datePublished ? { datePublished } : {}),
+    ...(dateModified ? { dateModified } : {}),
     author: {
       "@type": "Organization",
       name: siteConfig.name,

@@ -5,14 +5,13 @@ import type { Metadata } from "next";
 import { ContentPageView } from "@/components/seo/content-page";
 import { HubPageView, type HubDirectory } from "@/components/seo/hub-page";
 import { StructuredData } from "@/components/seo/structured-data";
-import { findResolvedEntry, getCollection, getColorMeaningOverride, getHubByPath, isColorMeaningAuthored, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
+import { findResolvedEntry, getCollection, getColorMeaningOverride, getHubByPath, isColorMeaningAuthored, isColorMeaningIndexable, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
 import { buildProgrammaticBrandColorEntry, buildProgrammaticColorEntry, getHexDuplicateCanonicalSlug, getProgrammaticBrandColorSlugs, getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
 import {
   buildArticleSchema,
   buildBreadcrumbSchema,
   buildCollectionPageSchema,
   buildFaqSchema,
-  buildHowToSchema,
   buildWebPageSchema,
 } from "@/lib/seo/schema";
 import { indexableRobots, siteConfig } from "@/lib/seo/site-config";
@@ -139,8 +138,9 @@ export function renderHub(path: string) {
 // ("Colors", "Color Palettes"); the <title> carries the phrase people actually search for.
 const hubSeo: Record<string, { title: string; description: string }> = {
   "/colors": {
-    title: "Color Names & Hex Codes: 140+ Colors",
-    description: "Browse 140+ named colors with HEX, RGB and HSL codes, meanings, accessibility notes, Tailwind classes and matching palettes. A free color reference.",
+    // "Names" here, "codes" on /color-codes: the two pages used to compete for the same searches.
+    title: "Color Names: Browse 140+ Named Colors by Family",
+    description: "Browse 140+ named colors by color family, with a page for each one: meaning, shades, accessibility notes, Tailwind classes and matching palettes.",
   },
   "/palettes": {
     title: "Color Palettes for Websites, Brands & Apps",
@@ -249,7 +249,7 @@ export function buildCollectionMetadata<
   const isUnauthoredHexColorPage =
     key === "colors" && !duplicateOfSlug && getProgrammaticColorDescriptor(slug)?.mode === "hex";
 
-  const noindex = (key === "colorMeanings" && !duplicateOfSlug && !isColorMeaningAuthored(slug)) || isUnauthoredHexColorPage;
+  const noindex = (key === "colorMeanings" && !duplicateOfSlug && !isColorMeaningIndexable(slug)) || isUnauthoredHexColorPage;
 
   return buildPageMetadata({
     title: entry.title,
@@ -425,13 +425,6 @@ export function renderEntryPage({
     <>
       <StructuredData data={buildWebPageSchema({ title: entry.title, description: entry.description, url })} />
       <StructuredData data={buildArticleSchema({ title: entry.title, description: entry.description, url })} />
-      <StructuredData
-        data={buildHowToSchema({
-          title: `How to use ${entry.title}`,
-          description: entry.description,
-          steps: entry.sections.map((section) => `${section.title}: ${section.body}`),
-        })}
-      />
       <StructuredData data={buildFaqSchema(entry.faq)} />
       <StructuredData
         data={buildBreadcrumbSchema([

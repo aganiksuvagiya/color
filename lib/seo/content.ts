@@ -3024,6 +3024,15 @@ const colorMeaningOverrides: Record<string, ColorMeaningOverride> = {
 // True when a color-meanings slug has genuinely distinct, hand-written psychology
 // content (see colorMeaningOverrides above) rather than falling back to the
 // programmatic hex/RGB generator shared with /colors.
+// Only the 13 hand-written base hues (the `colors` array: blue, red, azure...) keep an
+// indexable /color-meanings page. The other named colors' meaning pages repeat their
+// /colors twin too closely (about half their wording on spot checks), so they stay up for
+// visitors but are noindexed and left out of the sitemap (owner decision, 2026-10-24).
+const indexableColorMeaningSlugs = new Set(colors.map((entry) => entry.slug));
+export function isColorMeaningIndexable(slug: string): boolean {
+  return indexableColorMeaningSlugs.has(slug);
+}
+
 export function isColorMeaningAuthored(slug: string): boolean {
   return Object.prototype.hasOwnProperty.call(colorMeaningOverrides, slug);
 }
@@ -3702,7 +3711,7 @@ const guides: ContentEntry[] = [
       { title: "Purple meaning", href: "/color-meanings/purple" },
       { title: "Palette generator", href: "/generator" },
       { title: "Gradient generator", href: "/tools/gradient" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Contrast checker", href: "/tools/contrast" },
     ],
   },
@@ -4565,7 +4574,7 @@ const bestColorsFor: ContentEntry[] = [
       { title: "WCAG color contrast guide", href: "/accessibility/color-contrast" },
       { title: "Contrast checker", href: "/tools/contrast" },
       { title: "Palette generator", href: "/generator" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
     ],
   },
   {
@@ -4870,7 +4879,7 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Yellow color page", href: "/colors/yellow" },
       { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
       { title: "Contrast checker", href: "/tools/contrast" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Palette generator", href: "/generator" },
     ],
   },
@@ -4951,7 +4960,7 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
       { title: "Best colors for SaaS websites", href: "/best-colors-for/saas-websites" },
       { title: "Contrast checker", href: "/tools/contrast" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Palette generator", href: "/generator" },
     ],
   },
@@ -5033,7 +5042,7 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Navy color page", href: "/colors/navy" },
       { title: "Best colors for finance websites", href: "/best-colors-for/finance-websites" },
       { title: "Best colors for real estate websites", href: "/best-colors-for/real-estate-websites" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Contrast checker", href: "/tools/contrast" },
       { title: "Palette generator", href: "/generator" },
     ],
@@ -5116,7 +5125,7 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
       { title: "Healthcare website color guide", href: "/best-colors-for/healthcare-websites" },
       { title: "Teal color page", href: "/colors/teal" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Contrast checker", href: "/tools/contrast" },
       { title: "Palette generator", href: "/generator" },
     ],
@@ -5220,7 +5229,7 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Best colors for real estate websites", href: "/best-colors-for/real-estate-websites" },
       { title: "Gray color page", href: "/colors/gray" },
       { title: "Orange color page", href: "/colors/orange" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Contrast checker", href: "/tools/contrast" },
       { title: "Palette generator", href: "/generator" },
     ],
@@ -5323,7 +5332,7 @@ const bestColorsFor: ContentEntry[] = [
     relatedLinks: [
       { title: "Pink color page", href: "/colors/pink" },
       { title: "Best colors for photography websites", href: "/best-colors-for/photography-websites" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Contrast checker", href: "/tools/contrast" },
       { title: "Palette generator", href: "/generator" },
       { title: "Image color extractor", href: "/tools/image-colors" },
@@ -5428,7 +5437,7 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Best colors for beauty salon websites", href: "/best-colors-for/beauty-salon-websites" },
       { title: "Black color page", href: "/colors/black" },
       { title: "Image color extractor", href: "/tools/image-colors" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Contrast checker", href: "/tools/contrast" },
       { title: "Gradient generator", href: "/tools/gradient" },
     ],

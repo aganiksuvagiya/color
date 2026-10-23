@@ -61,7 +61,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     ],
     answer:
       "HueFlow's Color Contrast Checker is a free contrast analyzer and accessibility validator: enter a text color and a background color to get the WCAG contrast ratio (1:1 to 21:1) and an instant AA/AAA pass or fail. WCAG AA needs 4.5:1 for normal text and 3:1 for large text and UI components; AAA needs 7:1. If a pair fails, the checker suggests the closest accessible color.",
-    audience: "Product teams, marketers, and developers improving readable interfaces for US searchers and customers.",
+    audience: "Designers, developers, and content teams checking that text stays readable for everyone, including people with low vision.",
     useCases: [
       "Check CTA button text before shipping a landing page",
       "Validate dashboard UI text for AA and AAA accessibility",
@@ -96,9 +96,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
           "Normal text should usually meet at least 4.5:1 for WCAG AA. Larger text can pass at 3:1, but stronger contrast is safer for readability.",
       },
       {
-        question: "Why is contrast important for SEO and UX?",
+        question: "Why does color contrast matter?",
         answer:
-          "Poor contrast increases bounce risk, reduces readability, and weakens usability signals. Better readability supports engagement, accessibility, and crawl-friendly page quality.",
+          "Low-contrast text is hard to read for everyone, and much harder for people with low vision or color vision deficiency, older readers, and anyone on a phone in bright light. The WCAG minimums exist to keep text readable in those everyday conditions.",
       },
       {
         question: "What's the difference between AA and AAA contrast?",
@@ -164,7 +164,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     ],
     answer:
       "HueFlow's CSS Gradient Generator builds linear, radial, and conic gradients visually and gives you copy-ready CSS such as background: linear-gradient(135deg, #6366F1, #EC4899). Pick your color stops, set the angle or shape, preview live, and paste the code into any stylesheet - no signup needed.",
-    audience: "Designers, founders, and frontend teams building polished web interfaces for US users.",
+    audience: "Designers, founders, and frontend teams building polished web interfaces.",
     useCases: [
       "Create hero gradients for SaaS websites",
       "Build background gradients for onboarding flows",
@@ -239,7 +239,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   },
   picker: {
     slug: "picker",
-    path: "/tools/picker",
+    path: "/color-picker",
     title: "Color Picker Tool: Eyedropper, HSL Sliders & Recent Colors",
     description:
       "Free online color picker and hue picker — click any color to instantly get HEX, RGB, and HSL values, plus shades, tints, and complementary palettes.",
@@ -335,7 +335,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   },
   tailwind: {
     slug: "tailwind",
-    path: "/tools/tailwind",
+    path: "/tailwind-colors",
     title: "Tailwind Colors Explorer: Search & Copy Any Shade",
     description:
       "Search every Tailwind CSS color family, copy HEX values and class names, and map 50-950 shades for product UI, landing pages and design systems.",
@@ -354,7 +354,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     ],
     answer:
       "HueFlow's Tailwind CSS Colors page helps teams browse Tailwind shades quickly, compare scale values, and copy production-ready color references for component systems.",
-    audience: "Frontend teams and Tailwind users shipping interfaces for US startups, SaaS products, and marketing sites.",
+    audience: "Frontend teams and Tailwind users shipping interfaces for startups, SaaS products, and marketing sites.",
     useCases: [
       "Find Tailwind shade values faster during implementation",
       "Compare neutral, blue, green, and accent scales for component work",
@@ -411,7 +411,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     relatedLinks: [
       { title: "Tailwind hub", href: "/tailwind" },
       { title: "Blue in Tailwind", href: "/tailwind/blue" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Design token generator", href: "/tools/design-tokens" },
       { title: "Tailwind color scale generator", href: "/tools/tailwind-scale" },
       { title: "Contrast checker", href: "/tools/contrast" },
@@ -462,8 +462,8 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     ],
     relatedLinks: [
       { title: "Generator", href: "/generator" },
-      { title: "Color picker", href: "/tools/picker" },
-      { title: "Tailwind colors", href: "/tools/tailwind" },
+      { title: "Color picker", href: "/color-picker" },
+      { title: "Tailwind colors", href: "/tailwind-colors" },
       { title: "Building a design token system", href: "/guides/conversion-color-strategy" },
     ],
   },
@@ -715,7 +715,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     ],
     relatedLinks: [
       { title: "Image color extractor", href: "/tools/image-colors" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Brand color analyzer", href: "/tools/brand-analyzer" },
       { title: "Palettes hub", href: "/palettes" },
       { title: "Palette visualizer", href: "/tools/palette-visualizer" },
@@ -768,7 +768,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     ],
     relatedLinks: [
       { title: "SVG image recolor", href: "/tools/image-recolor" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Palettes hub", href: "/palettes" },
       { title: "Palette generator", href: "/generator" },
     ],
@@ -819,7 +819,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     relatedLinks: [
       { title: "Palette generator", href: "/generator" },
       { title: "Color mixer", href: "/tools/color-mixer" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Palette visualizer", href: "/tools/palette-visualizer" },
     ],
   },
@@ -870,7 +870,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Pastel colors", href: "/pastel-colors" },
       { title: "Color harmony generator", href: "/tools/color-harmony" },
       { title: "Gradient generator", href: "/tools/gradient" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Palette generator", href: "/generator" },
     ],
   },
@@ -1046,9 +1046,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       },
     ],
     relatedLinks: [
-      { title: "Tailwind CSS colors", href: "/tools/tailwind" },
+      { title: "Tailwind CSS colors", href: "/tailwind-colors" },
       { title: "Design token generator", href: "/tools/design-tokens" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Color harmony generator", href: "/tools/color-harmony" },
     ],
   },
@@ -1279,7 +1279,7 @@ export const blogPageContent = {
     "brand color resources",
   ],
   answer:
-    "HueFlow's resource library helps US-focused teams learn how color affects trust, readability, conversion, and brand clarity across SaaS, fintech, ecommerce, AI, and modern marketing websites.",
+    "HueFlow's resource library helps teams learn how color affects trust, readability, conversion, and brand clarity across SaaS, fintech, ecommerce, AI, and modern marketing websites.",
   featuredArticles: [
     {
       title: "Color of the Year 2027: Every Pick So Far",
@@ -1288,6 +1288,38 @@ export const blogPageContent = {
       readTime: "9 min",
       href: "/blog/color-of-the-year-2027",
       cover: ["#E0DDBD", "#64806C", "#615E50", "#7A8F97", "#A6613C"],
+    },
+    {
+      title: "Sherwin-Williams Celery (SW 6421): Hex & Palettes",
+      excerpt: "The lightest 2027 Color of the Year: codes, four palettes and six colors that go with it.",
+      category: "Trends",
+      readTime: "5 min",
+      href: "/blog/sherwin-williams-celery",
+      cover: ["#F5F1E6", "#E0DDBD", "#B8B08A", "#7A7F5A", "#3E3A2F"],
+    },
+    {
+      title: "Benjamin Moore Webster Green (HC-130): Hex & Palettes",
+      excerpt: "A deep, classic green from the Historical Colors: codes, palettes and pairings.",
+      category: "Trends",
+      readTime: "5 min",
+      href: "/blog/benjamin-moore-webster-green",
+      cover: ["#F3EEE3", "#B89B72", "#64806C", "#2E3B33", "#8C5A3C"],
+    },
+    {
+      title: "Behr Grounded (T27-01): Hex & Palettes",
+      excerpt: "The darkest 2027 pick, an earthy olive: codes, palettes and colors that go with it.",
+      category: "Trends",
+      readTime: "5 min",
+      href: "/blog/behr-grounded",
+      cover: ["#E6DFD1", "#A89C80", "#615E50", "#9C5B3B", "#2F2D27"],
+    },
+    {
+      title: "Valspar Cottage Door (8004-38E): Hex & Palettes",
+      excerpt: "A soft gray-blue, the first 2027 Color of the Year: codes, palettes and pairings.",
+      category: "Trends",
+      readTime: "5 min",
+      href: "/blog/valspar-cottage-door",
+      cover: ["#F4F1EA", "#B9A88F", "#7A8F97", "#C08A5B", "#3E4A50"],
     },
     {
       title: "What Colors Go With Navy Blue? 18 Pairings",

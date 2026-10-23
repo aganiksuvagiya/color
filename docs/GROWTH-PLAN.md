@@ -338,7 +338,7 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 - No console errors, and no horizontal scroll at 375px.
 - To measure: compare the 28 days after 2026-10-23 with the 28 days before, page by page (Search Console Pages filter). Use the 16 untouched `/best-colors-for` pages as the comparison group.
 
-**Share images (2026-10-23, follow-up on the same branch, not deployed yet):**
+**Share images (2026-10-23, live as worker `cc9ce468`, develop `de8c03a`):**
 - **Site-wide image.** The old dark `/opengraph-image` used for every page is redrawn in the light design: white background, "Find colors that feel right.", and a palette strip. The shared frame is `components/seo/og-frame.tsx`.
 - **Industry pages.** Every `/best-colors-for/<slug>` page now has its own image (`app/best-colors-for/[slug]/opengraph-image.tsx`) with the page title, the "N ... Color Palettes" line in orange, and its first 3 palettes. Pages without palettes show their color strip instead.
   - All 24 images are prerendered at build time.
@@ -394,6 +394,69 @@ Shared building blocks for the new SEO pages live in `components/seo/page-ui.tsx
 - After deploy, request indexing for the 8 pages in Search Console.
 - Watch the queries above for 2–4 weeks.
 - If positions improve, give the other 16 `/best-colors-for` pages the same treatment.
+
+## Research report and weekly plan (2026-10-23)
+
+The full research (6 parts: keywords, palette tools, color reference sites, converter/contrast tools, links and channels, HueFlow audit) is in the session notes folder, not in the repo: `reports/HueFlow US top 10 research.md`. Main points:
+- **Not realistic in 1–2 months:** US top 10 for head terms ("color palette generator", "color palette", "shades of blue", "contrast checker", "hex to rgb", "color picker", "tailwind colors"). These belong to DR 75–90 sites with thousands of linking domains.
+- **Realistic by December:**
+  - industry palettes (healthcare already sits at positions 26–30);
+  - Christmas palettes, live by Nov 1;
+  - the 2027 Color of the Year long tail (Pantone reveal expected in the first week of December);
+  - niche converters (hex↔hsl, hex→cmyk, OKLCH; Pantone matching only if a ΔE matcher is built);
+  - "<color> hex / code" variants.
+- **First, stop the self-inflicted signals:** crawl errors, dates that change on every request, invisible schema, duplicate pages (Tailwind x3, picker x2, generator x2, `/colors` vs `/color-codes`) and templated color pages (light yellow and cyan share 71% of their wording).
+- **Links:** aim for 20–50 real referring domains by December, from one launch with a real hook (palettes on a sample website with WCAG contrast) and Pantone-timed PR.
+- **Industry experiment:** don't touch the content of the 24 `/best-colors-for` pages until the Nov 20 read. The 8 upgraded pages are compared with the 16 untouched ones, and Dec 18 is the real answer.
+
+**Workflow (owner, 2026-10-23):** one branch per week (`week-1`, `week-2`, ...) cut from `develop`. Work stays uncommitted during the week, and the owner says when to commit and push. Production still deploys only from a clean, pushed `develop`.
+
+### Weeks 1 and 2 (branch `week-1` from `develop` `de8c03a`, committed and merged into `develop` on 2026-10-24)
+
+**Done (checked with an OpenNext build and preview before the merge):**
+- **Real dates only.** `buildArticleSchema` no longer defaults to today, so content pages have no `datePublished`/`dateModified`. Blog posts keep their real dates.
+- **Schema cleanup:**
+  - `/generator` no longer has the invisible FAQ and HowTo markup; the full-screen app shows neither.
+  - Content pages no longer emit HowTo built from their sections.
+  - The site-wide SoftwareApplication markup is gone from the layout (it stays on `/generator`).
+  - Tool pages keep HowTo, because their steps are visible.
+- **Real `lastmod` in the sitemaps,** only where the date is known: the `contentUpdatedOn` map in `lib/seo/sitemaps.ts` (the 8 industry pages and the Christmas page) and blog posts (`updated`). Add a page there whenever its content changes substantially.
+- **Christmas page.** `/color-palettes/christmas` ("21 Christmas Color Palettes with Hex Codes") is a new season tag with 20 new palettes plus Holiday Classic, an intro, a color-blind tip and 4 FAQs. Refresh it each autumn.
+- **Crawl load:**
+  - The slug rate limiter goes from 30 to 120 requests a minute per IP (`wrangler.jsonc`). Free plans can't verify bots, and a user-agent exemption would be spoofable.
+  - Footer links use `prefetch={false}`. One scroll down live `/shades-of-blue` fired 110+ `_rsc` prefetches, about 45 of them from the footer. After the change, scrolling to the footer adds none.
+- **Copy.** The contrast tool page no longer talks about "US searchers" or "crawl-friendly page quality". Other "for US ..." audience lines were trimmed too.
+- **HSTS header** (`max-age=31536000`, this host only).
+
+- **Duplicate pages (owner decisions, 2026-10-24):**
+  - **Picker:** `/color-picker` now shows the picker tool itself (it was a text page linking away), and `/tools/picker` 308s there.
+  - **Tailwind:** `/tools/tailwind` 308s to `/tailwind-colors`; both rendered the same component.
+  - **Links:** all internal links, `toolPageContent` paths and the sitemap point at the kept URLs. The FAQ markup on both kept pages now matches the FAQ they show; `/tailwind-colors` had invisible FAQ markup before.
+  - **`/color-codes` vs `/colors`:** `/color-codes` is now a code table (HEX, RGB, HSL and CMYK side by side, family filter, copy on click, a family header row with shades and palettes links). The swatch-card grid that duplicated `/colors` is gone. Its title is "Color Codes: HEX, RGB, HSL & CMYK for 140 Named Colors". `/colors` keeps the cards, and its title is now "Color Names: Browse 140+ Named Colors by Family".
+  - **`/color-meanings/<name>`:** only the 13 hand-written base hues stay indexable (blue, green, red, purple, black, orange, yellow, pink, teal, gray, white, brown, azure). The other meaning pages are `noindex, follow` and out of the sitemap (`isColorMeaningIndexable` in `lib/seo/content.ts`). They still work for visitors, and the meanings hub still lists them.
+  - **`/color-palette-generator` vs `/generator`:** left as is until the generator redesign decision.
+
+- **Week 2, started on the same `week-1` branch (owner, 2026-10-24):**
+  - **2027 paint picks:** one page per pick for the four biggest US brands: `/blog/sherwin-williams-celery`, `/blog/benjamin-moore-webster-green`, `/blog/behr-grounded`, `/blog/valspar-cottage-door`. Each has codes (HEX, RGB, HSL, CMYK, LRV), 4 palettes, 6 pairings with computed contrast, where to use it, an on-screen contrast check (with a darker button shade where neither dark nor white text passes), FAQ and sources. One template: `components/blog/posts/paint-picks-2027.tsx`. Brand facts reuse the fact-checked 2027 post, which now links to each page.
+  - **IndexNow:** the key file is `public/ae005b44b3f7999141df5b8a7137d684.txt`, and `npm run indexnow -- <paths>` or `-- --sitemap` submits URLs. Run it only after a deploy.
+  - **Launch kit:** `docs/LAUNCH-KIT.md` has listing text for Uneed, TOOOLS.design, AlternativeTo, Product Hunt, Show HN, Reddit and the bradtraversy list, plus the launch schedule. The owner posts everything.
+
+**Not done in code, and why:**
+- **HTTP to HTTPS.** A redirect in `next.config.ts` looped: Next/OpenNext rewrote the same-host https destination back to http. Turn on Cloudflare **SSL/TLS → Edge Certificates → Always Use HTTPS** instead.
+- **The 5xx errors (found 2026-10-24).**
+  - **Where they show up:** Cloudflare Observability logged 204 errors in 7 days, all "Worker exceeded CPU time limit", on `_rsc` prefetches of static pages (`/about`, `/blog`, `/shades`, `/community`). Search Console Crawl stats show 5XX on 6% of Googlebot requests (3 months to Oct 21).
+  - **Cause:** the Workers **free plan gives 10 ms CPU per request**. Those pages were cache HITs, but every request first loaded the ~10 MB Next server bundle, and on a cold isolate (traffic bursts) that alone can pass 10 ms.
+  - **Decision:** the owner stays on the free plan (2026-10-24). Workers Paid ($5/mo, 30 s CPU) would have fixed it outright.
+  - **Fix, tested then parked (owner, 2026-10-24: analyze it later):** `enableCacheInterception: true` in `open-next.config.ts`. It is not on `week-1`; the patch is saved in the session notes folder as `parked-5xx-cache-interception.patch`. Prerendered pages (HTML, RSC and segment prefetches, sitemaps, robots, OG images) are answered from the cache by the small routing layer (`x-opennext-cache: HIT`) without loading the server. In preview, everything else is unchanged: redirects, middleware 404 and limiter, dynamic pages, security headers, client navigation. Must be turned off if Partial Prerendering is ever enabled.
+  - **After deploy:** check Observability → Errors (filter "exceeded CPU") and Crawl stats → Server error (5XX) after a week.
+
+**Needs the owner:**
+- ~~Search Console Crawl stats baseline~~ (2026-10-24): 2.65K requests in 3 months, average response 271 ms, 89% 200, **6% 5XX**, 2% 404. `www.hueflow.site` returns 301 to the apex.
+- ~~Turn on Cloudflare "Always Use HTTPS".~~ Done 2026-10-24: `http://` now returns 301 to `https://`.
+- Set up Bing Webmaster Tools (import from Search Console).
+- "Request indexing" for the 8 industry pages, and for `/color-palettes/christmas` once it is live.
+
+**Still in week 1 or week 2 per the report:** 301-merge the duplicate pages, noindex or merge the thin `/color-meanings` twins, add a named founder, a domain email and social profiles (`sameAs`), and launch prep.
 
 ## Next session: start here (updated 2026-10-19)
 

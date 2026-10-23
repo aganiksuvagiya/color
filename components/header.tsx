@@ -17,10 +17,10 @@ const MAIN_LINKS = [
 ];
 
 const TOOL_LINKS = [
-  { href: "/tools/picker", label: "Color Picker" },
+  { href: "/color-picker", label: "Color Picker" },
   { href: "/tools/gradient", label: "Gradient Generator" },
   { href: "/tools/contrast", label: "Contrast Checker" },
-  { href: "/tools/tailwind", label: "Tailwind Colors" },
+  { href: "/tailwind-colors", label: "Tailwind Colors" },
   { href: "/tools/brand-analyzer", label: "Brand Analyzer" },
   { href: "/tools/design-tokens", label: "Design Tokens" },
   { href: "/tools/contrast-fixer", label: "Contrast Fixer" },

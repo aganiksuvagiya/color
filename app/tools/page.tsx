@@ -137,7 +137,7 @@ const tools = [
     ),
   },
   {
-    href: "/tools/picker",
+    href: "/color-picker",
     title: "Color Picker",
     description: "Pick any color and get its hex, RGB, and HSL values instantly.",
     icon: (
@@ -189,7 +189,7 @@ const tools = [
     tag: "Dev",
   },
   {
-    href: "/tools/tailwind",
+    href: "/tailwind-colors",
     title: "Tailwind Colors",
     description: "Browse and copy all Tailwind CSS color values with one click.",
     icon: (
