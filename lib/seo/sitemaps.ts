@@ -1,20 +1,23 @@
+import { blogPath, blogPosts } from "@/lib/blog/posts";
+import { converterSlugList } from "@/lib/seo/converter-specs";
 import { routeCollections } from "@/lib/seo/content";
-import { getProgrammaticColorSitemapPaths } from "@/lib/seo/programmatic";
+import { getProgrammaticBrandColorSlugs, getProgrammaticColorSitemapPaths } from "@/lib/seo/programmatic";
 import { siteConfig } from "@/lib/seo/site-config";
+import { colorPalettesPath, getLibraryTags } from "@/lib/palette-library";
+import { getShadeFamilies, shadesPath } from "@/lib/shades-data";
 
+// No <lastmod>: nothing tracks when each page's content actually changed, and a
+// lastmod of "now" on every request tells Google every URL changed constantly,
+// which makes it ignore lastmod for the whole site. Omitting it is the honest option.
 type SitemapEntry = {
   loc: string;
-  lastmod: string;
   changefreq: "daily" | "weekly" | "monthly";
   priority: number;
 };
 
-const now = new Date().toISOString();
-
 function page(path: string, changefreq: SitemapEntry["changefreq"], priority: number): SitemapEntry {
   return {
     loc: `${siteConfig.domain}${path}`,
-    lastmod: now,
     changefreq,
     priority,
   };
@@ -34,9 +37,14 @@ export const staticPages = [
   page("/tailwind-colors", "monthly", 0.88),
   page("/color-palette-generator", "weekly", 0.92),
   page("/color-picker", "weekly", 0.9),
-  page("/color-wheel", "weekly", 0.9),
+  page("/color-wheel", "weekly", 0.92),
+  page("/color-mixing-chart", "weekly", 0.9),
+  page("/pastel-colors", "weekly", 0.9),
   page("/color-palette-from-image", "weekly", 0.88),
   page("/color-converter", "monthly", 0.88),
+  ...converterSlugList.map((slug) => page(`/${slug}`, "monthly", 0.86)),
+  page("/random-color-generator", "monthly", 0.84),
+  page("/color-name-finder", "monthly", 0.82),
   page("/tools/animation", "monthly", 0.76),
   page("/tools/brand-analyzer", "monthly", 0.76),
   page("/tools/contrast-fixer", "monthly", 0.76),
@@ -51,6 +59,9 @@ export const staticPages = [
   page("/tools/color-psychology-explorer", "monthly", 0.8),
   page("/tools/collage", "monthly", 0.76),
   page("/colors", "weekly", 0.92),
+  page("/shades", "weekly", 0.92),
+  page("/color-palettes", "weekly", 0.94),
+  page("/color-codes", "weekly", 0.9),
   page("/palettes", "weekly", 0.92),
   page("/gradients", "weekly", 0.9),
   page("/brand-colors", "weekly", 0.9),
@@ -67,7 +78,6 @@ export const staticPages = [
   page("/best-colors-for", "weekly", 0.84),
   page("/faqs", "weekly", 0.82),
   page("/resources", "weekly", 0.78),
-  page("/blog", "weekly", 0.8),
   page("/developer", "weekly", 0.84),
   page("/color-psychology", "weekly", 0.8),
   page("/about", "monthly", 0.5),
@@ -79,6 +89,7 @@ export const staticPages = [
 export const sitemapFiles = [
   "/sitemap-pages.xml",
   "/sitemap-colors.xml",
+  "/sitemap-shades.xml",
   "/sitemap-palettes.xml",
   "/sitemap-gradients.xml",
   "/sitemap-brand-colors.xml",
@@ -101,10 +112,17 @@ export const colorsSitemap = dynamicEntries(
   0.8,
 );
 
-export const palettesSitemap = dynamicEntries(
-  routeCollections.palettes.map((entry) => `/palettes/${entry.slug}`),
+export const palettesSitemap = [
+  ...dynamicEntries(routeCollections.palettes.map((entry) => `/palettes/${entry.slug}`), "weekly", 0.82),
+  // Palette library tag pages (/color-palettes/pastel, /color-palettes/blue, ...).
+  ...dynamicEntries(getLibraryTags().map((tag) => colorPalettesPath(tag.slug)), "weekly", 0.88),
+];
+
+// "Shades of <color>" pages, served at their search-phrase URL (/shades-of-blue).
+export const shadesSitemap = dynamicEntries(
+  getShadeFamilies().map((family) => shadesPath(family.slug)),
   "weekly",
-  0.82,
+  0.9,
 );
 
 export const gradientsSitemap = dynamicEntries(
@@ -114,7 +132,12 @@ export const gradientsSitemap = dynamicEntries(
 );
 
 export const brandColorsSitemap = dynamicEntries(
-  routeCollections.brandColors.map((entry) => `/brand-colors/${entry.slug}`),
+  [
+    ...routeCollections.brandColors.map((entry) => `/brand-colors/${entry.slug}`),
+    ...getProgrammaticBrandColorSlugs()
+      .filter((slug) => !routeCollections.brandColors.some((entry) => entry.slug === slug))
+      .map((slug) => `/brand-colors/${slug}`),
+  ],
   "weekly",
   0.82,
 );
@@ -135,13 +158,13 @@ export const guidesSitemap = dynamicEntries(
   0.78,
 );
 
-export const blogSitemap = [page("/blog", "weekly", 0.8)];
+export const blogSitemap = [page("/blog", "weekly", 0.8), ...blogPosts.map((p) => page(blogPath(p.slug), "weekly", 0.85))];
 
 export function renderSitemapXml(entries: SitemapEntry[]) {
   const body = entries
     .map(
       (entry) =>
-        `<url><loc>${entry.loc}</loc><lastmod>${entry.lastmod}</lastmod><changefreq>${entry.changefreq}</changefreq><priority>${entry.priority.toFixed(1)}</priority></url>`,
+        `<url><loc>${entry.loc}</loc><changefreq>${entry.changefreq}</changefreq><priority>${entry.priority.toFixed(1)}</priority></url>`,
     )
     .join("");
 
@@ -151,7 +174,7 @@ export function renderSitemapXml(entries: SitemapEntry[]) {
 
 export function renderSitemapIndexXml(paths: string[]) {
   const body = paths
-    .map((path) => `<sitemap><loc>${siteConfig.domain}${path}</loc><lastmod>${now}</lastmod></sitemap>`)
+    .map((path) => `<sitemap><loc>${siteConfig.domain}${path}</loc></sitemap>`)
     .join("");
 
   return `<?xml version="1.0" encoding="UTF-8"?>` +

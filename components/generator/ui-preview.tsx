@@ -20,11 +20,11 @@ export function UIPreview({ palette }: Props) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl"
+      className="rounded-2xl border border-black/[0.08] bg-white p-4 shadow-[0_1px_6px_rgba(28,23,18,0.06)]"
     >
-      <p className="mb-3 text-sm font-medium text-white/50">Live UI Preview</p>
+      <p className="mb-3 text-sm font-medium text-[#1c1712]/55">Live UI Preview</p>
 
-      <div className="overflow-hidden rounded-xl border border-white/10" style={{ backgroundColor: neutral }}>
+      <div className="overflow-hidden rounded-xl border border-black/[0.07]" style={{ backgroundColor: neutral }}>
         <div className="flex items-center justify-between px-4 py-2.5" style={{ backgroundColor: primary }}>
           <span className="text-sm font-semibold text-white">Dashboard</span>
           <div className="flex gap-2">

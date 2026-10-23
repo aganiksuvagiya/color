@@ -4,7 +4,7 @@ import { StaticPage } from "@/components/static-page";
 import { buildPageMetadata } from "@/lib/seo/page-utils";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Contact",
+  title: "Contact HueFlow",
   description:
     "Get in touch with the HueFlow team - feedback, bug reports, feature requests, and general questions.",
   path: "/contact",

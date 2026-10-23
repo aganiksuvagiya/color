@@ -25,7 +25,7 @@ export default function ContrastFixerPage() {
       <StructuredData
         data={buildBreadcrumbSchema([
           { name: "Home", item: siteConfig.domain },
-          { name: "Tools", item: `${siteConfig.domain}/tools/contrast-fixer` },
+          { name: "Tools", item: `${siteConfig.domain}/tools` },
           { name: page.title, item: url },
         ])}
       />

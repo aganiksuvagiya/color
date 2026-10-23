@@ -4,12 +4,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "next build --webpack",
     "clean": "rm -rf .next",
-    "dev": "next dev",
-    "dev:clean": "rm -rf .next && next dev",
+    "dev": "next dev --webpack",
+    "dev:clean": "rm -rf .next && next dev --webpack",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
@@ -18,27 +18,27 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",
     "@auth/supabase-adapter": "^1.11.3",
-    "@opennextjs/cloudflare": "^1.20.2",
+    "@opennextjs/cloudflare": "^1.20.13",
     "@sparticuz/chromium": "^147.0.0",
     "@supabase/supabase-js": "^2.112.3",
     "framer-motion": "^12.23.12",
-    "next": "^15.0.0",
+    "next": "^16.4.2",
     "next-auth": "^5.0.0-beta.32",
     "puppeteer-core": "^25.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^16.2.9",
+    "@next/eslint-plugin-next": "^16.4.2",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^22.10.1",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "eslint": "^9.39.4",
-    "eslint-config-next": "^16.2.9",
+    "eslint-config-next": "^16.4.2",
     "postcss": "^8.4.49",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.7.2",
-    "wrangler": "^4.120.1"
+    "wrangler": "^4.152.0"
   }
 }
