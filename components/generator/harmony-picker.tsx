@@ -32,22 +32,22 @@ export function HarmonyPicker({ onGenerate }: Props) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group rounded-2xl border border-white/10 bg-gradient-to-b from-white/8 to-white/3 p-5 shadow-lg shadow-black/10 backdrop-blur-xl transition-colors hover:border-white/15"
+      className="rounded-2xl border border-black/[0.08] bg-white p-5 shadow-[0_1px_6px_rgba(28,23,18,0.06)]"
     >
       <div className="mb-4 flex items-center gap-2.5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/8">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className="text-white/50">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1c1712]/[0.05]">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className="text-[#1c1712]/45">
             <circle cx="12" cy="12" r="9" />
             <path d="M12 3a9 9 0 010 18" />
             <path d="M12 7a5 5 0 010 10" />
           </svg>
         </div>
-        <p className="text-sm font-medium text-white/70">Color Harmony</p>
+        <p className="text-sm font-medium text-[#1c1712]/65">Color Harmony</p>
       </div>
 
       <div className="mb-4 flex items-center gap-3">
         <div className="relative">
-          <div className="h-10 w-10 rounded-xl border border-white/10 shadow-inner" style={{ backgroundColor: baseColor }} />
+          <div className="h-10 w-10 rounded-xl border border-black/[0.10] shadow-sm" style={{ backgroundColor: baseColor }} />
           <input
             type="color"
             value={baseColor}
@@ -67,7 +67,7 @@ export function HarmonyPicker({ onGenerate }: Props) {
               onGenerate(generateHarmony(e.target.value, activeMode));
             }
           }}
-          className="w-24 rounded-xl border border-white/10 bg-white/5 px-3 py-2 font-mono text-sm text-white outline-none transition-colors focus:border-white/25 focus:bg-white/8"
+          className="w-24 rounded-xl border border-black/[0.10] bg-[#faf7f2] px-3 py-2 font-mono text-sm text-[#1c1712] outline-none transition-colors focus:border-black/25 focus:bg-white"
           maxLength={7}
           placeholder="#hex"
         />
@@ -80,8 +80,8 @@ export function HarmonyPicker({ onGenerate }: Props) {
             onClick={() => handleGenerate(m.key)}
             className={`rounded-xl px-3.5 py-2 text-xs font-medium transition-all ${
               activeMode === m.key
-                ? "bg-white/15 text-white shadow-sm"
-                : "text-white/35 hover:bg-white/8 hover:text-white/60"
+                ? "bg-[#1c1712]/8 text-[#1c1712] shadow-sm"
+                : "text-[#1c1712]/40 hover:bg-[#1c1712]/5 hover:text-[#1c1712]/65"
             }`}
           >
             {m.label}

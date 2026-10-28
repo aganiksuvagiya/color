@@ -3,15 +3,17 @@ import {
   findClosestColorName,
   findNamedColorByHex,
   findNamedColorBySlug,
+  getClosestNamedColors,
   getPopularHexSamples,
   getPopularNamedColorSlugs,
   namedColors,
   normalizeHexColor,
   type NamedColor,
 } from "@/lib/color-names";
-import { getContrastText, hexToHsl, isValidHex } from "@/lib/color-utils";
+import { getContrastText, hexToHsl, hslToHex, isValidHex } from "@/lib/color-utils";
 
-import type { ContentEntry } from "@/lib/seo/content";
+import { cssColorSlugs, isColorMeaningIndexable, type ContentEntry } from "@/lib/seo/content";
+import { colorFamily } from "@/lib/palette-library";
 
 type ColorDescriptor = {
   slug: string;
@@ -192,17 +194,43 @@ function buildColorRelatedLinks(descriptor: ColorDescriptor) {
   const familyPair = familyPairs[descriptor.hueFamily] ?? familyPairs.neutral;
   const baseColorSlug = descriptor.mode === "hex" ? descriptor.canonicalSlug : descriptor.slug;
   const display = descriptor.displayName;
+  const cssSlug = descriptor.hueFamily === "neutral" ? "black" : descriptor.hueFamily;
+
+  // Every color page points into its family's shades page and palette-library tag
+  // (both cover the same 12 families that colorFamily() returns).
+  const family = colorFamily(descriptor.hex);
+  const familyName = family.charAt(0).toUpperCase() + family.slice(1);
 
   return [
+    { title: `Shades of ${familyName}`, href: `/shades-of-${family}`, label: "Related shades" },
+    { title: `${familyName} color palettes`, href: `/color-palettes/${family}`, label: "Related palette library" },
     { title: `${display} color meaning`, href: `/color-meanings/${baseColorSlug}`, label: "Related color meaning" },
     { title: `${descriptor.hueLabel} palettes`, href: `/palettes/${familyPair.palette}`, label: "Related palette" },
     { title: `${descriptor.hueLabel} gradients`, href: `/gradients/${familyPair.gradient}`, label: "Related gradient" },
     { title: `${descriptor.hueLabel} brand colors`, href: `/brand-colors/${familyPair.brand}`, label: "Related branding guide" },
     { title: `${descriptor.hueLabel} accessibility guide`, href: "/accessibility/color-contrast", label: "Related accessibility guide" },
     { title: `${descriptor.hueLabel} Tailwind guide`, href: `/tailwind/${descriptor.hueFamily === "neutral" ? "black" : descriptor.hueFamily}`, label: "Related Tailwind page" },
-    { title: `${descriptor.hueLabel} CSS guide`, href: `/css-colors/${descriptor.hueFamily === "neutral" ? "black" : descriptor.hueFamily}`, label: "Related CSS page" },
+    // Only a few hue families have a /css-colors page - skip the link for the rest.
+    ...(cssColorSlugs.includes(cssSlug)
+      ? [{ title: `${descriptor.hueLabel} CSS guide`, href: `/css-colors/${cssSlug}`, label: "Related CSS page" }]
+      : []),
     { title: `${descriptor.hueLabel} strategy article`, href: `/guides/${familyPair.article}`, label: "Related article" },
   ];
+}
+
+function describeSaturation(s: number) {
+  if (s < 15) return "nearly gray with very little saturation";
+  if (s < 40) return "muted and low-saturation";
+  if (s < 70) return "moderately saturated";
+  return "highly saturated and vivid";
+}
+
+function describeLightness(l: number) {
+  if (l < 20) return "very dark, close to black";
+  if (l < 40) return "dark";
+  if (l < 60) return "mid-toned";
+  if (l < 80) return "light";
+  return "very light, close to white";
 }
 
 function buildColorFaq(descriptor: ColorDescriptor, contrastRatio: number, wcagLevel: string) {
@@ -240,33 +268,43 @@ export function buildProgrammaticColorEntry(slug: string): ContentEntry | null {
   const colorLabel = descriptor.mode === "hex" ? displayHex : descriptor.displayName;
   const titlePrefix = descriptor.mode === "hex" ? `${descriptor.hex.toLowerCase()} Color` : `${descriptor.displayName} Color`;
 
+  const toneDescription = `${describeSaturation(s)} and ${describeLightness(l)}`;
+  const complementaryHex = hslToHex((h + 180) % 360, s, l).toUpperCase();
+  const nearestColors = getClosestNamedColors(descriptor.hex, 3);
+
   return {
     slug,
-    title: `${colorLabel} Color ${displayHex} - Hex, RGB, HSL, Shades & Palettes`,
-    description: `${descriptor.displayName} (${displayHex}) - hex, RGB (${rgbStr}), HSL (${hslStr}). Explore shades, tints, complementary colors, accessibility contrast, and palette ideas for ${descriptor.displayName.toLowerCase()}.`,
-    answer: `${titlePrefix} works best when a team needs ${descriptor.psychology} and wants a shade that connects naturally to ${descriptor.branding}. It is most effective when paired with accessible contrast, a clear palette role, and related gradients, branding guides, and UI implementation patterns.`,
+    title: `${colorLabel} Color – Hex ${displayHex}, RGB, HSL, Shades & Palettes`,
+    description: `${descriptor.displayName} is a ${descriptor.hueLabel.toLowerCase()}-family color (${displayHex}). Get the hex code, RGB (${rgbStr}), HSL (${hslStr}), shades, tints, complementary palettes, and design ideas for ${descriptor.displayName.toLowerCase()}.`,
+    answer: `${descriptor.displayName} is a ${descriptor.hueLabel.toLowerCase()}-family color that communicates ${descriptor.psychology}. It is widely used in ${descriptor.branding}. Hex: ${displayHex}, RGB: ${rgbStr}, HSL: ${hslStr}.`,
     intent: "informational",
     keywords: [
       `${descriptor.displayName.toLowerCase()} color`,
+      `what is ${descriptor.displayName.toLowerCase()} color`,
       `${descriptor.displayName.toLowerCase()} hex code`,
       `${descriptor.hex.toLowerCase()} color`,
       `${descriptor.displayName.toLowerCase()} rgb`,
       `${descriptor.displayName.toLowerCase()} hsl`,
       `${descriptor.hueLabel.toLowerCase()} color palette`,
       `${descriptor.displayName.toLowerCase()} shades`,
+      `${descriptor.displayName.toLowerCase()} color meaning`,
     ],
     sections: [
       {
-        title: "Why it matters",
-        body: `${titlePrefix} matters because it shapes trust, emotional tone, and interface clarity all at once. Understanding a color fully means looking at psychology, branding, gradients, accessibility, and implementation together - not in isolation.`,
+        title: "What this color is used for",
+        body: `${titlePrefix} sits in the ${descriptor.hueLabel.toLowerCase()} family and reads as ${descriptor.psychology}. That's why it shows up most often in ${descriptor.branding}.`,
       },
       {
         title: "Best use cases",
-        body: `${descriptor.displayName} is strongest for ${descriptor.useCases.join(", ")}. It usually works best when assigned one clear semantic role such as primary brand color, accent, or support color instead of being spread across every interface state.`,
+        body: `${descriptor.displayName} works well for ${descriptor.useCases.join(", ")}. It's usually strongest when it's given one clear job - a primary brand color, an accent, or a support color - rather than reused for everything on the page.`,
       },
       {
-        title: "Common mistakes",
-        body: `The most common mistake with ${descriptor.displayName.toLowerCase()} is relying on it without testing contrast, hierarchy, or category fit. Another mistake is using the same shade for branding, alerts, and UI states, which weakens accessibility and semantic clarity.`,
+        title: "Things to check before using it",
+        body: `Test contrast before shipping text or buttons in this color, and avoid reusing the exact same shade for branding, alerts, and UI status all at once - that makes it harder for users to tell them apart.`,
+      },
+      {
+        title: "Saturation, lightness & similar shades",
+        body: `At ${s}% saturation and ${l}% lightness, ${descriptor.displayName.toLowerCase()} reads as ${toneDescription}. Its complementary color is ${complementaryHex} - useful for accent pairings. The closest named colors are ${nearestColors.map((c) => `${c.name} (${c.hex})`).join(", ")}, so compare swatches side by side before locking in the exact shade.`,
       },
     ],
     faq: buildColorFaq(descriptor, contrastOnWhite, wcagLevel),
@@ -300,11 +338,8 @@ export function buildProgrammaticColorEntry(slug: string): ContentEntry | null {
       { label: "Closest named color", value: descriptor.displayName },
       { label: "Hue family", value: descriptor.hueLabel },
       { label: "HSL", value: `${h} ${s}% ${l}%` },
+      { label: "Complementary color", value: complementaryHex },
       { label: "Text contrast", value: `${contrastOnWhite}:1 on white • ${wcagLevel} • prefers ${textColor} text on the swatch` },
-    ],
-    definitions: [
-      { term: descriptor.displayName, definition: `${descriptor.displayName} is a ${descriptor.hueLabel.toLowerCase()}-family color associated with ${descriptor.psychology}.` },
-      { term: "Color entity", definition: `In HueFlow, a color entity links one shade to palettes, gradients, accessibility checks, psychology, branding guidance, Tailwind classes, and CSS implementation.` },
     ],
     keyTakeaways: [
       `${descriptor.displayName} usually signals ${descriptor.psychology}.`,
@@ -314,35 +349,13 @@ export function buildProgrammaticColorEntry(slug: string): ContentEntry | null {
     prosCons: {
       pros: [
         `Supports ${descriptor.psychology} in branding and UI systems.`,
-        `Connects naturally to ${descriptor.hueLabel.toLowerCase()} palettes, gradients, and semantic color systems.`,
+        `Pairs naturally with the rest of the ${descriptor.hueLabel.toLowerCase()} palettes and gradients on this site.`,
       ],
       cons: [
         `May create thin hierarchy if the same shade is used for every UI role.`,
         `Needs contrast validation in text, buttons, and gradient overlays before scaling.`,
       ],
     },
-    expertSummary: {
-      title: "Expert summary",
-      body: `${titlePrefix} is most useful when teams treat it as a connected entity rather than a standalone swatch. The strongest implementation ties the color to a palette, a gradient, accessibility validation, brand positioning, and a clear semantic role in UI and marketing systems.`,
-    },
-    entityRelations: [
-      { entity: descriptor.displayName, relationship: "connects to", connectedTo: `${descriptor.hueLabel.toLowerCase()} palettes and gradients` },
-      { entity: descriptor.displayName, relationship: "supports", connectedTo: descriptor.branding },
-      { entity: descriptor.displayName, relationship: "must be validated against", connectedTo: "accessibility, contrast, Tailwind, and CSS implementation" },
-    ],
-    aiSections: [
-      { title: "What is it?", body: `${descriptor.displayName} is a ${descriptor.hueLabel.toLowerCase()}-family color represented here as ${descriptor.hex.toLowerCase()}.` },
-      { title: "Why it matters?", body: `${descriptor.displayName} influences trust, emotion, readability, and brand recognition across product UI, websites, marketing pages, and AI-cited answer content.` },
-      { title: "Best use cases", body: descriptor.useCases.join(", ") },
-      { title: "Examples", body: `Use ${descriptor.displayName.toLowerCase()} in SaaS hero accents, fintech dashboards, palette systems, gradient treatments, and brand documentation depending on category fit.` },
-      { title: "Common mistakes", body: `Avoid using ${descriptor.displayName.toLowerCase()} without testing contrast or assigning it to too many semantic roles at once.` },
-      { title: "Related topics", body: buildColorRelatedLinks(descriptor).map((link) => link.title).join(" • ") },
-    ],
-    citationBlocks: [
-      `${titlePrefix} is best when a team needs ${descriptor.psychology} and wants a shade that links naturally to branding, gradients, and accessibility guidance.`,
-      `${descriptor.hex.toLowerCase()} reaches ${contrastOnWhite}:1 contrast against white, which means accessibility decisions should be part of the color selection process, not a later cleanup step.`,
-      `${descriptor.displayName} should be treated as a color entity connected to palettes, gradients, branding, psychology, Tailwind, CSS, and WCAG validation.`,
-    ],
   };
 }
 
@@ -384,6 +397,10 @@ const industryProfiles: Record<string, { title: string; focus: string; colors: s
   },
 };
 
+export function getProgrammaticBrandColorSlugs(): string[] {
+  return Object.keys(industryProfiles);
+}
+
 export function buildProgrammaticBrandColorEntry(slug: string): ContentEntry | null {
   const profile = industryProfiles[slug];
   if (!profile) {
@@ -401,7 +418,7 @@ export function buildProgrammaticBrandColorEntry(slug: string): ContentEntry | n
   return {
     slug,
     title: `Best Brand Colors for ${profile.title}`,
-    description: `Programmatic ${profile.title.toLowerCase()} brand color guide connecting trust, accessibility, palettes, gradients, psychology, and conversion patterns for HueFlow.`,
+    description: `A ${profile.title.toLowerCase()} brand color guide covering trust, accessibility, palettes, gradients, and conversion patterns.`,
     answer: `The best brand colors for ${profile.title.toLowerCase()} usually combine shades that support ${profile.focus}. The strongest brand systems connect individual colors to palettes, gradients, accessibility, psychology, and UI implementation so the brand stays consistent across every surface.`,
     intent: "commercial",
     keywords: [
@@ -422,21 +439,35 @@ export function buildProgrammaticBrandColorEntry(slug: string): ContentEntry | n
   };
 }
 
+// Returns the named-color slug a hex-code slug duplicates (e.g. "000000" -> "black"),
+// or null if the slug isn't a redundant hex form of an already-named color.
+export function getHexDuplicateCanonicalSlug(slug: string): string | null {
+  const descriptor = getProgrammaticColorDescriptor(slug);
+  if (!descriptor || descriptor.mode !== "hex") {
+    return null;
+  }
+  return descriptor.canonicalSlug !== descriptor.slug ? descriptor.canonicalSlug : null;
+}
+
 export function getProgrammaticColorStaticParams() {
-  const nameParams = getPopularNamedColorSlugs(72).map((slug) => ({ slug }));
+  // All named colors now have authored /color-meanings content (see colorMeaningOverrides
+  // in content.ts), so every one of them is worth pre-rendering at build time rather than
+  // capping at a "popular" subset and leaving the rest to render on first request.
+  const nameParams = getPopularNamedColorSlugs(namedColors.length).map((slug) => ({ slug }));
   const hexParams = getPopularHexSamples(24).map((slug) => ({ slug }));
   return [...nameParams, ...hexParams];
 }
 
-export function getProgrammaticColorSitemapPaths(limit = 120) {
+export function getProgrammaticColorSitemapPaths(limit = namedColors.length) {
+  // /colors/<name> is the canonical reference page for every named color.
+  // /color-meanings/<name> is only included for the 13 hand-written base hues; the rest
+  // render for visitors but are noindexed as near-duplicates of /colors/<name>.
   const namedPaths = namedColors.slice(0, limit).flatMap((color) => [
     `/colors/${color.slug}`,
-    `/color-meanings/${color.slug}`,
+    ...(isColorMeaningIndexable(color.slug) ? [`/color-meanings/${color.slug}`] : []),
   ]);
 
-  const hexPaths = getPopularHexSamples(40).flatMap((slug) => [
-    `/colors/${slug}`,
-    `/color-meanings/${slug}`,
-  ]);
-  return [...namedPaths, ...hexPaths];
+  // Hex-code slugs that just re-spell an already-named color (e.g. "000000" for
+  // "black") canonicalize to the named page, so they're excluded from the sitemap too.
+  return namedPaths;
 }

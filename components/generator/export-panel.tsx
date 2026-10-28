@@ -113,7 +113,7 @@ export function ExportPanel({ palette }: Props) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.1 }}
-      className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl"
+      className="rounded-2xl border border-black/[0.08] bg-white p-4 shadow-[0_1px_6px_rgba(28,23,18,0.06)]"
     >
       <div className="mb-3 flex items-center justify-between">
         <div className="flex flex-wrap items-center gap-1">
@@ -123,8 +123,8 @@ export function ExportPanel({ palette }: Props) {
               onClick={() => setFormat(tab.key)}
               className={`rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
                 format === tab.key
-                  ? "bg-white/10 text-white"
-                  : "text-white/40 hover:text-white/60"
+                  ? "bg-[#1c1712]/8 text-[#1c1712]"
+                  : "text-[#1c1712]/40 hover:text-[#1c1712]/70"
               }`}
             >
               {tab.label}
@@ -136,14 +136,14 @@ export function ExportPanel({ palette }: Props) {
           <button
             onClick={handleCopy}
             disabled={figmaLocked}
-            className="flex items-center gap-1.5 rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/60 transition-colors hover:bg-white/12 disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex items-center gap-1.5 rounded-lg border border-black/10 bg-[#faf7f2] px-3 py-1.5 text-xs font-medium text-[#1c1712]/60 transition-colors hover:text-[#1c1712] disabled:cursor-not-allowed disabled:opacity-40"
           >
             {figmaLocked ? "Locked" : copied ? "Copied!" : "Copy"}
           </button>
         ) : (
           <button
             onClick={handleDownload}
-            className="flex items-center gap-1.5 rounded-lg bg-white/8 px-3 py-1.5 text-xs font-medium text-white/60 transition-colors hover:bg-white/12"
+            className="flex items-center gap-1.5 rounded-lg border border-black/10 bg-[#faf7f2] px-3 py-1.5 text-xs font-medium text-[#1c1712]/60 transition-colors hover:text-[#1c1712]"
           >
             Download
           </button>
@@ -173,18 +173,21 @@ export function ExportPanel({ palette }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="rounded-xl border border-orange-500/25 bg-orange-500/8 p-4"
+            className="rounded-xl border border-[#e8531f]/20 bg-[#e8531f]/8 p-4"
           >
-            <p className="text-sm font-medium text-orange-300">
+            <p className="text-sm font-medium text-[#e8531f]">
               🔒 Unlock Figma export at {POINT_REWARDS.FIGMA_EXPORT} points
             </p>
-            <p className="mt-1 text-xs text-white/50">
+            <p className="mt-1 text-xs text-[#1c1712]/50">
               You have {points} points — save/share palettes or try the Daily Challenge to earn more.
             </p>
-            <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-white/10">
+            <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-black/[0.06]">
               <div
-                className="h-full rounded-full bg-orange-400"
-                style={{ width: `${Math.min(100, Math.round((points / POINT_REWARDS.FIGMA_EXPORT) * 100))}%` }}
+                className="h-full rounded-full"
+                style={{
+                  width: `${Math.min(100, Math.round((points / POINT_REWARDS.FIGMA_EXPORT) * 100))}%`,
+                  background: "linear-gradient(90deg, #ff7a45, #e8531f)",
+                }}
               />
             </div>
           </motion.div>
@@ -195,7 +198,7 @@ export function ExportPanel({ palette }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="max-h-[240px] overflow-auto rounded-xl bg-black/30 p-4 font-mono text-xs leading-5 text-white/70"
+            className="max-h-[240px] overflow-auto rounded-xl bg-[#f0ebe4] p-4 font-mono text-xs leading-5 text-[#1c1712]/70"
           >
             {output}
           </motion.pre>

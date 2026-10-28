@@ -3,5 +3,11 @@ import nextVitals from "eslint-config-next/core-web-vitals";
 
 export default defineConfig([
   ...nextVitals,
-  globalIgnores(["dist", "src", "vite.config.js"]),
+  globalIgnores(["dist", "src", "vite.config.js", ".open-next", ".wrangler"]),
+  {
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+      "@next/next/no-img-element": "off",
+    },
+  },
 ]);

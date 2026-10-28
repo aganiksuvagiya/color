@@ -15,7 +15,10 @@ export type ToolPageSeoConfig = {
     | "color-mixer"
     | "colorblind-simulator"
     | "tailwind-scale"
-    | "color-psychology-explorer";
+    | "collage"
+    | "color-psychology-explorer"
+    | "random-color-generator"
+    | "color-name-finder";
   path: string;
   title: string;
   description: string;
@@ -24,6 +27,8 @@ export type ToolPageSeoConfig = {
   audience: string;
   useCases: string[];
   howToSteps: string[];
+  explainerHeading?: string;
+  explainer?: Array<{ title: string; body: string }>;
   faq: Array<{ question: string; answer: string }>;
   relatedLinks: Array<{ title: string; href: string }>;
 };
@@ -32,11 +37,19 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   contrast: {
     slug: "contrast",
     path: "/tools/contrast",
-    title: "Contrast Checker",
+    title: "Color Contrast Checker & Analyzer — Free WCAG AA/AAA Tool",
     description:
-      "Check WCAG contrast ratios between any two colors, validate AA or AAA accessibility, and review readable text combinations for websites and apps.",
+      "Free color contrast checker and analyzer: enter text and background colors to get the WCAG contrast ratio, AA/AAA pass or fail, and an accessible fix. Checks website readability instantly.",
     keywords: [
+      "color contrast checker",
       "contrast checker",
+      "color contrast analyzer",
+      "colour contrast analyser",
+      "color readability checker",
+      "color contrast accessibility validator",
+      "contrast checker colors",
+      "color contrast checker for website",
+      "website contrast checker",
       "wcag contrast checker",
       "color contrast ratio checker",
       "accessible text contrast tool",
@@ -47,18 +60,34 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "wcag 2.1 contrast ratio tool",
     ],
     answer:
-      "HueFlow's Contrast Checker helps teams test foreground and background colors against WCAG rules so buttons, text, dashboards, and landing pages stay readable for US web audiences.",
-    audience: "Product teams, marketers, and developers improving readable interfaces for US searchers and customers.",
+      "HueFlow's Color Contrast Checker is a free contrast analyzer and accessibility validator: enter a text color and a background color to get the WCAG contrast ratio (1:1 to 21:1) and an instant AA/AAA pass or fail. WCAG AA needs 4.5:1 for normal text and 3:1 for large text and UI components; AAA needs 7:1. If a pair fails, the checker suggests the closest accessible color.",
+    audience: "Designers, developers, and content teams checking that text stays readable for everyone, including people with low vision.",
     useCases: [
       "Check CTA button text before shipping a landing page",
       "Validate dashboard UI text for AA and AAA accessibility",
       "Compare brand colors against white or dark surfaces",
+      "Audit an existing website's contrast before a redesign or accessibility review",
     ],
     howToSteps: [
       "Enter or pick a foreground text color.",
       "Enter or pick a background color.",
       "Review the ratio, WCAG level, and preview text blocks.",
       "Adjust colors until the combination passes the target accessibility standard.",
+    ],
+    explainerHeading: "Understanding website contrast checking",
+    explainer: [
+      {
+        title: "What a contrast ratio means",
+        body: "The ratio compares the luminance of two colors, from 1:1 (identical, no contrast) to 21:1 (pure black on white). WCAG sets minimum ratios so text stays readable for users with low vision or color blindness.",
+      },
+      {
+        title: "AA vs AAA",
+        body: "AA is the baseline most sites target: 4.5:1 for normal text, 3:1 for large text (18pt+ or 14pt bold). AAA is stricter — 7:1 for normal text — and is often required for government or healthcare sites.",
+      },
+      {
+        title: "Where to check contrast on a website",
+        body: "Test body copy, button labels, form placeholders, links, and any text over images or gradients. These are the spots automated site audits and manual accessibility reviews flag most often.",
+      },
     ],
     faq: [
       {
@@ -67,9 +96,39 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
           "Normal text should usually meet at least 4.5:1 for WCAG AA. Larger text can pass at 3:1, but stronger contrast is safer for readability.",
       },
       {
-        question: "Why is contrast important for SEO and UX?",
+        question: "Why does color contrast matter?",
         answer:
-          "Poor contrast increases bounce risk, reduces readability, and weakens usability signals. Better readability supports engagement, accessibility, and crawl-friendly page quality.",
+          "Low-contrast text is hard to read for everyone, and much harder for people with low vision or color vision deficiency, older readers, and anyone on a phone in bright light. The WCAG minimums exist to keep text readable in those everyday conditions.",
+      },
+      {
+        question: "What's the difference between AA and AAA contrast?",
+        answer:
+          "AA is the standard most websites aim for (4.5:1 normal text, 3:1 large text). AAA is a higher bar (7:1 normal text, 4.5:1 large text) used for sites that need stronger accessibility guarantees, like healthcare or government.",
+      },
+      {
+        question: "Is this contrast checker free to use on a live website?",
+        answer:
+          "Yes. Enter any two colors from your site's design — no signup, no limit on checks — and get an instant WCAG AA/AAA pass-fail with a one-click accessible fix suggestion.",
+      },
+      {
+        question: "What is a color contrast analyzer?",
+        answer:
+          "A color contrast analyzer (or colour contrast analyser) measures the luminance difference between a foreground and a background color and reports the WCAG contrast ratio. This tool works as a contrast analyzer, readability checker, and accessibility validator in one: it shows the ratio, the AA/AAA result for normal and large text, and a live text preview.",
+      },
+      {
+        question: "How is the WCAG contrast ratio calculated?",
+        answer:
+          "Each color's relative luminance (L) is calculated from its linearized RGB values: L = 0.2126 R + 0.7152 G + 0.0722 B. The contrast ratio is (L1 + 0.05) / (L2 + 0.05), where L1 is the lighter color. The result ranges from 1:1 (no contrast) to 21:1 (black on white).",
+      },
+      {
+        question: "Do buttons, icons, and form borders need contrast too?",
+        answer:
+          "Yes. WCAG 2.1 success criterion 1.4.11 (Non-text Contrast) requires at least 3:1 between UI components — button edges, input borders, focus rings, and meaningful icons — and the colors next to them. Button label text still needs 4.5:1 against the button fill.",
+      },
+      {
+        question: "Can I check the contrast of text on an image or gradient?",
+        answer:
+          "Check the text color against the lightest and darkest areas behind it - use the color picker to grab those colors from your design. If either fails, add a dark overlay or a solid text background. Contrast on images changes across the image, so the weakest area decides whether the text passes.",
       },
     ],
     relatedLinks: [
@@ -78,18 +137,24 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Smart contrast fixer", href: "/tools/contrast-fixer" },
       { title: "Blue color page", href: "/colors/blue" },
       { title: "Color blind simulator", href: "/tools/colorblind-simulator" },
+      { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
+      { title: "Best colors for finance websites", href: "/best-colors-for/finance-websites" },
     ],
   },
   gradient: {
     slug: "gradient",
     path: "/tools/gradient",
-    title: "Gradient Generator",
+    title: "CSS Gradient Generator — Linear, Radial & Conic (Free)",
     description:
-      "Create CSS gradients with multiple color stops, angle control, preset palettes, and copy-ready code for landing pages, apps, and marketing assets.",
+      "Free CSS gradient generator: pick colors, set the angle, preview live, and copy linear-gradient, radial-gradient, or conic-gradient code instantly. No signup.",
     keywords: [
-      "gradient generator",
       "css gradient generator",
+      "gradient generator",
+      "css generator gradient",
+      "css gradient code",
       "linear gradient generator",
+      "radial gradient generator",
+      "conic gradient generator",
       "marketing gradient tool",
       "ui gradient builder",
       "css gradient code generator",
@@ -98,8 +163,8 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "gradient generator for buttons",
     ],
     answer:
-      "HueFlow's Gradient Generator helps teams build production-ready CSS gradients for hero sections, product UI, and brand campaigns without manually writing gradient syntax.",
-    audience: "Designers, founders, and frontend teams building polished web interfaces for US users.",
+      "HueFlow's CSS Gradient Generator builds linear, radial, and conic gradients visually and gives you copy-ready CSS such as background: linear-gradient(135deg, #6366F1, #EC4899). Pick your color stops, set the angle or shape, preview live, and paste the code into any stylesheet - no signup needed.",
+    audience: "Designers, founders, and frontend teams building polished web interfaces.",
     useCases: [
       "Create hero gradients for SaaS websites",
       "Build background gradients for onboarding flows",
@@ -111,7 +176,47 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "Add, remove, or randomize color stops.",
       "Preview the output and copy the CSS for production use.",
     ],
+    explainerHeading: "CSS gradient syntax explained",
+    explainer: [
+      {
+        title: "linear-gradient()",
+        body: "Blends colors along a straight line. background: linear-gradient(90deg, #6366F1, #EC4899); runs left to right; change the angle (0deg = bottom to top, 180deg = top to bottom) to change the direction.",
+      },
+      {
+        title: "radial-gradient()",
+        body: "Spreads colors outward from a center point. background: radial-gradient(circle at center, #FDE68A, #F97316); use 'circle' or 'ellipse' and 'at <position>' to control the shape and origin.",
+      },
+      {
+        title: "conic-gradient()",
+        body: "Rotates colors around a center point, like a pie chart or color wheel. background: conic-gradient(from 0deg, #22D3EE, #A855F7, #22D3EE); repeat the first color at the end for a seamless loop.",
+      },
+    ],
     faq: [
+      {
+        question: "How do I create a gradient in CSS?",
+        answer:
+          "Use the background property with a gradient function, for example: background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);. The first value sets the direction and each color can take an optional stop position. This generator writes that code for you - pick colors, adjust the angle, and copy.",
+      },
+      {
+        question: "What is the difference between linear, radial, and conic gradients?",
+        answer:
+          "A linear gradient blends colors along a straight line at a set angle. A radial gradient spreads colors outward from a center point in a circle or ellipse. A conic gradient sweeps colors around a center point, like the hands of a clock.",
+      },
+      {
+        question: "Can I use CSS gradients as text color?",
+        answer:
+          "Yes. Set the gradient as the background, then clip it to the text: background: linear-gradient(90deg, #6366F1, #EC4899); -webkit-background-clip: text; background-clip: text; color: transparent;.",
+      },
+      {
+        question: "Do CSS gradients work in all browsers?",
+        answer:
+          "linear-gradient() and radial-gradient() work in every modern browser without prefixes. conic-gradient() is supported in all current versions of Chrome, Edge, Safari, and Firefox.",
+      },
+      {
+        question: "Are CSS gradients better than gradient images?",
+        answer:
+          "Usually, yes. CSS gradients are resolution-independent, scale to any screen size without blurring, add no extra HTTP request, and are easy to change later. Use an image only for complex textures or noise effects CSS can't produce.",
+      },
       {
         question: "When should a website use gradients instead of flat colors?",
         answer:
@@ -129,16 +234,18 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Color animation generator", href: "/tools/animation" },
       { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
       { title: "Color mixer", href: "/tools/color-mixer" },
+      { title: "AI website color strategy", href: "/guides/ai-website-color-strategy" },
     ],
   },
   picker: {
     slug: "picker",
-    path: "/tools/picker",
-    title: "Color Picker",
+    path: "/color-picker",
+    title: "Color Picker Tool: Eyedropper, HSL Sliders & Recent Colors",
     description:
-      "Pick any color, copy HEX, RGB, or HSL values, and explore shades and tints for brand systems, UI kits, and accessible web design.",
+      "Free online color picker and hue picker — click any color to instantly get HEX, RGB, and HSL values, plus shades, tints, and complementary palettes.",
     keywords: [
       "color picker",
+      "hue picker",
       "hex color picker",
       "hsl color picker",
       "rgb color converter",
@@ -147,6 +254,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "hex to rgb converter",
       "color shades and tints generator",
       "pick a color online",
+      "what is a hex color code",
     ],
     answer:
       "HueFlow's Color Picker helps teams inspect a color, convert it into usable formats, and generate supporting shades or tints for consistent product and brand systems.",
@@ -162,7 +270,31 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "Click any generated shade or tint to continue exploring.",
       "Copy the final value for design tokens, CSS, or Tailwind classes.",
     ],
+    explainerHeading: "Understanding Hue, HEX, RGB & HSL",
+    explainer: [
+      {
+        title: "Hue",
+        body: "Hue is the base color itself — where it sits on the 0-360° color wheel (0/360 = red, 120 = green, 240 = blue), independent of how light, dark, or saturated it is. A hue picker lets you lock in that underlying color first, then fine-tune saturation and lightness separately.",
+      },
+      {
+        title: "HEX",
+        body: "A HEX code (like #2563EB) packs red, green, and blue into six characters, two per channel, from 00 to FF. It's the most common format in CSS, design tools, and brand guidelines because it's compact and unambiguous to copy-paste.",
+      },
+      {
+        title: "RGB",
+        body: "RGB (like rgb(37, 99, 235)) writes the same red, green, and blue channels as plain 0-255 numbers instead of hex pairs. It's easier to reason about programmatically and is what most color-mixing and blending math is done in.",
+      },
+      {
+        title: "HSL",
+        body: "HSL (like hsl(221, 83%, 53%)) describes a color by hue, saturation, and lightness instead of channel mixing. It's the easiest format for building a shade scale, since you can raise or lower lightness without shifting the underlying hue.",
+      },
+    ],
     faq: [
+      {
+        question: "What is a hue picker?",
+        answer:
+          "A hue picker lets you select a color by its position on the 0-360° color wheel first, then adjust saturation and lightness separately. This picker works as both a full color picker and a hue picker — pick a hue, then fine-tune it with the shade and tint options below.",
+      },
       {
         question: "Why use HSL when picking UI colors?",
         answer:
@@ -172,6 +304,21 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
         question: "How do shades and tints help design systems?",
         answer:
           "Shades and tints turn one core color into hover states, surfaces, borders, text accents, and semantic variants that feel more consistent across a product.",
+      },
+      {
+        question: "What is the difference between HEX, RGB, and HSL?",
+        answer:
+          "They describe the same color three different ways. HEX and RGB both encode red/green/blue channel values (as hex pairs or 0-255 numbers); HSL instead uses hue, saturation, and lightness, which is usually easier for humans to adjust by hand.",
+      },
+      {
+        question: "How do I convert HEX to RGB?",
+        answer:
+          "Split the HEX code into three two-character pairs and convert each from base 16 to base 10 - for example #2563EB becomes rgb(37, 99, 235). This picker does that conversion automatically the moment you enter or select a color.",
+      },
+      {
+        question: "Which format should I use in CSS: HEX, RGB, or HSL?",
+        answer:
+          "All three work identically in modern CSS. Use HEX for compact static values, RGB when you need to manage transparency with rgba(), and HSL when you're building a shade/tint scale and want to tune lightness directly.",
       },
     ],
     relatedLinks: [
@@ -183,14 +330,15 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Palette visualizer", href: "/tools/palette-visualizer" },
       { title: "Color harmony generator", href: "/tools/color-harmony" },
       { title: "Color mixer", href: "/tools/color-mixer" },
+      { title: "AI website color strategy", href: "/guides/ai-website-color-strategy" },
     ],
   },
   tailwind: {
     slug: "tailwind",
-    path: "/tools/tailwind",
-    title: "Tailwind CSS Colors",
+    path: "/tailwind-colors",
+    title: "Tailwind Colors Explorer: Search & Copy Any Shade",
     description:
-      "Browse the Tailwind CSS palette, search color families, copy HEX values, and map shades for product UI, landing pages, and design systems.",
+      "Search every Tailwind CSS color family, copy HEX values and class names, and map 50-950 shades for product UI, landing pages and design systems.",
     keywords: [
       "tailwind css colors",
       "tailwind color palette",
@@ -201,10 +349,12 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "tailwind color names list",
       "tailwind default color palette",
       "tailwind 500 shade hex",
+      "tailwind color chart",
+      "tailwind hex colors",
     ],
     answer:
       "HueFlow's Tailwind CSS Colors page helps teams browse Tailwind shades quickly, compare scale values, and copy production-ready color references for component systems.",
-    audience: "Frontend teams and Tailwind users shipping interfaces for US startups, SaaS products, and marketing sites.",
+    audience: "Frontend teams and Tailwind users shipping interfaces for startups, SaaS products, and marketing sites.",
     useCases: [
       "Find Tailwind shade values faster during implementation",
       "Compare neutral, blue, green, and accent scales for component work",
@@ -215,6 +365,21 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       "Scan the full 50 to 950 shade scale.",
       "Hover a swatch to review the exact HEX value.",
       "Click any swatch to copy the color into your workflow.",
+    ],
+    explainerHeading: "Understanding the Tailwind color system",
+    explainer: [
+      {
+        title: "What is the Tailwind color chart",
+        body: "Tailwind ships a default palette of 22 color families (slate, gray, red, orange... through to rose), each with an 11-step scale from 50 (lightest) to 950 (darkest). This page mirrors that full chart with the exact HEX value under every swatch.",
+      },
+      {
+        title: "Using Tailwind colors in tailwind.config",
+        body: "The default palette is available out of the box via classes like bg-blue-500 or text-slate-900 - no config needed. To customize it, extend theme.colors in tailwind.config.js/ts with your own scale, or override a single family while keeping the rest of the default palette.",
+      },
+      {
+        title: "Arbitrary values vs. theme colors",
+        body: "Tailwind also supports one-off values like bg-[#2563eb] when you need an exact brand HEX that isn't in the default scale. Reach for a theme color first for consistency; use an arbitrary value only when the design genuinely needs a color outside the scale.",
+      },
     ],
     faq: [
       {
@@ -227,21 +392,37 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
         answer:
           "Yes. Many teams start with a Tailwind family close to their brand hue, then customize the final token scale to fit product and marketing needs.",
       },
+      {
+        question: "What are the HEX values for Tailwind colors?",
+        answer:
+          "Every Tailwind color family has 11 shades (50-950), each with its own fixed HEX value - for example blue-500 is #3B82F6. Search a family above to see its full chart of exact HEX codes.",
+      },
+      {
+        question: "How do I use Tailwind colors outside of a Tailwind project?",
+        answer:
+          "Copy the HEX value for any shade and use it directly in plain CSS, design tools, or another framework - the values are just standard hex colors, not something tied to Tailwind's build process.",
+      },
+      {
+        question: "Why does Tailwind's default palette work well as a starting point?",
+        answer:
+          "Each family is tuned so shades stay perceptually consistent in lightness and saturation across the 50-950 scale, which makes it easier to build accessible UI states without manually testing contrast at every step.",
+      },
     ],
     relatedLinks: [
       { title: "Tailwind hub", href: "/tailwind" },
       { title: "Blue in Tailwind", href: "/tailwind/blue" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Design token generator", href: "/tools/design-tokens" },
       { title: "Tailwind color scale generator", href: "/tools/tailwind-scale" },
+      { title: "Contrast checker", href: "/tools/contrast" },
     ],
   },
   "design-tokens": {
     slug: "design-tokens",
     path: "/tools/design-tokens",
-    title: "Design Token Generator",
+    title: "Design Token Generator for CSS, Tailwind & Figma",
     description:
-      "Export palette roles into CSS variables, Tailwind, JSON, Figma tokens, Swift, Kotlin, and Flutter formats for scalable design systems.",
+      "Free design token generator: export color palettes, type and spacing scales as CSS variables, Tailwind, JSON, Figma tokens, Swift, Kotlin and Flutter.",
     keywords: [
       "design token generator",
       "color token generator",
@@ -281,17 +462,17 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     ],
     relatedLinks: [
       { title: "Generator", href: "/generator" },
-      { title: "Color picker", href: "/tools/picker" },
-      { title: "Tailwind colors", href: "/tools/tailwind" },
+      { title: "Color picker", href: "/color-picker" },
+      { title: "Tailwind colors", href: "/tailwind-colors" },
       { title: "Building a design token system", href: "/guides/conversion-color-strategy" },
     ],
   },
   "image-colors": {
     slug: "image-colors",
     path: "/tools/image-colors",
-    title: "Image Color Extractor",
+    title: "Image Color Picker: Extract Colors from Any Image",
     description:
-      "Upload an image, extract dominant colors, and turn visual inspiration into palettes for websites, branding, and product design.",
+      "Free image color picker: upload a photo, click anywhere for the HEX, RGB and HSL code, and extract dominant colors into a palette. Runs in your browser.",
     keywords: [
       "image color extractor",
       "extract colors from image",
@@ -335,14 +516,15 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Brand color analyzer", href: "/tools/brand-analyzer" },
       { title: "Palettes hub", href: "/palettes" },
       { title: "Luxury brand color strategy", href: "/guides/luxury-brand-color-strategy" },
+      { title: "Best colors for photography websites", href: "/best-colors-for/photography-websites" },
     ],
   },
   "brand-analyzer": {
     slug: "brand-analyzer",
     path: "/tools/brand-analyzer",
-    title: "Brand Color Analyzer",
+    title: "Brand Color Analyzer: Find the Colors a Website Uses",
     description:
-      "Analyze a website screenshot, extract visible brand colors, and review dominant tones for competitors, inspiration, and brand audits.",
+      "Enter a website URL to extract its brand colors and dominant tones. A free brand color analyzer for competitor research, inspiration and brand audits.",
     keywords: [
       "brand color analyzer",
       "website color extractor",
@@ -391,9 +573,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   animation: {
     slug: "animation",
     path: "/tools/animation",
-    title: "Color Animation Generator",
+    title: "CSS Color Animation & Animated Gradient Generator",
     description:
-      "Create animated CSS gradients and color transitions with production-ready keyframes for hero sections, landing pages, and interactive UI.",
+      "Create animated CSS gradients and color transitions with copy-ready keyframes for hero sections, landing pages and interactive UI. Free, no signup.",
     keywords: [
       "color animation generator",
       "css gradient animation generator",
@@ -441,9 +623,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "contrast-fixer": {
     slug: "contrast-fixer",
     path: "/tools/contrast-fixer",
-    title: "Smart Contrast Fixer",
+    title: "Contrast Fixer: Make Colors WCAG Accessible",
     description:
-      "Automatically suggest accessible color fixes that preserve brand intent while improving contrast for text, buttons, and interface elements.",
+      "Automatically fix low-contrast colors to meet WCAG AA or AAA while keeping your brand look. Free accessible color fixer for text, buttons and UI.",
     keywords: [
       "contrast fixer",
       "accessible color fixer",
@@ -491,9 +673,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "image-recolor": {
     slug: "image-recolor",
     path: "/tools/image-recolor",
-    title: "SVG Image Recolor",
+    title: "SVG Recolor Tool: Change SVG Colors Online",
     description:
-      "Upload an SVG icon or illustration, swap any of its colors, preview the result instantly, and export your recolored file.",
+      "Free SVG recolor tool: upload an SVG icon or illustration, swap any of its colors, preview the result and download the recolored file.",
     keywords: [
       "svg color changer",
       "recolor svg online",
@@ -533,7 +715,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     ],
     relatedLinks: [
       { title: "Image color extractor", href: "/tools/image-colors" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Brand color analyzer", href: "/tools/brand-analyzer" },
       { title: "Palettes hub", href: "/palettes" },
       { title: "Palette visualizer", href: "/tools/palette-visualizer" },
@@ -542,9 +724,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "palette-visualizer": {
     slug: "palette-visualizer",
     path: "/tools/palette-visualizer",
-    title: "Palette Visualizer",
+    title: "Palette Visualizer: Preview Colors on a Website",
     description:
-      "Apply a color palette to a real website layout with a nav, hero, feature cards, and footer to see how it feels before you commit to it.",
+      "Apply a color palette to a real website, dashboard, app UI and component layout to see how it looks before you commit. Free palette visualizer.",
     keywords: [
       "palette visualizer",
       "color palette visualizer",
@@ -586,7 +768,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     ],
     relatedLinks: [
       { title: "SVG image recolor", href: "/tools/image-recolor" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Palettes hub", href: "/palettes" },
       { title: "Palette generator", href: "/generator" },
     ],
@@ -594,9 +776,9 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "color-harmony": {
     slug: "color-harmony",
     path: "/tools/color-harmony",
-    title: "Color Harmony Generator",
+    title: "Color Scheme Generator from One Base Color",
     description:
-      "Generate complementary, analogous, triadic, tetradic, split-complementary, and monochromatic color palettes from a single base color.",
+      "Generate complementary, analogous, triadic, tetradic, split-complementary and monochromatic color schemes from a single base color. Free, no signup.",
     keywords: [
       "color harmony generator",
       "complementary colors",
@@ -637,16 +819,16 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
     relatedLinks: [
       { title: "Palette generator", href: "/generator" },
       { title: "Color mixer", href: "/tools/color-mixer" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Palette visualizer", href: "/tools/palette-visualizer" },
     ],
   },
   "color-mixer": {
     slug: "color-mixer",
     path: "/tools/color-mixer",
-    title: "Color Mixer",
+    title: "Color Mixer: Blend Two Colors Online",
     description:
-      "Blend two colors together and generate a smooth 9-step color scale between them, with a one-click midpoint mix.",
+      "Free online color mixer: blend two colors, get the midpoint mix and a 9-step color scale between them, with HEX, RGB and HSL codes to copy.",
     keywords: [
       "color mixer",
       "color blender",
@@ -684,18 +866,95 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       },
     ],
     relatedLinks: [
+      { title: "Color mixing chart", href: "/color-mixing-chart" },
+      { title: "Pastel colors", href: "/pastel-colors" },
       { title: "Color harmony generator", href: "/tools/color-harmony" },
       { title: "Gradient generator", href: "/tools/gradient" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
+      { title: "Palette generator", href: "/generator" },
+    ],
+  },
+  collage: {
+    slug: "collage",
+    path: "/tools/collage",
+    title: "Collage Creator: Combine Photos into One Image (Free)",
+    description:
+      "Free online collage maker: add up to 6 photos, set the spacing and download one PNG. Runs in your browser, so your images are never uploaded.",
+    keywords: [
+      "collage creator",
+      "collage maker",
+      "photo collage maker",
+      "free collage maker online",
+      "combine images into one",
+      "image grid maker",
+      "photo grid",
+      "mood board collage",
+    ],
+    answer:
+      "HueFlow's Collage Creator combines up to 6 photos into a single grid image. Pick how many images you want, add them, set the gap between them and download the result as a PNG, all in your browser.",
+    audience: "Designers, marketers and creators building mood boards, product grids, social posts or brand inspiration boards.",
+    useCases: [
+      "Build a mood board or color inspiration board from several reference photos",
+      "Put product photos side by side for a social post or listing",
+      "Combine screenshots into a single image for a case study or presentation",
+      "Collect photos to pull a palette from with the image color extractor",
+    ],
+    howToSteps: [
+      "Choose how many images you want, from 2 to 6.",
+      "Click each empty slot and add a photo from your device.",
+      "Drag the gap slider to set the spacing between images.",
+      "Click Download PNG to save the finished collage.",
+    ],
+    explainerHeading: "How the collage is built",
+    explainer: [
+      {
+        title: "Grid layout",
+        body: "Collages with 2 to 4 images use two columns, and collages with 5 or 6 images use three columns. Each photo is cropped to fill its cell evenly.",
+      },
+      {
+        title: "Private by design",
+        body: "Photos are read and combined in your browser using a canvas. Nothing is uploaded to a server, so your images stay on your device.",
+      },
+      {
+        title: "Export quality",
+        body: "The collage exports as a 1200px wide PNG. Start from higher-resolution photos to keep the result sharp.",
+      },
+    ],
+    faq: [
+      {
+        question: "Is the collage maker free?",
+        answer: "Yes. It is free to use with no signup and no watermark on the exported PNG.",
+      },
+      {
+        question: "Are my photos uploaded anywhere?",
+        answer: "No. The collage is created in your browser, so your photos are never sent to HueFlow's servers.",
+      },
+      {
+        question: "How many photos can I combine?",
+        answer: "You can combine up to 6 photos in one collage. Choose between 2 and 6 slots.",
+      },
+      {
+        question: "What format does the collage download in?",
+        answer: "The collage downloads as a PNG that is 1200 pixels wide. The height depends on how many rows your layout has.",
+      },
+      {
+        question: "Can I get a color palette from my collage?",
+        answer: "Yes. Download the collage, then upload it to the image color extractor to pull a palette from all of its photos at once.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Image color extractor", href: "/tools/image-colors" },
+      { title: "Color palette from image", href: "/color-palette-from-image" },
+      { title: "Image recolor tool", href: "/tools/image-recolor" },
       { title: "Palette generator", href: "/generator" },
     ],
   },
   "colorblind-simulator": {
     slug: "colorblind-simulator",
     path: "/tools/colorblind-simulator",
-    title: "Color Blind Simulator",
+    title: "Color Blind Simulator: Test Palettes for Color Blindness",
     description:
-      "Preview any palette under protanopia, deuteranopia, and tritanopia to catch colors that become indistinguishable for color-blind users.",
+      "Preview any palette under protanopia, deuteranopia and tritanopia to catch colors that become hard to tell apart for color-blind users. Free online tool.",
     keywords: [
       "color blind simulator",
       "color blindness simulator online",
@@ -742,10 +1001,11 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
   "tailwind-scale": {
     slug: "tailwind-scale",
     path: "/tools/tailwind-scale",
-    title: "Tailwind Color Scale Generator",
+    title: "Tailwind Color Generator — Hex to 50-950 Scale",
     description:
-      "Turn any hex color into a full Tailwind-style 50-950 shade scale, with a one-click copy as a ready-to-paste config object.",
+      "Free Tailwind color generator — turn any hex color into a full Tailwind-style 50-950 shade scale, with a one-click copy as a ready-to-paste config object.",
     keywords: [
+      "tailwind color generator",
       "tailwind color scale generator",
       "tailwind shades from hex",
       "generate tailwind color palette from color",
@@ -779,20 +1039,25 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
         answer:
           "The step closest to your base color's actual lightness keeps your exact hex value; every other step is generated around it.",
       },
+      {
+        question: "Is this a free Tailwind color generator?",
+        answer:
+          "Yes. Enter any hex code and get a full 50-950 Tailwind-compatible shade scale instantly, with no signup and a one-click copy as a ready-to-paste tailwind.config object.",
+      },
     ],
     relatedLinks: [
-      { title: "Tailwind CSS colors", href: "/tools/tailwind" },
+      { title: "Tailwind CSS colors", href: "/tailwind-colors" },
       { title: "Design token generator", href: "/tools/design-tokens" },
-      { title: "Color picker", href: "/tools/picker" },
+      { title: "Color picker", href: "/color-picker" },
       { title: "Color harmony generator", href: "/tools/color-harmony" },
     ],
   },
   "color-psychology-explorer": {
     slug: "color-psychology-explorer",
     path: "/tools/color-psychology-explorer",
-    title: "Color Psychology Explorer",
+    title: "Color Psychology Explorer: Meaning of Any Color",
     description:
-      "Pick any color and instantly see what it signals psychologically, which industries use it best, and real use cases for branding and UI.",
+      "Pick any color and see what it signals psychologically, which industries use it best, and real branding and UI use cases. Free color meaning explorer.",
     keywords: [
       "color psychology explorer",
       "color psychology tool",
@@ -835,6 +1100,170 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Colors hub", href: "/colors" },
     ],
   },
+  "random-color-generator": {
+    slug: "random-color-generator",
+    path: "/random-color-generator",
+    title: "Random Color Generator: Get a Random Hex Color Code",
+    description:
+      "Free random color generator: press space to get a random color with its HEX, RGB, HSL, CMYK and OKLCH codes, or generate a random color palette. Copy any code.",
+    keywords: [
+      "random color generator",
+      "random hex color generator",
+      "random color picker",
+      "random color palette generator",
+      "random color code",
+      "random hex code",
+      "random rgb color generator",
+      "color randomizer",
+      "random color palette",
+      "random pastel color generator",
+    ],
+    answer:
+      "A random color generator picks a color at random and shows its HEX, RGB and HSL code so you can copy it. HueFlow's generator also names the color, can limit results to pastel, vivid, muted, dark or light tones, and creates a five-color random palette with color locking.",
+    audience:
+      "For designers hunting for a starting point, developers who need placeholder or test colors, teachers, artists and anyone who wants a quick color idea.",
+    useCases: [
+      "Find an unexpected starting color for a new design",
+      "Get placeholder or test colors for UI code and demos",
+      "Break out of a color rut with a random palette",
+      "Generate random colors for games, charts and creative projects",
+    ],
+    howToSteps: [
+      "Press the Space bar or click Generate to get a random color.",
+      "Choose Color or Palette mode, and pick a style such as pastel, vivid or dark to narrow the results.",
+      "In palette mode, lock the colors you like and generate again to replace only the rest.",
+      "Click any HEX, RGB, HSL, CMYK or OKLCH value to copy it, or open the palette in the full generator.",
+    ],
+    explainerHeading: "How the random colors are chosen",
+    explainer: [
+      {
+        title: "Any color",
+        body: "In Any mode the red, green and blue channels are each picked at random from 0 to 255, so all 16,777,216 colors in the sRGB range are possible.",
+      },
+      {
+        title: "Styled randomness",
+        body: "Pastel, vivid, muted, dark and light modes pick a random hue and then limit saturation and lightness in HSL, which gives random colors that still look usable.",
+      },
+      {
+        title: "Random is not harmonious",
+        body: "A random palette has no built-in color harmony. Check text contrast and refine the palette in the generator before using it in a design.",
+      },
+    ],
+    faq: [
+      {
+        question: "How does the random color generator work?",
+        answer:
+          "It picks random red, green and blue values (or a random hue with limited saturation and lightness in the pastel, vivid, muted, dark and light styles) and shows the result as a HEX code plus RGB, HSL, CMYK and OKLCH values.",
+      },
+      {
+        question: "Is the random hex color truly random?",
+        answer:
+          "It uses your browser's pseudo-random number generator, which is random enough for design, testing and inspiration. It is not meant for security or cryptography.",
+      },
+      {
+        question: "Can I generate a random color palette?",
+        answer:
+          "Yes. Switch to Palette mode to get five random colors, lock the ones you like, and generate again to replace only the unlocked colors. You can open the result in the HueFlow palette generator to export it.",
+      },
+      {
+        question: "Can I get random pastel colors?",
+        answer:
+          "Yes. Choose the Pastel style and the generator limits saturation and lightness so every result is a soft, light color. Vivid, muted, dark and light styles work the same way.",
+      },
+      {
+        question: "How many random colors are possible?",
+        answer:
+          "In Any mode there are 16,777,216 possible colors (256 x 256 x 256), which is every color a standard sRGB screen can show.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Color palette generator", href: "/generator" },
+      { title: "Color picker", href: "/color-picker" },
+      { title: "Color converter", href: "/color-converter" },
+      { title: "Color wheel", href: "/color-wheel" },
+      { title: "Color name finder", href: "/color-name-finder" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+    ],
+  },
+  "color-name-finder": {
+    slug: "color-name-finder",
+    path: "/color-name-finder",
+    title: "Color Name Finder: What Color Is This Hex Code?",
+    description:
+      "Free color name finder: enter any HEX, RGB or HSL code to see the closest color name, its HEX, RGB, HSL, CMYK and OKLCH values, and similar named colors.",
+    keywords: [
+      "color name finder",
+      "what color is this hex code",
+      "hex to color name",
+      "color name from hex",
+      "name that color",
+      "color namer",
+      "color name identifier",
+      "what is the name of this color",
+      "rgb to color name",
+    ],
+    answer:
+      "To find the name of a color, enter its HEX, RGB or HSL code and HueFlow compares it with 140 standard named colors, such as the CSS and X11 color names, and shows the closest match with its HEX, RGB, HSL, CMYK and OKLCH values plus other nearby names.",
+    audience:
+      "For designers, developers and writers who have a color code and need its name, or want a readable name for a design token or palette.",
+    useCases: [
+      "Name the colors in a palette or design system",
+      "Find out what color a hex code is",
+      "Pick readable color names for CSS variables and tokens",
+      "Compare a color against nearby named colors",
+    ],
+    howToSteps: [
+      "Type or paste a HEX, RGB or HSL code, or pick a color with the color picker.",
+      "Read the closest color name and how exact the match is.",
+      "Check the similar named colors, and open any name for its full color page.",
+      "Copy the HEX, RGB, HSL, CMYK or OKLCH value you need.",
+    ],
+    explainerHeading: "How color names are matched",
+    explainer: [
+      {
+        title: "Closest named color",
+        body: "HueFlow measures the distance between your color and each of 140 named colors in RGB space and returns the nearest one, so there is always an answer.",
+      },
+      {
+        title: "Exact versus approximate",
+        body: "When the code is exactly a named color, the tool says so. Otherwise the name is the closest match, not the official name of that exact code.",
+      },
+      {
+        title: "Which names are used",
+        body: "The names come from the standard CSS and X11 color list plus common design names, so they are readable in code and in conversation.",
+      },
+    ],
+    faq: [
+      {
+        question: "How do I find the name of a hex color?",
+        answer:
+          "Enter the HEX code in the color name finder. HueFlow shows the closest named color, and tells you when the code is an exact match for a named color.",
+      },
+      {
+        question: "Does every hex code have a name?",
+        answer:
+          "Only a limited number of hex codes have an official name, such as the 140 CSS color names. For every other code the tool shows the closest named color instead.",
+      },
+      {
+        question: "Which color names does HueFlow use?",
+        answer:
+          "Standard CSS and X11 color names plus common design names, 140 colors in total, each with its own page showing HEX, RGB, HSL and usage.",
+      },
+      {
+        question: "Can I enter RGB or HSL instead of HEX?",
+        answer:
+          "Yes. Enter RGB values such as 59, 130, 246 or HSL values such as 217, 91%, 60%. The tool detects the format and converts it before matching the name.",
+      },
+    ],
+    relatedLinks: [
+      { title: "All named colors", href: "/colors" },
+      { title: "Color codes chart", href: "/color-codes" },
+      { title: "Color picker", href: "/color-picker" },
+      { title: "Color converter", href: "/color-converter" },
+      { title: "Random color generator", href: "/random-color-generator" },
+      { title: "Shades of color", href: "/shades" },
+    ],
+  },
 };
 
 export const blogPageContent = {
@@ -850,8 +1279,64 @@ export const blogPageContent = {
     "brand color resources",
   ],
   answer:
-    "HueFlow's resource library helps US-focused teams learn how color affects trust, readability, conversion, and brand clarity across SaaS, fintech, ecommerce, AI, and modern marketing websites.",
+    "HueFlow's resource library helps teams learn how color affects trust, readability, conversion, and brand clarity across SaaS, fintech, ecommerce, AI, and modern marketing websites.",
   featuredArticles: [
+    {
+      title: "Why We Show Every Palette on a Website First",
+      excerpt: "Five swatches can't tell you if a palette works. What the preview checks, how contrast is computed, and how HueFlow is built.",
+      category: "Guides",
+      readTime: "6 min",
+      href: "/blog/palettes-on-a-real-website",
+      cover: ["#0F172A", "#3B82F6", "#22C55E", "#FACC15", "#A855F7"],
+    },
+    {
+      title: "Color of the Year 2027: Every Pick So Far",
+      excerpt: "Sherwin-Williams Celery, Benjamin Moore Webster Green, Behr Grounded, Valspar Cottage Door and more, side by side with HEX codes.",
+      category: "Trends",
+      readTime: "9 min",
+      href: "/blog/color-of-the-year-2027",
+      cover: ["#E0DDBD", "#64806C", "#615E50", "#7A8F97", "#A6613C"],
+    },
+    {
+      title: "Sherwin-Williams Celery (SW 6421): Hex & Palettes",
+      excerpt: "The lightest 2027 Color of the Year: codes, four palettes and six colors that go with it.",
+      category: "Trends",
+      readTime: "5 min",
+      href: "/blog/sherwin-williams-celery",
+      cover: ["#F5F1E6", "#E0DDBD", "#B8B08A", "#7A7F5A", "#3E3A2F"],
+    },
+    {
+      title: "Benjamin Moore Webster Green (HC-130): Hex & Palettes",
+      excerpt: "A deep, classic green from the Historical Colors: codes, palettes and pairings.",
+      category: "Trends",
+      readTime: "5 min",
+      href: "/blog/benjamin-moore-webster-green",
+      cover: ["#F3EEE3", "#B89B72", "#64806C", "#2E3B33", "#8C5A3C"],
+    },
+    {
+      title: "Behr Grounded (T27-01): Hex & Palettes",
+      excerpt: "The darkest 2027 pick, an earthy olive: codes, palettes and colors that go with it.",
+      category: "Trends",
+      readTime: "5 min",
+      href: "/blog/behr-grounded",
+      cover: ["#E6DFD1", "#A89C80", "#615E50", "#9C5B3B", "#2F2D27"],
+    },
+    {
+      title: "Valspar Cottage Door (8004-38E): Hex & Palettes",
+      excerpt: "A soft gray-blue, the first 2027 Color of the Year: codes, palettes and pairings.",
+      category: "Trends",
+      readTime: "5 min",
+      href: "/blog/valspar-cottage-door",
+      cover: ["#F4F1EA", "#B9A88F", "#7A8F97", "#C08A5B", "#3E4A50"],
+    },
+    {
+      title: "What Colors Go With Navy Blue? 18 Pairings",
+      excerpt: "From white and camel to mustard, coral and blush: 18 navy pairings with HEX codes, contrast checks and ready palettes.",
+      category: "Color Pairings",
+      readTime: "8 min",
+      href: "/blog/colors-that-go-with-navy-blue",
+      cover: ["#1F2A44", "#F5EFE0", "#C19A6B", "#E1AD01", "#FF7F50"],
+    },
     {
       title: "Conversion Color Strategy",
       excerpt: "Learn how color hierarchy supports trust, CTA clarity, and better landing page conversion decisions.",
@@ -865,6 +1350,20 @@ export const blogPageContent = {
       category: "Guides",
       readTime: "6 min",
       href: "/guides/ai-website-color-strategy",
+    },
+    {
+      title: "Why Every Gym Brand Looks the Same",
+      excerpt: "Black, orange, and a little red - here's why fitness brands converge on the same palette, and when it's the wrong call.",
+      category: "Explainers",
+      readTime: "4 min",
+      href: "/explainers/why-gym-brands-go-black-and-orange",
+    },
+    {
+      title: "Why Blue and Orange Shows Up Everywhere",
+      excerpt: "It's not just because they're complementary - the real reason is how cleanly the two colors split visual roles.",
+      category: "Explainers",
+      readTime: "4 min",
+      href: "/explainers/why-blue-and-orange-works",
     },
     {
       title: "Why Blue Builds Trust",
@@ -902,11 +1401,46 @@ export const blogPageContent = {
       href: "/guides/homepage-color-mistakes-hurting-conversions",
     },
     {
-      title: "Best Colors for Healthcare Websites in the USA",
-      excerpt: "A US-focused guide to choosing healthcare colors that feel calmer, clearer, and more credible for patients.",
+      title: "Healthcare & Medical Website Color Palettes",
+      excerpt: "8 healthcare color palettes with hex codes, each shown on a sample website, plus which colors build patient trust.",
       category: "Guides",
       readTime: "6 min",
-      href: "/guides/best-colors-for-healthcare-websites-usa",
+      href: "/best-colors-for/healthcare-websites",
+    },
+    {
+      title: "Web Design Color Trends for 2026",
+      excerpt: "What's actually showing up in new website launches this year, and which trends are worth adopting versus skipping.",
+      category: "Guides",
+      readTime: "5 min",
+      href: "/guides/color-trends-2026",
+    },
+    {
+      title: "How to Design Color Palettes for Color-Blind Users",
+      excerpt: "Practical steps for building palettes that still work for the roughly 1 in 12 men with some form of color blindness.",
+      category: "Guides",
+      readTime: "5 min",
+      href: "/guides/color-blind-friendly-design",
+    },
+    {
+      title: "Gradients vs. Solid Colors: Which Converts Better?",
+      excerpt: "A practical breakdown of when a gradient background helps a page and when it just adds noise.",
+      category: "Guides",
+      readTime: "5 min",
+      href: "/guides/gradient-vs-solid-website-backgrounds",
+    },
+    {
+      title: "Common Brand Color Mistakes (and How to Fix Them)",
+      excerpt: "The recurring color mistakes that quietly make brands look inconsistent, cheap, or hard to trust.",
+      category: "Guides",
+      readTime: "6 min",
+      href: "/guides/brand-color-palette-mistakes",
+    },
+    {
+      title: "Color Psychology for Email Marketing",
+      excerpt: "How CTA button color, sender branding, and email background choices actually affect click-through rates.",
+      category: "Guides",
+      readTime: "5 min",
+      href: "/guides/email-marketing-color-psychology",
     },
   ],
   sections: [
@@ -930,7 +1464,7 @@ export const blogPageContent = {
     {
       question: "What makes HueFlow resources different from a typical blog?",
       answer:
-        "The content is structured around practical decisions and retrieval-friendly answers rather than generic editorial posts. It is closer to a searchable color strategy library than a casual blog.",
+        "The content is organized around specific decisions - which color, which pairing, which contrast fix - instead of general editorial posts. It's closer to a searchable color strategy library than a casual blog.",
     },
     {
       question: "Which pages should new visitors read first?",

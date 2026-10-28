@@ -125,3 +125,19 @@ export function findClosestColorName(hex: string): string {
 
   return closest;
 }
+
+/**
+ * Returns the `count` named colors closest to `hex`, restricted to the fixed,
+ * statically pre-built `namedColors` set. Used for "similar colors" links so they
+ * always point at an already-cached page instead of generating a brand-new,
+ * never-before-seen hex slug that would trigger a fresh render and cache write.
+ */
+export function getClosestNamedColors(hex: string, count = 5): NamedColor[] {
+  const normalized = hex.toUpperCase();
+  return namedColors
+    .filter((color) => color.hex !== normalized)
+    .map((color) => ({ color, distance: hexDistance(normalized, color.hex) }))
+    .sort((a, b) => a.distance - b.distance)
+    .slice(0, count)
+    .map(({ color }) => color);
+}

@@ -3,11 +3,76 @@ import { Header } from "@/components/header";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Color Tools | HueFlow",
-  description: "Free color tools for designers and developers - color mixer, contrast checker, gradient generator, image color extractor, and more.",
+  title: "Free Color Tools: Palette, Contrast, Gradient & More",
+  alternates: { canonical: "/tools" },
+  description: "Free online color tools for designers and developers: palette generator, color picker, contrast checker, gradient generator, color converter, image color extractor and more.",
 };
 
 const tools = [
+  {
+    href: "/random-color-generator",
+    title: "Random Color Generator",
+    description: "Press space for a random color or palette with HEX, RGB and HSL codes.",
+    icon: (
+      <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+        <rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor" /><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor" /><circle cx="15.5" cy="8.5" r="1.2" fill="currentColor" /><circle cx="8.5" cy="15.5" r="1.2" fill="currentColor" />
+      </svg>
+    ),
+    tag: "New",
+  },
+  {
+    href: "/color-mixing-chart",
+    title: "Color Mixing Chart",
+    description: "What colors make brown, purple, pink and more, with a paint, light and ink mixer.",
+    icon: (
+      <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+        <circle cx="9" cy="9" r="6" /><circle cx="15" cy="9" r="6" /><circle cx="12" cy="15" r="6" />
+      </svg>
+    ),
+    tag: "New",
+  },
+  {
+    href: "/color-wheel",
+    title: "Color Wheel",
+    description: "Interactive 12-color wheel with complementary, analogous and triadic schemes.",
+    icon: (
+      <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+        <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="3.5" /><path d="M12 3v5.5M12 15.5V21M3 12h5.5M15.5 12H21" />
+      </svg>
+    ),
+  },
+  {
+    href: "/pastel-colors",
+    title: "Pastel Colors",
+    description: "47 pastel colors with names, hex codes and palettes, plus a pastel maker.",
+    icon: (
+      <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+        <path d="M12 3c4 4 6 7 6 10a6 6 0 11-12 0c0-3 2-6 6-10z" />
+      </svg>
+    ),
+    tag: "New",
+  },
+  {
+    href: "/color-name-finder",
+    title: "Color Name Finder",
+    description: "Enter a hex, RGB or HSL code and find the closest named color.",
+    icon: (
+      <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+        <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
+      </svg>
+    ),
+    tag: "New",
+  },
+  {
+    href: "/color-converter",
+    title: "Color Converter",
+    description: "Convert HEX, RGB, HSL, CMYK and OKLCH, with a page for every pair.",
+    icon: (
+      <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+        <path d="M7 7h11l-3-3M17 17H6l3 3" />
+      </svg>
+    ),
+  },
   {
     href: "/tools/playground",
     title: "Color Playground",
@@ -72,7 +137,7 @@ const tools = [
     ),
   },
   {
-    href: "/tools/picker",
+    href: "/color-picker",
     title: "Color Picker",
     description: "Pick any color and get its hex, RGB, and HSL values instantly.",
     icon: (
@@ -124,7 +189,7 @@ const tools = [
     tag: "Dev",
   },
   {
-    href: "/tools/tailwind",
+    href: "/tailwind-colors",
     title: "Tailwind Colors",
     description: "Browse and copy all Tailwind CSS color values with one click.",
     icon: (
@@ -215,53 +280,64 @@ const tools = [
 // Remove duplicates
 const uniqueTools = tools.filter((t, i, arr) => arr.findIndex(x => x.href === t.href) === i);
 
+const TAG_STYLES: Record<string, string> = {
+  New: "bg-[#c2410c] text-white",
+  Popular: "bg-[#1c1712] text-white",
+};
+
 export default function ToolsPage() {
   return (
-    <main className="relative min-h-screen bg-[#160b05] text-white">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(0,0,0,0.95),transparent_18%),radial-gradient(circle_at_88%_0%,rgba(255,106,44,0.18),transparent_30%),linear-gradient(135deg,#1a0e06_0%,#160b05_50%,#1a0e06_100%)]" />
-      <div className="noise absolute inset-0 opacity-20" />
-
+    <main className="min-h-screen bg-white text-[#1c1712]">
       <Header />
 
-      <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-28 sm:px-6 sm:pt-36">
-        <div className="mb-12 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/6 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white/55 backdrop-blur-xl mb-5">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" className="text-[#F15B2A]"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" stroke="currentColor" strokeWidth="2" fill="none"/></svg>
-            All Tools
-          </div>
-          <h1 className="font-display text-[2.4rem] font-semibold leading-[1.1] tracking-[-0.05em] text-white sm:text-[3.2rem]">
-            Every color tool,<br />
-            <span className="text-[#F97A45]">in one place.</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-xl text-lg text-white/50">
-            Free tools for designers and developers to create, check, and export colors.
+      {/* Header */}
+      <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+          <span className="text-[#1c1712]/20">/</span>
+          <span className="text-[#1c1712]/60">Tools</span>
+        </nav>
+        <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Every color tool, in one place.</h1>
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <span className="flex -space-x-1.5" aria-hidden="true">
+            {["#6366f1", "#10b981", "#f59e0b", "#ec4899", "#0ea5e9"].map((c) => (
+              <span key={c} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
+            ))}
+          </span>
+          <p className="hub-description text-[16px] text-[#1c1712]/55">
+            <span className="font-semibold text-[#1c1712]/80">{uniqueTools.length} free tools.</span> For designers and developers to create, check, and export colors.
           </p>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {uniqueTools.map((tool) => (
-            <Link
-              key={tool.href}
-              href={tool.href}
-              className="group relative rounded-2xl border border-white/10 bg-white/4 p-6 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white/18 hover:bg-white/6"
-            >
-              {tool.tag && (
-                <span className="absolute right-4 top-4 rounded-full border border-[#F15B2A]/30 bg-[#F15B2A]/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#F97A45]">
-                  {tool.tag}
-                </span>
-              )}
-              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/6 text-white/60 transition-colors group-hover:text-[#F97A45]">
-                {tool.icon}
-              </div>
-              <h2 className="text-base font-semibold text-white">{tool.title}</h2>
-              <p className="mt-1.5 text-sm leading-6 text-white/50">{tool.description}</p>
-              <p className="mt-4 text-xs font-medium text-white/25 transition-colors group-hover:text-[#F97A45]">
-                Open tool →
-              </p>
-            </Link>
-          ))}
+      {/* Tools */}
+      <section className="border-t border-black/[0.06]">
+        <div className="w-full px-6 py-12 sm:px-8 lg:px-12">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+            {uniqueTools.map((tool) => (
+              <Link
+                key={tool.href}
+                href={tool.href}
+                className="group relative flex flex-col rounded-2xl p-6 ring-1 ring-black/[0.07] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-18px_rgba(28,23,18,0.35)] hover:ring-black/20"
+              >
+                {tool.tag && (
+                  <span className={`absolute right-4 top-4 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${TAG_STYLES[tool.tag] ?? "bg-[#1c1712]/[0.06] text-[#1c1712]/65"}`}>
+                    {tool.tag}
+                  </span>
+                )}
+                <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl text-[#1c1712]/65 ring-1 ring-black/[0.1] transition-colors group-hover:text-[#c2410c]">
+                  {tool.icon}
+                </div>
+                <h2 className="text-[1.05rem] font-semibold tracking-[-0.015em]">{tool.title}</h2>
+                <p className="mt-1.5 flex-1 text-[14px] leading-6 text-[#1c1712]/60">{tool.description}</p>
+                <p className="mt-5 text-[13px] font-semibold text-[#c2410c]">
+                  Open tool <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-0.5">→</span>
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
     </main>
   );
 }
