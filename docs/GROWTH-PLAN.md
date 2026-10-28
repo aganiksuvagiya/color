@@ -458,7 +458,21 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
 
 **Still in week 1 or week 2 per the report:** 301-merge the duplicate pages, noindex or merge the thin `/color-meanings` twins, add a named founder, a domain email and social profiles (`sameAs`), and launch prep.
 
-### Branch `week-2` (from `develop` `3f98e15`, uncommitted)
+### Branch `week-2` (from `develop` `3f98e15`, committed as `e0a43bf`, merged into `develop` and live since 2026-10-29)
+
+**Live (2026-10-29):**
+- **Deploy:** `week-2` was fast-forwarded into `develop` (`e0a43bf`), built from a clean `develop` and deployed as worker version `4d73aee1`.
+- **Live checks:**
+  - All 25 changed pages return 200 with `index, follow`; `/color-meanings/floral-white` stays `noindex`.
+  - The generator's Preview button and contrast checks work.
+  - The new share images and sitemap entries are there.
+- **IndexNow:** 200 OK for 27 URLs: the 3 industry pages and the hub, the 5 HEX converters, the blog post and `/blog`, the 3 color pages, the 12 meaning pages, and `/generator`.
+- **Search Console:** the owner requested indexing for 20 URLs (the 5 new pages, the 3 color pages, the 12 meaning pages), and all 20 were indexed the same day.
+- **Still to do:**
+  - Re-run PageSpeed on `/hex-to-rgb` (CLS).
+  - In 1–2 weeks, check impressions and position for these pages.
+  - Next week's work goes on a fresh `week-3` from `develop`.
+
 
 - **12 meaning pages rewritten and back in the index (owner, 2026-10-29).**
   - **Colors:** gold, silver, lavender, turquoise, navy, maroon, indigo, violet, magenta, coral, beige, olive.
