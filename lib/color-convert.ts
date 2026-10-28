@@ -1,12 +1,13 @@
 // Pure color-format conversions (HEX, RGB, HSL, CMYK, OKLCH) shared by the converter pages.
 // No imports, so it runs in server components, client components and plain Node.
 
-export type RGB = { r: number; g: number; b: number };
+/** `a` is the alpha (0 to 1), set only when the input had one (8- or 4-digit HEX, rgba()). */
+export type RGB = { r: number; g: number; b: number; a?: number };
 export type HSL = { h: number; s: number; l: number };
 export type CMYK = { c: number; m: number; y: number; k: number };
 export type OKLCH = { l: number; c: number; h: number };
 
-export type ColorFormat = "hex" | "rgb" | "hsl" | "cmyk" | "oklch";
+export type ColorFormat = "hex" | "rgb" | "rgba" | "hsl" | "cmyk" | "oklch";
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
 const round = (v: number, digits = 0) => {
@@ -17,6 +18,7 @@ const round = (v: number, digits = 0) => {
 export const FORMAT_LABEL: Record<ColorFormat, string> = {
   hex: "HEX",
   rgb: "RGB",
+  rgba: "RGBA",
   hsl: "HSL",
   cmyk: "CMYK",
   oklch: "OKLCH",
@@ -25,6 +27,7 @@ export const FORMAT_LABEL: Record<ColorFormat, string> = {
 export const FORMAT_PLACEHOLDER: Record<ColorFormat, string> = {
   hex: "#3B82F6",
   rgb: "59, 130, 246",
+  rgba: "59, 130, 246, 0.5",
   hsl: "217, 91%, 60%",
   cmyk: "76, 47, 0, 4",
   oklch: "62.3% 0.188 259.8",
@@ -32,11 +35,18 @@ export const FORMAT_PLACEHOLDER: Record<ColorFormat, string> = {
 
 // ── HEX ───────────────────────────────────────────────────────────────────────
 
+// Alpha is shown to two decimals, the precision people write by hand (0x80 = 0.502 -> 0.5).
+const roundAlpha = (a: number) => round(clamp(a, 0, 1), 2);
+const hasAlpha = (rgb: RGB) => rgb.a !== undefined && rgb.a < 1;
+
+/** Accepts 3, 4, 6 or 8 digits, with or without the #, like CSS (#38F, #38F8, #3B82F6, #3B82F680). */
 export function parseHex(input: string): RGB | null {
   let hex = input.trim().replace(/^#/, "");
-  if (/^[0-9a-f]{3}$/i.test(hex)) hex = hex.split("").map((c) => c + c).join("");
-  if (!/^[0-9a-f]{6}$/i.test(hex)) return null;
-  return { r: parseInt(hex.slice(0, 2), 16), g: parseInt(hex.slice(2, 4), 16), b: parseInt(hex.slice(4, 6), 16) };
+  if (/^[0-9a-f]{3,4}$/i.test(hex)) hex = hex.split("").map((c) => c + c).join("");
+  if (!/^(?:[0-9a-f]{6}|[0-9a-f]{8})$/i.test(hex)) return null;
+  const rgb: RGB = { r: parseInt(hex.slice(0, 2), 16), g: parseInt(hex.slice(2, 4), 16), b: parseInt(hex.slice(4, 6), 16) };
+  if (hex.length === 8) rgb.a = parseInt(hex.slice(6, 8), 16) / 255;
+  return rgb;
 }
 
 export function rgbToHex({ r, g, b }: RGB): string {
@@ -145,11 +155,14 @@ export function oklchToRgb({ l, c, h }: OKLCH): RGB {
 
 // ── Formatting ────────────────────────────────────────────────────────────────
 
-export const formatHex = (rgb: RGB) => rgbToHex(rgb);
-export const formatRgb = ({ r, g, b }: RGB) => `rgb(${r}, ${g}, ${b})`;
+// HEX, RGB, HSL and OKLCH carry the alpha when there is one; CMYK has no alpha.
+export const formatHex = (rgb: RGB) =>
+  rgbToHex(rgb) + (hasAlpha(rgb) ? Math.round(rgb.a! * 255).toString(16).padStart(2, "0").toUpperCase() : "");
+export const formatRgb = (rgb: RGB) => (hasAlpha(rgb) ? formatRgba(rgb) : `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+export const formatRgba = ({ r, g, b, a = 1 }: RGB) => `rgba(${r}, ${g}, ${b}, ${roundAlpha(a)})`;
 export const formatHsl = (rgb: RGB) => {
   const { h, s, l } = rgbToHsl(rgb);
-  return `hsl(${h}, ${s}%, ${l}%)`;
+  return hasAlpha(rgb) ? `hsla(${h}, ${s}%, ${l}%, ${roundAlpha(rgb.a!)})` : `hsl(${h}, ${s}%, ${l}%)`;
 };
 export const formatCmyk = (rgb: RGB) => {
   const { c, m, y, k } = rgbToCmyk(rgb);
@@ -157,12 +170,13 @@ export const formatCmyk = (rgb: RGB) => {
 };
 export const formatOklch = (rgb: RGB) => {
   const { l, c, h } = rgbToOklch(rgb);
-  return `oklch(${round(l * 100, 2)}% ${c} ${h})`;
+  return `oklch(${round(l * 100, 2)}% ${c} ${h}${hasAlpha(rgb) ? ` / ${roundAlpha(rgb.a!)}` : ""})`;
 };
 
 export const formatters: Record<ColorFormat, (rgb: RGB) => string> = {
   hex: formatHex,
   rgb: formatRgb,
+  rgba: formatRgba,
   hsl: formatHsl,
   cmyk: formatCmyk,
   oklch: formatOklch,
@@ -175,12 +189,19 @@ function numbers(input: string): number[] | null {
   return matches ? matches.map(Number) : null;
 }
 
+/** Red, green and blue (0-255), plus an optional fourth alpha value: 0-1, or a percentage. */
 export function parseRgb(input: string): RGB | null {
   const n = numbers(input);
   if (!n || n.length < 3) return null;
   const [r, g, b] = n;
   if ([r, g, b].some((v) => v < 0 || v > 255)) return null;
-  return { r: Math.round(r), g: Math.round(g), b: Math.round(b) };
+  const rgb: RGB = { r: Math.round(r), g: Math.round(g), b: Math.round(b) };
+  if (n.length >= 4) {
+    const a = /\d\s*%\s*\)?\s*$/.test(input) ? n[3] / 100 : n[3];
+    if (a < 0 || a > 1) return null;
+    rgb.a = a;
+  }
+  return rgb;
 }
 
 export function parseHsl(input: string): RGB | null {
@@ -213,6 +234,7 @@ export function parseOklch(input: string): RGB | null {
 export const parsers: Record<ColorFormat, (input: string) => RGB | null> = {
   hex: parseHex,
   rgb: parseRgb,
+  rgba: parseRgb,
   hsl: parseHsl,
   cmyk: parseCmyk,
   oklch: parseOklch,

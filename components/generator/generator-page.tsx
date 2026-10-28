@@ -370,7 +370,12 @@ export function GeneratorPage() {
                   </button>
                 </div>
                 <div className="flex-1 overflow-y-auto p-4">
-                  {activePanel === "accessibility" && <AccessibilityPanel palette={activePalette} />}
+                  {activePanel === "accessibility" && (
+                    <div className="space-y-5">
+                      <AccessibilityPanel palette={activePalette} />
+                      <ColorBlindPanel palette={activePalette} />
+                    </div>
+                  )}
                   {activePanel === "variations" && <PaletteVariations palette={activePalette} />}
                   {activePanel === "preview" && <UIPreview palette={activePalette} />}
                   {activePanel === "colorblind" && <ColorBlindPanel palette={activePalette} />}
@@ -421,6 +426,7 @@ export function GeneratorPage() {
         <div className="flex h-10 items-center justify-around px-2">
           <button onClick={() => setViewFormat(f => f === "HEX" ? "RGB" : f === "RGB" ? "HSL" : "HEX")} className={`${iconBtn} text-[10px] font-bold w-auto px-2`}>{viewFormat}</button>
           <button onClick={() => togglePanel("insights")} className={`${iconBtn} text-[10px] font-bold w-auto px-2 ${activePanel === "insights" ? "text-[#1c1712] bg-[#1c1712]/8" : ""}`}>Info</button>
+          <button onClick={() => togglePanel("preview")} className={`${iconBtn} text-[10px] font-bold w-auto px-2 ${activePanel === "preview" ? "text-[#1c1712] bg-[#1c1712]/8" : ""}`} title="UI Preview">UI</button>
           <button onClick={() => togglePanel("accessibility")} className={`${iconBtn} text-[10px] font-bold w-auto px-2 ${activePanel === "accessibility" ? "text-[#1c1712] bg-[#1c1712]/8" : ""}`}>A11y</button>
           <button onClick={() => togglePanel("tools")} className={`${iconBtn} ${activePanel === "tools" ? "text-[#1c1712] bg-[#1c1712]/8" : ""}`} title="Tools"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" /></svg></button>
           <button onClick={() => togglePanel("export")} className={`${iconBtn} ${activePanel === "export" ? "text-[#1c1712] bg-[#1c1712]/8" : ""}`} title="Export"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg></button>
@@ -536,6 +542,12 @@ export function GeneratorPage() {
               <circle cx="12" cy="12" r="10" /><path d="M12 16v-4M12 8h.01" />
             </svg>
             Insights
+          </button>
+          <button onClick={() => togglePanel("preview")} className={`${tbBtn(activePanel === "preview")} hidden md:inline-flex`}>
+            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+              <rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 9h18" />
+            </svg>
+            Preview
           </button>
           <button onClick={() => togglePanel("accessibility")} className={`${tbBtn(activePanel === "accessibility")} hidden lg:inline-flex`}>
             A11y

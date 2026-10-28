@@ -458,6 +458,62 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
 
 **Still in week 1 or week 2 per the report:** 301-merge the duplicate pages, noindex or merge the thin `/color-meanings` twins, add a named founder, a domain email and social profiles (`sameAs`), and launch prep.
 
+### Branch `week-2` (from `develop` `3f98e15`, uncommitted)
+
+- **12 meaning pages rewritten and back in the index (owner, 2026-10-29).**
+  - **Colors:** gold, silver, lavender, turquoise, navy, maroon, indigo, violet, magenta, coral, beige, olive.
+  - **Content:** each is hand-written for its own color in `lib/seo/color-meanings-rich.ts`: an answer, 4 key takeaways, 6 sections and 5–6 FAQs. The sections cover what the color means and why, how it feels, culture and history, spiritual meaning, design use and a "<color> vs <near color>" section. There are no codes; each page links to `/colors/<name>` for those. Spiritual meanings are written as what traditions say, not as fact.
+  - **Templated blocks hidden:** a meaning set with `authoredOnly: true` hides the generated "The bottom line", "Core Definitions", "Pros & Cons", "Comparison" and "Examples" blocks, which repeated the same template wording on every page. The generated related links no longer link the page to itself.
+  - **Index and sitemap:** `isColorMeaningIndexable` now covers the 13 base hues plus these 12, so 25 meaning pages are `index, follow` and in `sitemap-colors.xml`. The other meaning pages stay `noindex, follow`.
+  - **More colors:** to bring another meaning page back, add a full entry to `richColorMeanings`. Don't just flip it to indexable; the old short overrides are too thin.
+  - **After deploy:** run IndexNow for the 12 URLs and "Request indexing" in Search Console.
+  - Authored answers (`authoredOnly`) now skip `normalizeAnswer`, which padded answers under 40 words with a generic "It connects closely to..." sentence and cut answers over 60.
+- **Week 3 items from the report, started early on the same branch (owner, 2026-10-29).**
+  - **`/colors/azure`, `/colors/light-yellow`, `/colors/cyan` rewritten** in `lib/seo/color-pages-rich.ts`. These names are used for more than one hex code, and each page shows every code side by side:
+    - azure: #007FFF first, then CSS #F0FFFF (#0080FF is explained as the same color rounded);
+    - light yellow: CSS #FFFFE0, Figma's #FFFFC5 and #FFFFED;
+    - cyan: #00FFFF (CSS cyan = aqua) and process cyan, about #00B7EB.
+  - **What each page has:**
+    - a split hero swatch and code cards (RGB, HSL, CMYK, contrast on white and black);
+    - a shades/tints/tones grid (10% steps, click to copy);
+    - 6 hand-written sections and 5–6 FAQs;
+    - a "Sources" list with external links (Wikipedia, W3C, Figma). These are the site's first outbound citations.
+  - **Templated blocks hidden:** `authoredOnly` hides them, and the quick-facts box is replaced by the code cards. The old azure `colorPageOverride` was removed; the rich page replaces it.
+  - **Converters:**
+    - HEX input now takes 3, 4, 6 or 8 digits, like CSS. With alpha, the HEX, RGB, HSL and OKLCH outputs carry it (`rgba()`, `hsla()`, `oklch(... / a)`); CMYK has none.
+    - RGB input takes an optional fourth alpha value (0–1 or %).
+    - New page `/hex-to-rgba` (example #3B82F680) with a HEX alpha to RGBA opacity chart. The preview shows transparency over a checkerboard.
+  - **CLS 0.54 on `/hex-to-rgb` (PSI, Oct 23):**
+    - PSI blames a shift of `<body>`, and names the lazily loaded footer logo as an "unsized image".
+    - It does not reproduce: CLS is 0 at 375px on both the live page and the new build.
+    - Both logos now have an explicit CSS size (`h-[22px] w-[104px]`). Tailwind's `height: auto` made Lighthouse count them as unsized.
+    - Re-run PSI on `/hex-to-rgb` after deploy. If the body shift is still there, test with AdSense auto ads off, since its anchor slot is on the page.
+  - **Sitemap `lastmod`:** set to 2026-10-29 for the 12 meaning pages and the 3 color pages.
+  - **Owner's side:** sign up as a source on Qwoted, Source of Sources and Featured; decide yes or no on a Pantone matcher.
+- **Generator preview and launch article (owner, 2026-10-29: "Pela preview sudharo").**
+  - **The problem:** the launch hook ("see a palette on a website with WCAG contrast") was only true on the industry pages.
+    - In `/generator` no toolbar button opened the UI preview (not since at least Aug 10), nor the color-blind panel.
+    - The preview hard-coded white text on every color, and showed no contrast numbers.
+  - **Now:**
+    - `components/generator/ui-preview.tsx`: every label picks the most readable of white, near-black or the palette's neutral. It adds a link sample and three WCAG checks under the preview (body text on background, button label on primary, links on background), on the same scale as the industry cards.
+    - The toolbar has **Preview** (desktop) and **UI** (mobile).
+    - The **A11y** panel now also shows the color-blind view.
+  - **Launch article:** `/blog/palettes-on-a-real-website` (category Guides, linked from the blog index). It embeds the live preview with an example palette. Its contrast figures are computed: white on #FACC15 is 1.53:1, on #22C55E 2.28:1, on #3B82F6 3.68:1 (near-black on that blue is 5.13:1); a #3B82F6 link is 4.85:1 on #0F172A and 3.52:1 on #F8FAFC.
+  - Blog prose rules now skip anything inside `.not-prose`, so embedded components keep their own spacing. Other posts are unchanged.
+  - **Before Show HN:** the color-blind view is a simple matrix in gamma-encoded sRGB, and the article says it is an approximation. A linear-RGB model (Machado et al., 2009) would hold up better to technical readers.
+- **3 new industry pages (owner, 2026-10-29: "aava pacha kik top searching ma hoy aeva 3 topic").**
+  - **Pages:** `/best-colors-for/luxury-brand-websites`, `/best-colors-for/corporate-websites`, `/best-colors-for/portfolio-websites`.
+  - **Why these three:**
+    - Google autocomplete adds "website" to each of them: "luxury color palette for website", "corporate color palette for website", "website color palette for portfolio".
+    - None overlaps the 24 existing pages or the healthcare experiment. Spa, therapy, fashion and interiors were left out for overlap or non-website intent.
+    - The SERPs are weak: agency blogs and a forum for luxury and corporate, and auto-generated spam on hacked subdomains for portfolio.
+    - No volume data: industry palette queries are long tail (under 1K a month each, per the research).
+  - **What each page has:**
+    - The same previewed-palette format as the 8 upgraded pages: 6 palettes drawn as sample sites, palette sets in `lib/seo/industry-palettes.ts`.
+    - `authoredOnly`: hand-written takeaways, 7 sections and 6–7 FAQs, with no template blocks.
+    - Contrast: all 18 palettes pass AAA body text and AA buttons, links, badges and cards (checked by script before writing). Every contrast figure in the copy is computed.
+  - **Experiment:** these pages are in neither group of the Nov 20 / Dec 18 read. Track them separately; they aren't part of the 8-vs-16 comparison.
+
 ## Next session: start here (updated 2026-10-19)
 
 **State:**

@@ -9,8 +9,9 @@ Generic "free color tools" launches get 1–5 points on Hacker News. Launches th
 > **See a palette on a real website before you use it.** Every palette can be previewed on a sample UI, with WCAG contrast computed for text, buttons and links, plus a color-blindness check, then exported to Tailwind, CSS or code.
 
 Where it shows:
-- `/generator`: the UI preview, accessibility and color-blind panels.
+- `/generator`: the **Preview** button (**UI** on phones) opens the UI preview. Every label there picks the most readable text color, and three WCAG checks sit underneath: body text, button label, links. The **A11y** panel has the contrast table and the color-blind view. Before 2026-10-29 the generator had no button for the preview, and its labels were always white.
 - `/best-colors-for/healthcare-websites` (and 7 more industries): each palette on a sample website with contrast scores.
+- **Launch article:** `/blog/palettes-on-a-real-website` ("Why We Show Every Palette on a Website First"). It explains the hook with real numbers (white on a #FACC15 button is 1.53:1) and embeds the live preview, then covers how contrast is computed and how the site is built. Link to it from the Show HN first comment and the r/SideProject post. Update its `published`/`updated` dates in `lib/blog/posts.ts` to the day it goes live.
 
 ## Listing basics
 
@@ -19,7 +20,7 @@ Where it shows:
 - **Tagline (≤60 chars):** Color palettes you can see on a real website first
 - **Short description (~160 chars):** Free color palette generator that previews every palette on a sample website with WCAG contrast, then exports to Tailwind, CSS, SCSS, JSON or Swift.
 - **Long description:**
-  > HueFlow is a free color workspace for designers and developers. Generate a palette with the space bar, lock the colors you like, and see it on a sample website with contrast scores for text, buttons and links before you commit to it. Every palette gets a color-blindness check and exports to Tailwind, CSS, SCSS, JSON, Swift, Android, SVG, PNG, ASE or PDF.
+  > HueFlow is a free color workspace for designers and developers. Generate a palette with the space bar, lock the colors you like, and see it on a sample website with contrast scores for text, buttons and links before you commit to it. Every palette gets a color-blindness check and exports to Tailwind, CSS, SCSS, JSON, Figma tokens, Swift, Android, SVG, PNG, ASE or PDF.
   >
   > Around the generator there are 140 named color pages, shades of every color, converters (HEX, RGB, HSL, CMYK, OKLCH), a contrast checker, and industry palettes (healthcare, dental, restaurant, law firm...) shown on sample websites. No account needed.
 - **Pricing:** Free

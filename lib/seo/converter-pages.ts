@@ -6,6 +6,7 @@ import {
   rgbToOklab,
   rgbToOklch,
   rgbToCmyk,
+  rgbToHex,
   type ColorFormat,
   type RGB,
 } from "@/lib/color-convert";
@@ -17,6 +18,7 @@ export { FORMAT_LABEL, FORMAT_PLACEHOLDER } from "@/lib/color-convert";
 const FORMAT_BLURB: Record<ColorFormat, string> = {
   hex: "HEX is a six-digit hexadecimal color code written after a #, such as #3B82F6. Each pair of digits sets the red, green or blue channel from 00 to FF (0 to 255).",
   rgb: "RGB describes a color by its red, green and blue light levels, each from 0 to 255, such as rgb(59, 130, 246). It is the native color model of screens, and CSS lets you add transparency with an alpha value.",
+  rgba: "RGBA is RGB plus an alpha channel for opacity, such as rgba(59, 130, 246, 0.5). Red, green and blue run from 0 to 255; alpha runs from 0 (fully transparent) to 1 (fully opaque).",
   hsl: "HSL stands for hue (0 to 360 degrees on the color wheel), saturation (0 to 100%) and lightness (0 to 100%), such as hsl(217, 91%, 60%). It is popular in design systems because changing one number makes a color lighter, darker or more muted.",
   cmyk: "CMYK stands for cyan, magenta, yellow and key (black), the four inks used in print. Values are percentages from 0 to 100, such as cmyk(76%, 47%, 0%, 4%).",
   oklch: "OKLCH is a perceptual color format built on the OKLab color space: lightness (0 to 100%), chroma (color intensity) and hue (0 to 360 degrees), such as oklch(62.3% 0.188 259.8). Equal steps in lightness look equally light to the eye, which makes it useful for building accessible color scales.",
@@ -25,6 +27,7 @@ const FORMAT_BLURB: Record<ColorFormat, string> = {
 const CSS_SUPPORT: Record<ColorFormat, string> = {
   hex: "Yes. HEX works everywhere in CSS, including the 3-digit shorthand (#38F) and the 8-digit form with alpha (#3B82F680).",
   rgb: "Yes. Write rgb(59 130 246) or rgb(59, 130, 246), and add transparency with rgb(59 130 246 / 50%) or rgba().",
+  rgba: "Yes. rgba(59, 130, 246, 0.5) works in every browser. Modern CSS also accepts the alpha inside rgb(), as rgb(59 130 246 / 50%), and both mean the same color.",
   hsl: "Yes. Write hsl(217 91% 60%) or hsl(217, 91%, 60%), and add transparency with hsl(217 91% 60% / 50%).",
   cmyk: "Not directly. Browsers do not support a cmyk() color function in CSS, so convert CMYK to HEX or RGB for the web. CMYK values are mainly used in print design tools.",
   oklch: "Yes, in current versions of Chrome, Edge, Safari and Firefox. Add a HEX or RGB fallback if you need to support older browsers.",
@@ -33,6 +36,7 @@ const CSS_SUPPORT: Record<ColorFormat, string> = {
 const FORMAT_USE: Record<ColorFormat, string> = {
   hex: "HEX is the most common format in CSS, design tools and style guides, and it is compact and easy to copy",
   rgb: "RGB is handy when you need per-channel values, transparency or canvas and image-processing code",
+  rgba: "RGBA is the format for see-through colors: overlays, shadows, glass effects and tinted backgrounds, where the opacity is easy to read and change",
   hsl: "HSL is the easiest format to adjust by hand, because you can change lightness or saturation without touching the hue",
   cmyk: "CMYK is the format for print work, where colors are mixed from cyan, magenta, yellow and black ink",
   oklch: "OKLCH gives the most even lightness steps, so it is best for generating color scales and accessible palettes",
@@ -41,6 +45,7 @@ const FORMAT_USE: Record<ColorFormat, string> = {
 const TO_RGB_METHOD: Record<ColorFormat, string> = {
   hex: "split the HEX code into red, green and blue pairs and convert each pair from base 16 to a number from 0 to 255",
   rgb: "read the red, green and blue values (0 to 255)",
+  rgba: "read the red, green and blue values (0 to 255) and the alpha (0 to 1)",
   hsl: "turn hue, saturation and lightness into chroma and a hue sector, then scale the result to 0 to 255",
   cmyk: "multiply 255 by (1 - ink) and (1 - black) for each channel",
   oklch: "convert lightness, chroma and hue to OKLab, then to linear sRGB, apply the sRGB gamma curve and scale to 0 to 255",
@@ -49,6 +54,7 @@ const TO_RGB_METHOD: Record<ColorFormat, string> = {
 const FROM_RGB_METHOD: Record<ColorFormat, string> = {
   hex: "write each channel as a two-digit hexadecimal number and join them after a #",
   rgb: "write the three channels as rgb(red, green, blue)",
+  rgba: "write the channels as rgba(red, green, blue, alpha), where alpha is the last HEX pair divided by 255, or 1 when there is none",
   hsl: "normalize each channel to 0 to 1, take lightness as the average of the highest and lowest channels, then derive saturation and hue from their difference",
   cmyk: "take black as 1 minus the highest channel, then compute cyan, magenta and yellow from what remains",
   oklch: "remove the sRGB gamma curve, multiply by the OKLab matrices, then convert lightness, a and b to lightness, chroma and hue",
@@ -93,18 +99,30 @@ const SAMPLE_COLORS: Array<[string, string]> = [
   ["White", "#FFFFFF"],
 ];
 
+// HEX alpha pairs for 100% down to 0% opacity, one per sample color.
+const ALPHA_STEPS = ["FF", "E6", "CC", "BF", "99", "80", "66", "40", "33", "1A", "0D", "00"];
+
 const f2 = (n: number) => String(Math.round(n * 100) / 100);
 const f3 = (n: number) => String(Math.round(n * 1000) / 1000);
 
 function toRgbSteps(from: ColorFormat, rgb: RGB, exampleFrom: string): string[] {
   const hexPairs = [rgb.r, rgb.g, rgb.b].map((v) => Math.round(v).toString(16).padStart(2, "0").toUpperCase());
   switch (from) {
-    case "hex":
+    case "hex": {
+      if (rgb.a !== undefined) {
+        const alphaPair = Math.round(rgb.a * 255).toString(16).padStart(2, "0").toUpperCase();
+        return [
+          `Remove the # and split the code into four pairs: R = ${hexPairs[0]}, G = ${hexPairs[1]}, B = ${hexPairs[2]} and alpha A = ${alphaPair}.`,
+          `Convert each pair from hexadecimal (base 16) to decimal: ${hexPairs[0]} = ${rgb.r}, ${hexPairs[1]} = ${rgb.g}, ${hexPairs[2]} = ${rgb.b}, ${alphaPair} = ${Math.round(rgb.a * 255)}.`,
+        ];
+      }
       return [
         `Remove the # and split the code into three pairs: R = ${hexPairs[0]}, G = ${hexPairs[1]}, B = ${hexPairs[2]}.`,
         `Convert each pair from hexadecimal (base 16) to decimal: ${hexPairs[0]} = ${rgb.r}, ${hexPairs[1]} = ${rgb.g}, ${hexPairs[2]} = ${rgb.b}.`,
       ];
+    }
     case "rgb":
+    case "rgba":
       return [`Start with the three channel values of ${exampleFrom}: R = ${rgb.r}, G = ${rgb.g}, B = ${rgb.b}. Each runs from 0 to 255.`];
     case "hsl": {
       const { h, s, l } = rgbToHsl(rgb);
@@ -148,6 +166,13 @@ function fromRgbSteps(to: ColorFormat, rgb: RGB): string[] {
       ];
     case "rgb":
       return [`Write the three values as rgb(${rgb.r}, ${rgb.g}, ${rgb.b}).`];
+    case "rgba": {
+      const a255 = Math.round((rgb.a ?? 1) * 255);
+      return [
+        `Divide the alpha by 255 to get a value from 0 to 1: ${a255} / 255 = ${f3(a255 / 255)}, which rounds to ${f2(a255 / 255)}. With no alpha pair, alpha is 1.`,
+        `Write the result as ${formatters.rgba(rgb)}.`,
+      ];
+    }
     case "hsl": {
       const { h, s, l } = rgbToHsl(rgb);
       return [
@@ -178,6 +203,9 @@ function fromRgbSteps(to: ColorFormat, rgb: RGB): string[] {
 
 function accuracyNote(from: ColorFormat, to: ColorFormat): string {
   const set = [from, to];
+  if (set.includes("hex") && set.includes("rgba")) {
+    return "The red, green and blue values are exact. Alpha is stored as 0 to 255 in HEX and written as a decimal in RGBA, rounded to two places, so 80 becomes 0.5 (exactly 0.502). Converting back gives the same HEX code.";
+  }
   if (set.includes("hex") && set.includes("rgb")) {
     return "Yes. HEX and RGB store exactly the same 8-bit channel values, so converting between them is lossless in both directions.";
   }
@@ -200,7 +228,7 @@ function buildPair([from, to, exampleHex]: [ColorFormat, ColorFormat, string]): 
   const rgb = parseHex(exampleHex)!;
   const exampleFrom = formatters[from](rgb);
   const exampleTo = formatters[to](rgb);
-  const exampleName = findClosestColorName(exampleHex);
+  const exampleName = findClosestColorName(rgbToHex(rgb));
 
   const method =
     from === "rgb"
@@ -211,8 +239,9 @@ function buildPair([from, to, exampleHex]: [ColorFormat, ColorFormat, string]): 
 
   const steps = [...toRgbSteps(from, rgb, exampleFrom), ...fromRgbSteps(to, rgb)];
 
-  const samples = SAMPLE_COLORS.map(([name, hex]) => {
-    const c = parseHex(hex)!;
+  // On the RGBA page each sample gets a different alpha, so the table doubles as an opacity chart.
+  const samples = SAMPLE_COLORS.map(([name, hex], i) => {
+    const c = parseHex(to === "rgba" ? hex + ALPHA_STEPS[i] : hex)!;
     return { name, hex, from: formatters[from](c), to: formatters[to](c) };
   });
 

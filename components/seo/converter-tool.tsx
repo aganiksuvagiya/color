@@ -7,6 +7,7 @@ import { useCopy } from "@/components/seo/swatch-strip";
 import {
   FORMAT_LABEL,
   FORMAT_PLACEHOLDER,
+  formatRgb,
   formatters,
   hslToRgb,
   parseHex,
@@ -21,8 +22,9 @@ import { findClosestColorName } from "@/lib/color-names";
 const ALL: ColorFormat[] = ["hex", "rgb", "hsl", "cmyk", "oklch"];
 
 const HINT: Record<ColorFormat, string> = {
-  hex: "Enter a HEX code, for example #3B82F6 or 3B82F6",
-  rgb: "Enter three values from 0 to 255, for example 59, 130, 246 or rgb(59 130 246)",
+  hex: "Enter a HEX code, for example #3B82F6, 3B82F6 or the short #38F. Add two digits for transparency: #3B82F680",
+  rgb: "Enter three values from 0 to 255, for example 59, 130, 246 or rgb(59 130 246). A fourth value sets the alpha",
+  rgba: "Enter red, green and blue (0-255) and an alpha from 0 to 1, for example 59, 130, 246, 0.5 or rgba(59, 130, 246, 50%)",
   hsl: "Enter hue (0-360), saturation and lightness (0-100%), for example 217, 91%, 60%",
   cmyk: "Enter four percentages from 0 to 100, for example 76, 47, 0, 4",
   oklch: "Enter lightness, chroma and hue, for example 62.3% 0.188 259.8 or oklch(0.623 0.188 259.8)",
@@ -36,11 +38,14 @@ function paletteParam(rgb: RGB) {
   return [mk(h, s, Math.max(14, l - 30)), mk(h - 30, s, l), rgbToHex(rgb).slice(1), mk(h + 30, s, l), mk(h, Math.min(s, 60), Math.min(94, l + 32))].join("-");
 }
 
-function textOn(hex: string) {
-  const rgb = parseHex(hex);
-  if (!rgb) return "#1c1712";
-  return (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255 > 0.55 ? "#1c1712" : "#ffffff";
+// A see-through color is judged as it looks over the white checkerboard.
+function textOn(rgb: RGB) {
+  const a = rgb.a ?? 1;
+  const [r, g, b] = [rgb.r, rgb.g, rgb.b].map((v) => v * a + 255 * (1 - a));
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.55 ? "#1c1712" : "#ffffff";
 }
+
+const CHECKERBOARD = "repeating-conic-gradient(#e7e5e4 0% 25%, #ffffff 0% 50%) 50% / 16px 16px";
 
 export function ConverterTool({
   from,
@@ -62,6 +67,9 @@ export function ConverterTool({
   const hex = rgb ? rgbToHex(rgb) : null;
   const name = hex ? findClosestColorName(hex) : null;
   const result = rgb ? formatters[to](rgb) : null;
+  const css = rgb ? formatRgb(rgb) : null;
+  // RGBA isn't in the standard list; on the RGBA page it takes the RGB row's place.
+  const rows = to === "rgba" ? ALL.map((f) => (f === "rgb" ? "rgba" : f)) : ALL;
 
   const randomize = () => {
     const c = { r: Math.floor(Math.random() * 256), g: Math.floor(Math.random() * 256), b: Math.floor(Math.random() * 256) };
@@ -97,7 +105,7 @@ export function ConverterTool({
               value={hex ? hex.toLowerCase() : "#ffffff"}
               onChange={(e) => {
                 const c = parseHex(e.target.value);
-                if (c) setValue(formatters[from](c));
+                if (c) setValue(formatters[from]({ ...c, a: rgb?.a }));
               }}
               className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
             />
@@ -154,10 +162,13 @@ export function ConverterTool({
       <div className="min-w-0 overflow-hidden rounded-2xl ring-1 ring-black/[0.07]" aria-live="polite">
         <div
           className="flex h-36 items-end justify-between gap-3 p-4 transition-colors sm:h-40"
-          style={{ backgroundColor: hex ?? "#f5f5f5", color: hex ? textOn(hex) : "#1c1712" }}
+          style={{
+            background: css ? (rgb?.a !== undefined && rgb.a < 1 ? `linear-gradient(${css}, ${css}), ${CHECKERBOARD}` : css) : "#f5f5f5",
+            color: rgb ? textOn(rgb) : "#1c1712",
+          }}
         >
           <span className="rounded-full bg-black/55 px-3 py-1 text-[12px] font-semibold text-white">{name ?? "No color"}</span>
-          {hex && <span className="font-mono text-[13px] font-semibold opacity-80">{hex}</span>}
+          {rgb && <span className="font-mono text-[13px] font-semibold opacity-80">{formatters.hex(rgb)}</span>}
         </div>
 
         <div className="p-5 sm:p-6">
@@ -174,7 +185,7 @@ export function ConverterTool({
           </div>
 
           <dl className="mt-5 divide-y divide-black/[0.06] border-t border-black/[0.06]">
-            {ALL.map((f) => {
+            {rows.map((f) => {
               const v = rgb ? formatters[f](rgb) : "—";
               const isTarget = f === to;
               return (

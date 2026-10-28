@@ -1,11 +1,12 @@
+import { richColorMeanings } from "./color-meanings-rich";
 import { industryPaletteSets } from "./industry-palettes";
 
-type FaqItem = {
+export type FaqItem = {
   question: string;
   answer: string;
 };
 
-type ContentSection = {
+export type ContentSection = {
   title: string;
   body: string;
 };
@@ -15,6 +16,18 @@ type LinkItem = {
   href: string;
   label?: string;
   paletteColors?: string[];
+};
+
+/** One hex code a color name is used for, e.g. azure blue #007FFF vs CSS azure #F0FFFF. */
+export type HexVariant = {
+  label: string;
+  hex: string;
+  note: string;
+};
+
+export type SourceLink = {
+  title: string;
+  href: string;
 };
 
 type ExampleItem = {
@@ -113,6 +126,12 @@ export type ContentEntry = {
   paletteColors?: string[];
   palettes?: ReadyPalette[];
   palettePreview?: PalettePreviewCopy;
+  /** Fully hand-written page: hide the generated blocks (bottom line, definitions, pros and cons, comparison, examples), which repeat the same template wording across pages. */
+  authoredOnly?: boolean;
+  /** Every hex code the name is used for, shown side by side at the top (the first is the main one). */
+  hexVariants?: HexVariant[];
+  /** External sources cited at the end of the page. */
+  sources?: SourceLink[];
   // /colors pages use the programmatic title/description/answer/FAQ by default -
   // set this to override them for a color that targets a specific search intent.
   colorPageOverride?: {
@@ -563,26 +582,7 @@ const colors: ContentEntry[] = [
       "azure blue hex",
       "#007FFF color",
     ],
-    colorPageOverride: {
-      title: "Azure Color Hex Code: #007FFF vs #F0FFFF, Meaning & Palettes",
-      description: "Azure has two hex codes: bright azure blue #007FFF (RGB 0, 127, 255) and pale CSS azure #F0FFFF (RGB 240, 255, 255). See the difference, meaning, contrast, and palettes for each.",
-      answer:
-        "Azure has two common hex codes. Traditional azure is a bright sky blue, #007FFF (RGB 0, 127, 255), halfway between blue and cyan. CSS/HTML azure is a pale, almost-white cyan, #F0FFFF (RGB 240, 255, 255). Use #007FFF for accents, icons, and illustrations; use #F0FFFF as a soft background tint.",
-      faq: [
-        {
-          question: "What is the hex code for azure color?",
-          answer: "Azure has two hex codes. The traditional azure blue is #007FFF (RGB 0, 127, 255; HSL 210°, 100%, 50%). The CSS named color 'azure' is #F0FFFF (RGB 240, 255, 255), a very pale cyan-white. If you mean the bright sky-blue azure, use #007FFF.",
-        },
-        {
-          question: "Why is CSS azure almost white?",
-          answer: "The CSS/X11 color names were defined decades ago and many of them don't match their traditional meaning. CSS 'azure' (#F0FFFF) is a pale tint, while the azure used in art, heraldry, and color theory is the bright blue #007FFF. Writing 'azure' in CSS always gives you #F0FFFF.",
-        },
-        {
-          question: "Is #007FFF azure accessible on white?",
-          answer: "Not for body text. #007FFF on white has a contrast ratio of about 3.8:1, which passes WCAG AA only for large text (18px bold or 24px regular) and UI icons. For links and small text, use a darker azure like #0066CC (5.6:1 on white).",
-        },
-      ],
-    },
+    // The /colors/azure page itself is written in color-pages-rich.ts.
     sections: [
       {
         title: "Azure #007FFF vs CSS azure #F0FFFF",
@@ -1183,6 +1183,9 @@ export type ColorMeaningOverride = {
   sections: ContentSection[];
   faq: FaqItem[];
   keyTakeaways?: string[];
+  authoredOnly?: boolean;
+  /** Shown before the generated related links (e.g. the /colors page for the codes). */
+  relatedLinks?: LinkItem[];
 };
 
 // /color-meanings covers the psychology/symbolism angle - what the color signals emotionally
@@ -3024,11 +3027,12 @@ const colorMeaningOverrides: Record<string, ColorMeaningOverride> = {
 // True when a color-meanings slug has genuinely distinct, hand-written psychology
 // content (see colorMeaningOverrides above) rather than falling back to the
 // programmatic hex/RGB generator shared with /colors.
-// Only the 13 hand-written base hues (the `colors` array: blue, red, azure...) keep an
-// indexable /color-meanings page. The other named colors' meaning pages repeat their
-// /colors twin too closely (about half their wording on spot checks), so they stay up for
-// visitors but are noindexed and left out of the sitemap (owner decision, 2026-10-24).
-const indexableColorMeaningSlugs = new Set(colors.map((entry) => entry.slug));
+// Indexable /color-meanings pages: the 13 hand-written base hues (the `colors` array: blue,
+// red, azure...) plus the colors rewritten in full in color-meanings-rich.ts. The other named
+// colors' meaning pages repeat their /colors twin too closely (about half their wording on
+// spot checks), so they stay up for visitors but are noindexed and left out of the sitemap
+// (owner decision, 2026-10-24). Give a color a full write-up there to bring it back.
+const indexableColorMeaningSlugs = new Set([...colors.map((entry) => entry.slug), ...Object.keys(richColorMeanings)]);
 export function isColorMeaningIndexable(slug: string): boolean {
   return indexableColorMeaningSlugs.has(slug);
 }
@@ -3044,7 +3048,7 @@ export function isColorMeaningAuthored(slug: string): boolean {
 // generator instead of their authored content, even though isColorMeaningAuthored
 // (and therefore their indexability) already reports them as authored.
 export function getColorMeaningOverride(slug: string): ColorMeaningOverride | undefined {
-  return colorMeaningOverrides[slug];
+  return richColorMeanings[slug] ?? colorMeaningOverrides[slug];
 }
 
 const colorMeaningEntries: ContentEntry[] = colors.map((entry) => {
@@ -6142,6 +6146,323 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Contrast checker", href: "/tools/contrast" },
     ],
   },
+  {
+    slug: "luxury-brand-websites",
+    title: "Luxury Color Palette for Websites: 6 Palettes With Hex Codes",
+    paletteColors: ["#0B0B0B", "#B08D57", "#F5F1EA", "#0F3D2E", "#6D1F2F"],
+    description:
+      "6 luxury color palettes with hex codes for fashion, jewelry, hotel, beauty and watch websites, each shown on a sample site with its WCAG contrast.",
+    ...industryPaletteSets["luxury-brand-websites"],
+    answer:
+      "Luxury websites use restraint: one deep color such as near-black, emerald, burgundy or espresso for buttons and headings, an ivory or white background with plenty of space, and one muted metallic accent like gold or champagne, used sparingly. Fewer colors, low saturation and strong text contrast read as expensive; bright, busy palettes read as discount.",
+    intent: "commercial",
+    authoredOnly: true,
+    keywords: [
+      "luxury color palette",
+      "luxury color palette for website",
+      "luxury website colors",
+      "luxury brand color palette",
+      "luxury color palette hex codes",
+      "black and gold color palette",
+      "luxury color combinations",
+      "high end website color scheme",
+      "quiet luxury color palette",
+    ],
+    keyTakeaways: [
+      "Luxury palettes are small: one deep color, one warm neutral and one muted metallic accent.",
+      "Muted gold (#B08D57) looks expensive; bright gold (#FFD700) looks cheap, and neither works as body text on white.",
+      "Ivory and warm white feel richer than pure white, and near-black text keeps them readable.",
+      "All six palettes below pass WCAG AA for buttons and links and AAA for body text.",
+    ],
+    quickFacts: [
+      { label: "Primary", value: "#0B0B0B (near-black) - buttons, headings, navigation" },
+      { label: "Accent", value: "#B08D57 (muted gold) - thin rules, badges, small details" },
+      { label: "Background", value: "#FFFFFF or ivory #FBF8F3 - with generous white space" },
+      { label: "Contrast check", value: "Gold #B08D57 text on white is only 3.09:1 - keep gold off body text" },
+    ],
+    sections: [
+      {
+        title: "Why restraint reads as luxury",
+        body: "Discount retail fights for attention with bright, saturated colors, big badges and lots of them. Luxury brands do the opposite: they use few colors, low saturation and a lot of empty space, which signals confidence. The palette's job is to frame the product, not to sell it. If your page has more than one bright color, it will start to look like a sale.",
+      },
+      {
+        title: "Black, white and one metal",
+        body: "The classic luxury palette is near-black, white and a muted gold. Near-black #0B0B0B carries buttons and headings, warm off-white #F5F1EA softens cards, and gold #B08D57 appears only in thin rules, icons and small badges. Gold is a poor text color: #B08D57 on white measures 3.09:1 and bright #FFD700 just 1.40:1, both below the 4.5:1 WCAG asks for body text. Give gold badges a dark label instead.",
+      },
+      {
+        title: "Jewel tones: emerald, burgundy and navy",
+        body: "Deep, cool or wine-dark colors feel established and rich, which suits hotels, spirits, private clubs and wine. Emerald #0F3D2E with white labels reaches 12.2:1, and burgundy #6D1F2F 11.1:1, so they work as button and header colors with room to spare. Pair them with cream or blush rather than pure white, and use gold or dusty pink only as accents.",
+      },
+      {
+        title: "Quiet luxury: warm neutrals",
+        body: "The quiet-luxury look in fashion and interiors has moved onto websites too: espresso, taupe, stone and ivory with no metallics at all. It feels expensive because nothing shouts. The risk is low contrast. Taupe #A89580 on ivory #F8F5F0 measures only 2.65:1, so keep taupe for tags and dividers and set text in a dark espresso such as #1F1B17.",
+      },
+      {
+        title: "Dark mode luxury",
+        body: "Black backgrounds suit watches, cars, fragrance and nightlife, where product photos glow against the dark. Use ivory #F4EFE6 rather than pure white for text: it still reaches 17.2:1 on #0B0B0C but glares less in long reading. Gold #CBB27C works well as a button color on black, at 9.55:1, as long as the button label is dark.",
+      },
+      {
+        title: "Type and photography do half the work",
+        body: "A luxury palette only works with the right supporting cast: large, high-quality product photography, a refined serif or a light, widely spaced sans-serif, and generous margins. Let the product photos bring the color. The interface around them should stay quiet, so a beige handbag or a green bottle is the most colorful thing on the page.",
+      },
+      {
+        title: "What makes a palette look cheap",
+        body: "Avoid saturated primary colors, neon, rainbow gradients and more than one accent. Avoid bright yellow-gold, which reads as costume jewelry on screen. And avoid the fashionable mistake of pale gray or taupe body text on cream: it looks elegant in a mockup and becomes unreadable on a phone in daylight.",
+      },
+    ],
+    faq: [
+      {
+        question: "What colors look most luxurious on a website?",
+        answer: "Near-black, deep emerald, burgundy and navy for buttons and headings, ivory or white backgrounds, and one muted metallic accent such as gold or champagne. Low saturation and plenty of white space matter as much as the colors themselves.",
+      },
+      {
+        question: "What is the hex code for a luxury gold?",
+        answer: "Muted golds such as #B08D57, #C5A46D and #CBB27C look expensive on screen. Bright gold like #FFD700 tends to look cheap. Use gold for details and give gold badges dark text, since gold text on white fails WCAG contrast.",
+      },
+      {
+        question: "Is black a luxury color?",
+        answer: "Yes. Black or near-black is the most common luxury website color, because it is serious, timeless and makes product photography stand out. Use it with white or ivory and a single accent.",
+      },
+      {
+        question: "Should a luxury website use a dark background?",
+        answer: "It can. Dark backgrounds suit watches, cars, fragrance and nightlife. Use ivory text instead of pure white and check that buttons have dark labels if they are gold or light.",
+      },
+      {
+        question: "What colors make a brand look cheap?",
+        answer: "Bright saturated primaries, neon, rainbow gradients, bright yellow-gold and too many accent colors at once. Discount retail uses these to grab attention, so luxury brands avoid them.",
+      },
+      {
+        question: "How many colors should a luxury website use?",
+        answer: "Usually three to five: a deep primary, a warm neutral, a background, a text color and at most one accent. Fewer colors read as more confident.",
+      },
+      {
+        question: "Is gold text accessible on white?",
+        answer: "Rarely. Muted gold #B08D57 on white measures 3.09:1 and #C5A46D only 2.36:1, both below the 4.5:1 WCAG asks for body text. Use gold for large display type, rules and icons, not paragraphs.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Gold color page", href: "/colors/gold" },
+      { title: "Gold color meaning", href: "/color-meanings/gold" },
+      { title: "Maroon color meaning", href: "/color-meanings/maroon" },
+      { title: "Best colors for beauty salon websites", href: "/best-colors-for/beauty-salon-websites" },
+      { title: "Best colors for wedding websites", href: "/best-colors-for/wedding-websites" },
+      { title: "Best colors for photography websites", href: "/best-colors-for/photography-websites" },
+      { title: "WCAG color contrast guide", href: "/accessibility/color-contrast" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Palette generator", href: "/generator" },
+      { title: "Why we show palettes on a website", href: "/blog/palettes-on-a-real-website" },
+    ],
+  },
+  {
+    slug: "corporate-websites",
+    title: "Corporate Color Palette for Websites: 6 Palettes With Hex Codes",
+    paletteColors: ["#1D4ED8", "#1E3A5F", "#0F766E", "#F1F5F9", "#0F172A"],
+    description:
+      "6 corporate color palettes with hex codes for consulting, finance, technology, energy and industrial company websites, each on a sample site with WCAG contrast.",
+    ...industryPaletteSets["corporate-websites"],
+    answer:
+      "Most corporate websites are built on a deep blue or navy for buttons and navigation, white and light gray backgrounds, and near-black text, with one accent color for highlights. Blue reads as stable and trustworthy in almost every industry; teal, green, red or indigo can set a company apart as long as text contrast stays high.",
+    intent: "commercial",
+    authoredOnly: true,
+    keywords: [
+      "corporate color palette",
+      "corporate color palette for website",
+      "corporate website colors",
+      "corporate color palette blue",
+      "business website color palette",
+      "professional color palette",
+      "corporate color scheme",
+      "company website color palette",
+      "corporate color palette hex codes",
+    ],
+    keyTakeaways: [
+      "Blue and navy are the default corporate colors because they signal stability and are easy to read.",
+      "A corporate palette covers five jobs: primary, light surface, accent, background and text.",
+      "Stand out with a less common primary or a sharp accent, not with more colors.",
+      "All six palettes below pass WCAG AA for buttons and links and AAA for body text.",
+    ],
+    quickFacts: [
+      { label: "Primary", value: "#1D4ED8 (corporate blue) or #1E3A5F (navy) - buttons, links, navigation" },
+      { label: "Surfaces", value: "#F1F5F9 or #EFF6FF - panels, tables, alternating sections" },
+      { label: "Text", value: "#0F172A (near-black slate) - headings and body copy" },
+      { label: "Contrast check", value: "#1D4ED8 on white is 6.70:1 (WCAG AA) - safe for links and button labels" },
+    ],
+    sections: [
+      {
+        title: "Why so many companies choose blue",
+        body: "Blue is the most common corporate color because it reads as calm, competent and trustworthy, and because dark blues give excellent contrast with white. That makes it a safe choice for consulting, finance, software and insurance. The downside is that everyone uses it, so a blue site needs a distinctive accent, typeface or photography to be remembered.",
+      },
+      {
+        title: "Navy and slate for traditional firms",
+        body: "Banks, insurers and professional-services firms often want something more conservative than a bright blue. Navy #1E3A5F reaches 11.5:1 with white labels, and slate gray #64748B works for tags and secondary labels at 4.76:1. Cool gray surfaces such as #F1F5F9 separate sections without adding another color.",
+      },
+      {
+        title: "Teal and green for technology and sustainability",
+        body: "A deep teal like #0F766E keeps the calm, technical feel of blue while standing apart from it, which suits engineering and data companies. Forest green #166534 is the natural primary for energy, utilities and ESG reporting, with an amber accent for figures. Both pass AA for links and buttons on white.",
+      },
+      {
+        title: "Red and indigo when you need to stand out",
+        body: "Manufacturing, logistics and construction groups often use a confident red such as #B91C1C (6.47:1 on white) for the brand and buttons, with charcoal and gray doing the rest. Indigo #4338CA is a modern alternative to navy for HR, recruiting and education companies. Keep red for actions and the logo; long red text tires the eye.",
+      },
+      {
+        title: "Gray does the heavy lifting",
+        body: "On most corporate pages, light grays and white cover more area than the brand color. Use very light grays for surfaces and near-black for text. Avoid mid-gray body text: slate #94A3B8 on white is only 2.56:1, a common reason corporate sites fail accessibility audits.",
+      },
+      {
+        title: "One palette for web, reports and slides",
+        body: "A corporate palette has to work in more places than the website: annual reports, investor decks, PDFs and print. Record the HEX, RGB and CMYK value of every color, and add a few extra tints for charts, since data visualization needs more distinct colors than a website does.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid a long list of brand colors that nobody applies consistently, trendy gradients that date quickly, and low-contrast gray text. Avoid red for anything except the brand, buttons and genuine warnings. And check the palette on a real page before rolling it out, not only on a brand-guidelines slide.",
+      },
+    ],
+    faq: [
+      {
+        question: "What is the best color for a corporate website?",
+        answer: "A deep blue or navy is the safest choice, because it reads as trustworthy and gives strong contrast with white. Teal, green, red or indigo are good alternatives when you need to stand out.",
+      },
+      {
+        question: "What are corporate colors?",
+        answer: "A company's official brand colors: usually one primary color, one or two secondary colors, neutrals for backgrounds and text, and sometimes an accent. They are used across the website, documents, slides and signage.",
+      },
+      {
+        question: "What hex codes are used for corporate blue?",
+        answer: "Common corporate blues include #1D4ED8 (a strong blue, 6.70:1 on white), #1E3A5F (navy, 11.5:1 with white text) and #0F172A for near-black text. Pale blues like #EFF6FF work for panels.",
+      },
+      {
+        question: "How do I make a corporate website not look boring?",
+        answer: "Keep the palette small but give it one distinctive choice: a less common primary such as teal or indigo, a sharp accent color, strong photography, or a confident typeface.",
+      },
+      {
+        question: "How many colors should a corporate brand have?",
+        answer: "Most work best with four to six: a primary, one or two secondaries, a light surface, a background and a text color. Add extra tints only for charts.",
+      },
+      {
+        question: "Is green a good corporate color?",
+        answer: "Yes, especially for energy, sustainability, finance and healthcare-adjacent companies. Use a deep green such as #166534 for buttons and links so text contrast stays above 4.5:1.",
+      },
+      {
+        question: "What colors should corporate websites avoid?",
+        answer: "Neon and highly saturated colors, too many brand colors at once, trendy gradients, and light gray text, which often fails WCAG contrast.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for SaaS websites", href: "/best-colors-for/saas-websites" },
+      { title: "Best colors for finance websites", href: "/best-colors-for/finance-websites" },
+      { title: "Best colors for law firm websites", href: "/best-colors-for/law-firm-websites" },
+      { title: "Best colors for insurance websites", href: "/best-colors-for/insurance-websites" },
+      { title: "Navy color meaning", href: "/color-meanings/navy" },
+      { title: "Colors that go with navy blue", href: "/blog/colors-that-go-with-navy-blue" },
+      { title: "HEX to CMYK converter", href: "/hex-to-cmyk" },
+      { title: "WCAG color contrast guide", href: "/accessibility/color-contrast" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Palette generator", href: "/generator" },
+    ],
+  },
+  {
+    slug: "portfolio-websites",
+    title: "Portfolio Website Color Palette: 6 Palettes With Hex Codes",
+    paletteColors: ["#111111", "#E4572E", "#0E1116", "#6D4AFF", "#F6F3EE"],
+    description:
+      "6 portfolio website color palettes with hex codes for designers, developers, photographers, writers and illustrators, each on a sample site with WCAG contrast.",
+    ...industryPaletteSets["portfolio-websites"],
+    answer:
+      "The best portfolio palettes stay out of the way of the work: a white, off-white or dark background, near-black or near-white text, and one accent color used only for links and buttons. Photographers and designers usually do best with neutrals, developers often choose dark mode, and illustrators can use soft pastels. Keep it to three to five colors.",
+    intent: "commercial",
+    authoredOnly: true,
+    keywords: [
+      "portfolio website color palette",
+      "portfolio color palette",
+      "color palette for portfolio website",
+      "portfolio color palette ideas",
+      "portfolio color schemes",
+      "personal website color palette",
+      "developer portfolio colors",
+      "designer portfolio color palette",
+      "dark mode portfolio colors",
+    ],
+    keyTakeaways: [
+      "Your work is the color: a neutral background lets screenshots, photos and illustrations stand out.",
+      "Use one accent, only for links and buttons, so visitors always know what to click.",
+      "Dark mode suits developer and motion portfolios; light backgrounds suit photography and print work.",
+      "Each palette below passes WCAG AA for buttons and links and AAA for body text.",
+    ],
+    quickFacts: [
+      { label: "Background", value: "#FFFFFF, warm off-white #F6F3EE, or near-black #0E1116 for dark mode" },
+      { label: "Text", value: "#111111 on light pages, #E6EDF3 on dark pages" },
+      { label: "Accent", value: "One color for links and buttons, e.g. #6D4AFF (violet) or #5AA9FF on dark" },
+      { label: "Contrast check", value: "#5AA9FF links on #0E1116 reach 7.70:1 (WCAG AAA)" },
+    ],
+    sections: [
+      {
+        title: "Let the work carry the color",
+        body: "Every project in a portfolio arrives with its own colors: a client's brand, a photo's light, an illustration's palette. A loud site palette fights with all of them. That's why most strong portfolios use a neutral base, white, warm off-white or near-black, and let the case studies supply the color.",
+      },
+      {
+        title: "One accent, used consistently",
+        body: "Pick a single accent and use it for links, buttons and focus states only, so visitors always know what's clickable. It's also the one place your personality shows. Check it as a label background too: orange-red #E4572E with white text is only 3.68:1, but with near-black text it reaches 5.13:1.",
+      },
+      {
+        title: "Dark mode for developers",
+        body: "Developer and technical portfolios often use a dark theme, which makes code screenshots and terminal demos feel native. Use a near-black like #0E1116 rather than pure black and an off-white text color like #E6EDF3 (16.0:1). Blue links at #5AA9FF reach 7.70:1, and a green accent works for 'available' or 'shipped' tags.",
+      },
+      {
+        title: "Pastels and warm neutrals for illustrators and writers",
+        body: "Illustrators and brand designers can afford more personality: a violet primary like #6D4AFF (5.0:1 as a link on warm white) with a peach accent feels playful but stays readable. Writers and content designers suit an editorial palette: paper-like off-white, near-black text and one rust accent such as #9A3412, which reads like a well-set magazine page.",
+      },
+      {
+        title: "Photographers: quiet and earthy",
+        body: "For photography, anything colorful in the interface competes with the images. Warm stone backgrounds and a muted olive or charcoal for buttons keep the page calm. Avoid pure white if your work is warm-toned, and avoid saturated link colors next to photos.",
+      },
+      {
+        title: "Match your resume and profiles",
+        body: "A portfolio is part of a personal brand. Use the same background, text and accent colors on your resume PDF, LinkedIn banner and social profiles, so a recruiter recognizes your work everywhere. Export the palette once and reuse the hex codes.",
+      },
+      {
+        title: "What to avoid",
+        body: "Avoid rainbow palettes, gradient backgrounds behind body text, light gray text on white, and a different color scheme on every project page. Recruiters skim on phones, so contrast matters more than novelty.",
+      },
+    ],
+    faq: [
+      {
+        question: "What colors should I use for my portfolio website?",
+        answer: "A neutral background (white, off-white or near-black), a high-contrast text color and one accent for links and buttons. Let your projects provide the rest of the color.",
+      },
+      {
+        question: "Should a portfolio website be dark or light?",
+        answer: "Either works. Dark themes suit developers, motion designers and work shown on screens; light themes suit photography, print and editorial work. Choose the one that makes your best project look best.",
+      },
+      {
+        question: "How many colors should a portfolio use?",
+        answer: "Three to five: a background, a text color, one accent, and optionally a light surface for cards and a second accent for tags.",
+      },
+      {
+        question: "What is a good accent color for a portfolio?",
+        answer: "One that fits your personality and passes contrast: violet #6D4AFF, rust #9A3412 or electric blue #2B2BFF on light pages, or a light blue like #5AA9FF on dark pages.",
+      },
+      {
+        question: "What colors do UX designers use for their portfolio?",
+        answer: "Most use neutral backgrounds with one accent, so the case studies stand out. Black, white and one signal color is the most common pattern.",
+      },
+      {
+        question: "Do colors matter in a portfolio?",
+        answer: "Yes, mostly by staying out of the way. A calm, readable palette makes your work the focus and shows you understand contrast and hierarchy, which is part of what a design portfolio is judged on.",
+      },
+    ],
+    relatedLinks: [
+      { title: "Best colors for photography websites", href: "/best-colors-for/photography-websites" },
+      { title: "Why we show palettes on a website", href: "/blog/palettes-on-a-real-website" },
+      { title: "Palette generator", href: "/generator" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "WCAG color contrast guide", href: "/accessibility/color-contrast" },
+      { title: "Color codes table", href: "/color-codes" },
+      { title: "Tailwind colors", href: "/tailwind-colors" },
+      { title: "HEX to RGB converter", href: "/hex-to-rgb" },
+      { title: "Black color page", href: "/colors/black" },
+      { title: "Best colors for SaaS websites", href: "/best-colors-for/saas-websites" },
+    ],
+  },
 ];
 
 const faqs: ContentEntry[] = [
@@ -6972,7 +7293,8 @@ export function resolveContentEntry(entry: ContentEntry): ResolvedContentEntry {
 
   return {
     ...mergedEntry,
-    answer: normalizeAnswer(mergedEntry),
+    // Authored answers are already written to length; the normalizer pads or cuts them.
+    answer: mergedEntry.authoredOnly ? mergedEntry.answer.trim() : normalizeAnswer(mergedEntry),
     keyTakeaways: buildKeyTakeaways(mergedEntry),
     quickFacts: buildQuickFacts(mergedEntry),
     definitions: buildDefinitions(mergedEntry),

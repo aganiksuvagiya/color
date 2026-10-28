@@ -6,6 +6,7 @@ import { ContentPageView } from "@/components/seo/content-page";
 import { HubPageView, type HubDirectory } from "@/components/seo/hub-page";
 import { StructuredData } from "@/components/seo/structured-data";
 import { findResolvedEntry, getCollection, getColorMeaningOverride, getHubByPath, isColorMeaningAuthored, isColorMeaningIndexable, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
+import { richColorPages } from "@/lib/seo/color-pages-rich";
 import { buildProgrammaticBrandColorEntry, buildProgrammaticColorEntry, getHexDuplicateCanonicalSlug, getProgrammaticBrandColorSlugs, getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
 import {
   buildArticleSchema,
@@ -306,6 +307,11 @@ const findCollectionEntry = cache(function findCollectionEntry<K extends keyof R
   if (key === "colors") {
     const programmatic = buildProgrammaticColorEntry(slug);
     if (!programmatic) return undefined;
+    // Fully hand-written pages: only the generated codes and links are kept.
+    const rich = richColorPages[slug];
+    if (rich) {
+      return resolveContentEntry({ ...programmatic, ...rich, authoredOnly: true });
+    }
     const resolved = findResolvedEntry("colors", slug);
     // Always use programmatic title/description (has hex, RGB, HSL) but keep resolved content sections if they exist
     const override = resolved?.colorPageOverride;
@@ -348,6 +354,12 @@ const findCollectionEntry = cache(function findCollectionEntry<K extends keyof R
         sections: override.sections,
         faq: override.faq,
         keyTakeaways: override.keyTakeaways,
+        authoredOnly: override.authoredOnly,
+        // The generated list links this page to itself - drop that one.
+        relatedLinks: [
+          ...(override.relatedLinks ?? []),
+          ...colorEntry.relatedLinks.filter((link) => link.href !== `/color-meanings/${slug}`),
+        ],
       });
     }
 

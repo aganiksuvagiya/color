@@ -20,6 +20,15 @@ const contentUpdatedOn: Record<string, string> = {
   "/best-colors-for/real-estate-websites": "2026-10-23",
   "/best-colors-for/law-firm-websites": "2026-10-23",
   "/color-palettes/christmas": "2026-10-23",
+  ...Object.fromEntries(
+    ["gold", "silver", "lavender", "turquoise", "navy", "maroon", "indigo", "violet", "magenta", "coral", "beige", "olive"].map((slug) => [`/color-meanings/${slug}`, "2026-10-29"]),
+  ),
+  "/colors/azure": "2026-10-29",
+  "/colors/light-yellow": "2026-10-29",
+  "/colors/cyan": "2026-10-29",
+  "/best-colors-for/luxury-brand-websites": "2026-10-29",
+  "/best-colors-for/corporate-websites": "2026-10-29",
+  "/best-colors-for/portfolio-websites": "2026-10-29",
 };
 
 type SitemapEntry = {

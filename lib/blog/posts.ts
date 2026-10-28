@@ -31,6 +31,58 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "palettes-on-a-real-website",
+    title: "Why We Show Every Palette on a Website First",
+    h1: "Why HueFlow shows every palette on a website before you use it",
+    crumb: "Palettes on a real website",
+    description:
+      "Five swatches can't tell you if a palette works. HueFlow previews every palette as a small interface and computes WCAG contrast for text, buttons and links. Here's why, and how.",
+    answer:
+      "A palette can look perfect as five swatches and still fail on a page: white text on a #FACC15 yellow button measures 1.53:1, far below the 4.5:1 WCAG asks for. HueFlow previews each palette as a small interface, picks the most readable label for every surface, and shows the WCAG contrast of body text, buttons and links.",
+    dek: "Colors only work or fail once they have a job. Here's what the preview checks, how the contrast numbers are worked out, and how HueFlow is built.",
+    category: "Guides",
+    published: "2026-10-29",
+    updated: "2026-10-29",
+    readMinutes: 6,
+    cover: ["#0F172A", "#3B82F6", "#22C55E", "#FACC15", "#A855F7"],
+    keywords: [
+      "preview color palette on website",
+      "accessible color palette generator",
+      "wcag color palette checker",
+      "color palette contrast checker",
+      "button text color contrast",
+      "white text on yellow button contrast",
+      "hueflow",
+    ],
+    toc: [
+      { id: "swatches", title: "Five swatches hide the problem" },
+      { id: "preview", title: "What the preview shows" },
+      { id: "contrast", title: "How the numbers are worked out" },
+      { id: "built", title: "How it's built" },
+      { id: "next", title: "What's next" },
+      { id: "faq", title: "FAQ" },
+    ],
+    faq: [
+      { question: "Is HueFlow free?", answer: "Yes. The generator, the preview, the converters and the contrast checker all work without an account." },
+      { question: "What contrast ratio does text need?", answer: "WCAG level AA asks for 4.5:1 for normal text and 3:1 for large text and UI parts such as icons. Level AAA asks for 7:1." },
+      { question: "How does HueFlow choose the text color on a button?", answer: "It measures white, near-black and the palette's own dark color against the button and uses whichever has the highest contrast. If none reaches 4.5:1, the check under the preview shows it." },
+      { question: "Does HueFlow simulate color blindness?", answer: "Yes, for protanopia, deuteranopia and tritanopia. It's a simple matrix approximation, useful for spotting colors that look alike, not a clinical model." },
+    ],
+    sources: [
+      { title: "WCAG 2.2: Contrast (Minimum), W3C", url: "https://www.w3.org/TR/WCAG22/#contrast-minimum" },
+      { title: "WCAG 2.2: relative luminance definition, W3C", url: "https://www.w3.org/TR/WCAG22/#dfn-relative-luminance" },
+      { title: "OpenNext for Cloudflare", url: "https://opennext.js.org/cloudflare" },
+      { title: "Cloudflare Workers limits", url: "https://developers.cloudflare.com/workers/platform/limits/" },
+    ],
+    related: [
+      { title: "Color palette generator", href: "/generator" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Healthcare website colors", href: "/best-colors-for/healthcare-websites" },
+      { title: "Color contrast guide", href: "/accessibility/color-contrast" },
+      { title: "HEX to RGB converter", href: "/hex-to-rgb" },
+    ],
+  },
+  {
     slug: "color-of-the-year-2027",
     title: "Color of the Year 2027: Every Pick So Far, With Hex Codes",
     h1: "Color of the Year 2027: every pick so far, side by side",

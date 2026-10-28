@@ -6,6 +6,8 @@ import type { ColorFormat } from "../color-convert";
 // "what is #XXXXXX in RGB" answers) differ from page to page.
 export const converterPairSpecs: Array<[ColorFormat, ColorFormat, string]> = [
   ["hex", "rgb", "#3B82F6"],
+  // An 8-digit example, so the page shows how the alpha pair converts.
+  ["hex", "rgba", "#3B82F680"],
   ["rgb", "hex", "#E8531F"],
   ["hex", "hsl", "#0F766E"],
   ["hsl", "hex", "#7C3AED"],

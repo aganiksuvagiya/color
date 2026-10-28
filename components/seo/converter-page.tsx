@@ -72,7 +72,9 @@ export function ConverterPairView({ pair }: { pair: ConverterPair }) {
       <section className="border-t border-black/[0.06]">
         <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
           <p className={eyebrow}>Quick reference</p>
-          <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Common colors in {pair.fromLabel} and {pair.toLabel}</h2>
+          <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">
+            {pair.to === "rgba" ? "HEX alpha to RGBA opacity chart" : `Common colors in ${pair.fromLabel} and ${pair.toLabel}`}
+          </h2>
           <div className="mt-6 max-w-5xl overflow-x-auto rounded-2xl ring-1 ring-black/[0.07]">
             <table className="w-full min-w-[34rem] text-left text-[14px]">
               <thead>
@@ -87,7 +89,7 @@ export function ConverterPairView({ pair }: { pair: ConverterPair }) {
                   <tr key={s.name}>
                     <td className="px-4 py-3">
                       <span className="flex items-center gap-3 font-medium">
-                        <span className="h-5 w-5 shrink-0 rounded-full ring-1 ring-black/15" style={{ backgroundColor: s.hex }} aria-hidden="true" />
+                        <span className="h-5 w-5 shrink-0 rounded-full ring-1 ring-black/15" style={{ backgroundColor: pair.to === "rgba" ? s.to : s.hex }} aria-hidden="true" />
                         {s.name}
                       </span>
                     </td>

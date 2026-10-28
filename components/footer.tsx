@@ -91,7 +91,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-[minmax(0,1.5fr)_repeat(6,minmax(0,1fr))]">
           <div className="col-span-2 sm:col-span-3 lg:col-span-1 lg:pr-6">
             <Link href="/" className="inline-flex items-center">
-              <Image src="/hueflow.svg" alt="HueFlow" width={104} height={22} className="[filter:brightness(0)_saturate(100%)]" />
+              <Image src="/hueflow.svg" alt="HueFlow" width={104} height={22} className="h-[22px] w-[104px] [filter:brightness(0)_saturate(100%)]" />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-6 text-[#1c1712]/60">
               A free color workspace: generate palettes, explore shades, check contrast and copy any color code.

@@ -1282,6 +1282,14 @@ export const blogPageContent = {
     "HueFlow's resource library helps teams learn how color affects trust, readability, conversion, and brand clarity across SaaS, fintech, ecommerce, AI, and modern marketing websites.",
   featuredArticles: [
     {
+      title: "Why We Show Every Palette on a Website First",
+      excerpt: "Five swatches can't tell you if a palette works. What the preview checks, how contrast is computed, and how HueFlow is built.",
+      category: "Guides",
+      readTime: "6 min",
+      href: "/blog/palettes-on-a-real-website",
+      cover: ["#0F172A", "#3B82F6", "#22C55E", "#FACC15", "#A855F7"],
+    },
+    {
       title: "Color of the Year 2027: Every Pick So Far",
       excerpt: "Sherwin-Williams Celery, Benjamin Moore Webster Green, Behr Grounded, Valspar Cottage Door and more, side by side with HEX codes.",
       category: "Trends",

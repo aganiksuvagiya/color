@@ -94,7 +94,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
         }`}
       >
         <Link href="/" className="flex items-center" aria-label="HueFlow home">
-          <Image src="/hueflow.svg" alt="HueFlow" width={104} height={22} preload className="[filter:brightness(0)_saturate(100%)]" />
+          <Image src="/hueflow.svg" alt="HueFlow" width={104} height={22} preload className="h-[22px] w-[104px] [filter:brightness(0)_saturate(100%)]" />
         </Link>
 
         <nav className="hidden items-center gap-6 text-[15px] font-medium text-[#1c1712]/65 md:flex">

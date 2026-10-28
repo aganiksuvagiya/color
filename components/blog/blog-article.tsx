@@ -10,7 +10,8 @@ const prose =
   "min-w-0 text-[17px] leading-8 text-[#1c1712]/75 " +
   "[&_h2]:mt-14 [&_h2]:scroll-mt-28 [&_h2]:text-[1.65rem] [&_h2]:font-semibold [&_h2]:leading-tight [&_h2]:tracking-[-0.025em] [&_h2]:text-[#1c1712] [&>h2:first-child]:mt-0 " +
   "[&_h3]:mt-10 [&_h3]:scroll-mt-28 [&_h3]:text-[1.2rem] [&_h3]:font-semibold [&_h3]:tracking-[-0.015em] [&_h3]:text-[#1c1712] " +
-  "[&_p]:mt-5 [&_ul]:mt-5 [&_ul]:space-y-2.5 [&_ul>li]:ml-5 [&_ul>li]:list-disc [&_ul>li]:pl-1 [&_ul>li]:marker:text-[#c2410c] " +
+  // Text rules skip anything inside .not-prose, e.g. a live component embedded in a post.
+  "[&_p:not(.not-prose_*)]:mt-5 [&_ul:not(.not-prose_*)]:mt-5 [&_ul:not(.not-prose_*)]:space-y-2.5 [&_ul:not(.not-prose_*)>li]:ml-5 [&_ul:not(.not-prose_*)>li]:list-disc [&_ul:not(.not-prose_*)>li]:pl-1 [&_ul:not(.not-prose_*)>li]:marker:text-[#c2410c] " +
   "[&_ol]:mt-5 [&_ol]:space-y-2.5 [&_ol>li]:ml-5 [&_ol>li]:list-decimal [&_ol>li]:pl-1 " +
   "[&_strong]:font-semibold [&_strong]:text-[#1c1712] " +
   "[&_p_a]:font-medium [&_p_a]:text-[#c2410c] [&_p_a]:underline [&_p_a]:underline-offset-2 hover:[&_p_a]:no-underline [&_li_a]:font-medium [&_li_a]:text-[#c2410c] [&_li_a]:underline [&_li_a]:underline-offset-2";

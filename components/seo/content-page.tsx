@@ -1,7 +1,10 @@
 import Link from "next/link";
 
+import { getContrastRatio } from "@/lib/accessibility";
 import { getClosestNamedColors } from "@/lib/color-names";
-import type { ResolvedContentEntry } from "@/lib/seo/content";
+import { formatCmyk, formatHsl, formatRgb, parseHex } from "@/lib/color-convert";
+import type { HexVariant, ResolvedContentEntry } from "@/lib/seo/content";
+import { ColorVariations } from "@/components/seo/color-variations";
 import { CopyHexButton } from "@/components/seo/copy-hex-button";
 import { IndustryPaletteCard } from "@/components/seo/industry-palette-card";
 import { PaletteColorStrip } from "@/components/seo/palette-color-strip";
@@ -15,6 +18,59 @@ function isLight(hex: string) {
 
 function getSimilarColors(hex: string) {
   return getClosestNamedColors(hex, 5).map((color) => ({ hex: color.hex, slug: color.slug, name: color.name }));
+}
+
+function mixHex(from: string, to: string, t: number) {
+  return "#" + [1, 3, 5].map((i) => {
+    const a = parseInt(from.slice(i, i + 2), 16), b = parseInt(to.slice(i, i + 2), 16);
+    return Math.round(a + (b - a) * t).toString(16).padStart(2, "0");
+  }).join("").toUpperCase();
+}
+
+// The color itself, then 10% steps toward black, white or gray.
+function getVariationRows(hex: string) {
+  const steps = (to: string) => Array.from({ length: 9 }, (_, i) => mixHex(hex, to, i / 10));
+  return [
+    { label: "Shades", note: "mixed with black", colors: steps("#000000") },
+    { label: "Tints", note: "mixed with white", colors: steps("#FFFFFF") },
+    { label: "Tones", note: "mixed with gray", colors: steps("#808080") },
+  ];
+}
+
+function HexVariantCard({ variant }: { variant: HexVariant }) {
+  const rgb = parseHex(variant.hex);
+  const rows = rgb
+    ? [
+        ["RGB", formatRgb(rgb)],
+        ["HSL", formatHsl(rgb)],
+        ["CMYK", formatCmyk(rgb)],
+        ["Contrast", `${getContrastRatio(variant.hex, "#FFFFFF")}:1 on white · ${getContrastRatio(variant.hex, "#000000")}:1 on black`],
+      ]
+    : [];
+
+  return (
+    <div className="overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
+      <div className="h-16 border-b border-black/[0.06]" style={{ backgroundColor: variant.hex }} />
+      <div className="p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-[15px] font-semibold">{variant.label}</p>
+            <p className="font-mono text-[15px] font-semibold uppercase tracking-[0.06em] text-[#1c1712]/70">{variant.hex}</p>
+          </div>
+          <CopyHexButton hex={variant.hex} />
+        </div>
+        <dl className="mt-4 space-y-1 text-[13px]">
+          {rows.map(([label, value]) => (
+            <div key={label} className="flex gap-2">
+              <dt className="w-16 shrink-0 font-semibold">{label}</dt>
+              <dd className="min-w-0 break-words font-mono text-[#1c1712]/65">{value}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="mt-4 text-[14px] leading-6 text-[#1c1712]/60">{variant.note}</p>
+      </div>
+    </div>
+  );
 }
 
 type Breadcrumb = { name: string; href: string };
@@ -66,7 +122,12 @@ export function ContentPageView({
   const hexFact      = entry.quickFacts.find((f) => f.label === "Hex");
   const originalHex  = hexFact?.value ?? null;
   const light        = originalHex ? isLight(originalHex) : false;
-  const similarColors = originalHex
+  // Names used for more than one code (azure #007FFF vs #F0FFFF) show every code; the first leads.
+  const variants     = entry.hexVariants?.length ? entry.hexVariants : null;
+  const primaryHex   = variants ? variants[0].hex : originalHex;
+  const similarColors = variants
+    ? getSimilarColors(variants[0].hex)
+    : originalHex
     ? [
         { hex: originalHex, slug: originalHex.slice(1).toLowerCase(), name: entry.quickFacts.find(f => f.label === "Closest named color")?.value ?? originalHex },
         ...getSimilarColors(originalHex),
@@ -92,7 +153,19 @@ export function ContentPageView({
       <section className="w-full px-6 pb-12 pt-28 sm:px-8 lg:px-12">
         <Breadcrumbs items={breadcrumbs.map((b) => ({ title: b.name, href: b.href }))} />
 
-        {originalHex && (
+        {variants ? (
+          <div className="mt-8 flex min-h-[11rem] overflow-hidden rounded-2xl ring-1 ring-black/[0.07] sm:min-h-[14rem]">
+            {variants.map((v) => {
+              const ink = isLight(v.hex) ? "rgba(28,23,18,0.7)" : "rgba(255,255,255,0.85)";
+              return (
+                <div key={v.hex} className="flex min-w-0 flex-1 flex-col justify-end p-4 sm:p-6" style={{ backgroundColor: v.hex }}>
+                  <span className="font-mono text-base font-semibold uppercase tracking-[0.06em] sm:text-xl" style={{ color: ink }}>{v.hex}</span>
+                  <span className="mt-1 text-[12px] leading-4 sm:text-[13px]" style={{ color: ink }}>{v.label}</span>
+                </div>
+              );
+            })}
+          </div>
+        ) : originalHex && (
           <div
             className="mt-8 flex min-h-[11rem] flex-col justify-end rounded-2xl p-5 ring-1 ring-black/[0.07] sm:min-h-[14rem] sm:p-6"
             style={{ backgroundColor: originalHex }}
@@ -108,6 +181,15 @@ export function ContentPageView({
 
         <h1 className="mt-8 max-w-5xl text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">{entry.title}</h1>
         <p className="mt-5 max-w-4xl text-[16px] leading-7 text-[#1c1712]/55">{entry.description}</p>
+
+        {variants && (
+          <div className="mt-10">
+            <SmallTitle>Hex codes</SmallTitle>
+            <div className={`grid gap-4 ${variants.length >= 3 ? "md:grid-cols-3" : "sm:grid-cols-2"}`}>
+              {variants.map((v) => <HexVariantCard key={v.hex} variant={v} />)}
+            </div>
+          </div>
+        )}
 
         {entry.paletteColors && entry.paletteColors.length > 0 && (
           <div className="mt-10">
@@ -179,7 +261,7 @@ export function ContentPageView({
               <div className="mt-5">
                 <Bullets items={entry.keyTakeaways} />
               </div>
-              {entry.quickFacts.length > 0 && (
+              {entry.quickFacts.length > 0 && !variants && (
                 <dl className="mt-7 grid gap-x-8 gap-y-1 rounded-2xl p-5 ring-1 ring-black/[0.07] sm:grid-cols-2">
                   {entry.quickFacts.map((fact) => (
                     <div key={fact.label} className="flex items-baseline gap-2 border-b border-black/[0.05] py-2 text-[14px] last:border-0 sm:[&:nth-last-child(2):nth-child(odd)]:border-0">
@@ -191,11 +273,14 @@ export function ContentPageView({
               )}
             </div>
 
+            {!entry.authoredOnly && (
             <div className={block}>
               <h2 className={h2}>{entry.expertSummary.title}</h2>
               <p className={`${body} mt-4`}>{entry.expertSummary.body}</p>
             </div>
+            )}
 
+            {!entry.authoredOnly && (
             <div className={block}>
               <h2 className={h2}>Core Definitions</h2>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -207,7 +292,9 @@ export function ContentPageView({
                 ))}
               </div>
             </div>
+            )}
 
+            {!entry.authoredOnly && (
             <div className={block}>
               <h2 className={h2}>Pros &amp; Cons</h2>
               <div className="mt-6 grid gap-6 sm:grid-cols-2">
@@ -238,6 +325,7 @@ export function ContentPageView({
                 </div>
               </div>
             </div>
+            )}
 
             {entry.aiSections.length > 0 && (
               <div className={block}>
@@ -262,7 +350,15 @@ export function ContentPageView({
               </div>
             ))}
 
-            {entry.comparisonRows && (
+            {variants && primaryHex && (
+              <div className={block}>
+                <h2 className={h2}>Shades, tints and tones of {primaryHex.toUpperCase()}</h2>
+                <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">Each row starts with {primaryHex.toUpperCase()} and moves 10% at a time toward black, white or gray. Click a swatch to copy its hex code.</p>
+                <ColorVariations rows={getVariationRows(primaryHex)} />
+              </div>
+            )}
+
+            {entry.comparisonRows && !entry.authoredOnly && (
               <div className={block}>
                 <h2 className={h2}>Comparison</h2>
                 <div className="mt-6 overflow-x-auto rounded-2xl ring-1 ring-black/[0.07]">
@@ -289,7 +385,7 @@ export function ContentPageView({
               </div>
             )}
 
-            {entry.examples && (
+            {entry.examples && !entry.authoredOnly && (
               <div className={block}>
                 <h2 className={h2}>Examples</h2>
                 <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -323,6 +419,21 @@ export function ContentPageView({
                 <Faq items={entry.faq} />
               </div>
             </div>
+
+            {entry.sources && entry.sources.length > 0 && (
+              <div className={block}>
+                <h2 className={h2}>Sources</h2>
+                <ul className="mt-4 space-y-2">
+                  {entry.sources.map((source) => (
+                    <li key={source.href} className="text-[15px] leading-7">
+                      <a href={source.href} target="_blank" rel="noopener noreferrer" className="text-[#c2410c] underline-offset-4 hover:underline">
+                        {source.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </article>
 
           {/* Sidebar */}
@@ -342,9 +453,9 @@ export function ContentPageView({
               </div>
             )}
 
-            {originalHex && (
+            {primaryHex && (
               <div>
-                <SmallTitle>Use {originalHex.toUpperCase()}</SmallTitle>
+                <SmallTitle>Use {primaryHex.toUpperCase()}</SmallTitle>
                 <ul className="space-y-1">
                   {[
                     { title: "Convert HEX to RGB", href: "/hex-to-rgb" },
