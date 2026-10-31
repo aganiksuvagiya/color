@@ -5,8 +5,9 @@ import type { Metadata } from "next";
 import { ContentPageView } from "@/components/seo/content-page";
 import { HubPageView, type HubDirectory } from "@/components/seo/hub-page";
 import { StructuredData } from "@/components/seo/structured-data";
-import { findResolvedEntry, getCollection, getColorMeaningOverride, getHubByPath, isColorMeaningAuthored, isColorMeaningIndexable, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
+import { findResolvedEntry, getCollection, getColorMeaningOverride, getHubByPath, isColorMeaningAuthored, isColorMeaningIndexable, isColorPageIndexable, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
 import { richColorPages } from "@/lib/seo/color-pages-rich";
+import { isRedirectedColorMeaning } from "@/lib/seo/color-redirects";
 import { buildProgrammaticBrandColorEntry, buildProgrammaticColorEntry, getHexDuplicateCanonicalSlug, getProgrammaticBrandColorSlugs, getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
 import {
   buildArticleSchema,
@@ -84,7 +85,7 @@ function getHubDirectory(path: string, featuredHrefs: Set<string>): HubDirectory
 
   if (path === "/colors" || path === "/color-meanings") {
     const links = namedColors
-      .filter((color) => path === "/colors" || isColorMeaningAuthored(color.slug))
+      .filter((color) => path === "/colors" || (isColorMeaningAuthored(color.slug) && !isRedirectedColorMeaning(color.slug)))
       .map((color) => ({ title: color.name, href: `${path}/${color.slug}`, hex: color.hex }))
       .filter((link) => !featuredHrefs.has(link.href));
     return {
@@ -250,14 +251,22 @@ export function buildCollectionMetadata<
   const isUnauthoredHexColorPage =
     key === "colors" && !duplicateOfSlug && getProgrammaticColorDescriptor(slug)?.mode === "hex";
 
-  const noindex = (key === "colorMeanings" && !duplicateOfSlug && !isColorMeaningIndexable(slug)) || isUnauthoredHexColorPage;
+  const noindex =
+    (key === "colorMeanings" && !duplicateOfSlug && !isColorMeaningIndexable(slug)) ||
+    (key === "colors" && !duplicateOfSlug && !isColorPageIndexable(slug)) ||
+    isUnauthoredHexColorPage;
 
   return buildPageMetadata({
     title: entry.title,
     description: entry.description,
     keywords: entry.keywords,
     path: `${pathPrefix}/${entry.slug}`,
-    canonicalPath: duplicateOfSlug ? `${pathPrefix}/${duplicateOfSlug}` : undefined,
+    // A hex twin of a meaning page that now redirects points straight at the /colors page instead.
+    canonicalPath: duplicateOfSlug
+      ? key === "colorMeanings" && isRedirectedColorMeaning(duplicateOfSlug)
+        ? `/colors/${duplicateOfSlug}`
+        : `${pathPrefix}/${duplicateOfSlug}`
+      : undefined,
     noindex,
     // Industry pages have a prerendered share image with their own title and palettes.
     imagePath: key === "bestColorsFor" ? `${pathPrefix}/${entry.slug}/opengraph-image` : undefined,

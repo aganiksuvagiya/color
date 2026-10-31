@@ -1,4 +1,6 @@
 import { richColorMeanings } from "./color-meanings-rich";
+import { richColorPages } from "./color-pages-rich";
+import { isRedirectedColorMeaning } from "./color-redirects";
 import { industryPaletteSets } from "./industry-palettes";
 
 export type FaqItem = {
@@ -3037,6 +3039,28 @@ export function isColorMeaningIndexable(slug: string): boolean {
   return indexableColorMeaningSlugs.has(slug);
 }
 
+// /colors/<name> is only indexable when the page is more than the generated template, which
+// 130 of the 140 pages were (70-84% of their text shared with another color page): a base hue
+// with written sections, a full rewrite in color-pages-rich.ts, or a color with real search
+// demand that is next in line for a rewrite. The rest stay reachable but noindex until rewritten.
+const colorPagesNextToRewrite = [
+  // Rich meaning pages already exist for these.
+  "gold", "silver", "lavender", "turquoise", "navy", "maroon", "indigo", "violet", "magenta", "coral", "beige", "olive",
+  // Had Search Console queries in Aug-Oct 2026.
+  "bisque", "lime-green", "medium-sea-green",
+  // 10+ impressions or a click in Search Console, Jun 23-Oct 29 2026.
+  "dark-orange", "medium-blue", "royal-blue", "dark-sea-green", "dark-goldenrod", "orange-red",
+  "camel", "hot-pink", "linen", "dark-gray", "wheat",
+];
+const indexableColorPageSlugs = new Set([
+  ...colors.map((entry) => entry.slug),
+  ...Object.keys(richColorPages),
+  ...colorPagesNextToRewrite,
+]);
+export function isColorPageIndexable(slug: string): boolean {
+  return indexableColorPageSlugs.has(slug);
+}
+
 export function isColorMeaningAuthored(slug: string): boolean {
   return Object.prototype.hasOwnProperty.call(colorMeaningOverrides, slug);
 }
@@ -3577,7 +3601,7 @@ const tailwindEntries: ContentEntry[] = ["blue", "green", "purple", "orange", "b
   relatedLinks: [
     ...(NO_COLOR_PAGE_SLUGS.has(color) ? [] : [
       { title: `${color[0].toUpperCase()}${color.slice(1)} color page`, href: `/colors/${color}` },
-      { title: `${color[0].toUpperCase()}${color.slice(1)} color meaning`, href: `/color-meanings/${color}` },
+      ...(isRedirectedColorMeaning(color) ? [] : [{ title: `${color[0].toUpperCase()}${color.slice(1)} color meaning`, href: `/color-meanings/${color}` }]),
     ]),
     ...(CSS_COLOR_SLUGS.has(color) ? [{ title: `${color[0].toUpperCase()}${color.slice(1)} CSS guide`, href: `/css-colors/${color}` }] : []),
     { title: "Color contrast guide", href: "/accessibility/color-contrast" },
@@ -3605,7 +3629,7 @@ const cssColorEntries: ContentEntry[] = cssColorSlugs.map((color) => ({
   ],
   relatedLinks: [
     { title: `${color[0].toUpperCase()}${color.slice(1)} Tailwind guide`, href: `/tailwind/${color}` },
-    { title: `${color[0].toUpperCase()}${color.slice(1)} color meaning`, href: `/color-meanings/${color}` },
+    ...(isRedirectedColorMeaning(color) ? [] : [{ title: `${color[0].toUpperCase()}${color.slice(1)} color meaning`, href: `/color-meanings/${color}` }]),
     { title: `${color[0].toUpperCase()}${color.slice(1)} color page`, href: `/colors/${color}` },
     { title: "Accessibility guide", href: "/accessibility/color-contrast" },
   ],
@@ -5937,7 +5961,7 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Best colors for restaurant websites", href: "/best-colors-for/restaurant-websites" },
       { title: "Brown color page", href: "/colors/brown" },
       { title: "Chocolate color meaning", href: "/color-meanings/chocolate" },
-      { title: "Tan color meaning", href: "/color-meanings/tan" },
+      { title: "Tan color page", href: "/colors/tan" },
       { title: "Color palette generator", href: "/generator" },
       { title: "Contrast checker", href: "/tools/contrast" },
     ],

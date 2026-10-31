@@ -29,6 +29,12 @@ const contentUpdatedOn: Record<string, string> = {
   "/best-colors-for/luxury-brand-websites": "2026-10-29",
   "/best-colors-for/corporate-websites": "2026-10-29",
   "/best-colors-for/portfolio-websites": "2026-10-29",
+  "/colors/tan": "2026-11-01",
+  "/colors/forest-green": "2026-11-01",
+  "/colors/crimson": "2026-11-01",
+  "/colors/alice-blue": "2026-11-01",
+  "/colors/lime": "2026-11-01",
+  "/colors/light-gray": "2026-11-01",
 };
 
 type SitemapEntry = {

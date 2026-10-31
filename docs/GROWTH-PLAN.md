@@ -548,6 +548,51 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
   - Non-prerendered pages still render on demand (e.g. `/colors/f0ffff`, MISS, canonical to azure).
   - Unchanged: redirects (picker, tailwind, `/convert/*`, the healthcare guide, `/shades-of-grey`), the middleware hex 404 with noindex, HSTS and security headers, sitemaps, robots, share images, client navigation, and the rate limiter (120/min on all slug routes, cached pages included).
   - **After deploy:** watch Cloudflare Observability errors ("exceeded CPU") and Search Console Crawl stats 5xx for a week. Must be turned off if Partial Prerendering is ever enabled.
+  - **Live 2026-11-01** as worker `17df396a` (develop `562d8bb`).
+- **Full live audit (2026-11-01).**
+  - **Hygiene, all clean:** all 401 sitemap URLs return 200 from the cache; no noindex inside the sitemap; every canonical points to itself; one H1 per page; no duplicate titles or descriptions.
+  - **Speed:** mobile PageSpeed is home 97 and `/hex-to-rgb` 98.
+  - **What holds impressions back:**
+    1. Template pages: 130 of 140 `/colors` pages share 70–84% of their text with another color page; `/css-colors` 82%, `/tailwind` 67%.
+    2. Zero external mentions or links, and no `sameAs` or founder in the schema.
+    3. Recovery from the server errors.
+  - **Minor:** 50 titles over 60 characters, 183 descriptions over 165, and thin hubs (`/explore` 52 words, `/resources` 92).
+- **Color pages, batch 1 (2026-11-01, uncommitted):**
+  - **Pages:** `tan`, `forest-green`, `crimson`, `alice-blue`, `lime` and `light-gray` are rewritten in `lib/seo/color-pages-rich.ts`, picked by Search Console demand (tan alone had 8+ queries).
+  - **Facts:** checked against Wikipedia, W3C and `brand.ua.edu`. Harvard's crimson hex couldn't be fetched, so it's left out.
+  - **Result:** each page now shares 16–19% of its text with any other color page, down from about 80%. That remainder is the sidebar and section labels.
+- **Plan for the remaining ~130 template color pages:**
+  - **Batch 2:** the `/colors` pages for the 12 colors whose meaning pages are already rich (gold, silver, lavender, turquoise, navy, maroon, indigo, violet, magenta, coral, beige, olive). Most have a real "which hex?" story, e.g. gold #FFD700 vs metallic #D4AF37, olive #808000 vs olive drab #6B8E23, violet #EE82EE vs spectral ~#7F00FF, lavender #E6E6FA vs the flower ~#B57EDC. The facts are already verified.
+  - **Batch 3:** the 13 base hues (blue, green, red, purple, black, orange, yellow, pink, teal, gray, white, brown, plus azure, which is done). Move them to `authoredOnly` with rewritten sections; white and black had searches in October.
+  - **Batch 4:** the ~100 long-tail CSS names (bisque, papaya whip…), at about 10 a week by Search Console demand.
+- **Template color pages noindexed (owner, 2026-11-01: "ha to srkhu kr"):**
+  - **Rule:** `isColorPageIndexable` in `lib/seo/content.ts` keeps `/colors/<name>` indexable only for:
+    - the 13 base hues;
+    - every page in `color-pages-rich.ts`;
+    - the colors next in line for a rewrite: the 12 batch-2 colors, plus bisque, lime-green and medium-sea-green, which had Search Console queries in Aug–Oct.
+  - **Indexing:** 47 color pages are indexed and in `sitemap-colors.xml` (it listed all 140 before). The other 93 still render (200) and are linked from the `/colors` hub, but carry `noindex, follow` and are out of the sitemap.
+  - **Extra demand group:** after the owner signed in to Search Console in the app browser, the 6-month page data (Jun 23–Oct 29) added 11 pages with 10+ impressions or a click: dark-orange, medium-blue, royal-blue, dark-sea-green, dark-goldenrod, orange-red, camel, hot-pink, linen, dark-gray, wheat.
+  - **Bringing pages back:** a page goes back into the index as soon as it's added to `color-pages-rich.ts`. Check Search Console → Pages → "Excluded by noindex" after deploy (~93 more there is expected).
+- **Search Console findings (read in the app browser, 2026-11-01).**
+  - **6 months:** 491 clicks and 25.1K impressions over 388 pages.
+  - **Before and after Oct 19:** Oct 5–18 had 40 clicks and 3.44K impressions; Oct 19–29 had 10 clicks and 95 impressions. Pages ranking 5–8 went to zero, among them education (7.3), automotive (5.7), finance (5.5), travel, coffee shop, pet and the ai-website-color-strategy guide (8.7). Only the brand homepage kept impressions.
+  - **Not a technical block:**
+    - No manual actions and no security issues.
+    - 426 pages indexed, and the indexing report shows 0 server errors.
+    - URL Inspection of education-websites: crawled Oct 28, indexed, user-declared canonical.
+    - Crawl stats over 90 days: 7% 5XX. The examples are mostly `http://www.hueflow.site/` and its favicon until Oct 11 (www has redirected since Oct 24), plus a few real pages on Sep 5–9. There's no 5XX example after Oct 11, so Googlebot errors did not cause the Oct 19 drop.
+  - **Likely cause:** a site-wide quality demotion of an indexed site. Hundreds of template pages (and the hex URLs crawlers hit after Aug 31), followed by the Oct 17 redesign that changed every page at once. The September spam update finished on Oct 8, so it doesn't line up. The fix is the current direction: fewer template pages in the index, unique pages, then links and brand signals.
+  - **Where the color demand sat:** Google ranked the color queries on the `/color-meanings/<name>` pages (tan 332 impressions, light-yellow 337, crimson 206, cyan 185, forest-green 159, cadet-blue 73, blue-violet 67…), not on `/colors/<name>` (tan 17, crimson 3). Those meaning pages were noindexed on Oct 24, and their rich versions now live on `/colors`.
+  - **Done (owner, 2026-11-01: "Ha, redirect karo"):** `/color-meanings/<name>` now 308s to `/colors/<name>` for tan, light-yellow, crimson, cyan, forest-green, alice-blue, lime and light-gray. The list is in `lib/seo/color-redirects.ts`, which `next.config.ts` reads.
+    - Internal links to those meaning pages are gone: the related links on color pages, the Tailwind and CSS guides, the coffee-shop page and the meanings hub A–Z. None of the 567 prerendered pages links to them.
+    - Their hex twins (e.g. `/color-meanings/d2b48c`) now canonicalize to `/colors/<name>`.
+    - Azure keeps its own meaning page, because it is a written base hue.
+    - Add each future rewrite whose meaning page is a noindexed template to that list.
+  - **Other demand clusters:**
+    - `/color-combinations/*`: blue-and-orange 479, green-and-purple 224, purple-and-gold 221, red-and-orange 208, purple-and-black 169…
+    - `/tools/contrast`: 1,875 impressions, 0 clicks.
+    - `/tailwind-colors`: 1,309.
+    - `/guides/ai-website-color-strategy`: 836.
 
 ## Next session: start here (updated 2026-10-19)
 

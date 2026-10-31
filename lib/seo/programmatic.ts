@@ -12,7 +12,8 @@ import {
 } from "@/lib/color-names";
 import { getContrastText, hexToHsl, hslToHex, isValidHex } from "@/lib/color-utils";
 
-import { cssColorSlugs, isColorMeaningIndexable, type ContentEntry } from "@/lib/seo/content";
+import { isRedirectedColorMeaning } from "@/lib/seo/color-redirects";
+import { cssColorSlugs, isColorMeaningIndexable, isColorPageIndexable, type ContentEntry } from "@/lib/seo/content";
 import { colorFamily } from "@/lib/palette-library";
 
 type ColorDescriptor = {
@@ -204,7 +205,9 @@ function buildColorRelatedLinks(descriptor: ColorDescriptor) {
   return [
     { title: `Shades of ${familyName}`, href: `/shades-of-${family}`, label: "Related shades" },
     { title: `${familyName} color palettes`, href: `/color-palettes/${family}`, label: "Related palette library" },
-    { title: `${display} color meaning`, href: `/color-meanings/${baseColorSlug}`, label: "Related color meaning" },
+    ...(isRedirectedColorMeaning(baseColorSlug)
+      ? []
+      : [{ title: `${display} color meaning`, href: `/color-meanings/${baseColorSlug}`, label: "Related color meaning" }]),
     { title: `${descriptor.hueLabel} palettes`, href: `/palettes/${familyPair.palette}`, label: "Related palette" },
     { title: `${descriptor.hueLabel} gradients`, href: `/gradients/${familyPair.gradient}`, label: "Related gradient" },
     { title: `${descriptor.hueLabel} brand colors`, href: `/brand-colors/${familyPair.brand}`, label: "Related branding guide" },
@@ -459,11 +462,11 @@ export function getProgrammaticColorStaticParams() {
 }
 
 export function getProgrammaticColorSitemapPaths(limit = namedColors.length) {
-  // /colors/<name> is the canonical reference page for every named color.
-  // /color-meanings/<name> is only included for the 13 hand-written base hues; the rest
-  // render for visitors but are noindexed as near-duplicates of /colors/<name>.
+  // Only indexable pages go in the sitemap: /colors/<name> for colors past the generated
+  // template (isColorPageIndexable) and /color-meanings/<name> for the hand-written meanings.
+  // The rest render for visitors but are noindexed until they're rewritten.
   const namedPaths = namedColors.slice(0, limit).flatMap((color) => [
-    `/colors/${color.slug}`,
+    ...(isColorPageIndexable(color.slug) ? [`/colors/${color.slug}`] : []),
     ...(isColorMeaningIndexable(color.slug) ? [`/color-meanings/${color.slug}`] : []),
   ]);
 

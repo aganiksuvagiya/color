@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 
+import { redirectedColorMeanings } from "./lib/seo/color-redirects";
 import { converterSlugList } from "./lib/seo/converter-specs";
 
 const converterSlugPattern = converterSlugList.join("|");
@@ -36,6 +37,8 @@ const nextConfig: NextConfig = {
       // Tool pages merged into their search-phrase URL, so the tool and its text sit on one page.
       { source: "/tools/picker", destination: "/color-picker", permanent: true },
       { source: "/tools/tailwind", destination: "/tailwind-colors", permanent: true },
+      // Meaning pages whose content moved into a full /colors rewrite (see color-redirects.ts).
+      { source: `/color-meanings/:slug(${redirectedColorMeanings.join("|")})`, destination: "/colors/:slug", permanent: true },
     ];
   },
   async headers() {
