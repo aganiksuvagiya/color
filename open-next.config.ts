@@ -16,4 +16,10 @@ export default defineCloudflareConfig({
 		set: async () => {},
 		delete: async () => {},
 	},
+	// Answer prerendered pages (HTML, RSC and segment prefetches) straight from that cache in
+	// the small routing layer, before the ~10 MB Next server bundle is loaded. On the Workers
+	// free plan (10 ms CPU per request) loading the server on a cold isolate is what failed:
+	// "Worker exceeded CPU time limit" on `_rsc` prefetches of static pages, and ~6% 5xx in
+	// Search Console's crawl stats. Must be false if Partial Prerendering is ever turned on.
+	enableCacheInterception: true,
 });

@@ -528,6 +528,27 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
     - Contrast: all 18 palettes pass AAA body text and AA buttons, links, badges and cards (checked by script before writing). Every contrast figure in the copy is computed.
   - **Experiment:** these pages are in neither group of the Nov 20 / Dec 18 read. Track them separately; they aren't part of the 8-vs-16 comparison.
 
+### Branch `week-3` (from `develop` `553fa1d`, uncommitted)
+
+- **Why traffic fell (Search Console, analyzed 2026-11-01).**
+  - **Monthly figures:**
+
+    | Month | Impressions | Clicks | Avg position |
+    |---|---|---|---|
+    | August | 14.9K | 228 | 53.1 |
+    | September | 3.93K | 108 | 25.8 |
+    | October | 4.36K | 69 | 26.9 |
+
+    Daily impressions went from ~240 on Oct 1–18 to ~10 from Oct 19.
+  - **Drop 1 (around Sep 3–4):** follows commit `d13f116` (Aug 31). It set `dynamicParams = true` on `/colors`, `/color-meanings`, `/brand-colors` and `/resources`, so any hex URL rendered a new page. Crawlers enumerated them, and the Worker hit the CPU limit and KV write errors. The color-name queries (azure, cyan, tan hex, crimson, forest green, alice blue…) disappeared from the September data.
+  - **Drop 2 (Oct 19):** follows the Oct 17 redesign (`e128a7d`), which grew the server bundle to ~10 MB. Cold-start "Worker exceeded CPU time limit" errors followed on the free plan's 10 ms CPU budget.
+  - **Brand searches fell too:** "hueflow" impressions went 823 → ~450 → 127 a month, and its position from 1.5 (mid-Aug) to 2.4–2.7.
+- **5xx fix applied: `enableCacheInterception: true` in `open-next.config.ts`** (the patch parked on 2026-10-24). Tested with `npx opennextjs-cloudflare preview`. Plain `wrangler dev` doesn't fill the cache, so every page shows MISS there.
+  - Every prerendered page and its `_rsc` prefetch is answered from the cache by the routing layer (`x-opennext-cache: HIT`) without loading the server.
+  - Non-prerendered pages still render on demand (e.g. `/colors/f0ffff`, MISS, canonical to azure).
+  - Unchanged: redirects (picker, tailwind, `/convert/*`, the healthcare guide, `/shades-of-grey`), the middleware hex 404 with noindex, HSTS and security headers, sitemaps, robots, share images, client navigation, and the rate limiter (120/min on all slug routes, cached pages included).
+  - **After deploy:** watch Cloudflare Observability errors ("exceeded CPU") and Search Console Crawl stats 5xx for a week. Must be turned off if Partial Prerendering is ever enabled.
+
 ## Next session: start here (updated 2026-10-19)
 
 **State:**
