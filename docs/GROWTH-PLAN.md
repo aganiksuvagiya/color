@@ -632,6 +632,29 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
   - All contrast figures computed with the WCAG formula and rounded down. Facts checked against My Jewish Learning, TIME, Wikipedia (Flag of Israel, Color analysis), the National Archives, the James Hardie release and trade press.
   - **After deploy:** IndexNow for the 4 URLs and `/blog`; owner requests indexing in Search Console. Pantone 2027 (event on Dec 3, 2026) gets added to the roundup when it's out.
 
+- **Question queries in Search Console (read 2026-11-14, 16 months, regex `(?i)\b(who|what|why|how|when|where|which|can|does|do|is|are|should|will|could|would)\b`).**
+  - **Total:** 461 question queries, 817 impressions, 0 clicks, average position 61. Most of it is from Aug–Oct, before the Oct 19 drop.
+  - **By group:**
+
+    | Group | Queries | Impressions | Avg position |
+    |---|---|---|---|
+    | "Do X and Y go together?", "what goes with X and Y", "are X and Y complementary" | 159 | 253 | 38.6 |
+    | "What color is X?", "what is X color" | 154 | 284 | 68.4 |
+    | "What does X represent / symbolize / mean" | 80 | 129 | 79.5 |
+    | Business: trust, health, luxury, "what colors convert best" | 23 | 87 | 67.4 |
+    | Codes: "what is yellow in rgb", "hex code for tan" | 27 | 37 | 79.3 |
+    | Theory: warm/cool, shade, "hue with black added" | 18 | 27 | 71.9 |
+
+  - **Combination pairs (closest to page 1):** green + purple 27 variants / 60 impressions / best position 7.8; blue + orange 34 / 53 / 28; red + purple 10 / 17 / 23; red + orange 10 / 17 / 19.5; purple + gold 9 / 12 / 11; black + gold 7 / 12 / 10; green + red 9 / 9 / 9; green + black 6 / 7 / 8; purple + black 4 / 6 / 5.
+  - **Top pages for questions:** /color-meanings/white 71 (pos 75), /color-combinations/green-and-purple 63 (35), blue-and-orange 57 (45), /color-meanings/tan 50, yellow 50 (82), crimson 47, black 42 (82), /guides/conversion-color-strategy 33 (55), /faqs/trust-colors 19, /best-colors-for/ecommerce-conversions 19 (91), /color-psychology/warm-vs-cool-colors 10 (82).
+  - **What to do, in order:**
+    1. Rewrite the combination pages, top 5 first (green-purple, blue-orange, red-purple, red-orange, purple-gold). Answer "do they go together?" in the first line, say honestly whether they are complementary, add "what third color goes with them" with hex codes, and use the real questions as FAQs.
+    2. Rewrite the white, black and yellow meaning pages (batch 3), and put yellow's codes (#FFFF00, RGB 255, 255, 0) first on /colors/yellow: about 15 "yellow rgb/hex" variants.
+    3. Next color rewrites by question demand: camel, hot-pink, bisque, wheat, teal, ivory, saddle-brown, dodger-blue, linen.
+    4. One honest guide for "what color represents trust / health / luxury" and "what colors convert best", improving /faqs/trust-colors and /guides/conversion-color-strategy rather than adding pages.
+- **Combination pages, batch 1 (2026-11-14, uncommitted on `week-4`):** green-and-purple, blue-and-orange, red-and-purple, red-and-orange and purple-and-gold are rewritten in `lib/seo/color-combinations-rich.ts` (merged in `findCollectionEntry` with `authoredOnly`). Each answers its Search Console questions first ("do they go together", "are they complementary", "what color goes with them"), adds a shade strip, 4 palettes with computed contrast, and sources (Mardi Gras, WSPU, Red Hat Society and Jenny Joseph, Tyrian purple, Lakers, LSU, Knicks, color grading). Sitemap lastmod 2026-11-14.
+- **Combination pages, batch 2 (2026-11-14, same branch):** purple-and-black, green-and-black, green-and-red, black-and-gold, purple-and-orange, red-and-black, black-and-orange, blue-and-purple and green-and-orange, written the same way. This also fixes two wrong claims on the old pages: green-and-orange called the pair "analogous" and purple-and-orange called it "split-complementary"; both are two corners of the secondary triad. green-and-red adds a Machado deuteranopia check (the classic Christmas pair drops to 1.1:1) and a color-blind-friendly palette. Sources added: Ravens, green-screen monitors, color blindness prevalence, Pan-African flag, Steelers, Suns, AC Milan, Giants, monarch butterfly, Irish flag. 14 of 17 combination pages are now hand-written; blue-and-green, blue-and-black and blue-and-red (almost no question searches) are still templates.
+
 ## Next session: start here (updated 2026-10-19)
 
 **State:**

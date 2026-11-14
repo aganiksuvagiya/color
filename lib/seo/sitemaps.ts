@@ -47,6 +47,13 @@ const contentUpdatedOn: Record<string, string> = {
   "/colors/coral": "2026-11-14",
   "/colors/beige": "2026-11-14",
   "/colors/olive": "2026-11-14",
+  ...Object.fromEntries(
+    [
+      "green-and-purple", "blue-and-orange", "red-and-purple", "red-and-orange", "purple-and-gold",
+      "purple-and-black", "green-and-black", "green-and-red", "black-and-gold", "purple-and-orange",
+      "red-and-black", "black-and-orange", "blue-and-purple", "green-and-orange",
+    ].map((slug) => [`/color-combinations/${slug}`, "2026-11-14"]),
+  ),
 };
 
 type SitemapEntry = {

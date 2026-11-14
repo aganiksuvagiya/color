@@ -5,8 +5,9 @@ import type { Metadata } from "next";
 import { ContentPageView } from "@/components/seo/content-page";
 import { HubPageView, type HubDirectory } from "@/components/seo/hub-page";
 import { StructuredData } from "@/components/seo/structured-data";
-import { findResolvedEntry, getCollection, getColorMeaningOverride, getHubByPath, isColorMeaningAuthored, isColorMeaningIndexable, isColorPageIndexable, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
+import { findEntry, findResolvedEntry, getCollection, getColorMeaningOverride, getHubByPath, isColorMeaningAuthored, isColorMeaningIndexable, isColorPageIndexable, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
 import { richColorPages } from "@/lib/seo/color-pages-rich";
+import { richColorCombinations } from "@/lib/seo/color-combinations-rich";
 import { isRedirectedColorMeaning } from "@/lib/seo/color-redirects";
 import { buildProgrammaticBrandColorEntry, buildProgrammaticColorEntry, getHexDuplicateCanonicalSlug, getProgrammaticBrandColorSlugs, getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
 import {
@@ -376,6 +377,15 @@ const findCollectionEntry = cache(function findCollectionEntry<K extends keyof R
       ...colorEntry,
       title: `${getProgrammaticColorDescriptor(slug)?.displayName ?? slug} Color Meaning`,
     });
+  }
+
+  if (key === "colorCombinations") {
+    // Hand-written pairs: answer the real search questions and hide the template blocks.
+    const rich = richColorCombinations[slug];
+    const base = rich ? findEntry("colorCombinations", slug) : undefined;
+    if (rich && base) {
+      return resolveContentEntry({ ...base, ...rich, authoredOnly: true });
+    }
   }
 
   if (key === "brandColors") {
