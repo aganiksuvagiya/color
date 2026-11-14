@@ -62,13 +62,13 @@ export function UIPreview({ palette }: Props) {
 
         <div className="grid grid-cols-1 gap-3 p-4 sm:grid-cols-3">
           {[
-            { title: "Revenue", value: "$12,450", badge: "+12%", color: success },
+            { title: "Revenue", value: "$12k", badge: "+12%", color: success },
             { title: "Users", value: "3,281", badge: "Active", color: accent },
             { title: "Alerts", value: "7", badge: "Pending", color: warning },
           ].map((stat) => (
-            <div key={stat.title} className="min-w-0 rounded-lg p-3" style={{ backgroundColor: card }}>
+            <div key={stat.title} className="min-w-0 rounded-lg p-2.5" style={{ backgroundColor: card }}>
               <p className="text-[10px] uppercase tracking-wider opacity-60">{stat.title}</p>
-              <p className="mt-1 truncate text-base font-bold">{stat.value}</p>
+              <p className="mt-1 truncate text-sm font-bold">{stat.value}</p>
               <div className="mt-2 flex items-center gap-1">
                 <span className="rounded px-1.5 py-0.5 text-[10px] font-bold" style={{ backgroundColor: stat.color, color: label(stat.color) }}>{stat.badge}</span>
               </div>
