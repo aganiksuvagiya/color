@@ -6,6 +6,9 @@ import { BlogArticle } from "@/components/blog/blog-article";
 import { ColorOfTheYear2027Post } from "@/components/blog/posts/color-of-the-year-2027";
 import { NavyBluePost } from "@/components/blog/posts/colors-that-go-with-navy-blue";
 import { PalettesOnARealWebsitePost } from "@/components/blog/posts/palettes-on-a-real-website";
+import { HanukkahColorsPost } from "@/components/blog/posts/hanukkah-colors";
+import { ThanksgivingPalettePost } from "@/components/blog/posts/thanksgiving-color-palette";
+import { WinterColorPalettePost } from "@/components/blog/posts/winter-color-palette";
 import { CeleryPost, CottageDoorPost, GroundedPost, WebsterGreenPost } from "@/components/blog/posts/paint-picks-2027";
 import { StructuredData } from "@/components/seo/structured-data";
 import { blogPath, blogPosts, getBlogPost } from "@/lib/blog/posts";
@@ -21,6 +24,9 @@ const BODIES: Record<string, ComponentType> = {
   "benjamin-moore-webster-green": WebsterGreenPost,
   "behr-grounded": GroundedPost,
   "valspar-cottage-door": CottageDoorPost,
+  "thanksgiving-color-palette": ThanksgivingPalettePost,
+  "hanukkah-colors": HanukkahColorsPost,
+  "winter-color-palette": WinterColorPalettePost,
 };
 
 export const dynamicParams = false;

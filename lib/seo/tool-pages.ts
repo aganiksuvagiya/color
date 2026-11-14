@@ -1282,6 +1282,30 @@ export const blogPageContent = {
     "HueFlow's resource library helps teams learn how color affects trust, readability, conversion, and brand clarity across SaaS, fintech, ecommerce, AI, and modern marketing websites.",
   featuredArticles: [
     {
+      title: "Thanksgiving Color Palette: 8 Palettes, Hex Codes",
+      excerpt: "Pumpkin, cranberry, harvest gold and sage with exact codes, eight ready palettes and readable text pairs for menus and invitations.",
+      category: "Seasonal",
+      readTime: "6 min",
+      href: "/blog/thanksgiving-color-palette",
+      cover: ["#9B1B30", "#E07B39", "#DA9100", "#6F4E37", "#F5EBDC"],
+    },
+    {
+      title: "Hanukkah Colors: Meaning, Hex Codes and Palettes",
+      excerpt: "Why blue and white, where silver and gold come in, the codes to use and six palettes that stay readable.",
+      category: "Seasonal",
+      readTime: "6 min",
+      href: "/blog/hanukkah-colors",
+      cover: ["#FFFFFF", "#7FA7E0", "#0038B8", "#D4AF37", "#1F2A44"],
+    },
+    {
+      title: "Winter Color Palette: Hex Codes for All 3 Winters",
+      excerpt: "Deep, True and Bright Winter from color analysis, the colors Winters avoid, and four winter palettes for design.",
+      category: "Seasonal",
+      readTime: "7 min",
+      href: "/blog/winter-color-palette",
+      cover: ["#FFFFFF", "#C8102E", "#0F52BA", "#009B77", "#1A1A1A"],
+    },
+    {
       title: "Why We Show Every Palette on a Website First",
       excerpt: "Five swatches can't tell you if a palette works. What the preview checks, how contrast is computed, and how HueFlow is built.",
       category: "Guides",
@@ -1291,7 +1315,7 @@ export const blogPageContent = {
     },
     {
       title: "Color of the Year 2027: Every Pick So Far",
-      excerpt: "Sherwin-Williams Celery, Benjamin Moore Webster Green, Behr Grounded, Valspar Cottage Door and more, side by side with HEX codes.",
+      excerpt: "All 14 picks so far, from Sherwin-Williams Celery and Benjamin Moore Webster Green to James Hardie Midnight Black, side by side with HEX codes.",
       category: "Trends",
       readTime: "9 min",
       href: "/blog/color-of-the-year-2027",

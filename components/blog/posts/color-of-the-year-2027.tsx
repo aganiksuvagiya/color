@@ -12,6 +12,11 @@ const ROWS: ColorOfYearRow[] = [
   { brand: "Dulux", name: "Soulful Sage", code: "UK and Europe", announced: "Sep 8, 2026", look: "A soft, silvery sage green." },
   { brand: "Graham & Brown", name: "Rose Earth", code: "UK wallpaper and paint brand", announced: "2026", look: "Dusty, earthy pink with clay and muted brown undertones." },
   { brand: "WGSN × Coloro", name: "Luminous Blue", code: "Coloro 125-28-38", announced: "Apr 2025", look: "The trend forecasters' pick: a clear, glowing blue." },
+  { brand: "Dunn-Edwards", name: "French Press Coffee", code: "US paint brand", announced: "Fall 2026", look: "A deep brown with purple undertones, pitched as an elevated neutral." },
+  { brand: "C2 Paint", name: "Pueblo", code: "US paint brand", announced: "Oct 2026", look: "A rosy plum that shifts with the light from day to night." },
+  { brand: "Minwax", name: "Pickled Oak", code: "MW260 · wood stain", announced: "Oct 6, 2026", look: "A light, soft neutral stain with warm undertones that lets the grain show." },
+  { brand: "Little Greene", name: "Marle", code: "UK paint brand", announced: "Early Oct 2026", look: "A soft, clay-inspired mid-tone brown." },
+  { brand: "James Hardie", name: "Midnight Black", code: "ColorPlus siding finish", announced: "Nov 12, 2026", look: "A deep black for whole house exteriors, not just trim." },
 ];
 
 export function ColorOfTheYear2027Post() {
@@ -26,23 +31,26 @@ export function ColorOfTheYear2027Post() {
 
       <h2 id="all-picks">All the 2027 picks at a glance</h2>
       <p>
-        Nine brands and forecasters have named a 2027 color as of October 23, 2026. Tap any HEX code to copy it. A note on accuracy: Sherwin-Williams and Behr publish their own screen values, and the others come from paint-matching databases, so treat those as close matches rather than official specs.
+        Fourteen brands and forecasters have named a 2027 color as of November 14, 2026. Tap any HEX code to copy it. A note on accuracy: Sherwin-Williams and Behr publish their own screen values, and the others come from paint-matching databases, so treat those as close matches rather than official specs.
       </p>
       <ColorOfYearTable rows={ROWS} />
 
       <h2 id="patterns">What the 2027 colors have in common</h2>
       <p>
-        Put the picks side by side and three things jump out.
+        Put the picks side by side and four things jump out.
       </p>
       <ul>
         <li>
-          <strong>Green is the color of 2027.</strong> Four of the nine picks are green: Sherwin-Williams&apos; Celery, Benjamin Moore&apos;s Webster Green, Behr&apos;s Grounded and Dulux&apos;s Soulful Sage. They range from almost-neutral (Celery) to deep and dramatic (Webster Green), which tells you green has moved from accent color to everyday color.
+          <strong>Green is the color of 2027.</strong> Four of the fourteen picks are green: Sherwin-Williams&apos; Celery, Benjamin Moore&apos;s Webster Green, Behr&apos;s Grounded and Dulux&apos;s Soulful Sage. They range from almost-neutral (Celery) to deep and dramatic (Webster Green), which tells you green has moved from accent color to everyday color.
         </li>
         <li>
           <strong>Blue is a close second.</strong> Valspar&apos;s Cottage Door and Glidden&apos;s Artifact are both muted, mid-tone blues, and WGSN and Coloro chose Luminous Blue. Notice how close Cottage Door (#7A8F97) and Artifact (#69808B) are: two brands landed on nearly the same smoky blue within six weeks of each other.
         </li>
         <li>
-          <strong>Everything is toned down.</strong> Of the six picks with a HEX value, four have a saturation of 14% or less in HSL, and none goes above 47% (Dutch Boy&apos;s Deep Rooted). These are colors with a lot of gray or brown mixed in. They read as calm and lived-in rather than bright.
+          <strong>Brown and wood are back.</strong> Dunn-Edwards&apos; French Press Coffee and Little Greene&apos;s Marle are browns, C2&apos;s Pueblo is a rosy plum, and Minwax&apos;s Pickled Oak is a pale wood stain. Add Dutch Boy&apos;s terracotta and Graham &amp; Brown&apos;s dusty pink, and earthy colors make up six of the fourteen picks.
+        </li>
+        <li>
+          <strong>Everything is toned down.</strong> Of the six picks with a HEX value, four have a saturation of 14% or less in HSL, and none goes above 47% (Dutch Boy&apos;s Deep Rooted). These are colors with a lot of gray or brown mixed in. They read as calm and lived-in rather than bright. The one bold exception is James Hardie&apos;s Midnight Black, and it&apos;s meant for the outside of a house.
         </li>
       </ul>
       <p>
@@ -113,9 +121,24 @@ export function ColorOfTheYear2027Post() {
         We haven&apos;t listed HEX codes for these three because we couldn&apos;t find values we trust. Dulux and Graham &amp; Brown are mostly UK-facing, and WGSN&apos;s color is specified in Coloro&apos;s own system rather than as a screen color.
       </p>
 
+      <h3 id="browns">Dunn-Edwards, C2, Little Greene and Minwax</h3>
+      <ColorFeature name="French Press Coffee" code="Dunn-Edwards" facts="A deep brown with purple undertones that Dunn-Edwards calls an elevated neutral, the anchor of its Color Trends 2027 collection." />
+      <ColorFeature name="Pueblo" code="C2 Paint" facts="A rosy plum chosen for how it changes with the light, leading a trend C2 calls Rural Renaissance." />
+      <ColorFeature name="Marle" code="Little Greene" facts="A soft, clay-inspired mid-tone brown: yellow ochre softened with black, plus a touch of red oxide." />
+      <ColorFeature name="Pickled Oak" code="Minwax · MW260" facts="Announced October 6, 2026. A light wood stain with warm undertones that leaves the grain visible, in line with the trend toward white oak and pale pine." />
+      <p>
+        Four very different browns, and a clear sign that warm, earthy neutrals are taking over from gray. None of these brands publishes a screen value we could verify, so we&apos;ve left the HEX codes out rather than guess.
+      </p>
+
+      <h3 id="midnight-black">James Hardie: Midnight Black</h3>
+      <ColorFeature name="Midnight Black" code="James Hardie · ColorPlus siding finish" facts="Announced November 12, 2026, for Hardie fiber cement siding in the Statement Collection." />
+      <p>
+        The newest pick and the only exterior-only one. James Hardie makes fiber cement siding, and its point is that black has moved from trim and window frames to the whole house. The brand suggests pairing it with crisp whites, warm neutrals, natural stone and rich wood tones, and suggests TimberTech decking in English Walnut as a partner. There&apos;s no official HEX for it, and siding finishes look very different in sun and shade, so order a physical sample before you decide.
+      </p>
+
       <h2 id="pantone">What about Pantone&apos;s 2027 color?</h2>
       <p>
-        Pantone hasn&apos;t named its 2027 Color of the Year yet. It usually announces in early December, and it&apos;s the pick most people mean when they search for &quot;the&quot; Color of the Year. For reference, the 2026 Pantone Color of the Year was <strong>Cloud Dancer (PANTONE 11-4201)</strong>, a warm off-white with the screen value #F0EEE9. We&apos;ll add the 2027 pick here as soon as it&apos;s out.
+        As of November 14, 2026, Pantone hasn&apos;t named its 2027 Color of the Year yet. It usually announces in early December, and it&apos;s the pick most people mean when they search for &quot;the&quot; Color of the Year. For reference, the 2026 Pantone Color of the Year was <strong>Cloud Dancer (PANTONE 11-4201)</strong>, a warm off-white with the screen value #F0EEE9. We&apos;ll add the 2027 pick here as soon as it&apos;s out.
       </p>
 
       <h2 id="screens">Using the 2027 colors on screens</h2>

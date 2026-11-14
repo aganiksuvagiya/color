@@ -528,7 +528,7 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
     - Contrast: all 18 palettes pass AAA body text and AA buttons, links, badges and cards (checked by script before writing). Every contrast figure in the copy is computed.
   - **Experiment:** these pages are in neither group of the Nov 20 / Dec 18 read. Track them separately; they aren't part of the 8-vs-16 comparison.
 
-### Branch `week-3` (from `develop` `553fa1d`, uncommitted)
+### Branch `week-3` (from `develop` `553fa1d`; all of it live, see "Live 2026-11-14" below)
 
 - **Why traffic fell (Search Console, analyzed 2026-11-01).**
   - **Monthly figures:**
@@ -557,7 +557,7 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
     2. Zero external mentions or links, and no `sameAs` or founder in the schema.
     3. Recovery from the server errors.
   - **Minor:** 50 titles over 60 characters, 183 descriptions over 165, and thin hubs (`/explore` 52 words, `/resources` 92).
-- **Color pages, batch 1 (2026-11-01, uncommitted):**
+- **Color pages, batch 1 (live 2026-11-01, worker `7cf685f9`):**
   - **Pages:** `tan`, `forest-green`, `crimson`, `alice-blue`, `lime` and `light-gray` are rewritten in `lib/seo/color-pages-rich.ts`, picked by Search Console demand (tan alone had 8+ queries).
   - **Facts:** checked against Wikipedia, W3C and `brand.ua.edu`. Harvard's crimson hex couldn't be fetched, so it's left out.
   - **Result:** each page now shares 16–19% of its text with any other color page, down from about 80%. That remainder is the sidebar and section labels.
@@ -565,7 +565,7 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
   - **Batch 2:** the `/colors` pages for the 12 colors whose meaning pages are already rich (gold, silver, lavender, turquoise, navy, maroon, indigo, violet, magenta, coral, beige, olive). Most have a real "which hex?" story, e.g. gold #FFD700 vs metallic #D4AF37, olive #808000 vs olive drab #6B8E23, violet #EE82EE vs spectral ~#7F00FF, lavender #E6E6FA vs the flower ~#B57EDC. The facts are already verified.
   - **Batch 3:** the 13 base hues (blue, green, red, purple, black, orange, yellow, pink, teal, gray, white, brown, plus azure, which is done). Move them to `authoredOnly` with rewritten sections; white and black had searches in October.
   - **Batch 4:** the ~100 long-tail CSS names (bisque, papaya whip…), at about 10 a week by Search Console demand.
-- **Color pages, batch 2 (2026-11-14, uncommitted):**
+- **Color pages, batch 2 (live 2026-11-14, worker `ce32639c`):**
   - **Pages:** the `/colors` pages for gold, silver, lavender, turquoise, navy, maroon, indigo, violet, magenta, coral, beige and olive are rewritten in `color-pages-rich.ts`. That makes 21 rewritten color pages.
   - **Focus:** these colors also have rich, indexed meaning pages, so the `/colors` versions stick to codes, "which hex?", screen contrast, pairings and comparisons, with a short meaning section that points to the meaning page.
   - **Facts:** checked against Wikipedia and W3C. Pantone's Living Coral hex (not on Wikipedia) and the indigo dye hex (two Wikipedia pages disagree) were left out.
@@ -611,6 +611,26 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
     - `/tools/contrast`: 1,875 impressions, 0 clicks.
     - `/tailwind-colors`: 1,309.
     - `/guides/ai-website-color-strategy`: 836.
+- **Live 2026-11-14 (owner: "bdhu aaje j kri nakhi ae to").**
+  - **Deploy 1:** commit `71dedfb` (batch 2, color-blind model, launch schedule), fast-forwarded into `develop` and deployed as worker `ce32639c`.
+  - **Deploy 2:** commit `e0f159e` fixed the generator preview, whose stat numbers truncated to "$1…" and "3,…" in the side panel. Shorter values ("$12k", "3,281", "7"), tighter cards. Worker `2fd25070`; `week-3` = `develop` = `e0f159e`.
+  - **Live checks:** the 12 batch-2 pages return `x-opennext-cache: HIT` with `index, follow`; the meaning-twin redirects still 308; `sitemap-colors.xml` lists 47; the launch article shows the new color-blind text.
+  - **IndexNow:** 200 for 15 URLs (the 12 batch-2 pages, `/blog/palettes-on-a-real-website`, `/tools/colorblind-simulator`, `/generator`).
+  - **Color-blind model:** `lib/colorblind.ts` now uses Machado, Oliveira & Fernandes (2009) at severity 1.0, applied in linear RGB. It feeds the generator's A11y panel and `/tools/colorblind-simulator`. The launch article and `docs/LAUNCH-KIT.md` name the model.
+  - **Launch screenshots:** 5 PNGs (1600×1000 at 2x, from the live site) were sent to the owner in chat and kept outside the repo: UI preview, A11y, healthcare palette on a sample site, Tailwind export, color codes table.
+  - **Search Console, Nov 1–13:** 82 impressions and 5 clicks. No recovery yet; after a quality demotion it usually takes weeks. The launch and real links are the main lever now.
+  - **Industry experiment:** both groups are near zero impressions since Oct 19, so the Nov 20 read can't tell anything. Recommendation to the owner: drop the "don't touch the 24 pages" freeze and keep only the Dec 18 look as a general check.
+  - **Next:** Pantone 2027 update of `/blog/color-of-the-year-2027` (Pantone usually announces in early December; aim for ~Nov 28 prep), batch 3 (base hues), the demand list (bisque, lime-green, medium-sea-green, dark-orange, wheat…), `/color-combinations` pages, About page and `sameAs` once the owner sends founder details, weekly Search Console check from Nov 21.
+
+### Branch `week-4` (from `develop` `e0f159e`)
+
+- **Trending blog posts (owner, 2026-11-14: "latest tranding na blog to lkhi aap").** Topics picked from Google autocomplete and news on Nov 14:
+  - `/blog/thanksgiving-color-palette`: 8 harvest colors, 8 palettes, contrast for menus and posts. Thanksgiving is Nov 26, 2026. Autocomplete: "thanksgiving color palette hex codes", "… 2026".
+  - `/blog/hanukkah-colors`: why blue and white (tallit, Frankl 1864, the flag, post-war American cards), codes (flag blue #0038B8 per Wikipedia), 6 palettes. Hanukkah runs Dec 4–12, 2026. Autocomplete: "hanukkah colors meaning", "why are hanukkah colors blue", "hanukkah colors hex".
+  - `/blog/winter-color-palette`: seasonal color analysis (Deep, True, Bright Winter) plus 4 design palettes. Autocomplete for "winter color palette" is almost all color analysis.
+  - `/blog/color-of-the-year-2027` updated to 14 picks: added Dunn-Edwards French Press Coffee, C2 Pueblo, Minwax Pickled Oak (MW260), Little Greene Marle and James Hardie Midnight Black (announced Nov 12, 2026). No HEX for the new five: none has a screen value we could verify.
+  - All contrast figures computed with the WCAG formula and rounded down. Facts checked against My Jewish Learning, TIME, Wikipedia (Flag of Israel, Color analysis), the National Archives, the James Hardie release and trade press.
+  - **After deploy:** IndexNow for the 4 URLs and `/blog`; owner requests indexing in Search Console. Pantone 2027 (event on Dec 3, 2026) gets added to the roundup when it's out.
 
 ## Next session: start here (updated 2026-10-19)
 
@@ -631,7 +651,7 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
    - **Upgrade Next.js**: done and merged into `develop` (see "Next 16 upgrade" above).
 3. **Owner actions outside the code** (see "Needs the owner" in the SEO section): real social profile URLs into `socialProfiles`, Google Search Console and Bing Webmaster verification plus sitemap submit and "Request indexing" for the new pages, backlinks and directory listings. Not confirmed as done.
 4. **Ads** (see the "Ads" section below): waiting for the Adsterra ad code.
-5. **Not yet checked:** the signed-in view of `/profile` (score, streak, invite row, sign-out dialog; needs a login), and the `/colorblind` matrices in `lib/colorblind.ts` (inaccurate, separate task).
+5. **Not yet checked:** the signed-in view of `/profile` (score, streak, invite row, sign-out dialog; needs a login). The color-blind matrices in `lib/colorblind.ts` were replaced with the Machado 2009 model on 2026-11-14.
 6. **Before any deploy** (only on request, from a clean `develop`):
    - `npx tsc --noEmit`
    - `npx eslint` on the changed files (quote paths with `[` in them, and use `xargs` in zsh)

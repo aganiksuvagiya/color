@@ -31,6 +31,232 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "thanksgiving-color-palette",
+    title: "Thanksgiving Color Palette: 8 Palettes, Hex Codes",
+    h1: "Thanksgiving color palette: 8 harvest palettes with hex codes",
+    crumb: "Thanksgiving color palette",
+    description:
+      "Thanksgiving colors with HEX codes: pumpkin, cranberry, harvest gold, sage and more, 8 ready palettes, and contrast checks for menus, invitations and posts.",
+    answer:
+      "The classic Thanksgiving colors are the harvest colors: pumpkin orange (#E07B39), cranberry red (#9B1B30), harvest gold (#DA9100), chestnut brown (#6F4E37) and cream (#F5EBDC), often with sage green (#9CAF88) for a more modern table. Let one color lead, keep the base light, and use cranberry or brown for text: both pass WCAG AA on cream.",
+    dek: "The harvest colors with exact codes, eight palettes for tables, invitations and social posts, and the contrast numbers for putting text on them.",
+    category: "Seasonal",
+    published: "2026-11-14",
+    updated: "2026-11-14",
+    readMinutes: 6,
+    cover: ["#9B1B30", "#E07B39", "#DA9100", "#6F4E37", "#F5EBDC"],
+    keywords: [
+      "thanksgiving color palette",
+      "thanksgiving colors",
+      "thanksgiving color palette hex codes",
+      "thanksgiving color palette 2026",
+      "thanksgiving color scheme",
+      "friendsgiving color palette",
+      "harvest color palette",
+    ],
+    toc: [
+      { id: "colors", title: "The core Thanksgiving colors" },
+      { id: "palettes", title: "8 Thanksgiving color palettes" },
+      { id: "table", title: "Thanksgiving colors on the table" },
+      { id: "print", title: "Invitations, menus and place cards" },
+      { id: "digital", title: "Websites, emails and social posts" },
+      { id: "friendsgiving", title: "Friendsgiving and modern palettes" },
+      { id: "avoid", title: "Colors to be careful with" },
+      { id: "faq", title: "FAQ" },
+    ],
+    faq: [
+      {
+        question: "What are the traditional Thanksgiving colors?",
+        answer:
+          "The harvest colors: pumpkin orange, cranberry red, golden yellow, warm brown and cream. Sage green is a popular modern addition because it cools down all the orange.",
+      },
+      {
+        question: "What are the hex codes for Thanksgiving colors?",
+        answer:
+          "Pumpkin #E07B39, cranberry #9B1B30, harvest gold #DA9100, chestnut brown #6F4E37, burnt orange #CC5500, sage #9CAF88, wheat #F5DEB3 and cream #F5EBDC.",
+      },
+      {
+        question: "When is Thanksgiving 2026?",
+        answer:
+          "Thursday, November 26, 2026. Thanksgiving in the United States is the fourth Thursday of November, fixed by a resolution President Roosevelt signed on December 26, 1941.",
+      },
+      {
+        question: "What colors go with orange for Thanksgiving?",
+        answer:
+          "Cream and wheat as the base, brown for wood and text, cranberry for depth, gold for candles and flatware, and sage green to balance the warmth.",
+      },
+      {
+        question: "What text color should I use on a Thanksgiving invitation?",
+        answer:
+          "Cranberry #9B1B30 on cream measures 6.8:1 and chestnut brown #6F4E37 on cream 6.3:1, so both pass WCAG AA. Avoid white text on pumpkin orange: it only reaches 2.9:1.",
+      },
+    ],
+    sources: [
+      { title: "National Archives: Congress Establishes Thanksgiving", url: "https://www.archives.gov/legislative/features/thanksgiving" },
+      { title: "WCAG 2.2: Contrast (Minimum), W3C", url: "https://www.w3.org/TR/WCAG22/#contrast-minimum" },
+    ],
+    related: [
+      { title: "Christmas color palettes", href: "/color-palettes/christmas" },
+      { title: "Winter color palette", href: "/blog/winter-color-palette" },
+      { title: "Color of the Year 2027", href: "/blog/color-of-the-year-2027" },
+      { title: "Wheat color codes", href: "/colors/wheat" },
+      { title: "Color wheel", href: "/color-wheel" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+    ],
+  },
+  {
+    slug: "hanukkah-colors",
+    title: "Hanukkah Colors: Meaning, Hex Codes and Palettes",
+    h1: "Hanukkah colors: why blue and white, with hex codes and palettes",
+    crumb: "Hanukkah colors",
+    description:
+      "Why Hanukkah colors are blue and white, plus silver and gold: the history, HEX codes such as flag blue #0038B8, six palettes and readable text pairs.",
+    answer:
+      "The Hanukkah colors are blue and white, often with silver and gold. Blue and white come from the tallit, the Jewish prayer shawl; an 1864 poem called them the colors of Judah; they became the colors of Israel's flag; and American cards and decorations made them the standard Hanukkah look after World War II. A good screen blue is #0038B8. In 2026, Hanukkah runs from sundown on December 4 to sundown on December 12.",
+    dek: "Blue and white, silver and gold: where the Hanukkah colors come from, the codes to use, and palettes that stay readable on cards and screens.",
+    category: "Seasonal",
+    published: "2026-11-14",
+    updated: "2026-11-14",
+    readMinutes: 6,
+    cover: ["#FFFFFF", "#7FA7E0", "#0038B8", "#D4AF37", "#1F2A44"],
+    keywords: [
+      "hanukkah colors",
+      "hanukkah colors meaning",
+      "why are hanukkah colors blue and white",
+      "hanukkah colors hex",
+      "hanukkah colors rgb",
+      "hanukkah color palette",
+      "chanukah colors",
+      "blue and gold hanukkah",
+    ],
+    toc: [
+      { id: "colors", title: "What are the Hanukkah colors?" },
+      { id: "why-blue", title: "Why blue and white?" },
+      { id: "codes", title: "Hanukkah color codes" },
+      { id: "palettes", title: "6 Hanukkah color palettes" },
+      { id: "text", title: "Readable text on Hanukkah colors" },
+      { id: "ideas", title: "Ideas for cards, tables and posts" },
+      { id: "faq", title: "FAQ" },
+    ],
+    faq: [
+      {
+        question: "What are the colors of Hanukkah?",
+        answer: "Blue and white, with silver and gold as the usual accents. Silver and gold echo menorahs, candlelight and the gold-foil chocolate coins called gelt.",
+      },
+      {
+        question: "Why are Hanukkah colors blue and white?",
+        answer:
+          "Blue and white are long-standing Jewish colors from the tallit, the white prayer shawl that is often striped in blue and whose fringes recall a blue thread called tekhelet. An 1864 poem by Ludwig August Frankl called them the colors of Judah, they became the colors of Israel's flag, and after World War II American greeting cards and decorations made them the standard colors of Hanukkah.",
+      },
+      {
+        question: "What is the hex code for Hanukkah blue?",
+        answer:
+          "A good default is #0038B8 (RGB 0, 56, 184), the Israeli flag blue as Wikipedia lists it. For a lighter, friendlier blue use royal blue #4169E1, which still carries white text at 4.8:1.",
+      },
+      {
+        question: "When is Hanukkah in 2026?",
+        answer: "Hanukkah 2026 begins at sundown on Friday, December 4, and lasts until sundown on Saturday, December 12.",
+      },
+      {
+        question: "Are there religious rules about Hanukkah colors?",
+        answer: "No. Jewish law doesn't assign colors to Hanukkah. Blue, white, silver and gold are cultural traditions, so any palette you like is fine.",
+      },
+      {
+        question: "Can I use gold text on a white Hanukkah card?",
+        answer:
+          "On screen, no: metallic gold #D4AF37 on white measures only 2.1:1. Put gold on navy instead, where it reaches 6.7:1. Printed gold foil can work at lower contrast because it catches the light.",
+      },
+    ],
+    sources: [
+      { title: "My Jewish Learning: Hanukkah 2026 dates", url: "https://www.myjewishlearning.com/article/hanukkah/" },
+      { title: "TIME: how blue and white became the colors of Hanukkah", url: "https://time.com/5458247/hanukkah-colors-blue-white/" },
+      { title: "Wikipedia: Flag of Israel (history and color values)", url: "https://en.wikipedia.org/wiki/Flag_of_Israel" },
+      { title: "WCAG 2.2: Contrast (Minimum), W3C", url: "https://www.w3.org/TR/WCAG22/#contrast-minimum" },
+    ],
+    related: [
+      { title: "Shades of blue", href: "/shades-of-blue" },
+      { title: "Navy color codes", href: "/colors/navy" },
+      { title: "Gold color codes", href: "/colors/gold" },
+      { title: "Silver color codes", href: "/colors/silver" },
+      { title: "Winter color palette", href: "/blog/winter-color-palette" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+    ],
+  },
+  {
+    slug: "winter-color-palette",
+    title: "Winter Color Palette: Hex Codes for All 3 Winters",
+    h1: "Winter color palette: hex codes for Deep, True and Bright Winter",
+    crumb: "Winter color palette",
+    description:
+      "The Winter palette from seasonal color analysis with HEX codes: Deep, True and Bright Winter palettes, colors Winters avoid, and four winter palettes for design.",
+    answer:
+      "In seasonal color analysis, a Winter has cool, high-contrast coloring and looks best in clear, saturated colors: pure white, black, true red (#C8102E), royal blue (#4169E1), sapphire (#0F52BA), emerald (#009B77), hot pink (#FF69B4), burgundy (#800020) and icy pastels such as #D6ECF5. Deep Winters suit the darkest of these, True Winters the coolest and Bright Winters the most vivid. Warm, muted earth tones such as camel, mustard and orange usually suit them least.",
+    dek: "What a Winter is in color analysis, the colors and codes for Deep, True and Bright Winter, and four winter palettes for design.",
+    category: "Seasonal",
+    published: "2026-11-14",
+    updated: "2026-11-14",
+    readMinutes: 7,
+    cover: ["#FFFFFF", "#C8102E", "#0F52BA", "#009B77", "#1A1A1A"],
+    keywords: [
+      "winter color palette",
+      "winter color palette hex codes",
+      "deep winter color palette",
+      "true winter color palette",
+      "bright winter color palette",
+      "cool winter colors",
+      "winter color analysis",
+      "winter color palette for design",
+    ],
+    toc: [
+      { id: "what", title: "What is a Winter in color analysis?" },
+      { id: "colors", title: "The core Winter colors" },
+      { id: "types", title: "Deep, True and Bright Winter palettes" },
+      { id: "avoid", title: "Colors Winters usually avoid" },
+      { id: "design", title: "Winter color palettes for design" },
+      { id: "text", title: "Readable text on Winter colors" },
+      { id: "faq", title: "FAQ" },
+    ],
+    faq: [
+      {
+        question: "What is a winter color palette?",
+        answer:
+          "In color analysis, it is the set of clothing and makeup colors said to suit people with cool, high-contrast coloring: clear, saturated jewel tones, pure white, black and icy pastels. In design, it simply means colors that feel like winter, such as snowy blues, evergreen and berry.",
+      },
+      {
+        question: "What colors are in the Winter palette?",
+        answer:
+          "Pure white, black, true red #C8102E, royal blue #4169E1, sapphire #0F52BA, emerald #009B77, hot pink #FF69B4, burgundy #800020, charcoal #36454F and icy pastels such as icy blue #D6ECF5.",
+      },
+      {
+        question: "What is the difference between Deep, True and Bright Winter?",
+        answer:
+          "Deep (Dark) Winter is the darkest and closest to Autumn, True (Cool) Winter is the coolest, and Bright (Clear) Winter is the most vivid and closest to Spring. They share the same cool, high-contrast base.",
+      },
+      {
+        question: "What colors should a Winter avoid?",
+        answer:
+          "Warm, muted, earthy colors: camel, mustard, orange, rust, peach and olive. Cooler swaps are charcoal or navy for camel, icy lemon for mustard, true red for orange and emerald for olive.",
+      },
+      {
+        question: "Is seasonal color analysis scientific?",
+        answer:
+          "Not really. It is a styling system, and different schools sort people differently. A 2007 study found inconsistencies between three systems, and a 2026 study found warm and cool categories matched measured colors better than the four seasons. Treat it as a starting point.",
+      },
+    ],
+    sources: [
+      { title: "Wikipedia: Color analysis (history, Kentner, Jackson, studies)", url: "https://en.wikipedia.org/wiki/Color_analysis" },
+      { title: "WCAG 2.2: Contrast (Minimum), W3C", url: "https://www.w3.org/TR/WCAG22/#contrast-minimum" },
+    ],
+    related: [
+      { title: "Shades of blue", href: "/shades-of-blue" },
+      { title: "Shades of pink", href: "/shades-of-pink" },
+      { title: "Royal blue color codes", href: "/colors/royal-blue" },
+      { title: "Hot pink color codes", href: "/colors/hot-pink" },
+      { title: "Hanukkah colors", href: "/blog/hanukkah-colors" },
+      { title: "Christmas color palettes", href: "/color-palettes/christmas" },
+    ],
+  },
+  {
     slug: "palettes-on-a-real-website",
     title: "Why We Show Every Palette on a Website First",
     h1: "Why HueFlow shows every palette on a website before you use it",
@@ -88,14 +314,14 @@ export const blogPosts: BlogPost[] = [
     h1: "Color of the Year 2027: every pick so far, side by side",
     crumb: "Color of the Year 2027",
     description:
-      "Every 2027 Color of the Year announced so far, side by side: Sherwin-Williams Celery, Benjamin Moore Webster Green, Behr Grounded, Valspar Cottage Door, Glidden Artifact and more, with HEX codes and pairing ideas.",
+      "All 14 Colors of the Year 2027 so far, side by side with HEX codes: Sherwin-Williams Celery, Benjamin Moore Webster Green, James Hardie Midnight Black and more.",
     answer:
-      "There is no single Color of the Year for 2027, because every paint brand and forecaster picks its own. So far Sherwin-Williams chose Celery (SW 6421), Benjamin Moore chose Webster Green (HC-130), Behr chose Grounded (T27-01), Valspar chose Cottage Door (8004-38E), Glidden chose Artifact (PPG10-16) and Dutch Boy chose Deep Rooted (311-7DB). Pantone usually names its pick in early December.",
+      "There is no single Color of the Year for 2027, because every paint brand and forecaster picks its own. So far Sherwin-Williams chose Celery (SW 6421), Benjamin Moore chose Webster Green (HC-130), Behr chose Grounded (T27-01), Valspar chose Cottage Door (8004-38E), Glidden chose Artifact (PPG10-16), Dutch Boy chose Deep Rooted (311-7DB) and James Hardie chose Midnight Black. Pantone usually names its pick in early December.",
     dek: "Paint brands and trend forecasters have started naming their 2027 colors. Here is every pick announced so far, what they have in common, and the codes you need to use them on a screen.",
     category: "Trends",
     published: "2026-10-23",
-    updated: "2026-10-24",
-    readMinutes: 9,
+    updated: "2026-11-14",
+    readMinutes: 10,
     cover: ["#E0DDBD", "#64806C", "#615E50", "#7A8F97", "#A6613C"],
     keywords: [
       "color of the year 2027",
@@ -108,11 +334,13 @@ export const blogPosts: BlogPost[] = [
       "2027 color trends",
       "celery sw 6421 hex",
       "webster green hc-130",
+      "james hardie midnight black",
     ],
     toc: [
       { id: "all-picks", title: "All the 2027 picks at a glance" },
       { id: "patterns", title: "What the 2027 colors have in common" },
       { id: "each-color", title: "Each color, and how to use it" },
+      { id: "midnight-black", title: "James Hardie: Midnight Black" },
       { id: "pantone", title: "What about Pantone's 2027 color?" },
       { id: "screens", title: "Using the 2027 colors on screens" },
       { id: "faq", title: "FAQ" },
@@ -121,12 +349,12 @@ export const blogPosts: BlogPost[] = [
       {
         question: "What is the Color of the Year 2027?",
         answer:
-          "There isn't just one. Each brand names its own. The main US paint picks are Celery (Sherwin-Williams), Webster Green (Benjamin Moore), Grounded (Behr), Cottage Door (Valspar), Artifact (Glidden) and Deep Rooted (Dutch Boy). WGSN and Coloro picked Luminous Blue, Dulux picked Soulful Sage and Graham & Brown picked Rose Earth.",
+          "There isn't just one. Each brand names its own. The main US paint picks are Celery (Sherwin-Williams), Webster Green (Benjamin Moore), Grounded (Behr), Cottage Door (Valspar), Artifact (Glidden) and Deep Rooted (Dutch Boy). WGSN and Coloro picked Luminous Blue, Dulux Soulful Sage, Graham & Brown Rose Earth, Dunn-Edwards French Press Coffee, C2 Pueblo, Little Greene Marle, Minwax Pickled Oak and James Hardie Midnight Black.",
       },
       {
         question: "Has Pantone announced its 2027 Color of the Year?",
         answer:
-          "Not as of October 23, 2026. Pantone usually reveals its Color of the Year in early December. Its 2026 pick was Cloud Dancer (PANTONE 11-4201), a soft off-white with the screen value #F0EEE9.",
+          "Not as of November 14, 2026. Pantone usually reveals its Color of the Year in early December. Its 2026 pick was Cloud Dancer (PANTONE 11-4201), a soft off-white with the screen value #F0EEE9.",
       },
       {
         question: "What is Sherwin-Williams' Color of the Year 2027?",
@@ -137,6 +365,11 @@ export const blogPosts: BlogPost[] = [
         question: "What is Benjamin Moore's Color of the Year 2027?",
         answer:
           "Webster Green, HC-130, announced on October 14, 2026. It is a deep, classic green. Paint-matching databases list it at about #64806C with an LRV of 20.",
+      },
+      {
+        question: "What is James Hardie's 2027 Color of the Year?",
+        answer:
+          "Midnight Black, announced on November 12, 2026, for Hardie fiber cement siding with its ColorPlus factory finish. James Hardie doesn't publish a HEX value, so order a physical sample to judge it.",
       },
       {
         question: "Are the HEX codes for paint colors exact?",
@@ -161,6 +394,11 @@ export const blogPosts: BlogPost[] = [
       { title: "Dezeen: Sage green is the Dulux Colour of the Year 2027", url: "https://dezeen.com/2026/09/08/sage-green-colour-year-2027-dulux" },
       { title: "Graham & Brown: Design and Colour of the Year 2027", url: "https://www.grahambrown.com/uk/inspiration/introducing-design-and-colour-of-the-year-2027/" },
       { title: "WGSN: Colour of the Year 2027, Luminous Blue", url: "https://www.wgsn.com/en/wgsn/press/press-releases/wgsn-and-coloro-reveal-colour-year-2027-luminous-blue-and-s-s-27-key" },
+      { title: "James Hardie: 2027 Color of the Year, Midnight Black", url: "https://www.jameshardie.com/color-of-the-year-midnight-black" },
+      { title: "Business Wire via Morningstar: James Hardie names Midnight Black (Nov 12, 2026)", url: "https://www.morningstar.com/news/business-wire/20261112762343/james-hardie-names-midnight-black-its-2027-color-of-the-year" },
+      { title: "Hardware Retailing: Minwax names Pickled Oak (MW260)", url: "https://hardwareretailing.com/mixwax-names-2027-color-of-the-year" },
+      { title: "Homes & Gardens: Little Greene's Marle", url: "https://www.homesandgardens.com/decor/paint/little-greene-color-of-the-year-2027" },
+      { title: "Young House Love: every 2027 Color of the Year (Dunn-Edwards, C2)", url: "https://www.younghouselove.com/2027-color-of-the-year/" },
       { title: "HEX reference: Webster Green HC-130 (Match My Paint Color)", url: "https://www.matchmypaintcolor.com/benjamin-moore/webster-green-hc-130" },
       { title: "HEX reference: Deep Rooted 311-7DB (Match My Paint Color)", url: "https://www.matchmypaintcolor.com/dutch-boy/deep-rooted-311-7db" },
       { title: "HEX reference: Artifact PPG10-16 (Match My Paint Color)", url: "https://www.matchmypaintcolor.com/ppg/artifact-ppg10-16" },
