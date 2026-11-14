@@ -638,4 +638,658 @@ export const richColorPages: Record<string, ColorPageRewrite> = {
       { title: "WCAG 2.2: Non-text Contrast, W3C", href: "https://www.w3.org/TR/WCAG22/#non-text-contrast" },
     ],
   },
+  gold: {
+    title: "Gold Color Hex #FFD700 vs Metallic Gold #D4AF37",
+    description:
+      "Gold is #FFD700 in CSS, but metallic gold is closer to #D4AF37 and old gold to #CFB53B. Compare them side by side, with RGB, CMYK, contrast and pairings.",
+    answer:
+      "Gold has more than one hex code. The CSS color gold is #FFD700 (RGB 255, 215, 0), a bright golden yellow. Metallic gold, the color most people picture for jewelry and awards, is closer to #D4AF37, and old gold is a duller #CFB53B. None of them is readable as text on white.",
+    hexVariants: [
+      { label: "CSS gold", hex: "#FFD700", note: "The web's named color gold: bright and sunny, close to golden yellow." },
+      { label: "Metallic gold", hex: "#D4AF37", note: "The flat on-screen stand-in for gold metal; deeper and less yellow." },
+      { label: "Old gold", hex: "#CFB53B", note: "A muted, slightly greenish gold, first recorded in the early 19th century." },
+    ],
+    keyTakeaways: [
+      "CSS gold is #FFD700; metallic gold is about #D4AF37; old gold is #CFB53B.",
+      "Flat color can't shine, so screens fake metal with gradients and highlights.",
+      "All three fail as text on white (1.40 to 2.10:1); for gold-toned text use something like #7A5C1E (6.22:1).",
+      "Gold looks richest next to black, navy, deep green and cream.",
+    ],
+    sections: [
+      {
+        title: "Gold color codes",
+        body: "CSS gold is #FFD700 in HEX, rgb(255, 215, 0) in RGB, hsl(51, 100%, 50%) in HSL and 0, 16, 100, 0 in CMYK. Metallic gold, #D4AF37, is rgb(212, 175, 55) and hsl(46, 65%, 52%). In CSS, writing gold always gives the bright #FFD700, so use the hex code when you want the deeper metallic tone.",
+      },
+      {
+        title: "Which gold is the real gold?",
+        body: "Gold is a metal, and metal isn't one flat color: it changes with light, angle and reflections. Color lists pick a single value to stand for it. The X11 and CSS gold (#FFD700) is a bright golden yellow, metallic gold (#D4AF37) is the deeper, browner tone of polished metal, and old gold (#CFB53B) is duller still. Golden yellow, #FFDF00, recorded as a color name in 1597, sits right next to CSS gold.",
+      },
+      {
+        title: "Making gold look like metal on screens",
+        body: "A flat #D4AF37 reads as mustard rather than metal. Designers get the metallic look by placing a lighter gold next to a darker one: a soft gradient from a pale highlight through #D4AF37 to a deep shade such as darkgoldenrod (#B8860B), or a thin light edge on a gold shape. Keep gold areas small, like rules, icons, badges and borders, since large flat gold areas look cheap.",
+      },
+      {
+        title: "Gold and contrast",
+        body: "Gold is light, so it fails as text on white: CSS gold measures 1.40:1, metallic gold 2.10:1 and darkgoldenrod 3.25:1, all below the 4.5:1 WCAG asks for. Put dark text on gold buttons instead: near-black on CSS gold reaches 12.7:1. For gold-toned text on a white page, use a deep golden brown such as #7A5C1E (6.22:1).",
+      },
+      {
+        title: "Colors that go with gold",
+        body: "Gold looks most expensive next to deep, quiet colors: black, navy, emerald or forest green, and burgundy. Cream and ivory keep it soft and classic. Bright yellow next to gold makes it look flat, and so do other saturated warm colors.",
+      },
+      {
+        title: "What gold means",
+        body: "Gold stands for wealth, success and reward, because it points to a precious metal: gold medals, gold standards, golden anniversaries. It's also tied to celebration and to the sacred in religious art. Read the full symbolism, culture and history on the gold color meaning page.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for gold?", answer: "CSS gold is #FFD700 (RGB 255, 215, 0). For a metallic gold, use about #D4AF37; old gold is #CFB53B." },
+      { question: "What is the difference between gold and metallic gold?", answer: "CSS gold (#FFD700) is a bright golden yellow. Metallic gold (#D4AF37) is deeper and browner, closer to polished gold metal." },
+      { question: "How do you make gold look metallic in design?", answer: "Use a gradient or highlight: a lighter gold next to a deeper one, such as a pale highlight into #D4AF37 and #B8860B. One flat gold never looks like metal." },
+      { question: "Is gold text readable on white?", answer: "No. CSS gold measures 1.40:1 and metallic gold 2.10:1 on white. Use dark text on gold, or a deep golden brown like #7A5C1E for text." },
+      { question: "What colors go with gold?", answer: "Black, navy, emerald, burgundy, cream and ivory." },
+    ],
+    sources: [
+      { title: "Gold (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Gold_(color)" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  silver: {
+    title: "Silver Color Hex #C0C0C0: RGB, Shades & Metallic Look",
+    description:
+      "Silver is #C0C0C0 in CSS (RGB 192, 192, 192): technically a light gray. See its codes, how to make it look metallic on screens, contrast and pairings.",
+    answer:
+      "Silver is #C0C0C0 (RGB 192, 192, 192; CMYK 0, 0, 0, 25), the CSS named color silver. On a screen it's simply a light gray: what makes silver look like metal is shine, so designers add gradients and highlights. Silver is far too light for text on white (1.82:1); dark text on it reads well.",
+    hexVariants: [
+      { label: "CSS silver", hex: "#C0C0C0", note: "One of HTML's original 16 colors. On its own, a neutral light gray." },
+    ],
+    keyTakeaways: [
+      "Silver is #C0C0C0: RGB 192, 192, 192, HSL 0°, 0%, 75%.",
+      "It's one of HTML's original 16 named colors.",
+      "Flat silver reads as light gray; metal needs gradients, highlights or reflections.",
+      "On white it measures 1.82:1, so use it for surfaces, borders and icons with dark text.",
+    ],
+    sections: [
+      {
+        title: "Silver color codes",
+        body: "Silver is #C0C0C0 in HEX, rgb(192, 192, 192) in RGB, hsl(0, 0%, 75%) in HSL and 25% black in CMYK. It's one of the 16 original HTML color names, alongside gray, white and black. Silver was recorded as a color name in English as early as 1481.",
+      },
+      {
+        title: "Why silver looks gray on screens",
+        body: "Real silver is defined by reflection: bright highlights, dark reflections and everything in between. A single flat color can't do that, so #C0C0C0 looks like a light neutral gray. In CSS, silver sits between darkgray (#A9A9A9) and lightgray (#D3D3D3).",
+      },
+      {
+        title: "Making silver look metallic",
+        body: "To suggest metal, use a gradient from near-white through #C0C0C0 to a darker gray, add a thin bright edge, or let a photo of real metal do the work. Cool hints help too: a tiny touch of blue in the darker stops reads as steel or chrome. Keep it to buttons, badges, icons and frames rather than large backgrounds.",
+      },
+      {
+        title: "Silver and contrast",
+        body: "On white, silver measures only 1.82:1, so never use it for text or essential icons there. Near-black text on silver reaches 9.8:1 and reads easily. For a gray that's still readable as text on white, go down to about #757575 (4.61:1).",
+      },
+      {
+        title: "Colors that go with silver",
+        body: "Silver pairs well with navy, black and white, with deep blues and purples, and with emerald for a jewel-toned look. For warmth, add blush, cognac leather or wood. Silver and gold together work when one clearly leads and the other is a small accent.",
+      },
+      {
+        title: "What silver means",
+        body: "Silver suggests modern technology, polish and calm: steel, chrome and phones, as well as the moon and mirrors. It also marks milestones: a silver anniversary is 25 years, and a silver medal is second place. The silver color meaning page covers its symbolism in full.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for silver?", answer: "Silver is #C0C0C0 (RGB 192, 192, 192). In CSS you can write silver." },
+      { question: "Is silver the same as gray?", answer: "On screens, nearly. CSS silver is a neutral light gray; what makes silver look like metal is shine, which needs gradients or highlights." },
+      { question: "How do you make silver look metallic?", answer: "Use a gradient from near-white through #C0C0C0 to a darker gray, add a bright edge, or use a photo of real metal." },
+      { question: "Is silver text readable on white?", answer: "No. It measures 1.82:1. Use dark text on silver, or a darker gray such as #757575 for text." },
+      { question: "What colors go with silver?", answer: "Navy, black, white, deep blue, purple and emerald; blush or wood for warmth." },
+    ],
+    sources: [
+      { title: "Silver (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Silver_(color)" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  lavender: {
+    title: "Lavender Color Hex: #E6E6FA vs Floral #B57EDC",
+    description:
+      "CSS lavender is #E6E6FA, a near-white tint. The lavender of the flower is closer to #B57EDC. Compare both, with RGB, contrast, shades and pairings.",
+    answer:
+      "Lavender has two common hex codes. The CSS color lavender is #E6E6FA (RGB 230, 230, 250), so pale it reads as a lilac-tinted white. The color of the flower, called floral lavender, is #B57EDC (RGB 181, 126, 220), a clear soft purple. Neither works as text on white; both suit backgrounds and accents.",
+    hexVariants: [
+      { label: "CSS lavender", hex: "#E6E6FA", note: "The web's named color; sometimes called lavender mist. Almost white." },
+      { label: "Lavender (floral)", hex: "#B57EDC", note: "The purple of the lavender flower, from Maerz and Paul's color dictionary." },
+    ],
+    keyTakeaways: [
+      "CSS lavender is #E6E6FA; floral lavender is #B57EDC.",
+      "Lavender was first recorded as a color name in English in 1705.",
+      "Neither works as text on white (1.23:1 and 3.01:1); for text use a deep purple like #5B4B8A (7.45:1).",
+      "Lavender pairs well with sage, cream, soft gray and navy.",
+    ],
+    sections: [
+      {
+        title: "Lavender color codes",
+        body: "CSS lavender is #E6E6FA, rgb(230, 230, 250), hsl(240, 67%, 94%). Floral lavender is #B57EDC, rgb(181, 126, 220), hsl(275, 57%, 68%). The two share a name but look very different: the CSS value is a background tint, the floral one a visible purple.",
+      },
+      {
+        title: "Which lavender do you mean?",
+        body: "When the X11 color list named #E6E6FA lavender, it chose a whisper of a tint; some references call it lavender mist to tell it apart. The color of the plant is much deeper, and that's floral lavender, #B57EDC. If you want lavender to read as purple, use the floral value or something close to it.",
+      },
+      {
+        title: "Lavender's purple neighbors",
+        body: "Several named colors sit close by. Lavender blue, also called periwinkle (#CCCCFF), is cooler and bluer. CSS mediumpurple (#9370DB), sometimes called deep lavender, is a stronger purple. Lilac leans pinker than lavender, and violet is more saturated.",
+      },
+      {
+        title: "Lavender and contrast",
+        body: "CSS lavender measures 1.23:1 on white, so it only works as a background, and dark text on it reads easily (14.5:1 with near-black). Floral lavender reaches 3.01:1 on white: fine for large shapes, not for text. For lavender-family text or buttons with white labels, deepen it to a muted purple such as #5B4B8A (7.45:1).",
+      },
+      {
+        title: "Colors that go with lavender",
+        body: "Lavender is calm next to sage green, cream, soft gray and muted gold, and crisp next to navy or charcoal. Pale lavender backgrounds work well behind deep purple headings and a single warm accent.",
+      },
+      {
+        title: "What lavender means",
+        body: "Lavender borrows its meaning from the plant: calm, rest and gentleness, with a touch of nostalgia. It's also a historic color of LGBTQ+ identity. The lavender color meaning page covers its symbolism and history.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for lavender?", answer: "CSS lavender is #E6E6FA. The flower color, floral lavender, is #B57EDC." },
+      { question: "Why is CSS lavender almost white?", answer: "The X11 color list, which CSS adopted, defined lavender as a very pale tint (#E6E6FA). The flower's color is the deeper #B57EDC." },
+      { question: "What is the difference between lavender and lilac?", answer: "Both are pale purples; lavender leans slightly blue and gray, lilac leans pinker." },
+      { question: "Is lavender readable as text on white?", answer: "No. CSS lavender is 1.23:1 and floral lavender 3.01:1. Use a deep purple such as #5B4B8A for text." },
+      { question: "What colors go with lavender?", answer: "Sage green, cream, soft gray, muted gold, navy and charcoal." },
+    ],
+    sources: [
+      { title: "Lavender (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Lavender_(color)" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  turquoise: {
+    title: "Turquoise Hex #40E0D0: RGB, Shades & Turquoise Blue",
+    description:
+      "Turquoise is #40E0D0 in CSS (RGB 64, 224, 208). See its codes, turquoise blue #00FFEF, dark turquoise, contrast tips and the colors that go with it.",
+    answer:
+      "Turquoise is #40E0D0 (RGB 64, 224, 208; CMYK 71, 0, 7, 12), the CSS named color turquoise: a bright blue-green that leans slightly green. Turquoise blue (#00FFEF) is a more vivid variant. All turquoises are light, so they need dark text: near-black on #40E0D0 reaches 10.8:1, while white text fails.",
+    hexVariants: [
+      { label: "CSS turquoise", hex: "#40E0D0", note: "The web's named color turquoise." },
+      { label: "Turquoise blue", hex: "#00FFEF", note: "A more vivid, bluer turquoise, first recorded as a color name in 1900." },
+      { label: "CSS dark turquoise", hex: "#00CED1", note: "Written darkturquoise in CSS; a little deeper and bluer." },
+    ],
+    keyTakeaways: [
+      "CSS turquoise is #40E0D0: RGB 64, 224, 208, HSL 174°, 72%, 56%.",
+      "Turquoise was first recorded as a color name in English in 1573.",
+      "It's light: white text on it measures only 1.64:1, so use dark text.",
+      "Coral is its classic partner; white, sand and navy work too.",
+    ],
+    sections: [
+      {
+        title: "Turquoise color codes",
+        body: "Turquoise is #40E0D0 in HEX, rgb(64, 224, 208) in RGB, hsl(174, 72%, 56%) in HSL and about 71, 0, 7, 12 in CMYK. Its hue of 174° puts it just on the green side of cyan (180°). In CSS you can write turquoise and get exactly #40E0D0.",
+      },
+      {
+        title: "The turquoise family in CSS",
+        body: "CSS has a small ladder of turquoises. paleturquoise (#AFEEEE) is soft and light, mediumturquoise (#48D1CC) a touch deeper, turquoise (#40E0D0) the reference, and darkturquoise (#00CED1) bluer and stronger. Turquoise blue, #00FFEF, is a vivid variant that isn't a CSS name.",
+      },
+      {
+        title: "Named after a stone",
+        body: "The color takes its name from the turquoise stone, and was first recorded as a color name in English in 1573. That's why it carries the stone's associations: protection, good fortune and the jewelry of Persia, Tibet and the American Southwest.",
+      },
+      {
+        title: "Turquoise and contrast",
+        body: "Turquoise is a light color: white text on it measures only 1.64:1 and darkturquoise 1.95:1. Use near-black text on turquoise buttons and badges (10.8:1). For turquoise-family text on white, go much deeper, to a teal such as #0E7490 (5.36:1).",
+      },
+      {
+        title: "Colors that go with turquoise",
+        body: "Coral is turquoise's classic partner, since the two sit roughly across the color wheel and together feel tropical. White and sand keep it beachy, navy makes it crisp, and gold or brass give it a Southwest-jewelry feel.",
+      },
+      {
+        title: "What turquoise means",
+        body: "Turquoise suggests calm, clarity and holidays by the sea, plus the protective meaning of the stone. The turquoise color meaning page covers its cultural and spiritual meanings.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for turquoise?", answer: "Turquoise is #40E0D0 (RGB 64, 224, 208). Turquoise blue is #00FFEF; CSS darkturquoise is #00CED1." },
+      { question: "Is turquoise blue or green?", answer: "Both: a blue-green at hue 174°, just on the green side of cyan." },
+      { question: "What is the difference between turquoise and teal?", answer: "Teal (#008080) is much darker and calmer; turquoise (#40E0D0) is bright and light." },
+      { question: "Can I use white text on turquoise?", answer: "No: it measures 1.64:1. Use near-black text, which reaches 10.8:1." },
+      { question: "What colors go with turquoise?", answer: "Coral, white, sand, navy and gold." },
+    ],
+    sources: [
+      { title: "Turquoise (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Turquoise_(color)" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  navy: {
+    title: "Navy Color Hex #000080: RGB, CMYK & Navy Shades",
+    description:
+      "Navy is #000080 in CSS (RGB 0, 0, 128). See its codes, real navies like U.S. Navy blue #022A3A and peacoat #2B2E43, contrast and colors that go with it.",
+    answer:
+      "Navy is #000080 (RGB 0, 0, 128; CMYK 100, 100, 0, 50), the CSS named color navy: pure blue at half brightness. Real-world navies are usually darker and grayer: the official U.S. Navy blue is #022A3A, and Pantone's Peacoat is #2B2E43. White text on any of them reads very well, at 13:1 or more.",
+    hexVariants: [
+      { label: "CSS navy", hex: "#000080", note: "Pure blue at half strength: saturated and quite purple-blue." },
+      { label: "U.S. Navy blue", hex: "#022A3A", note: "The U.S. Navy's official color: dark, with a hint of green-blue." },
+      { label: "Peacoat (Pantone)", hex: "#2B2E43", note: "Pantone 19-3920 TCX: the soft, grayish navy of clothing." },
+    ],
+    keyTakeaways: [
+      "CSS navy is #000080: RGB 0, 0, 128, HSL 240°, 100%, 25%.",
+      "The name comes from British naval uniforms: officers' uniform rules of 1748 made dark blue standard.",
+      "Real navies are darker and grayer, like U.S. Navy blue #022A3A and Pantone Peacoat #2B2E43.",
+      "White text on navy reaches 16:1, so it's one of the safest dark brand colors.",
+    ],
+    sections: [
+      {
+        title: "Navy color codes",
+        body: "CSS navy is #000080 in HEX, rgb(0, 0, 128) in RGB, hsl(240, 100%, 25%) in HSL and 100, 100, 0, 50 in CMYK. It's one of HTML's original 16 colors, and close to CSS midnightblue (#191970).",
+      },
+      {
+        title: "Why most navies don't look like #000080",
+        body: "CSS navy is fully saturated blue, which on screen looks bright and slightly purple next to the navy of a suit or a uniform. Real navies are darker and grayer. The U.S. Navy's official blue is #022A3A, and Pantone's Peacoat (19-3920 TCX) is #2B2E43. Some navies' uniforms are so dark they're described as a tone of black. For a brand or website, a softer navy usually looks more refined than #000080.",
+      },
+      {
+        title: "Where the name comes from",
+        body: "The first uniform regulations for British Royal Navy officers, in 1748, made dark blue the main color. It was first called marine blue, and 'navy blue' appears in the British press by about 1780.",
+      },
+      {
+        title: "Navy and contrast",
+        body: "Navy is one of the most readable brand colors. White text on CSS navy reaches 16.0:1, on U.S. Navy blue 15.1:1 and on Peacoat 13.3:1, all far above AAA. As a text color on white it works just as well, which makes navy a natural choice for headings, links and footers.",
+      },
+      {
+        title: "Colors that go with navy",
+        body: "Navy acts like a dark neutral, so almost everything works with it. White, cream and light gray are the safe partners; mustard, coral and orange are bold warm accents; sky blue, sage and blush keep it calm. The colors that go with navy blue guide covers 18 pairings.",
+      },
+      {
+        title: "What navy means",
+        body: "Navy stands for trust, authority and calm confidence, from naval uniforms to business suits and banks. The navy color meaning page covers its symbolism in full.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for navy?", answer: "CSS navy is #000080 (RGB 0, 0, 128). Real-world navies are darker, such as U.S. Navy blue #022A3A or Pantone Peacoat #2B2E43." },
+      { question: "Is navy the same as navy blue?", answer: "Yes. In CSS the name is navy, #000080; 'navy blue' is the everyday name for the same family of dark blues." },
+      { question: "What navy hex code should I use for a website?", answer: "#000080 can look bright and purple-blue. Many brands use a softer, grayer navy instead; check that white text stays above 4.5:1, which any dark navy easily does." },
+      { question: "Is white text readable on navy?", answer: "Yes: 16.0:1 on CSS navy, 15.1:1 on U.S. Navy blue and 13.3:1 on Peacoat." },
+      { question: "What colors go with navy?", answer: "White, cream, light gray, camel, mustard, coral, sky blue, sage and blush." },
+    ],
+    sources: [
+      { title: "Navy blue, Wikipedia", href: "https://en.wikipedia.org/wiki/Navy_blue" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  maroon: {
+    title: "Maroon Hex #800000 vs X11 Maroon #B03060",
+    description:
+      "Maroon is #800000 in CSS, but the X11 color list defines a much rosier maroon, #B03060. Compare both, with RGB, CMYK, contrast, shades and pairings.",
+    answer:
+      "Maroon is #800000 (RGB 128, 0, 0; CMYK 0, 100, 100, 50) in CSS: pure red at half brightness, a deep brownish red. The older X11 color list defined maroon differently, as #B03060, a brighter, rosier shade. White text works on both: 10.95:1 on CSS maroon and 6.11:1 on X11 maroon.",
+    hexVariants: [
+      { label: "CSS maroon", hex: "#800000", note: "One of HTML's original 16 colors: red at half strength." },
+      { label: "X11 maroon", hex: "#B03060", note: "The X11 list's 'maroon': brighter and rosier. CSS kept the HTML value instead." },
+    ],
+    keyTakeaways: [
+      "CSS maroon is #800000; the X11 color list's maroon is #B03060.",
+      "Maroon was first recorded as a color name in English in 1789.",
+      "White text on CSS maroon reaches 10.95:1, so it works for buttons and headers.",
+      "Maroon is browner than burgundy and darker than crimson.",
+    ],
+    sections: [
+      {
+        title: "Maroon color codes",
+        body: "CSS maroon is #800000 in HEX, rgb(128, 0, 0) in RGB, hsl(0, 100%, 25%) in HSL and 0, 100, 100, 50 in CMYK. Its hue is pure red; it looks brownish only because it's so dark.",
+      },
+      {
+        title: "Two maroons: HTML vs X11",
+        body: "HTML's original 16 colors defined maroon as #800000. The X11 color list, used on Unix displays, called a different color maroon: #B03060, much brighter and more toned toward rose. When CSS adopted the X11 names, it kept HTML's maroon, so color: maroon gives #800000. Different dictionaries define maroon differently too, which is why you'll see both.",
+      },
+      {
+        title: "Where the name comes from",
+        body: "Maroon comes from the French marron, meaning chestnut, and was first recorded as a color name in English in 1789. The chestnut connection explains the brown in it.",
+      },
+      {
+        title: "Maroon and contrast",
+        body: "White text on CSS maroon reaches 10.95:1, and on X11 maroon 6.11:1, so both work for buttons, banners and headings. As a text color on white, CSS maroon reads just as well. Dark text on maroon doesn't work; keep labels white or cream.",
+      },
+      {
+        title: "Colors that go with maroon",
+        body: "Maroon looks classic with cream and gold, which is the collegiate look, and serious with navy and charcoal. Blush and sage soften it. Avoid pairing it with crimson or bright red, which makes both look muddy.",
+      },
+      {
+        title: "Maroon, burgundy or crimson?",
+        body: "Maroon (#800000) leans brown, like chestnut. Burgundy leans purple, like red wine. Crimson (#DC143C) is much brighter and slightly blue. The maroon color meaning page covers what maroon stands for.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for maroon?", answer: "CSS maroon is #800000 (RGB 128, 0, 0). The X11 color list defines maroon as #B03060." },
+      { question: "Why are there two maroon hex codes?", answer: "HTML's color names used #800000; the X11 list used #B03060. CSS kept the HTML value." },
+      { question: "What is the difference between maroon and burgundy?", answer: "Maroon leans brown (chestnut); burgundy leans purple (red wine)." },
+      { question: "Is white text readable on maroon?", answer: "Yes: 10.95:1 on #800000 and 6.11:1 on #B03060." },
+      { question: "What colors go with maroon?", answer: "Cream, gold, navy, charcoal, blush and sage." },
+    ],
+    sources: [
+      { title: "Maroon, Wikipedia", href: "https://en.wikipedia.org/wiki/Maroon" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  indigo: {
+    title: "Indigo Color Hex #4B0082: RGB, CMYK & Shades",
+    description:
+      "Indigo is #4B0082 in CSS (RGB 75, 0, 130), a deep purple-blue. See its codes, the bluer spectral indigo #4000FF, contrast, shades and pairings.",
+    answer:
+      "Indigo is #4B0082 (RGB 75, 0, 130; CMYK 42, 100, 0, 49) in CSS: a deep color that leans clearly toward purple. The indigo of the rainbow and of reference charts is bluer, around #4000FF, a vivid purplish blue. White text works on both: 12.95:1 on CSS indigo and 7.89:1 on #4000FF.",
+    hexVariants: [
+      { label: "CSS indigo", hex: "#4B0082", note: "The web's named color: dark and purple-leaning." },
+      { label: "Indigo (spectral)", hex: "#4000FF", note: "A vivid purplish blue, closer to the indigo between blue and violet." },
+    ],
+    keyTakeaways: [
+      "CSS indigo is #4B0082; the bluer reference indigo is about #4000FF.",
+      "Indigo was first recorded as a color name in English in 1289.",
+      "White text on CSS indigo reaches 12.95:1, so it's safe for buttons and dark sections.",
+      "Indigo and gold is a classic, rich pairing.",
+    ],
+    sections: [
+      {
+        title: "Indigo color codes",
+        body: "CSS indigo is #4B0082 in HEX, rgb(75, 0, 130) in RGB, hsl(275, 100%, 25%) in HSL and about 42, 100, 0, 49 in CMYK. At hue 275° it sits on the purple side of blue, which is why it can look more like a dark violet than a blue on screen.",
+      },
+      {
+        title: "Purple indigo vs blue indigo",
+        body: "The word covers a range. The CSS value, #4B0082, is purple-leaning and dark. Color references that place indigo between blue and violet in the spectrum use a bluer value, such as #4000FF, a vivid purplish blue. Denim's indigo is bluer and grayer still. Pick the one that matches what you mean: purple-dark, vivid spectral, or denim.",
+      },
+      {
+        title: "A very old color name",
+        body: "Indigo was recorded as a color name in English as early as 1289, named after the indigo dye. Isaac Newton later listed it as one of the seven colors of the spectrum, between blue and violet.",
+      },
+      {
+        title: "Indigo and contrast",
+        body: "Indigo is dark, so it's easy to use for text and buttons. White text on CSS indigo reaches 12.95:1, and on #4000FF 7.89:1, both AAA for normal text. As a text color on white it reads just as well. Dark text on indigo doesn't work.",
+      },
+      {
+        title: "Colors that go with indigo",
+        body: "Indigo looks rich with gold and cream, fresh with coral or peach, and calm with silver, soft gray and lavender. In dark interfaces, a deep indigo makes a softer alternative to pure black or navy.",
+      },
+      {
+        title: "Indigo, navy or violet?",
+        body: "Navy (#000080) is a dark blue with no purple in it. Violet is lighter and clearly purple. Indigo sits between them. The indigo color meaning page covers what indigo stands for.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for indigo?", answer: "CSS indigo is #4B0082 (RGB 75, 0, 130). A bluer, spectral indigo is about #4000FF." },
+      { question: "Is indigo blue or purple?", answer: "In between. CSS indigo leans purple (hue 275°); the spectral indigo leans blue." },
+      { question: "Is white text readable on indigo?", answer: "Yes: 12.95:1 on #4B0082 and 7.89:1 on #4000FF." },
+      { question: "What is the difference between indigo and navy?", answer: "Navy is a pure dark blue; indigo has violet in it." },
+      { question: "What colors go with indigo?", answer: "Gold, cream, coral, peach, silver, soft gray and lavender." },
+    ],
+    sources: [
+      { title: "Indigo (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Indigo_(color)" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  violet: {
+    title: "Violet Color Hex: CSS #EE82EE vs Spectral #8000FF",
+    description:
+      "CSS violet is #EE82EE, a light pinkish purple. The violet of the spectrum is a deep #8000FF. Compare both plus dark violet, with codes, contrast and pairings.",
+    answer:
+      "Violet has two very different hex codes. The CSS color violet is #EE82EE (RGB 238, 130, 238), a light pinkish purple. The violet of the rainbow and the color wheel is a deep, vivid #8000FF. CSS darkviolet (#9400D3) sits close to that. Use dark text on CSS violet, and white text on the deep violets.",
+    hexVariants: [
+      { label: "CSS violet", hex: "#EE82EE", note: "The web's named color: light, pinkish, closer to orchid than to rainbow violet." },
+      { label: "Violet (spectral)", hex: "#8000FF", note: "The vivid violet of the color wheel and spectrum." },
+      { label: "CSS dark violet", hex: "#9400D3", note: "Written darkviolet in CSS; close to spectral violet." },
+    ],
+    keyTakeaways: [
+      "CSS violet is #EE82EE; spectral violet is #8000FF; CSS darkviolet is #9400D3.",
+      "Violet is a spectral color; purple is a mix of red and blue light.",
+      "Violet was first recorded as a color name in English around 1370.",
+      "CSS violet needs dark text (7.68:1); the deep violets take white text (6.25 to 6.56:1).",
+    ],
+    sections: [
+      {
+        title: "Violet color codes",
+        body: "CSS violet is #EE82EE, rgb(238, 130, 238), hsl(300, 76%, 72%), CMYK 0, 45, 0, 7. Spectral violet is #8000FF, rgb(128, 0, 255), hsl(270, 100%, 50%). CSS darkviolet is #9400D3, hsl(282, 100%, 41%).",
+      },
+      {
+        title: "Why CSS violet doesn't match the rainbow",
+        body: "Like several CSS names that came from the X11 color list, violet was given a value that doesn't match its traditional meaning. #EE82EE is a light, pinkish purple, much closer to orchid. The violet at the end of the rainbow is the deep #8000FF. In CSS, darkviolet (#9400D3) is the closest named match to that.",
+      },
+      {
+        title: "Violet vs purple",
+        body: "Violet is a spectral color: it's a real wavelength of light, at the short end of what we can see. Purple isn't in the spectrum; it's what we see from a mix of red and blue (and violet) light. In everyday speech the words overlap, but violet usually means the bluer, cooler purples.",
+      },
+      {
+        title: "Violet and contrast",
+        body: "CSS violet is light: white text on it measures 2.32:1, so use dark text (7.68:1 with near-black). The deep violets are the opposite: white text on #8000FF reaches 6.25:1 and on #9400D3 6.56:1, both fine for buttons. As text on white, the deep violets work; CSS violet doesn't.",
+      },
+      {
+        title: "Colors that go with violet",
+        body: "Soft yellow sits opposite violet on the color wheel and makes it pop. Sage, cream, silver and deep green are calmer partners. For a light CSS-violet palette, add charcoal text and a single deep violet accent.",
+      },
+      {
+        title: "What violet means",
+        body: "Violet is linked with imagination, spirituality and dignity, and through the flower with modesty. The violet color meaning page covers its history and symbolism.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for violet?", answer: "CSS violet is #EE82EE. Spectral violet is #8000FF, and CSS darkviolet is #9400D3." },
+      { question: "Why is CSS violet so light?", answer: "CSS took the name and value from the X11 color list, which defined violet as a light pinkish purple. The rainbow's violet is the deep #8000FF." },
+      { question: "What is the difference between violet and purple?", answer: "Violet is a spectral color, a real wavelength of light; purple is a mix of red and blue light." },
+      { question: "What text color works on violet?", answer: "Dark text on CSS violet (7.68:1); white text on spectral violet (6.25:1) or darkviolet (6.56:1)." },
+      { question: "What colors go with violet?", answer: "Soft yellow, sage, cream, silver and deep green." },
+    ],
+    sources: [
+      { title: "Violet (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Violet_(color)" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  magenta: {
+    title: "Magenta Hex #FF00FF vs Process Magenta",
+    description:
+      "Magenta is #FF00FF on screens, the same as CSS fuchsia. Process magenta, the CMYK print ink, is shown as about #FF0090. Compare both, with codes and contrast.",
+    answer:
+      "Magenta is #FF00FF (RGB 255, 0, 255) on screens: red and blue light at full strength with no green. In CSS, magenta and fuchsia are identical. Process magenta, the M in CMYK printing, is an ink rather than an RGB color; screens approximate it as about #FF0090. Dark text reads better on magenta than white.",
+    hexVariants: [
+      { label: "Screen magenta (CSS magenta and fuchsia)", hex: "#FF00FF", note: "Red and blue at full strength, no green. Identical to CSS fuchsia." },
+      { label: "Process magenta (print ink)", hex: "#FF0090", note: "An approximation: process magenta is an ink, not an RGB color." },
+    ],
+    keyTakeaways: [
+      "Screen magenta is #FF00FF, and CSS fuchsia is exactly the same color.",
+      "Process magenta, the M in CMYK, is an ink; on screens it's approximated as about #FF0090.",
+      "The name comes from a dye patented in 1859 as fuchsine and renamed after that year's Battle of Magenta.",
+      "Near-black text on magenta (5.67:1) beats white text (3.14:1).",
+    ],
+    sections: [
+      {
+        title: "Magenta color codes",
+        body: "Magenta is #FF00FF in HEX, rgb(255, 0, 255) in RGB, hsl(300, 100%, 50%) in HSL and 0, 100, 0, 0 in CMYK. In CSS, magenta and fuchsia are two names for exactly the same color.",
+      },
+      {
+        title: "Screen magenta vs process magenta",
+        body: "On a screen, magenta is made by adding red and blue light. In print, magenta is one of the four process inks (CMYK), and it absorbs green light. The ink can't glow like a screen, so it looks deeper and slightly more crimson; screens show it as about #FF0090. If a design must match in print, specify the ink (C0 M100 Y0 K0) rather than trusting #FF00FF.",
+      },
+      {
+        title: "Where the name comes from",
+        body: "The color is named after an aniline dye patented in 1859 by François-Emmanuel Verguin, who first called it fuchsine. It was soon renamed magenta, after the Battle of Magenta in northern Italy that same year. That's why fuchsia and magenta still sit side by side as names.",
+      },
+      {
+        title: "Magenta and contrast",
+        body: "White text on magenta measures 3.14:1, enough only for large text. Near-black text reaches 5.67:1 and reads better. As a text color on white, magenta (3.14:1) fails for body copy; use it for large headings and accents, or deepen it for links.",
+      },
+      {
+        title: "Colors that go with magenta",
+        body: "Magenta is bold next to black, navy and white, and electric next to teal or lime. To calm it down, pair it with soft gray, cream or blush, and keep magenta to one accent.",
+      },
+      {
+        title: "What magenta means",
+        body: "Magenta suggests creativity, confidence and nonconformity. It also isn't in the rainbow: the brain makes it from red and blue light. The magenta color meaning page covers more.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for magenta?", answer: "Magenta is #FF00FF (RGB 255, 0, 255). CSS fuchsia is the same color. Process magenta is approximated as about #FF0090." },
+      { question: "Is magenta the same as fuchsia?", answer: "In CSS, yes: both mean #FF00FF. In paint and fashion, fuchsia is often a slightly pinker shade." },
+      { question: "What is process magenta?", answer: "The magenta ink used in CMYK printing. It's an ink rather than an RGB color, and screens show it as roughly #FF0090." },
+      { question: "Should I use white or black text on magenta?", answer: "Near-black: 5.67:1 against 3.14:1 for white." },
+      { question: "What colors go with magenta?", answer: "Black, navy, white, teal and lime; soft gray or cream to calm it down." },
+    ],
+    sources: [
+      { title: "Magenta, Wikipedia", href: "https://en.wikipedia.org/wiki/Magenta" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  coral: {
+    title: "Coral Color Hex #FF7F50: RGB, Shades & Light Coral",
+    description:
+      "Coral is #FF7F50 in CSS (RGB 255, 127, 80), a pink-orange. Compare light coral #F08080 and coral pink #F88379, with codes, contrast and pairings.",
+    answer:
+      "Coral is #FF7F50 (RGB 255, 127, 80; CMYK 0, 50, 69, 0), the CSS named color coral: a warm pink-orange that leans orange on screens. Light coral (#F08080) and coral pink (#F88379) are pinker. All three need dark text: near-black on coral reaches 7.12:1, while white text measures only 2.50:1.",
+    hexVariants: [
+      { label: "CSS coral", hex: "#FF7F50", note: "The web's named color; on screen it reads as a shade of orange." },
+      { label: "CSS light coral", hex: "#F08080", note: "Written lightcoral in CSS: softer and pinker." },
+      { label: "Coral pink", hex: "#F88379", note: "A pinker coral, first recorded as a color name in 1892." },
+    ],
+    keyTakeaways: [
+      "CSS coral is #FF7F50; light coral is #F08080; coral pink is #F88379.",
+      "Coral was first recorded as a color name in English in 1513.",
+      "All corals need dark text: white measures only 2.47 to 2.59:1.",
+      "Pantone named Living Coral (16-1546) its Color of the Year for 2019.",
+    ],
+    sections: [
+      {
+        title: "Coral color codes",
+        body: "CSS coral is #FF7F50 in HEX, rgb(255, 127, 80) in RGB, hsl(16, 100%, 66%) in HSL and 0, 50, 69, 0 in CMYK. Its hue of 16° puts it on the orange side of red, which is why web coral looks more orange than many people expect.",
+      },
+      {
+        title: "Which coral do you mean?",
+        body: "Coral covers a range from orange to pink. The CSS value, #FF7F50, is the most orange. CSS lightcoral (#F08080) is pinker and softer, and coral pink (#F88379) sits between them. Pantone's Living Coral, its 2019 Color of the Year (16-1546), is another pink-orange. If you want coral to read as pink, choose one of the pinker values.",
+      },
+      {
+        title: "Named after the reef",
+        body: "Coral was first recorded as a color name in English in 1513, after the pinkish-red coral used in jewelry and charms. That's why it still feels warm, summery and connected to the sea.",
+      },
+      {
+        title: "Coral and contrast",
+        body: "Coral is light enough that white text fails: 2.50:1 on CSS coral, 2.59:1 on light coral and 2.47:1 on coral pink. Use near-black text instead (7.12:1 on #FF7F50). For a coral button with white text, deepen it considerably and check that the label reaches 4.5:1.",
+      },
+      {
+        title: "Colors that go with coral",
+        body: "Navy and coral is a classic nautical pairing, and turquoise and coral feel tropical. Mint, white, sand and gold also work. Keep coral to accents and buttons in interfaces; large coral areas get loud quickly.",
+      },
+      {
+        title: "Coral, salmon or peach?",
+        body: "Coral is the most saturated of the three. Salmon is lighter and pinker, and peach is paler and more beige. The coral color meaning page covers what coral stands for.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for coral?", answer: "CSS coral is #FF7F50 (RGB 255, 127, 80). Light coral is #F08080 and coral pink is #F88379." },
+      { question: "Is coral pink or orange?", answer: "A pink-orange. Web coral leans orange (hue 16°); light coral and coral pink lean pinker." },
+      { question: "Can I use white text on coral?", answer: "Not at normal sizes: 2.50:1. Near-black text reaches 7.12:1." },
+      { question: "Was coral a Pantone Color of the Year?", answer: "Yes. Pantone named Living Coral (16-1546) its Color of the Year for 2019." },
+      { question: "What colors go with coral?", answer: "Navy, turquoise, mint, white, sand and gold." },
+    ],
+    sources: [
+      { title: "Coral (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Coral_(color)" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  beige: {
+    title: "Beige Color Hex #F5F5DC: RGB, CMYK & Warmer Beiges",
+    description:
+      "Beige is #F5F5DC in CSS (RGB 245, 245, 220), a pale, slightly yellow neutral. Compare desert sand and French beige, with codes, contrast and pairings.",
+    answer:
+      "Beige is #F5F5DC (RGB 245, 245, 220; CMYK 0, 0, 10, 4), the CSS named color beige: a very pale, slightly yellow neutral. Many beiges used in fashion and interiors are warmer and deeper, like desert sand (#EDC9AF) or French beige (#A67B5B). CSS beige is a background color; dark text on it reads very well (16.1:1).",
+    hexVariants: [
+      { label: "CSS beige", hex: "#F5F5DC", note: "The web's named color: pale, slightly yellow, close to cream." },
+      { label: "Desert sand", hex: "#EDC9AF", note: "A warmer, pinkish beige, closer to what many people picture." },
+      { label: "French beige", hex: "#A67B5B", note: "A deep, warm beige-brown." },
+    ],
+    keyTakeaways: [
+      "CSS beige is #F5F5DC; warmer beiges include desert sand #EDC9AF and French beige #A67B5B.",
+      "Beige comes from the French word for natural wool, neither bleached nor dyed.",
+      "It was first recorded as a color name in English in 1887.",
+      "CSS beige is almost white on screen (1.11:1 against white); use it for backgrounds with dark text.",
+    ],
+    sections: [
+      {
+        title: "Beige color codes",
+        body: "CSS beige is #F5F5DC in HEX, rgb(245, 245, 220) in RGB, hsl(60, 56%, 91%) in HSL and 0, 0, 10, 4 in CMYK. Its red and green channels are equal, so its slight tint is yellow, not orange or pink.",
+      },
+      {
+        title: "Why CSS beige looks so pale",
+        body: "The X11 and CSS beige is a very light, slightly yellow tint, close to cream. The beige of trench coats, linen and living rooms is usually warmer and deeper: desert sand (#EDC9AF) has a pinkish warmth, and French beige (#A67B5B) is a deep beige-brown. For a beige that reads as beige rather than off-white, use a warmer value.",
+      },
+      {
+        title: "Where the name comes from",
+        body: "Beige originally meant natural wool that had been neither bleached nor dyed. It came into use as a color name in France around 1855–1860 and in English by 1887.",
+      },
+      {
+        title: "Beige and contrast",
+        body: "CSS beige is almost white: 1.11:1 against white, so a beige panel on a white page needs a border or a slightly darker edge. Near-black text on it reaches 16.1:1. French beige (#A67B5B) is deeper but still only 3.75:1 against white, so it's an accent, not a text color.",
+      },
+      {
+        title: "Colors that go with beige",
+        body: "Beige works with white, navy, olive, sage, terracotta and black. One deep accent keeps a beige room or brand from looking flat; navy or olive are the safest choices.",
+      },
+      {
+        title: "Beige, tan, cream or ivory?",
+        body: "Tan (#D2B48C) is darker and browner. Cream is paler and more yellow. Ivory (#FFFFF0) is whiter than all of them. The beige color meaning page covers what beige stands for.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for beige?", answer: "CSS beige is #F5F5DC (RGB 245, 245, 220). Warmer beiges include desert sand #EDC9AF and French beige #A67B5B." },
+      { question: "Why does CSS beige look almost white?", answer: "The X11 and CSS value is a very pale, slightly yellow tint. Beiges in fashion and interiors are usually warmer and deeper." },
+      { question: "Is beige warm or cool?", answer: "Usually warm. CSS beige has a slight yellow tint; desert sand and French beige are warmer still." },
+      { question: "Where does the word beige come from?", answer: "From French, for natural wool that was neither bleached nor dyed. It's been an English color name since 1887." },
+      { question: "What colors go with beige?", answer: "White, navy, olive, sage, terracotta and black." },
+    ],
+    sources: [
+      { title: "Beige, Wikipedia", href: "https://en.wikipedia.org/wiki/Beige" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  olive: {
+    title: "Olive Color Hex #808000 vs Olive Drab #6B8E23",
+    description:
+      "Olive is #808000 in CSS, olive drab is #6B8E23 and dark olive green is #556B2F. Compare all three, with RGB, CMYK, contrast and pairings.",
+    answer:
+      "Olive is #808000 (RGB 128, 128, 0; CMYK 0, 0, 100, 50) in CSS: yellow at half brightness, a muted yellow-green. CSS olivedrab (#6B8E23) is greener, and darkolivegreen (#556B2F) deeper. Olive sits awkwardly for text: 4.20:1 on white and 5.01:1 with black text, so check contrast or go darker.",
+    hexVariants: [
+      { label: "CSS olive", hex: "#808000", note: "One of HTML's original 16 colors: yellow at half strength." },
+      { label: "CSS olive drab", hex: "#6B8E23", note: "Written olivedrab in CSS; named after the military color, first recorded in 1892." },
+      { label: "CSS dark olive green", hex: "#556B2F", note: "Written darkolivegreen in CSS; deeper and more muted." },
+    ],
+    keyTakeaways: [
+      "CSS olive is #808000; olivedrab is #6B8E23; darkolivegreen is #556B2F.",
+      "Olive measures 4.20:1 on white, just under AA for body text; darkolivegreen reaches 5.95:1.",
+      "The U.S. Army used several numbered olive drab shades, so there's no single 'army green'.",
+      "Olive pairs well with cream, terracotta, mustard and rust.",
+    ],
+    sections: [
+      {
+        title: "Olive color codes",
+        body: "CSS olive is #808000 in HEX, rgb(128, 128, 0) in RGB, hsl(60, 100%, 25%) in HSL and 0, 0, 100, 50 in CMYK. With red and green equal and no blue, it's technically a dark yellow, which our eyes read as a yellow-green.",
+      },
+      {
+        title: "Olive, olive drab and dark olive green",
+        body: "CSS has three olives. olive (#808000) is the yellowest. olivedrab (#6B8E23) is greener and was first recorded as a color name in 1892. darkolivegreen (#556B2F) is the deepest and most muted. Real military olive drab varied: the U.S. Army used several numbered shades, such as OD #3, OD #7 and OG-107, so there's no single official 'army green' hex.",
+      },
+      {
+        title: "Named after the fruit",
+        body: "Olive takes its name from the green of unripe olives and olive leaves, and carries the old symbolism of the olive branch: peace and reconciliation. The olive color meaning page covers that history.",
+      },
+      {
+        title: "Olive and contrast",
+        body: "Olive is a mid-tone, which makes it tricky: white text on it measures 4.20:1 and black text 5.01:1, so neither is comfortable at small sizes. olivedrab is similar (3.81:1 with white). For olive buttons with white labels or olive text on white, use darkolivegreen (#556B2F, 5.95:1) or darker.",
+      },
+      {
+        title: "Colors that go with olive",
+        body: "Olive and terracotta is a classic earthy pairing. Cream, mustard, rust and camel keep it warm; navy and blush make it more modern. Olive works well in outdoor, food and sustainable brands.",
+      },
+      {
+        title: "Olive, sage or khaki?",
+        body: "Sage is grayer, lighter and cooler. Khaki is lighter still, close to sand. Olive is the darkest and most yellow of the three.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for olive?", answer: "CSS olive is #808000 (RGB 128, 128, 0). Olive drab is #6B8E23 and dark olive green is #556B2F." },
+      { question: "What is the difference between olive and olive drab?", answer: "Olive (#808000) is a yellowish green; olive drab (#6B8E23) is greener and named after the military color." },
+      { question: "What is the army green hex code?", answer: "There isn't a single one: the U.S. Army used several olive drab shades. CSS olivedrab (#6B8E23) is the common web stand-in." },
+      { question: "Can I use white text on olive?", answer: "Only for large text: 4.20:1. Use darkolivegreen (#556B2F, 5.95:1) or darker for buttons." },
+      { question: "What colors go with olive?", answer: "Cream, terracotta, mustard, rust, camel, navy and blush." },
+    ],
+    sources: [
+      { title: "Olive (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Olive_(color)" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
 };

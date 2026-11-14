@@ -2,6 +2,25 @@
 
 Ready-to-paste text for the launch and directory listings in the research plan (week 2 submissions, launch on **Tue–Wed Nov 17–18, 2026**). The owner posts everything from their own accounts. Nothing here has been submitted.
 
+## Status and schedule (updated 2026-11-14)
+
+**Ready on the site (live from 2026-11-14):**
+- Generator Preview with contrast checks.
+- Color-blind view using the Machado et al. (2009) model.
+- The launch article, `/blog/palettes-on-a-real-website`.
+- 21 rewritten color pages and 3 new industry pages.
+
+**Screenshots:** the 5 below were captured on 2026-11-14 at 1600×1000 and sent in chat. They are kept outside the repo.
+
+| When | Owner (from your own accounts) |
+|---|---|
+| Nov 15–16 | Schedule Product Hunt for **Tue Nov 17, 12:01 am PT**. Submit to Uneed, AlternativeTo and TOOOLS.design if not done. |
+| Nov 17 | Product Hunt launch day. Post the maker comment and answer every comment. |
+| Nov 18 | Show HN, around 8–10 am ET. Stay in the thread for the first 2–3 hours. |
+| Nov 18–19 | r/SideProject post. |
+| Nov 21 (Sat) | r/web_design and r/webdev Showoff Saturday threads. |
+| After launch | Send the founder name, short bio and social profile links, so the About page and the `sameAs` schema can be filled in. |
+
 ## The hook (lead with this everywhere)
 
 Generic "free color tools" launches get 1–5 points on Hacker News. Launches that do something specific get hundreds. HueFlow's specific thing:
@@ -54,7 +73,7 @@ Where it shows:
 - Show HN needs something people can try without signing up. HueFlow qualifies.
 - **Title:** Show HN: HueFlow – preview color palettes on a sample website with WCAG contrast
 - **Text:**
-  > I kept choosing palettes that looked good as swatches and failed on a real page. HueFlow shows each palette on a sample UI and computes WCAG contrast for text, buttons and links (plus a color-blindness simulation) before you export to Tailwind/CSS/Swift. Industry pages (healthcare, law firm, restaurant...) show ready palettes the same way. Built with Next.js on Cloudflare Workers. Free, no account. Feedback welcome, especially on how the contrast and preview should work.
+  > I kept choosing palettes that looked good as swatches and failed on a real page. HueFlow shows each palette on a sample UI and computes WCAG contrast for text, buttons and links (plus a color-blindness simulation using the Machado 2009 model) before you export to Tailwind/CSS/Swift. Industry pages (healthcare, law firm, restaurant...) show ready palettes the same way. Built with Next.js on Cloudflare Workers. Free, no account. Feedback welcome, especially on how the contrast and preview should work.
 - Stay in the thread for the first 2–3 hours and answer technical questions plainly.
 
 ### Reddit

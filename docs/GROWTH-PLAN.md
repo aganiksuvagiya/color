@@ -565,6 +565,24 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
   - **Batch 2:** the `/colors` pages for the 12 colors whose meaning pages are already rich (gold, silver, lavender, turquoise, navy, maroon, indigo, violet, magenta, coral, beige, olive). Most have a real "which hex?" story, e.g. gold #FFD700 vs metallic #D4AF37, olive #808000 vs olive drab #6B8E23, violet #EE82EE vs spectral ~#7F00FF, lavender #E6E6FA vs the flower ~#B57EDC. The facts are already verified.
   - **Batch 3:** the 13 base hues (blue, green, red, purple, black, orange, yellow, pink, teal, gray, white, brown, plus azure, which is done). Move them to `authoredOnly` with rewritten sections; white and black had searches in October.
   - **Batch 4:** the ~100 long-tail CSS names (bisque, papaya whip…), at about 10 a week by Search Console demand.
+- **Color pages, batch 2 (2026-11-14, uncommitted):**
+  - **Pages:** the `/colors` pages for gold, silver, lavender, turquoise, navy, maroon, indigo, violet, magenta, coral, beige and olive are rewritten in `color-pages-rich.ts`. That makes 21 rewritten color pages.
+  - **Focus:** these colors also have rich, indexed meaning pages, so the `/colors` versions stick to codes, "which hex?", screen contrast, pairings and comparisons, with a short meaning section that points to the meaning page.
+  - **Facts:** checked against Wikipedia and W3C. Pantone's Living Coral hex (not on Wikipedia) and the indigo dye hex (two Wikipedia pages disagree) were left out.
+  - **Hex variants:**
+    - gold #FFD700 / metallic #D4AF37 / old gold #CFB53B;
+    - lavender #E6E6FA / floral #B57EDC;
+    - turquoise #40E0D0 / turquoise blue #00FFEF / dark turquoise #00CED1;
+    - navy #000080 / U.S. Navy blue #022A3A / Peacoat #2B2E43;
+    - maroon #800000 / X11 #B03060;
+    - indigo #4B0082 / spectral #4000FF;
+    - violet #EE82EE / spectral #8000FF / darkviolet #9400D3;
+    - magenta #FF00FF / process ~#FF0090;
+    - coral #FF7F50 / lightcoral #F08080 / coral pink #F88379;
+    - beige #F5F5DC / desert sand #EDC9AF / French beige #A67B5B;
+    - olive #808000 / olivedrab #6B8E23 / darkolivegreen #556B2F.
+  - **Overlap:** 21–28% with other color pages (it was ~80%) and 11–17% with each color's own meaning page.
+  - **Indexing:** these 12 moved from the "next to rewrite" list to `color-pages-rich.ts`, so 47 color pages are still indexable. Sitemap lastmod is 2026-11-14.
 - **Template color pages noindexed (owner, 2026-11-01: "ha to srkhu kr"):**
   - **Rule:** `isColorPageIndexable` in `lib/seo/content.ts` keeps `/colors/<name>` indexable only for:
     - the 13 base hues;

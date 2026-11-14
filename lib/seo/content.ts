@@ -3044,8 +3044,6 @@ export function isColorMeaningIndexable(slug: string): boolean {
 // with written sections, a full rewrite in color-pages-rich.ts, or a color with real search
 // demand that is next in line for a rewrite. The rest stay reachable but noindex until rewritten.
 const colorPagesNextToRewrite = [
-  // Rich meaning pages already exist for these.
-  "gold", "silver", "lavender", "turquoise", "navy", "maroon", "indigo", "violet", "magenta", "coral", "beige", "olive",
   // Had Search Console queries in Aug-Oct 2026.
   "bisque", "lime-green", "medium-sea-green",
   // 10+ impressions or a click in Search Console, Jun 23-Oct 29 2026.

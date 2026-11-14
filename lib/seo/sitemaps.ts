@@ -35,6 +35,18 @@ const contentUpdatedOn: Record<string, string> = {
   "/colors/alice-blue": "2026-11-01",
   "/colors/lime": "2026-11-01",
   "/colors/light-gray": "2026-11-01",
+  "/colors/gold": "2026-11-14",
+  "/colors/silver": "2026-11-14",
+  "/colors/lavender": "2026-11-14",
+  "/colors/turquoise": "2026-11-14",
+  "/colors/navy": "2026-11-14",
+  "/colors/maroon": "2026-11-14",
+  "/colors/indigo": "2026-11-14",
+  "/colors/violet": "2026-11-14",
+  "/colors/magenta": "2026-11-14",
+  "/colors/coral": "2026-11-14",
+  "/colors/beige": "2026-11-14",
+  "/colors/olive": "2026-11-14",
 };
 
 type SitemapEntry = {

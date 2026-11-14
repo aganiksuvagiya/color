@@ -42,7 +42,7 @@ export const blogPosts: BlogPost[] = [
     dek: "Colors only work or fail once they have a job. Here's what the preview checks, how the contrast numbers are worked out, and how HueFlow is built.",
     category: "Guides",
     published: "2026-10-29",
-    updated: "2026-10-29",
+    updated: "2026-11-14",
     readMinutes: 6,
     cover: ["#0F172A", "#3B82F6", "#22C55E", "#FACC15", "#A855F7"],
     keywords: [
@@ -66,7 +66,7 @@ export const blogPosts: BlogPost[] = [
       { question: "Is HueFlow free?", answer: "Yes. The generator, the preview, the converters and the contrast checker all work without an account." },
       { question: "What contrast ratio does text need?", answer: "WCAG level AA asks for 4.5:1 for normal text and 3:1 for large text and UI parts such as icons. Level AAA asks for 7:1." },
       { question: "How does HueFlow choose the text color on a button?", answer: "It measures white, near-black and the palette's own dark color against the button and uses whichever has the highest contrast. If none reaches 4.5:1, the check under the preview shows it." },
-      { question: "Does HueFlow simulate color blindness?", answer: "Yes, for protanopia, deuteranopia and tritanopia. It's a simple matrix approximation, useful for spotting colors that look alike, not a clinical model." },
+      { question: "Does HueFlow simulate color blindness?", answer: "Yes, for protanopia, deuteranopia and tritanopia, using the Machado et al. (2009) model in linear RGB. It's a simulation for spotting colors that look alike, not a diagnosis." },
     ],
     sources: [
       { title: "WCAG 2.2: Contrast (Minimum), W3C", url: "https://www.w3.org/TR/WCAG22/#contrast-minimum" },

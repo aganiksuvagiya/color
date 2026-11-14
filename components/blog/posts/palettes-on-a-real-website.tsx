@@ -51,7 +51,7 @@ export function PalettesOnARealWebsitePost() {
         <li><strong>Three checks sit under the preview:</strong> body text on the background, the label on the primary button, and links on the background, each with its ratio and WCAG level.</li>
       </ul>
       <p>
-        The A11y panel goes further, with every color measured against white and black and a text sample on each. Below that, a color-blind view shows the palette as people with protanopia, deuteranopia or tritanopia might see it. That view is a simple matrix approximation: good for spotting two colors that collapse into one, not a clinical model.
+        The A11y panel goes further, with every color measured against white and black and a text sample on each. Below that, a color-blind view shows the palette as people with protanopia, deuteranopia or tritanopia might see it. It uses the Machado, Oliveira and Fernandes (2009) model, applied in linear RGB, and shows full color blindness. It&apos;s a simulation for spotting colors that collapse into one, not a diagnosis.
       </p>
       <p>
         The same idea runs through the industry pages. <Link href="/best-colors-for/healthcare-websites">Healthcare website colors</Link>, for example, shows every palette as a small website (navigation, headline, button, link and card) with the job of each color and the contrast of each pair.
@@ -84,7 +84,7 @@ export function PalettesOnARealWebsitePost() {
 
       <h2 id="next">What&apos;s next</h2>
       <p>
-        The preview is a dashboard today. On the list: a landing-page layout, a light-background version, and a color-blind simulation that works in linear RGB instead of the current approximation. If there&apos;s something you want the preview to show, <Link href="/contact">tell us</Link>.
+        The preview is a dashboard today. On the list: a landing-page layout and a light-background version. If there&apos;s something you want the preview to show, <Link href="/contact">tell us</Link>.
       </p>
     </>
   );
