@@ -54,6 +54,9 @@ const contentUpdatedOn: Record<string, string> = {
       "red-and-black", "black-and-orange", "blue-and-purple", "green-and-orange",
     ].map((slug) => [`/color-combinations/${slug}`, "2026-11-14"]),
   ),
+  "/color-meanings/white": "2026-11-16",
+  "/color-meanings/black": "2026-11-16",
+  "/color-meanings/yellow": "2026-11-16",
 };
 
 type SitemapEntry = {

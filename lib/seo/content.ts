@@ -3074,7 +3074,8 @@ export function getColorMeaningOverride(slug: string): ColorMeaningOverride | un
 }
 
 const colorMeaningEntries: ContentEntry[] = colors.map((entry) => {
-  const override = colorMeaningOverrides[entry.slug];
+  // A full rewrite in color-meanings-rich.ts wins over the short base-hue override.
+  const override = richColorMeanings[entry.slug] ?? colorMeaningOverrides[entry.slug];
   const cap = `${entry.slug[0].toUpperCase()}${entry.slug.slice(1)}`;
 
   if (!override) {
@@ -3099,8 +3100,10 @@ const colorMeaningEntries: ContentEntry[] = colors.map((entry) => {
     sections: override.sections,
     faq: override.faq,
     keyTakeaways: override.keyTakeaways,
+    authoredOnly: override.authoredOnly,
     relatedLinks: [
       { title: `${cap} color page (hex, RGB, use cases)`, href: `/colors/${entry.slug}` },
+      ...(override.relatedLinks ?? []),
       ...entry.relatedLinks.filter((l) => !l.href.startsWith(`/color-meanings/${entry.slug}`) && !l.href.startsWith(`/colors/${entry.slug}`)),
     ],
   };

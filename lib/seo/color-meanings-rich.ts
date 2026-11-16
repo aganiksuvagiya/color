@@ -1,9 +1,9 @@
 import type { ColorMeaningOverride } from "./content";
 
 // Full, hand-written /color-meanings pages for named colors people actually search meanings
-// for. Each one is about symbolism, history, culture and feeling, never codes or conversions
-// (those live on /colors/<name>), and is written for its own color rather than from a shared
-// template. A color listed here becomes indexable again (see isColorMeaningIndexable).
+// for. Each one is about symbolism, history, culture and feeling; codes and conversions live on
+// /colors/<name> (at most a one-line FAQ answer here when people ask for them), and each page is
+// written for its own color rather than from a shared template. A color listed here becomes indexable again (see isColorMeaningIndexable).
 // Spiritual meanings are reported as what traditions and modern practice say, not as fact.
 
 export const richColorMeanings: Record<string, ColorMeaningOverride> = {
@@ -607,6 +607,149 @@ export const richColorMeanings: Record<string, ColorMeaningOverride> = {
       { question: "What does olive green mean spiritually?", answer: "Through the olive branch and the dove in the story of Noah, olive is tied to peace, renewal and hope. It's also seen as a color of quiet wisdom." },
       { question: "What is the difference between olive and khaki?", answer: "Olive is a darker, greener yellow-green; khaki is lighter and closer to beige or sand. Both trace back to military uniforms." },
       { question: "What colors go with olive green?", answer: "Cream, white, terracotta, mustard, rust, navy and blush. Olive and terracotta is a classic earthy pairing." },
+    ],
+  },
+  // Base hues. These three had the most question searches in Search Console ("what does white
+  // represent", "what does black symbolize", "what does yellow mean"), so each FAQ also answers
+  // the code question in one line and points to the /colors page for the rest.
+  white: {
+    title: "White Color Meaning: What White Symbolizes",
+    description:
+      "What the color white means: purity, cleanliness and new beginnings in the West, mourning in much of Asia, weddings, religion, and how white feels in design.",
+    answer:
+      "White stands for purity, cleanliness, peace and new beginnings in most Western cultures, which is why it is the color of wedding dresses, doctors' coats and flags of truce. In surveys in Europe and the United States, people link it most with perfection, goodness, honesty and the new. But its meaning isn't universal: in China, Korea and other parts of Asia, white is the traditional color of mourning.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "In the West, white means purity, cleanliness, peace, honesty and new beginnings.",
+      "In China, Korea and many other Asian cultures, white is the color of mourning and funerals.",
+      "The white wedding dress became popular after Queen Victoria wore white lace in 1840.",
+      "White is achromatic: it has no hue and reflects all visible wavelengths, so it's the lightest color but not a vivid one.",
+    ],
+    sections: [
+      {
+        title: "What does white represent?",
+        body: "In Western cultures white represents purity, innocence, cleanliness, peace and a fresh start. In surveys in Europe and the United States it is the color most often linked with perfection, the good, honesty, cleanliness, the beginning, the new, neutrality and exactness. That's why we talk about a clean slate or a white lie (a harmless one), why hospitals and labs are white, and why a white flag is the sign of truce. White also feels calm and open, because it gives the eye nothing to compete with.",
+      },
+      {
+        title: "White in history and religion",
+        body: "White has been a sacred and official color for thousands of years. In ancient Egypt and Rome, priestesses wore white as a sign of purity, and Roman citizens wore white togas. The pope has worn white since 1566. Pilgrims in Islam and in Japan's Shinto religion wear white, and in India white stands for purity, divinity, detachment and serenity. Many religions use white for baptism, festivals and their most important ceremonies.",
+      },
+      {
+        title: "White at weddings, and at funerals",
+        body: "The white wedding dress is younger than it seems. Royal brides wore white before, but most women married in their best dress of any color until Queen Victoria wore a white lace gown in 1840, which set the fashion in Europe and America. In Japan, too, white is the most common wedding color. Yet in China, Korea and other Asian countries white, more precisely the off-white of undyed linen, is the traditional color of mourning and funerals. Even in Europe, widows often wore white for mourning until the 16th century.",
+      },
+      {
+        title: "Is white a color?",
+        body: "Yes, though a special one. White is achromatic: it has no hue at all, like black and gray. A white surface reflects and scatters almost all visible wavelengths of light, and white light from the sun or a screen contains every color mixed together; on a screen it's red, green and blue light at full strength. So white is the lightest possible color, but not a vibrant one, because vibrancy comes from saturation and white has none.",
+      },
+      {
+        title: "How white feels in design",
+        body: "White space is what makes a design feel calm, premium and easy to read. Luxury brands, galleries and tech products use a lot of it so that type, photos and products carry the message. Too much pure white can feel cold or clinical, which is why many designers prefer a warm off-white or ivory for large areas. For global audiences, remember that a white-and-black design can read as a funeral announcement in parts of Asia.",
+      },
+    ],
+    faq: [
+      { question: "What does white represent?", answer: "In Western cultures, purity, cleanliness, peace, honesty and new beginnings. In surveys it's the color most linked with perfection and the good." },
+      { question: "What does the color white symbolize in other cultures?", answer: "In China, Korea and other parts of Asia it is the traditional color of mourning. In India it symbolizes purity, divinity and serenity, and in Japan it's also the usual wedding color." },
+      { question: "Is white a color?", answer: "Yes. It's an achromatic color, with no hue, like black and gray. White light contains all visible colors, and a white surface reflects them all." },
+      { question: "Is white a bright color?", answer: "White is the lightest color there is, so it's bright, but it isn't vibrant: it has no saturation. Vivid colors look brighter against it." },
+      { question: "Why do brides wear white?", answer: "Mostly because of Queen Victoria, who wore a white lace gown in 1840 and set the fashion. Before that, most brides wore their best dress of any color." },
+      { question: "What is the color code for white?", answer: "White is #FFFFFF (shorthand #FFF), RGB 255, 255, 255 and CMYK 0, 0, 0, 0. Off-whites such as ivory #FFFFF0 have a slight tint." },
+    ],
+  },
+  black: {
+    title: "Black Color Meaning: What Black Symbolizes",
+    description:
+      "What the color black means: power, elegance, mourning and mystery, its history from ancient Egypt to Chanel, and whether black is a color or a shade.",
+    answer:
+      "Black stands for power, elegance, authority and formality, and also for mourning, mystery and the unknown. In surveys in Europe and North America it is the color most linked with mourning, the end, secrets, magic, force and elegance. Its meaning has swung over time: ancient Egyptians saw black as the color of fertile soil and life, while Rome made it the color of mourning, and Coco Chanel made it the height of style.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Black means power, elegance, authority and formality, but also mourning, mystery and fear.",
+      "In ancient Egypt black was positive: the color of the fertile Nile soil.",
+      "Judges' robes, formal suits and the little black dress all come from black's link with dignity and restraint.",
+      "Black is achromatic: the absence or full absorption of visible light. Adding black to a hue makes a shade.",
+    ],
+    sections: [
+      {
+        title: "What does black represent?",
+        body: "Black represents power, seriousness, sophistication and formality, and it is the classic color of elegance. It also stands for darkness, death and mourning, secrets and mystery, and sometimes fear or evil. In surveys in Europe and North America, black is the color most often linked with mourning, the end, secrets, magic, force, violence, fear, evil and elegance. Which side shows depends on context: a black evening dress feels refined, a black cloud feels threatening.",
+      },
+      {
+        title: "Black in history",
+        body: "Black is one of the oldest colors in art: Neolithic cave painters used charcoal. For the ancient Egyptians it was positive, the color of the rich black soil left by the Nile floods and therefore of fertility and life. The ancient Greeks linked it with the underworld, and in the Roman Empire it became the color of mourning. In the 14th century black became the color of royalty, clergy, judges and officials in much of Europe, a sign of dignity and restraint. That's why judges still wear black robes.",
+      },
+      {
+        title: "Black in fashion: elegance and power",
+        body: "In the 19th century black was the standard for businessmen, statesmen and evening wear. For women, the turning point came in 1926, when Coco Chanel published a drawing of a simple black dress in Vogue: the little black dress. Since then black has been the safe choice for anything formal, which is why a new trend is said to be \"the new black\". In branding, black signals luxury and confidence, especially with generous space and a single accent such as gold or white.",
+      },
+      {
+        title: "Black and mourning",
+        body: "Across Europe and the Americas, black is the main color of mourning, a custom that goes back to the Roman Empire. It isn't universal: in China, Korea and other parts of Asia, white is the traditional color of mourning. In Japan, condolence gifts are often tied with black and white ribbons.",
+      },
+      {
+        title: "Is black a color, or a shade?",
+        body: "Black is the absence or complete absorption of visible light, so a physicist might say it isn't a color of light. In everyday use, art and design it is a color: an achromatic one, with no hue, like white and gray. Black isn't a shade itself, but it makes shades: a shade is any hue with black added (navy is a shade of blue, maroon a shade of red). Adding white makes a tint, and adding gray makes a tone.",
+      },
+      {
+        title: "What dark colors represent",
+        body: "Dark colors in general borrow some of black's meaning. Navy, charcoal, forest green and burgundy feel serious, stable and grown-up, which is why they are popular for finance, law and luxury. They read as calmer and warmer than pure black, so many designers use a very dark gray or navy for text and large areas instead of #000000.",
+      },
+    ],
+    faq: [
+      { question: "What does black represent?", answer: "Power, elegance, authority and formality, and also mourning, mystery, secrets and fear. In surveys it's the color most linked with mourning and elegance." },
+      { question: "What does the color black symbolize in different cultures?", answer: "In Europe and the Americas it's the main color of mourning. In ancient Egypt it meant fertility and life. In much of Asia, white rather than black is the traditional mourning color." },
+      { question: "Is black a color?", answer: "In everyday use and design, yes: an achromatic color with no hue. In physics, black is the absence or full absorption of visible light." },
+      { question: "Is black a shade?", answer: "Not itself. Black is what makes shades: a shade is a hue with black added, like navy from blue. Black plus white makes gray." },
+      { question: "What do dark colors represent?", answer: "Seriousness, stability, authority and sophistication. Navy, charcoal and burgundy share some of black's meaning but feel softer." },
+      { question: "What is the color code for black?", answer: "Black is #000000 (shorthand #000), RGB 0, 0, 0 and CMYK 0, 0, 0, 100. Many designs use a softer near-black such as #111111 for text." },
+    ],
+  },
+  yellow: {
+    title: "Yellow Color Meaning: What Yellow Stands For",
+    description:
+      "What yellow means: happiness, warmth and optimism, but also caution and jealousy. Yellow in China, Buddhism and traffic signs, plus its hex and RGB code.",
+    answer:
+      "Yellow stands for happiness, optimism, warmth and energy, the color of sunshine. In surveys in Europe and North America people link it most with amusement, humor, happiness and spontaneity, but also with envy, jealousy and, in the US, cowardice. Because it's so easy to see, it also means caution: school buses, taxis, warning signs and the middle traffic light. In China, bright yellow was the emperor's color.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Yellow means happiness, optimism, warmth and energy, but also jealousy, betrayal and caution.",
+      "In China bright yellow was the imperial color, worn only by the emperor and his household.",
+      "Yellow is easy to see from a distance, so it's used for school buses, taxis and warning signs.",
+      "Yellow is #FFFF00 on screens (RGB 255, 255, 0), hue 60°: red and green light at full strength.",
+    ],
+    sections: [
+      {
+        title: "What does yellow mean?",
+        body: "Yellow is the color of sunshine, so it means warmth, happiness, optimism and energy. In surveys in Europe, Canada and the United States, yellow is the color people most often link with amusement, gentleness, humor, happiness and spontaneity. It also has a darker side: the same surveys connect it with duplicity, envy, jealousy and greed, and in the US with cowardice, as in calling someone yellow. That double meaning is why yellow is often called the color of ambivalence.",
+      },
+      {
+        title: "Yellow means caution",
+        body: "Yellow is one of the easiest colors to see from a distance, so it's used where being seen matters: school buses in the US and Canada, taxis, fire engines in some places and road equipment. Warning signs use yellow because it traditionally signals caution rather than danger, and a yellow traffic light means slow down, not stop. Paired with black, yellow makes the classic warning look, from hazard tape to wasps.",
+      },
+      {
+        title: "Yellow in China and Asia",
+        body: "In China yellow has the opposite reputation to its Western one. Bright yellow was the color of the Middle Kingdom and could be worn only by the emperor and his household, and the legendary first emperor is called the Yellow Emperor. Across China and many Asian countries yellow is linked with royalty, nobility, respect, happiness, glory, harmony and wisdom. In Buddhism, monks' robes have been dyed in saffron and other yellow to orange dyes since soon after the Buddha's death.",
+      },
+      {
+        title: "Yellow in history",
+        body: "Yellow ochre was one of the very first pigments: a yellow horse at Lascaux cave in France was painted about 17,000 years ago. In medieval Europe yellow often carried negative meanings: it was associated with Judas and betrayal and used to mark heretics, and in the 20th century Jews in Nazi-occupied Europe were forced to wear a yellow star. Today, in the West, the cheerful meaning is the one most people think of first.",
+      },
+      {
+        title: "What hue is yellow, and its codes",
+        body: "Yellow sits between green and orange in the spectrum, at a wavelength of roughly 575 to 585 nanometers. On a screen it's made by mixing red and green light at full strength: #FFFF00, RGB 255, 255, 0, hue 60° in HSL. In printing it's one of the three primary inks (CMYK 0, 0, 100, 0). Between yellow and green sits chartreuse or yellow-green; in CSS, yellowgreen is #9ACD32 and chartreuse #7FFF00.",
+      },
+      {
+        title: "Using yellow in design",
+        body: "Yellow grabs attention, so it's best as an accent: a highlight, a badge, a single button. It's almost invisible as text on white: #FFFF00 on white measures 1.0:1, while black on yellow measures 19.5:1. Soft, buttery yellows feel friendly and warm on large areas; bright lemon yellow is energetic but tiring over a whole page. Mustard and gold are the grown-up versions when bright yellow feels too playful.",
+      },
+    ],
+    faq: [
+      { question: "What does yellow mean?", answer: "Happiness, optimism, warmth and energy, like sunshine. It can also mean caution, jealousy, betrayal and, in the US, cowardice." },
+      { question: "What does yellow stand for in different cultures?", answer: "In China and much of Asia, royalty, nobility, harmony and wisdom: bright yellow was the emperor's color. In Buddhism, monks wear saffron and yellow robes. In the West it mostly means happiness and caution." },
+      { question: "What is yellow in RGB and hex?", answer: "Pure yellow is #FFFF00, RGB 255, 255, 0. Its HSL value is hue 60°, saturation 100%, lightness 50%, and in print it's CMYK 0, 0, 100, 0." },
+      { question: "What hue is yellow?", answer: "60° on the screen color wheel, halfway between red (0°) and green (120°). In the spectrum, yellow light is roughly 575 to 585 nm." },
+      { question: "What color is yellow and green?", answer: "Yellow-green, also called chartreuse. In CSS, yellowgreen is #9ACD32 and chartreuse is #7FFF00." },
+      { question: "Why is yellow used for warning signs and school buses?", answer: "It's very easy to see from a distance and traditionally signals caution rather than danger, so it suits buses, taxis, road work and warning signs." },
     ],
   },
 };
