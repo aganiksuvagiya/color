@@ -154,7 +154,9 @@ export function ContentPageView({
         <Breadcrumbs items={breadcrumbs.map((b) => ({ title: b.name, href: b.href }))} />
 
         {variants ? (
-          <div className="mt-8 flex min-h-[11rem] overflow-hidden rounded-2xl ring-1 ring-black/[0.07] sm:min-h-[14rem]">
+          // Four codes don't fit side by side on a phone (the hex gets cut off), so they
+          // go 2x2 there and back to one row from the sm breakpoint.
+          <div className={`mt-8 min-h-[11rem] overflow-hidden rounded-2xl ring-1 ring-black/[0.07] sm:flex sm:min-h-[14rem] ${variants.length >= 4 ? "grid grid-cols-2" : "flex"}`}>
             {variants.map((v) => {
               const ink = isLight(v.hex) ? "rgba(28,23,18,0.7)" : "rgba(255,255,255,0.85)";
               return (
@@ -185,7 +187,7 @@ export function ContentPageView({
         {variants && (
           <div className="mt-10">
             <SmallTitle>Hex codes</SmallTitle>
-            <div className={`grid gap-4 ${variants.length >= 3 ? "md:grid-cols-3" : "sm:grid-cols-2"}`}>
+            <div className={`grid gap-4 ${variants.length >= 4 ? "sm:grid-cols-2 xl:grid-cols-4" : variants.length === 3 ? "md:grid-cols-3" : "sm:grid-cols-2"}`}>
               {variants.map((v) => <HexVariantCard key={v.hex} variant={v} />)}
             </div>
           </div>

@@ -752,4 +752,443 @@ export const richColorMeanings: Record<string, ColorMeaningOverride> = {
       { question: "Why is yellow used for warning signs and school buses?", answer: "It's very easy to see from a distance and traditionally signals caution rather than danger, so it suits buses, taxis, road work and warning signs." },
     ],
   },
+  // The other ten base hues (2026-11-17). Search Console demand on these pages is small (azure
+  // 294 impressions in 16 months, blue 62, teal 29, the rest 12 or fewer) and mostly
+  // "<color> color meaning" / "<color> color definition", so each answers that first. Facts come
+  // from the Wikipedia article for each color. Owner rule (2026-11-17): content has to read as
+  // written by a person, so each page has its own structure, plain wording, and something only
+  // HueFlow can say (numbers from our palette library, Tailwind contrast checks and the Machado
+  // color-blind simulator in lib/colorblind.ts).
+  blue: {
+    title: "Blue Color Meaning: What Blue Symbolizes",
+    description:
+      "Blue means calm, trust and harmony, and sometimes sadness. Why it's the favorite color in the US and Europe, how a rare pigment became everyday, and blue in design.",
+    answer:
+      "Blue usually means calm, trust and harmony. People in the US and Europe also connect it with confidence, intelligence and infinity, and on its gloomier side with cold, distance and sadness. It's the color both men and women there most often name as their favorite, which goes a long way to explaining why the UN and EU flags are blue and why so many banks choose it.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Blue means calm, trust and harmony, with a sad side: cold, distance, feeling blue.",
+      "In the US and Europe, more people pick blue as their favorite color than any other.",
+      "Blue used to be a luxury: ultramarine, ground from lapis lazuli, was the priciest pigment of the Renaissance.",
+    ],
+    sections: [
+      {
+        title: "What people mean by blue",
+        body: "Blue is the sky and the open sea, so most of what it means has to do with space and quiet: calm, depth, distance, something you can rely on. In surveys in the US and Europe, people tie it to harmony, confidence, masculinity, knowledge, intelligence, calmness, imagination and infinity, as well as cold and sadness. The UN and the European Union both picked blue flags for the harmony part. English keeps the sad part alive in a phrase: feeling blue.",
+      },
+      {
+        title: "Why so many people's favorite is blue",
+        body: "In the United States and across Europe, blue is the color both men and women are most likely to name as their favorite, and at least one recent survey found the same in China, Malaysia and Indonesia. There's no single agreed explanation. A reasonable guess is that almost nothing bad is attached to blue: it isn't rotting food, blood or a warning sign. It's a hard color to dislike.",
+      },
+      {
+        title: "When blue was a luxury",
+        body: "It's easy to forget how hard blue used to be to make. Ancient Egyptians cut lapis lazuli into jewelry, and Renaissance painters ground the same stone into ultramarine, the most expensive pigment on their shelves. Chinese potters were painting cobalt blue onto porcelain by the eighth century, and medieval glassmakers put it into cathedral windows. Everyday blue cloth in Europe came from woad until finer indigo arrived from America. Only later did dark blue settle into uniforms and, after that, office suits.",
+      },
+      {
+        title: "Not every language has one blue",
+        body: "Russian has no single word for blue. Goluboy is light blue and siniy is dark blue, and speakers treat them as two different colors. Japanese and Lakota went the other way and used one word for blue and green, so a green traffic light in Japan is still called ao. Linguists have also noticed that languages don't start out with a word for blue; it tends to come later. And in Hindu art, Krishna and Rama are usually painted with blue skin.",
+      },
+      {
+        title: "Blue in HueFlow's palettes",
+        body: "Of the 240 palettes in our palette library, 70 include at least one blue, about 29%. Only orange turns up more often. Blue also holds up well for people with red-green color blindness: run pure blue #0000FF through our deuteranopia simulator and it comes out as #003DFB, still clearly blue. If you need one signal color that nearly everyone reads the same way, blue is the safe pick.",
+      },
+    ],
+    faq: [
+      { question: "What does the color blue mean?", answer: "Calm, trust and harmony, plus confidence and intelligence. Its sad side is cold, distance and melancholy." },
+      { question: "What is the definition of the color blue?", answer: "Blue is light with a wavelength of roughly 450 to 495 nanometers, between violet and green. On screens it's one of the three primaries, #0000FF." },
+      { question: "Why is the sky blue?", answer: "Air scatters the short blue wavelengths of sunlight much more than the long red ones (Rayleigh scattering), so blue reaches your eyes from every part of the sky." },
+      { question: "What is the color code for blue?", answer: "Pure blue is #0000FF (RGB 0, 0, 255). For links and buttons, a softer blue such as #2563EB reads better." },
+    ],
+  },
+  azure: {
+    title: "Azure Color Meaning: What Azure Represents",
+    description:
+      "What color azure is (a bright sky blue between blue and cyan), what it means, where the name comes from, azure in heraldry and Chinese myth, and azure vs teal.",
+    answer:
+      "Azure is a bright, clear sky blue, halfway between blue and cyan. Its meaning comes straight from that sky: openness, calm, clarity, a cloudless day. The word was borrowed from the name of lapis lazuli, so it has always carried a hint of something precious. Heraldry uses azure as its word for blue, and in Chinese myth the Azure Dragon represents the east.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Azure is the blue of a clear sky, halfway between blue and cyan (#007FFF).",
+      "It means openness, calm and clarity, and it's lighter and less serious than navy or royal blue.",
+      "The name comes from lapis lazuli, by way of Persian lāžaward and Arabic lāzaward.",
+      "The CSS color called azure is a near-white tint, #F0FFFF, which confuses a lot of people.",
+    ],
+    sections: [
+      {
+        title: "What color is azure?",
+        body: "Picture the sky at noon on a cloudless day: that's azure. On a screen it's #007FFF, exactly halfway between pure blue and cyan, at hue 210°. It's brighter and a touch greener than blue, and far more saturated than sky blue. One catch: type azure into CSS and you get #F0FFFF, an almost-white cyan, because the web inherited an old Unix color list that used the name differently.",
+      },
+      {
+        title: "What azure means",
+        body: "Since it's the color of the sky, azure means open space and good weather: clarity, calm, freedom, nothing in the way. It keeps blue's steadiness and drops some of blue's seriousness. The French Riviera's nickname, the Côte d'Azur, works because everyone can picture the water and sky it promises.",
+      },
+      {
+        title: "A name borrowed from a stone",
+        body: "In Persian, lāžaward named both a deep blue stone, lapis lazuli, and the place it was mined. Arabic made it lāzaward, French made it azur, and Italian, Spanish and Portuguese turned it into azzurro and azul. Lapis was rare and expensive, so the color word started life with a little luxury attached.",
+      },
+      {
+        title: "Azure on coats of arms",
+        body: "Heraldry has its own color words, and azure is the one for blue, next to gules for red, vert for green, sable for black and purpure for purple. In medieval arms only red was more common, and azure kept gaining ground. Engravers printing in black and white showed it with horizontal lines. Today's heralds don't give the colors fixed meanings, though writers between the 15th and 17th centuries tied them to planets, gems and virtues.",
+      },
+      {
+        title: "Dragons, footballers and police",
+        body: "In Chinese mythology the Azure Dragon is one of the Four Symbols and represents the east and spring; Japan knows it as Seiryū and Korea as Cheongryong. Italy took Savoy azure as a national color, which is why its football team is gli Azzurri and its state police use azure. Hebrew's sacred blue, tekhelet, is often translated as azure too.",
+      },
+    ],
+    faq: [
+      { question: "What color is azure?", answer: "A bright sky blue, halfway between blue and cyan: #007FFF on screens." },
+      { question: "What does azure mean?", answer: "Clear skies: openness, calm, clarity and freedom." },
+      { question: "Is azure the same as teal?", answer: "No. Teal (#008080) is a dark blue-green. Azure (#007FFF) is a much lighter, brighter sky blue." },
+      { question: "What does azure mean in heraldry?", answer: "It's the heraldic word for blue. Black-and-white engravings show it with horizontal lines." },
+      { question: "What is the color code for azure?", answer: "#007FFF, sometimes written #0080FF. The CSS keyword azure gives #F0FFFF, a near-white cyan." },
+    ],
+  },
+  teal: {
+    title: "Teal Color Meaning: What Teal Represents",
+    description:
+      "What teal means: calm and balance between blue and green. Why it's named after a duck, the teal ribbon, its 1990s moment, and what to check before you brand in teal.",
+    answer:
+      "Teal reads as calm and balanced, with a bit more life than navy and a bit more polish than green. It's a deep blue-green, so it borrows trust from blue and freshness from green. Teal is also the awareness color for ovarian cancer, and the name comes from a small duck, the Eurasian teal.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Teal suggests calm, balance and quiet confidence: blue's steadiness plus green's freshness.",
+      "It's named after the Eurasian teal, a duck with a blue-green stripe on its head, and has been a color word since 1917.",
+      "Teal ribbons mark ovarian cancer awareness.",
+    ],
+    sections: [
+      {
+        title: "What teal means",
+        body: "Teal sits where blue turns into green and takes something from each: blue's calm and reliability, green's freshness and health. People tend to read it as balanced and quietly confident. It's less formal than navy and less outdoorsy than forest green, so it suits healthcare, wellness and finance brands that want to look trustworthy without looking like a bank.",
+      },
+      {
+        title: "Named after a duck",
+        body: "The Eurasian teal is a small dabbling duck with a blue-green stripe on its head, and the color takes its name from it. Teal only became a color word in English in 1917, a newcomer next to blue or green. It had its big moment later: in North America teal was a fad color in the 1990s, when many sports teams put it on their uniforms, and Windows 95 greeted millions of people with a teal desktop.",
+      },
+      {
+        title: "The teal ribbon",
+        body: "Teal is the color of ovarian cancer awareness. Survivors and supporters wear teal ribbons, bracelets, T-shirts and hats to draw attention to the disease, so for a health charity teal will already mean something to many people.",
+      },
+      {
+        title: "Before you brand in teal",
+        body: "Teal works for text and for backgrounds, which is rare. #008080 on white measures 4.77:1, and white text on teal measures the same. If you use Tailwind, teal-700 (#0F766E, 5.47:1) is the lightest step that's safe for text on white; teal-500 only manages 2.49:1. Film colorists have made 'orange and teal' a cliché, warm skin against cool shadows, so an orange accent will look familiar. One thing to test: with protanopia, our color-blind simulator turns #008080 into #777980, a plain gray, so don't let teal versus gray carry meaning on its own.",
+      },
+    ],
+    faq: [
+      { question: "What does teal mean?", answer: "Calm, balance and quiet confidence. It mixes blue's trust with green's freshness." },
+      { question: "Is teal blue or green?", answer: "Both. It's a dark blue-green at hue 180°, the same hue as cyan at half brightness." },
+      { question: "What's the difference between teal and turquoise?", answer: "Teal (#008080) is darker and more muted. Turquoise (#40E0D0) is lighter and greener, and named after the gemstone." },
+      { question: "What is the color code for teal?", answer: "#008080, RGB 0, 128, 128 and CMYK 100, 0, 0, 50." },
+    ],
+  },
+  red: {
+    title: "Red Color Meaning: What Red Symbolizes",
+    description:
+      "What red means, from love and passion to anger and danger, why it's lucky in China and India, red's history from ochre to cardinals, and red for color-blind users.",
+    answer:
+      "Red is the color of blood and fire, so its meanings run hot: love, passion, energy and joy, and also anger and danger. Surveys in Europe and the US link it with heat, activity, passion, sexuality, anger, love and joy. In China and India red is lucky and festive. And almost everywhere, a red light means stop.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Red means love, passion and energy. It can just as easily mean anger and danger.",
+      "In China, India and much of Asia it's the color of luck and celebration.",
+      "Red ochre was among the very first paints people used.",
+      "To color-blind users, a typical error red and success green can look almost the same.",
+    ],
+    sections: [
+      {
+        title: "What is red, exactly?",
+        body: "Red is the long end of the visible spectrum: light with a wavelength of roughly 625 to 740 nanometers, just past orange. On a screen it's one of the three primaries, #FF0000. It's also one of the oldest color words in English, first recorded around the year 700.",
+      },
+      {
+        title: "What red means",
+        body: "Red pulls in two directions at once. Valentine's hearts, roses and lipstick sit on one side; fire alarms, stop signs and error messages on the other. Ask people in Europe or the US and they connect red with heat, activity, passion, sexuality, anger, love and joy, often all in the same breath. Context decides which one people see: a red dress, a red price tag and a red warning banner say three very different things.",
+      },
+      {
+        title: "Lucky red",
+        body: "Travel east and red loses most of its menace. In China it's the color of happiness and good fortune. It was used on early pottery and later on palace gates and walls, and it's still everywhere at weddings and New Year. In India red is linked with Lakshmi, the goddess of wealth, and some Hindu women wear a line of red sindoor in their hair parting to show they're married.",
+      },
+      {
+        title: "Red through history",
+        body: "Red ochre is one of the oldest paints there is. Ancient Egyptians and Mayans colored their faces red for ceremonies, and a Roman general celebrating a victory had his body painted red. Renaissance nobles wore reds dyed with kermes and cochineal, both made from insects, and cochineal from Spanish Mexico became a big export to Europe. Catholic cardinals wear red; the cardinal bird is named after them. After the 1917 revolution in Russia, the red flag became the sign of communism and socialism.",
+      },
+      {
+        title: "Red, and what color-blind users see",
+        body: "Red is the color almost every interface uses for errors, and that's where it gets risky. We ran Tailwind's red-600 and green-600, a very common error and success pair, through our deuteranopia simulator. They came out as #8F801B and #958951: two muddy olives with a contrast of just 1.13:1 between them. Pure #FF0000 turns into an olive yellow, #A39000. So give every red message an icon or a word, and for red text on white use red-600 (#DC2626, 4.83:1) or darker, because pure #FF0000 only reaches about 4:1.",
+      },
+    ],
+    faq: [
+      { question: "What does the color red mean?", answer: "Love, passion, energy and joy on one side; anger and danger on the other." },
+      { question: "What does red symbolize in China?", answer: "Happiness and good fortune. It's the color of weddings and New Year." },
+      { question: "Do bulls hate red?", answer: "No. Bulls charge the matador's cape because it moves, not because it's red." },
+      { question: "What is the color code for red?", answer: "Pure red is #FF0000 (RGB 255, 0, 0). For text on white, #DC2626 or #CC0000 reads better." },
+    ],
+  },
+  green: {
+    title: "Green Color Meaning: What Green Symbolizes",
+    description:
+      "What green means: nature, life, health and hope, and envy. Green in Islam, Ireland and China, why medieval bankers wore green, and why 'green means go' has limits.",
+    answer:
+      "Green means nature and life: growth, health, youth, spring and hope. It also has one famous bad habit, envy. Surveys in American, European and Islamic countries all put nature and life first. In China and most of Asia its associations are very positive, while in Europe and the US it can also hint at poison or sickness. And at every traffic light, green means go.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Green means nature, life, health, youth, spring and hope. Its one famous negative is envy.",
+      "It's the historic color of Islam and is on the flags of nearly all Islamic countries.",
+      "Medieval Europe dressed merchants and bankers in green and nobles in red.",
+      "Red and green status colors can look almost identical to color-blind users, so add icons.",
+    ],
+    sections: [
+      {
+        title: "What green means",
+        body: "Green is leaves, grass and spring, so nearly everything it means is about being alive: growth, health, youth, freshness, hope. Surveys in American, European and Islamic countries agree on that core, listing nature, life, health, youth, spring, hope and envy. Envy is the odd one out, and it comes from Shakespeare, whose Othello warns against 'the green-eyed monster'. Where cultures split is the dark side: in Europe and the US green can also suggest toxicity and poor health, while in China and most of Asia it's a positive symbol of fertility and happiness.",
+      },
+      {
+        title: "Green in Islam, Ireland and China",
+        body: "Green is the historic color of Islam, representing the lush vegetation of Paradise. It was the color of the Prophet Muhammad's banner and is on the flags of nearly all Islamic countries. Ireland has a long tradition of green as the color of the island and of Gaelic culture, hence the green streets on St. Patrick's Day. In China green belongs to the east, sunrise and growth, although 'wearing a green hat' is an old way of saying a man's wife is unfaithful.",
+      },
+      {
+        title: "Bankers in green, nobles in red",
+        body: "Ancient Egyptians saw green as the color of regeneration and rebirth, and Romans got a green pigment, verdigris, by exposing copper to fermenting wine. In medieval and Renaissance Europe green dressed merchants, bankers and the gentry, while red was kept for the nobility. You can still see the split in London, where the House of Commons sits on green benches and the House of Lords on red. The Mona Lisa, for what it's worth, wears green.",
+      },
+      {
+        title: "Go, safe, done",
+        body: "A green light means go, and interfaces copied it: green checkmarks, green 'saved' messages, green rising numbers. That works for most people but not everyone. Tailwind's green-600 (#16A34A), a common success color, turns into #958951 in our deuteranopia simulator, nearly the same olive as the red-600 error color beside it. Pair green with a checkmark or a word. Since the 1980s green has also been the color of environmental politics, with Green parties across Europe.",
+      },
+    ],
+    faq: [
+      { question: "What does the color green mean?", answer: "Nature, life, health, youth, spring and hope, and also envy." },
+      { question: "What does green mean in Islam?", answer: "It's the historic color of Islam, representing Paradise, and it was the color of the Prophet Muhammad's banner." },
+      { question: "What is the color code for green?", answer: "CSS green is #008000 (RGB 0, 128, 0). Full-strength screen green, #00FF00, is called lime in CSS." },
+    ],
+  },
+  brown: {
+    title: "Brown Color Meaning: What Brown Represents",
+    description:
+      "What brown is (a dark, muted orange) and what it means: earth, warmth, reliability and simplicity. Monks' robes, painters' umber, and why packaging turned brown.",
+    answer:
+      "Brown is a dark, muted orange or red: the color of soil, wood, coffee and leather. That gives it a solid, down-to-earth meaning: warmth, stability, reliability and simplicity. For centuries brown was what the poor and humble monks wore, and since the late 20th century it has come to signal natural and healthy, from brown bread to brown paper bags.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Brown means earth, warmth, reliability and simplicity; it can also look plain or dull.",
+      "There's no brown in the rainbow. It's dark orange or red seen next to brighter colors.",
+      "Franciscan monks wore brown on purpose, as a sign of humility and poverty.",
+    ],
+    sections: [
+      {
+        title: "What is brown?",
+        body: "There's no brown wavelength of light, and no brown in the rainbow. Brown is what an orange or red looks like when it's dark and muted compared with what's around it. On screens that means red at medium strength, green lower and blue lowest; in print, mostly yellow ink with a little magenta and black. CSS brown, #A52A2A, is a reddish brown. Saddle brown #8B4513 and chocolate #D2691E are warmer.",
+      },
+      {
+        title: "What brown means",
+        body: "Think of the brown things you touch in a day: wood, bread, coffee, leather, earth. That's where its meaning comes from. People read brown as warm, solid, honest and unpretentious, a color that isn't trying to impress anyone. The flip side is real too. Brown can look plain or old-fashioned, and when Europeans and Americans are asked for their favorite color, it regularly lands near the bottom.",
+      },
+      {
+        title: "Peasants and monks",
+        body: "In ancient Rome the common people were called pullati, 'those dressed in brown'. In medieval Europe grey and brown were the colors of the poor, and an English law of 1363 ordered poor people to wear russet, a coarse brownish cloth. Franciscan monks chose brown robes deliberately, as a sign of humility and poverty.",
+      },
+      {
+        title: "Painters' browns",
+        body: "Earth browns are some of the oldest colors in art. Paintings using umber date to around 40,000 BC, and the brown horses in the Lascaux cave are about 17,300 years old. Renaissance painters relied on raw umber, dug from around Umbria, and raw sienna from near Siena. Caravaggio and Rembrandt built their deep shadows out of browns, and Leonardo da Vinci and Raphael drew in sepia, a reddish-brown ink made from cuttlefish.",
+      },
+      {
+        title: "How brown became 'natural'",
+        body: "In the late 20th century brown picked up a new meaning in the West: simple, inexpensive, natural and healthy. Brown bread, brown sugar and plain brown paper bags started to look more wholesome than their white versions. Our own palette library shows the same pull: brown turns up in 45 of its 240 palettes, and 26 of those are tagged earthy and 17 autumn.",
+      },
+      {
+        title: "Tea, coffee and chestnuts",
+        body: "Plenty of languages name brown after something brown. Japanese chairo means 'tea color', Turkish kahverengi means 'coffee color', and Portuguese, Spanish and French take their words from the chestnut. English brún was first written down as a color name around the year 1000.",
+      },
+    ],
+    faq: [
+      { question: "What does the color brown mean?", answer: "Earth, warmth, stability, reliability and simplicity. It can also look plain or dull." },
+      { question: "What is the definition of brown?", answer: "A dark, usually muted shade of orange or red: the color of earth, wood and coffee." },
+      { question: "Why did monks wear brown?", answer: "Franciscan monks wore brown robes as a sign of humility and poverty. In medieval Europe brown and grey were the colors of the poor." },
+      { question: "What is the color code for brown?", answer: "CSS brown is #A52A2A (RGB 165, 42, 42). Saddle brown #8B4513 and chocolate #D2691E are warmer browns." },
+    ],
+  },
+  gray: {
+    title: "Gray Color Meaning: What Gray Represents",
+    description:
+      "What gray means: neutral, calm and modest, but also dull and unsure. Grey vs gray, grey friars, gray flannel suits, gray hair, and how to pick a gray for design.",
+    answer:
+      "Gray is the in-between color, and that's most of what it means: neutral, balanced, reserved, sometimes undecided. Surveys in Europe and North America link it with neutrality, conformity, boredom, uncertainty, old age, indifference and humility, and only about one percent of people pick it as a favorite. Designers love it for the same reason everyone else finds it dull: it stays out of the way.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Gray means neutral, balanced and modest, but also dull, conforming or unsure.",
+      "Grey is the usual British spelling and gray the American one. Both are correct.",
+      "Undyed wool made gray the color of peasants and friars; English Franciscans were the grey friars.",
+      "Gray needs less darkening than colorful hues: Tailwind's gray-500 (#6B7280) already passes as text on white.",
+    ],
+    sections: [
+      {
+        title: "What gray means",
+        body: "Gray sits halfway between black and white, and most of its meanings come from being in the middle: neutral, balanced, reserved, unsure which way to go. Surveys in Europe and North America put it next to neutrality, conformity, boredom, uncertainty, old age, indifference and humility, and only about one percent of people name it as their favorite color. Nobody gets excited about gray, and that's exactly why designers use so much of it. It lets everything else on the page do the talking.",
+      },
+      {
+        title: "Grey or gray?",
+        body: "Both are right. Grey is the main spelling in British and Commonwealth English and gray in American English, and the split only settled in around the 20th century. CSS doesn't mind either: gray and grey both give #808080.",
+      },
+      {
+        title: "Friars and factory girls",
+        body: "For most of history gray simply meant undyed wool, which made it the color of peasants and the poor. Cistercian monks and Franciscan and Capuchin friars wore it to show their vows of humility and poverty; in England and Scotland the Franciscans were known as the grey friars. In 19th-century Paris, the young women who worked in factories and workshops wore gray so often that they were nicknamed grisettes.",
+      },
+      {
+        title: "Gray suits, gray uniforms",
+        body: "The gray business suit appeared in London in the mid-19th century, and after the Second World War it became shorthand for conformity, the subject of the 1955 novel The Man in the Gray Flannel Suit. Armies liked gray for a practical reason: soldiers in gray were harder to spot than soldiers in blue or red. The Confederate Army wore it in the American Civil War, and the Prussian Army switched to it in 1910.",
+      },
+      {
+        title: "Gray hair, gray areas, gray matter",
+        body: "English uses gray for all sorts of in-between things. Hair turns gray as it loses pigment, so gray means age, and with it experience. A gray area is neither clearly right nor clearly wrong. And grey matter, a name for brain tissue, has made gray a shorthand for brains.",
+      },
+      {
+        title: "Picking a gray for design",
+        body: "No gray stays perfectly neutral once it's on a page. Add a little yellow, orange or red and you get a warm gray that looks soft and human; add green, blue or violet and it turns cool and technical. For text, contrast matters more than temperature: mid gray #808080 reaches only 3.95:1 on white. Gray also needs less darkening than colorful hues do. In Tailwind's scales, gray-500 (#6B7280, 4.83:1) already passes as text on white, while red and blue need their 600 step and green, teal and yellow their 700.",
+      },
+    ],
+    faq: [
+      { question: "What does the color gray mean?", answer: "Neutral, balanced, calm and modest. On the downside: dull, conforming, uncertain." },
+      { question: "Is it grey or gray?", answer: "Both: grey is the usual British spelling, gray the American one. In CSS they're the same color." },
+      { question: "Why is gray associated with old age?", answer: "Hair loses its pigment with age and turns gray, then white, so gray became a sign of age and of experience." },
+      { question: "What is the difference between warm and cool gray?", answer: "Warm grays have a little yellow, orange or red in them; cool grays a little green, blue or violet." },
+      { question: "What is the color code for gray?", answer: "CSS gray (or grey) is #808080. Oddly, CSS darkgray is #A9A9A9, which is lighter than gray." },
+    ],
+  },
+  orange: {
+    title: "Orange Color Meaning: What Orange Symbolizes",
+    description:
+      "What orange means: warmth, energy, fun and the unconventional. Why it's named after the fruit, saffron robes, the Dutch House of Orange, and safety orange.",
+    answer:
+      "Orange is warm, loud and friendly: fun, energy, enthusiasm and a streak of the unconventional. In surveys in Europe and the US it comes up for amusement, extroversion, warmth, fire and activity, plus autumn and Halloween. It's sacred in Hinduism and Buddhism, it's the national color of the Netherlands, and because it's so easy to spot, it's what life jackets are made of.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Orange means warmth, energy, fun and the unconventional, with a hint of danger.",
+      "The fruit came first: orange became an English color word in 1502. Before that it was 'yellow-red'.",
+      "The Dutch wear orange for their royal House of Orange-Nassau, whose name has nothing to do with the fruit.",
+      "Orange is the most common hue in HueFlow's palette library: 94 of 240 palettes.",
+    ],
+    sections: [
+      {
+        title: "What orange means",
+        body: "Orange has red's energy without red's alarm, and yellow's cheer without yellow's childishness. People in Europe and the US link it with amusement, the unconventional, extroversion, warmth, fire, energy, activity, danger, taste and smell, and with autumn and Halloween. It's a sociable, slightly cheeky color, a good fit for brands that would rather look fun than formal.",
+      },
+      {
+        title: "The fruit came first",
+        body: "English named the color after the fruit, not the other way round. The earliest known use of orange as a color word is from 1502, in a record of clothes bought for Margaret Tudor. Before that, English speakers made do with ġeolurēad, 'yellow-red'.",
+      },
+      {
+        title: "Saffron robes",
+        body: "Orange matters in both Hinduism and Buddhism. Theravada Buddhist monks typically wear saffron robes, and saffron and orange run through Hindu religious life. In those settings orange is serene and sacred, nothing like a Halloween pumpkin.",
+      },
+      {
+        title: "Why the Dutch wear orange",
+        body: "The Netherlands' royal family is the House of Orange-Nassau, which goes back to 1163 and the Principality of Orange, a place whose name has nothing to do with the fruit. That's where the orange shirts and orange stadiums come from. Orange has shown up in politics elsewhere too: it was the color of Ukraine's Orange Revolution in 2004, and it's the political color of Christian democracy.",
+      },
+      {
+        title: "Safety orange",
+        body: "Orange is one of the easiest colors to see in dim light and against water, so life rafts, life jackets, buoys and road-work gear are orange. San Francisco's Golden Gate Bridge is painted International Orange partly so it stays visible in fog.",
+      },
+      {
+        title: "Orange on screens",
+        body: "Orange is the most common hue in HueFlow's palette library: 94 of our 240 palettes include at least one orange, often in the summer, bright and autumn sets. It's also one of the hardest hues to use for text. CSS orange #FFA500 measures only 1.97:1 on white, and Tailwind's orange-500 manages 2.8:1; orange-700 (#C2410C, 5.18:1) is the first step that works for text. On orange buttons, dark text beats white by a mile: #111111 on #FFA500 reaches 9.56:1.",
+      },
+    ],
+    faq: [
+      { question: "What does the color orange mean?", answer: "Warmth, energy, fun, enthusiasm and the unconventional. It can also signal danger." },
+      { question: "Was orange named after the fruit?", answer: "Yes. The fruit came first, and orange became a color word in English in 1502." },
+      { question: "What is the color code for orange?", answer: "CSS orange is #FFA500 (RGB 255, 165, 0). The orange exactly halfway between red and yellow on screens is #FF8000." },
+    ],
+  },
+  purple: {
+    title: "Purple Color Meaning: What Purple Symbolizes",
+    description:
+      "What purple means: royalty, luxury, magic and mystery. Why Tyrian purple took ten thousand snails a gram, emperors and bishops, Perkin's mauve, and purple vs violet.",
+    answer:
+      "Purple means royalty, luxury, ambition, magic and mystery. Surveys in Europe and the US connect it with rarity, royalty, luxury, ambition, magic, mystery, piety and spirituality. Nearly all of that goes back to one ancient dye, Tyrian purple, made from sea snails at such cost that for centuries mostly emperors wore it.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Purple means royalty, luxury, magic, mystery and spirituality.",
+      "Tyrian purple took about ten thousand sea snails for a single gram of dye.",
+      "Purple isn't in the rainbow; it's red and blue light mixed. Violet is the spectral one.",
+    ],
+    sections: [
+      {
+        title: "What purple means",
+        body: "Purple has meant power and rarity for more than two thousand years. Surveys in Europe and the United States still tie it to rarity, royalty, luxury, ambition, magic, mystery, piety and spirituality, and, paired with pink, to eroticism, femininity and seduction. Halfway between calm blue and hot red, it manages to look dignified and a little strange at the same time.",
+      },
+      {
+        title: "Ten thousand snails",
+        body: "The ancient purple, Tyrian purple, came from a mucus secreted by the spiny dye-murex sea snail. Making it was slow and messy, and it took thousands of tiny snails to get even a little dye. A gram made to the original recipe in 2000 used ten thousand molluscs and cost two thousand euros. The most prized shades were said to look like dried blood. In the late Roman Empire, selling purple cloth was a state monopoly protected by the death penalty.",
+      },
+      {
+        title: "Emperors and bishops",
+        body: "Roman senators wore a purple stripe on their togas, and a general's triumphal toga was solid purple embroidered with gold. Under the Empire purple slid toward the emperors alone. Byzantine and Holy Roman emperors kept it, and Roman Catholic bishops followed. 'Born in the purple' comes from the Byzantine court, for children born to a reigning emperor. Japan, too, has traditionally associated purple with the emperor and the aristocracy.",
+      },
+      {
+        title: "Perkin's accident",
+        body: "Purple stopped being rare in 1856, when the young chemist William Henry Perkin accidentally made mauveine, the first synthetic dye, and mauve became a craze. China had its own story: it got purple from the purple gromwell plant and was the first culture to develop a synthetic purple. Later, purple, white and green became the colors of the British women's suffrage movement, and in the US the Purple Heart is given to those wounded or killed in service.",
+      },
+      {
+        title: "Purple or violet?",
+        body: "Violet is in the rainbow, at the shortest wavelengths we can see. Purple isn't: it's red and blue light mixed. In everyday speech purple means the redder hues and violet the bluer ones. CSS purple, #800080, is a dark, even mix that reads well as text on white (9.42:1), while CSS violet, #EE82EE, is a light, pinkish lilac.",
+      },
+      {
+        title: "Rare in palettes, tricky for color blindness",
+        body: "Purple is the least common hue in HueFlow's palette library, in 29 of 240 palettes (12%), which is one reason a purple brand still stands out. Test it for color blindness, though. Our deuteranopia simulator turns #800080 into #304B7D, a dull blue, so purple and blue placed side by side can merge into one.",
+      },
+    ],
+    faq: [
+      { question: "What does the color purple mean?", answer: "Royalty, luxury, ambition, magic, mystery and spirituality." },
+      { question: "Why is purple associated with royalty?", answer: "Tyrian purple dye took thousands of sea snails to make, so only emperors and the very rich could afford it." },
+      { question: "What is the difference between purple and violet?", answer: "Violet is a spectral color at the short end of the rainbow; purple is a mix of red and blue light." },
+      { question: "What is the color code for purple?", answer: "CSS purple is #800080 (RGB 128, 0, 128). Rebecca purple #663399 and violet #EE82EE are other CSS purples." },
+    ],
+  },
+  pink: {
+    title: "Pink Color Meaning: What Pink Represents",
+    description:
+      "What pink means: tenderness, sweetness, romance and play. Why pink was once a boys' color, the flower behind the name, cherry blossoms and the pink ribbon.",
+    answer:
+      "Pink is a light red, and it keeps red's warmth while dropping the aggression: tenderness, sweetness, romance and play. Today it's closely tied to femininity, but that's a fairly recent idea. Before the second half of the 20th century, pink was often thought of as a boys' color. Pink is also the color of breast cancer awareness and, in Japan, of cherry blossoms and spring.",
+    authoredOnly: true,
+    keyTakeaways: [
+      "Pink means tenderness, sweetness, romance and play, and today femininity.",
+      "Before the second half of the 20th century, pink often stood for masculinity.",
+      "CSS pink #FFC0CB is too light for text (1.54:1 on white); Tailwind's pink-600 #DB2777 is the first step that passes.",
+    ],
+    sections: [
+      {
+        title: "What pink means",
+        body: "Pink sits between red and white, which is a good way to think about its meaning: red's warmth and affection, softened. People read it as tender, sweet, romantic and playful, and in surveys it's also the color most linked with sweet foods and drinks. Saturation changes the mood a lot. Hot pink is loud, young and confident; pale pink is quiet and calm.",
+      },
+      {
+        title: "Pink used to be for boys",
+        body: "Before the second half of the 20th century, pink often stood for masculinity. A June 1918 trade article in Earnshaw's gave the rule as 'pink for the boys, and blue for the girls'. Pink started marking girls in the 1940s, and scholars tie its full switch to femininity to the launch of Barbie in 1959.",
+      },
+      {
+        title: "Named after a flower",
+        body: "Pinks are flowers in the Dianthus family, and the color takes its name from them; their own name refers to the frilled edges of their petals. Pink only became a color word in the late 17th century, a youngster next to red.",
+      },
+      {
+        title: "Cherry blossoms",
+        body: "In Japan pink is the color of spring, because of the cherry blossoms. Japanese has a word for cherry-blossom pink, sakura-iro, and an older one taken from the peach blossom, momo-iro.",
+      },
+      {
+        title: "Ribbons and triangles",
+        body: "Since 1991 the pink ribbon has been the international symbol of breast cancer awareness. The pink triangle has a darker history: in Nazi concentration camps, prisoners accused of homosexuality were forced to wear one. It has since become a symbol of the gay rights movement.",
+      },
+      {
+        title: "Pompadour pink, shocking pink",
+        body: "In 18th-century France, Madame de Pompadour had the Sèvres porcelain factory make a pink of her own and helped make pink and blue the fashion colors at Versailles. In the 20th century the designer Elsa Schiaparelli launched 'shocking pink', a vivid magenta-pink.",
+      },
+      {
+        title: "Pink on screens",
+        body: "Light pinks need care. CSS pink #FFC0CB measures only 1.54:1 on white, so keep it for backgrounds behind dark text. For pink text, Tailwind's pink-600 (#DB2777, 4.6:1) is the first step that passes. One more check: with protanopia, our color-blind simulator turns #FFC0CB into #C9CACB, a light gray, so a pink highlight can simply disappear for some users.",
+      },
+    ],
+    faq: [
+      { question: "What does the color pink mean?", answer: "Tenderness, sweetness, romance and play, and today femininity." },
+      { question: "Was pink a boys' color?", answer: "Before the second half of the 20th century it often was. A 1918 trade article gave the rule as pink for boys and blue for girls." },
+      { question: "What does hot pink mean?", answer: "Hot pink keeps pink's playfulness and adds confidence and energy, so it reads as bold and young rather than soft." },
+      { question: "What does a pink ribbon mean?", answer: "Breast cancer awareness. It has been the international symbol since 1991." },
+      { question: "What is the color code for pink?", answer: "CSS pink is #FFC0CB (RGB 255, 192, 203). Hot pink is #FF69B4 and deep pink #FF1493." },
+    ],
+  },
 };

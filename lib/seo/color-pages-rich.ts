@@ -1292,4 +1292,250 @@ export const richColorPages: Record<string, ColorPageRewrite> = {
       { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
     ],
   },
+  // Base hues, codes first (2026-11-17). Search Console demand: yellow about 60 different
+  // "yellow hex / rgb / hue / code" queries; red "#ff0000 meaning", "ff0000", "0xff0000",
+  // "ffff0000", "pantone ff0000"; white "white rgb/hex", "#fff", off-white codes; blue "0000ff",
+  // "blue values", "professional blue". The meaning, history and culture live on
+  // /color-meanings/<name>. Contrast figures use the same rounding as the variant cards
+  // (lib/accessibility.ts). Each page also carries numbers only HueFlow has: the palette library,
+  // Tailwind steps checked for contrast, and the Machado color-blind simulator.
+  yellow: {
+    title: "Yellow Color Code: Hex #FFFF00, RGB 255, 255, 0",
+    description:
+      "Yellow is #FFFF00 in hex and RGB 255, 255, 0. Its HSL, HSV, CMYK, decimal and binary values, Munsell, NCS and Pantone yellows, and yellows that pass contrast.",
+    answer:
+      "Pure yellow is #FFFF00 in hex (#FF0 for short) and RGB 255, 255, 0: red and green light at full strength, no blue. In HSL it's 60°, 100%, 50%, in HSV 60°, 100%, 100%, and in print CMYK 0, 0, 100, 0. It's the lightest pure hue a screen can show, so yellow text on white is unreadable (1.07:1). Put dark text on yellow instead.",
+    hexVariants: [
+      { label: "Web yellow", hex: "#FFFF00", note: "The CSS named color yellow and the screen's own yellow: red and green light at full strength." },
+      { label: "Munsell yellow", hex: "#FFDB00", note: "An sRGB stand-in for yellow in the Munsell color system, a touch warmer, toward gold." },
+      { label: "NCS yellow", hex: "#FFD300", note: "The sRGB approximation of NCS 0580-Y, the pure yellow of the Natural Color System." },
+      { label: "Pantone yellow", hex: "#FEDF00", note: "The screen value given for Pantone's yellow (TPX). For print, Pantone's own swatch is the reference." },
+    ],
+    keyTakeaways: [
+      "Yellow is #FFFF00, RGB 255, 255, 0, HSL 60°, 100%, 50%, HSV 60°, 100%, 100% and CMYK 0, 0, 100, 0.",
+      "Its hue number is 60°, halfway between red (0°) and green (120°).",
+      "#FFFF00 on white is 1.07:1. For yellow-toned text, go as dark as Tailwind's yellow-700 (#A16207, 4.92:1).",
+      "Yellow keeps its look for red-green color-blind users, which helps it work as a warning color.",
+    ],
+    sections: [
+      {
+        title: "Yellow color codes",
+        body: "Pure yellow is #FFFF00 in HEX, or #FF0 for short. In RGB it's rgb(255, 255, 0), or rgb(100%, 100%, 0%). In HSL it's hsl(60, 100%, 50%), and in HSV (also called HSB) it's 60°, 100%, 100%. The CMYK conversion is 0, 0, 100, 0: no cyan, magenta or black, only yellow ink. As a single number, #FFFF00 is 16776960 in decimal and 11111111 11111111 00000000 in binary, one byte each for red, green and blue. In CSS and HTML the keyword yellow gives exactly #FFFF00.",
+      },
+      {
+        title: "What hue number is yellow?",
+        body: "On the screen color wheel yellow sits at 60°, halfway between red at 0° and green at 120°. A screen has no yellow pixels at all; it lights the red and green parts of each pixel at full strength and your eye does the rest. Yellow light in a rainbow is roughly 575 to 585 nanometers. In light, yellow's opposite is blue (#0000FF), and the two together make white. On the painter's red-yellow-blue wheel, yellow is a primary and its opposite is purple.",
+      },
+      {
+        title: "Which yellow? Web, Munsell, NCS and Pantone",
+        body: "#FFFF00 is a screen value: as much red and green as a display can give. Paint and print systems define their pure yellow differently, and their yellows convert to warmer screen values that lean slightly toward orange: Munsell yellow comes out near #FFDB00, the Natural Color System's yellow (NCS 0580-Y) near #FFD300, and Pantone's yellow near #FEDF00. Put them side by side and #FFFF00 looks cooler and a little greener. If you're matching a printed brand yellow, start from the brand's Pantone or CMYK spec, not from #FFFF00.",
+      },
+      {
+        title: "Yellow in code, wiring and words",
+        body: "Not every platform agrees on yellow. In the Unity game engine, Color.yellow is RGBA(1, 0.92, 0.016, 1), about #FFEB04, and Unity's own documentation admits it isn't a fully saturated yellow; use new Color(1, 1, 0) for #FFFF00. In electronics, the IEC 60757 color code abbreviates yellow as YE, and in CMYK it's simply Y. In science words the Greek prefix xantho- means yellow, as in xanthophyll, the yellow pigment in leaves. The English word goes back to Old English geolu, which shares an Indo-European root with gold and yell.",
+      },
+      {
+        title: "Getting yellow past a contrast check",
+        body: "Yellow is the lightest pure hue, so it works behind dark text and fails as text on white. #FFFF00 on white measures 1.07:1, and even Tailwind's yellow-500 (#EAB308) only reaches 1.92:1. We checked every step of Tailwind's yellow scale: yellow-700 (#A16207, 4.92:1) is the first one dark enough for text on white, and by then it reads as mustard rather than yellow. Turn it around and yellow is easy: black text on yellow reaches 19.56:1, navy (#000080) 14.91:1.",
+      },
+      {
+        title: "Yellow buttons and dark mode",
+        body: "On a dark background yellow is easy to read: #FFFF00 on #121212 measures 17.45:1. Pure yellow can glow uncomfortably against black, though, so many dark themes use a warmer yellow such as Tailwind's yellow-400 (#FACC15, 12.23:1). For a yellow button, use dark text: #111111 on #FACC15 is 12.33:1, while white text on the same button is only 1.53:1. Yellow has one more advantage: our deuteranopia simulator barely changes it (#FFFF00 becomes #FFFA31), so a yellow warning still looks yellow to most color-blind users.",
+      },
+      {
+        title: "Shades of yellow and their codes",
+        body: "For backgrounds and highlights: light yellow #FFFFE0, cream #FFFFCC and lemon chiffon #FFFACD. Warmer and deeper: gold #FFD700, goldenrod #DAA520 and dark goldenrod #B8860B. Toward green: yellow-green #9ACD32 and chartreuse #7FFF00. All of these except cream are CSS named colors. In our palette library, 51 of the 240 palettes use at least one yellow, but only 11 use two or more, so yellow mostly plays the accent.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for yellow?", answer: "#FFFF00, or #FF0 for short. It's also the CSS named color yellow." },
+      { question: "What is yellow in RGB?", answer: "rgb(255, 255, 0): red and green at full strength, no blue. As percentages, rgb(100%, 100%, 0%)." },
+      { question: "What is the hue number of yellow?", answer: "60° on the HSL and HSV color wheel, halfway between red (0°) and green (120°)." },
+      { question: "What is yellow in HSL, HSV and CMYK?", answer: "HSL 60°, 100%, 50%; HSV (HSB) 60°, 100%, 100%; CMYK 0, 0, 100, 0." },
+      { question: "What is yellow in binary and decimal?", answer: "#FFFF00 is 11111111 11111111 00000000 in binary (one byte each for red, green and blue) and 16776960 in decimal." },
+      { question: "What is the abbreviation for yellow?", answer: "Y in CMYK, and YE in the IEC 60757 color code for wires and electronic parts. As a word prefix, xantho- means yellow." },
+      { question: "What is Color.yellow in Unity?", answer: "RGBA(1, 0.92, 0.016, 1), about #FFEB04, a little warmer than pure yellow. For #FFFF00, use new Color(1, 1, 0)." },
+    ],
+    sources: [
+      { title: "Yellow, Wikipedia", href: "https://en.wikipedia.org/wiki/Yellow" },
+      { title: "Shades of yellow, Wikipedia", href: "https://en.wikipedia.org/wiki/Shades_of_yellow" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+      { title: "Color.yellow, Unity Scripting API", href: "https://docs.unity.com/en-us/engine/current/script-reference/unityengine/color/yellow" },
+      { title: "Electronic color code (IEC 60757 codes), Wikipedia", href: "https://en.wikipedia.org/wiki/Electronic_color_code" },
+    ],
+  },
+  red: {
+    title: "#FF0000 Meaning: Red Color Code, RGB & Pantone",
+    description:
+      "#FF0000 is pure red, RGB 255, 0, 0. What each digit means, 0xFF0000 and FFFF0000 in code, Pantone and NCS reds, a red scale from #330000 to #FFCCCC, and contrast.",
+    answer:
+      "#FF0000 is the hex code for pure red. Read it in pairs: FF means red at its maximum (255), and the two 00 pairs mean no green and no blue. So it's RGB 255, 0, 0, HSL 0°, 100%, 50% and CMYK 0, 100, 100, 0, and in CSS it's the named color red. On white it measures about 4:1, below the 4.5:1 body text needs, so for red text use a deeper red such as #DC2626.",
+    hexVariants: [
+      { label: "Web red", hex: "#FF0000", note: "The CSS named color red: the red channel at full strength, green and blue off." },
+      { label: "Pantone red", hex: "#ED2839", note: "The screen value given for Pantone's red in its Textile Paper eXtended list (TPX 032M)." },
+      { label: "NCS red", hex: "#C40234", note: "The sRGB approximation of NCS S 1080-R, the Natural Color System's pure red: deeper and slightly bluer." },
+      { label: "Pigment red", hex: "#ED1B24", note: "Red printed with CMYK inks (magenta plus yellow), converted to a screen value." },
+    ],
+    keyTakeaways: [
+      "#FF0000 means full red (FF = 255), no green (00) and no blue (00): RGB 255, 0, 0.",
+      "On Android red is 0xFFFF0000, because the first FF is the alpha. 0xFF000000 there is black.",
+      "No Pantone ink equals #FF0000. Pantone's red converts to about #ED2839.",
+    ],
+    sections: [
+      {
+        title: "What #FF0000 means",
+        body: "A hex color code is three pairs of hexadecimal digits, one pair each for red, green and blue, running from 00 (0) to FF (255). #FF0000 reads as FF red, 00 green, 00 blue: the red part of every pixel at full strength and the other two switched off. That's the purest, most saturated red a standard screen can show. Written other ways, it's rgb(255, 0, 0), HSL 0°, 100%, 50%, HSV 0°, 100%, 100%, CMYK 0, 100, 100, 0, and 16711680 as a decimal number. In CSS, red, #FF0000 and #F00 are all the same color.",
+      },
+      {
+        title: "0xFF0000, FFFF0000 and the alpha trap",
+        body: "Programmers often write the same value as 0xFF0000. Once transparency comes in, the order of the digits matters, and platforms disagree. CSS puts alpha last (#RRGGBBAA), so #FF0000FF is fully opaque red and #FF000000 is red at zero opacity, in other words invisible. Android packs colors as ARGB with alpha first: its Color.RED is 0xFFFF0000, and 0xFF000000 means opaque black. If a red turns black or vanishes after you copy a code from one platform to another, this is almost always why.",
+      },
+      {
+        title: "Which red? Web, Pantone, NCS and print",
+        body: "#FF0000 is a screen red, made of light. Print and paint systems define red their own way, and their reds convert to slightly different screen values: Pantone's red (TPX 032M) comes out near #ED2839, the Natural Color System's pure red (NCS S 1080-R) near a deeper #C40234, and red printed with CMYK inks near #ED1B24. No Pantone ink matches #FF0000 exactly, because a screen can show a more intense red than ink on paper can. For a brand red, start from the brand's Pantone or CMYK spec and its official screen value.",
+      },
+      {
+        title: "Shades and tints of red",
+        body: "Keep the hue at 0° and saturation at 100%, move only the lightness, and you get a clean red scale: #330000 (10%), #660000 (20%), #990000 (30%), #CC0000 (40%), #FF0000 (50%), #FF3333 (60%), #FF6666 (70%), #FF9999 (80%) and #FFCCCC (90%). The darker steps are shades and the lighter ones tints. Named reds sit around this scale: dark red #8B0000, firebrick #B22222, crimson #DC143C, fire engine red #CE2029 and tomato #FF6347.",
+      },
+      {
+        title: "Red text, red buttons, dark mode",
+        body: "Pure red is a mid-tone, which makes it awkward for text in both directions. #FF0000 on white measures 3.998:1, which rounds to 4:1, below the 4.5:1 WCAG asks for body text, and white text on red is the same. Black on red does better at 5.25:1. In Tailwind's red scale, red-600 (#DC2626, 4.83:1) is the first step that passes as text on white, and #CC0000 reaches 5.89:1. In dark mode, #FF0000 on #121212 is 4.69:1 but harsh on the eyes; a softer red such as #F87171 reaches 6.77:1.",
+      },
+      {
+        title: "How #FF0000 looks to color-blind users",
+        body: "Red means error almost everywhere, and that's exactly where it fails some people. Run #FF0000 through our deuteranopia simulator and it comes out as #A39000, an olive yellow. Tailwind's red-600 and green-600, a very common error and success pair, end up as #8F801B and #958951, only 1.13:1 apart. So give every red message an icon or a word as well.",
+      },
+    ],
+    faq: [
+      { question: "What does #FF0000 mean?", answer: "It's pure red in hex: FF red (255), 00 green, 00 blue. That's RGB 255, 0, 0, the CSS color red." },
+      { question: "What color is #FF0000?", answer: "Pure red, the most saturated red a standard screen can show. Its CSS color name is red." },
+      { question: "What is the Pantone for #FF0000?", answer: "There's no exact match. Pantone's red (TPX 032M) converts to about #ED2839; a screen can show a purer red than ink." },
+      { question: "What is 0xFFFF0000?", answer: "Opaque red in ARGB order, as Android uses it: FF alpha, then FF red, 00 green, 00 blue. CSS puts alpha last instead: #FF0000FF." },
+      { question: "Is #FF0000 accessible on white?", answer: "Not for body text: it's about 4:1, below the 4.5:1 WCAG asks for. Use #DC2626 (4.83:1) or #CC0000 (5.89:1) for red text." },
+      { question: "What are other red hex codes?", answer: "Dark red #8B0000, firebrick #B22222, crimson #DC143C, fire engine red #CE2029 and tomato #FF6347." },
+    ],
+    sources: [
+      { title: "Red, Wikipedia", href: "https://en.wikipedia.org/wiki/Red" },
+      { title: "Shades of red, Wikipedia", href: "https://en.wikipedia.org/wiki/Shades_of_red" },
+      { title: "CSS Color Module Level 4: hex notation and named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#hex-notation" },
+      { title: "android.graphics.Color, Android Developers", href: "https://developer.android.com/reference/android/graphics/Color" },
+    ],
+  },
+  white: {
+    title: "White Color Code: Hex #FFFFFF, RGB 255, 255, 255",
+    description:
+      "White is #FFFFFF (#FFF) and RGB 255, 255, 255. Its HSL, HSV and CMYK values, off-white codes like white smoke, snow and ivory, and white in dark mode and print.",
+    answer:
+      "White is #FFFFFF in hex, or #FFF for short, and RGB 255, 255, 255: red, green and blue light all at full strength. In HSL it's 0°, 0%, 100%, in HSV 0°, 0%, 100%, and in CMYK 0, 0, 0, 0, which in print simply means no ink. For a softer white on big areas, many designers reach for an off-white such as white smoke #F5F5F5 or snow #FFFAFA.",
+    hexVariants: [
+      { label: "White", hex: "#FFFFFF", note: "Pure white, every channel at 255. The CSS named color white." },
+      { label: "White smoke", hex: "#F5F5F5", note: "A neutral, very light gray-white, popular for page backgrounds and cards." },
+      { label: "Snow", hex: "#FFFAFA", note: "A white with the faintest hint of pink, slightly warmer than pure white." },
+      { label: "Ivory", hex: "#FFFFF0", note: "A warm off-white with a faint yellow tint." },
+    ],
+    keyTakeaways: [
+      "White is #FFFFFF (#FFF), RGB 255, 255, 255, HSL 0°, 0%, 100% and CMYK 0, 0, 0, 0.",
+      "On a screen white is red, green and blue light at full strength; in print it's the paper, with no ink.",
+      "White is in 141 of the 240 palettes in HueFlow's library, more than any other color.",
+      "Black on white is 21:1, the highest contrast there is.",
+    ],
+    sections: [
+      {
+        title: "White color codes",
+        body: "Pure white is #FFFFFF in HEX, #FFF in shorthand, and rgb(255, 255, 255) in RGB. In HSL it's hsl(0, 0%, 100%) and in HSV 0°, 0%, 100%: no saturation and full lightness, so the hue value doesn't matter at all. In CMYK it's 0, 0, 0, 0. As a single number it's 16777215, the largest 24-bit color value. In CSS, white, #FFF, #FFFFFF and rgb(255, 255, 255) all give the same color; #FFFFFFFF and #FFFF add an explicit full opacity, and Android's Color.WHITE is 0xFFFFFFFF.",
+      },
+      {
+        title: "What #FFFFFF means",
+        body: "Each pair of digits in a hex code is one channel, from 00 to FF (0 to 255). #FFFFFF is FF red, FF green and FF blue: every part of the pixel at full brightness. Red, green and blue light at full strength add up to white, the same reason white light contains every color. #FFF is the 3-digit shorthand, where each digit is doubled, so #FFF expands to #FFFFFF.",
+      },
+      {
+        title: "Off-white color codes",
+        body: "Pure white can look cold or glaring across a whole page, so many designs use an off-white instead. CSS has a surprising number built in: white smoke #F5F5F5 (neutral), ghost white #F8F8FF (cool, faintly blue), snow #FFFAFA (faintly pink), floral white #FFFAF0 and ivory #FFFFF0 (warm), seashell #FFF5EE, old lace #FDF5E6, linen #FAF0E6 and antique white #FAEBD7 (warmer, toward beige), and mint cream #F5FFFA and honeydew #F0FFF0 (faintly green). Outside CSS, cream is usually given as #FFFDD0 and eggshell as #F0EAD6.",
+      },
+      {
+        title: "Why almost every palette has a white",
+        body: "In HueFlow's palette library, 141 of the 240 palettes include a white or near-white, about 59%, far more than any hue. Most palettes need one light neutral for backgrounds and space, and white is usually it. On a white page, near-black text reads best: #111111 reaches 18.88:1 and #333333 12.63:1. To lift a card off a white page, #F5F5F5 is enough, though at 1.09:1 against white it needs a border or shadow if the edge matters; dark text on it still reaches 17.32:1.",
+      },
+      {
+        title: "White in dark mode and on colors",
+        body: "In dark mode, pure white text on #121212 is 18.73:1, which can glare across long paragraphs, so many themes use a light gray such as #E0E0E0 (14.19:1). White text works on dark and mid-dark colors: on navy it reaches 16.01:1, on Tailwind's blue-600 (#2563EB) 5.17:1. It fails on light ones: white on yellow is 1.07:1, and on mid gray #808080 only 3.95:1. For white body text to pass 4.5:1, the background needs to be at least as dark as gray #767676.",
+      },
+      {
+        title: "White in print",
+        body: "In print, white usually isn't an ink. CMYK 0, 0, 0, 0 means no ink at all, so the white you see is the paper, and the same #FFFFFF design looks bright on coated paper and warmer on recycled stock. For white on colored or clear materials, printers add a separate opaque white ink. That's also why hunting for a Pantone that equals #FFFFFF doesn't get far: on paper, white depends on the paper.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for white?", answer: "#FFFFFF, or #FFF for short. It's the CSS named color white." },
+      { question: "What is white in RGB?", answer: "rgb(255, 255, 255): red, green and blue all at full strength." },
+      { question: "Is #FFF the same as #FFFFFF?", answer: "Yes. In 3-digit shorthand each digit is doubled, so #FFF expands to #FFFFFF." },
+      { question: "What is the hex code for off-white?", answer: "There isn't a single one. Popular choices are white smoke #F5F5F5, snow #FFFAFA, ivory #FFFFF0 and floral white #FFFAF0; eggshell is about #F0EAD6." },
+      { question: "What is the white smoke color code?", answer: "#F5F5F5, RGB 245, 245, 245: a neutral, very light gray-white and a CSS named color." },
+    ],
+    sources: [
+      { title: "White, Wikipedia", href: "https://en.wikipedia.org/wiki/White" },
+      { title: "Shades of white, Wikipedia", href: "https://en.wikipedia.org/wiki/Shades_of_white" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+      { title: "android.graphics.Color, Android Developers", href: "https://developer.android.com/reference/android/graphics/Color" },
+    ],
+  },
+  blue: {
+    title: "Blue Color Code: Hex #0000FF, RGB 0, 0, 255",
+    description:
+      "Blue is #0000FF in hex and RGB 0, 0, 255. Its HSL, HSV and CMYK values, Pantone and NCS blues, a blue value scale from #000033 to #CCCCFF, and blues for UI text.",
+    answer:
+      "Pure blue is #0000FF in hex (#00F for short) and RGB 0, 0, 255: only the blue part of each pixel lit. In HSL it's 240°, 100%, 50%, in HSV 240°, 100%, 100%, and in CMYK 100, 100, 0, 0. It's the darkest of the three screen primaries, so it reads well as text on white (8.59:1) and almost disappears on black (2.44:1).",
+    hexVariants: [
+      { label: "Web blue", hex: "#0000FF", note: "The CSS named color blue: the blue channel at full strength, red and green off." },
+      { label: "Pantone blue", hex: "#0018A8", note: "The screen value given for Pantone's Blue in its Textile Paper eXtended (TPX) list: deep and dark." },
+      { label: "NCS blue", hex: "#0087BD", note: "The sRGB approximation of NCS 2060-B, the Natural Color System's pure blue: much lighter, toward cyan." },
+      { label: "Pigment blue", hex: "#333399", note: "Blue printed with CMYK inks (cyan plus magenta), converted to a screen value: a muted, dusky blue." },
+    ],
+    keyTakeaways: [
+      "Blue is #0000FF, RGB 0, 0, 255, HSL 240°, 100%, 50% and CMYK 100, 100, 0, 0.",
+      "Print and paint blues differ: Pantone blue is about #0018A8, NCS blue #0087BD, CMYK pigment blue #333399.",
+      "In dark mode pure blue fails (2.18:1 on #121212); Tailwind's blue-500 (#3B82F6) is the darkest step that still passes.",
+    ],
+    sections: [
+      {
+        title: "Blue color codes",
+        body: "Pure blue is #0000FF in HEX, or #00F for short. In RGB it's rgb(0, 0, 255), in HSL hsl(240, 100%, 50%) and in HSV 240°, 100%, 100%. The CMYK conversion is 100, 100, 0, 0: full cyan and magenta ink. As a single number it's just 255, because the red and green bytes are zero. In CSS, blue, #00F, #0000FF and rgb(0, 0, 255) are the same color, and Android's Color.BLUE is 0xFF0000FF, alpha first.",
+      },
+      {
+        title: "Where blue sits on the color wheel",
+        body: "Blue is at 240° on the screen color wheel, a third of the way round from both red (0°) and green (120°). Its opposite there is yellow (#FFFF00): blue and yellow light together make white. On the painter's red-yellow-blue wheel, blue is a primary and its complement is orange, which is the pairing designers usually mean by blue and orange. Blue light in the rainbow runs from roughly 450 to 495 nanometers.",
+      },
+      {
+        title: "Which blue? Web, Pantone, NCS and print",
+        body: "#0000FF is a screen blue, made of light, and other systems pick their blue very differently. Pantone's Blue converts to about #0018A8, a deep, dark blue. The Natural Color System's pure blue (NCS 2060-B) comes out near #0087BD, much lighter and leaning toward cyan. Blue printed with CMYK inks, cyan plus magenta, converts to a muted #333399. Ink can't reach the intensity of #0000FF, so a screen blue nearly always looks duller in print; for a brand blue, start from the Pantone or CMYK spec.",
+      },
+      {
+        title: "Blue value scale",
+        body: "Keep the hue at 240° and saturation at 100%, change only the lightness, and you get a clean blue value scale: #000033 (10%), #000066 (20%), #000099 (30%), #0000CC (40%), #0000FF (50%), #3333FF (60%), #6666FF (70%), #9999FF (80%) and #CCCCFF (90%). Steps darker than #0000FF are shades, lighter ones tints. Familiar named blues sit around this scale: navy #000080, medium blue #0000CD, royal blue #4169E1, dodger blue #1E90FF and sky blue #87CEEB.",
+      },
+      {
+        title: "A professional blue for links and buttons",
+        body: "Blue is the classic link color, and one of the few pure hues that works as text on white: #0000FF measures 8.59:1, and white text on blue the same. Most modern interfaces tone it down, though. In Tailwind's blue scale, blue-600 (#2563EB, 5.17:1) is the first step that passes as text on white, and blue-700 (#1D4ED8, 6.70:1) looks calmer still. If you want blue to look serious and established, go darker: navy (#000080) reaches 16.01:1.",
+      },
+      {
+        title: "Blue in dark mode, and for color-blind users",
+        body: "On dark backgrounds pure blue fails: #0000FF on #121212 is only 2.18:1, because blue is the darkest screen primary. We checked Tailwind's whole blue scale on #121212, and blue-500 (#3B82F6, 5.09:1) is the darkest step that still passes; #60A5FA reaches 7.37:1. The good news is color blindness: our deuteranopia simulator turns #0000FF into #003DFB, still clearly blue, which makes blue one of the safest colors for links and focus rings. Blue is also in 70 of the 240 palettes in our palette library, second only to orange.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for blue?", answer: "#0000FF, or #00F for short. It's the CSS named color blue." },
+      { question: "What is blue in RGB?", answer: "rgb(0, 0, 255): blue at full strength, no red or green." },
+      { question: "What does #0000FF mean?", answer: "00 red, 00 green, FF blue: only the blue channel, at its maximum (255)." },
+      { question: "What is the Pantone for blue?", answer: "Pantone's Blue converts to about #0018A8 on screens. No ink matches #0000FF exactly." },
+      { question: "What is a professional blue color code?", answer: "Darker, calmer blues read as the most professional: navy #000080, or Tailwind's #1D4ED8 and #1E3A8A. Pure #0000FF looks loud." },
+      { question: "Is #0000FF accessible?", answer: "On white, yes: 8.59:1. On dark backgrounds, no: 2.18:1 on #121212. Use a lighter blue such as #60A5FA in dark mode." },
+    ],
+    sources: [
+      { title: "Blue, Wikipedia", href: "https://en.wikipedia.org/wiki/Blue" },
+      { title: "Shades of blue, Wikipedia", href: "https://en.wikipedia.org/wiki/Shades_of_blue" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+      { title: "android.graphics.Color, Android Developers", href: "https://developer.android.com/reference/android/graphics/Color" },
+    ],
+  },
 };

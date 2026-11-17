@@ -57,6 +57,13 @@ const contentUpdatedOn: Record<string, string> = {
   "/color-meanings/white": "2026-11-16",
   "/color-meanings/black": "2026-11-16",
   "/color-meanings/yellow": "2026-11-16",
+  "/colors/yellow": "2026-11-17",
+  "/colors/red": "2026-11-17",
+  "/colors/white": "2026-11-17",
+  "/colors/blue": "2026-11-17",
+  ...Object.fromEntries(
+    ["blue", "azure", "teal", "red", "green", "brown", "gray", "orange", "purple", "pink"].map((slug) => [`/color-meanings/${slug}`, "2026-11-17"]),
+  ),
 };
 
 type SitemapEntry = {
