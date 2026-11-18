@@ -14,7 +14,7 @@ const NAMED_COLORS: [string, string][] = [
   ["#A0522D", "Sienna"], ["#DEB887", "Burly Wood"], ["#F5DEB3", "Wheat"],
   ["#FFDEAD", "Navajo White"], ["#FFE4C4", "Bisque"], ["#FFDAB9", "Peach Puff"],
   ["#F4A460", "Sandy Brown"], ["#DAA520", "Goldenrod"], ["#B8860B", "Dark Goldenrod"],
-  ["#BC8F8F", "Rosy Brown"], ["#D2B48C", "Tan"], ["#C4A484", "Camel"],
+  ["#BC8F8F", "Rosy Brown"], ["#D2B48C", "Tan"], ["#C19A6B", "Camel"],
   ["#ADFF2F", "Green Yellow"], ["#7FFF00", "Chartreuse"], ["#32CD32", "Lime Green"],
   ["#90EE90", "Light Green"], ["#00FA9A", "Medium Spring Green"],
   ["#3CB371", "Medium Sea Green"], ["#2E8B57", "Sea Green"],

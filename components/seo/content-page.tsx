@@ -11,9 +11,12 @@ import { PaletteColorStrip } from "@/components/seo/palette-color-strip";
 import { Breadcrumbs, Faq, SmallTitle, eyebrow } from "@/components/seo/page-ui";
 import { Header } from "@/components/header";
 
+// Dark ink on light swatches. The brightness cut-off alone put white text on hot pink
+// (#FF69B4, 2.65:1), so a swatch where white can't reach even the 3:1 large-text level
+// counts as light too.
 function isLight(hex: string) {
   const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  return (r*299+g*587+b*114)/1000 > 160;
+  return (r*299+g*587+b*114)/1000 > 160 || getContrastRatio("#FFFFFF", hex) < 3;
 }
 
 function getSimilarColors(hex: string) {

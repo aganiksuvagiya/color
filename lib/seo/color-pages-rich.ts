@@ -1538,4 +1538,451 @@ export const richColorPages: Record<string, ColorPageRewrite> = {
       { title: "android.graphics.Color, Android Developers", href: "https://developer.android.com/reference/android/graphics/Color" },
     ],
   },
+  // "What color is X?" batch (2026-11-18). Search Console, 16 months: 73 queries for these nine
+  // names ("bisque color", "what color is camel", "hot pink meaning", "what is dodger blue",
+  // "wheat hex code", "teal azure color", "medical teal color"...). Except for teal, Google sent
+  // them to the noindexed /color-meanings/<name> templates, so those now redirect here (see
+  // color-redirects.ts) and each page answers the "what color is it" and meaning questions too.
+  // ΔE figures are CIEDE2000; palette counts are swatches within ΔE 5 in lib/palette-library.ts.
+  camel: {
+    title: "What Color Is Camel? Hex #C19A6B, RGB & the Camel Coat",
+    description:
+      "Camel is a light yellowish brown, the color of camel hair: #C19A6B, RGB 193, 154, 107. Its codes, the coat that made it famous, and how to use it on screens.",
+    answer:
+      "Camel is a light yellowish brown, the color of a camel's coat. Most color references give it as #C19A6B, which is RGB 193, 154, 107, HSL 33°, 41%, 59% and CMYK 0, 20, 45, 24. It's deeper and more golden than tan (#D2B48C). There's no camel keyword in CSS, so use the hex code.",
+    hexVariants: [
+      { label: "Camel", hex: "#C19A6B", note: "The camel of the ISCC-NBS color dictionary and most color references: a light yellowish brown." },
+      { label: "Camel for text", hex: "#8C683B", note: "Step 700 of HueFlow's scale for camel. Dark enough for text on white (5.05:1)." },
+      { label: "Tan, for comparison", hex: "#D2B48C", note: "The CSS named color tan: lighter and sandier, with less gold in it." },
+    ],
+    keyTakeaways: [
+      "Camel is #C19A6B: RGB 193, 154, 107, HSL 33°, 41%, 59%, CMYK 0, 20, 45, 24.",
+      "It isn't a CSS keyword. color: camel does nothing, so use the hex code.",
+      "Camel is too light for text on white (2.59:1), but dark text on camel reads well (7.29:1 with #111111).",
+    ],
+    sections: [
+      {
+        title: "What color is camel?",
+        body: "Camel is the color of camel hair: a light, warm brown with some gold in it. The ISCC-NBS dictionary, which gives colors plain-English names, files it under light yellowish brown. Its hue is 33°, in the orange part of the color wheel, but the saturation is only 41%, and that mutes the orange down to brown. As a color word it's fairly young. Maerz and Paul's Dictionary of Color dates its first recorded use in English to 1916. Next to tan (#D2B48C) camel looks darker and more golden; next to caramel (#C68E17) it looks soft and a little dusty.",
+      },
+      {
+        title: "Camel color codes",
+        body: "In code, camel is #C19A6B. That's rgb(193, 154, 107), hsl(33, 41%, 59%), HSV 33°, 45%, 76% and roughly CMYK 0, 20, 45, 24, or 12687979 as a single decimal number. Tan, wheat and bisque are CSS named colors, but camel never made the list, so browsers ignore color: camel. Some color lists give camel as #C4A484, a lighter and grayer value that's more often called light brown. We use #C19A6B because it's the value with a documented source.",
+      },
+      {
+        title: "The coat that named a color",
+        body: "The polo coat, also called the camel coat, is where most people meet this color: an overcoat associated with polo players in England. It was first made from camel hair; blends of camel hair and wool later became standard because they last longer. A 1951 Collier's fashion article laid down the old rules: a camel polo coat for summer, the country and the American South, and a navy overcoat for the city and for autumn, winter and spring. The best-known camel coat today is Max Mara's 101801, designed by Anne-Marie Beretta in 1981 and still made. Harrods has estimated that about 140,000 have been sold.",
+      },
+      {
+        title: "Camel on a screen",
+        body: "Camel is a mid-light color, so it fails as text on white at 2.59:1, and white text on a camel button fails the same way. Dark text fixes it: #111111 on camel reaches 7.29:1, navy (#000080) 6.18:1 and a softer ink like #1F2A44 5.5:1. For camel-colored text, darken it. HueFlow's scale generator puts #C19A6B at step 500; its step 700, #8C683B, reaches 5.05:1 on white, and #976F3F is about the lightest camel that still passes (4.51:1). Dark mode is easy: camel on #121212 measures 7.23:1.",
+      },
+      {
+        title: "Where camel shows up in our palettes",
+        body: "Seven of the 240 palettes in HueFlow's library have a swatch close to camel. What's interesting is the job it does there. In Marble & Gold and Black & Gold Label (#B8975A), and in Champagne Toast and Antique Shop (#C9A66B), the camel-like swatch stands in for gold. Next to black or white, a muted camel can pass for brushed gold without looking yellow.",
+      },
+    ],
+    faq: [
+      { question: "What color is camel?", answer: "A light yellowish brown, the color of camel hair. Its usual hex code is #C19A6B." },
+      { question: "Is camel a color?", answer: "Yes. It has been a color name in English since at least 1916, though it isn't one of the CSS named colors." },
+      { question: "What is the hex code for camel?", answer: "#C19A6B, RGB 193, 154, 107." },
+      { question: "Is camel a warm or cool color?", answer: "Warm. Its hue is 33°, between orange and yellow, muted down to a brown." },
+      { question: "What colors go with camel?", answer: "Navy is the traditional partner, especially in menswear. White, cream, black, burgundy and olive work too. For text on camel, use near-black or navy." },
+    ],
+    sources: [
+      { title: "Camel (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Camel_(color)" },
+      { title: "Polo coat, Wikipedia", href: "https://en.wikipedia.org/wiki/Polo_coat" },
+      { title: "Anne Marie Beretta, Wikipedia", href: "https://en.wikipedia.org/wiki/Anne_Marie_Beretta" },
+      { title: "101801 coat, Max Mara", href: "https://in.maxmara.com/icon/101801-coat" },
+    ],
+  },
+  "hot-pink": {
+    title: "Hot Pink Color Code #FF69B4: Meaning, RGB & Tailwind",
+    description:
+      "Hot pink is #FF69B4, the CSS color hotpink. Its RGB and CMYK codes, what it says, its near-twin in Tailwind, and why white text fails on a hot pink button.",
+    answer:
+      "Yes, hot pink is a color, and a named one in CSS: hotpink, written as one word, is #FF69B4, RGB 255, 105, 180. It's a bright, slightly purplish pink at hue 330°. It comes across as loud, playful and confident. On screens, put dark text on it, because white text on hot pink is only 2.65:1.",
+    hexVariants: [
+      { label: "Hot pink", hex: "#FF69B4", note: "The CSS named color hotpink, inherited from the X11 color list." },
+      { label: "Deep pink", hex: "#FF1493", note: "The CSS named color deeppink: stronger and closer to magenta." },
+      { label: "Tailwind pink-400", hex: "#F472B6", note: "The closest Tailwind step, almost indistinguishable from hotpink (ΔE 2.1)." },
+      { label: "Tailwind pink-600", hex: "#DB2777", note: "The first Tailwind pink that passes as text on white (4.6:1), and with white text on it." },
+    ],
+    keyTakeaways: [
+      "Hot pink is #FF69B4: RGB 255, 105, 180, HSL 330°, 100%, 71%, CMYK 0, 59, 29, 0.",
+      "In Tailwind, pink-400 (#F472B6) is a near-exact match.",
+      "Use dark text on hot pink (7.13:1 with #111111). White text fails at 2.65:1.",
+      "With deuteranopia hot pink can look gray, so don't let it carry meaning on its own.",
+    ],
+    sections: [
+      {
+        title: "Hot pink codes",
+        body: "Hot pink is #FF69B4 in HEX and rgb(255, 105, 180) in RGB. In HSL it's hsl(330, 100%, 71%), in HSV 330°, 59%, 100%, and the CMYK conversion is about 0, 59, 29, 0. As a decimal number it's 16738740. In CSS and HTML you can write hotpink, all one word, and get exactly #FF69B4; hot-pink, or hot pink with a space, won't work. The ISCC-NBS dictionary, which gives every color a plain description, calls it vivid purplish red.",
+      },
+      {
+        title: "What hot pink says",
+        body: "Pale pink is gentle. Hot pink is the same family turned all the way up, so it reads as loud, playful and sure of itself rather than sweet. It's tied to particular moments. Along with bubblegum pink, it was one of the big colors of 2000s fashion, and the Y2K revival of the early 2020s brought it back. Then the 2023 Barbie film went further. Its sets leaned on one shade, Pantone 219, so heavily that the production used up its paint supplier Rosco's remaining stock of pink.",
+      },
+      {
+        title: "Hot pink in Tailwind and other tools",
+        body: "In Tailwind, pink-400 (#F472B6) is about as close as it gets. The color difference is 2.1 (ΔE 2000), small enough that most people can't tell the two apart side by side. HueFlow's own scale generator agrees and puts #FF69B4 at step 400. Tools that use the older X11 list, such as R and Tcl/Tk, also know hotpink1 to hotpink4. hotpink1 is #FF6EB4, a hair off hotpink itself, and hotpink4 is a deep #8B3A62.",
+      },
+      {
+        title: "Why white text fails on hot pink",
+        body: "It surprises people, but hot pink is a light color. White text on #FF69B4 measures 2.65:1, well under the 4.5:1 that body text needs, and even deep pink only gets white text to 3.64:1. There are two fixes. Keep hot pink and use dark text: #111111 reaches 7.13:1, the softer #1B1B1B 6.51:1. Or keep white text and darken the pink to Tailwind's pink-600 (#DB2777, 4.6:1) or CSS medium violet red (#C71585, 5.42:1). In dark mode hot pink works well as text, at 7.08:1 on #121212.",
+      },
+      {
+        title: "Hot pink and color blindness",
+        body: "Run #FF69B4 through our deuteranopia simulator and it comes out as #A7A9B0, a light gray. With protanopia it turns a dusty blue, #7E8EB6. So a hot pink badge next to a gray one can look the same to some users; add a label or an icon when the pink means something. Our Hot Pink Studio palette pairs it with deep pink, medium violet red, lavender blush (#FFF0F5) and a near-black #1B1B1B, so there's always a dark color for text.",
+      },
+    ],
+    faq: [
+      { question: "Is hot pink a color?", answer: "Yes. It's a CSS named color, hotpink, with the hex code #FF69B4." },
+      { question: "What color is hot pink?", answer: "A bright, slightly purplish pink: RGB 255, 105, 180." },
+      { question: "What does hot pink represent?", answer: "Fun, boldness and confidence. It's pink without the softness, and it's closely tied to 2000s fashion and the Barbie look." },
+      { question: "What is the hex code for hot pink?", answer: "#FF69B4. Deep pink, its stronger neighbor, is #FF1493." },
+      { question: "Is hot pink the same as magenta?", answer: "No. Magenta (#FF00FF) has no green at all and sits at 300°. Hot pink is lighter and warmer, at 330°." },
+    ],
+    sources: [
+      { title: "Shades of pink: hot pink, Wikipedia", href: "https://en.wikipedia.org/wiki/Shades_of_pink#Hot_pink" },
+      { title: "Barbie (film): production design, Wikipedia", href: "https://en.wikipedia.org/wiki/Barbie_(film)" },
+      { title: "'Barbie' production emptied a company's worldwide supply of pink paint, Los Angeles Times (2023)", href: "https://www.latimes.com/entertainment-arts/movies/story/2023-06-03/barbie-production-design-shortage-pink-paint-greta-gerwig" },
+      { title: "X11 color names, Wikipedia", href: "https://en.wikipedia.org/wiki/X11_color_names" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  bisque: {
+    title: "What Color Is Bisque? Hex #FFE4C4, RGB 255, 228, 196",
+    description:
+      "Bisque is a pale peach-beige, CSS color #FFE4C4 (RGB 255, 228, 196), named after unglazed fired pottery. Its codes, X11's bisque1 to bisque4, and close matches.",
+    answer:
+      "Bisque is a very pale orange, close to a peachy beige: #FFE4C4 in hex, RGB 255, 228, 196. It's a CSS named color, and it takes its name from bisque (or biscuit) pottery, which is clay fired without a glaze. Use it as a warm background. It's far too light for text (1.22:1 on white).",
+    hexVariants: [
+      { label: "Bisque", hex: "#FFE4C4", note: "The CSS named color bisque. In X11 it's also bisque1." },
+      { label: "bisque2", hex: "#EED5B7", note: "X11's next step down, available by name in R and Tcl/Tk." },
+      { label: "bisque3", hex: "#CDB79E", note: "A deeper, grayer bisque from the same X11 set." },
+      { label: "bisque4", hex: "#8B7D6B", note: "The darkest X11 bisque, a gray-brown. On white it's 4:1, enough for large text only." },
+    ],
+    keyTakeaways: [
+      "Bisque is #FFE4C4: RGB 255, 228, 196, HSL 33°, 100%, 88%, CMYK 0, 11, 23, 0.",
+      "Its hue, 33°, is the same as camel's. Bisque is just much lighter and purer.",
+      "Background only: 1.22:1 on white. Near-black text on bisque reaches 15.42:1.",
+    ],
+    sections: [
+      {
+        title: "What color is bisque?",
+        body: "Bisque looks like unglazed porcelain with a little peach in it: a pale orange washed almost to cream. In numbers it's hue 33°, full saturation and 88% lightness, so the orange is there but heavily diluted with white. It sits in a crowded corner of the CSS color list. Blanched almond (#FFEBCD) is a touch lighter, peach puff (#FFDAB9) a touch pinker, and wheat (#F5DEB3) a touch yellower and grayer. The differences are only 2.9, 3.9 and 4.6 (ΔE 2000), so on most screens they look like one color under four slightly different lights.",
+      },
+      {
+        title: "Bisque color codes",
+        body: "In CSS, bisque and #FFE4C4 are interchangeable. The other formats: rgb(255, 228, 196), hsl(33, 100%, 88%), HSV 33°, 23%, 100%, CMYK about 0, 11, 23, 0, and 16770244 as a decimal number. The name reached the web through the X11 color list, which also defines numbered versions: bisque1 is the same as bisque, and bisque2 (#EED5B7), bisque3 (#CDB79E) and bisque4 (#8B7D6B) get steadily darker. Browsers don't accept the numbered names, but R, Tcl/Tk and other X11-based tools do.",
+      },
+      {
+        title: "Named after pottery",
+        body: "In ceramics, biscuit or bisque is pottery that has been fired in a kiln without a glaze. Sometimes that's the finished piece, as with biscuit porcelain figures or terracotta, but more often it's a halfway stage before the glaze goes on. The color name borrows the pale, matte look of fired porcelain before glazing.",
+      },
+      {
+        title: "Using bisque in a design",
+        body: "Bisque only works behind things. It measures 1.22:1 against white, so bisque text disappears, and a bisque card on a white page needs a border or a shadow. Dark text is easy on it: #111111 reaches 15.42:1 and #333333 10.32:1. For a warm, bakery-like pair, saddle brown (#8B4513) text on bisque reaches 5.8:1. Tailwind has no bisque, but orange-100 (#FFEDD5) is close (ΔE 3.8). In our palette library 13 of the 240 palettes have a bisque-like swatch, from pastel sets like Peach Blossom to autumn ones like Pumpkin Spice and Maple Syrup.",
+      },
+    ],
+    faq: [
+      { question: "What color is bisque?", answer: "A pale peach-beige, or a very light, soft orange. Its hex code is #FFE4C4." },
+      { question: "Is bisque white or beige?", answer: "Closer to beige. It's lighter than most beiges but clearly warmer than any white, with a peach tint." },
+      { question: "What is the hex code for bisque?", answer: "#FFE4C4, RGB 255, 228, 196. In CSS you can just write bisque." },
+      { question: "Where does the name bisque come from?", answer: "From bisque or biscuit pottery: ceramics fired without a glaze." },
+    ],
+    sources: [
+      { title: "Biscuit (pottery), Wikipedia", href: "https://en.wikipedia.org/wiki/Biscuit_(pottery)" },
+      { title: "X11 color names, Wikipedia", href: "https://en.wikipedia.org/wiki/X11_color_names" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  wheat: {
+    title: "Wheat Color Hex Code #F5DEB3: RGB, CMYK & X11 wheat1",
+    description:
+      "Wheat is #F5DEB3 (RGB 245, 222, 179), a pale yellow-beige CSS color. Its codes, why X11's wheat1 is a different color, and how to use wheat as a background.",
+    answer:
+      "Wheat is #F5DEB3 in hex and RGB 245, 222, 179: the pale yellow-beige of a wheat grain. It's a CSS named color, so you can also write wheat. HSL is 39°, 77%, 83% and CMYK about 0, 9, 27, 4. It's a background color: on white it measures 1.31:1, while near-black text on wheat reaches 14.37:1.",
+    hexVariants: [
+      { label: "Wheat", hex: "#F5DEB3", note: "The CSS named color wheat." },
+      { label: "wheat1", hex: "#FFE7BA", note: "X11's wheat1. It isn't the same as plain wheat: it's lighter and brighter." },
+      { label: "wheat4", hex: "#8B7E66", note: "The darkest of X11's numbered wheats, a grayish brown." },
+    ],
+    keyTakeaways: [
+      "Wheat is #F5DEB3: RGB 245, 222, 179, HSL 39°, 77%, 83%, CMYK 0, 9, 27, 4.",
+      "In R and other X11 tools, wheat1 is #FFE7BA, not #F5DEB3.",
+    ],
+    sections: [
+      {
+        title: "Wheat color codes",
+        body: "HEX #F5DEB3, RGB rgb(245, 222, 179), HSL hsl(39, 77%, 83%), HSV 39°, 27%, 96%, CMYK about 0, 9, 27, 4, decimal 16113331. In CSS, wheat and #F5DEB3 give the same color. If you just want to know what it looks like: a pale, slightly golden beige, more like a husked grain of wheat than a ripe field. Wheat has been a color name since at least 1711, according to Maerz and Paul's Dictionary of Color, and it reached the web through the X11 color list. The ISCC-NBS dictionary calls it pale yellow.",
+      },
+      {
+        title: "The wheat1 surprise",
+        body: "X11 gives many of its colors four numbered versions, and they don't always start from the named color. bisque1 and ivory1 are identical to bisque and ivory, but wheat1 is #FFE7BA, lighter and brighter than wheat. The darker steps run wheat2 #EED8AE, wheat3 #CDBA96 and wheat4 #8B7E66. Wheat and wheat1 are only 2.0 apart (ΔE 2000), but if you match a chart made in R with wheat1 against a web page that uses wheat, the hex codes won't agree.",
+      },
+      {
+        title: "Wheat, bisque, tan or beige?",
+        body: "Wheat's hue is 39°, a little yellower than bisque at 33°, and it's grayer. Tan (#D2B48C) is close in hue but much darker. CSS beige (#F5F5DC) is a different thing again: a pale yellow at hue 60°, so next to wheat it looks slightly green. If a design calls for wheat and you only have Tailwind, orange-200 (#FED7AA) is the nearest step, but it's visibly pinker (ΔE 5.2). An arbitrary value such as bg-[#F5DEB3] is the honest choice.",
+      },
+      {
+        title: "Wheat as a background",
+        body: "Wheat is a popular warm background. In our palette library, 18 of the 240 palettes have a swatch within ΔE 5 of it, and Coffee House uses #F5DEB3 itself, next to coffee browns. Text on wheat is easy: #111111 reaches 14.37:1, and saddle brown (#8B4513) 5.4:1 if you want a brown ink. Wheat-toned text on white is harder; you need to go as dark as #996B14 (4.7:1).",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for wheat?", answer: "#F5DEB3, RGB 245, 222, 179." },
+      { question: "What color is wheat?", answer: "A pale yellow-beige, the color of a husked wheat grain." },
+      { question: "Is wheat a CSS color?", answer: "Yes. color: wheat gives #F5DEB3." },
+      { question: "What colors go with wheat?", answer: "Browns such as saddle brown (#8B4513) or coffee (#6F4E37), deep greens, navy and terracotta. For text, use near-black or a dark brown." },
+    ],
+    sources: [
+      { title: "Wheat (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Wheat_(color)" },
+      { title: "X11 color names, Wikipedia", href: "https://en.wikipedia.org/wiki/X11_color_names" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  teal: {
+    title: "Teal Color Code #008080: RGB, HTML & Close Matches",
+    description:
+      "Teal is #008080, RGB 0, 128, 128, one of HTML's original 16 colors. Its codes, teal vs Tailwind teal and dark cyan, clinical teal, and teal in dark mode.",
+    answer:
+      "Teal is #008080 in hex and RGB 0, 128, 128: green and blue at half strength, no red. In HSL it's 180°, 100%, 25%, and in CMYK 100, 0, 0, 50. teal is one of the 16 original HTML color names, so color: teal works in every browser. Be careful with Tailwind: its teal-500 (#14B8A6) is a much lighter, greener color.",
+    hexVariants: [
+      { label: "Teal", hex: "#008080", note: "One of the 16 basic HTML colors: cyan at half brightness." },
+      { label: "Dark cyan", hex: "#008B8B", note: "CSS darkcyan, from the X11 list. Slightly brighter than teal and easy to mix up with it." },
+      { label: "Teal blue", hex: "#367588", note: "Teal blue in the ISCC-NBS color dictionary: grayer and bluer." },
+      { label: "Tailwind teal-500", hex: "#14B8A6", note: "What teal means in Tailwind's default palette: lighter and greener than #008080." },
+    ],
+    keyTakeaways: [
+      "Teal is #008080: RGB 0, 128, 128, HSL 180°, 100%, 25%, CMYK 100, 0, 0, 50.",
+      "It's one of the 16 basic HTML colors, which came from the Windows VGA palette.",
+      "Tailwind's teal-500 (#14B8A6) isn't #008080. The closest Tailwind step is teal-700 (#0F766E).",
+      "Teal fails as text in dark mode (3.92:1 on #121212); light sea green #20B2AA reaches 7.15:1.",
+    ],
+    sections: [
+      {
+        title: "Teal color codes",
+        body: "Written out, teal is rgb(0, 128, 128), hsl(180, 100%, 25%), HSV 180°, 100%, 50% and CMYK 100, 0, 0, 50, or 32896 as a single decimal number. The hex, #008080, is easy to read once you know that 80 is 128, half of FF: teal is cyan (#00FFFF) with its green and blue cut in half.",
+      },
+      {
+        title: "Teal in HTML",
+        body: "teal was one of the first sixteen color names browsers learned. HTML 4.01 (1999) defines 16 basic colors, and the earlier HTML 3.2 specification described the same set as the standard 16 colors of the Windows VGA palette. Teal sits there with navy (#000080), maroon (#800000), olive (#808000) and purple (#800080), each one a full color at half brightness. So the keyword teal has meant #008080 since the 1990s, in old HTML attributes and in modern CSS alike.",
+      },
+      {
+        title: "Teal, dark cyan and Tailwind teal",
+        body: "Two other colors in code are easy to mistake for teal. CSS darkcyan (#008B8B) comes from the X11 list, where 8B (139) is the usual dark level, so it's a shade brighter than teal. The difference is small (ΔE 4.0) but it shows in a side-by-side swatch, and darkcyan fails as text on white (4.15:1) where teal passes (4.77:1). Tailwind is the bigger trap. Its teal-500 is #14B8A6, a light turquoise-green 18.9 ΔE away from #008080. If you want real teal in Tailwind, teal-700 (#0F766E) is the nearest step, at ΔE 5.0.",
+      },
+      {
+        title: "Teal or azure?",
+        body: "People search for teal azure as if it were one color. In CSS the two share a hue, 180°, and sit at opposite ends of it: teal is that hue at 25% lightness, and CSS azure (#F0FFFF) is the same hue at 97%, an almost-white with a cold tint. The azure most people picture, the bright sky blue #007FFF, is a different hue altogether, at 210°. For something between teal and that blue, try teal blue (#367588). It leans blue and still passes as text on white at 5.18:1.",
+      },
+      {
+        title: "Clinical teal",
+        body: "Blue-greens like teal are hospital colors for a practical reason. Surgical scrubs are usually green or blue because staring at red blood and tissue, then looking at something white, can leave a blue-green afterimage, and scrubs in those colors keep it from showing. In the UK, scrubs are sometimes called theatre blues. Our Clinic Calm palette builds on that: light cyan #E0FFFF, pale turquoise #AFEEEE, light sea green #20B2AA, teal #008080 and a deep #004953, which reaches 9.59:1 on the light cyan. One catch for dark mode: teal on #121212 is only 3.92:1, so use #20B2AA (7.15:1) for text there.",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for teal?", answer: "#008080. In CSS you can also write teal." },
+      { question: "What is teal in RGB?", answer: "rgb(0, 128, 128): no red, half green, half blue." },
+      { question: "Is teal an HTML color?", answer: "Yes. It's one of the 16 basic HTML colors, along with navy, maroon, olive and purple." },
+      { question: "Is Tailwind's teal the same as #008080?", answer: "No. Tailwind's teal-500 is #14B8A6, much lighter. teal-700 (#0F766E) is the closest step." },
+      { question: "What's the difference between teal and dark cyan?", answer: "Dark cyan (#008B8B) is slightly brighter. Teal (#008080) passes as text on white and dark cyan doesn't." },
+    ],
+    sources: [
+      { title: "Teal, Wikipedia", href: "https://en.wikipedia.org/wiki/Teal" },
+      { title: "Web colors: basic colors, Wikipedia", href: "https://en.wikipedia.org/wiki/Web_colors" },
+      { title: "HTML 3.2 Reference Specification, W3C", href: "https://www.w3.org/TR/REC-html32" },
+      { title: "Scrubs (clothing), Wikipedia", href: "https://en.wikipedia.org/wiki/Scrubs_(clothing)" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  ivory: {
+    title: "What Color Is Ivory? Hex #FFFFF0, RAL 1014 & Cream",
+    description:
+      "Ivory on screens is #FFFFF0, a barely yellow white; ivory paint (RAL 1014) is a yellow beige. Codes for both, ivory vs cream, and ivory as a page background.",
+    answer:
+      "Ivory is an off-white with a faint yellow tint. On screens it's the CSS color ivory, #FFFFF0 (RGB 255, 255, 240). In paint it's much darker: RAL 1014 Ivory, the European standard, is a yellowish beige of about #DDC49A. Which one people mean depends on whether they're choosing a web color or painting a door.",
+    hexVariants: [
+      { label: "Ivory (CSS)", hex: "#FFFFF0", note: "The CSS and X11 ivory: white with the blue turned down a little." },
+      { label: "RAL 1014 Ivory", hex: "#DDC49A", note: "Ivory in the RAL paint standard, as an approximate screen value: a yellow beige." },
+      { label: "RAL 1015 Light ivory", hex: "#E6D2B5", note: "RAL's lighter ivory, long the required color for taxis in Germany." },
+    ],
+    keyTakeaways: [
+      "CSS ivory is #FFFFF0: RGB 255, 255, 240, HSL 60°, 100%, 97%, CMYK 0, 0, 6, 0.",
+      "Against white it measures 1.01:1. You see the tint over a large area, not along an edge.",
+      "Paint ivories are darker: RAL 1014 is about #DDC49A, RAL 1015 about #E6D2B5.",
+    ],
+    sections: [
+      {
+        title: "Screen ivory and paint ivory",
+        body: "The two ivories people find look nothing alike. CSS ivory, #FFFFF0, is pure white with the blue channel lowered by 15, just enough warmth to notice across a whole page and to miss on a small swatch. RAL 1014 Ivory, from the European paint and coatings standard, is a yellowish beige that converts to roughly #DDC49A, and RAL 1015 Light ivory, long the required color for German taxis, is about #E6D2B5. That gap is behind searches like ivory yellow: in a paint catalog, ivory really is yellow.",
+      },
+      {
+        title: "Where the name comes from",
+        body: "The color is named after ivory itself, the material of elephant and walrus tusks, and was in use as a color word in English by 1385. It was among the X11 colors drawn up in 1987 and reached CSS from there. The material has a darker side in paint history. Ivory black, a deep black pigment, was once made by grinding charred ivory in oil. Today the name survives as another word for bone black, and no ivory is used.",
+      },
+      {
+        title: "Ivory, cream or off-white?",
+        body: "On screens these are all small steps away from white. Ivory (#FFFFF0) is the subtlest, 6.9 ΔE from white. Cream (#FFFDD0) is clearly yellower, about 9.2 ΔE from ivory, and eggshell (#F0EAD6) is grayer and duller. In Tailwind, amber-50 (#FFFBEB) is within 1.9 ΔE of ivory, so bg-amber-50 is an ivory background in all but name. Outside screens, ivory is closely tied to weddings and other formal occasions in Western culture.",
+      },
+      {
+        title: "Ivory as a page background",
+        body: "Ivory-like whites are common page colors in our palette library: 29 of the 240 palettes have one, and Ivory Tower is built on #FFFFF0 with warm grays and a deep brown, #3C3226. Text is no problem; #111111 reaches 18.72:1 and saddle brown 7.04:1. Edges are the catch. Ivory against white measures 1.01:1, so a white card on an ivory page is invisible without a border or a shadow.",
+      },
+    ],
+    faq: [
+      { question: "What color is ivory?", answer: "An off-white with a faint yellow tint. On screens it's #FFFFF0." },
+      { question: "Is ivory white or yellow?", answer: "On screens it's practically white. In paint, RAL 1014 Ivory is a yellow beige." },
+      { question: "What is the hex code for ivory?", answer: "#FFFFF0 in CSS. RAL 1014 Ivory is about #DDC49A." },
+      { question: "Is ivory lighter than cream?", answer: "On screens, yes. CSS ivory (#FFFFF0) is lighter and less yellow than cream (#FFFDD0)." },
+    ],
+    sources: [
+      { title: "Ivory (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Ivory_(color)" },
+      { title: "List of RAL colours: RAL 1014 and RAL 1015, Wikipedia", href: "https://en.wikipedia.org/wiki/List_of_RAL_colours" },
+      { title: "Bone char (ivory black), Wikipedia", href: "https://en.wikipedia.org/wiki/Bone_char" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  "saddle-brown": {
+    title: "Saddle Brown #8B4513: RGB, CSS saddlebrown & Contrast",
+    description:
+      "Saddle brown is #8B4513 (RGB 139, 69, 19), the CSS color saddlebrown. Its codes, its X11 twin chocolate4, and why it works as text where other CSS browns fail.",
+    answer:
+      "Saddle brown is #8B4513 in hex, RGB 139, 69, 19: a deep, reddish leather brown. In CSS it's written saddlebrown, one word. It's dark enough for body text on white (7.1:1), which several named browns aren't, but it disappears in dark mode (2.64:1 on #121212).",
+    hexVariants: [
+      { label: "Saddle brown", hex: "#8B4513", note: "The CSS named color saddlebrown, and also X11's chocolate4." },
+      { label: "Sienna", hex: "#A0522D", note: "The CSS named color sienna: lighter and a little redder." },
+      { label: "Tailwind amber-800", hex: "#92400E", note: "The nearest Tailwind step, almost a match (ΔE 2.6)." },
+    ],
+    keyTakeaways: [
+      "Saddle brown is #8B4513: RGB 139, 69, 19, HSL 25°, 76%, 31%, CMYK 0, 50, 86, 45.",
+      "It passes as text on white at 7.1:1, which clears even the stricter 7:1 level.",
+    ],
+    sections: [
+      {
+        title: "Saddle brown codes",
+        body: "In CSS write saddlebrown, all one word, or #8B4513; saddle-brown, or saddle brown with a space, won't work. Converted, it's rgb(139, 69, 19), hsl(25, 76%, 31%), HSV 25°, 86%, 55%, about CMYK 0, 50, 86, 45, and 9127187 in decimal. Tailwind has no saddle brown, but amber-800 (#92400E) is close enough that most people won't see a difference (ΔE 2.6).",
+      },
+      {
+        title: "The same hex as chocolate4",
+        body: "In the X11 color list that CSS borrowed from, many colors come in four numbered versions, and the darkest usually tops out at 8B, or 139. Saddle brown has no numbered versions of its own, but it's exactly chocolate4: the darkest step of X11 chocolate (#D2691E) is #8B4513. sienna4 (#8B4726) is a close neighbor. So in R or Tcl/Tk, saddlebrown and chocolate4 draw the same color.",
+      },
+      {
+        title: "A brown you can set text in",
+        body: "Several CSS browns look dark enough for text and aren't: chocolate (#D2691E) measures 3.63:1 on white and peru (#CD853F) 2.99:1. Saddle brown passes at 7.1:1, which clears even the 7:1 AAA level, and white text on a saddle brown button is 7.1:1 too. It also works on the light warm colors: 5.4:1 on wheat, 5.8:1 on bisque, 6.31:1 on linen and 7.04:1 on ivory. In dark mode it fails (2.64:1 on #121212), so switch to a light brown such as burlywood (#DEB887, 10.09:1) there. In our palette library, close relatives show up in Leather & Brass (#80461B), Saffron Spice (#8A4B08) and Maple Syrup (#8A3A0F).",
+      },
+    ],
+    faq: [
+      { question: "What is the hex code for saddle brown?", answer: "#8B4513, RGB 139, 69, 19." },
+      { question: "How do you write saddle brown in CSS?", answer: "saddlebrown, as one word, or #8B4513." },
+      { question: "Is saddle brown good for text?", answer: "On light backgrounds, yes: 7.1:1 on white. On dark backgrounds, no." },
+    ],
+    sources: [
+      { title: "X11 color names, Wikipedia", href: "https://en.wikipedia.org/wiki/X11_color_names" },
+      { title: "Shades of brown, Wikipedia", href: "https://en.wikipedia.org/wiki/Shades_of_brown" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  "dodger-blue": {
+    title: "Dodger Blue Hex #1E90FF: RGB and the Real Dodgers Blue",
+    description:
+      "Dodger blue is #1E90FF (RGB 30, 144, 255), a CSS color named after the LA Dodgers. Who added it in 1989, the team's actual blue #005A9C, and contrast tips.",
+    answer:
+      "Dodger blue is #1E90FF in hex, RGB 30, 144, 255: a bright azure blue. It's a CSS named color, dodgerblue, named after the Los Angeles Dodgers, though the team actually wears a darker royal blue, #005A9C. Dodger blue is too light for text on white (3.24:1); for text, use #0073E6 or something darker.",
+    hexVariants: [
+      { label: "Dodger blue", hex: "#1E90FF", note: "The CSS named color dodgerblue." },
+      { label: "Dodgers team blue", hex: "#005A9C", note: "The blue in the team's logo files: much darker, a royal blue." },
+      { label: "dodgerblue3", hex: "#1874CD", note: "X11's darker dodger blue. It passes as text on white (4.75:1)." },
+      { label: "Tailwind blue-500", hex: "#3B82F6", note: "The nearest Tailwind step (ΔE 5.7), slightly more violet." },
+    ],
+    keyTakeaways: [
+      "Dodger blue is #1E90FF: RGB 30, 144, 255, HSL 210°, 100%, 56%, CMYK 88, 44, 0, 0.",
+      "The Dodgers' own blue is #005A9C. The web color is lighter, closer to the blue around Dodger Stadium.",
+      "As text on white it fails (3.24:1). #1874CD and #0073E6 pass.",
+    ],
+    sections: [
+      {
+        title: "What is dodger blue?",
+        body: "Dodger blue is a vivid azure blue, and its name is a small piece of web history. In 1989 Paul Raveling, a software engineer at the University of Southern California's Information Sciences Institute, was tuning colors to look right on computer monitors, and he proposed a big update to the X11 color list. One of his additions was dodgerblue, after the Los Angeles Dodgers. The X11 list later became the basis of the web's named colors, so every browser still knows it. The phrase is older than the color: Tommy Lasorda, who managed the Dodgers from 1977 to 1996, liked to say he bled Dodger blue.",
+      },
+      {
+        title: "Dodger blue color codes",
+        body: "In CSS write dodgerblue, one word, or #1E90FF. Its other values are rgb(30, 144, 255), hsl(210, 100%, 56%), HSV 210°, 88%, 100% and CMYK about 88, 44, 0, 0; as a decimal number it's 2003199. X11-based tools such as R also have darker numbered versions: dodgerblue2 #1C86EE, dodgerblue3 #1874CD and dodgerblue4 #104E8B.",
+      },
+      {
+        title: "Not the team's blue",
+        body: "The web color isn't what the players wear. The blue in the Dodgers' logo files is #005A9C, a much darker royal blue. Dodger blue is closer to the lighter blue used around Dodger Stadium. Raveling himself has pointed out that the X11 colors were tuned on HP monitors, and that monitors later settled on different gamma. The sRGB standard that browsers read #1E90FF in today didn't arrive until 1996, seven years after dodgerblue.",
+      },
+      {
+        title: "Dodger blue for text and buttons",
+        body: "As text, dodger blue is lighter than it looks. On white it measures 3.24:1, under the 4.5:1 that body text needs, and white text on a dodger blue button is the same 3.24:1, enough only for large text. Either put dark text on it (#111111 reaches 5.83:1) or darken the blue. The lightest blue of the same hue that passes on white is about #0073E6 (4.57:1); X11's dodgerblue3, #1874CD, reaches 4.75:1 and the team's #005A9C 7.14:1. In dark mode it's the other way round: #1E90FF on #121212 reads well at 5.79:1.",
+      },
+      {
+        title: "Color blindness, and a palette",
+        body: "Blue holds up well for color-blind users, and dodger blue is no exception: our deuteranopia simulator turns it into #2386FD, still plainly blue. In our palette library it anchors Cobalt Pop, between cobalt #0047AB and light sky blue #87CEFA, with a warm #FFB703 accent.",
+      },
+    ],
+    faq: [
+      { question: "What is dodger blue?", answer: "A bright azure blue, #1E90FF, and a CSS named color named after the Los Angeles Dodgers." },
+      { question: "What is the hex code for dodger blue?", answer: "#1E90FF, RGB 30, 144, 255." },
+      { question: "Is dodger blue the Dodgers' team color?", answer: "Not exactly. The team's blue is a darker #005A9C." },
+      { question: "How do you write dodger blue in CSS?", answer: "dodgerblue, one word, or #1E90FF." },
+      { question: "Is dodger blue accessible?", answer: "Not as text on white (3.24:1). It works in dark mode (5.79:1) and with dark text on top of it." },
+    ],
+    sources: [
+      { title: "Dodger blue, Wikipedia", href: "https://en.wikipedia.org/wiki/Dodger_blue" },
+      { title: "How 'Dodger blue' became a permanent part of the internet, Los Angeles Times (2017)", href: "https://www.latimes.com/sports/dodgers/la-sp-how-dodger-blue-became-part-of-the-internet-20171030-story.html" },
+      { title: "X11 color names, Wikipedia", href: "https://en.wikipedia.org/wiki/X11_color_names" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
+  linen: {
+    title: "Linen Color #FAF0E6: Hex, RGB & Off-White Matches",
+    description:
+      "Linen is #FAF0E6 (RGB 250, 240, 230), the CSS color for the whitish shade of linen cloth. Its codes, linen vs flax and old lace, and linen as a background.",
+    answer:
+      "Linen is a warm off-white: #FAF0E6 in hex, RGB 250, 240, 230. It's the CSS named color linen, meant to show the whitish color of linen cloth, like a handkerchief, rather than the raw flax it's made from. HSL is 30°, 67%, 94%. Use it for backgrounds; near-black text on linen reaches 16.79:1.",
+    hexVariants: [
+      { label: "Linen", hex: "#FAF0E6", note: "The CSS named color linen." },
+      { label: "Old lace", hex: "#FDF5E6", note: "CSS oldlace: a hair lighter and yellower (ΔE 2.9)." },
+      { label: "Antique white", hex: "#FAEBD7", note: "CSS antiquewhite: a little deeper and more beige (ΔE 4.1)." },
+      { label: "Flax", hex: "#EEDC82", note: "The color of raw flax fiber in Maerz and Paul's dictionary: a pale straw yellow." },
+    ],
+    keyTakeaways: [
+      "Linen is #FAF0E6: RGB 250, 240, 230, HSL 30°, 67%, 94%, CMYK 0, 4, 8, 2.",
+      "It's a background color: 1.12:1 against white.",
+      "In Tailwind, orange-50 (#FFF7ED) is nearly the same color (ΔE 1.7).",
+    ],
+    sections: [
+      {
+        title: "What color is linen?",
+        body: "Linen is white with a little warmth in it: hue 30°, toward orange, at 94% lightness. It's an X11 color named for the whitish color of linen cloth. Raw flax, the plant fiber linen is spun from, is much yellower: the color flax is a pale yellowish gray, like straw. Maerz and Paul's 1930 Dictionary of Color shows it at about #EEDC82 and dates the name to 1915. So the color linen describes finished cloth, not the raw fiber.",
+      },
+      {
+        title: "Linen color codes",
+        body: "#FAF0E6 converts to rgb(250, 240, 230), hsl(30, 67%, 94%), HSV 30°, 8%, 98% and roughly CMYK 0, 4, 8, 2, or 16445670 in decimal. In CSS, linen and #FAF0E6 are the same color. Unlike bisque or wheat, linen has no numbered X11 versions.",
+      },
+      {
+        title: "Linen among the CSS off-whites",
+        body: "CSS has a cluster of warm whites that are hard to tell apart. Old lace (#FDF5E6) is 2.9 ΔE from linen, antique white (#FAEBD7) 4.1, and seashell (#FFF5EE) leans pinker. Against pure white, linen measures 1.12:1 and 6.3 ΔE: enough to look warm across a page, not enough to outline a card. Tailwind's orange-50 (#FFF7ED) is within 1.7 ΔE, so bg-orange-50 is a ready-made linen.",
+      },
+      {
+        title: "Why so many palettes have a linen",
+        body: "Linen-like whites are the most common background in our palette library: 45 of the 240 palettes have a swatch within ΔE 5 of #FAF0E6, more than for ivory (29) or wheat (18). Next to warm colors, a warm white like this looks softer than pure white. Text is easy on linen, #111111 at 16.79:1, and a brown ink like saddle brown (#8B4513) still reaches 6.31:1. As for what linen means as a color, it brings the fabric to mind: natural, calm and a little relaxed.",
+      },
+    ],
+    faq: [
+      { question: "What color is linen?", answer: "A warm off-white, #FAF0E6: white with a slight orange-beige tint." },
+      { question: "What is the hex code for linen?", answer: "#FAF0E6, RGB 250, 240, 230." },
+      { question: "Is linen white or beige?", answer: "In between. It's an off-white, warmer than white and much lighter than beige." },
+      { question: "What does the color linen mean?", answer: "It suggests natural fabric: calm, simple and a little relaxed." },
+    ],
+    sources: [
+      { title: "Shades of white: linen, Wikipedia", href: "https://en.wikipedia.org/wiki/Shades_of_white#Linen" },
+      { title: "Flax (color), Wikipedia", href: "https://en.wikipedia.org/wiki/Flax_(color)" },
+      { title: "CSS Color Module Level 4: named colors, W3C", href: "https://www.w3.org/TR/css-color-4/#named-colors" },
+    ],
+  },
 };

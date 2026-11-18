@@ -13,6 +13,15 @@ export const redirectedColorMeanings = [
   "alice-blue",
   "lime",
   "light-gray",
+  // "What color is X?" batch, 2026-11-18 (teal keeps its own hand-written meaning page).
+  "camel",
+  "hot-pink",
+  "bisque",
+  "wheat",
+  "ivory",
+  "saddle-brown",
+  "dodger-blue",
+  "linen",
 ];
 
 export function isRedirectedColorMeaning(slug: string): boolean {

@@ -271,7 +271,7 @@ const families: ShadeFamily[] = [
     shades: [
       ["Beige", "#F5F5DC"], ["Bisque", "#FFE4C4"], ["Wheat", "#F5DEB3"], ["Desert Sand", "#EDC9AF"],
       ["Burlywood", "#DEB887"], ["Tan", "#D2B48C"], ["Light French Beige", "#C8AD7F"], ["Fawn", "#E5AA70"],
-      ["Camel", "#C4A484"], ["Lion", "#C19A6B"], ["Rosy Brown", "#BC8F8F"], ["Caramel", "#C68E17"],
+      ["Light Brown", "#C4A484"], ["Camel", "#C19A6B"], ["Rosy Brown", "#BC8F8F"], ["Caramel", "#C68E17"],
       ["Peru", "#CD853F"], ["Chocolate", "#D2691E"], ["Café au Lait", "#A67B5B"], ["Mocha", "#967969"],
       ["Brown Sugar", "#AF6E4D"], ["Mahogany", "#C04000"], ["Sienna", "#A0522D"], ["Brown", "#A52A2A"],
       ["Chestnut", "#954535"], ["Saddle Brown", "#8B4513"], ["Raw Umber", "#826644"], ["Coyote Brown", "#81613C"],
@@ -286,7 +286,7 @@ const families: ShadeFamily[] = [
       { name: "Leather & Brass", useCase: "Menswear, watches, craft", colors: ["#EDC9AF", "#B87333", "#80461B", "#59260B", "#1B1811"] },
     ],
     faq: [
-      { question: "What are the main shades of brown?", answer: "Popular shades of brown include Beige (#F5F5DC), Tan (#D2B48C), Camel (#C4A484), Caramel (#C68E17), Chocolate (#D2691E), Coffee (#6F4E37), Saddle Brown (#8B4513) and Dark Brown (#654321)." },
+      { question: "What are the main shades of brown?", answer: "Popular shades of brown include Beige (#F5F5DC), Tan (#D2B48C), Camel (#C19A6B), Caramel (#C68E17), Chocolate (#D2691E), Coffee (#6F4E37), Saddle Brown (#8B4513) and Dark Brown (#654321)." },
       { question: "What is the hex code for chocolate brown?", answer: "The CSS named color Chocolate is #D2691E, which is fairly orange. For a darker 'chocolate brown' many designers use Coffee (#6F4E37) or Dark Brown (#654321)." },
       { question: "Is tan a shade of brown?", answer: "Yes - Tan (#D2B48C) is a light, sandy brown. It sits between Beige and Camel and works well as a warm neutral." },
       { question: "Can I use dark brown instead of black?", answer: "Yes - dark browns like Café Noir (#4B3621) or Bistre (#3D2B1F) give text and headers a warmer, softer feel than pure black while keeping strong contrast on light backgrounds." },

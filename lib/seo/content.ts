@@ -3045,10 +3045,10 @@ export function isColorMeaningIndexable(slug: string): boolean {
 // demand that is next in line for a rewrite. The rest stay reachable but noindex until rewritten.
 const colorPagesNextToRewrite = [
   // Had Search Console queries in Aug-Oct 2026.
-  "bisque", "lime-green", "medium-sea-green",
+  "lime-green", "medium-sea-green",
   // 10+ impressions or a click in Search Console, Jun 23-Oct 29 2026.
   "dark-orange", "medium-blue", "royal-blue", "dark-sea-green", "dark-goldenrod", "orange-red",
-  "camel", "hot-pink", "linen", "dark-gray", "wheat",
+  "dark-gray",
 ];
 const indexableColorPageSlugs = new Set([
   ...colors.map((entry) => entry.slug),
