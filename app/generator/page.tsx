@@ -1,11 +1,14 @@
 import { Suspense } from "react";
 import { GeneratorPage } from "@/components/generator/generator-page";
+import { StructuredData } from "@/components/seo/structured-data";
+import { buildSoftwareApplicationSchema } from "@/lib/seo/schema";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Color Palette Generator - Free Color Scheme Maker | HueFlow",
+  title: "Color Scheme Generator: Lock, Shuffle & Export Palettes",
+  alternates: { canonical: "/generator" },
   description:
-    "Free color palette generator. Create beautiful color schemes, brand palettes, and UI color systems in seconds. Pick a mood or shuffle for instant results - no signup required.",
+    "HueFlow's palette maker: press space to generate color schemes, lock colors you like, start from a mood, base color or image, and export as CSS, Tailwind or JSON. Free, no signup.",
   keywords: [
     "color palette generator",
     "best color palette generator",
@@ -21,7 +24,7 @@ export const metadata: Metadata = {
     "online color palette generator",
   ],
   openGraph: {
-    title: "Color Palette Generator - Free Color Scheme Maker | HueFlow",
+    title: "Color Scheme Generator: Lock, Shuffle & Export Palettes | HueFlow",
     description:
       "Free color palette generator. Create beautiful color schemes, brand palettes, and UI color systems in seconds.",
     type: "website",
@@ -30,8 +33,14 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <Suspense>
-      <GeneratorPage />
-    </Suspense>
+    <>
+      {/* No FAQ/HowTo markup here: the full-screen app shows neither, and Google's rules
+          forbid marking up content that isn't visible on the page. */}
+      <StructuredData data={buildSoftwareApplicationSchema()} />
+      <h1 className="sr-only">Color Palette Generator</h1>
+      <Suspense>
+        <GeneratorPage />
+      </Suspense>
+    </>
   );
 }
