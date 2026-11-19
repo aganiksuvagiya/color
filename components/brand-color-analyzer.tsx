@@ -109,7 +109,7 @@ const Spinner = () => (
 
 function SmallTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
+    <h2 className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">
       {children}
       <span className="h-px flex-1 bg-black/[0.06]" />
     </h2>
@@ -229,7 +229,7 @@ export function BrandColorAnalyzer() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -243,7 +243,7 @@ export function BrandColorAnalyzer() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Screenshot, extract, analyze.</span> Enter any website URL and we capture the live page and pull out its real brand colors.
             </p>
           </div>
@@ -254,7 +254,7 @@ export function BrandColorAnalyzer() {
           <div className={`w-full px-6 pt-8 sm:px-8 lg:px-12 ${loading || showResults ? "pb-2" : "pb-12"}`}>
             <form
               onSubmit={onSubmit}
-              className="flex items-center gap-2 rounded-full border border-black/[0.12] bg-white p-2 pl-6 text-[#1c1712]/50 shadow-[0_2px_16px_rgba(28,23,18,0.06)] transition focus-within:border-[#1c1712] focus-within:shadow-[0_4px_24px_rgba(28,23,18,0.12)]"
+              className="flex items-center gap-2 rounded-full border border-black/[0.12] bg-white p-2 pl-6 text-[#1c1712]/60 shadow-[0_2px_16px_rgba(28,23,18,0.06)] transition focus-within:border-[#1c1712] focus-within:shadow-[0_4px_24px_rgba(28,23,18,0.12)]"
             >
               <SearchIcon />
               <input
@@ -267,7 +267,7 @@ export function BrandColorAnalyzer() {
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="e.g. stripe.com"
                 aria-label="Website URL"
-                className="h-12 min-w-0 flex-1 bg-transparent px-1 text-[17px] text-[#1c1712] outline-none placeholder:text-[#1c1712]/40"
+                className="h-12 min-w-0 flex-1 bg-transparent px-1 text-[17px] text-[#1c1712] outline-none placeholder:text-[#1c1712]/60"
               />
               <button
                 type="submit"
@@ -286,7 +286,7 @@ export function BrandColorAnalyzer() {
             </form>
 
             <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-2.5 pl-2">
-              <span className="mr-1 text-[13px] text-[#1c1712]/50">Try</span>
+              <span className="mr-1 text-[13px] text-[#1c1712]/60">Try</span>
               {EXAMPLES.map((ex) => (
                 <button
                   key={ex.host}
@@ -298,7 +298,7 @@ export function BrandColorAnalyzer() {
                   {ex.host}
                 </button>
               ))}
-              <p className="text-[13px] text-[#1c1712]/45 lg:ml-auto">We load the page like a visitor and pull out its dominant colors.</p>
+              <p className="text-[13px] text-[#1c1712]/60 lg:ml-auto">We load the page like a visitor and pull out its dominant colors.</p>
             </div>
 
             {error && (
@@ -334,7 +334,7 @@ export function BrandColorAnalyzer() {
               <div className={layout} aria-live="polite">
                 <div className="overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
                   <div className="aspect-[16/10] animate-pulse bg-black/[0.05]" />
-                  <p className="flex items-center gap-2 px-4 py-3 text-[13px] text-[#1c1712]/55">
+                  <p className="flex items-center gap-2 px-4 py-3 text-[13px] text-[#1c1712]/60">
                     <Spinner />
                     Capturing a screenshot of the live page…
                   </p>
@@ -369,7 +369,7 @@ export function BrandColorAnalyzer() {
                         </div>
                       </div>
                       <div className="flex items-center justify-between gap-3 px-4 py-3">
-                        <p className="min-w-0 truncate text-[13px] text-[#1c1712]/55">{analyzedUrl}</p>
+                        <p className="min-w-0 truncate text-[13px] text-[#1c1712]/60">{analyzedUrl}</p>
                         <span className="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-[#1c1712]/60 ring-1 ring-black/[0.1]">
                           {colors.length} colors extracted
                         </span>
@@ -393,7 +393,7 @@ export function BrandColorAnalyzer() {
                             <span className="h-9 w-9 shrink-0 rounded-lg ring-1 ring-black/10" style={{ backgroundColor: color.hex }} />
                             <span className="min-w-0 flex-1">
                               <span className="block truncate text-[14px] font-semibold">{color.name}</span>
-                              <span className="block font-mono text-[12px] text-[#1c1712]/50">
+                              <span className="block font-mono text-[12px] text-[#1c1712]/60">
                                 {copiedHex === color.hex ? "✓ Copied" : color.hex}
                               </span>
                             </span>
@@ -401,7 +401,7 @@ export function BrandColorAnalyzer() {
                               <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-black/[0.07]">
                                 <span className="block h-full rounded-full bg-[#c2410c]" style={{ width: `${Math.max(color.percent, 3)}%` }} />
                               </span>
-                              <span className="w-8 text-right font-mono text-[11px] text-[#1c1712]/50">{color.percent}%</span>
+                              <span className="w-8 text-right font-mono text-[11px] text-[#1c1712]/60">{color.percent}%</span>
                             </span>
                             <span className="text-[#1c1712]/25 transition group-hover:text-[#1c1712]/70">
                               <CopyIcon />

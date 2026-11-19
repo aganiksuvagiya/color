@@ -51,7 +51,7 @@ function deltaE(a: string, b: string) {
   return Math.sqrt((l1 - l2) ** 2 + (a1 - a2) ** 2 + (b1 - b2) ** 2);
 }
 
-const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
 
 function HexField({ value, onCommit }: { value: string; onCommit: (hex: string) => void }) {
   // Shows half-typed text as a draft; a complete HEX is applied at once.
@@ -118,7 +118,7 @@ export function ColorblindSimulatorTool() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -132,7 +132,7 @@ export function ColorblindSimulatorTool() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c.hex }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Check your palette for color vision deficiency, free.</span> See it under protanopia, deuteranopia and tritanopia, and find the colors that run together.
             </p>
           </div>
@@ -145,7 +145,7 @@ export function ColorblindSimulatorTool() {
             <aside className="min-w-0 rounded-2xl ring-1 ring-black/[0.07] lg:sticky lg:top-24">
               <div className="px-5 pb-3 pt-5 sm:px-6">
                 <p className={label}>Your palette</p>
-                <p className="mt-1 text-[13px] text-[#1c1712]/50">Click a swatch or type a HEX to change it.</p>
+                <p className="mt-1 text-[13px] text-[#1c1712]/60">Click a swatch or type a HEX to change it.</p>
               </div>
               <ul className="divide-y divide-black/[0.06] border-t border-black/[0.06]">
                 {colors.map((color, i) => (
@@ -192,7 +192,7 @@ export function ColorblindSimulatorTool() {
                     <div className="flex items-start justify-between gap-3 px-5 pb-3 pt-4">
                       <div className="min-w-0">
                         <h2 className="text-[15px] font-semibold">{type.label}</h2>
-                        <p className="text-[13px] text-[#1c1712]/50">{type.desc}</p>
+                        <p className="text-[13px] text-[#1c1712]/60">{type.desc}</p>
                       </div>
                       {isNormal ? (
                         <span className="shrink-0 rounded-full bg-[#1c1712]/[0.05] px-2.5 py-0.5 text-[11px] font-bold text-[#1c1712]/60">Reference</span>
@@ -208,7 +208,7 @@ export function ColorblindSimulatorTool() {
                     {!isNormal && (
                       <div className="px-5 py-3.5">
                         {pairs.length === 0 ? (
-                          <p className="text-[13px] text-[#1c1712]/55">Every color stays easy to tell apart.</p>
+                          <p className="text-[13px] text-[#1c1712]/60">Every color stays easy to tell apart.</p>
                         ) : (
                           <ul className="space-y-2">
                             {pairs.map(({ a, b }) => (

@@ -102,7 +102,7 @@ export function TailwindColors() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -116,7 +116,7 @@ export function TailwindColors() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">{familyCount} families, {familyCount * shadeKeys.length} shades.</span> The full Tailwind CSS v4 palette. Click any shade to copy it as HEX, RGB, HSL or a class name.
             </p>
           </div>
@@ -128,7 +128,7 @@ export function TailwindColors() {
             <div className="flex w-full flex-wrap items-center gap-3 px-6 py-4 sm:px-8 lg:px-12">
               <label className="relative block w-full sm:w-64">
                 <span className="sr-only">Search Tailwind colors</span>
-                <svg className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1c1712]/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <svg className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1c1712]/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <input
@@ -136,7 +136,7 @@ export function TailwindColors() {
                   placeholder="Search colors"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="h-10 w-full rounded-full bg-white pl-10 pr-4 text-[14px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/40 focus:ring-2 focus:ring-[#1c1712]"
+                  className="h-10 w-full rounded-full bg-white pl-10 pr-4 text-[14px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/60 focus:ring-2 focus:ring-[#1c1712]"
                 />
               </label>
 
@@ -156,7 +156,7 @@ export function TailwindColors() {
               </div>
 
               <div className="flex items-center gap-2 lg:ml-auto" role="group" aria-label="Copy format">
-                <span className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">Copy as</span>
+                <span className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">Copy as</span>
                 <div className="flex rounded-full p-0.5 ring-1 ring-black/[0.12]">
                   {FORMATS.map((f) => (
                     <button
@@ -178,7 +178,7 @@ export function TailwindColors() {
           <div className="w-full px-6 py-8 sm:px-8 lg:px-12">
             <p className="mb-5 text-[14px] font-semibold text-[#1c1712]/80">
               {families.length} {families.length === 1 ? "family" : "families"}
-              <span className="font-normal text-[#1c1712]/45"> · {families.length * shadeKeys.length} shades</span>
+              <span className="font-normal text-[#1c1712]/60"> · {families.length * shadeKeys.length} shades</span>
             </p>
 
             {families.length > 0 ? (
@@ -191,7 +191,7 @@ export function TailwindColors() {
                         <div className="flex min-w-0 items-center gap-2.5">
                           <span className="h-3.5 w-3.5 shrink-0 rounded-full ring-1 ring-black/10" style={{ backgroundColor: shades["500"] }} />
                           <h2 className="text-[15px] font-semibold capitalize">{name}</h2>
-                          <span className="font-mono text-[12px] uppercase text-[#1c1712]/45">{shades["500"]}</span>
+                          <span className="font-mono text-[12px] uppercase text-[#1c1712]/60">{shades["500"]}</span>
                         </div>
                         <button
                           onClick={() => handleCopy(css, `css:${name}`)}
@@ -229,7 +229,7 @@ export function TailwindColors() {
                 })}
               </div>
             ) : (
-              <p className="text-[15px] text-[#1c1712]/55">
+              <p className="text-[15px] text-[#1c1712]/60">
                 No colors match &ldquo;{search}&rdquo;.{" "}
                 <button onClick={() => { setSearch(""); setGroup("all"); }} className="font-semibold text-[#c2410c] hover:underline">Clear filters</button>
               </p>

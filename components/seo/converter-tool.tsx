@@ -80,7 +80,7 @@ export function ConverterTool({
     <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
       {/* Input */}
       <div className="min-w-0 rounded-2xl p-5 ring-1 ring-black/[0.07] sm:p-6">
-        <label htmlFor="converter-input" className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45">
+        <label htmlFor="converter-input" className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">
           {FORMAT_LABEL[from]} value
         </label>
         <div className="mt-2 flex gap-2">
@@ -93,7 +93,7 @@ export function ConverterTool({
             autoComplete="off"
             aria-invalid={!rgb}
             aria-describedby="converter-hint"
-            className={`h-12 min-w-0 flex-1 rounded-xl px-4 font-mono text-[15px] font-semibold outline-none ring-1 transition placeholder:text-[#1c1712]/30 focus:ring-2 ${
+            className={`h-12 min-w-0 flex-1 rounded-xl px-4 font-mono text-[15px] font-semibold outline-none ring-1 transition placeholder:text-[#1c1712]/60 focus:ring-2 ${
               rgb ? "ring-black/[0.12] focus:ring-black/50" : "ring-red-300 focus:ring-red-500"
             }`}
           />
@@ -111,13 +111,13 @@ export function ConverterTool({
             />
           </label>
         </div>
-        <p id="converter-hint" className={`mt-2.5 text-[13px] leading-5 ${rgb ? "text-[#1c1712]/50" : "font-medium text-red-600"}`}>
+        <p id="converter-hint" className={`mt-2.5 text-[13px] leading-5 ${rgb ? "text-[#1c1712]/60" : "font-medium text-red-600"}`}>
           {rgb ? HINT[from] : `That is not a valid ${FORMAT_LABEL[from]} value. ${HINT[from]}.`}
         </p>
 
         {examples.length > 0 && (
           <div className="mt-6">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45">Try an example</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">Try an example</p>
             <div className="mt-2.5 flex flex-wrap gap-2">
               {examples.map((ex) => {
                 const c = parseHex(ex.hex);
@@ -190,7 +190,7 @@ export function ConverterTool({
               const isTarget = f === to;
               return (
                 <div key={f} className="flex items-center justify-between gap-3 py-2.5">
-                  <dt className={`w-14 shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] ${isTarget ? "text-[#c2410c]" : "text-[#1c1712]/45"}`}>{FORMAT_LABEL[f]}</dt>
+                  <dt className={`w-14 shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] ${isTarget ? "text-[#c2410c]" : "text-[#1c1712]/60"}`}>{FORMAT_LABEL[f]}</dt>
                   <dd className="min-w-0 flex-1 break-all font-mono text-[13px] font-medium text-[#1c1712]/80">{v}</dd>
                   <button
                     disabled={!rgb}

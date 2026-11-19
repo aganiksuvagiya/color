@@ -65,7 +65,7 @@ export function TrendsPage({ faq, explore }: { faq: Faq[]; explore: ExploreTile[
 
       {/* ── Header ── */}
       <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
           <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">Trends</span>
@@ -77,7 +77,7 @@ export function TrendsPage({ faq, explore }: { faq: Faq[]; explore: ExploreTile[
               <span key={hex} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: hex }} />
             ))}
           </span>
-          <p className="hub-description text-[16px] text-[#1c1712]/55">
+          <p className="hub-description text-[16px] text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">{count} trending palettes across 5 categories.</span> Curated 2026 color direction plus fresh SaaS, e-commerce, mobile and branding systems you can open straight in the generator.
           </p>
         </div>
@@ -126,8 +126,8 @@ export function TrendsPage({ faq, explore }: { faq: Faq[]; explore: ExploreTile[
                   <div className="p-5">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{LABEL[p.category]}</p>
                     <h3 className="mt-1.5 truncate text-[17px] font-semibold tracking-[-0.02em]">{p.label}</h3>
-                    <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/45">{hexes.map((h) => h.slice(1)).join(" · ")}</p>
-                    <p className="mt-2 text-[13px] leading-5 text-[#1c1712]/55">{SUMMARY[p.category]}</p>
+                    <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{hexes.map((h) => h.slice(1)).join(" · ")}</p>
+                    <p className="mt-2 text-[13px] leading-5 text-[#1c1712]/60">{SUMMARY[p.category]}</p>
                     <div className="mt-4 flex items-center gap-2">
                       <Link href={`/generator${encodePalette(p)}`} className="rounded-full bg-[#1c1712] px-3.5 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
                         Open in generator →
@@ -163,7 +163,7 @@ export function TrendsPage({ faq, explore }: { faq: Faq[]; explore: ExploreTile[
                 </span>
                 <span className="flex items-center justify-between px-3.5 py-2.5">
                   <span className="text-[14px] font-semibold transition group-hover:text-[#c2410c]">{t.name}</span>
-                  <span className="text-[12px] text-[#1c1712]/40">{t.count}</span>
+                  <span className="text-[12px] text-[#1c1712]/60">{t.count}</span>
                 </span>
               </Link>
             ))}
@@ -193,7 +193,7 @@ export function TrendsPage({ faq, explore }: { faq: Faq[]; explore: ExploreTile[
                 <details key={f.question} className="group py-4">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold">
                     {f.question}
-                    <span className="text-lg leading-none text-[#1c1712]/30 transition group-open:rotate-45">+</span>
+                    <span className="text-lg leading-none text-[#1c1712]/60 transition group-open:rotate-45">+</span>
                   </summary>
                   <p className="mt-2.5 text-[14px] leading-7 text-[#1c1712]/60">{f.answer}</p>
                 </details>

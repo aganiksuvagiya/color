@@ -48,7 +48,7 @@ export function ToolLanding({
         <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">{title}</h1>
         <div className="mt-5 flex max-w-4xl flex-wrap items-start gap-3">
           <span className="mt-1.5"><Dots colors={dots} /></span>
-          <p className="hub-description min-w-0 flex-1 basis-80 text-[16px] leading-7 text-[#1c1712]/55">
+          <p className="hub-description min-w-0 flex-1 basis-80 text-[16px] leading-7 text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">{badge}.</span> {subtitle}
           </p>
         </div>

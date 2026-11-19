@@ -22,7 +22,7 @@ const QUICK_PICKS = [
   { hex: "#EC4899", name: "Pink" },
 ];
 
-const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
 const ghostBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
 
 /** "trust, stability, and product clarity" -> chips. Falls back to null when the text is not a tidy list. */
@@ -77,7 +77,7 @@ export function ColorPsychologyExplorer() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -91,7 +91,7 @@ export function ColorPsychologyExplorer() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">What does your color say? Free.</span> Pick any color to see what it signals, which brands use it, and what it pairs with.
             </p>
           </div>
@@ -217,7 +217,7 @@ export function ColorPsychologyExplorer() {
                   <div className="mt-3 overflow-hidden rounded-xl ring-1 ring-black/[0.07]">
                     <SwatchStrip colors={pairing} height="h-16" copied={copied} onCopy={copy} className="" />
                   </div>
-                  <p className="mt-2 text-[13px] text-[#1c1712]/50">Complementary colors from the color wheel. Click one to copy it.</p>
+                  <p className="mt-2 text-[13px] text-[#1c1712]/60">Complementary colors from the color wheel. Click one to copy it.</p>
                 </div>
 
                 <div className="flex flex-wrap gap-2 p-5 sm:p-6">

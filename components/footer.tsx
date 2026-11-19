@@ -103,7 +103,7 @@ export function Footer() {
             </div>
             <Link
               href="/generator"
-              className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-[#e8531f] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#d04717]"
+              className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-[#d04615] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#b93d12]"
             >
               Generate a palette →
             </Link>
@@ -113,11 +113,11 @@ export function Footer() {
               returned 503s in Google's own PageSpeed test runs. */}
           {FOOTER_LINKS.map((group) => (
             <div key={group.heading}>
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#1c1712]/55">{group.heading}</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#1c1712]/60">{group.heading}</p>
               <ul className="mt-4 space-y-2.5">
                 {group.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} prefetch={false} className="text-sm text-[#1c1712]/65 transition-colors hover:text-[#e8531f]">
+                    <Link href={link.href} prefetch={false} className="text-sm text-[#1c1712]/65 transition-colors hover:text-[#c2410c]">
                       {link.label}
                     </Link>
                   </li>
@@ -127,14 +127,14 @@ export function Footer() {
           ))}
         </div>
         <nav aria-label="Popular color tools" className="mt-12 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-black/8 pt-6 text-[13px]">
-          <span className="font-semibold uppercase tracking-wider text-[#1c1712]/55">Popular tools</span>
+          <span className="font-semibold uppercase tracking-wider text-[#1c1712]/60">Popular tools</span>
           {CONVERTER_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} prefetch={false} className="text-[#1c1712]/60 transition-colors hover:text-[#e8531f]">
+            <Link key={link.href} href={link.href} prefetch={false} className="text-[#1c1712]/60 transition-colors hover:text-[#c2410c]">
               {link.label}
             </Link>
           ))}
         </nav>
-        <div className="mt-6 flex flex-col gap-3 border-t border-black/8 pt-6 text-sm text-[#1c1712]/45 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-6 flex flex-col gap-3 border-t border-black/8 pt-6 text-sm text-[#1c1712]/60 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} HueFlow. All rights reserved.</p>
           <div className="flex gap-5">
             <Link href="/privacy" prefetch={false} className="transition-colors hover:text-[#1c1712]">

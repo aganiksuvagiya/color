@@ -90,7 +90,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
         className={`mx-auto flex max-w-[1400px] items-center justify-between rounded-full border px-4 py-2.5 transition-all duration-300 sm:px-5 sm:py-3 ${
           scrolled
             ? "border-black/8 bg-white/85 shadow-[0_8px_30px_rgba(28,23,18,0.06)] backdrop-blur-xl"
-            : "border-black/[0.06] bg-white/60 backdrop-blur-md"
+            : "border-black/[0.06] bg-white/92 backdrop-blur-md"
         }`}
       >
         <Link href="/" className="flex items-center" aria-label="HueFlow home">
@@ -147,7 +147,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
             className={`hidden items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_6px_18px_rgba(232,83,31,0.28)] transition-transform hover:scale-[1.02] active:scale-[0.98] sm:inline-flex ${
               isHome ? "" : ""
             }`}
-            style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
+            style={{ background: "linear-gradient(135deg, #d04615, #b93d12)" }}
           >
             Generate palette
           </Link>
@@ -157,12 +157,12 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                 {session.user?.image ? (
                   <Image src={session.user.image} alt={session.user.name ?? "Your profile photo"} width={28} height={28} className="rounded-full" />
                 ) : (
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e8531f] text-xs font-bold text-white">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#d04615] text-xs font-bold text-white">
                     {session.user?.name?.[0] ?? "U"}
                   </span>
                 )}
                 {streak > 0 && (
-                  <span className="flex items-center gap-1 rounded-full bg-[#e8531f]/10 px-1.5 py-0.5 text-[11px] font-semibold text-[#e8531f]">
+                  <span className="flex items-center gap-1 rounded-full bg-[#e8531f]/10 px-1.5 py-0.5 text-[11px] font-semibold text-[#c2410c]">
                     🔥 {streak}
                   </span>
                 )}
@@ -175,13 +175,13 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                   {session.user?.image ? (
                     <Image src={session.user.image} alt={session.user.name ?? "Your profile photo"} width={22} height={22} className="rounded-full" />
                   ) : (
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#e8531f] text-xs font-bold text-white">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#d04615] text-xs font-bold text-white">
                       {session.user?.name?.[0] ?? "U"}
                     </span>
                   )}
                   <span className="max-w-[80px] truncate">{session.user?.name?.split(" ")[0]}</span>
                   {streak > 0 && (
-                    <span className="flex items-center gap-1 rounded-full bg-[#e8531f]/10 px-2 py-0.5 text-xs font-semibold text-[#e8531f]">
+                    <span className="flex items-center gap-1 rounded-full bg-[#e8531f]/10 px-2 py-0.5 text-xs font-semibold text-[#c2410c]">
                       🔥 {streak}
                     </span>
                   )}
@@ -274,7 +274,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
               ))}
 
               <div className="my-1 border-t border-black/8" />
-              <p className="px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#1c1712]/35">Tools</p>
+              <p className="px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#1c1712]/60">Tools</p>
 
               {TOOL_LINKS.map((link) => (
                 <Link
@@ -307,7 +307,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                 href="/generator"
                 onClick={() => setMenuOpen(false)}
                 className="mt-1 rounded-lg px-4 py-2.5 text-center text-sm font-semibold text-white sm:hidden"
-                style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
+                style={{ background: "linear-gradient(135deg, #d04615, #b93d12)" }}
               >
                 Generate palette
               </Link>
@@ -321,15 +321,15 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                   {session.user?.image ? (
                     <Image src={session.user.image} alt={session.user.name ?? "Your profile photo"} width={20} height={20} className="rounded-full" />
                   ) : (
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#e8531f] text-xs font-bold text-white">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#d04615] text-xs font-bold text-white">
                       {session.user?.name?.[0] ?? "U"}
                     </span>
                   )}
                   {session.user?.name?.split(" ")[0]}
                   {streak > 0 && (
-                    <span className="rounded-full bg-[#e8531f]/10 px-2 py-0.5 text-xs font-semibold text-[#e8531f]">🔥 {streak}</span>
+                    <span className="rounded-full bg-[#e8531f]/10 px-2 py-0.5 text-xs font-semibold text-[#c2410c]">🔥 {streak}</span>
                   )}
-                  <span className="ml-auto text-[#1c1712]/40">Sign out</span>
+                  <span className="ml-auto text-[#1c1712]/60">Sign out</span>
                 </button>
               ) : (
                 <button
@@ -370,7 +370,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                 </svg>
               </div>
               <h3 className="mt-3 text-center text-base font-semibold text-[#1c1712]">Sign out?</h3>
-              <p className="mt-1.5 text-center text-sm text-[#1c1712]/50">Are you sure you want to sign out of your account?</p>
+              <p className="mt-1.5 text-center text-sm text-[#1c1712]/60">Are you sure you want to sign out of your account?</p>
               <div className="mt-5 flex gap-3">
                 <button
                   onClick={() => setSignOutModal(false)}

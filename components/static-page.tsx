@@ -17,13 +17,13 @@ export function StaticPage({
       <Header />
 
       <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
           <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">{title}</span>
         </nav>
         <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">{title}</h1>
-        {updated ? <p className="mt-4 text-[14px] text-[#1c1712]/50">Last updated: {updated}</p> : null}
+        {updated ? <p className="mt-4 text-[14px] text-[#1c1712]/60">Last updated: {updated}</p> : null}
       </section>
 
       <section className="border-t border-black/[0.06]">

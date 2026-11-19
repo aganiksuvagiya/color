@@ -12,7 +12,7 @@ import { toolPageContent } from "@/lib/seo/tool-pages";
 type Level = "AAA" | "AA" | "Fail";
 
 const VERDICT_STYLES: Record<Level, string> = {
-  AAA: "bg-emerald-600 text-white",
+  AAA: "bg-emerald-700 text-white",
   AA: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/20",
   Fail: "bg-red-50 text-red-700 ring-1 ring-red-600/20",
 };
@@ -36,7 +36,7 @@ const PAIRS = [
   { name: "Gray on white", fg: "#9CA3AF", bg: "#FFFFFF" },
 ];
 
-const labelCls = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const labelCls = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
 const inputCls = "h-10 min-w-0 flex-1 rounded-xl px-3 font-mono text-[13px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition focus:ring-2 focus:ring-[#1c1712]";
 
 function SwapIcon() {
@@ -81,7 +81,7 @@ function ColorField({
         </label>
         <input id={id} type="text" value={text} onChange={(e) => onText(e.target.value)} maxLength={7} spellCheck={false} placeholder="#000000" className={inputCls} />
       </div>
-      <p className="mt-1.5 truncate text-[12px] text-[#1c1712]/45">{findClosestColorName(value)}</p>
+      <p className="mt-1.5 truncate text-[12px] text-[#1c1712]/60">{findClosestColorName(value)}</p>
     </div>
   );
 }
@@ -146,7 +146,7 @@ export function ContrastChecker() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -159,7 +159,7 @@ export function ContrastChecker() {
               <span className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: fg }} />
               <span className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: bg }} />
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">WCAG 2.1 AA and AAA, free.</span> Pick a text and a background color to see if they pass accessibility standards.
             </p>
           </div>
@@ -209,7 +209,7 @@ export function ContrastChecker() {
               </div>
               <p className="mt-2 font-mono text-[3.5rem] font-bold leading-none tracking-[-0.03em]">
                 {ratio.toFixed(2)}
-                <span className="text-[#1c1712]/30">:1</span>
+                <span className="text-[#1c1712]/60">:1</span>
               </p>
 
               <div className="relative mt-5 h-2.5 overflow-hidden rounded-full bg-black/[0.06]">
@@ -220,7 +220,7 @@ export function ContrastChecker() {
               </div>
               <div className="relative mt-1 h-4">
                 {[{ v: 3, l: "3:1" }, { v: 4.5, l: "4.5:1" }, { v: 7, l: "7:1" }, { v: 21, l: "21:1" }].map((m) => (
-                  <span key={m.v} className="absolute font-mono text-[10px] text-[#1c1712]/35" style={{ left: `${(m.v / 21) * 100}%`, transform: "translateX(-50%)" }}>
+                  <span key={m.v} className="absolute font-mono text-[10px] text-[#1c1712]/60" style={{ left: `${(m.v / 21) * 100}%`, transform: "translateX(-50%)" }}>
                     {m.l}
                   </span>
                 ))}
@@ -236,11 +236,11 @@ export function ContrastChecker() {
                       </span>
                       <div className="min-w-0 flex-1">
                         <p className="text-[14px] font-semibold leading-5">
-                          {row.label} <span className="font-medium text-[#1c1712]/45">· WCAG {row.std}</span>
+                          {row.label} <span className="font-medium text-[#1c1712]/60">· WCAG {row.std}</span>
                         </p>
-                        <p className="text-[12px] text-[#1c1712]/45">{row.note}</p>
+                        <p className="text-[12px] text-[#1c1712]/60">{row.note}</p>
                       </div>
-                      <span className="shrink-0 font-mono text-[12px] font-semibold text-[#1c1712]/55">{row.min}:1</span>
+                      <span className="shrink-0 font-mono text-[12px] font-semibold text-[#1c1712]/60">{row.min}:1</span>
                       <span className={`w-11 shrink-0 text-right text-[12px] font-bold ${pass ? "text-emerald-700" : "text-red-600"}`}>{pass ? "Pass" : "Fail"}</span>
                     </li>
                   );
@@ -269,7 +269,7 @@ export function ContrastChecker() {
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div className="max-w-2xl">
                 <h2 className="text-[1.75rem] font-semibold tracking-[-0.03em]">Try a pair</h2>
-                <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">Click any pair to load it into the checker. Six pass, two fail on purpose, so you can see the difference.</p>
+                <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/60">Click any pair to load it into the checker. Six pass, two fail on purpose, so you can see the difference.</p>
               </div>
               <Link href="/tools/contrast-fixer" className="rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
                 Try the smart contrast fixer →
@@ -294,7 +294,7 @@ export function ContrastChecker() {
                     <div className="flex items-center justify-between gap-2 bg-white px-4 py-3">
                       <div className="min-w-0">
                         <p className="truncate text-[14px] font-semibold">{p.name}</p>
-                        <p className="font-mono text-[12px] text-[#1c1712]/50">{r.toFixed(2)}:1</p>
+                        <p className="font-mono text-[12px] text-[#1c1712]/60">{r.toFixed(2)}:1</p>
                       </div>
                       <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-bold ${VERDICT_STYLES[l]}`}>{l === "Fail" ? "✕ Fail" : `✓ ${l}`}</span>
                     </div>

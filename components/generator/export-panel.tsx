@@ -124,7 +124,7 @@ export function ExportPanel({ palette }: Props) {
               className={`rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
                 format === tab.key
                   ? "bg-[#1c1712]/8 text-[#1c1712]"
-                  : "text-[#1c1712]/40 hover:text-[#1c1712]/70"
+                  : "text-[#1c1712]/60 hover:text-[#1c1712]/70"
               }`}
             >
               {tab.label}
@@ -175,10 +175,10 @@ export function ExportPanel({ palette }: Props) {
             transition={{ duration: 0.15 }}
             className="rounded-xl border border-[#e8531f]/20 bg-[#e8531f]/8 p-4"
           >
-            <p className="text-sm font-medium text-[#e8531f]">
+            <p className="text-sm font-medium text-[#c2410c]">
               🔒 Unlock Figma export at {POINT_REWARDS.FIGMA_EXPORT} points
             </p>
-            <p className="mt-1 text-xs text-[#1c1712]/50">
+            <p className="mt-1 text-xs text-[#1c1712]/60">
               You have {points} points — save/share palettes or try the Daily Challenge to earn more.
             </p>
             <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-black/[0.06]">

@@ -38,7 +38,7 @@ export function ColorOfYearTable({ rows }: { rows: ColorOfYearRow[] }) {
     <div className="my-8 overflow-x-auto rounded-2xl ring-1 ring-black/[0.07]">
       <table className="w-full min-w-[46rem] text-left text-[14px]">
         <thead>
-          <tr className="border-b border-black/[0.07] bg-[#fafafa] text-[12px] uppercase tracking-[0.1em] text-[#1c1712]/50">
+          <tr className="border-b border-black/[0.07] bg-[#fafafa] text-[12px] uppercase tracking-[0.1em] text-[#1c1712]/60">
             <th className="px-4 py-3 font-semibold">Brand</th>
             <th className="px-4 py-3 font-semibold">2027 color</th>
             <th className="px-4 py-3 font-semibold">HEX</th>
@@ -59,7 +59,7 @@ export function ColorOfYearTable({ rows }: { rows: ColorOfYearRow[] }) {
                   />
                   <span>
                     <span className="block font-medium">{r.name}</span>
-                    <span className="block text-[12px] text-[#1c1712]/50">{r.code}</span>
+                    <span className="block text-[12px] text-[#1c1712]/60">{r.code}</span>
                   </span>
                 </span>
               </td>
@@ -69,9 +69,9 @@ export function ColorOfYearTable({ rows }: { rows: ColorOfYearRow[] }) {
                     {copied === r.hex ? "Copied ✓" : r.hex}
                   </button>
                 ) : (
-                  <span className="text-[12px] text-[#1c1712]/45">No HEX published</span>
+                  <span className="text-[12px] text-[#1c1712]/60">No HEX published</span>
                 )}
-                {r.hex && <span className="block text-[11px] text-[#1c1712]/40">{r.hexSource === "official" ? "brand's own value" : "paint database match"}</span>}
+                {r.hex && <span className="block text-[11px] text-[#1c1712]/60">{r.hexSource === "official" ? "brand's own value" : "paint database match"}</span>}
               </td>
               <td className="px-4 py-3 whitespace-nowrap text-[#1c1712]/70">{r.announced}</td>
               <td className="px-4 py-3 text-[#1c1712]/70">{r.look}</td>
@@ -91,8 +91,8 @@ export function Palette({ name, colors, note }: { name: string; colors: string[]
       <div className="mt-2.5 flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-[15px] font-semibold">{name}</p>
-          {note && <p className="mt-0.5 text-[13px] leading-5 text-[#1c1712]/55">{note}</p>}
-          <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/45">{colors.join(" · ")}</p>
+          {note && <p className="mt-0.5 text-[13px] leading-5 text-[#1c1712]/60">{note}</p>}
+          <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{colors.join(" · ")}</p>
         </div>
         {colors.length === 5 && (
           <Link href={generatorHref({ name, colors })} className="shrink-0 rounded-full px-3 py-1 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
@@ -135,12 +135,12 @@ export function PairingCard({ base, pairing }: { base: string; pairing: Pairing 
       <div className="p-4">
         <div className="flex items-baseline justify-between gap-3">
           <h4 className="text-[16px] font-semibold tracking-[-0.01em]">{pairing.name}</h4>
-          <span className="shrink-0 text-[11px] font-semibold text-[#1c1712]/45" title="WCAG contrast ratio between the two colors">
+          <span className="shrink-0 text-[11px] font-semibold text-[#1c1712]/60" title="WCAG contrast ratio between the two colors">
             {strength} · {ratio.toFixed(1)}:1
           </span>
         </div>
         <p className="mt-1.5 text-[14px] leading-6 text-[#1c1712]/70">{pairing.why}</p>
-        <p className="mt-2 text-[12px] font-medium text-[#1c1712]/50">Best for: {pairing.bestFor}</p>
+        <p className="mt-2 text-[12px] font-medium text-[#1c1712]/60">Best for: {pairing.bestFor}</p>
       </div>
     </div>
   );
@@ -165,13 +165,13 @@ export function ColorFeature({ hex, name, code, facts }: { hex?: string; name: s
           <span className="font-mono text-[12px] font-semibold">{copied === hex ? "Copied ✓" : hex}</span>
         </button>
       ) : (
-        <div className="flex w-28 shrink-0 items-end p-3 text-[11px] text-[#1c1712]/50 sm:w-40" style={{ background: "repeating-linear-gradient(45deg,#eee 0 6px,#fff 6px 12px)" }}>
+        <div className="flex w-28 shrink-0 items-end p-3 text-[11px] text-[#1c1712]/60 sm:w-40" style={{ background: "repeating-linear-gradient(45deg,#eee 0 6px,#fff 6px 12px)" }}>
           No HEX published
         </div>
       )}
       <div className="min-w-0 p-4">
         <p className="text-[16px] font-semibold tracking-[-0.01em]">{name}</p>
-        <p className="text-[12px] text-[#1c1712]/50">{code}</p>
+        <p className="text-[12px] text-[#1c1712]/60">{code}</p>
         <p className="mt-2 text-[13px] leading-6 text-[#1c1712]/65">{facts}</p>
       </div>
     </div>

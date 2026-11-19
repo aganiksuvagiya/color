@@ -145,7 +145,7 @@ export function ColorMixingChart({ faq, steps, tips }: Props) {
                   ))}
               </div>
 
-              <p className="mt-6 text-[13px] leading-6 text-[#1c1712]/50">
+              <p className="mt-6 text-[13px] leading-6 text-[#1c1712]/60">
                 {mode === "paint" && "Paint is subtractive: pigments absorb light, so the more you mix, the darker and duller the result. Parts are relative, so 2 red + 2 yellow is the same orange as 1 red + 1 yellow."}
                 {mode === "light" && "Light is additive: screens add light together, so mixing more light makes the result brighter, up to white."}
                 {mode === "ink" && "Inks are subtractive, like paint. Printers lay cyan, magenta, yellow and black ink on white paper."}
@@ -153,7 +153,7 @@ export function ColorMixingChart({ faq, steps, tips }: Props) {
 
               {mode === "paint" && (
                 <div className="mt-5">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45">Quick recipes</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">Quick recipes</p>
                   <div className="mt-2.5 flex flex-wrap gap-2">
                     {PAINT_RECIPES.slice(0, 8).map((r) => (
                       <button
@@ -181,7 +181,7 @@ export function ColorMixingChart({ faq, steps, tips }: Props) {
                 <dl className="mt-3 divide-y divide-black/[0.06] border-t border-black/[0.06]">
                   {rows.map((r) => (
                     <div key={r.label} className="flex items-center justify-between gap-3 py-2.5">
-                      <dt className="w-12 shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#1c1712]/45">{r.label}</dt>
+                      <dt className="w-12 shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#1c1712]/60">{r.label}</dt>
                       <dd className="min-w-0 flex-1 break-all font-mono text-[13px] font-medium text-[#1c1712]/80">{r.value}</dd>
                       <button
                         onClick={() => copy(r.value)}
@@ -221,9 +221,9 @@ export function ColorMixingChart({ faq, steps, tips }: Props) {
                     <div className="p-4">
                       <h3 className="text-[15px] font-semibold tracking-[-0.01em]">What colors make {r.name.toLowerCase()}?</h3>
                       <p className="mt-1.5 text-[14px] font-medium text-[#1c1712]/85">{r.recipe}</p>
-                      <p className="mt-1.5 text-[13px] leading-6 text-[#1c1712]/55">{r.note}</p>
+                      <p className="mt-1.5 text-[13px] leading-6 text-[#1c1712]/60">{r.note}</p>
                       <div className="mt-3 flex items-center justify-between gap-2">
-                        <span className="font-mono text-[12px] text-[#1c1712]/45">{h}</span>
+                        <span className="font-mono text-[12px] text-[#1c1712]/60">{h}</span>
                         <button onClick={() => loadRecipe(r.parts)} className="rounded-full px-3 py-1 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
                           Try it
                         </button>

@@ -701,7 +701,7 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
     - The /color-meanings/blue live test took about 3 minutes; the others 80–100 seconds.
     - Re-check indexing around Nov 25 and impressions in 2–4 weeks.
   - **Still open:** `npm audit` lists 11 high and 10 moderate advisories in other packages (glob, brace-expansion, undici, zod, follow-redirects, puppeteer-core and others, mostly build tooling and transitive). Review separately. Request indexing in Search Console needs the owner's yes; re-check indexing and impressions in 2–4 weeks against the Nov 17 baseline (/colors/red 170 impressions at position 44.6, white 163 at 52.4, blue 52 at 51).
-- **"What color is X?" batch: camel, hot-pink, bisque, wheat, teal, ivory, saddle-brown, dodger-blue, linen (2026-11-18, uncommitted on `week-4`, owner chose "Camel batch").**
+- **"What color is X?" batch: camel, hot-pink, bisque, wheat, teal, ivory, saddle-brown, dodger-blue, linen (2026-11-18, owner chose "Camel batch"; live 2026-11-18, commit `52ec573`, worker `88e0dea5`).**
   - **Search Console (16 months, regex on the nine names):** 73 queries, 172 impressions, 0 clicks, average position 58.3. Top: "bisque color" 16, "teal" 15, "wheat color" 10, "teal azure color" 6, "linen color" 6, "hot pink" 5; plus "what color is camel/bisque/ivory/hot pink", "what is dodger blue", "dodger blue hex code", "wheat hex code", "hot pink meaning", "medical/clinical teal color", "saddlebrown", "teal html". By page: /color-meanings/bisque 32, hot-pink 22, /colors/teal 20, /color-meanings/camel 19, wheat 14, dodger-blue 12, teal 12, ivory 7, /colors/linen 7. So for eight of the nine, Google was ranking the noindexed meaning template, not the /colors page.
   - **What changed:**
     - Nine full entries in `lib/seo/color-pages-rich.ts`, each answering its own Search Console question first. Structure varies: 3 to 5 sections, 3 to 5 FAQs, 2 to 4 takeaways and 3 or 4 hex variants per page.
@@ -713,7 +713,45 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
   - **Sourced facts:** Wikipedia (Camel (color), Polo coat, Anne Marie Beretta, Shades of pink, Barbie (film), Biscuit (pottery), Wheat (color), Teal, Web colors, Scrubs (clothing), Ivory (color), List of RAL colours, Bone char, Dodger blue, Shades of white, Flax (color), X11 color names), the LA Times (2017 dodger blue history, 2023 Barbie paint), Max Mara (101801, 1981) and the W3C (CSS named colors, HTML 3.2). Examples: camel first recorded 1916; Collier's 1951 camel vs navy rule; X11 wheat1 is #FFE7BA, not wheat; saddle brown equals X11 chocolate4; RAL 1014 Ivory is about #DDC49A and RAL 1015 Light ivory was required for German taxis; dodgerblue was added to X11 by Paul Raveling at USC ISI in 1989, and the team's blue is #005A9C; teal is one of the 16 HTML 4.01 basic colors.
   - **HueFlow-only data:** CIEDE2000 distance to the nearest Tailwind step (hot pink ≈ pink-400 at ΔE 2.1, saddle brown ≈ amber-800 at 2.6, linen ≈ orange-50 at 1.7, ivory ≈ amber-50 at 1.9; Tailwind teal-500 is 18.9 from #008080); palettes with a swatch within ΔE 5 (linen 45, ivory 29, wheat 18, bisque 13, camel 7); exact library palettes (Hot Pink Studio, Cobalt Pop, Clinic Calm, Coffee House, Ivory Tower); Machado simulator (hot pink → gray #A7A9B0 under deuteranopia; dodger blue stays blue); contrast with the site's rounding (dodger blue 3.24:1 on white, saddle brown 7.1:1).
   - **Checks:** tsc clean; at most 2.2% five-word overlap with any other rich page and under 1% with any meaning page; descriptions 153–160 characters; every contrast ratio in the text recomputed. In `next dev`: all nine 200 with `index, follow`, canonical to themselves and FAQ JSON-LD (3–5); the eight meaning URLs 308 to `/colors/<name>`; /color-meanings/teal still 200; sitemap lastmod 2026-11-18; hot pink hero labels dark; 2x2 hero at 375 px.
-  - **After deploy:** IndexNow for the nine `/colors` URLs, then Test live URL and Request indexing with the owner's yes.
+  - **Live (2026-11-18):** `52ec573` committed on `week-4`, fast-forwarded into `develop`, both pushed; built and deployed from clean `develop` (worker version `88e0dea5`). Right after the deploy, six of the nine pages and /color-meanings/camel still came back as the old version for about a minute; a second run a minute later showed all nine new. Checked live: all nine 200, `index, follow`, self canonical, FAQ JSON-LD 3–5, no template text; the eight meaning URLs 308 to `/colors/<name>`; /color-meanings/teal 200; sitemap lastmod 2026-11-18 for all nine; /shades-of-brown lists Light Brown #C4A484 and Camel #C19A6B with no Lion; hot pink and lime hero labels use dark ink. IndexNow: 200 OK for the nine `/colors` URLs.
+  - **Search Console (2026-11-19, owner said yes):** before the request, all nine were "Crawled - currently not indexed", last crawled with the old content: camel, hot-pink and teal Oct 22, wheat and ivory Oct 21, saddle-brown Oct 28, dodger-blue Sep 21, linen Jul 30, bisque Jul 21. Test live URL passed for all nine ("URL is available to Google", page can be indexed, 1 valid breadcrumb). The first live test for saddle-brown and for dodger-blue failed with "Something went wrong" on Google's side; the second try passed both times. Request indexing then gave "Indexing requested" for all nine. Check them again around Nov 26, together with the 14 earlier pages.
+- **Pause on new pages until about Dec 3 (owner, 2026-11-19: "Ha, evu karie").** Launch and real links come first for two weeks.
+  - **Why (Search Console, read 2026-11-19):**
+    - Oct 17–Nov 18: 20 clicks. 15 were the brand query "hueflow", 19 landed on the homepage, 1 on /tools/brand-analyzer. No new or rewritten page got a click.
+    - Nov 5–18: the rewritten pages show only at positions 50–80 (/pastel-colors 22 impressions at 71.9, green-and-purple 14 at 53.1, blue-and-orange 11 at 51.3).
+    - Aug 1–Oct 16, before the drop: 391 clicks, about 133 of them non-brand, mostly `/best-colors-for/*` at positions 5–8.
+    - So the site as a whole lost visibility on Oct 19. More pages won't rank until that recovers, while real links help every page.
+    - The Nov 14–18 rewrites (about 40 pages) mostly haven't been recrawled yet.
+  - **During the pause:** the owner does the launch posts in `docs/LAUNCH-KIT.md` and the extra listings added there on 2026-11-19. Only fixes to existing pages, no new pages.
+  - **Search Console health (read 2026-11-19):**
+    - Crawl stats over 3 months: 2.23K requests, average 288 ms, 89% 200 and 6% 5XX. The newest 5XX example is Oct 11 (www and favicon), so there are none since the Nov 1 cache fix.
+    - Only 2% of requests are discovery, and 44% are JavaScript files.
+    - All 9 sitemaps show Success and were last read Nov 11–17.
+    - Page indexing is unchanged since the Nov 13 data: 245 indexed, 185 crawled - currently not indexed, 73 discovered - currently not indexed, 0 server errors.
+    - So nothing is technically blocking indexing. Google is choosing what to index, and it re-crawls slowly.
+  - **Accessibility pass before Show HN (2026-11-19, owner: "Ha, check karo"; uncommitted on `week-4`):**
+    - **Method:** axe-core 4.12 (already in node_modules) in headless Chrome via puppeteer-core, WCAG 2.0/2.1 A and AA rules, plus the a11y-enforcer static scan. The script lives in the session scratchpad, not the repo.
+    - **Before (live site):** 335 contrast failures on 8 checked pages: home, generator (plain, Preview, A11y), /tools/contrast, the launch article, /best-colors-for/healthcare-websites and /colors/teal. Also icon-only close buttons with no name, an `aria-hidden` block that held focusable buttons, panels that couldn't be scrolled from the keyboard, and 25 static-scan errors (unlabeled inputs, click-only divs).
+    - **Grey text:** `text-[#1c1712]/30` up to `/55` became `/60` (437 classes in 64 files; disabled styles left alone). /60 is the lowest step that reaches 4.5:1 on white and #faf7f2.
+    - **Brand orange where it carries text:**
+      - Orange text is now #C2410C (5.18:1 on white).
+      - Solid buttons are #D04615 with a #B93D12 hover (white text 4.60 and 5.62).
+      - Gradient buttons are #D04615 to #B93D12 (they were #FF7A45 to #E8531F, white 2.59 at the light end).
+      - The home headline gradient is #E8531F to #C2410C (3.45:1 for large text).
+      - Tints, borders, rings, dots and the logo keep #E8531F.
+    - **Badges and labels:**
+      - AAA badges are emerald-700 (was emerald-600, 3.65 with white). A11y panel Fail is red-700 and AA is amber-800.
+      - Swatch labels on /colors, /shades and /pastel-colors are solid white or near-black, whichever reads better. Translucent inks and a brightness cut-off had put teal at 3.9 and #629BF8 at 2.77.
+      - The header fill before scrolling is white/92 (was /60), so its text stays at 4.5:1 over generator palettes.
+    - **Real bug found:** the selected chip on /color-codes ("All 140") was white text on a 4% background, so it was invisible. Its classes are now separate.
+    - **Keyboard and ARIA in the generator:**
+      - The side panel, prompt and shortcuts are dialogs. Focus moves into the panel, Tab wraps inside it, and Escape closes it and returns focus to the trigger.
+      - Space on a focused button presses that button instead of shuffling the palette.
+      - Close buttons and inputs have names. The rename control is a button. The image drop zone works with Enter and Space. The color picker closes on Escape and its labels are tied to the inputs.
+      - The home hero copy-swatches are out of the tab order, since that block is `aria-hidden`.
+    - **After (local `next dev`):** 0 violations on 11 of the 14 page states checked. What's left on the other three is demo content: the generator Preview and A11y panels showing the palette's own link and button contrast, and the deliberately failing example pairs on /tools/contrast. tsc and eslint are clean (one old warning).
+    - **Still manual:** VoiceOver/NVDA pass. The generator's one-key shortcuts (R, S, C, ?) have no off switch (WCAG 2.1.4).
+  - **Nov 26:** recheck clicks, impressions and positions for the rewritten pages and the indexing of the 23 requested URLs. Then decide whether to restart new pages around Dec 3. The Pantone 2027 page is the one planned exception (first week of December).
 
 ## Next session: start here (updated 2026-10-19)
 

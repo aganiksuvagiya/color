@@ -106,7 +106,7 @@ export function RandomColorGenerator() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -116,7 +116,7 @@ export function RandomColorGenerator() {
           <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Random Color Generator</h1>
           <div className="mt-5 flex max-w-4xl flex-wrap items-start gap-3">
             <span className="mt-1.5"><Dots colors={colors.length > 1 ? colors : ["#E8531F", "#3B82F6", "#0F766E", "#7C3AED", "#FDE68A"]} /></span>
-            <p className="hub-description min-w-0 flex-1 basis-80 text-[16px] leading-7 text-[#1c1712]/55">
+            <p className="hub-description min-w-0 flex-1 basis-80 text-[16px] leading-7 text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Press the space bar for a new color.</span> Get a random HEX, RGB and HSL color code, or a random color palette you can lock, copy and open in the generator.
             </p>
           </div>
@@ -160,7 +160,7 @@ export function RandomColorGenerator() {
                 <button onClick={generate} className="rounded-full bg-[#1c1712] px-7 py-3 text-[15px] font-semibold text-white transition hover:bg-[#c2410c]">
                   Generate {isPalette ? "palette" : "color"}
                 </button>
-                <span className="hidden text-[13px] text-[#1c1712]/50 sm:inline">or press <kbd className="rounded-md px-1.5 py-0.5 font-mono text-[12px] ring-1 ring-black/[0.15]">Space</kbd></span>
+                <span className="hidden text-[13px] text-[#1c1712]/60 sm:inline">or press <kbd className="rounded-md px-1.5 py-0.5 font-mono text-[12px] ring-1 ring-black/[0.15]">Space</kbd></span>
                 <div className="ml-auto flex gap-2" role="group" aria-label="Number of colors">
                   {([1, 5] as const).map((n) => (
                     <button
@@ -195,7 +195,7 @@ export function RandomColorGenerator() {
                 <span className="h-10 w-10 shrink-0 rounded-full ring-1 ring-black/15" style={{ backgroundColor: hex }} aria-hidden="true" />
                 <div className="min-w-0">
                   <p className="truncate text-[17px] font-semibold tracking-[-0.01em]">{name}</p>
-                  <p className="font-mono text-[13px] text-[#1c1712]/50">{hex}</p>
+                  <p className="font-mono text-[13px] text-[#1c1712]/60">{hex}</p>
                 </div>
               </div>
               <dl className="mt-4 divide-y divide-black/[0.06] border-t border-black/[0.06]">
@@ -203,7 +203,7 @@ export function RandomColorGenerator() {
                   const v = formatters[f](rgb);
                   return (
                     <div key={f} className="flex items-center justify-between gap-3 py-2.5">
-                      <dt className="w-14 shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#1c1712]/45">{FORMAT_LABEL[f]}</dt>
+                      <dt className="w-14 shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#1c1712]/60">{FORMAT_LABEL[f]}</dt>
                       <dd className="min-w-0 flex-1 break-all font-mono text-[13px] font-medium text-[#1c1712]/80">{v}</dd>
                       <button
                         onClick={() => copy(v)}

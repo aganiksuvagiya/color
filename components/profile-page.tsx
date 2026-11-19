@@ -29,7 +29,7 @@ const DEFAULT_STRIP = ["#e8531f", "#f97316", "#eab308", "#22c55e", "#3b82f6", "#
 const LEVEL_SIZE = 100;
 const TABS: Tab[] = ["palettes", "gradients", "collections"];
 
-const iconBtn = "rounded-full p-2 text-[#1c1712]/40 transition hover:bg-black/[0.05] hover:text-[#1c1712]";
+const iconBtn = "rounded-full p-2 text-[#1c1712]/60 transition hover:bg-black/[0.05] hover:text-[#1c1712]";
 const ringBtn = "rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
 const darkBtn = "rounded-full bg-[#1c1712] px-5 py-2.5 text-[14px] font-semibold text-white transition hover:bg-[#c2410c]";
 
@@ -50,7 +50,7 @@ const TrashIcon = (
 function Stat({ label, value, accent, children }: { label: string; value: ReactNode; accent?: boolean; children?: ReactNode }) {
   return (
     <div className="rounded-xl p-4 ring-1 ring-black/[0.07]">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1c1712]/40">{label}</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1c1712]/60">{label}</p>
       <p className={`mt-2 text-[1.9rem] font-bold leading-none tracking-[-0.03em] tabular-nums ${accent ? "text-[#c2410c]" : ""}`}>{value}</p>
       {children}
     </div>
@@ -64,7 +64,7 @@ function Empty({ strip, title, body, cta }: { strip: string[]; title: string; bo
         {strip.map((c) => <div key={c} className="flex-1" style={{ backgroundColor: c }} />)}
       </div>
       <p className="mt-6 text-[18px] font-semibold tracking-[-0.02em]">{title}</p>
-      <p className="mt-1.5 max-w-sm text-[14px] leading-6 text-[#1c1712]/55">{body}</p>
+      <p className="mt-1.5 max-w-sm text-[14px] leading-6 text-[#1c1712]/60">{body}</p>
       {cta && <Link href={cta.href} className={`mt-6 ${darkBtn}`}>{cta.label}</Link>}
     </div>
   );
@@ -202,7 +202,7 @@ export function ProfilePage() {
         <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Your library</h1>
         <div className="mt-5 flex max-w-3xl flex-wrap items-start gap-3">
           <span className="mt-1.5"><Dots colors={stripColors} /></span>
-          <p className="hub-description min-w-0 flex-1 basis-72 text-[16px] leading-7 text-[#1c1712]/55">
+          <p className="hub-description min-w-0 flex-1 basis-72 text-[16px] leading-7 text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">Hey {firstName}.</span> Your saved palettes, gradients and collections live here.
           </p>
         </div>
@@ -218,7 +218,7 @@ export function ProfilePage() {
               )}
               <div className="min-w-0">
                 <p className="truncate text-[18px] font-semibold tracking-[-0.02em]">{user?.name ?? "Guest"}</p>
-                <p className="break-all text-[13px] text-[#1c1712]/50">{user?.email ?? "Not signed in"}</p>
+                <p className="break-all text-[13px] text-[#1c1712]/60">{user?.email ?? "Not signed in"}</p>
                 <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-[#c2410c]/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#c2410c]">
                   <span className="h-1 w-1 rounded-full bg-[#c2410c]" />Free member
                 </span>
@@ -231,7 +231,7 @@ export function ProfilePage() {
                 {streak > 0 && <span className="rounded-full bg-[#c2410c]/10 px-1.5 py-0.5 text-[11px] font-bold text-[#c2410c]">🔥 {streak}</span>}
               </Link>
               {user ? (
-                <button onClick={() => setSignOutModal(true)} className={`${ringBtn} py-2.5 text-[14px] !text-[#1c1712]/55 hover:!text-red-600 hover:!ring-red-300`}>
+                <button onClick={() => setSignOutModal(true)} className={`${ringBtn} py-2.5 text-[14px] !text-[#1c1712]/60 hover:!text-red-600 hover:!ring-red-300`}>
                   Sign out
                 </button>
               ) : (
@@ -252,7 +252,7 @@ export function ProfilePage() {
                       <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-black/[0.07]">
                         <div className="h-full rounded-full bg-[#c2410c] transition-all duration-700" style={{ width: `${(levelProgress / LEVEL_SIZE) * 100}%` }} />
                       </div>
-                      <p className="mt-1.5 text-[11px] text-[#1c1712]/45">Level {level} · {levelProgress}/{LEVEL_SIZE} pts to next</p>
+                      <p className="mt-1.5 text-[11px] text-[#1c1712]/60">Level {level} · {levelProgress}/{LEVEL_SIZE} pts to next</p>
                     </>
                   )}
                 </Stat>
@@ -315,7 +315,7 @@ export function ProfilePage() {
                   }`}
                 >
                   {t}
-                  <span className={`text-[11px] font-bold tabular-nums ${tab === t ? "text-white/60" : "text-[#1c1712]/35"}`}>{mounted ? counts[t] : "·"}</span>
+                  <span className={`text-[11px] font-bold tabular-nums ${tab === t ? "text-white/60" : "text-[#1c1712]/60"}`}>{mounted ? counts[t] : "·"}</span>
                 </button>
               ))}
             </div>
@@ -323,7 +323,7 @@ export function ProfilePage() {
               <div className="flex min-w-0 flex-1 basis-64 items-center justify-end gap-2">
                 <div className="relative min-w-0 flex-1 sm:max-w-xs">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"
-                    className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#1c1712]/35">
+                    className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#1c1712]/60">
                     <circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" />
                   </svg>
                   <input
@@ -331,7 +331,7 @@ export function ProfilePage() {
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder={`Search ${tab}…`}
                     aria-label={`Search ${tab}`}
-                    className="w-full rounded-full bg-white py-2 pl-9 pr-4 text-[13px] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/35 focus:ring-black/40"
+                    className="w-full rounded-full bg-white py-2 pl-9 pr-4 text-[13px] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/60 focus:ring-black/40"
                   />
                 </div>
                 <select
@@ -352,17 +352,17 @@ export function ProfilePage() {
         <div className="w-full px-6 pb-20 pt-10 sm:px-8 lg:px-12">
           <div className="mb-6 flex items-baseline gap-3">
             <h2 className="text-[1.75rem] font-semibold tracking-[-0.03em]">{sectionTitle}</h2>
-            {mounted && <span className="text-[15px] font-medium tabular-nums text-[#1c1712]/35">{sectionCount}</span>}
+            {mounted && <span className="text-[15px] font-medium tabular-nums text-[#1c1712]/60">{sectionCount}</span>}
           </div>
 
           {!mounted ? (
-            <p className="py-24 text-center text-[14px] text-[#1c1712]/40">Loading…</p>
+            <p className="py-24 text-center text-[14px] text-[#1c1712]/60">Loading…</p>
           ) : tab === "palettes" ? (
             palettes.length === 0 ? (
               <Empty strip={DEFAULT_STRIP} title={`Hey ${firstName}, start your first palette`} body="Save a palette from the generator to see it here." cta={{ href: "/generator", label: "Open generator" }} />
             ) : visiblePalettes.length === 0 ? (
               <div className="py-20 text-center">
-                <p className="text-[15px] font-medium text-[#1c1712]/55">No palettes match &quot;{query}&quot;</p>
+                <p className="text-[15px] font-medium text-[#1c1712]/60">No palettes match &quot;{query}&quot;</p>
                 <button onClick={() => setQuery("")} className="mt-3 text-[13px] font-semibold text-[#c2410c] hover:underline">Clear search</button>
               </div>
             ) : (
@@ -394,7 +394,7 @@ export function ProfilePage() {
                     <div className="px-4 py-3.5">
                       <div className="flex items-center justify-between gap-2">
                         <p className="truncate text-[15px] font-semibold tracking-[-0.01em]">{p.label}</p>
-                        <p className="shrink-0 text-[11px] tabular-nums text-[#1c1712]/40">
+                        <p className="shrink-0 text-[11px] tabular-nums text-[#1c1712]/60">
                           {new Date(p.savedAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "2-digit" })}
                         </p>
                       </div>
@@ -430,7 +430,7 @@ export function ProfilePage() {
                           {addToCollectionMenuId === p.id && (
                             <div className="absolute right-0 top-full z-20 mt-1.5 w-52 rounded-xl bg-white p-1.5 shadow-xl ring-1 ring-black/[0.1]">
                               {collections.length === 0 ? (
-                                <p className="px-2.5 py-2 text-[12px] text-[#1c1712]/50">No collections yet.</p>
+                                <p className="px-2.5 py-2 text-[12px] text-[#1c1712]/60">No collections yet.</p>
                               ) : (
                                 collections.map((c) => {
                                   const inCollection = c.paletteIds.includes(p.id);
@@ -465,7 +465,7 @@ export function ProfilePage() {
               <Empty strip={["#8b5cf6", "#ec4899", "#e8531f", "#eab308"]} title={`Hey ${firstName}, create your first gradient`} body="Save a gradient from the gradient generator to see it here." cta={{ href: "/tools/gradient", label: "Gradient generator" }} />
             ) : visibleGradients.length === 0 ? (
               <div className="py-20 text-center">
-                <p className="text-[15px] font-medium text-[#1c1712]/55">No gradients match &quot;{query}&quot;</p>
+                <p className="text-[15px] font-medium text-[#1c1712]/60">No gradients match &quot;{query}&quot;</p>
                 <button onClick={() => setQuery("")} className="mt-3 text-[13px] font-semibold text-[#c2410c] hover:underline">Clear search</button>
               </div>
             ) : (
@@ -493,7 +493,7 @@ export function ProfilePage() {
             )
           ) : activeCollection ? (
             <>
-              <button onClick={() => setActiveCollectionId(null)} className="mb-6 -mt-2 flex items-center gap-1.5 text-[13px] font-medium text-[#1c1712]/55 transition hover:text-[#1c1712]">
+              <button onClick={() => setActiveCollectionId(null)} className="mb-6 -mt-2 flex items-center gap-1.5 text-[13px] font-medium text-[#1c1712]/60 transition hover:text-[#1c1712]">
                 <Svg size={13} sw={2.5}><path d="M15 6l-6 6 6 6" /></Svg>
                 All collections
               </button>
@@ -529,7 +529,7 @@ export function ProfilePage() {
                   onKeyDown={(e) => e.key === "Enter" && handleCreateCollection()}
                   placeholder="New collection name…"
                   aria-label="New collection name"
-                  className="min-w-0 flex-1 rounded-full bg-white px-5 py-2.5 text-[14px] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/35 focus:ring-black/40"
+                  className="min-w-0 flex-1 rounded-full bg-white px-5 py-2.5 text-[14px] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/60 focus:ring-black/40"
                 />
                 <button onClick={handleCreateCollection} disabled={!newCollectionName.trim()} className={`${darkBtn} disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#1c1712]`}>
                   Create
@@ -555,7 +555,7 @@ export function ProfilePage() {
                         <div className="flex items-center justify-between gap-2 px-4 py-3">
                           <div className="min-w-0">
                             <p className="truncate text-[15px] font-semibold tracking-[-0.01em]">{c.name}</p>
-                            <p className="text-[12px] text-[#1c1712]/45">{c.paletteIds.length} {c.paletteIds.length === 1 ? "palette" : "palettes"}</p>
+                            <p className="text-[12px] text-[#1c1712]/60">{c.paletteIds.length} {c.paletteIds.length === 1 ? "palette" : "palettes"}</p>
                           </div>
                           <button
                             onClick={(e) => { e.stopPropagation(); handleDeleteCollection(c.id); }}
@@ -588,7 +588,7 @@ export function ProfilePage() {
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-[18px] font-semibold tracking-[-0.02em]">Sign out?</h3>
-            <p className="mt-1.5 text-[14px] leading-6 text-[#1c1712]/55">Are you sure you want to sign out?</p>
+            <p className="mt-1.5 text-[14px] leading-6 text-[#1c1712]/60">Are you sure you want to sign out?</p>
             <div className="mt-6 flex gap-3">
               <button onClick={() => setSignOutModal(false)} className={`flex-1 ${ringBtn} py-2.5 text-[14px]`}>
                 Cancel

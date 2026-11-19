@@ -225,7 +225,7 @@ export function ImageColorExtractor() {
   const canUndo = past.length > 0;
   const canRedo = future.length > 0;
 
-  const iconBtn = "flex h-8 w-8 items-center justify-center rounded-full text-[#1c1712]/55 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25 disabled:cursor-not-allowed disabled:opacity-30";
+  const iconBtn = "flex h-8 w-8 items-center justify-center rounded-full text-[#1c1712]/60 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25 disabled:cursor-not-allowed disabled:opacity-30";
   const iconOn = "bg-[#1c1712] text-white ring-[#1c1712] hover:text-white";
 
   return (
@@ -242,7 +242,7 @@ export function ImageColorExtractor() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -256,7 +256,7 @@ export function ImageColorExtractor() {
                 <span key={p.id} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: p.hex }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Free, no signup.</span> Upload a photo, move the dots, and pull a palette straight from its colors. Your image never leaves your browser.
             </p>
           </div>
@@ -270,7 +270,7 @@ export function ImageColorExtractor() {
               <div className="flex flex-col overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
                 {/* Toolbar */}
                 <div className="flex flex-wrap items-center gap-2 border-b border-black/[0.07] px-4 py-3">
-                  <label className="flex items-center gap-2 text-[12px] font-semibold text-[#1c1712]/55">
+                  <label className="flex items-center gap-2 text-[12px] font-semibold text-[#1c1712]/60">
                     <span className="hidden sm:inline">Color mood</span>
                     <select
                       value={mood}
@@ -380,7 +380,7 @@ export function ImageColorExtractor() {
                     }`}
                   >
                     <p className="text-[16px] font-semibold text-[#1c1712]/70">Drop an image or click to upload</p>
-                    <p className="mt-1 text-[13px] text-[#1c1712]/40">PNG, JPG, WebP supported</p>
+                    <p className="mt-1 text-[13px] text-[#1c1712]/60">PNG, JPG, WebP supported</p>
                     <button
                       onClick={(e) => { e.stopPropagation(); loadDemoPhoto(); }}
                       className="mt-5 rounded-full bg-white px-4 py-2 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712]"
@@ -394,7 +394,7 @@ export function ImageColorExtractor() {
               {/* Swatches */}
               <div className="flex gap-3 overflow-x-auto lg:flex-col lg:overflow-visible">
                 {points.length === 0 ? (
-                  <p className="py-8 text-center text-[14px] text-[#1c1712]/40 lg:flex-1">No colors yet</p>
+                  <p className="py-8 text-center text-[14px] text-[#1c1712]/60 lg:flex-1">No colors yet</p>
                 ) : (
                   points.map((p) => (
                     <div
@@ -445,7 +445,7 @@ export function ImageColorExtractor() {
                 {points.length < MAX_POINTS && (
                   <button
                     onClick={addPoint}
-                    className="flex min-h-[44px] min-w-[120px] shrink-0 items-center justify-center gap-1.5 rounded-2xl text-[13px] font-semibold text-[#1c1712]/55 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25 lg:min-w-0"
+                    className="flex min-h-[44px] min-w-[120px] shrink-0 items-center justify-center gap-1.5 rounded-2xl text-[13px] font-semibold text-[#1c1712]/60 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25 lg:min-w-0"
                   >
                     + Add color
                   </button>
@@ -488,7 +488,7 @@ export function ImageColorExtractor() {
                   value={paletteName}
                   onChange={(e) => setPaletteName(e.target.value)}
                   aria-label="Palette name"
-                  className="min-w-0 flex-1 rounded-full px-4 py-2 text-[13px] font-medium text-[#1c1712]/70 outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/30 focus:ring-black/30 sm:w-44 sm:flex-none"
+                  className="min-w-0 flex-1 rounded-full px-4 py-2 text-[13px] font-medium text-[#1c1712]/70 outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/60 focus:ring-black/30 sm:w-44 sm:flex-none"
                   placeholder="Palette name"
                 />
                 <button

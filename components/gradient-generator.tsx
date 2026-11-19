@@ -326,7 +326,7 @@ export function GradientGenerator() {
     window.addEventListener("keydown",fn); return ()=>window.removeEventListener("keydown",fn);
   },[previewPreset]);
 
-  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
   const pill = (on: boolean) =>
     `rounded-full px-3.5 py-1.5 text-[13px] font-semibold capitalize transition ${
       on ? "bg-[#1c1712] text-white" : "bg-white text-[#1c1712]/60 ring-1 ring-black/[0.1] hover:text-[#1c1712] hover:ring-black/20"
@@ -343,7 +343,7 @@ export function GradientGenerator() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -357,7 +357,7 @@ export function GradientGenerator() {
                 <span key={st.id} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: st.color }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Linear, radial and conic gradients.</span> Drag the stops, tune the angle and copy CSS, Tailwind or SVG code.
             </p>
           </div>
@@ -369,7 +369,7 @@ export function GradientGenerator() {
             <div className="overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
               <div className="h-[260px] w-full sm:h-[320px]" style={{ background: gradientStyle }} />
 
-              <div className="flex items-center justify-between border-t border-black/[0.06] px-4 py-2 text-[12px] text-[#1c1712]/45">
+              <div className="flex items-center justify-between border-t border-black/[0.06] px-4 py-2 text-[12px] text-[#1c1712]/60">
                 <span>↔ Drag stops to reposition</span>
                 {stops.length < 5 && <span>Click the bar to add a stop ({stops.length}/5)</span>}
               </div>
@@ -399,7 +399,7 @@ export function GradientGenerator() {
               </div>
 
               <div className="flex flex-wrap items-center gap-3 border-t border-black/[0.06] px-5 py-3.5">
-                <code className="min-w-0 flex-1 truncate font-mono text-[12px] text-[#1c1712]/55">{exportCode.css}</code>
+                <code className="min-w-0 flex-1 truncate font-mono text-[12px] text-[#1c1712]/60">{exportCode.css}</code>
                 <div className="flex shrink-0 items-center gap-2">
                   {saveMessage && <span className="text-[12px] font-semibold text-emerald-600">{saveMessage}</span>}
                   <button onClick={handleSaveGradient} className={ghostBtn}>Save</button>
@@ -430,7 +430,7 @@ export function GradientGenerator() {
                         {COMPASS.map(([a, arrow], i) =>
                           a === null ? (
                             <div key={i} className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1c1712]/[0.04]">
-                              <span className="font-mono text-[10px] font-bold text-[#1c1712]/55">{angle}°</span>
+                              <span className="font-mono text-[10px] font-bold text-[#1c1712]/60">{angle}°</span>
                             </div>
                           ) : (
                             <button
@@ -456,7 +456,7 @@ export function GradientGenerator() {
                           aria-label="Angle"
                           className="h-2 w-full cursor-pointer accent-[#1c1712]"
                         />
-                        <p className="mt-1 font-mono text-[12px] text-[#1c1712]/50">{angle}°</p>
+                        <p className="mt-1 font-mono text-[12px] text-[#1c1712]/60">{angle}°</p>
                       </div>
                     </div>
                   </div>
@@ -466,7 +466,7 @@ export function GradientGenerator() {
               <div className="rounded-2xl p-6 ring-1 ring-black/[0.07]">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <p className={label}>
-                    Color stops <span className="ml-1 normal-case tracking-normal text-[#1c1712]/35">({stops.length}/5)</span>
+                    Color stops <span className="ml-1 normal-case tracking-normal text-[#1c1712]/60">({stops.length}/5)</span>
                   </p>
                   <div className="flex gap-2">
                     <button onClick={randomize} className={ghostBtn}>🎲 Randomize</button>
@@ -503,12 +503,12 @@ export function GradientGenerator() {
                         aria-label="Stop position"
                         className="h-2 min-w-0 flex-1 cursor-pointer accent-[#1c1712]"
                       />
-                      <span className="w-9 shrink-0 text-right font-mono text-[12px] text-[#1c1712]/50">{stop.position}%</span>
+                      <span className="w-9 shrink-0 text-right font-mono text-[12px] text-[#1c1712]/60">{stop.position}%</span>
                       {stops.length > 2 && (
                         <button
                           onClick={() => removeStop(stop.id)}
                           aria-label="Remove stop"
-                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#1c1712]/40 transition hover:bg-[#1c1712]/[0.06] hover:text-[#1c1712]"
+                          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#1c1712]/60 transition hover:bg-[#1c1712]/[0.06] hover:text-[#1c1712]"
                         >
                           <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -526,12 +526,12 @@ export function GradientGenerator() {
         {/* ── Gradient swatches ── */}
         <section className="border-t border-black/[0.06]">
           <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
-            <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
+            <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">
               Colors along the gradient
               <span className="h-px flex-1 bg-black/[0.06]" />
             </h2>
             <SwatchStrip colors={swatchColors.map((c) => c.toUpperCase())} height="h-24" copied={copied} onCopy={copy} className="rounded-2xl ring-1 ring-black/[0.07]" />
-            <p className="mt-3 text-[13px] text-[#1c1712]/45">12 evenly spaced samples. Hover for the HEX, click to copy.</p>
+            <p className="mt-3 text-[13px] text-[#1c1712]/60">12 evenly spaced samples. Hover for the HEX, click to copy.</p>
           </div>
         </section>
 
@@ -596,7 +596,7 @@ export function GradientGenerator() {
           <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Presets</p>
             <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Preset gradients</h2>
-            <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">Click one to preview and tweak it, then use it as your gradient.</p>
+            <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/60">Click one to preview and tweak it, then use it as your gradient.</p>
             <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
               {apiGradients.map((preset, i) => (
                 <button
@@ -607,7 +607,7 @@ export function GradientGenerator() {
                   <div className="h-28 w-full" style={{ background: presetToStyle(preset) }} />
                   <div className="p-3.5">
                     <p className="truncate text-[14px] font-semibold">{preset.name}</p>
-                    <p className="mt-0.5 truncate font-mono text-[11px] uppercase text-[#1c1712]/45">{preset.colors.map((c) => c.replace("#", "")).join(" · ")}</p>
+                    <p className="mt-0.5 truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{preset.colors.map((c) => c.replace("#", "")).join(" · ")}</p>
                   </div>
                 </button>
               ))}
@@ -641,7 +641,7 @@ export function GradientGenerator() {
                 <button
                   onClick={() => setPreviewPreset(null)}
                   aria-label="Close preview"
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-[#1c1712]/55 ring-1 ring-black/[0.12] transition hover:text-[#1c1712]"
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-[#1c1712]/60 ring-1 ring-black/[0.12] transition hover:text-[#1c1712]"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -664,7 +664,7 @@ export function GradientGenerator() {
                         {COMPASS.map(([a, arrow], i) =>
                           a === null ? (
                             <div key={i} className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1c1712]/[0.04]">
-                              <span className="font-mono text-[9px] font-bold text-[#1c1712]/55">{previewAngle}°</span>
+                              <span className="font-mono text-[9px] font-bold text-[#1c1712]/60">{previewAngle}°</span>
                             </div>
                           ) : (
                             <button
@@ -682,7 +682,7 @@ export function GradientGenerator() {
                       </div>
                       <div className="mt-3 flex items-center gap-2">
                         <input type="range" min={0} max={360} value={previewAngle} onChange={(e) => setPreviewAngle(Number(e.target.value))} aria-label="Angle" className="h-2 flex-1 accent-[#1c1712]" />
-                        <span className="w-9 text-right font-mono text-[11px] text-[#1c1712]/50">{previewAngle}°</span>
+                        <span className="w-9 text-right font-mono text-[11px] text-[#1c1712]/60">{previewAngle}°</span>
                       </div>
                     </div>
                   )}
@@ -711,9 +711,9 @@ export function GradientGenerator() {
                           className={`w-20 ${textInput} text-[11px]`}
                         />
                         <input type="range" min={0} max={100} value={stop.position} onChange={(e) => updatePreviewStop(stop.id, { position: Number(e.target.value) })} aria-label="Stop position" className="h-2 min-w-0 flex-1 accent-[#1c1712]" />
-                        <span className="w-8 text-right font-mono text-[11px] text-[#1c1712]/45">{stop.position}%</span>
+                        <span className="w-8 text-right font-mono text-[11px] text-[#1c1712]/60">{stop.position}%</span>
                         {previewStops.length > 2 && (
-                          <button onClick={() => removePreviewStop(stop.id)} aria-label="Remove stop" className="flex h-6 w-6 items-center justify-center rounded-full text-[#1c1712]/40 hover:text-[#1c1712]">
+                          <button onClick={() => removePreviewStop(stop.id)} aria-label="Remove stop" className="flex h-6 w-6 items-center justify-center rounded-full text-[#1c1712]/60 hover:text-[#1c1712]">
                             <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                             </svg>

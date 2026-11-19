@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { Header } from "@/components/header";
+import { getContrastRatio } from "@/lib/accessibility";
 import { SwatchStrip, useCopy } from "@/components/seo/swatch-strip";
 import type { Shade, ShadeFaq, ShadePalette } from "@/lib/shades-data";
 
@@ -37,11 +38,11 @@ export function Segmented<T extends string>({ value, options, onChange, label }:
           aria-selected={value === o.key}
           onClick={() => onChange(o.key)}
           className={`rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${
-            value === o.key ? "bg-white text-[#1c1712] shadow-sm" : "text-[#1c1712]/50 hover:text-[#1c1712]"
+            value === o.key ? "bg-white text-[#1c1712] shadow-sm" : "text-[#1c1712]/70 hover:text-[#1c1712]"
           }`}
         >
           {o.label}
-          {o.count !== undefined && <span className="ml-1.5 text-[11px] font-medium text-[#1c1712]/35">{o.count}</span>}
+          {o.count !== undefined && <span className="ml-1.5 text-[11px] font-medium text-[#1c1712]/70">{o.count}</span>}
         </button>
       ))}
     </div>
@@ -53,7 +54,7 @@ export function SectionTitle({ eyebrow, title, body }: { eyebrow: string; title:
     <div className="max-w-2xl">
       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">{eyebrow}</p>
       <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em] text-[#1c1712]">{title}</h2>
-      {body && <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">{body}</p>}
+      {body && <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/60">{body}</p>}
     </div>
   );
 }
@@ -61,9 +62,10 @@ export function SectionTitle({ eyebrow, title, body }: { eyebrow: string; title:
 type ViewShade = Shade & { colorSlug?: string };
 type FamilyNav = FamilyChip & { active: boolean };
 
+// True when dark text reads better than white on this swatch. A brightness cut-off put
+// white labels on mid blues like #629BF8 (2.77:1, against about 7:1 for dark text).
 export function isLight(hex: string) {
-  const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
-  return (r * 299 + g * 587 + b * 114) / 1000 > 160;
+  return getContrastRatio("#1C1712", hex) > getContrastRatio("#FFFFFF", hex);
 }
 
 export const CopyIcon = () => (
@@ -131,7 +133,7 @@ export function ShadesPageView({
 
       {/* ── Header: title, one line, color chips (coolors-style) ── */}
       <section className="w-full px-6 sm:px-8 lg:px-12 pb-10 pt-28">
-        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[12px] text-[#1c1712]/40">
+        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[12px] text-[#1c1712]/60">
           {breadcrumbs.map((item, i) => (
             <span key={item.href} className="flex items-center gap-2">
               {i < breadcrumbs.length - 1 ? (
@@ -153,7 +155,7 @@ export function ShadesPageView({
               <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: s?.hex }} />
             ))}
           </span>
-          <p className="text-[16px] text-[#1c1712]/55">
+          <p className="text-[16px] text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">{shades.length} {lower} color names</span> with HEX, RGB and HSL codes. Click any shade to copy it.
           </p>
         </div>
@@ -165,7 +167,7 @@ export function ShadesPageView({
               href={f.href}
               aria-current={f.active ? "page" : undefined}
               className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-[13px] font-medium transition ${
-                f.active ? "bg-[#e8531f]/10 text-[#e8531f] ring-1 ring-[#e8531f]/25" : "bg-[#1c1712]/[0.04] text-[#1c1712]/65 hover:bg-[#1c1712]/[0.08] hover:text-[#1c1712]"
+                f.active ? "bg-[#e8531f]/10 text-[#c2410c] ring-1 ring-[#e8531f]/25" : "bg-[#1c1712]/[0.04] text-[#1c1712]/65 hover:bg-[#1c1712]/[0.08] hover:text-[#1c1712]"
               }`}
             >
               <span className="h-2.5 w-2.5 rounded-full ring-1 ring-inset ring-black/10" style={{ backgroundColor: f.hex }} />
@@ -201,8 +203,8 @@ export function ShadesPageView({
             .map((g) => (
               <div key={g.key} className="mt-8">
                 {g.label && (
-                  <h3 className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
-                    {g.label} shades <span className="font-medium normal-case tracking-normal text-[#1c1712]/30">{g.items.length}</span>
+                  <h3 className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">
+                    {g.label} shades <span className="font-medium normal-case tracking-normal text-[#1c1712]/60">{g.items.length}</span>
                     <span className="h-px flex-1 bg-black/[0.06]" />
                   </h3>
                 )}
@@ -228,7 +230,7 @@ export function ShadesPageView({
                         </button>
                         <div className="mt-2 flex items-center justify-between gap-2 px-0.5">
                           <span className="truncate text-[13px] font-medium text-[#1c1712]/85">{s.name}</span>
-                          <span className="flex shrink-0 items-center gap-2 text-[#1c1712]/35">
+                          <span className="flex shrink-0 items-center gap-2 text-[#1c1712]/60">
                             <button onClick={() => copy(value)} className="transition hover:text-[#1c1712]" aria-label={`Copy ${value}`} title={`Copy ${value}`}>
                               <CopyIcon />
                             </button>
@@ -254,7 +256,7 @@ export function ShadesPageView({
         <div className={`mt-6 overflow-x-auto rounded-xl ring-1 ring-black/[0.07] ${view === "list" ? "" : "hidden"}`}>
           <table className="w-full min-w-[560px] text-left text-[14px]">
             <thead>
-              <tr className="border-b border-black/[0.06] text-[11px] uppercase tracking-[0.14em] text-[#1c1712]/40">
+              <tr className="border-b border-black/[0.06] text-[11px] uppercase tracking-[0.14em] text-[#1c1712]/60">
                 <th className="px-5 py-3 font-semibold">Name</th>
                 <th className="px-5 py-3 font-semibold">HEX</th>
                 <th className="px-5 py-3 font-semibold">RGB</th>
@@ -272,7 +274,7 @@ export function ShadesPageView({
                   </td>
                   {(["hex", "rgb", "hsl"] as Format[]).map((f) => (
                     <td key={f} className="px-5 py-2.5">
-                      <button onClick={() => copy(code(s, f))} className="font-mono text-[12px] text-[#1c1712]/60 transition hover:text-[#e8531f]">
+                      <button onClick={() => copy(code(s, f))} className="font-mono text-[12px] text-[#1c1712]/60 transition hover:text-[#c2410c]">
                         {copied === code(s, f) ? "✓ Copied" : code(s, f)}
                       </button>
                     </td>
@@ -295,11 +297,11 @@ export function ShadesPageView({
                 <div className="mt-3 flex items-center justify-between gap-4">
                   <div className="min-w-0">
                     <h3 className="truncate text-[15px] font-semibold">{p.name}</h3>
-                    <p className="truncate text-[13px] text-[#1c1712]/45">{p.useCase}</p>
+                    <p className="truncate text-[13px] text-[#1c1712]/60">{p.useCase}</p>
                   </div>
                   <Link
                     href={`/generator?label=${encodeURIComponent(p.name)}&c=${p.colors.map((c) => c.slice(1).toUpperCase()).join("-")}`}
-                    className="shrink-0 rounded-full border border-black/[0.12] px-3.5 py-1.5 text-[12px] font-semibold text-[#1c1712]/75 transition hover:border-[#e8531f] hover:bg-[#e8531f] hover:text-white"
+                    className="shrink-0 rounded-full border border-black/[0.12] px-3.5 py-1.5 text-[12px] font-semibold text-[#1c1712]/75 transition hover:border-[#e8531f] hover:bg-[#d04615] hover:text-white"
                   >
                     Open in generator →
                   </Link>
@@ -320,7 +322,7 @@ export function ShadesPageView({
             {related.length > 0 && (
               <div className="mt-8 flex flex-wrap gap-2">
                 {related.map((l) => (
-                  <Link key={l.href} href={l.href} className="rounded-full px-3.5 py-1.5 text-[13px] text-[#1c1712]/70 ring-1 ring-black/[0.08] transition hover:text-[#e8531f] hover:ring-[#e8531f]/40">
+                  <Link key={l.href} href={l.href} className="rounded-full px-3.5 py-1.5 text-[13px] text-[#1c1712]/70 ring-1 ring-black/[0.08] transition hover:text-[#c2410c] hover:ring-[#e8531f]/40">
                     {l.title} →
                   </Link>
                 ))}
@@ -334,7 +336,7 @@ export function ShadesPageView({
                 <details key={f.question} className="group py-4">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold">
                     {f.question}
-                    <span className="text-lg leading-none text-[#1c1712]/30 transition group-open:rotate-45">+</span>
+                    <span className="text-lg leading-none text-[#1c1712]/60 transition group-open:rotate-45">+</span>
                   </summary>
                   <p className="mt-2.5 text-[14px] leading-7 text-[#1c1712]/60">{f.answer}</p>
                 </details>
@@ -367,7 +369,7 @@ export function ShadesHubView({
 
       {/* ── Header (same pattern as /colors and the shades pages) ── */}
       <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
           <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">Shades</span>
@@ -379,7 +381,7 @@ export function ShadesHubView({
               <span key={f.slug} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: f.hex }} />
             ))}
           </span>
-          <p className="text-[16px] text-[#1c1712]/55">
+          <p className="text-[16px] text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">{families.length} color families · {totalShades} named shades</span> with HEX, RGB and HSL codes and ready palettes.
           </p>
         </div>
@@ -397,12 +399,12 @@ export function ShadesHubView({
                   <h2 className="text-[19px] font-semibold tracking-[-0.02em]">
                     Shades of <span style={{ color: f.accent }}>{f.name}</span>
                   </h2>
-                  <p className="mt-1 text-[13px] text-[#1c1712]/55">
+                  <p className="mt-1 text-[13px] text-[#1c1712]/60">
                     {f.count} shades · {f.palettes} palettes
                   </p>
-                  <p className="mt-2 truncate text-[12px] text-[#1c1712]/40">{f.samples.join(" · ")} …</p>
+                  <p className="mt-2 truncate text-[12px] text-[#1c1712]/60">{f.samples.join(" · ")} …</p>
                 </div>
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full ring-1 ring-black/[0.1] text-[#1c1712]/50 transition group-hover:bg-[#1c1712] group-hover:text-white group-hover:ring-[#1c1712]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full ring-1 ring-black/[0.1] text-[#1c1712]/60 transition group-hover:bg-[#1c1712] group-hover:text-white group-hover:ring-[#1c1712]">
                   →
                 </span>
               </Link>
@@ -420,7 +422,7 @@ export function ShadesHubView({
               <div key={sc.key}>
                 <SwatchStrip colors={sc.colors} height="h-24" copied={copied} onCopy={copy} className="rounded-xl" />
                 <h3 className="mt-4 text-[16px] font-semibold">{sc.label}</h3>
-                <p className="text-[13px] text-[#1c1712]/55">{sc.rule}</p>
+                <p className="text-[13px] text-[#1c1712]/60">{sc.rule}</p>
               </div>
             ))}
           </div>
@@ -436,7 +438,7 @@ export function ShadesHubView({
               <details key={f.question} className="group py-4">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold">
                   {f.question}
-                  <span className="text-lg leading-none text-[#1c1712]/30 transition group-open:rotate-45">+</span>
+                  <span className="text-lg leading-none text-[#1c1712]/60 transition group-open:rotate-45">+</span>
                 </summary>
                 <p className="mt-2.5 text-[14px] leading-7 text-[#1c1712]/60">{f.answer}</p>
               </details>

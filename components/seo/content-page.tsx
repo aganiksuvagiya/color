@@ -11,12 +11,12 @@ import { PaletteColorStrip } from "@/components/seo/palette-color-strip";
 import { Breadcrumbs, Faq, SmallTitle, eyebrow } from "@/components/seo/page-ui";
 import { Header } from "@/components/header";
 
-// Dark ink on light swatches. The brightness cut-off alone put white text on hot pink
-// (#FF69B4, 2.65:1), so a swatch where white can't reach even the 3:1 large-text level
-// counts as light too.
-function isLight(hex: string) {
-  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  return (r*299+g*587+b*114)/1000 > 160 || getContrastRatio("#FFFFFF", hex) < 3;
+// Label ink on a swatch: solid white or solid near-black, whichever reads better. A
+// brightness cut-off put white text on hot pink (#FF69B4, 2.65:1), and translucent inks
+// dropped teal's labels to 3.9:1 although solid white reaches 4.77.
+function swatchInk(hex: string) {
+  if (getContrastRatio("#FFFFFF", hex) >= getContrastRatio("#1C1712", hex)) return "#FFFFFF";
+  return getContrastRatio("#1C1712", hex) >= 4.5 ? "#1C1712" : "#000000";
 }
 
 function getSimilarColors(hex: string) {
@@ -124,7 +124,7 @@ export function ContentPageView({
 }) {
   const hexFact      = entry.quickFacts.find((f) => f.label === "Hex");
   const originalHex  = hexFact?.value ?? null;
-  const light        = originalHex ? isLight(originalHex) : false;
+  const light        = originalHex ? swatchInk(originalHex) !== "#FFFFFF" : false;
   // Names used for more than one code (azure #007FFF vs #F0FFFF) show every code; the first leads.
   const variants     = entry.hexVariants?.length ? entry.hexVariants : null;
   const primaryHex   = variants ? variants[0].hex : originalHex;
@@ -161,7 +161,7 @@ export function ContentPageView({
           // go 2x2 there and back to one row from the sm breakpoint.
           <div className={`mt-8 min-h-[11rem] overflow-hidden rounded-2xl ring-1 ring-black/[0.07] sm:flex sm:min-h-[14rem] ${variants.length >= 4 ? "grid grid-cols-2" : "flex"}`}>
             {variants.map((v) => {
-              const ink = isLight(v.hex) ? "rgba(28,23,18,0.7)" : "rgba(255,255,255,0.85)";
+              const ink = swatchInk(v.hex);
               return (
                 <div key={v.hex} className="flex min-w-0 flex-1 flex-col justify-end p-4 sm:p-6" style={{ backgroundColor: v.hex }}>
                   <span className="font-mono text-base font-semibold uppercase tracking-[0.06em] sm:text-xl" style={{ color: ink }}>{v.hex}</span>
@@ -176,7 +176,7 @@ export function ContentPageView({
             style={{ backgroundColor: originalHex }}
           >
             <div className="flex flex-wrap items-center gap-3">
-              <span className="font-mono text-xl font-semibold uppercase tracking-[0.08em]" style={{ color: light ? "rgba(28,23,18,0.7)" : "rgba(255,255,255,0.85)" }}>
+              <span className="font-mono text-xl font-semibold uppercase tracking-[0.08em]" style={{ color: swatchInk(originalHex) }}>
                 {originalHex.toUpperCase()}
               </span>
               <CopyHexButton hex={originalHex} tone={light ? "dark" : "light"} />
@@ -185,7 +185,7 @@ export function ContentPageView({
         )}
 
         <h1 className="mt-8 max-w-5xl text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">{entry.title}</h1>
-        <p className="mt-5 max-w-4xl text-[16px] leading-7 text-[#1c1712]/55">{entry.description}</p>
+        <p className="mt-5 max-w-4xl text-[16px] leading-7 text-[#1c1712]/60">{entry.description}</p>
 
         {variants && (
           <div className="mt-10">
@@ -240,7 +240,7 @@ export function ContentPageView({
             {entry.palettes && entry.palettes.length > 0 && (
               <div className={block}>
                 <h2 className={h2}>{entry.palettes.length} Ready-to-Use Color Palettes</h2>
-                <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">
+                <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/60">
                   {entry.palettes.some((palette) => palette.roles)
                     ? "Each palette is shown on a sample website, with the job of every color and its WCAG contrast. Click any swatch to copy its hex code."
                     : "Click any swatch to copy its hex code."}
@@ -251,9 +251,9 @@ export function ContentPageView({
                   ) : (
                     <div key={palette.name} className="rounded-2xl p-5 ring-1 ring-black/[0.07] sm:p-6">
                       <h3 className="text-[1.05rem] font-semibold">{palette.name}</h3>
-                      <p className="mb-4 text-[14px] text-[#1c1712]/55">{palette.useCase}</p>
+                      <p className="mb-4 text-[14px] text-[#1c1712]/60">{palette.useCase}</p>
                       <PaletteColorStrip colors={palette.colors} />
-                      <p className="mt-3 font-mono text-[12px] uppercase tracking-wide text-[#1c1712]/50">{palette.colors.join(" · ")}</p>
+                      <p className="mt-3 font-mono text-[12px] uppercase tracking-wide text-[#1c1712]/60">{palette.colors.join(" · ")}</p>
                       <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/65">{palette.note}</p>
                     </div>
                   ))}
@@ -313,7 +313,7 @@ export function ContentPageView({
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-4 text-[13px] leading-6 text-[#1c1712]/45">
+                  <p className="mt-4 text-[13px] leading-6 text-[#1c1712]/60">
                     <strong className="font-semibold text-[#1c1712]/60">Note:</strong> Consider your use case before applying.
                   </p>
                 </div>
@@ -358,7 +358,7 @@ export function ContentPageView({
             {variants && primaryHex && (
               <div className={block}>
                 <h2 className={h2}>Shades, tints and tones of {primaryHex.toUpperCase()}</h2>
-                <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">Each row starts with {primaryHex.toUpperCase()} and moves 10% at a time toward black, white or gray. Click a swatch to copy its hex code.</p>
+                <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/60">Each row starts with {primaryHex.toUpperCase()} and moves 10% at a time toward black, white or gray. Click a swatch to copy its hex code.</p>
                 <ColorVariations rows={getVariationRows(primaryHex)} />
               </div>
             )}
@@ -371,7 +371,7 @@ export function ContentPageView({
                     <thead>
                       <tr className="border-b border-black/[0.07] bg-[#fafafa]">
                         {["Option","Best for","Strengths","Watchouts"].map(h => (
-                          <th key={h} className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1c1712]/45">{h}</th>
+                          <th key={h} className="px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1c1712]/60">{h}</th>
                         ))}
                       </tr>
                     </thead>
@@ -473,7 +473,7 @@ export function ContentPageView({
                     <li key={link.href}>
                       <Link href={link.href} className="group flex items-start justify-between gap-3 rounded-lg px-3 py-2 text-[14px] leading-5 text-[#1c1712]/70 transition hover:bg-[#1c1712]/[0.04] hover:text-[#1c1712]">
                         {link.title}
-                        <span className="shrink-0 text-[#1c1712]/30 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
+                        <span className="shrink-0 text-[#1c1712]/60 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
                       </Link>
                     </li>
                   ))}
@@ -489,7 +489,7 @@ export function ContentPageView({
                     <li key={link.href}>
                       <Link href={link.href} className="group flex items-start justify-between gap-3 rounded-lg px-3 py-2 text-[14px] leading-5 text-[#1c1712]/70 transition hover:bg-[#1c1712]/[0.04] hover:text-[#c2410c]">
                         {link.title}
-                        <span className="shrink-0 text-[#1c1712]/30 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
+                        <span className="shrink-0 text-[#1c1712]/60 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
                       </Link>
                     </li>
                   ))}

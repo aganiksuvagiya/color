@@ -48,7 +48,7 @@ export function PalettesLanding({
 
       {/* ── Header ── */}
       <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
           <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">Palettes</span>
@@ -60,7 +60,7 @@ export function PalettesLanding({
               <span key={hex} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: hex }} />
             ))}
           </span>
-          <p className="hub-description text-[16px] text-[#1c1712]/55">
+          <p className="hub-description text-[16px] text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">{curated.length} curated brand palettes · {libraryTotal} palettes in the library.</span> {description}
           </p>
         </div>
@@ -112,7 +112,7 @@ export function PalettesLanding({
                   <h3 className="mt-1.5 text-[17px] font-semibold tracking-[-0.02em]">
                     <Link href={p.href} className="transition hover:text-[#c2410c]">{p.title.replace(/ Palette$/, "")}</Link>
                   </h3>
-                  <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/45">{p.colors.map((c) => c.slice(1)).join(" · ")}</p>
+                  <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{p.colors.map((c) => c.slice(1)).join(" · ")}</p>
                   <div className="mt-4 flex items-center gap-2">
                     <Link href={p.href} className="rounded-full bg-[#1c1712] px-3.5 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
                       View palette →
@@ -146,7 +146,7 @@ export function PalettesLanding({
                   <div className="flex items-center justify-between gap-3 px-4 py-3.5">
                     <div className="min-w-0">
                       <h3 className="truncate text-[15px] font-semibold">{p.name}</h3>
-                      <p className="truncate font-mono text-[11px] uppercase text-[#1c1712]/45">{p.colors.map((c) => c.slice(1)).join(" · ")}</p>
+                      <p className="truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{p.colors.map((c) => c.slice(1)).join(" · ")}</p>
                     </div>
                     <div className="flex shrink-0 items-center gap-2">
                       <button onClick={() => copy(all)} className="rounded-full px-3 py-1.5 text-[12px] font-semibold text-[#1c1712]/65 ring-1 ring-black/[0.12] transition hover:text-[#1c1712]">
@@ -169,7 +169,7 @@ export function PalettesLanding({
         <div className="w-full space-y-12 px-6 py-14 sm:px-8 lg:px-12">
           {tagGroups.map((g) => (
             <div key={g.label}>
-              <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
+              <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">
                 Palettes by {g.label.toLowerCase()}
                 <span className="h-px flex-1 bg-black/[0.06]" />
               </h2>
@@ -183,7 +183,7 @@ export function PalettesLanding({
                     </span>
                     <span className="flex items-center justify-between px-3.5 py-2.5">
                       <span className="text-[14px] font-semibold transition group-hover:text-[#c2410c]">{t.name}</span>
-                      <span className="text-[12px] text-[#1c1712]/40">{t.count}</span>
+                      <span className="text-[12px] text-[#1c1712]/60">{t.count}</span>
                     </span>
                   </Link>
                 ))}
@@ -215,7 +215,7 @@ export function PalettesLanding({
                 <details key={f.question} className="group py-4">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold">
                     {f.question}
-                    <span className="text-lg leading-none text-[#1c1712]/30 transition group-open:rotate-45">+</span>
+                    <span className="text-lg leading-none text-[#1c1712]/60 transition group-open:rotate-45">+</span>
                   </summary>
                   <p className="mt-2.5 text-[14px] leading-7 text-[#1c1712]/60">{f.answer}</p>
                 </details>

@@ -24,7 +24,7 @@ export default function NotFound() {
               <span key={s.href} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: s.hex }} />
             ))}
           </span>
-          <p className="min-w-0 flex-1 basis-72 text-[16px] leading-7 text-[#1c1712]/55">
+          <p className="min-w-0 flex-1 basis-72 text-[16px] leading-7 text-[#1c1712]/60">
             That color isn&apos;t in the palette. The page may have moved or been renamed. Here are some places to start instead.
           </p>
         </div>

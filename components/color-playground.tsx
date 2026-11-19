@@ -26,7 +26,7 @@ const THUMB =
   "[&::-moz-range-thumb]:box-border [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:rounded-full " +
   "[&::-moz-range-thumb]:border-[3px] [&::-moz-range-thumb]:border-solid [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:bg-(--thumb) [&::-moz-range-thumb]:shadow-[0_1px_5px_rgba(0,0,0,0.4)]";
 
-const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
 
 export function ColorPlayground() {
   const [values, setValues] = useState<Record<SliderKey, number>>(DEFAULTS);
@@ -128,7 +128,7 @@ export function ColorPlayground() {
                 <button onClick={() => copy(t.hex)} className="group flex w-full items-center gap-3 py-2.5 text-left">
                   <span className="h-7 w-7 shrink-0 rounded-lg ring-1 ring-black/10" style={{ backgroundColor: t.hex }} />
                   <span className="flex-1 text-[14px] font-semibold">{t.name}</span>
-                  <span className="font-mono text-[12px] uppercase text-[#1c1712]/50 transition group-hover:text-[#c2410c]">{copied === t.hex ? "✓ Copied" : t.hex}</span>
+                  <span className="font-mono text-[12px] uppercase text-[#1c1712]/60 transition group-hover:text-[#c2410c]">{copied === t.hex ? "✓ Copied" : t.hex}</span>
                 </button>
               </li>
             ))}

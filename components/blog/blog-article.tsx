@@ -29,7 +29,7 @@ export function BlogArticle({ post, children }: { post: BlogPost; children: Reac
         <p className={`mt-8 ${eyebrow}`}>{post.category}</p>
         <h1 className="mt-3 max-w-5xl text-[2.4rem] font-bold leading-[1.06] tracking-[-0.035em] sm:text-[3.3rem]">{post.h1}</h1>
         <p className="mt-5 max-w-3xl text-[18px] leading-8 text-[#1c1712]/60">{post.dek}</p>
-        <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-[#1c1712]/50">
+        <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-[#1c1712]/60">
           <span className="font-semibold text-[#1c1712]/70">By the HueFlow team</span>
           <span aria-hidden="true">·</span>
           <time dateTime={post.updated}>{updated ? `Updated ${formatDate(post.updated)}` : formatDate(post.published)}</time>
@@ -59,7 +59,7 @@ export function BlogArticle({ post, children }: { post: BlogPost; children: Reac
           <aside className="hidden lg:block">
             <div className="sticky top-28 space-y-8">
               <nav aria-label="On this page">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45">On this page</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">On this page</p>
                 <ul className="mt-3 space-y-1.5 border-l border-black/[0.08]">
                   {post.toc.map((t) => (
                     <li key={t.id}>
@@ -72,7 +72,7 @@ export function BlogArticle({ post, children }: { post: BlogPost; children: Reac
               </nav>
               <div className="rounded-2xl p-5 ring-1 ring-black/[0.07]">
                 <p className="text-[14px] font-semibold">Try the colors</p>
-                <p className="mt-1 text-[13px] leading-5 text-[#1c1712]/55">Build a palette around any color in this post and export it.</p>
+                <p className="mt-1 text-[13px] leading-5 text-[#1c1712]/60">Build a palette around any color in this post and export it.</p>
                 <Link href="/generator" className="mt-3 inline-block rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
                   Open the generator
                 </Link>

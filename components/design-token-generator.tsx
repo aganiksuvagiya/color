@@ -200,8 +200,8 @@ function generateOutput(
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
-const inputCls = "h-10 min-w-0 w-full rounded-xl px-3 text-[13px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/35 focus:ring-2 focus:ring-[#1c1712]";
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
+const inputCls = "h-10 min-w-0 w-full rounded-xl px-3 text-[13px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/60 focus:ring-2 focus:ring-[#1c1712]";
 const card = "rounded-2xl ring-1 ring-black/[0.07]";
 const ghostBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
 
@@ -215,7 +215,7 @@ function Svg({ children, size = 15 }: { children: ReactNode; size?: number }) {
 
 function SmallTitle({ children }: { children: ReactNode }) {
   return (
-    <h3 className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
+    <h3 className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">
       {children}
       <span className="h-px flex-1 bg-black/[0.06]" />
     </h3>
@@ -274,7 +274,7 @@ export function DesignTokenGenerator() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -288,7 +288,7 @@ export function DesignTokenGenerator() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">8 export formats, free.</span> Set your colors, type scale and spacing, then copy or download tokens for CSS, SCSS, Tailwind, JSON, Figma, Swift, Kotlin or Flutter.
             </p>
           </div>
@@ -302,7 +302,7 @@ export function DesignTokenGenerator() {
               <div className={`${card} p-5 sm:p-6`}>
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <p className={label}>
-                    Colors <span className="ml-2 font-mono normal-case tracking-normal text-[#1c1712]/35">{colors.length}/10</span>
+                    Colors <span className="ml-2 font-mono normal-case tracking-normal text-[#1c1712]/60">{colors.length}/10</span>
                   </p>
                   <button
                     role="switch"
@@ -356,7 +356,7 @@ export function DesignTokenGenerator() {
                               onClick={() => setExpandedShade(isExpanded ? null : i)}
                               aria-expanded={isExpanded}
                               aria-label="Show shades"
-                              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition ${isExpanded ? "bg-[#1c1712] text-white" : "text-[#1c1712]/50 ring-1 ring-black/[0.12] hover:text-[#1c1712] hover:ring-black/25"}`}
+                              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition ${isExpanded ? "bg-[#1c1712] text-white" : "text-[#1c1712]/60 ring-1 ring-black/[0.12] hover:text-[#1c1712] hover:ring-black/25"}`}
                             >
                               <Svg><path d={isExpanded ? "M6 15l6-6 6 6" : "M6 9l6 6 6-6"} /></Svg>
                             </button>
@@ -364,7 +364,7 @@ export function DesignTokenGenerator() {
                           <button
                             onClick={() => removeColor(i)}
                             aria-label={`Remove color ${i + 1}`}
-                            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-[#1c1712]/35 transition hover:bg-black/[0.04] hover:text-[#1c1712]"
+                            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-[#1c1712]/60 transition hover:bg-black/[0.04] hover:text-[#1c1712]"
                           >
                             <Svg><path d="M6 18L18 6M6 6l12 12" /></Svg>
                           </button>
@@ -420,7 +420,7 @@ export function DesignTokenGenerator() {
                       <label htmlFor="dt-space" className={label}>Base unit (px)</label>
                       <input id="dt-space" type="number" min={1} max={16} value={spacingUnit} onChange={e => setSpacingUnit(Number(e.target.value) || 4)} className={`${inputCls} mt-1.5 font-mono`} />
                     </div>
-                    <p className="pb-2.5 text-[13px] text-[#1c1712]/50">4px matches Tailwind. Steps run from 0 to {64 * spacingUnit}px.</p>
+                    <p className="pb-2.5 text-[13px] text-[#1c1712]/60">4px matches Tailwind. Steps run from 0 to {64 * spacingUnit}px.</p>
                   </div>
                 </div>
               </div>
@@ -431,7 +431,7 @@ export function DesignTokenGenerator() {
               <div className="flex flex-wrap items-center justify-between gap-3 px-5 pb-3 pt-5 sm:px-6">
                 <div>
                   <p className={label}>Generated tokens</p>
-                  <p className="mt-1 font-mono text-[12px] text-[#1c1712]/45">design-tokens{FORMAT_EXT[format]}</p>
+                  <p className="mt-1 font-mono text-[12px] text-[#1c1712]/60">design-tokens{FORMAT_EXT[format]}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <button onClick={handleDownload} className={ghostBtn}>
@@ -468,7 +468,7 @@ export function DesignTokenGenerator() {
           <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Preview</p>
             <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Your tokens at a glance</h2>
-            <p className="mt-2 max-w-2xl text-[15px] leading-7 text-[#1c1712]/55">Everything above updates live: colors, type scale, spacing, plus the shadow and radius tokens included in every export.</p>
+            <p className="mt-2 max-w-2xl text-[15px] leading-7 text-[#1c1712]/60">Everything above updates live: colors, type scale, spacing, plus the shadow and radius tokens included in every export.</p>
 
             <div className="mt-8 grid items-start gap-6 lg:grid-cols-3">
               <div className="space-y-6">
@@ -492,7 +492,7 @@ export function DesignTokenGenerator() {
                       <div key={i} className="flex items-center gap-2 rounded-full py-1 pl-1 pr-3 ring-1 ring-black/[0.1]">
                         <span className="h-6 w-6 rounded-full ring-1 ring-black/10" style={{ backgroundColor: c.hex }} />
                         <span className="text-[13px] font-semibold">{c.name || "unnamed"}</span>
-                        <span className="font-mono text-[11px] uppercase text-[#1c1712]/45">{c.hex}</span>
+                        <span className="font-mono text-[11px] uppercase text-[#1c1712]/60">{c.hex}</span>
                       </div>
                     ))}
                   </div>
@@ -505,8 +505,8 @@ export function DesignTokenGenerator() {
                   <div className="space-y-2">
                     {typography.map(t => (
                       <div key={t.name} className="flex items-baseline gap-3">
-                        <span className="w-10 shrink-0 font-mono text-[12px] font-semibold text-[#1c1712]/55">{t.name}</span>
-                        <span className="w-16 shrink-0 font-mono text-[12px] text-[#1c1712]/40">{t.sizePx}px</span>
+                        <span className="w-10 shrink-0 font-mono text-[12px] font-semibold text-[#1c1712]/60">{t.name}</span>
+                        <span className="w-16 shrink-0 font-mono text-[12px] text-[#1c1712]/60">{t.sizePx}px</span>
                         <span className="truncate font-semibold" style={{ fontSize: `${Math.min(t.sizePx, 36)}px`, fontFamily, lineHeight: 1.15 }}>Aa</span>
                       </div>
                     ))}
@@ -517,8 +517,8 @@ export function DesignTokenGenerator() {
                   <div className="max-h-72 space-y-1.5 overflow-y-auto pr-1">
                     {spacing.map(s => (
                       <div key={s.name} className="flex items-center gap-3">
-                        <span className="w-7 shrink-0 font-mono text-[12px] font-semibold text-[#1c1712]/55">{s.name}</span>
-                        <span className="w-14 shrink-0 font-mono text-[12px] text-[#1c1712]/40">{s.valuePx}px</span>
+                        <span className="w-7 shrink-0 font-mono text-[12px] font-semibold text-[#1c1712]/60">{s.name}</span>
+                        <span className="w-14 shrink-0 font-mono text-[12px] text-[#1c1712]/60">{s.valuePx}px</span>
                         <span className="relative h-2.5 flex-1 overflow-hidden rounded-full bg-black/[0.06]">
                           <span className="absolute left-0 top-0 h-full rounded-full bg-[#1c1712]/70 transition-all" style={{ width: s.valuePx === 0 ? "2px" : `${Math.min((s.valuePx / 256) * 100, 100)}%` }} />
                         </span>
@@ -534,9 +534,9 @@ export function DesignTokenGenerator() {
                   <div className="space-y-3">
                     {SHADOW_TOKENS.filter(s => s.name !== "none").map(s => (
                       <div key={s.name} className="flex items-center gap-3">
-                        <span className="w-10 shrink-0 font-mono text-[12px] font-semibold text-[#1c1712]/55">{s.name}</span>
+                        <span className="w-10 shrink-0 font-mono text-[12px] font-semibold text-[#1c1712]/60">{s.name}</span>
                         <div className="flex h-10 flex-1 items-center justify-center rounded-xl bg-white" style={{ boxShadow: s.value }}>
-                          <span className="text-[12px] font-semibold text-[#1c1712]/40">shadow-{s.name}</span>
+                          <span className="text-[12px] font-semibold text-[#1c1712]/60">shadow-{s.name}</span>
                         </div>
                       </div>
                     ))}
@@ -548,8 +548,8 @@ export function DesignTokenGenerator() {
                     {RADIUS_TOKENS.map(r => (
                       <div key={r.name} className="flex flex-col items-center gap-1.5">
                         <div className="h-12 w-12 border-2 border-[#1c1712]/25 bg-[#fafafa]" style={{ borderRadius: r.value }} />
-                        <span className="font-mono text-[12px] font-semibold text-[#1c1712]/55">{r.name}</span>
-                        <span className="font-mono text-[11px] text-[#1c1712]/40">{r.value === "9999px" ? "full" : r.value}</span>
+                        <span className="font-mono text-[12px] font-semibold text-[#1c1712]/60">{r.name}</span>
+                        <span className="font-mono text-[11px] text-[#1c1712]/60">{r.value === "9999px" ? "full" : r.value}</span>
                       </div>
                     ))}
                   </div>

@@ -51,7 +51,7 @@ export function ColorNameFinder() {
 
       <main>
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -61,7 +61,7 @@ export function ColorNameFinder() {
           <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Color Name Finder</h1>
           <div className="mt-5 flex max-w-4xl flex-wrap items-start gap-3">
             <span className="mt-1.5"><Dots colors={["#E8531F", "#0F766E", "#7C3AED", "#FACC15", "#14B8A6"]} /></span>
-            <p className="hub-description min-w-0 flex-1 basis-80 text-[16px] leading-7 text-[#1c1712]/55">
+            <p className="hub-description min-w-0 flex-1 basis-80 text-[16px] leading-7 text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">What color is this hex code?</span> Enter a HEX, RGB or HSL code and get the closest color name from {namedColors.length} named colors, plus every format to copy.
             </p>
           </div>
@@ -71,7 +71,7 @@ export function ColorNameFinder() {
           <div className="grid w-full gap-6 px-6 py-10 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:px-12">
             {/* Input */}
             <div className="min-w-0 rounded-2xl p-5 ring-1 ring-black/[0.07] sm:p-6">
-              <label htmlFor="name-input" className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45">Color code</label>
+              <label htmlFor="name-input" className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">Color code</label>
               <div className="mt-2 flex gap-2">
                 <input
                   id="name-input"
@@ -82,7 +82,7 @@ export function ColorNameFinder() {
                   autoComplete="off"
                   aria-invalid={!rgb}
                   aria-describedby="name-hint"
-                  className={`h-12 min-w-0 flex-1 rounded-xl px-4 font-mono text-[15px] font-semibold outline-none ring-1 transition placeholder:font-sans placeholder:text-[13px] placeholder:font-normal placeholder:text-[#1c1712]/30 focus:ring-2 ${rgb ? "ring-black/[0.12] focus:ring-black/50" : "ring-red-300 focus:ring-red-500"}`}
+                  className={`h-12 min-w-0 flex-1 rounded-xl px-4 font-mono text-[15px] font-semibold outline-none ring-1 transition placeholder:font-sans placeholder:text-[13px] placeholder:font-normal placeholder:text-[#1c1712]/60 focus:ring-2 ${rgb ? "ring-black/[0.12] focus:ring-black/50" : "ring-red-300 focus:ring-red-500"}`}
                 />
                 <label className="relative h-12 w-12 shrink-0 cursor-pointer overflow-hidden rounded-xl ring-1 ring-black/[0.12] transition hover:ring-black/30" title="Pick a color">
                   <span className="absolute inset-0" style={{ backgroundColor: hex ?? "#ffffff" }} />
@@ -95,12 +95,12 @@ export function ColorNameFinder() {
                   />
                 </label>
               </div>
-              <p id="name-hint" className={`mt-2.5 text-[13px] leading-5 ${rgb ? "text-[#1c1712]/50" : "font-medium text-red-600"}`}>
+              <p id="name-hint" className={`mt-2.5 text-[13px] leading-5 ${rgb ? "text-[#1c1712]/60" : "font-medium text-red-600"}`}>
                 {rgb ? "HEX, RGB (59, 130, 246) or HSL (217, 91%, 60%) all work." : "That is not a valid color. Try a HEX code like #3B82F6, RGB like 59, 130, 246 or HSL like 217, 91%, 60%."}
               </p>
 
               <div className="mt-6">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45">Try an example</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">Try an example</p>
                 <div className="mt-2.5 flex flex-wrap gap-2">
                   {EXAMPLES.map((ex) => (
                     <button
@@ -124,7 +124,7 @@ export function ColorNameFinder() {
                   <>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{exact ? "Exact match" : "Closest named color"}</p>
                     <p className="mt-1 text-[1.75rem] font-bold leading-tight tracking-[-0.03em]">{closest.name}</p>
-                    <p className="mt-1 text-[14px] leading-6 text-[#1c1712]/55">
+                    <p className="mt-1 text-[14px] leading-6 text-[#1c1712]/60">
                       {exact ? (
                         <>{hex} is the color {closest.name}. </>
                       ) : (
@@ -134,7 +134,7 @@ export function ColorNameFinder() {
                     </p>
                   </>
                 ) : (
-                  <p className="text-[15px] text-[#1c1712]/55">Enter a valid color code to see its name.</p>
+                  <p className="text-[15px] text-[#1c1712]/60">Enter a valid color code to see its name.</p>
                 )}
 
                 <dl className="mt-5 divide-y divide-black/[0.06] border-t border-black/[0.06]">
@@ -142,7 +142,7 @@ export function ColorNameFinder() {
                     const v = rgb ? formatters[f](rgb) : "—";
                     return (
                       <div key={f} className="flex items-center justify-between gap-3 py-2.5">
-                        <dt className="w-14 shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#1c1712]/45">{FORMAT_LABEL[f]}</dt>
+                        <dt className="w-14 shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#1c1712]/60">{FORMAT_LABEL[f]}</dt>
                         <dd className="min-w-0 flex-1 break-all font-mono text-[13px] font-medium text-[#1c1712]/80">{v}</dd>
                         <button
                           disabled={!rgb}
@@ -169,7 +169,7 @@ export function ColorNameFinder() {
                     <span className="block h-16" style={{ backgroundColor: c.hex }} />
                     <span className="block px-3 py-2.5">
                       <span className="block truncate text-[13px] font-semibold group-hover:text-[#c2410c]">{c.name}</span>
-                      <span className="block font-mono text-[11px] text-[#1c1712]/50">{c.hex}</span>
+                      <span className="block font-mono text-[11px] text-[#1c1712]/60">{c.hex}</span>
                     </span>
                   </Link>
                 ))}

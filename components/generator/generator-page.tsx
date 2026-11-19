@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { Header } from "@/components/header";
 import { generateFromPrompt, generateRandomPalette, getContrastText } from "@/lib/color-utils";
@@ -42,6 +43,19 @@ const PANEL_LABELS: Record<PanelTab, string> = {
   insights: "Insights",
 };
 
+// Tab and Shift+Tab wrap around inside an open dialog instead of reaching the page behind it.
+function keepTabInside(e: ReactKeyboardEvent<HTMLElement>) {
+  if (e.key !== "Tab") return;
+  const items = e.currentTarget.querySelectorAll<HTMLElement>(
+    "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])",
+  );
+  if (!items.length) return;
+  const first = items[0];
+  const last = items[items.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
 const MOOD_CHIPS = [
   { key: "luxury", label: "Luxury" },
   { key: "fintech", label: "Fintech" },
@@ -70,6 +84,8 @@ export function GeneratorPage() {
   const [labelValue, setLabelValue] = useState("");
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const labelInputRef = useRef<HTMLInputElement>(null);
+  const panelCloseRef = useRef<HTMLButtonElement>(null);
+  const panelReturnFocus = useRef<HTMLElement | null>(null);
 
   const historyRef = useRef<Palette[]>([]);
   const historyIndexRef = useRef(-1);
@@ -119,18 +135,31 @@ export function GeneratorPage() {
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLSelectElement) return;
+      if (e.key === "Escape") { setPromptOpen(false); setActivePanel(null); setEditingLabel(false); setShortcutsOpen(false); return; }
+      // Space on a focused button or link must press that control, not shuffle the palette,
+      // and the one-key shortcuts stay off inside the side panel and dialogs.
+      if (e.target instanceof Element && e.target.closest("button, a[href], [role='button'], [role='dialog'], [tabindex='0']")) return;
       if ((e.key === "r" || e.key === " ") && !e.metaKey && !e.ctrlKey) { e.preventDefault(); handleRandom(); }
       if (e.key === "s" && !e.metaKey && !e.ctrlKey) { e.preventDefault(); handleSave(); }
       if (e.key === "c" && !e.metaKey && !e.ctrlKey) { handleShare(); }
       if (e.key === "z" && (e.metaKey || e.ctrlKey) && !e.shiftKey) { e.preventDefault(); undo(); }
       if (e.key === "z" && (e.metaKey || e.ctrlKey) && e.shiftKey) { e.preventDefault(); redo(); }
-      if (e.key === "Escape") { setPromptOpen(false); setActivePanel(null); setEditingLabel(false); setShortcutsOpen(false); }
       if (e.key === "?") { setShortcutsOpen(prev => !prev); }
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   });
+
+  useEffect(() => {
+    if (activePanel) {
+      if (!panelReturnFocus.current && document.activeElement instanceof HTMLElement) panelReturnFocus.current = document.activeElement;
+      panelCloseRef.current?.focus();
+    } else if (panelReturnFocus.current) {
+      panelReturnFocus.current.focus();
+      panelReturnFocus.current = null;
+    }
+  }, [activePanel]);
 
   function updateUrl(p: Palette) {
     const qs = encodePalette(p);
@@ -295,10 +324,10 @@ export function GeneratorPage() {
     `inline-flex items-center gap-1.5 rounded-full px-3.5 h-8 text-[11px] font-semibold whitespace-nowrap transition-all duration-150 ${
       active
         ? "bg-[#1c1712] text-white shadow-[0_2px_8px_rgba(28,23,18,0.18)]"
-        : "text-[#1c1712]/50 hover:bg-[#1c1712]/7 hover:text-[#1c1712]"
+        : "text-[#1c1712]/60 hover:bg-[#1c1712]/7 hover:text-[#1c1712]"
     }`;
 
-  const iconBtn = "flex h-8 w-8 items-center justify-center rounded-full text-[#1c1712]/38 transition-all duration-150 hover:bg-[#1c1712]/7 hover:text-[#1c1712]";
+  const iconBtn = "flex h-8 w-8 items-center justify-center rounded-full text-[#1c1712]/60 transition-all duration-150 hover:bg-[#1c1712]/7 hover:text-[#1c1712]";
 
   return (
     <main className="flex h-screen flex-col overflow-hidden bg-[#faf7f2] text-[#1c1712]">
@@ -355,21 +384,28 @@ export function GeneratorPage() {
                 exit={{ x: 340, opacity: 0 }}
                 transition={{ type: "spring", damping: 28, stiffness: 300 }}
                 className="fixed bottom-0 right-0 top-0 z-[61] flex w-80 flex-col border-l border-black/[0.07] bg-white shadow-2xl"
+                role="dialog"
+                aria-modal="true"
+                aria-label={PANEL_LABELS[activePanel]}
+                onKeyDown={keepTabInside}
               >
                 <div className="flex shrink-0 items-center justify-between border-b border-black/[0.07] px-4 py-3">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/38">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#1c1712]/60">
                     {PANEL_LABELS[activePanel]}
                   </span>
                   <button
+                    ref={panelCloseRef}
+                    type="button"
+                    aria-label={`Close ${PANEL_LABELS[activePanel]}`}
                     onClick={() => setActivePanel(null)}
-                    className="flex h-7 w-7 items-center justify-center rounded-lg text-[#1c1712]/35 hover:bg-[#1c1712]/6 hover:text-[#1c1712]"
+                    className="flex h-7 w-7 items-center justify-center rounded-lg text-[#1c1712]/60 hover:bg-[#1c1712]/6 hover:text-[#1c1712]"
                   >
                     <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                       <path d="M18 6L6 18M6 6l12 12" />
                     </svg>
                   </button>
                 </div>
-                <div className="flex-1 overflow-y-auto p-4">
+                <div className="flex-1 overflow-y-auto p-4" tabIndex={0}>
                   {activePanel === "accessibility" && (
                     <div className="space-y-5">
                       <AccessibilityPanel palette={activePalette} />
@@ -417,7 +453,7 @@ export function GeneratorPage() {
             <span className="text-xs">Generate</span>
           </button>
           <div className="h-5 w-px bg-black/[0.08]" />
-          <button onClick={handleSave} className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-[#F15B2A] px-3 text-xs font-semibold text-white">
+          <button onClick={handleSave} className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-[#d04615] px-3 text-xs font-semibold text-white">
             <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" /><path d="M17 21v-8H7v8M7 3v5h8" /></svg>
             Save
           </button>
@@ -459,6 +495,7 @@ export function GeneratorPage() {
           {editingLabel ? (
             <input
               ref={labelInputRef}
+              aria-label="Palette name"
               autoFocus
               value={labelValue}
               onChange={(e) => setLabelValue(e.target.value)}
@@ -474,7 +511,7 @@ export function GeneratorPage() {
           ) : (
             <button
               onClick={startEditLabel}
-              className="max-w-[160px] truncate rounded-full px-3 py-1 text-[11px] font-semibold text-[#1c1712]/45 transition-all hover:bg-[#1c1712]/6 hover:text-[#1c1712]/75"
+              className="max-w-[160px] truncate rounded-full px-3 py-1 text-[11px] font-semibold text-[#1c1712]/60 transition-all hover:bg-[#1c1712]/6 hover:text-[#1c1712]/75"
               title="Rename palette"
             >
               {activePalette?.label ?? ""}
@@ -496,7 +533,7 @@ export function GeneratorPage() {
                 <line x1="4" y1="4" x2="9" y2="9" />
               </svg>
               Shuffle
-              <kbd className="hidden lg:inline rounded-md border border-black/[0.08] bg-white px-1 py-0.5 font-mono text-[8px] text-[#1c1712]/30">Space</kbd>
+              <kbd className="hidden lg:inline rounded-md border border-black/[0.08] bg-white px-1 py-0.5 font-mono text-[8px] text-[#1c1712]/60">Space</kbd>
             </button>
 
             {activePalette && activePalette.colors.length < MAX_COLOR_COUNT && (
@@ -581,7 +618,7 @@ export function GeneratorPage() {
           <button
             onClick={handleSave}
             className="inline-flex h-8 items-center gap-1.5 rounded-full px-4 text-[11px] font-semibold text-white shadow-[0_4px_14px_rgba(232,83,31,0.30)] transition-all hover:shadow-[0_6px_18px_rgba(232,83,31,0.38)] hover:scale-[1.02] active:scale-[0.98]"
-            style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
+            style={{ background: "linear-gradient(135deg, #d04615, #b93d12)" }}
             title="Save palette (S)"
           >
             <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
@@ -606,7 +643,7 @@ export function GeneratorPage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
-                className="rounded-xl border border-[#e8531f]/20 bg-[#e8531f]/8 px-3 py-1 text-xs font-medium text-[#e8531f]"
+                className="rounded-xl border border-[#e8531f]/20 bg-[#e8531f]/8 px-3 py-1 text-xs font-medium text-[#c2410c]"
               >
                 {saveMessage || shareMessage}
               </motion.span>
@@ -631,6 +668,10 @@ export function GeneratorPage() {
               exit={{ y: 32, opacity: 0 }}
               transition={{ type: "spring", damping: 30, stiffness: 340 }}
               className="w-full max-w-2xl overflow-hidden rounded-2xl border border-black/[0.08] bg-white shadow-2xl"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Generate a palette from a description"
+              onKeyDown={keepTabInside}
             >
               {/* Input row */}
               <form
@@ -646,23 +687,25 @@ export function GeneratorPage() {
                 <input
                   type="text"
                   autoFocus
+                  aria-label="Describe a mood, brand, or industry"
                   value={promptText}
                   onChange={(e) => setPromptText(e.target.value)}
                   placeholder="Describe a mood, brand, or industry…"
-                  className="flex-1 bg-transparent text-sm text-[#1c1712] outline-none placeholder:text-[#1c1712]/30"
+                  className="flex-1 bg-transparent text-sm text-[#1c1712] outline-none placeholder:text-[#1c1712]/60"
                   maxLength={200}
                 />
                 <button
                   type="submit"
                   disabled={!promptText.trim()}
-                  className="rounded-xl bg-[#F15B2A] px-5 py-2 text-xs font-semibold text-white transition-all hover:bg-[#F97A45] disabled:opacity-30"
+                  className="rounded-xl bg-[#d04615] px-5 py-2 text-xs font-semibold text-white transition-all hover:bg-[#b93d12] disabled:opacity-30"
                 >
                   Generate
                 </button>
                 <button
                   type="button"
+                  aria-label="Close"
                   onClick={() => setPromptOpen(false)}
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-[#1c1712]/35 hover:bg-[#1c1712]/6 hover:text-[#1c1712]"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-[#1c1712]/60 hover:bg-[#1c1712]/6 hover:text-[#1c1712]"
                 >
                   <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path d="M18 6L6 18M6 6l12 12" />
@@ -676,7 +719,7 @@ export function GeneratorPage() {
                   <button
                     key={key}
                     onClick={() => handleGenerate(key)}
-                    className="rounded-full border border-black/10 bg-[#faf7f2] px-3 py-1 text-xs font-medium text-[#1c1712]/55 transition-all hover:border-black/20 hover:bg-[#f0ebe4] hover:text-[#1c1712]"
+                    className="rounded-full border border-black/10 bg-[#faf7f2] px-3 py-1 text-xs font-medium text-[#1c1712]/60 transition-all hover:border-black/20 hover:bg-[#f0ebe4] hover:text-[#1c1712]"
                   >
                     {label}
                   </button>
@@ -704,10 +747,14 @@ export function GeneratorPage() {
               transition={{ duration: 0.2 }}
               onClick={(e) => e.stopPropagation()}
               className="w-full max-w-sm rounded-2xl border border-black/[0.08] bg-white p-6 shadow-2xl mx-4"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="shortcuts-title"
+              onKeyDown={keepTabInside}
             >
               <div className="mb-5 flex items-center justify-between">
-                <h2 className="text-base font-semibold text-[#1c1712]">Keyboard Shortcuts</h2>
-                <button onClick={() => setShortcutsOpen(false)} className="text-[#1c1712]/35 hover:text-[#1c1712]/70">
+                <h2 id="shortcuts-title" className="text-base font-semibold text-[#1c1712]">Keyboard Shortcuts</h2>
+                <button type="button" autoFocus aria-label="Close keyboard shortcuts" onClick={() => setShortcutsOpen(false)} className="text-[#1c1712]/60 hover:text-[#1c1712]/70">
                   <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path d="M18 6L6 18M6 6l12 12" />
                   </svg>
@@ -724,7 +771,7 @@ export function GeneratorPage() {
                   { keys: ["?"], label: "Show this guide" },
                 ].map(({ keys, label }) => (
                   <div key={label} className="flex items-center justify-between">
-                    <span className="text-sm text-[#1c1712]/55">{label}</span>
+                    <span className="text-sm text-[#1c1712]/60">{label}</span>
                     <div className="flex gap-1">
                       {keys.map((k) => (
                         <kbd key={k} className="rounded-md border border-black/10 bg-[#faf7f2] px-2 py-0.5 font-mono text-[11px] text-[#1c1712]/65">{k}</kbd>
@@ -733,7 +780,7 @@ export function GeneratorPage() {
                   </div>
                 ))}
               </div>
-              <p className="mt-5 text-[11px] text-[#1c1712]/30 text-center">Press <kbd className="rounded border border-black/10 bg-[#faf7f2] px-1 font-mono text-[10px]">?</kbd> anytime to toggle</p>
+              <p className="mt-5 text-[11px] text-[#1c1712]/60 text-center">Press <kbd className="rounded border border-black/10 bg-[#faf7f2] px-1 font-mono text-[10px]">?</kbd> anytime to toggle</p>
             </motion.div>
           </motion.div>
         )}

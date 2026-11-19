@@ -18,7 +18,7 @@ const MODES: { key: HarmonyMode; label: string; description: string }[] = [
   { key: "monochromatic",       label: "Monochromatic",       description: "Tints and shades of one hue. Safe, elegant, consistent." },
 ];
 
-const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
 const ghostBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
 
 const WHEEL = `conic-gradient(${Array.from({ length: 13 }, (_, i) => `hsl(${i * 30} 85% 55%)`).join(", ")})`;
@@ -89,7 +89,7 @@ export function ColorHarmonyTool() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -103,7 +103,7 @@ export function ColorHarmonyTool() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">6 harmony rules, free.</span> Pick one base color and get a palette built on the color wheel, ready to copy or open in the generator.
             </p>
           </div>
@@ -143,7 +143,7 @@ export function ColorHarmonyTool() {
                     }`}
                   />
                 </div>
-                <p className="mt-2 text-[13px] text-[#1c1712]/50">
+                <p className="mt-2 text-[13px] text-[#1c1712]/60">
                   {valid ? findClosestColorName(baseColor) : "Enter a valid HEX, like #4F46E5."}
                 </p>
               </div>
@@ -161,7 +161,7 @@ export function ColorHarmonyTool() {
                       }`}
                     >
                       <span className="block text-[14px] font-semibold">{m.label}</span>
-                      <span className="mt-0.5 hidden text-[13px] leading-5 text-[#1c1712]/55 lg:block">{m.description}</span>
+                      <span className="mt-0.5 hidden text-[13px] leading-5 text-[#1c1712]/60 lg:block">{m.description}</span>
                     </button>
                   ))}
                 </div>
@@ -218,7 +218,7 @@ export function ColorHarmonyTool() {
                           <li key={`${color.name}-${i}`} className="flex items-center gap-3 py-2.5">
                             <span className="h-6 w-6 shrink-0 rounded-full ring-1 ring-black/10" style={{ backgroundColor: color.hex }} />
                             <span className="min-w-0 flex-1 truncate text-[14px] font-semibold">{color.name}</span>
-                            <span className="font-mono text-[12px] uppercase text-[#1c1712]/50">{color.hex}</span>
+                            <span className="font-mono text-[12px] uppercase text-[#1c1712]/60">{color.hex}</span>
                             <span className="w-14 text-right font-mono text-[12px] font-semibold text-[#1c1712]/70">{hues[i]}°</span>
                           </li>
                         ))}

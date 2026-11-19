@@ -214,7 +214,7 @@ function SectionHeading({ eyebrow, title, body }: { eyebrow: string; title: stri
         {title}
       </motion.h2>
       {body && (
-        <motion.p variants={fadeUp} className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-[#1c1712]/55">
+        <motion.p variants={fadeUp} className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-[#1c1712]/60">
           {body}
         </motion.p>
       )}
@@ -317,8 +317,8 @@ export function HueFlowHomePage() {
 
               {/* Eyebrow */}
               <motion.div variants={fadeUp}>
-                <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.24em] text-[#1c1712]/48 shadow-[0_1px_4px_rgba(28,23,18,0.06)]">
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#e8531f]" aria-hidden="true" />
+                <span className="inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.24em] text-[#1c1712]/60 shadow-[0_1px_4px_rgba(28,23,18,0.06)]">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#d04615]" aria-hidden="true" />
                   HueFlow · Free color palette generator
                 </span>
               </motion.div>
@@ -330,7 +330,7 @@ export function HueFlowHomePage() {
                 className="mt-5 font-display text-[2.8rem] font-bold leading-[1.02] tracking-[-0.05em] text-[#1c1712] sm:text-[3.6rem] lg:text-[4.4rem]"
               >
                 Find colors that{" "}
-                <span style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+                <span style={{ background: "linear-gradient(135deg, #e8531f, #c2410c)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
                   feel right.
                 </span>
               </motion.h1>
@@ -345,7 +345,7 @@ export function HueFlowHomePage() {
                 <Link
                   href="/generator"
                   className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(232,83,31,0.26)] transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_12px_32px_rgba(232,83,31,0.34)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e8531f] focus-visible:ring-offset-2"
-                  style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
+                  style={{ background: "linear-gradient(135deg, #d04615, #b93d12)" }}
                 >
                   Create a palette
                 </Link>
@@ -358,7 +358,7 @@ export function HueFlowHomePage() {
               </motion.div>
 
               {/* Trust text */}
-              <motion.p variants={fadeUp} className="mt-4 text-xs text-[#1c1712]/50">
+              <motion.p variants={fadeUp} className="mt-4 text-xs text-[#1c1712]/60">
                 Free to use · No account required
               </motion.p>
 
@@ -399,6 +399,7 @@ export function HueFlowHomePage() {
                       <button
                         key={i}
                         type="button"
+                        tabIndex={-1}
                         aria-label={`Copy ${hex}`}
                         className="group/tile relative flex-1 cursor-pointer overflow-hidden rounded-lg border border-transparent transition-all duration-200 hover:scale-[1.03] hover:border-black/[0.06] hover:shadow-[0_4px_16px_rgba(28,23,18,0.14)] hover:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e8531f] focus-visible:ring-offset-1"
                         style={{ backgroundColor: hex }}
@@ -501,9 +502,9 @@ export function HueFlowHomePage() {
                 <div className="flex items-center justify-between gap-4 px-6 py-5">
                   <div>
                     <p className="text-lg font-semibold tracking-[-0.02em] text-[#1c1712]">Palette Generator</p>
-                    <p className="mt-0.5 font-mono text-sm text-[#1c1712]/50">{toolColor.toUpperCase()} · {toolSystemColors.length} colors</p>
+                    <p className="mt-0.5 font-mono text-sm text-[#1c1712]/60">{toolColor.toUpperCase()} · {toolSystemColors.length} colors</p>
                   </div>
-                  <span className="shrink-0 rounded-full border border-black/10 px-4 py-1.5 text-sm font-medium text-[#1c1712]/60 transition-colors group-hover:border-[#e8531f]/40 group-hover:text-[#e8531f]">
+                  <span className="shrink-0 rounded-full border border-black/10 px-4 py-1.5 text-sm font-medium text-[#1c1712]/60 transition-colors group-hover:border-[#e8531f]/40 group-hover:text-[#c2410c]">
                     Open →
                   </span>
                 </div>
@@ -543,9 +544,9 @@ export function HueFlowHomePage() {
                 <div className="flex items-end justify-between gap-4 px-5 py-5">
                   <div>
                     <p className="text-base font-semibold tracking-[-0.02em] text-[#1c1712]">Color Picker</p>
-                    <p className="mt-0.5 text-sm text-[#1c1712]/50">Explore and copy precise colors.</p>
+                    <p className="mt-0.5 text-sm text-[#1c1712]/60">Explore and copy precise colors.</p>
                   </div>
-                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#e8531f]">→</span>
+                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#c2410c]">→</span>
                 </div>
               </Link>
             </motion.div>
@@ -569,7 +570,7 @@ export function HueFlowHomePage() {
                       transition={{ duration: 0.2 }}
                       className="flex items-center gap-2 rounded-xl border border-black/8 bg-white px-3 py-2.5"
                     >
-                      <span className="w-7 shrink-0 text-[9px] font-bold uppercase tracking-widest text-[#1c1712]/35">{row.label}</span>
+                      <span className="w-7 shrink-0 text-[9px] font-bold uppercase tracking-widest text-[#1c1712]/60">{row.label}</span>
                       <span className="min-w-0 truncate font-mono text-[10px] text-[#1c1712]/75 sm:text-xs">{row.value}</span>
                     </motion.div>
                   ))}
@@ -577,9 +578,9 @@ export function HueFlowHomePage() {
                 <div className="flex items-end justify-between gap-4 px-5 py-5">
                   <div>
                     <p className="text-base font-semibold tracking-[-0.02em] text-[#1c1712]">Color Converter</p>
-                    <p className="mt-0.5 text-sm text-[#1c1712]/50">HEX, RGB, HSL, and more.</p>
+                    <p className="mt-0.5 text-sm text-[#1c1712]/60">HEX, RGB, HSL, and more.</p>
                   </div>
-                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#e8531f]">→</span>
+                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#c2410c]">→</span>
                 </div>
               </Link>
             </motion.div>
@@ -629,9 +630,9 @@ export function HueFlowHomePage() {
                 <div className="flex items-end justify-between gap-4 px-5 py-5">
                   <div>
                     <p className="text-base font-semibold tracking-[-0.02em] text-[#1c1712]">Contrast Checker</p>
-                    <p className="mt-0.5 text-sm text-[#1c1712]/50">Make sure colors are accessible.</p>
+                    <p className="mt-0.5 text-sm text-[#1c1712]/60">Make sure colors are accessible.</p>
                   </div>
-                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#e8531f]">→</span>
+                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#c2410c]">→</span>
                 </div>
               </Link>
             </motion.div>
@@ -655,9 +656,9 @@ export function HueFlowHomePage() {
                 <div className="flex items-end justify-between gap-4 px-5 py-5">
                   <div>
                     <p className="text-base font-semibold tracking-[-0.02em] text-[#1c1712]">Color Shades</p>
-                    <p className="mt-0.5 text-sm text-[#1c1712]/50">Generate tints, shades, and tones.</p>
+                    <p className="mt-0.5 text-sm text-[#1c1712]/60">Generate tints, shades, and tones.</p>
                   </div>
-                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#e8531f]">→</span>
+                  <span className="text-[#1c1712]/25 transition-colors group-hover:text-[#c2410c]">→</span>
                 </div>
               </Link>
             </motion.div>
@@ -681,7 +682,7 @@ export function HueFlowHomePage() {
                     </div>
                     <div className="flex items-center justify-between px-4 py-3">
                       <span className="text-sm font-medium text-[#1c1712]/80">{collection.label}</span>
-                      <span className="text-[#1c1712]/30 transition-transform group-hover:translate-x-1 group-hover:text-[#e8531f]">→</span>
+                      <span className="text-[#1c1712]/60 transition-transform group-hover:translate-x-1 group-hover:text-[#c2410c]">→</span>
                     </div>
                   </Link>
                 </motion.div>
@@ -690,19 +691,19 @@ export function HueFlowHomePage() {
           </motion.div>
 
           <div className="mt-8 text-center">
-            <Link href="/palettes" className="text-sm font-medium text-[#1c1712]/55 underline-offset-4 hover:text-[#e8531f] hover:underline">
+            <Link href="/palettes" className="text-sm font-medium text-[#1c1712]/60 underline-offset-4 hover:text-[#c2410c] hover:underline">
               Explore all palettes →
             </Link>
           </div>
 
           {/* Popular searches: the shades, palette-library and color-code pages */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2 text-[13px]">
-            <span className="mr-1 text-[#1c1712]/50">Popular:</span>
+            <span className="mr-1 text-[#1c1712]/60">Popular:</span>
             {POPULAR_LINKS.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
-                className="flex items-center gap-1.5 rounded-full border border-black/[0.08] bg-white py-1 pl-1 pr-3 text-[#1c1712]/65 transition hover:border-[#e8531f]/40 hover:text-[#e8531f]"
+                className="flex items-center gap-1.5 rounded-full border border-black/[0.08] bg-white py-1 pl-1 pr-3 text-[#1c1712]/65 transition hover:border-[#e8531f]/40 hover:text-[#c2410c]"
               >
                 <span className="h-4 w-4 rounded-full border border-black/10" style={{ backgroundColor: l.hex }} />
                 {l.label}
@@ -736,8 +737,8 @@ export function HueFlowHomePage() {
                     </div>}
                   </div>
                   <h3 className="text-lg font-semibold tracking-[-0.02em] text-[#1c1712]">{item.title}</h3>
-                  <p className="mt-2 flex-1 text-sm leading-6 text-[#1c1712]/55">{item.body}</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#1c1712]/55 transition-colors group-hover:text-[#e8531f]">
+                  <p className="mt-2 flex-1 text-sm leading-6 text-[#1c1712]/60">{item.body}</p>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-[#1c1712]/60 transition-colors group-hover:text-[#c2410c]">
                     Explore <span className="transition-transform group-hover:translate-x-1">→</span>
                   </span>
                 </Link>
@@ -803,7 +804,7 @@ export function HueFlowHomePage() {
                         <p className="text-base font-semibold text-[#1c1712]">
                           {mood.label}
                         </p>
-                        <p className="mt-1 text-sm text-[#1c1712]/50">{mood.description}</p>
+                        <p className="mt-1 text-sm text-[#1c1712]/60">{mood.description}</p>
                       </div>
                       <div className="flex items-center justify-between gap-3 sm:justify-start sm:gap-4">
                         <div className="flex gap-1.5">
@@ -818,7 +819,7 @@ export function HueFlowHomePage() {
                         <Link
                           href={mood.href}
                           className="inline-flex shrink-0 items-center rounded-full px-4 py-2 text-xs font-semibold text-white shadow-[0_6px_18px_rgba(232,83,31,0.22)] transition-transform hover:scale-[1.02] sm:px-5 sm:py-2.5 sm:text-sm"
-                          style={{ background: "linear-gradient(135deg, #ff7a45, #e8531f)" }}
+                          style={{ background: "linear-gradient(135deg, #d04615, #b93d12)" }}
                         >
                           <span className="sm:hidden">Open →</span>
                           <span className="hidden sm:inline">Open in generator →</span>
@@ -846,12 +847,12 @@ export function HueFlowHomePage() {
                 transition={{ delay: index * 0.06, duration: 0.5 }}
                 className="grid grid-cols-1 items-center gap-4 py-8 sm:grid-cols-[auto_1fr_auto] sm:gap-10"
               >
-                <span className="text-sm font-mono text-[#1c1712]/30">0{index + 1}</span>
+                <span className="text-sm font-mono text-[#1c1712]/60">0{index + 1}</span>
                 <div>
                   <h3 className="text-2xl font-semibold tracking-[-0.03em] text-[#1c1712] sm:text-3xl">{item.title}</h3>
-                  <p className="mt-2 max-w-xl text-base leading-7 text-[#1c1712]/55">{item.body}</p>
+                  <p className="mt-2 max-w-xl text-base leading-7 text-[#1c1712]/60">{item.body}</p>
                 </div>
-                <Link href={item.href} className="inline-flex w-fit items-center gap-1.5 whitespace-nowrap text-sm font-semibold text-[#e8531f] hover:underline underline-offset-4">
+                <Link href={item.href} className="inline-flex w-fit items-center gap-1.5 whitespace-nowrap text-sm font-semibold text-[#c2410c] hover:underline underline-offset-4">
                   {item.cta} →
                 </Link>
               </motion.div>
@@ -869,7 +870,7 @@ export function HueFlowHomePage() {
                 <div className="h-20" style={{ backgroundColor: token.hex }} />
                 <div className="bg-white px-3 py-2.5">
                   <p className="text-xs font-semibold text-[#1c1712]">{token.name}</p>
-                  <p className="mt-0.5 font-mono text-[10px] text-[#1c1712]/55">{token.hex.toUpperCase()}</p>
+                  <p className="mt-0.5 font-mono text-[10px] text-[#1c1712]/60">{token.hex.toUpperCase()}</p>
                 </div>
               </div>
             ))}
@@ -900,7 +901,7 @@ export function HueFlowHomePage() {
               <motion.div key={story.href} variants={fadeUp}>
                 <Link href={story.href} className="group flex items-center justify-between rounded-[18px] border border-black/8 bg-white px-5 py-4 transition-colors hover:border-black/16">
                   <span className="text-sm font-medium text-[#1c1712]/75 transition-colors group-hover:text-[#1c1712]">{story.title}</span>
-                  <span className="text-[#1c1712]/25 transition-transform group-hover:translate-x-1 group-hover:text-[#e8531f]">→</span>
+                  <span className="text-[#1c1712]/25 transition-transform group-hover:translate-x-1 group-hover:text-[#c2410c]">→</span>
                 </Link>
               </motion.div>
             ))}
@@ -923,7 +924,7 @@ export function HueFlowHomePage() {
               <h2 className="mt-4 font-display text-[2rem] font-semibold leading-[1.05] tracking-[-0.04em] text-[#1c1712] sm:text-[2.6rem]">
                 A few things people usually ask.
               </h2>
-              <p className="mt-5 text-base leading-7 text-[#1c1712]/50">
+              <p className="mt-5 text-base leading-7 text-[#1c1712]/60">
                 Can&apos;t find what you&apos;re looking for? Feel free to reach out and we&apos;ll help you out.
               </p>
             </motion.div>
@@ -957,8 +958,8 @@ export function HueFlowHomePage() {
                         <span
                           className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
                             isOpen
-                              ? "border-[#e8531f]/30 bg-[#e8531f]/8 text-[#e8531f] rotate-180"
-                              : "border-black/10 bg-transparent text-[#1c1712]/35"
+                              ? "border-[#e8531f]/30 bg-[#e8531f]/8 text-[#c2410c] rotate-180"
+                              : "border-black/10 bg-transparent text-[#1c1712]/60"
                           }`}
                         >
                           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
@@ -973,7 +974,7 @@ export function HueFlowHomePage() {
                             animate={{ opacity: 1, height: "auto", marginTop: 14 }}
                             exit={{ opacity: 0, height: 0, marginTop: 0 }}
                             transition={{ duration: 0.28 }}
-                            className="overflow-hidden text-sm leading-7 text-[#1c1712]/55"
+                            className="overflow-hidden text-sm leading-7 text-[#1c1712]/60"
                           >
                             {faq.answer}
                           </motion.p>

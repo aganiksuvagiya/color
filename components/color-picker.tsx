@@ -126,7 +126,7 @@ const LinkIcon = () => (
 
 function SmallTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
+    <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">
       {children}
       <span className="h-px flex-1 bg-black/[0.06]" />
     </h2>
@@ -335,7 +335,7 @@ export function ColorPicker() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -349,7 +349,7 @@ export function ColorPicker() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Free, no signup.</span> Pick any color and get its HEX, RGB, HSL, HSB and CMYK values with matching shades and tints.
             </p>
           </div>
@@ -478,7 +478,7 @@ export function ColorPicker() {
                   <span className="w-full truncate font-mono text-[13px] font-semibold text-[#1c1712]/80 group-hover:text-[#1c1712]">
                     {copied === value ? "✓ Copied" : value}
                   </span>
-                  <span className="absolute right-3 top-3.5 text-[#1c1712]/30 opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
+                  <span className="absolute right-3 top-3.5 text-[#1c1712]/60 opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
                     <CopyIcon />
                   </span>
                 </button>
@@ -502,7 +502,7 @@ export function ColorPicker() {
                     <div className="px-4 py-3.5">
                       <p className="font-mono text-[18px] font-semibold">
                         {c.ratio.toFixed(2)}
-                        <span className="text-[#1c1712]/35">:1</span>
+                        <span className="text-[#1c1712]/60">:1</span>
                       </p>
                       <div className="mt-2.5 flex flex-wrap gap-1.5">
                         {[
@@ -532,7 +532,7 @@ export function ColorPicker() {
                       <span key={i} className="h-12 w-12 rounded-xl border border-dashed border-black/15" />
                     ))}
                   </div>
-                  <p className="mt-3 text-[14px] text-[#1c1712]/50">Colors you pick show up here, so you can jump back to them.</p>
+                  <p className="mt-3 text-[14px] text-[#1c1712]/60">Colors you pick show up here, so you can jump back to them.</p>
                 </div>
               ) : (
                 <div className="flex flex-wrap gap-2.5">
@@ -544,7 +544,7 @@ export function ColorPicker() {
                       aria-label={`Use ${c.toUpperCase()}`}
                     >
                       <span className={`h-12 w-12 rounded-xl ring-1 ring-black/10 transition group-hover:-translate-y-0.5 ${c === hex ? "outline outline-2 outline-offset-2 outline-[#1c1712]" : ""}`} style={{ backgroundColor: c }} />
-                      <span className="font-mono text-[10px] uppercase text-[#1c1712]/45">{c.slice(1)}</span>
+                      <span className="font-mono text-[10px] uppercase text-[#1c1712]/60">{c.slice(1)}</span>
                     </button>
                   ))}
                 </div>
@@ -557,7 +557,7 @@ export function ColorPicker() {
         <section className="border-t border-black/[0.06]">
           <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
             <h2 className="text-[1.75rem] font-semibold tracking-[-0.03em]">Matching palettes</h2>
-            <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">Color harmonies built from {hex.toUpperCase()}. Click a swatch to pick it, or open the palette in the generator.</p>
+            <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/60">Color harmonies built from {hex.toUpperCase()}. Click a swatch to pick it, or open the palette in the generator.</p>
             <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
               {HARMONIES.map((h) => {
                 const colors = generateHarmony(hex, h.mode).colors.map((c) => c.hex.toUpperCase());
@@ -567,7 +567,7 @@ export function ColorPicker() {
                     <div className="flex items-center justify-between gap-3 px-4 py-3.5">
                       <div className="min-w-0">
                         <h3 className="truncate text-[15px] font-semibold">{h.label}</h3>
-                        <p className="truncate font-mono text-[11px] uppercase text-[#1c1712]/45">{colors.map((c) => c.slice(1)).join(" · ")}</p>
+                        <p className="truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{colors.map((c) => c.slice(1)).join(" · ")}</p>
                       </div>
                       <Link
                         href={`/generator?label=${encodeURIComponent(`${colorName} ${h.label}`)}&c=${colors.map((c) => c.slice(1)).join("-")}`}
@@ -593,7 +593,7 @@ export function ColorPicker() {
               <div key={g.title}>
                 <SmallTitle>{g.title}</SmallTitle>
                 <SwatchStrip colors={g.list.map((c) => c.toUpperCase())} height="h-28" copied={copied} onCopy={selectColor} className="rounded-2xl ring-1 ring-black/[0.07]" />
-                <p className="mt-3 text-[13px] text-[#1c1712]/45">{g.note}</p>
+                <p className="mt-3 text-[13px] text-[#1c1712]/60">{g.note}</p>
               </div>
             ))}
             <div className="lg:col-span-2">

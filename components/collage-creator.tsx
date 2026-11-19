@@ -98,7 +98,7 @@ export function CollageCreator() {
     setDownloading(false);
   }, [slots, cols, rows, gap]);
 
-  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
 
   return (
     <div className="min-h-screen bg-white text-[#1c1712]">
@@ -107,7 +107,7 @@ export function CollageCreator() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -115,7 +115,7 @@ export function CollageCreator() {
             <span className="text-[#1c1712]/60">Collage Creator</span>
           </nav>
           <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Collage Creator</h1>
-          <p className="mt-5 text-[16px] text-[#1c1712]/55">
+          <p className="mt-5 text-[16px] text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">Combine up to 6 images into one collage.</span> Add your photos, set the gap and export a PNG. Images stay in your browser.
           </p>
         </section>
@@ -144,7 +144,7 @@ export function CollageCreator() {
                     ) : (
                       <button
                         onClick={() => fileInputRefs.current[slot.id]?.click()}
-                        className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-[#1c1712]/45 transition hover:bg-[#1c1712]/[0.03] hover:text-[#1c1712]"
+                        className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-[#1c1712]/60 transition hover:bg-[#1c1712]/[0.03] hover:text-[#1c1712]"
                       >
                         <span className="text-2xl font-light leading-none">+</span>
                         <span className="text-[12px] font-semibold">Add image</span>
@@ -213,7 +213,7 @@ export function CollageCreator() {
               </div>
 
               <div className="border-t border-black/[0.07] pt-6">
-                <p className="text-[13px] text-[#1c1712]/55">
+                <p className="text-[13px] text-[#1c1712]/60">
                   {filledCount === 0 ? "Add at least one image to download." : `${filledCount} image${filledCount > 1 ? "s" : ""} · PNG · 1200px wide`}
                 </p>
                 <button

@@ -59,7 +59,7 @@ export function ConverterPairView({ pair }: { pair: ConverterPair }) {
 
           {cssCapable && (
             <div className="mt-8 max-w-3xl min-w-0">
-              <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#1c1712]/45">Use it in CSS</p>
+              <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#1c1712]/60">Use it in CSS</p>
               <pre className="mt-2 overflow-x-auto rounded-xl bg-[#1c1712] p-4 font-mono text-[13px] leading-6 text-white/90">
                 <code>{`.button {\n  background-color: ${pair.exampleTo};\n}`}</code>
               </pre>
@@ -78,7 +78,7 @@ export function ConverterPairView({ pair }: { pair: ConverterPair }) {
           <div className="mt-6 max-w-5xl overflow-x-auto rounded-2xl ring-1 ring-black/[0.07]">
             <table className="w-full min-w-[34rem] text-left text-[14px]">
               <thead>
-                <tr className="border-b border-black/[0.07] bg-[#fafafa] text-[12px] uppercase tracking-[0.1em] text-[#1c1712]/50">
+                <tr className="border-b border-black/[0.07] bg-[#fafafa] text-[12px] uppercase tracking-[0.1em] text-[#1c1712]/60">
                   <th className="px-4 py-3 font-semibold">Color</th>
                   <th className="px-4 py-3 font-semibold">{pair.fromLabel}</th>
                   <th className="px-4 py-3 font-semibold">{pair.toLabel}</th>

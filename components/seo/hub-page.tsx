@@ -48,7 +48,7 @@ export function HubPageView({ hub, directory }: { hub: HubPage; directory?: HubD
                   <span key={`${hex}-${i}`} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: hex }} />
                 ))}
               </span>
-              <p className="hub-description min-w-0 flex-1 basis-72 text-[16px] leading-7 text-[#1c1712]/55">
+              <p className="hub-description min-w-0 flex-1 basis-72 text-[16px] leading-7 text-[#1c1712]/60">
                 <span className="font-semibold text-[#1c1712]/80">{hub.featuredLinks.length} pages in this collection.</span> {hub.description}
               </p>
             </div>
@@ -141,7 +141,7 @@ export function HubPageView({ hub, directory }: { hub: HubPage; directory?: HubD
           <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
             <SmallTitle>
               {directory.heading}
-              <span className="font-mono normal-case tracking-normal text-[#1c1712]/35">{directory.links.length} pages</span>
+              <span className="font-mono normal-case tracking-normal text-[#1c1712]/60">{directory.links.length} pages</span>
             </SmallTitle>
             <ul className="grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {directory.links.map((link) => (

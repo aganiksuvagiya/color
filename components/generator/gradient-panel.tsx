@@ -41,14 +41,15 @@ export function GradientPanel({ palette }: Props) {
       animate={{ opacity: 1, y: 0 }}
       className="rounded-2xl border border-black/[0.08] bg-white p-4 shadow-[0_1px_6px_rgba(28,23,18,0.06)]"
     >
-      <p className="mb-3 text-sm font-medium text-[#1c1712]/55">Gradient Generator</p>
+      <p className="mb-3 text-sm font-medium text-[#1c1712]/60">Gradient Generator</p>
 
       <div className="mb-3 h-32 rounded-xl shadow-[inset_0_0_0_1px_rgba(28,23,18,0.06)]" style={{ background: gradient }} />
 
       <div className="mb-3 flex flex-wrap items-center gap-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs text-[#1c1712]/40">From</span>
+          <span className="text-xs text-[#1c1712]/60">From</span>
           <select
+            aria-label="Gradient start color"
             value={color1}
             onChange={(e) => setColor1(Number(e.target.value))}
             className="rounded-lg border border-black/[0.10] bg-[#faf7f2] px-2 py-1 text-xs text-[#1c1712] outline-none focus:border-black/20"
@@ -59,8 +60,9 @@ export function GradientPanel({ palette }: Props) {
           </select>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-[#1c1712]/40">To</span>
+          <span className="text-xs text-[#1c1712]/60">To</span>
           <select
+            aria-label="Gradient end color"
             value={color2}
             onChange={(e) => setColor2(Number(e.target.value))}
             className="rounded-lg border border-black/[0.10] bg-[#faf7f2] px-2 py-1 text-xs text-[#1c1712] outline-none focus:border-black/20"
@@ -78,7 +80,7 @@ export function GradientPanel({ palette }: Props) {
               className={`rounded-lg px-2.5 py-1 text-sm transition-colors ${
                 direction === d.key
                   ? "bg-[#1c1712]/8 text-[#1c1712]"
-                  : "text-[#1c1712]/40 hover:text-[#1c1712]/70"
+                  : "text-[#1c1712]/60 hover:text-[#1c1712]/70"
               }`}
             >
               {d.label}

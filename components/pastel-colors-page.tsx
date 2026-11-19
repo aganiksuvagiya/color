@@ -96,7 +96,7 @@ export function PastelColorsPage({ palettes, faq }: Props) {
             return (
               <div key={g.key} id={`pastel-${g.key}`} className="scroll-mt-40 pt-12">
                 <h2 className="text-[1.6rem] font-semibold tracking-[-0.03em]">{g.heading}</h2>
-                <p className="mt-2 max-w-3xl text-[15px] leading-7 text-[#1c1712]/55">{g.intro}</p>
+                <p className="mt-2 max-w-3xl text-[15px] leading-7 text-[#1c1712]/60">{g.intro}</p>
                 <ul className="mt-6 grid grid-cols-2 gap-x-5 gap-y-5 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5">
                   {items.map((c) => {
                     const value = code(c, format);
@@ -115,11 +115,11 @@ export function PastelColorsPage({ palettes, faq }: Props) {
                         </button>
                         <div className="mt-2 flex items-center justify-between gap-2 px-0.5">
                           <span className="truncate text-[13px] font-medium text-[#1c1712]/85">{c.name}</span>
-                          <button onClick={() => copy(value)} className="shrink-0 text-[#1c1712]/35 transition hover:text-[#1c1712]" aria-label={`Copy ${value}`} title={`Copy ${value}`}>
+                          <button onClick={() => copy(value)} className="shrink-0 text-[#1c1712]/60 transition hover:text-[#1c1712]" aria-label={`Copy ${value}`} title={`Copy ${value}`}>
                             <CopyIcon />
                           </button>
                         </div>
-                        <p className="px-0.5 font-mono text-[11px] text-[#1c1712]/45">{c.hex}</p>
+                        <p className="px-0.5 font-mono text-[11px] text-[#1c1712]/60">{c.hex}</p>
                       </li>
                     );
                   })}
@@ -171,13 +171,13 @@ export function PastelColorsPage({ palettes, faq }: Props) {
                     >
                       <span className="font-mono text-[11px] font-semibold">{copied === s.hex ? "Copied" : s.hex}</span>
                     </button>
-                    <p className="mt-1.5 text-[12px] text-[#1c1712]/50">{s.amount}% white</p>
+                    <p className="mt-1.5 text-[12px] text-[#1c1712]/60">{s.amount}% white</p>
                   </li>
                 ))}
               </ul>
             )}
             <div className="mt-8 max-w-3xl min-w-0">
-              <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#1c1712]/45">In CSS</p>
+              <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-[#1c1712]/60">In CSS</p>
               <pre className="mt-2 overflow-x-auto rounded-xl bg-[#1c1712] p-4 font-mono text-[13px] leading-6 text-white/90">
                 <code>{`/* mix a color with white */\nbackground: color-mix(in srgb, ${baseRgb ? base.toUpperCase() : "#3B82F6"} 35%, white);\n\n/* or set a high lightness in HSL */\nbackground: hsl(217 90% 85%);`}</code>
               </pre>
@@ -197,7 +197,7 @@ export function PastelColorsPage({ palettes, faq }: Props) {
                   <div className="mt-3 flex items-center justify-between gap-3">
                     <div className="min-w-0">
                       <p className="truncate text-[15px] font-semibold">{p.name}</p>
-                      <p className="truncate font-mono text-[11px] uppercase text-[#1c1712]/45">{p.colors.join(" · ")}</p>
+                      <p className="truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{p.colors.join(" · ")}</p>
                     </div>
                     <Link href={p.href} className="shrink-0 rounded-full px-3 py-1 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
                       Open
@@ -216,7 +216,7 @@ export function PastelColorsPage({ palettes, faq }: Props) {
                 <div key={c.name} className="min-w-0 rounded-2xl p-4 ring-1 ring-black/[0.07]">
                   <SwatchStrip colors={c.colors.map(hexOf)} height="h-16" copied={copied} onCopy={copy} className="rounded-xl" />
                   <p className="mt-3 text-[14px] font-semibold">{c.name}</p>
-                  <p className="mt-0.5 text-[13px] text-[#1c1712]/55">{c.colors.join(" + ")}</p>
+                  <p className="mt-0.5 text-[13px] text-[#1c1712]/60">{c.colors.join(" + ")}</p>
                 </div>
               ))}
             </div>
@@ -234,7 +234,7 @@ export function PastelColorsPage({ palettes, faq }: Props) {
             <div className="mt-6 max-w-4xl overflow-x-auto rounded-2xl ring-1 ring-black/[0.07]">
               <table className="w-full min-w-[32rem] text-left text-[14px]">
                 <thead>
-                  <tr className="border-b border-black/[0.07] bg-[#fafafa] text-[12px] uppercase tracking-[0.1em] text-[#1c1712]/50">
+                  <tr className="border-b border-black/[0.07] bg-[#fafafa] text-[12px] uppercase tracking-[0.1em] text-[#1c1712]/60">
                     <th className="px-4 py-3 font-semibold">Background</th>
                     <th className="px-4 py-3 font-semibold">Dark text (#1C1712)</th>
                     <th className="px-4 py-3 font-semibold">White text</th>
@@ -246,7 +246,7 @@ export function PastelColorsPage({ palettes, faq }: Props) {
                       <td className="px-4 py-2.5">
                         <span className="flex items-center gap-3 font-medium">
                           <span className="h-5 w-5 shrink-0 rounded-full ring-1 ring-black/15" style={{ backgroundColor: r.hex }} aria-hidden="true" />
-                          {r.name} <span className="font-mono text-[12px] text-[#1c1712]/45">{r.hex}</span>
+                          {r.name} <span className="font-mono text-[12px] text-[#1c1712]/60">{r.hex}</span>
                         </span>
                       </td>
                       <td className="px-4 py-2.5 font-mono text-[13px]">{r.onDark.toFixed(1)}:1 <span className={r.onDark >= 4.5 ? "text-emerald-700" : "text-red-600"}>{r.onDark >= 4.5 ? "pass" : "fail"}</span></td>

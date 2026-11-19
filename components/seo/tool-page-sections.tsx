@@ -12,7 +12,7 @@ function ToolPageSectionsNew({ config }: { config: ToolPageSeoConfig }) {
           <div>
             <p className={eyebrow}>Direct answer</p>
             <p className="hub-answer mt-3 text-[1.15rem] font-medium leading-8 tracking-[-0.01em]">{config.answer}</p>
-            <p className="mt-4 text-[14px] leading-7 text-[#1c1712]/50">{config.audience}</p>
+            <p className="mt-4 text-[14px] leading-7 text-[#1c1712]/60">{config.audience}</p>
           </div>
           <div>
             <p className={eyebrow}>Best use cases</p>
@@ -70,7 +70,7 @@ function ToolPageSectionsNew({ config }: { config: ToolPageSeoConfig }) {
                 <details key={f.question} open={i === 0} className="group">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-[16px] font-semibold leading-6 outline-none transition hover:text-[#c2410c] focus-visible:text-[#c2410c] [&::-webkit-details-marker]:hidden">
                     {f.question}
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#1c1712]/55 ring-1 ring-black/[0.14] transition duration-200 group-open:rotate-45 group-open:bg-[#1c1712] group-open:text-white group-open:ring-[#1c1712]">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#1c1712]/60 ring-1 ring-black/[0.14] transition duration-200 group-open:rotate-45 group-open:bg-[#1c1712] group-open:text-white group-open:ring-[#1c1712]">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
                         <path d="M6 1v10M1 6h10" />
                       </svg>
@@ -92,7 +92,7 @@ function ToolPageSectionsNew({ config }: { config: ToolPageSeoConfig }) {
                   className="group flex items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold leading-5 text-[#1c1712]/85 ring-1 ring-black/[0.08] transition hover:bg-[#fafafa] hover:text-[#c2410c] hover:ring-black/25"
                 >
                   {link.title}
-                  <span className="shrink-0 text-[#1c1712]/40 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
+                  <span className="shrink-0 text-[#1c1712]/60 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
                 </Link>
               ))}
             </div>
@@ -109,9 +109,9 @@ export function ToolPageSections({ config, variant }: { config: ToolPageSeoConfi
     <section className="mt-10 space-y-5">
       {/* Direct answer */}
       <div className="rounded-2xl border border-black/[0.08] bg-white p-6 shadow-[0_1px_6px_rgba(28,23,18,0.06)]">
-        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#e8531f]">Direct answer</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#c2410c]">Direct answer</p>
         <p className="mt-3 text-sm leading-7 text-[#1c1712]/70">{config.answer}</p>
-        <p className="mt-4 text-sm text-[#1c1712]/45">{config.audience}</p>
+        <p className="mt-4 text-sm text-[#1c1712]/60">{config.audience}</p>
       </div>
 
       {/* Use cases + How to */}
@@ -132,7 +132,7 @@ export function ToolPageSections({ config, variant }: { config: ToolPageSeoConfi
           <ol className="mt-4 space-y-2.5 text-sm leading-7 text-[#1c1712]/60">
             {config.howToSteps.map((step, index) => (
               <li key={step} className="flex items-start gap-2.5">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#1c1712]/[0.07] text-[10px] font-bold text-[#1c1712]/50">
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#1c1712]/[0.07] text-[10px] font-bold text-[#1c1712]/60">
                   {index + 1}
                 </span>
                 {step}
@@ -150,7 +150,7 @@ export function ToolPageSections({ config, variant }: { config: ToolPageSeoConfi
             {config.explainer.map((item) => (
               <div key={item.title} className="rounded-xl border border-black/[0.06] bg-[#faf7f2] p-4">
                 <p className="text-sm font-semibold text-[#1c1712]">{item.title}</p>
-                <p className="mt-2 text-sm leading-6 text-[#1c1712]/55">{item.body}</p>
+                <p className="mt-2 text-sm leading-6 text-[#1c1712]/60">{item.body}</p>
               </div>
             ))}
           </div>
@@ -163,19 +163,19 @@ export function ToolPageSections({ config, variant }: { config: ToolPageSeoConfi
         <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
           <div className="rounded-xl border border-black/[0.06] bg-[#faf7f2] p-4">
             <p className="text-sm font-semibold text-[#1c1712]">Clear answers first</p>
-            <p className="mt-2 text-sm leading-6 text-[#1c1712]/55">
+            <p className="mt-2 text-sm leading-6 text-[#1c1712]/60">
               Every page leads with a direct answer — no preamble, no filler. Get what you need without scrolling through editorial context.
             </p>
           </div>
           <div className="rounded-xl border border-black/[0.06] bg-[#faf7f2] p-4">
             <p className="text-sm font-semibold text-[#1c1712]">Grouped by topic</p>
-            <p className="mt-2 text-sm leading-6 text-[#1c1712]/55">
+            <p className="mt-2 text-sm leading-6 text-[#1c1712]/60">
               Content is organized into concise, scannable sections so you can jump to exactly the guidance you need.
             </p>
           </div>
           <div className="rounded-xl border border-black/[0.06] bg-[#faf7f2] p-4">
             <p className="text-sm font-semibold text-[#1c1712]">Linked to tools</p>
-            <p className="mt-2 text-sm leading-6 text-[#1c1712]/55">
+            <p className="mt-2 text-sm leading-6 text-[#1c1712]/60">
               Each page connects to related tools, palettes, and implementation resources so you can act on what you learn immediately.
             </p>
           </div>
@@ -189,7 +189,7 @@ export function ToolPageSections({ config, variant }: { config: ToolPageSeoConfi
           {config.faq.map((item) => (
             <div key={item.question} className="rounded-xl border border-black/[0.06] bg-[#faf7f2] p-4">
               <h3 className="text-sm font-semibold text-[#1c1712]">{item.question}</h3>
-              <p className="mt-2 text-sm leading-7 text-[#1c1712]/55">{item.answer}</p>
+              <p className="mt-2 text-sm leading-7 text-[#1c1712]/60">{item.answer}</p>
             </div>
           ))}
         </div>
@@ -206,7 +206,7 @@ export function ToolPageSections({ config, variant }: { config: ToolPageSeoConfi
               className="flex items-center justify-between rounded-xl border border-black/[0.08] bg-[#faf7f2] px-4 py-3 text-sm font-medium text-[#1c1712]/60 transition-all hover:border-black/14 hover:bg-[#f0ebe4] hover:text-[#1c1712]"
             >
               {link.title}
-              <span className="text-[#1c1712]/30">→</span>
+              <span className="text-[#1c1712]/60">→</span>
             </Link>
           ))}
         </div>

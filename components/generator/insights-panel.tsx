@@ -12,7 +12,7 @@ import {
 
 type Props = { palette: Palette; column?: "left" | "right" };
 
-const sectionLabel = "mb-3 text-[10px] font-bold uppercase tracking-[0.20em] text-[#1c1712]/50";
+const sectionLabel = "mb-3 text-[10px] font-bold uppercase tracking-[0.20em] text-[#1c1712]/60";
 
 export function InsightsPanel({ palette, column }: Props) {
   const story = getPaletteStory(palette);
@@ -82,7 +82,7 @@ export function InsightsPanel({ palette, column }: Props) {
               <div key={name}>
                 <div className="mb-1.5 flex items-center justify-between">
                   <span className="text-[12px] font-medium text-[#1c1712]/65">{emoji} {name}</span>
-                  <span className="font-mono text-[11px] font-bold text-[#1c1712]/40">{score}%</span>
+                  <span className="font-mono text-[11px] font-bold text-[#1c1712]/60">{score}%</span>
                 </div>
                 <div className="h-1.5 overflow-hidden rounded-full bg-black/[0.06]">
                   <motion.div
@@ -107,8 +107,8 @@ export function InsightsPanel({ palette, column }: Props) {
             {brandMatches.map(({ name, description, similarity }) => (
               <div key={name} className="rounded-2xl border border-black/[0.10] bg-white p-3.5 shadow-[0_1px_6px_rgba(28,23,18,0.07)]">
                 <p className="text-[13px] font-bold tracking-[-0.01em] text-[#1c1712]">{name}</p>
-                <p className="mt-1 text-[11px] leading-[1.5] text-[#1c1712]/55">{description}</p>
-                <span className="mt-2.5 inline-flex items-center rounded-full border border-[#e8531f]/20 bg-[#e8531f]/10 px-2 py-0.5 font-mono text-[9px] font-bold text-[#e8531f]">
+                <p className="mt-1 text-[11px] leading-[1.5] text-[#1c1712]/60">{description}</p>
+                <span className="mt-2.5 inline-flex items-center rounded-full border border-[#e8531f]/20 bg-[#e8531f]/10 px-2 py-0.5 font-mono text-[9px] font-bold text-[#c2410c]">
                   {similarity}% match
                 </span>
               </div>
@@ -124,11 +124,11 @@ export function InsightsPanel({ palette, column }: Props) {
           <div className="space-y-2.5">
             {fontPairings.map((pair, i) => (
               <div key={i} className="rounded-2xl border border-black/[0.10] bg-white p-4 shadow-[0_1px_6px_rgba(28,23,18,0.07)]">
-                <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.20em] text-[#1c1712]/40">{pair.style}</p>
+                <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.20em] text-[#1c1712]/60">{pair.style}</p>
                 <p className="text-[16px] font-bold tracking-[-0.02em] text-[#1c1712]">{pair.heading}</p>
-                <p className="mt-0.5 text-[12px] text-[#1c1712]/55">
+                <p className="mt-0.5 text-[12px] text-[#1c1712]/60">
                   {pair.body}
-                  {pair.mono ? <span className="text-[#1c1712]/35"> · {pair.mono}</span> : ""}
+                  {pair.mono ? <span className="text-[#1c1712]/60"> · {pair.mono}</span> : ""}
                 </p>
               </div>
             ))}

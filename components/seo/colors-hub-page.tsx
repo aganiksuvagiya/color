@@ -58,7 +58,7 @@ export function ColorsHubView({
 
       {/* ── Header ── */}
       <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
           <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">Colors</span>
@@ -70,7 +70,7 @@ export function ColorsHubView({
               <span key={hex} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: hex }} />
             ))}
           </span>
-          <p className="hub-description text-[16px] text-[#1c1712]/55">
+          <p className="hub-description text-[16px] text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">{total} named colors</span> with HEX, RGB and HSL codes. Click to copy, or open any color for shades, palettes and meaning.
           </p>
         </div>
@@ -91,7 +91,7 @@ export function ColorsHubView({
               >
                 {f.hex && <span className="h-2.5 w-2.5 rounded-full ring-1 ring-inset ring-black/10" style={{ backgroundColor: f.hex }} />}
                 {f.name}
-                <span className={`text-[11px] ${on ? "text-white/60" : "text-[#1c1712]/35"}`}>{f.count}</span>
+                <span className={`text-[11px] ${on ? "text-white/60" : "text-[#1c1712]/60"}`}>{f.count}</span>
               </button>
             );
           })}
@@ -103,7 +103,7 @@ export function ColorsHubView({
         <div ref={sentinel} aria-hidden="true" className="h-px" />
         {stuck && <div aria-hidden="true" className="pointer-events-none fixed inset-x-0 top-0 z-10 hidden h-[86px] bg-white lg:block" />}
         <div className="z-20 -mx-6 flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.06] bg-white px-6 py-3 sm:-mx-8 sm:px-8 lg:sticky lg:top-[86px] lg:-mx-12 lg:px-12">
-          <p className="text-[13px] text-[#1c1712]/55">
+          <p className="text-[13px] text-[#1c1712]/60">
             {active ? (
               <>
                 {active.colors.length} {active.name.toLowerCase()} colors ·{" "}
@@ -125,10 +125,10 @@ export function ColorsHubView({
         <div className={view === "grid" ? "" : "hidden"}>
           {shown.map((f) => (
             <div key={f.slug} className="mt-8">
-              <h2 className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
-                {f.name} colors <span className="font-medium normal-case tracking-normal text-[#1c1712]/30">{f.colors.length}</span>
+              <h2 className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">
+                {f.name} colors <span className="font-medium normal-case tracking-normal text-[#1c1712]/60">{f.colors.length}</span>
                 <span className="h-px flex-1 bg-black/[0.06]" />
-                <Link href={`/shades-of-${f.slug}`} className="text-[12px] font-medium normal-case tracking-normal text-[#1c1712]/45 transition hover:text-[#c2410c]">
+                <Link href={`/shades-of-${f.slug}`} className="text-[12px] font-medium normal-case tracking-normal text-[#1c1712]/60 transition hover:text-[#c2410c]">
                   Shades of {f.name.toLowerCase()} →
                 </Link>
               </h2>
@@ -156,7 +156,7 @@ export function ColorsHubView({
                         <Link href={`/colors/${c.slug}`} className="truncate text-[13px] font-medium text-[#1c1712]/85 transition hover:text-[#c2410c]">
                           {c.name}
                         </Link>
-                        <span className="flex shrink-0 items-center gap-2 text-[#1c1712]/35">
+                        <span className="flex shrink-0 items-center gap-2 text-[#1c1712]/60">
                           <button onClick={() => copy(value)} className="transition hover:text-[#1c1712]" aria-label={`Copy ${value}`} title={`Copy ${value}`}>
                             <CopyIcon />
                           </button>
@@ -177,7 +177,7 @@ export function ColorsHubView({
         <div className={`mt-6 overflow-x-auto rounded-xl ring-1 ring-black/[0.07] ${view === "list" ? "" : "hidden"}`}>
           <table className="w-full min-w-[560px] text-left text-[14px]">
             <thead>
-              <tr className="border-b border-black/[0.06] text-[11px] uppercase tracking-[0.14em] text-[#1c1712]/40">
+              <tr className="border-b border-black/[0.06] text-[11px] uppercase tracking-[0.14em] text-[#1c1712]/60">
                 <th className="px-5 py-3 font-semibold">Color</th>
                 <th className="px-5 py-3 font-semibold">HEX</th>
                 <th className="px-5 py-3 font-semibold">RGB</th>
@@ -230,7 +230,7 @@ export function ColorsHubView({
                 <details key={f.question} className="group py-4">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-semibold">
                     {f.question}
-                    <span className="text-lg leading-none text-[#1c1712]/30 transition group-open:rotate-45">+</span>
+                    <span className="text-lg leading-none text-[#1c1712]/60 transition group-open:rotate-45">+</span>
                   </summary>
                   <p className="mt-2.5 text-[14px] leading-7 text-[#1c1712]/60">{f.answer}</p>
                 </details>

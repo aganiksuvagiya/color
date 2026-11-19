@@ -930,7 +930,7 @@ export function PaletteVisualizer() {
   const previewProps = { neutral, primary, success, warning, accent, primaryText };
   const current = VIEWS.find((v) => v.id === view) ?? VIEWS[0];
 
-  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
   const actionBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
 
   return (
@@ -946,7 +946,7 @@ export function PaletteVisualizer() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -960,7 +960,7 @@ export function PaletteVisualizer() {
                 <span key={c.role} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c.hex }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">See your palette on real UI.</span> Edit the five role colors and watch a website, dashboard, app screen and UI kit update live, then copy CSS or JSON tokens.
             </p>
           </div>
@@ -973,7 +973,7 @@ export function PaletteVisualizer() {
             <aside className="flex flex-col rounded-2xl ring-1 ring-black/[0.07] lg:sticky lg:top-24 lg:self-start">
               <div className="px-5 pb-3 pt-5">
                 <p className={label}>Palette roles</p>
-                <p className="mt-1 text-[13px] text-[#1c1712]/50">Click a swatch to change it.</p>
+                <p className="mt-1 text-[13px] text-[#1c1712]/60">Click a swatch to change it.</p>
               </div>
               <ul className="divide-y divide-black/[0.06] border-t border-black/[0.06]">
                 {palette.colors.map((color) => (
@@ -995,7 +995,7 @@ export function PaletteVisualizer() {
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{ROLE_LABELS[color.role]}</p>
                       <p className="truncate text-[14px] font-semibold leading-5">{color.name}</p>
                     </div>
-                    <p className="font-mono text-[12px] uppercase text-[#1c1712]/50">{color.hex}</p>
+                    <p className="font-mono text-[12px] uppercase text-[#1c1712]/60">{color.hex}</p>
                   </li>
                 ))}
               </ul>
@@ -1030,7 +1030,7 @@ export function PaletteVisualizer() {
                     {v.label}
                   </button>
                 ))}
-                <span className="ml-auto text-[13px] text-[#1c1712]/45">Updates live as you edit</span>
+                <span className="ml-auto text-[13px] text-[#1c1712]/60">Updates live as you edit</span>
               </div>
 
               <div className="mt-4 overflow-hidden rounded-2xl ring-1 ring-black/[0.1]">
@@ -1040,7 +1040,7 @@ export function PaletteVisualizer() {
                     <span className="h-2.5 w-2.5 rounded-full bg-black/15" />
                     <span className="h-2.5 w-2.5 rounded-full bg-black/15" />
                   </span>
-                  <span className="mx-auto w-full max-w-xs truncate rounded-full bg-white px-4 py-1 text-center text-[11px] text-[#1c1712]/50 ring-1 ring-black/[0.06]">
+                  <span className="mx-auto w-full max-w-xs truncate rounded-full bg-white px-4 py-1 text-center text-[11px] text-[#1c1712]/60 ring-1 ring-black/[0.06]">
                     {current.url}
                   </span>
                   <span className="w-10" />

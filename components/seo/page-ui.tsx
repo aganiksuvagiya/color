@@ -12,7 +12,7 @@ export type Crumb = { title: string; href: string };
 
 export function Breadcrumbs({ items }: { items: Crumb[] }) {
   return (
-    <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[12px] text-[#1c1712]/40">
+    <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-[12px] text-[#1c1712]/60">
       {items.map((item, i) => (
         <span key={`${item.href}-${i}`} className="flex items-center gap-2">
           {i < items.length - 1 ? (
@@ -29,7 +29,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
 
 export function SmallTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
+    <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">
       {children}
       <span className="h-px flex-1 bg-black/[0.06]" />
     </h2>
@@ -54,7 +54,7 @@ export function Faq({ items, openFirst = true, wide = false }: { items: { questi
         <details key={f.question} open={openFirst && i === 0} className="group">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-[16px] font-semibold leading-6 outline-none transition hover:text-[#c2410c] focus-visible:text-[#c2410c] [&::-webkit-details-marker]:hidden">
             {f.question}
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#1c1712]/55 ring-1 ring-black/[0.14] transition duration-200 group-open:rotate-45 group-open:bg-[#1c1712] group-open:text-white group-open:ring-[#1c1712]">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#1c1712]/60 ring-1 ring-black/[0.14] transition duration-200 group-open:rotate-45 group-open:bg-[#1c1712] group-open:text-white group-open:ring-[#1c1712]">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
                 <path d="M6 1v10M1 6h10" />
               </svg>
@@ -77,7 +77,7 @@ export function RelatedLinks({ links }: { links: { title: string; href: string }
           className="group flex items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold leading-5 text-[#1c1712]/85 ring-1 ring-black/[0.08] transition hover:bg-[#fafafa] hover:text-[#c2410c] hover:ring-black/25"
         >
           {link.title}
-          <span className="shrink-0 text-[#1c1712]/40 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
+          <span className="shrink-0 text-[#1c1712]/60 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
         </Link>
       ))}
     </div>

@@ -62,7 +62,7 @@ export function IndustryPaletteCard({ palette, roles, copy = defaultCopy }: { pa
       <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
         <div className="min-w-0">
           <h3 className="text-[1.05rem] font-semibold">{palette.name}</h3>
-          <p className="text-[14px] text-[#1c1712]/55">{palette.useCase}</p>
+          <p className="text-[14px] text-[#1c1712]/60">{palette.useCase}</p>
         </div>
         <Link
           href={generatorHref(palette)}
@@ -75,7 +75,7 @@ export function IndustryPaletteCard({ palette, roles, copy = defaultCopy }: { pa
       <div className="mt-4">
         <PaletteColorStrip colors={palette.colors} />
       </div>
-      <p className="mt-3 font-mono text-[12px] uppercase tracking-wide text-[#1c1712]/50">{palette.colors.join(" · ")}</p>
+      <p className="mt-3 font-mono text-[12px] uppercase tracking-wide text-[#1c1712]/60">{palette.colors.join(" · ")}</p>
 
       <div
         role="img"
@@ -123,8 +123,8 @@ export function IndustryPaletteCard({ palette, roles, copy = defaultCopy }: { pa
             <li key={role} className="flex items-center gap-3 text-[13px]">
               <span className="h-5 w-5 shrink-0 rounded-md ring-1 ring-black/[0.1]" style={{ backgroundColor: roles[role] }} />
               <span className="w-20 shrink-0 font-semibold">{label}</span>
-              <span className="font-mono text-[12px] uppercase text-[#1c1712]/55">{roles[role]}</span>
-              <span className="min-w-0 truncate text-[#1c1712]/50">{job}</span>
+              <span className="font-mono text-[12px] uppercase text-[#1c1712]/60">{roles[role]}</span>
+              <span className="min-w-0 truncate text-[#1c1712]/60">{job}</span>
             </li>
           ))}
         </ul>

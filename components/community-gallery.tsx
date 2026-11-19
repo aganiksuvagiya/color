@@ -123,7 +123,7 @@ export function CommunityGallery() {
 
       {/* ── Header ── */}
       <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
           <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">Community</span>
@@ -135,7 +135,7 @@ export function CommunityGallery() {
               <span key={hex} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: hex }} />
             ))}
           </span>
-          <p className="text-[16px] text-[#1c1712]/55">
+          <p className="text-[16px] text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">{loading && palettes.length === 0 ? "Loading palettes…" : `${palettes.length} palettes shared by HueFlow users.`}</span>{" "}
             Copy a color, open one in the generator, or share yours from your{" "}
             <Link href="/profile" className="font-semibold text-[#c2410c] hover:underline">profile</Link>.
@@ -175,7 +175,7 @@ export function CommunityGallery() {
           {palettes.length === 0 && !loading && (
             <div className="rounded-2xl py-24 text-center ring-1 ring-black/[0.07]">
               <p className="text-[16px] font-semibold">No public palettes yet</p>
-              <p className="mx-auto mt-1 max-w-xs text-[14px] text-[#1c1712]/50">Be the first: make one of your saved palettes public from your profile.</p>
+              <p className="mx-auto mt-1 max-w-xs text-[14px] text-[#1c1712]/60">Be the first: make one of your saved palettes public from your profile.</p>
               <Link href="/profile" className="mt-6 inline-block rounded-full bg-[#1c1712] px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
                 Go to profile
               </Link>
@@ -214,7 +214,7 @@ export function CommunityGallery() {
                     <div className="p-5">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{timeAgo(palette.created_at)}</p>
                       <h3 className="mt-1.5 truncate text-[17px] font-semibold tracking-[-0.02em]">{palette.name}</h3>
-                      <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/45">{hexes.map((h) => h.slice(1)).join(" · ")}</p>
+                      <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{hexes.map((h) => h.slice(1)).join(" · ")}</p>
                       <div className="mt-4 flex items-center gap-2">
                         <Link href={paletteUrl(palette)} className="rounded-full bg-[#1c1712] px-3.5 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
                           Open in generator →

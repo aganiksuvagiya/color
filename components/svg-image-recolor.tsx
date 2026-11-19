@@ -45,7 +45,7 @@ function applyRecolor(svg: string, colorMap: Record<string, string>): string {
   return result;
 }
 
-const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
 const ghostBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-[#1c1712]/70 disabled:hover:ring-black/[0.12]";
 
 function Svg({ children }: { children: ReactNode }) {
@@ -175,7 +175,7 @@ export function SvgImageRecolor() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -189,7 +189,7 @@ export function SvgImageRecolor() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Free, and your file never leaves the browser.</span> Upload an SVG, swap any of its colors, then copy the code or download it.
             </p>
           </div>
@@ -221,11 +221,11 @@ export function SvgImageRecolor() {
                   onClick={() => fileInputRef.current?.click()}
                   className="flex w-full flex-col items-center justify-center gap-2 px-6 py-20 text-center transition hover:bg-[#fafafa]"
                 >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full text-[#1c1712]/55 ring-1 ring-black/[0.12]">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full text-[#1c1712]/60 ring-1 ring-black/[0.12]">
                     <Svg><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></Svg>
                   </span>
                   <span className="text-[15px] font-semibold">Drop an SVG here, or click to upload</span>
-                  <span className="text-[13px] text-[#1c1712]/50">SVG files only</span>
+                  <span className="text-[13px] text-[#1c1712]/60">SVG files only</span>
                 </button>
               )}
 
@@ -235,7 +235,7 @@ export function SvgImageRecolor() {
                   Upload SVG
                 </button>
                 <button onClick={loadDemo} className={ghostBtn}>Try demo</button>
-                {recoloredSvg && <span className="hidden truncate font-mono text-[12px] text-[#1c1712]/45 sm:inline">{fileName}.svg</span>}
+                {recoloredSvg && <span className="hidden truncate font-mono text-[12px] text-[#1c1712]/60 sm:inline">{fileName}.svg</span>}
                 <div className="ml-auto flex flex-wrap items-center gap-2">
                   <button onClick={copySvgCode} disabled={!recoloredSvg} className={ghostBtn}>Copy SVG</button>
                   <button
@@ -256,7 +256,7 @@ export function SvgImageRecolor() {
               <div className="flex items-center justify-between gap-3 px-5 pb-3 pt-5 sm:px-6">
                 <div>
                   <p className={label}>Colors in this image</p>
-                  <p className="mt-1 text-[13px] text-[#1c1712]/50">
+                  <p className="mt-1 text-[13px] text-[#1c1712]/60">
                     {originalColors.length} found{hasChanges ? ` · ${changedCount} changed` : ""}
                   </p>
                 </div>
@@ -269,7 +269,7 @@ export function SvgImageRecolor() {
               </div>
 
               {originalColors.length === 0 ? (
-                <p className="border-t border-black/[0.06] px-5 py-5 text-[14px] leading-6 text-[#1c1712]/55 sm:px-6">
+                <p className="border-t border-black/[0.06] px-5 py-5 text-[14px] leading-6 text-[#1c1712]/60 sm:px-6">
                   {originalSvg
                     ? "No HEX colors found in this file. This tool swaps #RRGGBB and #RGB values, so named colors like \"red\" are left as they are."
                     : "Upload an SVG to see its colors here."}
@@ -290,11 +290,11 @@ export function SvgImageRecolor() {
                           }`}
                         >
                           <span className="h-9 w-9 shrink-0 rounded-lg ring-1 ring-black/10" style={{ backgroundColor: hex }} title={`Original ${hex.toUpperCase()}`} />
-                          <span className="text-[#1c1712]/30" aria-hidden="true">→</span>
+                          <span className="text-[#1c1712]/60" aria-hidden="true">→</span>
                           <span className="h-9 w-9 shrink-0 rounded-lg ring-1 ring-black/10" style={{ backgroundColor: current }} title={`Now ${current.toUpperCase()}`} />
                           <span className="min-w-0 flex-1">
                             <span className="block font-mono text-[13px] font-semibold uppercase">{current}</span>
-                            <span className="block truncate text-[12px] text-[#1c1712]/45">{findClosestColorName(current)}</span>
+                            <span className="block truncate text-[12px] text-[#1c1712]/60">{findClosestColorName(current)}</span>
                           </span>
                           {changed && <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700 ring-1 ring-emerald-600/20">Changed</span>}
                         </button>

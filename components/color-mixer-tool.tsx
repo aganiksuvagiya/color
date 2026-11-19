@@ -46,7 +46,7 @@ function useCopy() {
   return { copied, copy };
 }
 
-const labelCls = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const labelCls = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
 const inputCls = "h-10 min-w-0 flex-1 rounded-xl px-3 font-mono text-[13px] font-semibold text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition focus:ring-2 focus:ring-[#1c1712]";
 const actionBtn = "rounded-full px-4 py-1.5 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25";
 
@@ -87,7 +87,7 @@ function ColorField({ name, value, valid, onChange }: { name: "A" | "B"; value: 
         </label>
         <input id={`mix-${name}`} type="text" value={value} onChange={(e) => onChange(e.target.value.toUpperCase())} maxLength={7} spellCheck={false} placeholder="#000000" className={inputCls} />
       </div>
-      <p className="mt-1.5 truncate text-[12px] text-[#1c1712]/45">{valid ? findClosestColorName(value) : "Enter a valid HEX"}</p>
+      <p className="mt-1.5 truncate text-[12px] text-[#1c1712]/60">{valid ? findClosestColorName(value) : "Enter a valid HEX"}</p>
     </div>
   );
 }
@@ -145,7 +145,7 @@ export function ColorMixerTool() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -159,7 +159,7 @@ export function ColorMixerTool() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: valid ? c : "#ddd" }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Blend any two colors.</span> Pick A and B, drag the gradient to set the ratio, and export a 9-step scale as CSS, Tailwind or JSON.
             </p>
           </div>
@@ -212,7 +212,7 @@ export function ColorMixerTool() {
               </div>
 
               <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-black/[0.06] pt-4">
-                <span className="mr-1 text-[13px] text-[#1c1712]/50">Try a blend</span>
+                <span className="mr-1 text-[13px] text-[#1c1712]/60">Try a blend</span>
                 {BLENDS.map((b) => (
                   <button
                     key={b.name}
@@ -262,11 +262,11 @@ export function ColorMixerTool() {
                 <div className="space-y-2 border-t border-black/[0.06] px-5 py-4 sm:px-6">
                   {([["R", rgbM.r, "#f87171"], ["G", rgbM.g, "#4ade80"], ["B", rgbM.b, "#60a5fa"]] as const).map(([ch, val, col]) => (
                     <div key={ch} className="flex items-center gap-3">
-                      <span className="w-3 text-[11px] font-bold text-[#1c1712]/45">{ch}</span>
+                      <span className="w-3 text-[11px] font-bold text-[#1c1712]/60">{ch}</span>
                       <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-black/[0.06]">
                         <span className="block h-full rounded-full" style={{ width: `${(val / 255) * 100}%`, backgroundColor: col }} />
                       </span>
-                      <span className="w-8 text-right font-mono text-[11px] text-[#1c1712]/50">{val}</span>
+                      <span className="w-8 text-right font-mono text-[11px] text-[#1c1712]/60">{val}</span>
                     </div>
                   ))}
                 </div>
@@ -287,7 +287,7 @@ export function ColorMixerTool() {
                 <div>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Scale</p>
                   <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">9-step blend</h2>
-                  <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/55">Even steps from A to B. Hover a swatch for its HEX, click to copy.</p>
+                  <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/60">Even steps from A to B. Hover a swatch for its HEX, click to copy.</p>
                 </div>
                 <button onClick={() => copy(scaleCss)} className={actionBtn}>{copied === scaleCss ? "✓ Copied" : "Copy CSS"}</button>
               </div>

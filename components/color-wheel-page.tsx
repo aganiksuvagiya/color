@@ -68,7 +68,7 @@ function WheelTable({ colors, caption }: { colors: WheelColor[]; caption: string
       <table className="w-full min-w-[30rem] text-left text-[14px]">
         <caption className="sr-only">{caption}</caption>
         <thead>
-          <tr className="border-b border-black/[0.07] bg-[#fafafa] text-[12px] uppercase tracking-[0.1em] text-[#1c1712]/50">
+          <tr className="border-b border-black/[0.07] bg-[#fafafa] text-[12px] uppercase tracking-[0.1em] text-[#1c1712]/60">
             <th className="px-4 py-3 font-semibold">Color</th>
             <th className="px-4 py-3 font-semibold">Type</th>
             <th className="px-4 py-3 font-semibold">Temperature</th>
@@ -224,7 +224,7 @@ export function ColorWheelPage({ faq, steps }: Props) {
                   <span className="h-14 w-14 shrink-0 rounded-2xl ring-1 ring-black/15" style={{ backgroundColor: current.hex }} aria-hidden="true" />
                   <div className="min-w-0">
                     <p className="text-[1.35rem] font-bold leading-tight tracking-[-0.02em]">{current.name}</p>
-                    <p className="mt-0.5 text-[14px] text-[#1c1712]/55">
+                    <p className="mt-0.5 text-[14px] text-[#1c1712]/60">
                       {TYPE_LABEL[current.type]} color · {current.temperature} color
                     </p>
                   </div>
@@ -232,7 +232,7 @@ export function ColorWheelPage({ faq, steps }: Props) {
                 <dl className="mt-4 divide-y divide-black/[0.06] border-t border-black/[0.06]">
                   {rows.map((r) => (
                     <div key={r.label} className="flex items-center justify-between gap-3 py-2.5">
-                      <dt className="w-12 shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#1c1712]/45">{r.label}</dt>
+                      <dt className="w-12 shrink-0 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#1c1712]/60">{r.label}</dt>
                       <dd className="min-w-0 flex-1 break-all font-mono text-[13px] font-medium text-[#1c1712]/80">{r.value}</dd>
                       <button onClick={() => copy(r.value)} aria-label={`Copy ${r.label} value`} className="shrink-0 rounded-full px-3 py-1 text-[12px] font-semibold text-[#1c1712]/60 ring-1 ring-black/[0.1] transition hover:text-[#1c1712] hover:ring-black/25">
                         {copied === r.value ? "Copied" : "Copy"}
@@ -304,7 +304,7 @@ export function ColorWheelPage({ faq, steps }: Props) {
                     <span className="font-mono text-[13px] font-semibold opacity-80">{base}</span>
                   </div>
                   <div className="p-4 sm:p-5">
-                    <label htmlFor="wheel-hex" className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45">Base color</label>
+                    <label htmlFor="wheel-hex" className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">Base color</label>
                     <div className="mt-2 flex gap-2">
                       <input
                         id="wheel-hex"
@@ -343,7 +343,7 @@ export function ColorWheelPage({ faq, steps }: Props) {
                     <dl className="mt-4 divide-y divide-black/[0.06] border-t border-black/[0.06]">
                       {baseRows.map((r) => (
                         <div key={r.label} className="flex items-center justify-between gap-3 py-2">
-                          <dt className="w-10 shrink-0 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#1c1712]/45">{r.label}</dt>
+                          <dt className="w-10 shrink-0 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#1c1712]/60">{r.label}</dt>
                           <dd className="min-w-0 flex-1 break-all font-mono text-[12px] font-medium text-[#1c1712]/80">{r.value}</dd>
                           <button onClick={() => copy(r.value)} aria-label={`Copy ${r.label} value`} className="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-semibold text-[#1c1712]/60 ring-1 ring-black/[0.1] transition hover:text-[#1c1712] hover:ring-black/25">
                             {copied === r.value ? "Copied" : "Copy"}
@@ -363,7 +363,7 @@ export function ColorWheelPage({ faq, steps }: Props) {
                     <div className="mt-3 flex items-start justify-between gap-3">
                       <div className="min-w-0">
                         <h3 className="text-[15px] font-semibold tracking-[-0.01em]">{row.label}</h3>
-                        <p className="mt-0.5 text-[12px] text-[#1c1712]/50">{row.detail}</p>
+                        <p className="mt-0.5 text-[12px] text-[#1c1712]/60">{row.detail}</p>
                       </div>
                       <div className="flex shrink-0 items-center gap-1.5">
                         <button onClick={() => copy(row.colors.join(", "))} className="rounded-full px-3 py-1 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
@@ -374,7 +374,7 @@ export function ColorWheelPage({ faq, steps }: Props) {
                         </Link>
                       </div>
                     </div>
-                    <p className="mt-1.5 truncate font-mono text-[11px] uppercase text-[#1c1712]/45">{row.colors.join(" · ")}</p>
+                    <p className="mt-1.5 truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{row.colors.join(" · ")}</p>
                   </div>
                 ))}
               </div>

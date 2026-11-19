@@ -37,8 +37,8 @@ const FAQ = [
   { question: "Which format should I use in CSS?", answer: "HEX for most cases. rgba() when you need transparency. HSL when adjusting brightness programmatically." },
 ];
 
-const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
-const inputCls = "mt-1.5 h-11 w-full min-w-0 rounded-xl px-4 font-mono text-[14px] font-semibold text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/35 focus:ring-2 focus:ring-[#1c1712]";
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
+const inputCls = "mt-1.5 h-11 w-full min-w-0 rounded-xl px-4 font-mono text-[14px] font-semibold text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/60 focus:ring-2 focus:ring-[#1c1712]";
 
 function CopyIcon() {
   return (
@@ -127,7 +127,7 @@ export function ColorConverter() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <span className="text-[#1c1712]/60">Color Converter</span>
@@ -139,7 +139,7 @@ export function ColorConverter() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Instant, free, copy with one click.</span> Convert HEX to RGB, RGB to HEX and HEX to HSL.
             </p>
           </div>

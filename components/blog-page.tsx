@@ -54,7 +54,7 @@ export function BlogPage() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/resources" className="transition hover:text-[#1c1712]/70">Resources</Link>
@@ -68,7 +68,7 @@ export function BlogPage() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
             </span>
-            <p className="min-w-0 flex-1 basis-80 text-[16px] leading-7 text-[#1c1712]/55">
+            <p className="min-w-0 flex-1 basis-80 text-[16px] leading-7 text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">{articles.length} articles, free.</span> {blogPageContent.answer}
             </p>
           </div>
@@ -91,7 +91,7 @@ export function BlogPage() {
                     }`}
                   >
                     {c}
-                    <span className={`font-mono text-[11px] ${on ? "text-white/60" : "text-[#1c1712]/40"}`}>{count}</span>
+                    <span className={`font-mono text-[11px] ${on ? "text-white/60" : "text-[#1c1712]/60"}`}>{count}</span>
                   </button>
                 );
               })}
@@ -115,7 +115,7 @@ export function BlogPage() {
                     <div className="flex flex-wrap items-center gap-2">
                       {idx === 0 && category === "All" && <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c2410c]">Start here</span>}
                       <span className="rounded-full bg-[#1c1712]/[0.05] px-2.5 py-0.5 text-[11px] font-semibold text-[#1c1712]/65">{article.category}</span>
-                      <span className="text-[12px] text-[#1c1712]/45">{article.readTime} read</span>
+                      <span className="text-[12px] text-[#1c1712]/60">{article.readTime} read</span>
                     </div>
                     <h2 className="mt-3 text-[1.1rem] font-semibold leading-snug tracking-[-0.015em] transition-colors group-hover:text-[#c2410c]">{article.title}</h2>
                     <p className="mt-2 flex-1 text-[14px] leading-6 text-[#1c1712]/60">{article.excerpt}</p>
@@ -157,7 +157,7 @@ export function BlogPage() {
                   <details key={f.question} open={i === 0} className="group">
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-[16px] font-semibold leading-6 outline-none transition hover:text-[#c2410c] focus-visible:text-[#c2410c] [&::-webkit-details-marker]:hidden">
                       {f.question}
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#1c1712]/55 ring-1 ring-black/[0.14] transition duration-200 group-open:rotate-45 group-open:bg-[#1c1712] group-open:text-white group-open:ring-[#1c1712]">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#1c1712]/60 ring-1 ring-black/[0.14] transition duration-200 group-open:rotate-45 group-open:bg-[#1c1712] group-open:text-white group-open:ring-[#1c1712]">
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
                           <path d="M6 1v10M1 6h10" />
                         </svg>
@@ -179,7 +179,7 @@ export function BlogPage() {
                     className="group flex items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold leading-5 text-[#1c1712]/85 ring-1 ring-black/[0.08] transition hover:bg-[#fafafa] hover:text-[#c2410c] hover:ring-black/25"
                   >
                     {link.title}
-                    <span className="shrink-0 text-[#1c1712]/40 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
+                    <span className="shrink-0 text-[#1c1712]/60 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
                   </Link>
                 ))}
               </div>

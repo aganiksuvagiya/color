@@ -14,7 +14,7 @@ type TargetLevel = "AA" | "AAA";
 const TARGET_RATIOS: Record<TargetLevel, number> = { AA: 4.5, AAA: 7 };
 
 const BADGE_STYLES: Record<Level, string> = {
-  AAA: "bg-emerald-600 text-white",
+  AAA: "bg-emerald-700 text-white",
   AA: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/20",
   Fail: "bg-red-50 text-red-700 ring-1 ring-red-600/20",
 };
@@ -26,7 +26,7 @@ const FAILING_PAIRS = [
   { name: "Yellow on white", fg: "#FACC15", bg: "#FFFFFF" },
 ];
 
-const labelCls = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const labelCls = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
 const inputCls = "h-10 min-w-0 flex-1 rounded-xl px-3 font-mono text-[13px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition focus:ring-2 focus:ring-[#1c1712]";
 
 function LevelBadge({ level }: { level: Level }) {
@@ -84,7 +84,7 @@ function ColorField({
         </label>
         <input id={id} type="text" value={text} onChange={(e) => onText(e.target.value)} maxLength={7} spellCheck={false} placeholder="#000000" className={inputCls} />
       </div>
-      <p className="mt-1.5 truncate text-[12px] text-[#1c1712]/45">{findClosestColorName(value)}</p>
+      <p className="mt-1.5 truncate text-[12px] text-[#1c1712]/60">{findClosestColorName(value)}</p>
     </div>
   );
 }
@@ -95,7 +95,7 @@ function Stage({ label, tone, bg, fg, ratio, level }: { label: string; tone: "be
       <div className="relative flex min-h-[16rem] flex-1 flex-col justify-end gap-2 p-6 pt-16 transition-colors duration-150" style={{ backgroundColor: bg, color: fg }}>
         <span
           className={`absolute left-4 top-4 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${
-            tone === "after" ? "bg-emerald-600 text-white" : "bg-white/90 text-[#1c1712]/70 ring-1 ring-black/10"
+            tone === "after" ? "bg-emerald-700 text-white" : "bg-white/90 text-[#1c1712]/70 ring-1 ring-black/10"
           }`}
         >
           {label}
@@ -107,7 +107,7 @@ function Stage({ label, tone, bg, fg, ratio, level }: { label: string; tone: "be
       <div className="flex items-center gap-3 bg-white px-4 py-3">
         <span className="h-7 w-7 shrink-0 rounded-lg ring-1 ring-black/10" style={{ backgroundColor: fg }} />
         <span className="font-mono text-[13px] font-semibold">{fg.toUpperCase()}</span>
-        <span className="font-mono text-[13px] text-[#1c1712]/50">{ratio.toFixed(2)}:1</span>
+        <span className="font-mono text-[13px] text-[#1c1712]/60">{ratio.toFixed(2)}:1</span>
         <span className="ml-auto">
           <LevelBadge level={level} />
         </span>
@@ -177,7 +177,7 @@ export function ContrastFixer() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -191,7 +191,7 @@ export function ContrastFixer() {
               <span className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: needsFix ? suggestedFg : bg }} />
               <span className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: bg }} />
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">WCAG AA and AAA, free.</span> Auto-fix a failing text color while keeping the shade as close to your design as possible.
             </p>
           </div>
@@ -240,7 +240,7 @@ export function ContrastFixer() {
                 </div>
 
                 <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-black/[0.06] pt-4">
-                  <span className="mr-1 text-[13px] text-[#1c1712]/50">Try a failing pair</span>
+                  <span className="mr-1 text-[13px] text-[#1c1712]/60">Try a failing pair</span>
                   {FAILING_PAIRS.map((p) => (
                     <button
                       key={p.name}
@@ -266,7 +266,7 @@ export function ContrastFixer() {
                 </div>
                 <p className="mt-2 font-mono text-[3.5rem] font-bold leading-none tracking-[-0.03em]">
                   {ratio.toFixed(2)}
-                  <span className="text-[#1c1712]/30">:1</span>
+                  <span className="text-[#1c1712]/60">:1</span>
                 </p>
                 <div className="relative mt-5 h-2.5 overflow-hidden rounded-full bg-black/[0.06]">
                   <div className="absolute inset-y-0 left-0 rounded-full transition-[width] duration-500" style={{ width: `${gaugeW}%`, backgroundColor: gaugeColor }} />
@@ -276,7 +276,7 @@ export function ContrastFixer() {
                 </div>
                 <div className="relative mt-1 h-4">
                   {[{ v: 3, l: "3:1" }, { v: 4.5, l: "4.5:1" }, { v: 7, l: "7:1" }].map((m) => (
-                    <span key={m.v} className="absolute font-mono text-[10px] text-[#1c1712]/35" style={{ left: `${(m.v / 21) * 100}%`, transform: "translateX(-50%)" }}>
+                    <span key={m.v} className="absolute font-mono text-[10px] text-[#1c1712]/60" style={{ left: `${(m.v / 21) * 100}%`, transform: "translateX(-50%)" }}>
                       {m.l}
                     </span>
                   ))}
@@ -292,9 +292,9 @@ export function ContrastFixer() {
                   <div className="mt-3 flex items-center gap-3">
                     <div className="min-w-0">
                       <span className="block h-10 w-10 rounded-xl ring-1 ring-black/10" style={{ backgroundColor: fg }} />
-                      <p className="mt-1.5 font-mono text-[11px] text-[#1c1712]/50">{fg.toUpperCase()}</p>
+                      <p className="mt-1.5 font-mono text-[11px] text-[#1c1712]/60">{fg.toUpperCase()}</p>
                     </div>
-                    <span className="text-[#1c1712]/30" aria-hidden="true">→</span>
+                    <span className="text-[#1c1712]/60" aria-hidden="true">→</span>
                     <div className="min-w-0">
                       <span className="block h-10 w-10 rounded-xl ring-2 ring-emerald-500" style={{ backgroundColor: suggestedFg }} />
                       <p className="mt-1.5 font-mono text-[11px] font-semibold text-emerald-700">{suggestedFg.toUpperCase()}</p>

@@ -11,7 +11,7 @@ export function ColorVariations({ rows }: { rows: { label: string; note: string;
       {rows.map((row) => (
         <div key={row.label}>
           <h3 className="text-[1.05rem] font-semibold">
-            {row.label} <span className="text-[14px] font-normal text-[#1c1712]/50">{row.note}</span>
+            {row.label} <span className="text-[14px] font-normal text-[#1c1712]/60">{row.note}</span>
           </h3>
           <SwatchStrip
             colors={row.colors}
@@ -20,7 +20,7 @@ export function ColorVariations({ rows }: { rows: { label: string; note: string;
             onCopy={copy}
             className="mt-3 rounded-xl ring-1 ring-black/[0.07]"
           />
-          <p className="mt-2 font-mono text-[11px] uppercase leading-5 tracking-wide text-[#1c1712]/45">{row.colors.join(" · ")}</p>
+          <p className="mt-2 font-mono text-[11px] uppercase leading-5 tracking-wide text-[#1c1712]/60">{row.colors.join(" · ")}</p>
         </div>
       ))}
     </div>

@@ -45,7 +45,7 @@ const PRESETS: PresetAnimation[] = [
 
 let nextId = 3;
 
-const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
 const hexInput = "h-10 w-28 rounded-xl px-3 font-mono text-[13px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition focus:ring-2 focus:ring-[#1c1712]";
 const ghostBtn = "inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25 disabled:cursor-not-allowed disabled:opacity-40";
 const THUMB =
@@ -143,7 +143,7 @@ function ColorRows({ stops, onChange, onRemove, onAdd }: { stops: ColorStop[]; o
   return (
     <div>
       <div className="flex items-center justify-between gap-3">
-        <p className={label}>Colors <span className="ml-2 font-mono normal-case tracking-normal text-[#1c1712]/35">{stops.length}/6</span></p>
+        <p className={label}>Colors <span className="ml-2 font-mono normal-case tracking-normal text-[#1c1712]/60">{stops.length}/6</span></p>
         <button onClick={onAdd} disabled={stops.length >= 6} className={ghostBtn.replace("px-4 py-2", "px-3.5 py-1.5")}>
           <Svg size={13}><path d="M12 4v16m8-8H4" /></Svg>
           Add color
@@ -175,7 +175,7 @@ function ColorRows({ stops, onChange, onRemove, onAdd }: { stops: ColorStop[]; o
               onClick={() => onRemove(stop.id)}
               disabled={stops.length <= 2}
               aria-label={`Remove color ${i + 1}`}
-              className="ml-auto flex h-10 w-10 items-center justify-center rounded-xl text-[#1c1712]/35 transition hover:bg-black/[0.04] hover:text-[#1c1712] disabled:opacity-25 disabled:hover:bg-transparent"
+              className="ml-auto flex h-10 w-10 items-center justify-center rounded-xl text-[#1c1712]/60 transition hover:bg-black/[0.04] hover:text-[#1c1712] disabled:opacity-25 disabled:hover:bg-transparent"
             >
               <Svg><path d="M6 18L18 6M6 6l12 12" /></Svg>
             </button>
@@ -358,7 +358,7 @@ export function ColorAnimationGenerator() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -372,7 +372,7 @@ export function ColorAnimationGenerator() {
                 <span key={i} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Live CSS animations, free.</span> Pick colors and a motion style, watch it loop, then copy the keyframes.
             </p>
           </div>
@@ -457,7 +457,7 @@ export function ColorAnimationGenerator() {
             <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
               <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Library</p>
               <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">More animations</h2>
-              <p className="mt-2 max-w-2xl text-[15px] leading-7 text-[#1c1712]/55">Open any one to tweak its colors and timing, then use it above or copy the CSS.</p>
+              <p className="mt-2 max-w-2xl text-[15px] leading-7 text-[#1c1712]/60">Open any one to tweak its colors and timing, then use it above or copy the CSS.</p>
               <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                 {morePresets.map((preset, i) => (
                   <button
@@ -468,7 +468,7 @@ export function ColorAnimationGenerator() {
                     <div className="h-20 w-full" style={{ background: `linear-gradient(135deg, ${preset.colors.join(",")})` }} />
                     <div className="px-3.5 py-3">
                       <p className="truncate text-[14px] font-semibold">{preset.name}</p>
-                      <p className="text-[12px] text-[#1c1712]/45">{typeName(preset.type)}</p>
+                      <p className="text-[12px] text-[#1c1712]/60">{typeName(preset.type)}</p>
                     </div>
                   </button>
                 ))}
@@ -498,9 +498,9 @@ export function ColorAnimationGenerator() {
             <div className="flex items-center justify-between gap-4 px-6 py-5">
               <div>
                 <p className="text-[18px] font-bold tracking-[-0.02em]">{previewPreset.name}</p>
-                <p className="text-[13px] text-[#1c1712]/50">Customize it, then use it or copy the CSS.</p>
+                <p className="text-[13px] text-[#1c1712]/60">Customize it, then use it or copy the CSS.</p>
               </div>
-              <button onClick={() => setPreviewPreset(null)} aria-label="Close" className="flex h-10 w-10 items-center justify-center rounded-full text-[#1c1712]/55 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
+              <button onClick={() => setPreviewPreset(null)} aria-label="Close" className="flex h-10 w-10 items-center justify-center rounded-full text-[#1c1712]/60 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
                 <Svg><path d="M6 18L18 6M6 6l12 12" /></Svg>
               </button>
             </div>

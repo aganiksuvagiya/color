@@ -15,7 +15,7 @@ export default function PlaygroundPage() {
       <Header />
 
       <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
           <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -29,7 +29,7 @@ export default function PlaygroundPage() {
               <span key={c} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
             ))}
           </span>
-          <p className="hub-description text-[16px] text-[#1c1712]/55">
+          <p className="hub-description text-[16px] text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">Free, and it updates as you drag.</span> Adjust hue, saturation, lightness and contrast, and watch the UI preview change in real time.
           </p>
         </div>

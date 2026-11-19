@@ -173,7 +173,7 @@ export function ExploreColors() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <span className="text-[#1c1712]/60">Explore</span>
@@ -185,7 +185,7 @@ export function ExploreColors() {
                 <span key={c} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
               ))}
             </span>
-            <p className="hub-description text-[16px] text-[#1c1712]/55">
+            <p className="hub-description text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Endless palettes, generated fresh.</span> Scroll to discover more, click a color to copy it, or open any palette in the generator.
             </p>
           </div>
@@ -198,7 +198,7 @@ export function ExploreColors() {
               <div className="flex flex-wrap items-center gap-3">
                 <label className="relative block w-full sm:w-80">
                   <span className="sr-only">Search palette names</span>
-                  <svg className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1c1712]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <svg className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1c1712]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                   <input
@@ -206,7 +206,7 @@ export function ExploreColors() {
                     placeholder="Search palette names"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="h-10 w-full rounded-full bg-white pl-10 pr-4 text-[14px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/40 focus:ring-2 focus:ring-[#1c1712]"
+                    className="h-10 w-full rounded-full bg-white pl-10 pr-4 text-[14px] text-[#1c1712] outline-none ring-1 ring-black/[0.12] transition placeholder:text-[#1c1712]/60 focus:ring-2 focus:ring-[#1c1712]"
                   />
                 </label>
                 <select
@@ -234,7 +234,7 @@ export function ExploreColors() {
                   </svg>
                   New set
                 </button>
-                <p className="text-[13px] text-[#1c1712]/50 lg:ml-auto">
+                <p className="text-[13px] text-[#1c1712]/60 lg:ml-auto">
                   {visible.length} palettes{hueFilter !== null ? " matching this hue" : " loaded"}
                 </p>
               </div>
@@ -257,7 +257,7 @@ export function ExploreColors() {
                 </div>
 
                 <div className="flex min-w-[16rem] flex-1 items-center gap-3 lg:max-w-md">
-                  <span className="shrink-0 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">Hue</span>
+                  <span className="shrink-0 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">Hue</span>
                   <div
                     onClick={handleHueBarClick}
                     className="relative h-3 flex-1 cursor-crosshair rounded-full ring-1 ring-black/[0.08]"
@@ -298,7 +298,7 @@ export function ExploreColors() {
             ) : visible.length === 0 ? (
               <div className="py-16">
                 <p className="text-[1.1rem] font-semibold">No palettes found</p>
-                <p className="mt-1.5 text-[15px] text-[#1c1712]/55">{search ? `No results for "${search}".` : "Try a different hue or category."}</p>
+                <p className="mt-1.5 text-[15px] text-[#1c1712]/60">{search ? `No results for "${search}".` : "Try a different hue or category."}</p>
                 <button
                   onClick={() => { setSearch(""); setHueFilter(null); }}
                   className="mt-5 rounded-full px-5 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25"
@@ -507,8 +507,8 @@ function ShareButton({ palette }: { palette: GeneratedPalette }) {
             </button>
             <div className="my-1 h-px bg-black/5" />
             <div className="px-3.5 py-2">
-              <p className="text-[11px] text-[#1c1712]/35 font-medium">Palette URL</p>
-              <p className="mt-1 truncate font-mono text-[10px] text-[#1c1712]/50 bg-black/3 rounded px-2 py-1">
+              <p className="text-[11px] text-[#1c1712]/60 font-medium">Palette URL</p>
+              <p className="mt-1 truncate font-mono text-[10px] text-[#1c1712]/60 bg-black/3 rounded px-2 py-1">
                 {typeof window !== "undefined" ? `${window.location.origin}${paletteUrl(palette)}`.replace("https://", "") : ""}
               </p>
             </div>
@@ -639,7 +639,7 @@ function PaletteCard({ palette }: { palette: GeneratedPalette }) {
                 {palette.category}
               </span>
             )}
-            <span className="text-[10px] text-[#1c1712]/30">{palette.colors.length} colors</span>
+            <span className="text-[10px] text-[#1c1712]/60">{palette.colors.length} colors</span>
           </div>
         </div>
 
@@ -648,10 +648,10 @@ function PaletteCard({ palette }: { palette: GeneratedPalette }) {
           <button
             onClick={() => setSaved(v => !v)}
             title={saved ? "Saved" : "Save palette"}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#1c1712]/35 hover:text-[#1c1712] transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#1c1712]/60 hover:text-[#1c1712] transition-colors"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-              className={saved ? "text-[#E8531F]" : ""}>
+              className={saved ? "text-[#c2410c]" : ""}>
               <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
             </svg>
           </button>
@@ -660,7 +660,7 @@ function PaletteCard({ palette }: { palette: GeneratedPalette }) {
           <Link
             href={paletteUrl(palette)}
             title="Open in Generator"
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#1c1712]/35 hover:text-[#1c1712] transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#1c1712]/60 hover:text-[#1c1712] transition-colors"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
@@ -673,7 +673,7 @@ function PaletteCard({ palette }: { palette: GeneratedPalette }) {
             <button
               onClick={() => setMenuOpen(v => !v)}
               title="More options"
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-[#1c1712]/35 hover:text-[#1c1712] transition-colors"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-[#1c1712]/60 hover:text-[#1c1712] transition-colors"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <circle cx="5" cy="12" r="2" /><circle cx="12" cy="12" r="2" /><circle cx="19" cy="12" r="2" />
@@ -780,7 +780,7 @@ function PaletteCard({ palette }: { palette: GeneratedPalette }) {
                   {/* Download */}
                   <button
                     onClick={() => { downloadPaletteImage(palette); setMenuOpen(false); }}
-                    className="flex w-full items-center gap-2.5 px-3.5 py-2 text-sm font-medium text-[#E8531F] hover:bg-[#E8531F]/5 transition-colors"
+                    className="flex w-full items-center gap-2.5 px-3.5 py-2 text-sm font-medium text-[#c2410c] hover:bg-[#E8531F]/5 transition-colors"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                       <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
@@ -816,7 +816,7 @@ function PaletteCard({ palette }: { palette: GeneratedPalette }) {
           <div className="flex items-center justify-between bg-white px-6 py-4 shadow-[0_-1px_0_rgba(0,0,0,0.06)]">
             <div>
               <p className="text-base font-semibold text-[#1c1712]">{palette.label}</p>
-              <p className="text-xs text-[#1c1712]/40 mt-0.5">Click anywhere to close · Press Esc</p>
+              <p className="text-xs text-[#1c1712]/60 mt-0.5">Click anywhere to close · Press Esc</p>
             </div>
             <div className="flex items-center gap-2">
               <ShareButton palette={palette} />
@@ -829,7 +829,7 @@ function PaletteCard({ palette }: { palette: GeneratedPalette }) {
               </Link>
               <button
                 onClick={(e) => { e.stopPropagation(); setFullscreen(false); }}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-[#1c1712]/50 hover:text-[#1c1712] transition-colors"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 text-[#1c1712]/60 hover:text-[#1c1712] transition-colors"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />

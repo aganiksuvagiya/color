@@ -20,7 +20,7 @@ export function SavedPalettes({ palettes, onLoad, onDelete }: Props) {
             <path d="M17 21v-8H7v8M7 3v5h8" />
           </svg>
         </div>
-        <p className="text-sm text-[#1c1712]/35">No saved palettes yet. Generate one and hit Save.</p>
+        <p className="text-sm text-[#1c1712]/60">No saved palettes yet. Generate one and hit Save.</p>
       </div>
     );
   }
@@ -29,11 +29,11 @@ export function SavedPalettes({ palettes, onLoad, onDelete }: Props) {
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#1c1712]/[0.06]">
-          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className="text-[#1c1712]/45">
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" className="text-[#1c1712]/60">
             <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
           </svg>
         </div>
-        <p className="text-sm font-medium text-[#1c1712]/55">Saved palettes ({palettes.length})</p>
+        <p className="text-sm font-medium text-[#1c1712]/60">Saved palettes ({palettes.length})</p>
       </div>
       <div className="grid grid-cols-1 gap-3">
         <AnimatePresence>
@@ -48,7 +48,7 @@ export function SavedPalettes({ palettes, onLoad, onDelete }: Props) {
             >
               <div className="mb-3 flex items-center justify-between">
                 <p className="text-xs font-semibold text-[#1c1712]/70">{p.label}</p>
-                <p className="text-[10px] text-[#1c1712]/30">
+                <p className="text-[10px] text-[#1c1712]/60">
                   {new Date(p.savedAt).toLocaleDateString()}
                 </p>
               </div>

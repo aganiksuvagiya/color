@@ -21,7 +21,7 @@ function TagChips({ tags }: { tags: TagChip[] }) {
         >
           <span className="h-2.5 w-2.5 rounded-full ring-1 ring-inset ring-black/10" style={{ backgroundColor: t.hex }} />
           {t.name}
-          <span className="text-[12px] text-[#1c1712]/40">{t.count}</span>
+          <span className="text-[12px] text-[#1c1712]/60">{t.count}</span>
         </Link>
       ))}
     </div>
@@ -36,7 +36,7 @@ function PaletteCard({ palette, copied, copy }: { palette: Palette; copied: stri
       <div className="flex items-center justify-between gap-3 px-4 py-3.5">
         <div className="min-w-0">
           <h3 className="truncate text-[15px] font-semibold">{palette.name}</h3>
-          <p className="truncate font-mono text-[11px] uppercase text-[#1c1712]/45">{palette.colors.map((c) => c.slice(1)).join(" · ")}</p>
+          <p className="truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{palette.colors.map((c) => c.slice(1)).join(" · ")}</p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <button onClick={() => copy(all)} className="rounded-full px-3 py-1.5 text-[12px] font-semibold text-[#1c1712]/65 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
@@ -84,14 +84,14 @@ export function PaletteTagView({
         <h1 className="mt-3 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">{name} Color Palettes</h1>
         <div className="mt-5 flex flex-wrap items-center gap-3">
           <Dots colors={palettes[0]?.colors ?? []} />
-          <p className="hub-description text-[16px] text-[#1c1712]/55">
+          <p className="hub-description text-[16px] text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">{palettes.length} {name.toLowerCase()} palettes with hex codes.</span> Hover to preview, click a color to copy it, or open any palette in the generator.
           </p>
         </div>
         <p className="hub-answer mt-6 max-w-4xl text-[1.1rem] font-medium leading-8 tracking-[-0.01em] text-[#1c1712]/80">{intro}</p>
         {related.length > 0 && (
           <div className="mt-8">
-            <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">Related palettes</p>
+            <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">Related palettes</p>
             <TagChips tags={related} />
           </div>
         )}
@@ -158,7 +158,7 @@ export function PaletteLibraryHubView({
         <h1 className="mt-8 text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">Color Palettes &amp; Color Schemes</h1>
         <div className="mt-5 flex flex-wrap items-center gap-3">
           <Dots colors={featured[0]?.colors ?? []} />
-          <p className="hub-description max-w-4xl text-[16px] leading-7 text-[#1c1712]/55">
+          <p className="hub-description max-w-4xl text-[16px] leading-7 text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">{total} hand-picked palettes with hex codes.</span> Organized by style, season and color. Hover to preview, click any color to copy it, or open a palette in the generator to make it your own.
           </p>
         </div>
@@ -195,9 +195,9 @@ export function PaletteLibraryHubView({
                     <span className="flex items-center justify-between gap-2 px-3.5 py-2.5">
                       <span className="min-w-0">
                         <span className="block truncate text-[14px] font-semibold transition group-hover:text-[#c2410c]">{t.name} palettes</span>
-                        <span className="block text-[12px] text-[#1c1712]/45">{t.count} palettes</span>
+                        <span className="block text-[12px] text-[#1c1712]/60">{t.count} palettes</span>
                       </span>
-                      <span className="text-[#1c1712]/30 transition group-hover:text-[#c2410c]" aria-hidden="true">→</span>
+                      <span className="text-[#1c1712]/60 transition group-hover:text-[#c2410c]" aria-hidden="true">→</span>
                     </span>
                   </Link>
                 ))}
@@ -212,7 +212,7 @@ export function PaletteLibraryHubView({
         <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
           <p className={eyebrow}>Library</p>
           <h2 className="mt-2 text-[1.75rem] font-semibold tracking-[-0.03em]">Featured palettes</h2>
-          <p className="mt-2 max-w-2xl text-[15px] leading-7 text-[#1c1712]/55">A spread of styles from the library. Click a color to copy it, or copy the whole palette.</p>
+          <p className="mt-2 max-w-2xl text-[15px] leading-7 text-[#1c1712]/60">A spread of styles from the library. Click a color to copy it, or copy the whole palette.</p>
           <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((p) => (
               <PaletteCard key={p.id} palette={p} copied={copied} copy={copy} />

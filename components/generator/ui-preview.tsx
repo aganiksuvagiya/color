@@ -49,14 +49,14 @@ export function UIPreview({ palette }: Props) {
       animate={{ opacity: 1, y: 0 }}
       className="rounded-2xl border border-black/[0.08] bg-white p-4 shadow-[0_1px_6px_rgba(28,23,18,0.06)]"
     >
-      <p className="mb-3 text-sm font-medium text-[#1c1712]/55">Live UI Preview</p>
+      <p className="mb-3 text-sm font-medium text-[#1c1712]/60">Live UI Preview</p>
 
       <div className="overflow-hidden rounded-xl border border-black/[0.07]" style={{ backgroundColor: neutral, color: ink }}>
         <div className="flex items-center justify-between px-4 py-2.5" style={{ backgroundColor: primary, color: label(primary) }}>
           <span className="text-sm font-semibold">Dashboard</span>
           <div className="flex gap-2">
             <div className="rounded-md px-3 py-1 text-xs font-medium" style={{ backgroundColor: accent, color: label(accent) }}>Profile</div>
-            <div className="rounded-md px-3 py-1 text-xs opacity-80">Settings</div>
+            <div className="rounded-md px-3 py-1 text-xs">Settings</div>
           </div>
         </div>
 
@@ -67,7 +67,7 @@ export function UIPreview({ palette }: Props) {
             { title: "Alerts", value: "7", badge: "Pending", color: warning },
           ].map((stat) => (
             <div key={stat.title} className="min-w-0 rounded-lg p-2.5" style={{ backgroundColor: card }}>
-              <p className="text-[10px] uppercase tracking-wider opacity-60">{stat.title}</p>
+              <p className="text-[10px] uppercase tracking-wider">{stat.title}</p>
               <p className="mt-1 truncate text-sm font-bold">{stat.value}</p>
               <div className="mt-2 flex items-center gap-1">
                 <span className="rounded px-1.5 py-0.5 text-[10px] font-bold" style={{ backgroundColor: stat.color, color: label(stat.color) }}>{stat.badge}</span>

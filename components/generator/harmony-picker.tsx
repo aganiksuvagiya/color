@@ -36,7 +36,7 @@ export function HarmonyPicker({ onGenerate }: Props) {
     >
       <div className="mb-4 flex items-center gap-2.5">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1c1712]/[0.05]">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className="text-[#1c1712]/45">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className="text-[#1c1712]/60">
             <circle cx="12" cy="12" r="9" />
             <path d="M12 3a9 9 0 010 18" />
             <path d="M12 7a5 5 0 010 10" />
@@ -50,6 +50,7 @@ export function HarmonyPicker({ onGenerate }: Props) {
           <div className="h-10 w-10 rounded-xl border border-black/[0.10] shadow-sm" style={{ backgroundColor: baseColor }} />
           <input
             type="color"
+            aria-label="Base color"
             value={baseColor}
             onChange={(e) => {
               setBaseColor(e.target.value);
@@ -81,7 +82,7 @@ export function HarmonyPicker({ onGenerate }: Props) {
             className={`rounded-xl px-3.5 py-2 text-xs font-medium transition-all ${
               activeMode === m.key
                 ? "bg-[#1c1712]/8 text-[#1c1712] shadow-sm"
-                : "text-[#1c1712]/40 hover:bg-[#1c1712]/5 hover:text-[#1c1712]/65"
+                : "text-[#1c1712]/60 hover:bg-[#1c1712]/5 hover:text-[#1c1712]/65"
             }`}
           >
             {m.label}

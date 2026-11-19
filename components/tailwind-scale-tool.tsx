@@ -28,7 +28,7 @@ export function TailwindScaleTool() {
   const jsonCode = JSON.stringify(Object.fromEntries(scale.map(({ step, hex }) => [step, hex])), null, 2);
   const exportCode = exportTab === "css" ? `:root {\n${cssVars}\n}` : exportTab === "tailwind" ? twConfig : jsonCode;
 
-  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/45";
+  const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
   const stripColors = scale.map(({ hex }) => hex.toUpperCase());
 
   return (
@@ -44,7 +44,7 @@ export function TailwindScaleTool() {
       <main>
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/40">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
             <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
@@ -58,7 +58,7 @@ export function TailwindScaleTool() {
                 <span key={step} className="h-5 w-5 rounded-full ring-2 ring-white" style={{ backgroundColor: hex }} />
               ))}
             </span>
-            <p className="text-[16px] text-[#1c1712]/55">
+            <p className="text-[16px] text-[#1c1712]/60">
               <span className="font-semibold text-[#1c1712]/80">Generate a full 50 to 950 Tailwind shade scale from any color.</span> Copy it as a Tailwind config, CSS variables or JSON.
             </p>
           </div>
@@ -90,13 +90,13 @@ export function TailwindScaleTool() {
                     placeholder="#4F46E5"
                     className="mt-1.5 block w-36 rounded-xl px-3 py-2 font-mono text-[13px] font-semibold outline-none ring-1 ring-black/[0.12] transition focus:ring-black/30"
                   />
-                  <p className="mt-1.5 text-[12px] text-[#1c1712]/45">{valid ? findClosestColorName(baseColor) : "Enter a valid HEX"}</p>
+                  <p className="mt-1.5 text-[12px] text-[#1c1712]/60">{valid ? findClosestColorName(baseColor) : "Enter a valid HEX"}</p>
                 </div>
               </div>
 
               {scale.length > 0 && (
                 <div className="flex items-center gap-3">
-                  <p className="text-right text-[13px] text-[#1c1712]/55">
+                  <p className="text-right text-[13px] text-[#1c1712]/60">
                     <span className="block font-semibold text-[#1c1712]/80">{scale.length} shades</span>
                     50 → 950
                   </p>
@@ -112,7 +112,7 @@ export function TailwindScaleTool() {
                 <SwatchStrip colors={stripColors} height="h-36" copied={copied} onCopy={copy} className="rounded-2xl ring-1 ring-black/[0.07]" />
                 <div className="mt-2 flex">
                   {scale.map(({ step }) => (
-                    <span key={step} className="flex-1 text-center font-mono text-[11px] font-semibold text-[#1c1712]/40">{step}</span>
+                    <span key={step} className="flex-1 text-center font-mono text-[11px] font-semibold text-[#1c1712]/60">{step}</span>
                   ))}
                 </div>
               </div>
@@ -124,7 +124,7 @@ export function TailwindScaleTool() {
         {scale.length > 0 && (
           <section className="border-t border-black/[0.06]">
             <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
-              <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/40">
+              <h2 className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">
                 All {scale.length} steps
                 <span className="h-px flex-1 bg-black/[0.06]" />
               </h2>
@@ -139,7 +139,7 @@ export function TailwindScaleTool() {
                     <div className="p-4">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{step}</p>
                       <p className="mt-1 font-mono text-[13px] font-semibold uppercase">{copied === hex.toUpperCase() ? "✓ Copied" : hex}</p>
-                      <p className="mt-0.5 truncate text-[12px] text-[#1c1712]/45">{findClosestColorName(hex)}</p>
+                      <p className="mt-0.5 truncate text-[12px] text-[#1c1712]/60">{findClosestColorName(hex)}</p>
                     </div>
                   </button>
                 ))}
