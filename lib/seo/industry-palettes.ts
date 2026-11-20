@@ -663,4 +663,62 @@ export const industryPaletteSets: Record<string, IndustryPaletteSet> = {
       ),
     ],
   },
+  // Keyed by the page's existing slug, which Google already has indexed.
+  "ecommerce-conversions": {
+    palettePreview: {
+      brand: "Harbor Lane Goods",
+      nav: ["Shop", "New in", "Sale"],
+      badge: "20% off this week",
+      headline: "Everyday goods, made to last",
+      body: "Free returns within 30 days. Most orders arrive in 2 to 4 business days.",
+      cta: "Add to cart",
+      link: "See details",
+      cardTitle: "Free shipping over $50",
+      cardBody: "Order by 2 pm for same-day dispatch",
+    },
+    palettes: [
+      palette(
+        "Marketplace & General Store",
+        "Marketplaces, department stores, and shops with many categories",
+        ["#1E293B", "#C2410C", "#FDE68A", "#FFFFFF", "#0F172A"],
+        ["#C2410C", "#1E293B", "#FDE68A", "#FFFFFF", "#0F172A"],
+        "Navy for the header and footer, burnt orange only for add-to-cart and checkout. The pale yellow deal badge needs dark text: white on it is 1.25:1.",
+      ),
+      palette(
+        "Fashion & Apparel",
+        "Clothing, shoes, and accessories",
+        ["#111111", "#F2EFEA", "#B91C1C", "#FFFFFF", "#262626"],
+        ["#111111", "#F2EFEA", "#B91C1C", "#FFFFFF", "#262626"],
+        "Black buttons and a lot of white, so the clothes bring the color. The only red is the sale badge, which keeps white text at 6.47:1.",
+      ),
+      palette(
+        "Beauty & Skincare",
+        "Cosmetics, skincare, and fragrance",
+        ["#9D3B55", "#F6E3E0", "#E8B4A0", "#FFF8F5", "#2B1E1E"],
+        ["#9D3B55", "#F6E3E0", "#E8B4A0", "#FFF8F5", "#2B1E1E"],
+        "A deep rose for buttons on a blush-white page. Lighter pinks look prettier as buttons, but white text on #E879A0 is only 2.74:1, so the rose stays deep.",
+      ),
+      palette(
+        "Electronics & Gadgets",
+        "Electronics, gaming gear, and tech accessories",
+        ["#0B0F17", "#1F2937", "#60A5FA", "#4ADE80", "#E5E7EB"],
+        ["#60A5FA", "#1F2937", "#4ADE80", "#0B0F17", "#E5E7EB"],
+        "A dark store where product renders stand out. The blue button takes a near-black label (7.54:1), because white on this blue is only 2.54:1.",
+      ),
+      palette(
+        "Home & Furniture",
+        "Furniture, decor, bedding, and kitchenware",
+        ["#5B6B4E", "#E9E1D6", "#C8A27A", "#FAF7F2", "#2A2420"],
+        ["#5B6B4E", "#E9E1D6", "#C8A27A", "#FAF7F2", "#2A2420"],
+        "Warm off-white and olive feel more like a showroom than a supermarket. Best when products are photographed in rooms rather than on pure white.",
+      ),
+      palette(
+        "Grocery & Food",
+        "Grocery delivery, meal kits, and specialty food shops",
+        ["#15803D", "#F0FDF4", "#FBBF24", "#FFFFFF", "#14231A"],
+        ["#15803D", "#F0FDF4", "#FBBF24", "#FFFFFF", "#14231A"],
+        "Deep green for buying, amber for deals. A brighter green like #22C55E looks fresher, but white text on it is 2.28:1.",
+      ),
+    ],
+  },
 };

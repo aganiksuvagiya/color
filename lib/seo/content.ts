@@ -262,7 +262,7 @@ const colors: ContentEntry[] = [
     ],
     relatedLinks: [
       { title: "Red and black combinations", href: "/color-combinations/red-and-black" },
-      { title: "Best colors for ecommerce", href: "/best-colors-for/ecommerce-conversions" },
+      { title: "Best colors for ecommerce websites", href: "/best-colors-for/ecommerce-conversions" },
       { title: "Red gradients", href: "/gradients/sunset-burst" },
       { title: "Marketing urgency colors", href: "/marketing-colors" },
       { title: "Red color meaning", href: "/color-meanings/red" },
@@ -4607,27 +4607,116 @@ const bestColorsFor: ContentEntry[] = [
     ],
   },
   {
+    // The slug stays "ecommerce-conversions" because Google already has this URL indexed.
     slug: "ecommerce-conversions",
-    title: "Best Colors for Ecommerce Conversions",
-    paletteColors: ["#1E293B", "#2563EB", "#F97316", "#FF6B4A", "#FFF8F0"],
-    description: "A practical answer page for DTC and ecommerce teams choosing colors that improve action and trust.",
+    title: "Best Colors for Ecommerce Websites: 6 Store Palettes With Hex Codes",
+    paletteColors: ["#C2410C", "#1E293B", "#B91C1C", "#15803D", "#FFFFFF"],
+    description:
+      "6 ecommerce color palettes with hex codes for marketplaces, fashion, beauty, electronics, home and grocery stores, each on a sample store with WCAG contrast.",
+    ...industryPaletteSets["ecommerce-conversions"],
     answer:
-      "The best ecommerce conversion colors usually combine trustworthy foundations with warm CTA accents. Use blue or dark neutrals for structure, then use orange, coral, or red selectively for promotional actions.",
+      "The best ecommerce palettes keep the page neutral so the product photos carry the color, then give the add-to-cart button one color that nothing else on the page uses. A white or warm off-white background, near-black text and a single strong action color (burnt orange, deep green, black or a deep rose, depending on the store) suit most shops. The hue matters less than the contrast: button labels, prices, sale and stock labels all have to be easy to read.",
     intent: "commercial",
-    keywords: ["best colors for ecommerce conversions", "ecommerce cta colors", "conversion color palette"],
+    authoredOnly: true,
+    keywords: [
+      "best colors for ecommerce website",
+      "ecommerce website color palette",
+      "best color palette for ecommerce website",
+      "best color combination for ecommerce website",
+      "color scheme for ecommerce website",
+      "best background color for ecommerce website",
+      "add to cart button color",
+      "best colors for ecommerce conversions",
+      "online store color palette",
+    ],
+    keyTakeaways: [
+      "The products are the color. Keep the background white or off-white and let the photos stand out.",
+      "Give add-to-cart one color that appears nowhere else on the page, not in the header and not on sale badges.",
+      "Check the button label: white text on a bright orange like #F97316 is only 2.80:1. #C2410C reaches 5.18:1.",
+      "Sale prices, stock labels and rating stars are small, so they need contrast too. The numbers are below.",
+    ],
+    quickFacts: [
+      { label: "Background", value: "#FFFFFF, or a warm off-white like #FAF7F2 if your products aren't shot on pure white" },
+      { label: "Add to cart", value: "One color used only for buying, e.g. #C2410C with white text (5.18:1)" },
+      { label: "Sale price", value: "#B91C1C on white reaches 6.47:1. #EF4444 is only 3.76:1" },
+      { label: "In stock label", value: "#15803D on white reaches 5.02:1. #22C55E is only 2.28:1" },
+    ],
     sections: [
-      { title: "Trust still matters", body: "Even in DTC, pages convert better when the base system feels organized and reliable." },
-      { title: "Warm action accents", body: "Orange and coral can help add energy to CTAs and promos without overwhelming the whole page." },
-      { title: "Category fit", body: "Luxury ecommerce tends to prefer black and ivory systems, while fast-moving DTC often uses warmer accents." },
+      {
+        title: "The products bring the color",
+        body: "People come to a store to look at the products. If the interface is colorful too, every photo has to compete with its frame. That's why stores that sell many different things keep the page white or close to it, use near-black text, and save color for the places where it means something: the buy button, a sale price, a stock label. A store with one product line can afford a brand color in the header or footer. A marketplace with thousands of products can't.",
+      },
+      {
+        title: "One color for buying",
+        body: "Choose one action color and use it only for add to cart, checkout and the other buying steps. If the same color also fills the header, the sale badges and the newsletter box, the button no longer stands out. We haven't seen good evidence that one particular hue sells better across stores. What does help is a button nothing else on the page competes with, and a label people can read. Orange is a popular pick, so check the label: white text on #F97316 measures 2.80:1, and on #EA580C 3.56:1. Both fail WCAG's 4.5:1 for normal text. A deeper burnt orange, #C2410C, reaches 5.18:1 with white, or keep the bright orange and put near-black text on it (#0F172A on #F97316 is 6.37:1).",
+      },
+      {
+        title: "Prices, sale prices and stock labels",
+        body: "Sale prices are usually red and 'In stock' is usually green. Both are small text, so both need 4.5:1. On white, a bright red like #EF4444 reaches only 3.76:1, while #DC2626 gets 4.83:1 and #B91C1C 6.47:1. Green is harder: #22C55E is 2.28:1 and #16A34A 3.30:1, so an 'In stock' label in those greens is hard to read for a lot of shoppers. #15803D gets 5.02:1. Gray has the same trap for crossed-out prices and 'Sold out' sizes: #9CA3AF is 2.54:1 on white, #6B7280 is 4.83:1.",
+      },
+      {
+        title: "Rating stars need contrast too",
+        body: "Yellow rating stars are on almost every product page, and on white they're faint: #FACC15 measures 1.53:1 and #F59E0B 2.15:1. If the stars are the only way a product shows its rating, WCAG 1.4.11 (non-text contrast) asks for 3:1 against the background. #D97706 just passes at 3.19:1 and #B45309 reaches 5.02:1. The easier fix is to print the number next to the stars, like '4.6 (212 reviews)', so nobody has to rely on the yellow.",
+      },
+      {
+        title: "Don't say it with color alone",
+        body: "A red price only says 'on sale' to shoppers who can see the red. WCAG 1.4.1 asks that color isn't the only way to show information, and in a store that's easy to do: strike through the old price, write the discount ('-20%' or 'Sale'), and write 'Out of stock' on a size instead of only graying it out. The same goes for form errors at checkout: a red border plus a short message, not just the red border.",
+      },
+      {
+        title: "Pure-white photos on an off-white page",
+        body: "Many stores shoot products on pure white, #FFFFFF. Put those photos on a warm off-white page like #FAF7F2 and each one sits in a white box. The two whites are only 1.07:1 apart, but at the edge of a photo you can see it. Either keep the page pure white, put the photos in white cards on purpose, or shoot on a background that matches the page. Furniture and home stores that photograph products in rooms don't have this problem, which is why warm backgrounds suit them.",
+      },
+      {
+        title: "Matching the palette to the store",
+        body: "Fashion stores mostly use black, white and very little else, so the clothes set the mood. Beauty and skincare lean toward blush, rose and warm whites. Electronics and gaming stores often go dark, where product renders look sharp. Grocery and food stores use green for freshness, with amber or red for deals. Home and furniture stores use warm neutrals and earthy accents. The six palettes above follow those patterns, and each one has been checked for body text, buttons, links, badges and cards.",
+      },
+      {
+        title: "What to avoid",
+        body: "Several bright colors fighting for attention on one page. Colored backgrounds behind product photos. Light gray text for prices or product names. Pale placeholder text instead of labels in checkout forms. A sale badge in the same color as the add-to-cart button, which makes the two look like the same kind of thing.",
+      },
     ],
     faq: [
-      { question: "What colors increase conversions?", answer: "Colors that create strong hierarchy and fit the category usually convert best. Warm CTA accents often help." },
-      { question: "What colors attract customers?", answer: "Trust-oriented colors attract reassurance-driven buyers, while warm accents attract faster attention." },
+      {
+        question: "What is the best color for an add to cart button?",
+        answer: "One that nothing else on your page uses and that keeps its label readable. Burnt orange #C2410C with white text (5.18:1), deep green #15803D (5.02:1) or black all work on light pages. If you prefer a bright orange like #F97316, put dark text on it (6.37:1), because white is only 2.80:1.",
+      },
+      {
+        question: "What colors are best for an ecommerce website?",
+        answer: "A white or off-white background, near-black text and one action color for buying. Add a red for sale prices and a green for stock labels, both dark enough to read: #B91C1C and #15803D pass on white.",
+      },
+      {
+        question: "What is the best background color for an ecommerce website?",
+        answer: "White, especially if your product photos are shot on white. A warm off-white such as #FAF7F2 suits home, beauty and fashion stores whose photos have their own backgrounds. Dark backgrounds suit electronics and gaming stores.",
+      },
+      {
+        question: "What color should sale prices be?",
+        answer: "Red is the convention, but use a darker red such as #DC2626 (4.83:1) or #B91C1C (6.47:1) on white, and also cross out the old price or show the discount, so the sale doesn't depend on color alone.",
+      },
+      {
+        question: "How many colors does an online store need?",
+        answer: "Five is enough: a background, a text color, an action color, a light surface for cards and an accent for badges. A sale red and a stock green come on top as small functional colors.",
+      },
+      {
+        question: "Does button color affect conversions?",
+        answer: "We haven't seen good evidence that one hue converts best in every store. What helps is a button that stands out from everything around it and a label people can read. If you change the color, test it on your own store.",
+      },
+    ],
+    sources: [
+      { title: "W3C: Understanding WCAG 2.2, Contrast (Minimum)", href: "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" },
+      { title: "W3C: Understanding WCAG 2.2, Non-text Contrast", href: "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html" },
+      { title: "W3C: Understanding WCAG 2.2, Use of Color", href: "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html" },
     ],
     relatedLinks: [
+      { title: "Why we show palettes on a website", href: "/blog/palettes-on-a-real-website" },
+      { title: "Best colors for luxury brand websites", href: "/best-colors-for/luxury-brand-websites" },
+      { title: "Best colors for beauty salon websites", href: "/best-colors-for/beauty-salon-websites" },
+      { title: "Best colors for restaurant websites", href: "/best-colors-for/restaurant-websites" },
+      { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
       { title: "DTC energy stack palette", href: "/palettes/dtc-energy-stack" },
       { title: "Orange color page", href: "/colors/orange" },
-      { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "WCAG color contrast guide", href: "/accessibility/color-contrast" },
+      { title: "Palette generator", href: "/generator" },
     ],
   },
   {
@@ -4694,7 +4783,7 @@ const bestColorsFor: ContentEntry[] = [
       { title: "Orange color page", href: "/colors/orange" },
       { title: "Brown color page", href: "/colors/brown" },
       { title: "Red color page", href: "/colors/red" },
-      { title: "Best colors for ecommerce conversions", href: "/best-colors-for/ecommerce-conversions" },
+      { title: "Best colors for ecommerce websites", href: "/best-colors-for/ecommerce-conversions" },
     ],
   },
   {
@@ -6534,7 +6623,7 @@ const faqs: ContentEntry[] = [
     relatedLinks: [
       { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
       { title: "Orange color page", href: "/colors/orange" },
-      { title: "Ecommerce conversion colors", href: "/best-colors-for/ecommerce-conversions" },
+      { title: "Best colors for ecommerce websites", href: "/best-colors-for/ecommerce-conversions" },
     ],
   },
   {
@@ -6851,7 +6940,7 @@ export const hubs: HubPage[] = [
     goals: ["See which colors affect conversion", "Get answers backed by practical examples", "Apply findings to palettes and CTAs"],
     featuredLinks: [
       { title: "What colors increase conversions?", href: "/guides/conversion-color-strategy" },
-      { title: "Best colors for ecommerce conversions", href: "/best-colors-for/ecommerce-conversions" },
+      { title: "Best colors for ecommerce websites", href: "/best-colors-for/ecommerce-conversions" },
       { title: "FAQ: What is the best CTA color?", href: "/faqs/cta-colors" },
       { title: "Color psychology for email marketing", href: "/guides/email-marketing-color-psychology" },
     ],
