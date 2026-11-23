@@ -663,6 +663,65 @@ export const industryPaletteSets: Record<string, IndustryPaletteSet> = {
       ),
     ],
   },
+  // The /guides/dark-mode-color-guide page. Every palette here is dark, so the light primaries
+  // and accents take near-black labels (labelColor picks whichever reads best).
+  "dark-mode-color-guide": {
+    palettePreview: {
+      brand: "Nightdesk",
+      nav: ["Inbox", "Projects", "Reports"],
+      badge: "Synced",
+      headline: "Your week at a glance",
+      body: "Tasks, notes and your calendar in one quiet dark workspace.",
+      cta: "New project",
+      link: "View reports",
+      cardTitle: "Due today",
+      cardBody: "3 tasks · 1 meeting at 4 pm",
+    },
+    palettes: [
+      palette(
+        "Neutral Dark (#121212)",
+        "Apps that follow Material Design, and any product that wants a plain dark gray",
+        ["#121212", "#1E1E1E", "#BB86FC", "#2DD4BF", "#E0E0E0"],
+        ["#BB86FC", "#1E1E1E", "#2DD4BF", "#121212", "#E0E0E0"],
+        "Material's recommended surface with 87% white text (#E0E0E0, 14.19:1). The light purple button takes a dark label: #121212 on it is 7.07:1, white only 2.65:1.",
+      ),
+      palette(
+        "Blue-Black for Developers",
+        "Code editors, developer tools, and documentation",
+        ["#0D1117", "#161B22", "#58A6FF", "#3FB950", "#E6EDF3"],
+        ["#58A6FF", "#161B22", "#3FB950", "#0D1117", "#E6EDF3"],
+        "A blue-tinted near-black that feels at home next to code. Links in #58A6FF reach 7.49:1, and the green works for 'passed' and 'merged' badges.",
+      ),
+      palette(
+        "OLED True Black",
+        "Phone apps, video players, and anything used at night",
+        ["#000000", "#1C1C1E", "#409CFF", "#FFD60A", "#F5F5F5"],
+        ["#409CFF", "#1C1C1E", "#FFD60A", "#000000", "#F5F5F5"],
+        "Pure black, with dark gray cards so there is still a sense of depth. Off-white #F5F5F5 text gives 19.26:1 without the full 21:1 of pure white.",
+      ),
+      palette(
+        "Warm Dark",
+        "Reading apps, writing tools, and blogs with a dark theme",
+        ["#1A1614", "#26201C", "#F2A65A", "#8FBF9F", "#EDE6DD"],
+        ["#F2A65A", "#26201C", "#8FBF9F", "#1A1614", "#EDE6DD"],
+        "Brown-black and cream instead of blue-gray, closer to paper under a lamp. The amber button needs dark text; white on #F2A65A is 2.02:1.",
+      ),
+      palette(
+        "Navy Dashboard",
+        "Analytics, finance, and admin dashboards",
+        ["#0B1220", "#1E293B", "#60A5FA", "#FBBF24", "#E2E8F0"],
+        ["#60A5FA", "#1E293B", "#FBBF24", "#0B1220", "#E2E8F0"],
+        "Deep navy keeps long data sessions calm. #60A5FA reaches 7.36:1 here, while the darker #1D4ED8 that works on white would drop below 3:1.",
+      ),
+      palette(
+        "Dim (Soft Dark)",
+        "Products that offer a gentler dark option next to a full dark theme",
+        ["#22272E", "#2D333B", "#6CB6FF", "#DAAA3F", "#CDD9E5"],
+        ["#6CB6FF", "#2D333B", "#DAAA3F", "#22272E", "#CDD9E5"],
+        "A lighter charcoal for people who find near-black too stark. Body text still reaches 10.48:1, and every pair passes at least AA.",
+      ),
+    ],
+  },
   // The /guides/ai-website-color-strategy page (a guide URL, but laid out like the industry pages).
   "ai-website-color-strategy": {
     palettePreview: {

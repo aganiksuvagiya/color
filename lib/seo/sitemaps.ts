@@ -70,6 +70,7 @@ const contentUpdatedOn: Record<string, string> = {
   "/best-colors-for/ecommerce-conversions": "2026-11-20",
   "/best-colors-for/finance-websites": "2026-11-23",
   "/guides/ai-website-color-strategy": "2026-11-23",
+  "/guides/dark-mode-color-guide": "2026-11-24",
 };
 
 type SitemapEntry = {

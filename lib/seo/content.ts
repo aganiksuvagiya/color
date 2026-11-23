@@ -489,7 +489,7 @@ const colors: ContentEntry[] = [
     relatedLinks: [
       { title: "Black color meaning", href: "/colors/black" },
       { title: "Contrast checker", href: "/tools/contrast" },
-      { title: "Dark mode color guide", href: "/guides/dark-mode-color-guide" },
+      { title: "Dark mode color palettes", href: "/guides/dark-mode-color-guide" },
       { title: "Tailwind gray", href: "/tailwind/gray" },
       { title: "Gray color meaning", href: "/color-meanings/gray" },
     ],
@@ -822,7 +822,7 @@ const palettes: ContentEntry[] = [
       { question: "Should developer tools always use dark mode?", answer: "Dark mode is strongly preferred by most developers and power users, so dark-first design is usually the right call." },
     ],
     relatedLinks: [
-      { title: "Dark mode color guide", href: "/guides/dark-mode-color-guide" },
+      { title: "Dark mode color palettes", href: "/guides/dark-mode-color-guide" },
       { title: "Midnight metal gradient", href: "/gradients/midnight-metal" },
       { title: "Contrast checker", href: "/tools/contrast" },
       { title: "SaaS product UI color guide", href: "/guides/saas-product-ui-color-guide" },
@@ -3758,7 +3758,7 @@ const guides: ContentEntry[] = [
     ],
     relatedLinks: [
       { title: "Best colors for SaaS websites", href: "/best-colors-for/saas-websites" },
-      { title: "Dark mode color guide", href: "/guides/dark-mode-color-guide" },
+      { title: "Dark mode color palettes", href: "/guides/dark-mode-color-guide" },
       { title: "Finance color palettes", href: "/best-colors-for/finance-websites" },
       { title: "Creative orbit palette", href: "/palettes/creative-orbit" },
       { title: "Dark mode pro palette", href: "/palettes/dark-mode-pro" },
@@ -3918,27 +3918,110 @@ const guides: ContentEntry[] = [
   },
   {
     slug: "dark-mode-color-guide",
-    title: "How to Choose Colors for Dark Mode Interfaces",
-    description: "A practical guide to selecting background, surface, text, and accent colors for dark mode product design.",
+    title: "Dark Mode Color Palette: 6 Dark UI Palettes With Hex Codes",
+    paletteColors: ["#121212", "#1E1E1E", "#BB86FC", "#60A5FA", "#E0E0E0"],
+    description:
+      "6 dark mode color palettes with hex codes, from Material's #121212 to OLED black and warm dark, plus text, surface and accent colors with WCAG contrast.",
+    ...industryPaletteSets["dark-mode-color-guide"],
     answer:
-      "Dark mode works best when backgrounds are dark but not pure black, surfaces are layered with subtle contrast, and accents stay vibrant enough to guide attention without causing eye strain. Pure white text on pure black is rarely the right choice.",
-    intent: "informational",
-    keywords: ["dark mode color guide", "dark ui colors", "best dark mode palette", "dark theme design colors"],
+      "A good dark mode palette starts from a dark gray rather than pure black: #121212 is Material Design's recommended dark surface. Main text goes slightly off-white (#E0E0E0 is 14.19:1 on #121212), secondary text around #A0A0A0 (7.16:1), and raised cards get lighter instead of casting shadows. Brand colors need lighter tones: a blue that passes on white, like #1D4ED8 (6.70:1), drops to 2.80:1 on #121212, while #60A5FA reaches 7.37:1.",
+    intent: "commercial",
+    authoredOnly: true,
+    keywords: [
+      "dark mode color palette",
+      "dark mode color palette hex",
+      "dark mode background color",
+      "best colors for dark mode",
+      "dark theme color palette",
+      "dark mode text color",
+      "best color for black background",
+      "dark mode color palette for website",
+      "dark mode dashboard color palette",
+    ],
+    keyTakeaways: [
+      "Start from a dark gray like #121212, not pure black.",
+      "Switch brand colors to lighter tones: #1D4ED8 is 6.70:1 on white but 2.80:1 on #121212.",
+      "Light buttons on dark need dark labels: white on #BB86FC is 2.65:1, #121212 on it is 7.07:1.",
+      "Show depth with lighter surfaces, not shadows.",
+    ],
+    quickFacts: [
+      { label: "Background", value: "#121212, Material Design's recommended dark surface" },
+      { label: "Main text", value: "#E0E0E0 (87% white), 14.19:1 on #121212" },
+      { label: "Secondary text", value: "#A0A0A0 (60% white), 7.16:1 on #121212" },
+      { label: "Error", value: "#CF6679, Material's dark theme error color, 5.20:1 on #121212" },
+    ],
     sections: [
-      { title: "Background vs surface", body: "Use slightly different dark shades for backgrounds and cards so users understand depth and hierarchy without relying on borders alone." },
-      { title: "Accent vibrancy in dark UI", body: "Accents need to be brighter or more saturated in dark mode to maintain visual weight. A color that reads fine on light will disappear on dark backgrounds." },
-      { title: "Text contrast rules", body: "Avoid pure white on pure black. Slightly off-white text on a very dark neutral reduces harsh contrast and feels more polished." },
+      {
+        title: "Dark gray, not black",
+        body: "Material Design recommends #121212 as the surface color for dark themes, and most dark interfaces sit close to it: a neutral near-black, or a blue-black like #0D1117. Pure black isn't wrong, and on OLED screens black pixels are simply off, but it leaves nothing darker underneath for depth, and white text on it is the full 21:1. On #121212 white text is still 18.73:1, far above anything WCAG asks for.",
+      },
+      {
+        title: "Text in three levels",
+        body: "Material suggests white at 87% opacity for main text, 60% for secondary text and 38% for disabled text. On #121212 those come out as #E0E0E0 (14.19:1), #A0A0A0 (7.16:1) and #6C6C6C (3.57:1). The first two pass easily. The third is only for disabled controls, which WCAG doesn't hold to the contrast minimum. If your design tool works in hex codes rather than opacity, those three make a good starting set.",
+      },
+      {
+        title: "Lighter surfaces instead of shadows",
+        body: "Shadows barely show on a dark background, so a raised card gets lighter instead. Material's overlays go from 5% white at the lowest elevation to 16% at the highest. On #121212 that gives #1E1E1E for a card, #272727 and #2E2E2E for menus and app bars, and #383838 for dialogs. Text holds up even on the lightest one: 60% white is still 5.35:1 on #383838.",
+      },
+      {
+        title: "Your brand colors need lighter tones",
+        body: "Saturated colors that look strong on white sink into a dark background. Blue #1D4ED8 is 6.70:1 on white and 2.80:1 on #121212. Red #B91C1C goes from 6.47 to 2.90, and green #15803D from 5.02 to 3.74. Even Material's own light-theme purple, #6200EE, is 7.63:1 on white and 2.46:1 on #121212. Material's advice is to use the lighter 200–50 tones in a dark theme: #60A5FA blue reaches 7.37:1 on #121212, #F87171 red 6.77:1 and #4ADE80 green 10.75:1.",
+      },
+      {
+        title: "Buttons flip their labels",
+        body: "Those lighter tones are too pale for white text. White on #BB86FC is 2.65:1 and on #58A6FF 2.53:1, so in dark mode a filled button usually takes a near-black label instead: #121212 on #BB86FC is 7.07:1. That's why every button in the previews above has dark text. Outline buttons and text links can keep the light color itself, since it already contrasts with the background.",
+      },
+      {
+        title: "Best colors on a black background",
+        body: "For text and icons on black, white and the light tints work best: yellow #FACC15 is 13.71:1 on pure black, lime #A3E635 13.93:1, cyan #22D3EE 11.62:1 and light blue #93C5FD 11.65:1. Gray needs more care: #6B7280 is 4.34:1 on black and 3.88:1 on #121212, which fails for body text. #9CA3AF reaches 7.38:1 on #121212 and still reads as secondary.",
+      },
+      {
+        title: "What to avoid",
+        body: "Reusing light-mode brand colors on a dark background. White labels on light buttons. Shadows as the only sign that a card is raised. Gray text under 4.5:1. Generating dark mode by inverting the light theme, which turns soft tints into muddy darks and bright accents into neon.",
+      },
     ],
     faq: [
-      { question: "What colors work best for dark mode?", answer: "Deep charcoal or near-black backgrounds, layered surface grays, bright or saturated accent colors, and off-white text usually work best." },
-      { question: "Should dark mode use pure black backgrounds?", answer: "Rarely. Pure black creates harsh contrast. Most polished dark UIs use very dark gray or slightly tinted dark neutrals." },
+      {
+        question: "What is the best background color for dark mode?",
+        answer: "A dark gray such as #121212, which Material Design recommends. A blue-black like #0D1117 suits developer tools, a navy like #0B1220 suits dashboards, and a warm #1A1614 suits reading apps. Pure black #000000 works on OLED phones.",
+      },
+      {
+        question: "What color should text be in dark mode?",
+        answer: "Slightly off-white rather than pure white: #E0E0E0 for main text (14.19:1 on #121212) and #A0A0A0 for secondary text (7.16:1). Keep anything people need to read at 4.5:1 or more.",
+      },
+      {
+        question: "Is pure black good for dark mode?",
+        answer: "It can be, especially on OLED screens. The catch is depth: with a #000000 background, cards and menus need slightly lighter grays such as #1C1C1E so they still stand apart, and pure white text on pure black is the maximum 21:1, so many apps use off-white text instead.",
+      },
+      {
+        question: "What colors look good on a black background?",
+        answer: "White and light tints: yellow #FACC15 (13.71:1), lime #A3E635 (13.93:1), cyan #22D3EE (11.62:1) and light blue #93C5FD (11.65:1). Avoid mid grays like #6B7280, which is only 4.34:1 on black.",
+      },
+      {
+        question: "How do I convert my brand colors for dark mode?",
+        answer: "Use a lighter tone of the same hue, around the 200–400 range of a Tailwind or Material scale, and check it against your dark background. #1D4ED8 fails on #121212 (2.80:1); #60A5FA passes (7.37:1). If the color is used as a button fill, give it a dark label.",
+      },
+      {
+        question: "Should dark mode buttons have white text?",
+        answer: "Only if the button color is dark enough, which it usually isn't in a dark theme. Light button colors like #BB86FC or #58A6FF need near-black text: white on them is under 3:1.",
+      },
+    ],
+    sources: [
+      { title: "Material Design 2: Dark theme", href: "https://m2.material.io/design/color/dark-theme.html" },
+      { title: "W3C: Understanding WCAG 2.2, Contrast (Minimum)", href: "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" },
+      { title: "W3C: Understanding WCAG 2.2, Non-text Contrast", href: "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html" },
     ],
     relatedLinks: [
-      { title: "Color playground", href: "/tools/playground" },
-      { title: "Contrast checker", href: "/tools/contrast" },
-      { title: "Midnight metal gradient", href: "/gradients/midnight-metal" },
+      { title: "Dark mode pro palette", href: "/palettes/dark-mode-pro" },
+      { title: "AI website color palettes", href: "/guides/ai-website-color-strategy" },
+      { title: "Finance color palettes", href: "/best-colors-for/finance-websites" },
+      { title: "Black color page", href: "/colors/black" },
       { title: "Luxury editorial noir palette", href: "/palettes/luxury-editorial-noir" },
-      { title: "Web design color trends for 2026", href: "/guides/color-trends-2026" },
+      { title: "Midnight metal gradient", href: "/gradients/midnight-metal" },
+      { title: "Tailwind colors", href: "/tailwind-colors" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "WCAG color contrast guide", href: "/accessibility/color-contrast" },
+      { title: "Palette generator", href: "/generator" },
     ],
   },
   {
@@ -3962,7 +4045,7 @@ const guides: ContentEntry[] = [
       { title: "Color playground", href: "/tools/playground" },
       { title: "Contrast checker", href: "/tools/contrast" },
       { title: "Design token generator", href: "/tools/design-tokens" },
-      { title: "Dark mode color guide", href: "/guides/dark-mode-color-guide" },
+      { title: "Dark mode color palettes", href: "/guides/dark-mode-color-guide" },
     ],
   },
   {
@@ -4037,7 +4120,7 @@ const guides: ContentEntry[] = [
     relatedLinks: [
       { title: "Color playground", href: "/tools/playground" },
       { title: "Startup website color strategy", href: "/guides/startup-website-color-strategy" },
-      { title: "Dark mode color guide", href: "/guides/dark-mode-color-guide" },
+      { title: "Dark mode color palettes", href: "/guides/dark-mode-color-guide" },
     ],
   },
   {
