@@ -5003,82 +5003,112 @@ const bestColorsFor: ContentEntry[] = [
   },
   {
     slug: "finance-websites",
-    title: "Best Colors for Finance and Banking Websites",
-    paletteColors: ["#1E3A5F", "#166534", "#2563EB", "#0D9488", "#1E3799"],
+    title: "Finance Color Palette: 6 Banking & Fintech Palettes With Hex Codes",
+    paletteColors: ["#0B2545", "#1E40AF", "#14532D", "#B08D57", "#FBF8F1"],
     description:
-      "The best colors for finance websites are navy, deep blue, and dark green - colors that communicate trust, stability, and authority. Learn which palettes work for banks, fintech apps, insurance brands, and investment platforms.",
+      "6 finance color palettes with hex codes for banks, wealth managers, fintech apps, trading dashboards, accounting firms and advisors, each on a sample site with WCAG contrast.",
+    ...industryPaletteSets["finance-websites"],
     answer:
-      "The best colors for finance and banking websites are deep navy, institutional blue, and dark green - the most trust-heavy palette in any industry. Financial brands need to communicate stability and competence above all else, since users are trusting them with money. Navy and dark blue dominate traditional banking. Fintech brands often use mid-blue or teal to feel modern without abandoning trust. Green works especially well for wealth management and investment brands where growth is the primary message.",
+      "Finance is mostly blue and green. Navy and strong blues read as careful and stable, which is why banks and anything holding savings lean on them, and green is tied to money itself in the US, so it suits investing and wealth management. A good finance palette pairs one of the two with a white or warm off-white background, near-black text and one quiet accent such as gold or brass. On dashboards, don't show gains and losses with red and green alone: the most common type of color blindness makes those two hard to tell apart.",
     intent: "commercial",
+    authoredOnly: true,
     keywords: [
+      "finance color palette",
+      "financial color palette",
       "best colors for finance website",
-      "banking website colors",
+      "banking color palette",
+      "finance app color palette",
       "fintech color palette",
-      "best colors for bank website",
-      "financial services brand colors",
-      "investment website colors",
-      "insurance website color palette",
-      "best colors for fintech app",
+      "finance dashboard color palette",
+      "what color represents finance",
+      "accounting firm color palette",
+      "investment banking color palette",
+    ],
+    keyTakeaways: [
+      "Blue says careful and stable, green says money and growth. Most finance palettes start with one of the two.",
+      "Keep account and data screens light and quiet, and use color for actions and status.",
+      "Never show gains and losses with red and green alone. Add a + or −, an arrow, or a word.",
+      "The greens and reds that pass on white fail on dark dashboards. Use lighter tints there.",
     ],
     quickFacts: [
-      { label: "Primary", value: "#1E3A5F (navy) - navigation, headers, primary CTAs" },
-      { label: "Secondary", value: "#166534 (dark green) - growth and wealth-management contexts" },
-      { label: "Accent", value: "#0D9488 (teal) - modern fintech accents and secondary actions" },
-      { label: "Contrast check", value: "#1E3A5F text on white is 11.5:1 (WCAG AAA); #166534 on white is 7.13:1 (AAA) - both safe for dense financial data tables" },
+      { label: "Bank blue", value: "#1E40AF buttons with white text reach 8.72:1" },
+      { label: "Money green", value: "#14532D on ivory #FBF8F1 reaches 8.59:1" },
+      { label: "Gain / loss on white", value: "#15803D (5.02:1) and #B91C1C (6.47:1)" },
+      { label: "Gain / loss on dark #0B1220", value: "#4ADE80 (10.74:1) and #F87171 (6.77:1)" },
     ],
     sections: [
       {
-        title: "Navy and deep blue - institutional trust",
-        body: "Navy (#1E3A5F, #1E3799) and deep blue are the most used colors in banking and financial services globally. They signal reliability, authority, and stability - the exact qualities that drive trust in financial relationships. Traditional banks like JP Morgan, Barclays, and Chase all anchor their brand in deep blue. Use navy for primary navigation, headers, and key CTAs. Keep the rest of the interface clean and light so users can focus on their financial information.",
+        title: "Blue for care, green for money",
+        body: "Ask what color represents finance and the honest answer is two colors. Blue, from navy to a strong mid blue, is the usual pick for banks, credit unions and anything that holds savings, because it reads as calm and careful. Green is tied to money itself in the US, where the bills are green, so it fits investing, savings goals and wealth management. Gold or brass turns up as a small accent for private banking and advice. Bright red, orange or purple as the main color is rare, because they read as urgent or playful, which is the opposite of what people want from the place that holds their money.",
       },
       {
-        title: "Dark green - growth and wealth",
-        body: "Dark green (#166534, #15803D) is the second most common finance color. It carries strong associations with money, wealth, and growth - particularly in investment and wealth management contexts. Vanguard, TD Ameritrade, and most investment brands use green as a primary or strong secondary color. It's a strong choice when the core message is portfolio growth or long-term wealth building.",
+        title: "The red and green problem on every dashboard",
+        body: "Gains in green and losses in red is the default in almost every finance app. It's also the pair the most common type of color blindness confuses, according to the US National Eye Institute. We ran a dark gain green, #15803D, and loss red, #B91C1C, through HueFlow's deuteranopia simulation (the Machado 2009 model). Both pass WCAG on white, 5.02:1 and 6.47:1. Simulated, they come out as #756C42 and #776A12: two olive browns with a contrast of 1.03:1 between them. Brighter #22C55E and #EF4444 do barely better at 1.31:1. Keep the colors, but don't let them carry the meaning alone. Add a + or −, an up or down arrow, or the words 'Gain' and 'Loss'. WCAG 1.4.1 asks for exactly that.",
       },
       {
-        title: "Fintech - modern blues and teal",
-        body: "Fintech brands occupy a different position from traditional banks - they need to feel trustworthy but also modern and accessible. Mid-range blues (#2563EB, #3B82F6) and teal (#0D9488) are common in fintech because they keep the trust of blue family colors while feeling lighter and more digital. Stripe, PayPal, and Revolut all use blue-based palettes that feel fresher than traditional banking navy.",
+        title: "Chart lines need 3:1",
+        body: "Lines and bars in a chart carry information, so WCAG 1.4.11 asks for 3:1 against the background. Pale chart colors miss it on white: mint #34D399 is 1.92:1, #10B981 2.54:1 and light blue #60A5FA 2.54:1. Deeper #059669 (3.77:1) and #2563EB (5.17:1) pass. When two series sit side by side, blue and orange are a safer pair than green and red: in the same deuteranopia simulation #2563EB and #EA580C stay a clear blue and a mustard yellow.",
+      },
+      {
+        title: "Dark dashboards need their own greens and reds",
+        body: "Trading and crypto screens often go dark for long sessions. The gain and loss colors that pass on white fail there: on #0B1220, #15803D is 3.73:1 and #B91C1C 2.89:1. Lighter tints work much better, #4ADE80 at 10.74:1 and #F87171 at 6.77:1. Keep a separate set of status colors for each theme instead of reusing the light-mode hex codes.",
+      },
+      {
+        title: "Fine print and forms",
+        body: "Finance sites are full of forms, fee tables and disclosures, and that small print is often set in light gray. #9CA3AF on white is 2.54:1, which fails for any text size. #6B7280 reaches 4.83:1 and still looks secondary. On loan, sign-up and transfer forms, an error needs a short message, not just a red border, for the same reason as the gains and losses above.",
+      },
+      {
+        title: "Bank, fintech, wealth or advice",
+        body: "Retail banks and credit unions mostly stay with navy, blue and white. Fintech apps go a little brighter, with indigo or a vivid blue and a mint or lime for good news. Wealth managers and private banks often use deep green or navy on ivory with a brass accent. Accounting firms do well with teal or slate, which feels careful without copying a bank. Advisory and investment banking firms look more like law firms: charcoal, white and one dark accent. The six palettes above follow those patterns, and each one passes WCAG for body text, buttons, links, badges and cards.",
       },
       {
         title: "What to avoid",
-        body: "Avoid playful or bright colors in primary financial interfaces - they undermine the seriousness and trust that financial brands need. Avoid heavy orange or red as primary brand colors in banking contexts, where they can feel alarming. Avoid dark mode as the default on financial dashboards where users need to scan numbers quickly - light backgrounds keep financial data readable.",
+        body: "Gains and losses shown only by color. Pale chart lines on white. Light gray fine print. A bright accent on every card, which makes the one important button harder to find. Reusing your light-mode greens and reds on a dark dashboard.",
       },
     ],
     faq: [
       {
-        question: "What are the best colors for a finance website?",
-        answer:
-          "Navy and deep blue for institutional trust, dark green for growth and wealth associations. Keep backgrounds light and use color primarily for navigation, branding, and CTAs so financial data stays readable.",
+        question: "What color represents finance?",
+        answer: "Blue and green. Blue, especially navy, reads as stable and careful and is the usual choice for banks. Green is tied to money and growth, so it's common for investing and wealth management. Gold is a frequent small accent.",
+      },
+      {
+        question: "What is a good color palette for a finance website?",
+        answer: "A white or ivory background, near-black text, one blue or green for buttons and links, and one quiet accent. For example: #1E40AF buttons with white text (8.72:1) on #FFFFFF, with #0B2545 navy for the header and a gold #E9C46A badge with dark text.",
+      },
+      {
+        question: "What colors should a finance app use for gains and losses?",
+        answer: "Green and red are fine, as long as they aren't the only signal. Add +/− signs or arrows, because red-green color blindness is the most common type. On white use #15803D and #B91C1C; on a dark background use lighter #4ADE80 and #F87171.",
       },
       {
         question: "What colors do banks use?",
-        answer:
-          "Most major banks use deep navy or institutional blue as their primary brand color. It signals reliability, authority, and stability. Many add a secondary color - gold, green, or red - as a cultural or historical brand marker.",
+        answer: "Navy and blue with white are the usual choice, often with one second color for recognition, such as red, green or gold. Smaller banks and credit unions sometimes use green or teal to stand apart from the big blue brands.",
       },
       {
-        question: "What color palette works for a fintech app?",
-        answer:
-          "Fintech apps typically use mid-range blue or teal as a primary color - modern enough to feel digital, trustworthy enough to handle money. Pair with clean white backgrounds, green for positive states (balance increase, goal achievement), and red only for negative states (declined, overdrawn).",
+        question: "Should a finance dashboard use dark mode?",
+        answer: "Trading and crypto dashboards often do, because people watch them for hours. Banking and account pages are usually light. If you offer both, give each theme its own status colors: the greens and reds that pass on white fail on dark.",
       },
       {
-        question: "Should finance websites use dark mode?",
-        answer:
-          "Dark mode works well for trading platforms and data-heavy dashboards where users want reduced eye strain during long sessions. For general banking and account management, light backgrounds keep financial information scannable and readable for a wider audience.",
-      },
-      {
-        question: "What color is most associated with trust in banking?",
-        answer:
-          "Deep navy and institutional blue are the strongest trust signals in banking and finance - they read as stable and authoritative across nearly every major bank's branding. Dark green is the closest runner-up, specifically for wealth and investment contexts where growth is the primary message.",
+        question: "What color palette works for an accounting firm?",
+        answer: "Teal or slate with white and dark gray text. #0F766E teal reaches 5.47:1 with white text, so it works for buttons and links, and a pale mint like #99F6E4 makes a calm badge color with dark text.",
       },
     ],
+    sources: [
+      { title: "National Eye Institute: Color Blindness", href: "https://www.nei.nih.gov/eye-health-information/eye-conditions-and-diseases/color-blindness" },
+      { title: "Machado, Oliveira & Fernandes (2009): color vision deficiency simulation", href: "https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html" },
+      { title: "W3C: Understanding WCAG 2.2, Use of Color", href: "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html" },
+      { title: "W3C: Understanding WCAG 2.2, Non-text Contrast", href: "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html" },
+      { title: "W3C: Understanding WCAG 2.2, Contrast (Minimum)", href: "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" },
+    ],
     relatedLinks: [
+      { title: "Best colors for fintech brands", href: "/best-colors-for/fintech-brands" },
+      { title: "Best colors for insurance websites", href: "/best-colors-for/insurance-websites" },
+      { title: "Best colors for corporate websites", href: "/best-colors-for/corporate-websites" },
+      { title: "Best colors for ecommerce websites", href: "/best-colors-for/ecommerce-conversions" },
+      { title: "Color blind simulator", href: "/tools/colorblind-simulator" },
       { title: "Navy color page", href: "/colors/navy" },
       { title: "Green color page", href: "/colors/green" },
-      { title: "Blue color page", href: "/colors/blue" },
-      { title: "Best colors for healthcare websites", href: "/best-colors-for/healthcare-websites" },
-      { title: "Best colors for SaaS websites", href: "/best-colors-for/saas-websites" },
       { title: "Contrast checker", href: "/tools/contrast" },
-      { title: "Color picker", href: "/color-picker" },
+      { title: "WCAG color contrast guide", href: "/accessibility/color-contrast" },
       { title: "Palette generator", href: "/generator" },
     ],
   },

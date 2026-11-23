@@ -68,6 +68,7 @@ const contentUpdatedOn: Record<string, string> = {
     ["camel", "hot-pink", "bisque", "wheat", "teal", "ivory", "saddle-brown", "dodger-blue", "linen"].map((slug) => [`/colors/${slug}`, "2026-11-18"]),
   ),
   "/best-colors-for/ecommerce-conversions": "2026-11-20",
+  "/best-colors-for/finance-websites": "2026-11-23",
 };
 
 type SitemapEntry = {

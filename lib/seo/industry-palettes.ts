@@ -663,6 +663,63 @@ export const industryPaletteSets: Record<string, IndustryPaletteSet> = {
       ),
     ],
   },
+  "finance-websites": {
+    palettePreview: {
+      brand: "Harbor & Oak Financial",
+      nav: ["Accounts", "Loans", "Invest"],
+      badge: "No monthly fees",
+      headline: "Your money in one calm place",
+      body: "Checking, savings and investments, with every fee listed up front.",
+      cta: "Open an account",
+      link: "Compare accounts",
+      cardTitle: "Portfolio this month",
+      cardBody: "▲ +2.4% · updated 9:30 am",
+    },
+    palettes: [
+      palette(
+        "Retail Bank & Credit Union",
+        "Retail banks, credit unions, and lenders",
+        ["#0B2545", "#1E40AF", "#E9C46A", "#FFFFFF", "#0F172A"],
+        ["#1E40AF", "#0B2545", "#E9C46A", "#FFFFFF", "#0F172A"],
+        "Navy for the header and account cards, a stronger blue for buttons and links (8.72:1 with white). The gold badge needs dark text: white on it is 1.67:1.",
+      ),
+      palette(
+        "Wealth & Investment Management",
+        "Wealth managers, private banks, and investment firms",
+        ["#14532D", "#E8E2D0", "#B08D57", "#FBF8F1", "#1C1917"],
+        ["#14532D", "#E8E2D0", "#B08D57", "#FBF8F1", "#1C1917"],
+        "Deep green on ivory feels established without looking dated. The brass accent takes dark text, because white on #B08D57 is only 3.09:1.",
+      ),
+      palette(
+        "Fintech App",
+        "Payment apps, neobanks, and budgeting tools",
+        ["#4F46E5", "#EEF2FF", "#34D399", "#FFFFFF", "#111827"],
+        ["#4F46E5", "#EEF2FF", "#34D399", "#FFFFFF", "#111827"],
+        "Indigo buttons (6.29:1 with white) feel newer than bank navy. Mint works for 'Paid' and 'On track' badges with dark text, but as a chart line on white it's only 1.92:1.",
+      ),
+      palette(
+        "Trading & Crypto Dashboard",
+        "Trading platforms, crypto apps, and market data screens",
+        ["#0B1220", "#1E293B", "#38BDF8", "#FBBF24", "#E2E8F0"],
+        ["#38BDF8", "#1E293B", "#FBBF24", "#0B1220", "#E2E8F0"],
+        "A dark screen for long sessions. The sky-blue button takes a near-black label (8.74:1), since white on it is 2.14:1. Use #4ADE80 and #F87171 for gains and losses here.",
+      ),
+      palette(
+        "Accounting & Tax Firm",
+        "Accountants, bookkeepers, and tax advisors",
+        ["#0F766E", "#F0FDFA", "#99F6E4", "#FFFFFF", "#1F2937"],
+        ["#0F766E", "#F0FDFA", "#99F6E4", "#FFFFFF", "#1F2937"],
+        "Teal sits between bank blue and money green and feels calm. White on #0F766E reaches 5.47:1, so it works for buttons and links.",
+      ),
+      palette(
+        "Advisory & Investment Banking",
+        "Boutique advisors, M&A firms, and investment banks",
+        ["#1F2937", "#F3F4F6", "#7F1D1D", "#FFFFFF", "#111827"],
+        ["#1F2937", "#F3F4F6", "#7F1D1D", "#FFFFFF", "#111827"],
+        "Charcoal and white with one oxblood accent, closer to a law firm than a high-street bank. Keep the oxblood for small badges and highlights.",
+      ),
+    ],
+  },
   // Keyed by the page's existing slug, which Google already has indexed.
   "ecommerce-conversions": {
     palettePreview: {
