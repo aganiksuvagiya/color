@@ -663,6 +663,64 @@ export const industryPaletteSets: Record<string, IndustryPaletteSet> = {
       ),
     ],
   },
+  // The /guides/ai-website-color-strategy page (a guide URL, but laid out like the industry pages).
+  "ai-website-color-strategy": {
+    palettePreview: {
+      brand: "Fieldnote AI",
+      nav: ["Product", "Pricing", "Docs"],
+      badge: "New: team workspaces",
+      headline: "Answers from your own documents",
+      body: "Upload PDFs and notes, ask in plain English, and see the source behind every answer.",
+      cta: "Start free",
+      link: "See how it works",
+      cardTitle: "Answer · 3 sources",
+      cardBody: "Cited from q3-report.pdf, page 12",
+    },
+    palettes: [
+      palette(
+        "AI Assistant",
+        "Chat assistants, copilots, and AI writing tools",
+        ["#4F46E5", "#EEF2FF", "#C7D2FE", "#FFFFFF", "#111827"],
+        ["#4F46E5", "#EEF2FF", "#C7D2FE", "#FFFFFF", "#111827"],
+        "The familiar AI indigo, one step darker so white text passes: #4F46E5 reaches 6.29:1, while the lighter #6366F1 is 4.47:1.",
+      ),
+      palette(
+        "Developer AI (Dark)",
+        "Code assistants, AI APIs, and developer platforms",
+        ["#0D1117", "#161B22", "#388BFD", "#3FB950", "#E6EDF3"],
+        ["#388BFD", "#161B22", "#3FB950", "#0D1117", "#E6EDF3"],
+        "Dark first, like an editor. The blue button takes a near-black label (5.66:1), because white on it is 3.34:1.",
+      ),
+      palette(
+        "Enterprise AI",
+        "B2B AI platforms, analytics, and AI for regulated industries",
+        ["#1E3A8A", "#F1F5F9", "#6EE7B7", "#FFFFFF", "#0F172A"],
+        ["#1E3A8A", "#F1F5F9", "#6EE7B7", "#FFFFFF", "#0F172A"],
+        "Navy reads as careful, which matters when a buyer has to get the tool past security review. Mint is kept for 'Connected' and 'Synced' badges.",
+      ),
+      palette(
+        "Creative & Generative AI",
+        "Image, video, music, and design generators",
+        ["#7C3AED", "#F5F3FF", "#F9A8D4", "#FFFFFF", "#1E1B2E"],
+        ["#7C3AED", "#F5F3FF", "#F9A8D4", "#FFFFFF", "#1E1B2E"],
+        "Violet and pink, but dark enough to read: #7C3AED gives white text 5.70:1, where the lighter #8B5CF6 is 4.23:1.",
+      ),
+      palette(
+        "AI Research & Writing",
+        "Research tools, knowledge bases, and AI for long reading",
+        ["#115E59", "#ECE7DF", "#E0A458", "#FAF8F5", "#1C1917"],
+        ["#115E59", "#ECE7DF", "#E0A458", "#FAF8F5", "#1C1917"],
+        "Paper-like background and deep teal, made for reading long answers. The amber badge takes dark text; white on it is 2.18:1.",
+      ),
+      palette(
+        "Not Another Purple AI",
+        "AI startups that want to stand apart from the indigo look",
+        ["#0A0A0A", "#F4F4F5", "#D9F99D", "#FFFFFF", "#18181B"],
+        ["#0A0A0A", "#F4F4F5", "#D9F99D", "#FFFFFF", "#18181B"],
+        "Black buttons, white space and one lime highlight. It looks nothing like the usual indigo gradient, and every pair passes AAA.",
+      ),
+    ],
+  },
   "finance-websites": {
     palettePreview: {
       brand: "Harbor & Oak Financial",

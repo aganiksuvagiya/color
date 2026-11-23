@@ -234,7 +234,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Color animation generator", href: "/tools/animation" },
       { title: "Conversion color strategy", href: "/guides/conversion-color-strategy" },
       { title: "Color mixer", href: "/tools/color-mixer" },
-      { title: "AI website color strategy", href: "/guides/ai-website-color-strategy" },
+      { title: "AI website color palettes", href: "/guides/ai-website-color-strategy" },
     ],
   },
   picker: {
@@ -330,7 +330,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Palette visualizer", href: "/tools/palette-visualizer" },
       { title: "Color harmony generator", href: "/tools/color-harmony" },
       { title: "Color mixer", href: "/tools/color-mixer" },
-      { title: "AI website color strategy", href: "/guides/ai-website-color-strategy" },
+      { title: "AI website color palettes", href: "/guides/ai-website-color-strategy" },
     ],
   },
   tailwind: {
@@ -617,7 +617,7 @@ export const toolPageContent: Record<ToolPageSeoConfig["slug"], ToolPageSeoConfi
       { title: "Gradient generator", href: "/tools/gradient" },
       { title: "Trending palettes", href: "/trends" },
       { title: "Violet aurora gradient", href: "/gradients/violet-aurora" },
-      { title: "AI website color strategy", href: "/guides/ai-website-color-strategy" },
+      { title: "AI website color palettes", href: "/guides/ai-website-color-strategy" },
     ],
   },
   "contrast-fixer": {
@@ -1369,8 +1369,8 @@ export const blogPageContent = {
       href: "/guides/conversion-color-strategy",
     },
     {
-      title: "AI Website Color Strategy",
-      excerpt: "See which color systems help AI, SaaS, and modern product brands feel credible without looking generic.",
+      title: "AI Website Color Palettes",
+      excerpt: "Six palettes for AI apps and chatbots, and why the usual indigo button fails contrast by a hair.",
       category: "Guides",
       readTime: "6 min",
       href: "/guides/ai-website-color-strategy",
