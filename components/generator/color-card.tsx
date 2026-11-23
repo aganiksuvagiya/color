@@ -70,7 +70,7 @@ export function ColorCard({
 
   const isLight = color.text === "dark";
   const fgStrong = isLight ? "rgba(0,0,0,0.82)" : "rgba(255,255,255,0.90)";
-  const fgMid = isLight ? "rgba(0,0,0,0.50)" : "rgba(255,255,255,0.50)";
+  const fgMid = isLight ? "rgba(0,0,0,0.68)" : "rgba(255,255,255,0.78)";
   const iconCls = `flex h-10 w-10 items-center justify-center rounded-2xl transition-all duration-150 active:scale-95 ${
     isLight
       ? "text-black/45 hover:bg-black/12 hover:text-black/80"
@@ -240,6 +240,7 @@ export function ColorCard({
           <input
             ref={nameInputRef}
             autoFocus
+            aria-label="Color name"
             value={nameValue}
             onChange={(e) => setNameValue(e.target.value)}
             onBlur={commitEdit}
@@ -252,14 +253,16 @@ export function ColorCard({
             maxLength={24}
           />
         ) : (
-          <p
-            className="mb-0.5 cursor-text truncate text-sm font-bold tracking-[-0.01em] transition-opacity hover:opacity-70"
+          <button
+            type="button"
+            className="mb-0.5 block w-full cursor-text truncate text-left text-sm font-bold tracking-[-0.01em] transition-opacity hover:opacity-70"
             style={{ color: fgStrong }}
             onClick={startEdit}
             title="Click to rename"
+            aria-label={`Rename ${color.name}`}
           >
             {color.name}
-          </p>
+          </button>
         )}
 
         <p className="font-mono text-[11px] uppercase" style={{ color: fgMid }}>

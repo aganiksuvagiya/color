@@ -1,7 +1,7 @@
 "use client";
 // v2
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { hexToHsl, hslToHex, isValidHex } from "@/lib/color-utils";
 
 type Props = {
@@ -15,6 +15,13 @@ type Props = {
 export function ColorPicker({ hex, onChange, onClose, cardIndex, cardTotal }: Props) {
   const [hexInput, setHexInput] = useState(hex);
   const hsl = hexToHsl(hex);
+  const id = useId();
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
 
   // Center the picker horizontally over its swatch, clamped so it stays on screen
   const swatchCenterPct = ((cardIndex + 0.5) / cardTotal) * 100;
@@ -48,17 +55,20 @@ export function ColorPicker({ hex, onChange, onClose, cardIndex, cardTotal }: Pr
           exit={{ opacity: 0, y: 8, scale: 0.95 }}
           transition={{ duration: 0.2 }}
           className="w-72 rounded-xl border border-white/10 bg-[#1c1c1e] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.6)] pointer-events-auto"
+          role="dialog"
+          aria-label="Edit color"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="mb-3 flex items-center justify-between">
             <div className="h-8 w-8 rounded-lg" style={{ backgroundColor: hex }} />
-            <button onClick={onClose} className="text-xs text-white/40 hover:text-white/70">Done</button>
+            <button type="button" onClick={onClose} className="text-xs text-white/70 hover:text-white">Done</button>
           </div>
 
           <div className="space-y-3">
             <div>
-              <label className="mb-1 block text-[10px] uppercase tracking-wider text-white/30">Hue</label>
+              <label htmlFor={`${id}-hue`} className="mb-1 block text-[10px] uppercase tracking-wider text-white/60">Hue</label>
               <input
+                id={`${id}-hue`}
                 type="range"
                 min={0}
                 max={360}
@@ -70,8 +80,9 @@ export function ColorPicker({ hex, onChange, onClose, cardIndex, cardTotal }: Pr
             </div>
 
             <div>
-              <label className="mb-1 block text-[10px] uppercase tracking-wider text-white/30">Saturation</label>
+              <label htmlFor={`${id}-saturation`} className="mb-1 block text-[10px] uppercase tracking-wider text-white/60">Saturation</label>
               <input
+                id={`${id}-saturation`}
                 type="range"
                 min={0}
                 max={100}
@@ -83,8 +94,9 @@ export function ColorPicker({ hex, onChange, onClose, cardIndex, cardTotal }: Pr
             </div>
 
             <div>
-              <label className="mb-1 block text-[10px] uppercase tracking-wider text-white/30">Lightness</label>
+              <label htmlFor={`${id}-lightness`} className="mb-1 block text-[10px] uppercase tracking-wider text-white/60">Lightness</label>
               <input
+                id={`${id}-lightness`}
                 type="range"
                 min={0}
                 max={100}
@@ -96,8 +108,9 @@ export function ColorPicker({ hex, onChange, onClose, cardIndex, cardTotal }: Pr
             </div>
 
             <div>
-              <label className="mb-1 block text-[10px] uppercase tracking-wider text-white/30">Hex</label>
+              <label htmlFor={`${id}-hex`} className="mb-1 block text-[10px] uppercase tracking-wider text-white/60">Hex</label>
               <input
+                id={`${id}-hex`}
                 type="text"
                 value={hexInput}
                 onChange={(e) => handleHexChange(e.target.value)}

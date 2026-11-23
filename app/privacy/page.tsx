@@ -14,7 +14,7 @@ const CONTACT_EMAIL = "suvagiyaaganik@gmail.com";
 
 export default function PrivacyPage() {
   return (
-    <StaticPage title="Privacy Policy" updated="July 26, 2026">
+    <StaticPage title="Privacy Policy" updated="September 9, 2026">
       <p>
         This Privacy Policy describes how HueFlow (&quot;we&quot;,
         &quot;us&quot;, or &quot;our&quot;) collects, uses, and shares
@@ -71,48 +71,38 @@ export default function PrivacyPage() {
         .
       </p>
 
-      <h2>Advertising (Google AdSense)</h2>
+      <h2>Advertising</h2>
       <p>
-        We use Google AdSense to display advertisements on the Site. Google and
-        its partners use advertising cookies to serve ads based on your prior
-        visits to this and other websites.
+        The Site does not currently display third-party advertisements. We may
+        use Google AdSense and other advertising services in the future to
+        support the Site. If we do, this policy will be updated to describe
+        what data those services collect and how you can control it, and this
+        section will be updated accordingly. Advertising partners typically use
+        cookies to serve ads based on your visits to this and other websites;
+        you can generally control or opt out of this through{" "}
+        <a
+          href="https://www.google.com/settings/ads"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Google Ads Settings
+        </a>{" "}
+        or{" "}
+        <a
+          href="https://www.aboutads.info/choices"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          aboutads.info/choices
+        </a>
+        .
       </p>
-      <ul>
-        <li>
-          Third-party vendors, including Google, use cookies to serve ads based
-          on your prior visits to this Site or other websites.
-        </li>
-        <li>
-          Google&apos;s use of advertising cookies enables it and its partners
-          to serve ads to you based on your visits to this Site and/or other
-          sites on the Internet.
-        </li>
-        <li>
-          You may opt out of personalized advertising by visiting{" "}
-          <a
-            href="https://www.google.com/settings/ads"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Google Ads Settings
-          </a>
-          , or opt out of some third-party vendors&apos; cookies at{" "}
-          <a
-            href="https://www.aboutads.info/choices"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            aboutads.info/choices
-          </a>
-          .
-        </li>
-      </ul>
 
       <h2>How We Use Information</h2>
       <ul>
         <li>To operate, maintain, and improve the Site and its tools.</li>
         <li>To understand which features and content are most useful.</li>
-        <li>To display advertising that supports the Site.</li>
+        <li>To display advertising that supports the Site, if and when we introduce it.</li>
         <li>To respond to messages you send us.</li>
       </ul>
 
@@ -120,8 +110,8 @@ export default function PrivacyPage() {
       <p>
         We do not sell your personal information. We share information only
         with service providers that help us operate the Site (such as
-        analytics and advertising partners described above), or if required by
-        law.
+        analytics providers, and advertising partners if we introduce
+        advertising as described above), or if required by law.
       </p>
 
       <h2>Data Retention</h2>

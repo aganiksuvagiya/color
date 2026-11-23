@@ -566,7 +566,7 @@ export function AdminDashboard({ adminUser, users: initialUsers, palettes: initi
     <div className="min-h-screen bg-[#160b05] text-white">
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-4 sm:px-6 lg:px-8">
         <span className="text-lg font-semibold">HueFlow Admin</span>
-        <Link href="/" className="text-sm text-white/50 hover:text-white">
+        <Link prefetch={false} href="/" className="text-sm text-white/50 hover:text-white">
           ← Back to site
         </Link>
       </div>
