@@ -18,7 +18,7 @@ export function StaticPage({
 
       <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-          <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+          <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">{title}</span>
         </nav>

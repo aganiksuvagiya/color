@@ -68,7 +68,7 @@ export function ColorOfTheYear2027Post() {
         Use it where you&apos;d normally use an off-white: whole rooms, kitchens, bedrooms. It looks good next to oak, terracotta and deep olive. On screens it works as a background, but always with dark text (more on that below).
       </p>
       <p>
-        <Link href="/blog/sherwin-williams-celery">Celery: full guide with codes, palettes and colors that go with it →</Link>
+        <Link prefetch={false} href="/blog/sherwin-williams-celery">Celery: full guide with codes, palettes and colors that go with it →</Link>
       </p>
 
       <h3 id="webster-green">Benjamin Moore: Webster Green (HC-130)</h3>
@@ -80,7 +80,7 @@ export function ColorOfTheYear2027Post() {
         It&apos;s a commitment color. Try it on cabinets, a study, a front door or one wall behind a bed, and pair it with brass, walnut, cream and a dusty pink if you want contrast.
       </p>
       <p>
-        <Link href="/blog/benjamin-moore-webster-green">Webster Green: full guide with codes, palettes and colors that go with it →</Link>
+        <Link prefetch={false} href="/blog/benjamin-moore-webster-green">Webster Green: full guide with codes, palettes and colors that go with it →</Link>
       </p>
 
       <h3 id="grounded">Behr: Grounded (T27-01)</h3>
@@ -89,7 +89,7 @@ export function ColorOfTheYear2027Post() {
         Grounded is an earthy olive that drifts between olive and moss, with brown underneath. With an LRV of 11 it&apos;s the darkest pick on the list, so it absorbs a lot of light. That makes it cozy in a den or bedroom and dramatic on exteriors and trim. Behr&apos;s wider 2027 trend palette includes shades such as Coastal Beige and Mozart, which gives you a sense of how they expect it to be used: next to warm, quiet neutrals.
       </p>
       <p>
-        <Link href="/blog/behr-grounded">Grounded: full guide with codes, palettes and colors that go with it →</Link>
+        <Link prefetch={false} href="/blog/behr-grounded">Grounded: full guide with codes, palettes and colors that go with it →</Link>
       </p>
 
       <h3 id="cottage-door">Valspar: Cottage Door (8004-38E)</h3>
@@ -98,7 +98,7 @@ export function ColorOfTheYear2027Post() {
         Valspar opened the season with a muted blue that leans gray. It changes a lot with the light: warm bulbs push it toward gray, cool daylight brings out a hint of teal. Valspar suggests pairing it with Moon Shot (8005-2B) and Apricot Blush (8003-8A), and that soft blue-plus-peach combination is a good one to steal for a bedroom or a nursery.
       </p>
       <p>
-        <Link href="/blog/valspar-cottage-door">Cottage Door: full guide with codes, palettes and colors that go with it →</Link>
+        <Link prefetch={false} href="/blog/valspar-cottage-door">Cottage Door: full guide with codes, palettes and colors that go with it →</Link>
       </p>
 
       <h3 id="artifact">Glidden: Artifact (PPG10-16)</h3>
@@ -110,7 +110,7 @@ export function ColorOfTheYear2027Post() {
       <h3 id="deep-rooted">Dutch Boy: Deep Rooted (311-7DB)</h3>
       <ColorFeature hex="#A6613C" name="Deep Rooted" code="311-7DB · sold through Menards" facts="Announced in late August 2026. Screen match about #A6613C (RGB 166, 97, 60), LRV about 17." />
       <p>
-        The one warm outlier. Deep Rooted is a muted terracotta orange, and it&apos;s a big swing from Dutch Boy&apos;s 2026 pick. Dutch Boy built three palettes around it, including Essence (with Antique White and Western Orange) and Bliss (with Champagne Fizzle and Ribbon Blue). It works on an accent wall, a front door or exterior trim, and it looks great next to the blues on this list, because orange and blue sit opposite each other on the <Link href="/color-wheel">color wheel</Link>.
+        The one warm outlier. Deep Rooted is a muted terracotta orange, and it&apos;s a big swing from Dutch Boy&apos;s 2026 pick. Dutch Boy built three palettes around it, including Essence (with Antique White and Western Orange) and Bliss (with Champagne Fizzle and Ribbon Blue). It works on an accent wall, a front door or exterior trim, and it looks great next to the blues on this list, because orange and blue sit opposite each other on the <Link prefetch={false} href="/color-wheel">color wheel</Link>.
       </p>
 
       <h3 id="others">Dulux, Graham &amp; Brown and WGSN</h3>
@@ -153,7 +153,7 @@ export function ColorOfTheYear2027Post() {
         <li><strong>Webster Green #64806C and Artifact #69808B:</strong> both land just under 4.5:1 with either white or dark text (4.1 to 4.3:1). Use them for backgrounds behind large type, illustrations and accents, not for small body text.</li>
       </ul>
       <Callout title="Quick tip">
-        If you need a 2027 green or blue for buttons, darken it a few points of HSL lightness. You keep the mood of the color and get past 4.5:1 with white text (Webster Green needs about 2 points, Artifact about 3, Cottage Door about 9). You can check any pair in our <Link href="/tools/contrast" className="font-semibold text-[#c2410c] underline underline-offset-2">contrast checker</Link>.
+        If you need a 2027 green or blue for buttons, darken it a few points of HSL lightness. You keep the mood of the color and get past 4.5:1 with white text (Webster Green needs about 2 points, Artifact about 3, Cottage Door about 9). You can check any pair in our <Link prefetch={false} href="/tools/contrast" className="font-semibold text-[#c2410c] underline underline-offset-2">contrast checker</Link>.
       </Callout>
       <p>Here are three palettes we built around the 2027 picks. Hover a color to see its code, click to copy, or open a palette in the generator to adjust it.</p>
       <PaletteGrid>
@@ -163,7 +163,7 @@ export function ColorOfTheYear2027Post() {
         <Palette name="2027 at a glance" note="One color from each family" colors={["#E0DDBD", "#64806C", "#7A8F97", "#A6613C", "#615E50"]} />
       </PaletteGrid>
       <p>
-        Want to go further with one of them? Paste its HEX into the <Link href="/color-wheel">color wheel</Link> to find its complementary and analogous colors, or start from it in the <Link href="/generator">palette generator</Link>.
+        Want to go further with one of them? Paste its HEX into the <Link prefetch={false} href="/color-wheel">color wheel</Link> to find its complementary and analogous colors, or start from it in the <Link prefetch={false} href="/generator">palette generator</Link>.
       </p>
     </>
   );

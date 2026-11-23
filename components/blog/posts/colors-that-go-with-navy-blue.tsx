@@ -75,14 +75,14 @@ export function NavyBluePost() {
         There&apos;s no single official navy. The navy built into HTML and CSS is <strong>#000080</strong>, a pure, very saturated dark blue. The navy you see in clothes, paint and logos is usually a bit grayer and softer. For this guide we use <strong>#1F2A44</strong>, a typical designer navy. Every contrast number below is measured against it.
       </p>
       <p>
-        If your navy is brighter or darker, the pairings still work. The only things that shift are the exact contrast numbers. You can find more navy variations on our <Link href="/shades-of-blue">shades of blue</Link> page.
+        If your navy is brighter or darker, the pairings still work. The only things that shift are the exact contrast numbers. You can find more navy variations on our <Link prefetch={false} href="/shades-of-blue">shades of blue</Link> page.
       </p>
 
       <h2 id="why">Why navy is so easy to pair</h2>
       <ul>
         <li><strong>It&apos;s very dark.</strong> Navy sits near the dark end of the lightness scale, so almost any lighter color stands out clearly against it. White on our navy measures 14.3:1, more than three times the 4.5:1 that WCAG asks for in body text.</li>
         <li><strong>It acts as a neutral.</strong> Like black, gray and beige, navy can fill a big area without demanding attention. That leaves room for one or two accents.</li>
-        <li><strong>Its opposite is orange.</strong> On the <Link href="/color-wheel">color wheel</Link>, blue faces orange. That&apos;s why warm colors like mustard, coral, rust and camel look so good next to navy: they complete each other.</li>
+        <li><strong>Its opposite is orange.</strong> On the <Link prefetch={false} href="/color-wheel">color wheel</Link>, blue faces orange. That&apos;s why warm colors like mustard, coral, rust and camel look so good next to navy: they complete each other.</li>
       </ul>
 
       <h2 id="pairings">18 colors that go with navy blue</h2>
@@ -128,7 +128,7 @@ export function NavyBluePost() {
       </p>
       <h3 id="websites">Websites and brands</h3>
       <p>
-        Navy is one of the safest brand colors because it&apos;s so readable. Navy text on white measures 14.3:1, and white text on a navy header or footer reads just as well. For call-to-action buttons, the warm accents are your friends: navy text on a mustard button measures 6.9:1 and on coral 5.7:1, both comfortably above the 4.5:1 minimum. Check your own combination in the <Link href="/tools/contrast">contrast checker</Link> before you ship it.
+        Navy is one of the safest brand colors because it&apos;s so readable. Navy text on white measures 14.3:1, and white text on a navy header or footer reads just as well. For call-to-action buttons, the warm accents are your friends: navy text on a mustard button measures 6.9:1 and on coral 5.7:1, both comfortably above the 4.5:1 minimum. Check your own combination in the <Link prefetch={false} href="/tools/contrast">contrast checker</Link> before you ship it.
       </p>
       <Callout title="Rule of thumb">
         Pair navy with one light color for readability and one warm color for energy. Navy, cream and mustard, or navy, white and coral, will look good almost anywhere.
@@ -141,7 +141,7 @@ export function NavyBluePost() {
         <li><strong>A slightly different navy.</strong> Two navies that are almost but not quite the same, like a navy jacket with navy trousers from a different set, often look worse than navy with any other color. Either match exactly or contrast clearly.</li>
       </ul>
       <p>
-        Want to explore beyond these 18? Put #1F2A44, or your own navy, into the <Link href="/color-wheel">color wheel calculator</Link> to see its complementary and analogous colors, or start a palette from it in the <Link href="/generator">generator</Link>.
+        Want to explore beyond these 18? Put #1F2A44, or your own navy, into the <Link prefetch={false} href="/color-wheel">color wheel calculator</Link> to see its complementary and analogous colors, or start a palette from it in the <Link prefetch={false} href="/generator">generator</Link>.
       </p>
     </>
   );

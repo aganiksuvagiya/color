@@ -59,7 +59,7 @@ export function ColorsHubView({
       {/* ── Header ── */}
       <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-          <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+          <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">Colors</span>
         </nav>
@@ -107,7 +107,7 @@ export function ColorsHubView({
             {active ? (
               <>
                 {active.colors.length} {active.name.toLowerCase()} colors ·{" "}
-                <Link href={`/shades-of-${active.slug}`} className="font-semibold text-[#c2410c] hover:underline">
+                <Link prefetch={false} href={`/shades-of-${active.slug}`} className="font-semibold text-[#c2410c] hover:underline">
                   See all shades of {active.name.toLowerCase()} →
                 </Link>
               </>
@@ -128,7 +128,7 @@ export function ColorsHubView({
               <h2 className="mb-4 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60">
                 {f.name} colors <span className="font-medium normal-case tracking-normal text-[#1c1712]/60">{f.colors.length}</span>
                 <span className="h-px flex-1 bg-black/[0.06]" />
-                <Link href={`/shades-of-${f.slug}`} className="text-[12px] font-medium normal-case tracking-normal text-[#1c1712]/60 transition hover:text-[#c2410c]">
+                <Link prefetch={false} href={`/shades-of-${f.slug}`} className="text-[12px] font-medium normal-case tracking-normal text-[#1c1712]/60 transition hover:text-[#c2410c]">
                   Shades of {f.name.toLowerCase()} →
                 </Link>
               </h2>
@@ -153,14 +153,14 @@ export function ColorsHubView({
                         </span>
                       </button>
                       <div className="mt-2 flex items-center justify-between gap-2 px-0.5">
-                        <Link href={`/colors/${c.slug}`} className="truncate text-[13px] font-medium text-[#1c1712]/85 transition hover:text-[#c2410c]">
+                        <Link prefetch={false} href={`/colors/${c.slug}`} className="truncate text-[13px] font-medium text-[#1c1712]/85 transition hover:text-[#c2410c]">
                           {c.name}
                         </Link>
                         <span className="flex shrink-0 items-center gap-2 text-[#1c1712]/60">
                           <button onClick={() => copy(value)} className="transition hover:text-[#1c1712]" aria-label={`Copy ${value}`} title={`Copy ${value}`}>
                             <CopyIcon />
                           </button>
-                          <Link href={`/colors/${c.slug}`} className="transition hover:text-[#1c1712]" aria-label={`Open ${c.name}`} title={`Open ${c.name}`}>
+                          <Link prefetch={false} href={`/colors/${c.slug}`} className="transition hover:text-[#1c1712]" aria-label={`Open ${c.name}`} title={`Open ${c.name}`}>
                             <EyeIcon />
                           </Link>
                         </span>
@@ -188,7 +188,7 @@ export function ColorsHubView({
               {all.map((c) => (
                 <tr key={c.slug} className="border-b border-black/[0.04] last:border-0">
                   <td className="px-5 py-2.5">
-                    <Link href={`/colors/${c.slug}`} className="flex items-center gap-3 hover:text-[#c2410c]">
+                    <Link prefetch={false} href={`/colors/${c.slug}`} className="flex items-center gap-3 hover:text-[#c2410c]">
                       <span className="h-7 w-7 shrink-0 rounded-md ring-1 ring-inset ring-black/[0.08]" style={{ backgroundColor: c.hex }} />
                       <span className="font-medium">{c.name}</span>
                     </Link>
@@ -217,7 +217,7 @@ export function ColorsHubView({
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
               {related.map((l) => (
-                <Link key={l.href} href={l.href} className="rounded-full px-3.5 py-1.5 text-[13px] text-[#1c1712]/70 ring-1 ring-black/[0.08] transition hover:text-[#c2410c] hover:ring-[#c2410c]/40">
+                <Link prefetch={false} key={l.href} href={l.href} className="rounded-full px-3.5 py-1.5 text-[13px] text-[#1c1712]/70 ring-1 ring-black/[0.08] transition hover:text-[#c2410c] hover:ring-[#c2410c]/40">
                   {l.title} →
                 </Link>
               ))}

@@ -16,7 +16,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
       {items.map((item, i) => (
         <span key={`${item.href}-${i}`} className="flex items-center gap-2">
           {i < items.length - 1 ? (
-            <Link href={item.href} className="transition hover:text-[#1c1712]/70">{item.title}</Link>
+            <Link prefetch={false} href={item.href} className="transition hover:text-[#1c1712]/70">{item.title}</Link>
           ) : (
             <span className="text-[#1c1712]/60">{item.title}</span>
           )}
@@ -72,6 +72,7 @@ export function RelatedLinks({ links }: { links: { title: string; href: string }
     <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {links.map((link) => (
         <Link
+          prefetch={false}
           key={link.href}
           href={link.href}
           className="group flex items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold leading-5 text-[#1c1712]/85 ring-1 ring-black/[0.08] transition hover:bg-[#fafafa] hover:text-[#c2410c] hover:ring-black/25"

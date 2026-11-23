@@ -139,8 +139,8 @@ export function ConverterPairView({ pair }: { pair: ConverterPair }) {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link href="/generator" className="rounded-full bg-[#1c1712] px-7 py-3 text-[15px] font-semibold text-white transition hover:bg-[#c2410c]">Open the generator</Link>
-            <Link href="/tools/contrast" className="rounded-full px-7 py-3 text-[15px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">Contrast checker</Link>
+            <Link prefetch={false} href="/generator" className="rounded-full bg-[#1c1712] px-7 py-3 text-[15px] font-semibold text-white transition hover:bg-[#c2410c]">Open the generator</Link>
+            <Link prefetch={false} href="/tools/contrast" className="rounded-full px-7 py-3 text-[15px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">Contrast checker</Link>
           </div>
         </div>
       </section>

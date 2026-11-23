@@ -41,7 +41,7 @@ export function PalettesOnARealWebsitePost() {
       </p>
 
       <h2 id="preview">What the preview shows</h2>
-      <p>This is the preview from the <Link href="/generator">generator</Link>, showing the same palette. It&apos;s the real component, so the numbers are computed live:</p>
+      <p>This is the preview from the <Link prefetch={false} href="/generator">generator</Link>, showing the same palette. It&apos;s the real component, so the numbers are computed live:</p>
       <div className="not-prose my-8">
         <UIPreview palette={EXAMPLE} />
       </div>
@@ -54,10 +54,10 @@ export function PalettesOnARealWebsitePost() {
         The A11y panel goes further, with every color measured against white and black and a text sample on each. Below that, a color-blind view shows the palette as people with protanopia, deuteranopia or tritanopia might see it. It uses the Machado, Oliveira and Fernandes (2009) model, applied in linear RGB, and shows full color blindness. It&apos;s a simulation for spotting colors that collapse into one, not a diagnosis.
       </p>
       <p>
-        The same idea runs through the industry pages. <Link href="/best-colors-for/healthcare-websites">Healthcare website colors</Link>, for example, shows every palette as a small website (navigation, headline, button, link and card) with the job of each color and the contrast of each pair.
+        The same idea runs through the industry pages. <Link prefetch={false} href="/best-colors-for/healthcare-websites">Healthcare website colors</Link>, for example, shows every palette as a small website (navigation, headline, button, link and card) with the job of each color and the contrast of each pair.
       </p>
       <Callout title="Try it">
-        Open the <Link href="/generator">generator</Link>, press the space bar for a new palette, lock the colors you like and click Preview in the toolbar. When the three checks pass, export to Tailwind, CSS variables, SCSS, JSON, Figma tokens, Swift, Android, SVG, PNG, ASE or PDF. No account needed.
+        Open the <Link prefetch={false} href="/generator">generator</Link>, press the space bar for a new palette, lock the colors you like and click Preview in the toolbar. When the three checks pass, export to Tailwind, CSS variables, SCSS, JSON, Figma tokens, Swift, Android, SVG, PNG, ASE or PDF. No account needed.
       </Callout>
 
       <h2 id="contrast">How the numbers are worked out</h2>
@@ -71,20 +71,20 @@ export function PalettesOnARealWebsitePost() {
         One small detail: ratios are rounded down to one decimal, never up. A pair at 4.47:1 fails AA, and showing it as &quot;4.5:1&quot; next to a Fail badge would look like a bug.
       </p>
       <p>
-        WCAG 3 drafts are exploring a different contrast method (APCA) that weighs text size and polarity. Until it becomes the standard, WCAG 2 is what audits and laws refer to, so that&apos;s what HueFlow reports. You can check any pair yourself in the <Link href="/tools/contrast">contrast checker</Link>.
+        WCAG 3 drafts are exploring a different contrast method (APCA) that weighs text size and polarity. Until it becomes the standard, WCAG 2 is what audits and laws refer to, so that&apos;s what HueFlow reports. You can check any pair yourself in the <Link prefetch={false} href="/tools/contrast">contrast checker</Link>.
       </p>
 
       <h2 id="built">How it&apos;s built</h2>
       <ul>
         <li><strong>Next.js 16 on Cloudflare Workers.</strong> The site is a Next.js App Router app, deployed to Workers with OpenNext. Pages are prerendered at build time and cached as static files.</li>
-        <li><strong>Color math with no dependencies.</strong> Conversions between HEX, RGB, HSL, CMYK and OKLCH, the contrast formula and the color-blind matrices are small, plain TypeScript functions. The same code runs on the server when a page is built and in your browser when you type into a <Link href="/hex-to-rgb">converter</Link>.</li>
-        <li><strong>Pages only for real names.</strong> A page for every hex code would mean 16.7 million possible URLs, and the free Workers plan gives each request 10 ms of CPU. So <Link href="/colors">/colors</Link> has pages for the 140 CSS named colors, other hex URLs return a 404, and the converters handle any code you type.</li>
+        <li><strong>Color math with no dependencies.</strong> Conversions between HEX, RGB, HSL, CMYK and OKLCH, the contrast formula and the color-blind matrices are small, plain TypeScript functions. The same code runs on the server when a page is built and in your browser when you type into a <Link prefetch={false} href="/hex-to-rgb">converter</Link>.</li>
+        <li><strong>Pages only for real names.</strong> A page for every hex code would mean 16.7 million possible URLs, and the free Workers plan gives each request 10 ms of CPU. So <Link prefetch={false} href="/colors">/colors</Link> has pages for the 140 CSS named colors, other hex URLs return a 404, and the converters handle any code you type.</li>
         <li><strong>No account wall.</strong> Every tool works without signing in.</li>
       </ul>
 
       <h2 id="next">What&apos;s next</h2>
       <p>
-        The preview is a dashboard today. On the list: a landing-page layout and a light-background version. If there&apos;s something you want the preview to show, <Link href="/contact">tell us</Link>.
+        The preview is a dashboard today. On the list: a landing-page layout and a light-background version. If there&apos;s something you want the preview to show, <Link prefetch={false} href="/contact">tell us</Link>.
       </p>
     </>
   );

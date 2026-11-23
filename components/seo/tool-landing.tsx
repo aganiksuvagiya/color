@@ -53,10 +53,10 @@ export function ToolLanding({
           </p>
         </div>
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Link href={primary.href} className="rounded-full bg-[#1c1712] px-6 py-3 text-[15px] font-semibold text-white transition hover:bg-[#c2410c]">
+          <Link prefetch={false} href={primary.href} className="rounded-full bg-[#1c1712] px-6 py-3 text-[15px] font-semibold text-white transition hover:bg-[#c2410c]">
             {primary.label}
           </Link>
-          <Link href={secondary.href} className="rounded-full px-6 py-3 text-[15px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
+          <Link prefetch={false} href={secondary.href} className="rounded-full px-6 py-3 text-[15px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
             {secondary.label}
           </Link>
         </div>
@@ -112,7 +112,7 @@ export function ToolLanding({
             <h2 className="text-[1.75rem] font-semibold tracking-[-0.03em]">{closing.title}</h2>
             <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/60">{closing.body}</p>
           </div>
-          <Link href={closing.cta.href} className="rounded-full bg-[#1c1712] px-7 py-3 text-[15px] font-semibold text-white transition hover:bg-[#c2410c]">
+          <Link prefetch={false} href={closing.cta.href} className="rounded-full bg-[#1c1712] px-7 py-3 text-[15px] font-semibold text-white transition hover:bg-[#c2410c]">
             {closing.cta.label}
           </Link>
         </div>

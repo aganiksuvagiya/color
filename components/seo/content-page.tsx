@@ -209,6 +209,7 @@ export function ContentPageView({
             <div className="flex h-24 w-full overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
               {similarColors.map((c) => (
                 <Link
+                  prefetch={false}
                   key={c.hex}
                   href={`/colors/${c.slug}`}
                   className="group/swatch relative min-w-0 flex-1 transition-[flex] duration-300 hover:z-10 hover:flex-[2.4]"
@@ -471,7 +472,7 @@ export function ContentPageView({
                     { title: "Find a color name", href: "/color-name-finder" },
                   ].map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className="group flex items-start justify-between gap-3 rounded-lg px-3 py-2 text-[14px] leading-5 text-[#1c1712]/70 transition hover:bg-[#1c1712]/[0.04] hover:text-[#1c1712]">
+                      <Link prefetch={false} href={link.href} className="group flex items-start justify-between gap-3 rounded-lg px-3 py-2 text-[14px] leading-5 text-[#1c1712]/70 transition hover:bg-[#1c1712]/[0.04] hover:text-[#1c1712]">
                         {link.title}
                         <span className="shrink-0 text-[#1c1712]/60 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
                       </Link>
@@ -487,7 +488,7 @@ export function ContentPageView({
                 <ul className="space-y-1">
                   {group.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className="group flex items-start justify-between gap-3 rounded-lg px-3 py-2 text-[14px] leading-5 text-[#1c1712]/70 transition hover:bg-[#1c1712]/[0.04] hover:text-[#c2410c]">
+                      <Link prefetch={false} href={link.href} className="group flex items-start justify-between gap-3 rounded-lg px-3 py-2 text-[14px] leading-5 text-[#1c1712]/70 transition hover:bg-[#1c1712]/[0.04] hover:text-[#c2410c]">
                         {link.title}
                         <span className="shrink-0 text-[#1c1712]/60 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
                       </Link>

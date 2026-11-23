@@ -58,7 +58,7 @@ export function HanukkahColorsPost() {
 
       <h2 id="palettes">6 Hanukkah color palettes</h2>
       <p>
-        Hover a color to see its code, click to copy it, or open a palette in the <Link href="/generator">generator</Link> to change a shade.
+        Hover a color to see its code, click to copy it, or open a palette in the <Link prefetch={false} href="/generator">generator</Link> to change a shade.
       </p>
       <PaletteGrid>
         <Palette name="Classic blue and white" note="Flag blue with soft blues and a navy for text" colors={["#FFFFFF", "#E8EEF8", "#7FA7E0", "#0038B8", "#14213D"]} />
@@ -84,7 +84,7 @@ export function HanukkahColorsPost() {
         And these fail: <strong>silver on white</strong> (1.8:1), <strong>gold on white</strong> (2.1:1), <strong>white on sky blue</strong> (2.4:1) and <strong>gold on flag blue</strong> (4.4:1, fine for a big headline but not for small text). Metallic foil on a printed card can work at lower contrast because it catches the light, but on a screen there&apos;s no shine, only a flat yellow-gray.
       </p>
       <Callout title="Rule of thumb">
-        Put the metallics on the dark colors, never on white. Gold or silver on navy looks festive and stays readable; gold or silver on white looks washed out. Check any pair in the <Link href="/tools/contrast" className="font-semibold text-[#c2410c] underline underline-offset-2">contrast checker</Link>.
+        Put the metallics on the dark colors, never on white. Gold or silver on navy looks festive and stays readable; gold or silver on white looks washed out. Check any pair in the <Link prefetch={false} href="/tools/contrast" className="font-semibold text-[#c2410c] underline underline-offset-2">contrast checker</Link>.
       </Callout>
 
       <h2 id="ideas">Ideas for cards, tables and posts</h2>
@@ -95,7 +95,7 @@ export function HanukkahColorsPost() {
         <li><strong>Websites and emails:</strong> white background, navy text, flag-blue buttons with white labels, and gold only for small decorative details.</li>
       </ul>
       <p>
-        For more blues to choose from, browse <Link href="/shades-of-blue">shades of blue</Link>, or look up the codes for <Link href="/colors/silver">silver</Link>, <Link href="/colors/gold">gold</Link> and <Link href="/colors/navy">navy</Link>. Planning for the whole season? Our <Link href="/color-palettes/christmas">Christmas palettes</Link> and <Link href="/blog/winter-color-palette">winter color palettes</Link> cover the rest of December.
+        For more blues to choose from, browse <Link prefetch={false} href="/shades-of-blue">shades of blue</Link>, or look up the codes for <Link prefetch={false} href="/colors/silver">silver</Link>, <Link prefetch={false} href="/colors/gold">gold</Link> and <Link prefetch={false} href="/colors/navy">navy</Link>. Planning for the whole season? Our <Link prefetch={false} href="/color-palettes/christmas">Christmas palettes</Link> and <Link prefetch={false} href="/blog/winter-color-palette">winter color palettes</Link> cover the rest of December.
       </p>
     </>
   );

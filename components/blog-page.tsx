@@ -55,9 +55,9 @@ export function BlogPage() {
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
-            <Link href="/resources" className="transition hover:text-[#1c1712]/70">Resources</Link>
+            <Link prefetch={false} href="/resources" className="transition hover:text-[#1c1712]/70">Resources</Link>
             <span className="text-[#1c1712]/20">/</span>
             <span className="text-[#1c1712]/60">Blog</span>
           </nav>
@@ -102,6 +102,7 @@ export function BlogPage() {
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {visible.map((article, idx) => (
                 <Link
+                  prefetch={false}
                   key={article.href}
                   href={article.href}
                   className="group flex flex-col overflow-hidden rounded-2xl ring-1 ring-black/[0.07] transition hover:-translate-y-0.5 hover:ring-black/25"
@@ -174,6 +175,7 @@ export function BlogPage() {
               <div className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                 {blogPageContent.relatedLinks.map((link) => (
                   <Link
+                    prefetch={false}
                     key={link.href}
                     href={link.href}
                     className="group flex items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold leading-5 text-[#1c1712]/85 ring-1 ring-black/[0.08] transition hover:bg-[#fafafa] hover:text-[#c2410c] hover:ring-black/25"

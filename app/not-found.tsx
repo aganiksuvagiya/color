@@ -32,6 +32,7 @@ export default function NotFound() {
         <div className="mt-10 grid w-full max-w-4xl grid-cols-2 gap-3 sm:grid-cols-3">
           {SUGGESTIONS.map((s) => (
             <Link
+              prefetch={false}
               key={s.href}
               href={s.href}
               className="group flex items-center gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold text-[#1c1712]/80 ring-1 ring-black/[0.08] transition hover:-translate-y-0.5 hover:bg-[#fafafa] hover:text-[#c2410c] hover:ring-black/25"
@@ -42,7 +43,7 @@ export default function NotFound() {
           ))}
         </div>
 
-        <Link href="/" className="mt-10 inline-flex items-center gap-2 rounded-full bg-[#1c1712] px-6 py-3 text-[14px] font-semibold text-white transition hover:bg-[#c2410c]">
+        <Link prefetch={false} href="/" className="mt-10 inline-flex items-center gap-2 rounded-full bg-[#1c1712] px-6 py-3 text-[14px] font-semibold text-white transition hover:bg-[#c2410c]">
           <span aria-hidden="true">←</span> Back to home
         </Link>
       </section>

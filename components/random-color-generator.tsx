@@ -107,9 +107,9 @@ export function RandomColorGenerator() {
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
-            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <Link prefetch={false} href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
             <span className="text-[#1c1712]/20">/</span>
             <span className="text-[#1c1712]/60">Random Color Generator</span>
           </nav>
@@ -223,9 +223,9 @@ export function RandomColorGenerator() {
                   </button>
                 )}
                 {isPalette ? (
-                  <Link href={generatorHref} className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">Open in generator →</Link>
+                  <Link prefetch={false} href={generatorHref} className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">Open in generator →</Link>
                 ) : (
-                  <Link href="/color-name-finder" className="rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">Name any color</Link>
+                  <Link prefetch={false} href="/color-name-finder" className="rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">Name any color</Link>
                 )}
               </div>
             </div>

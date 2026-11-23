@@ -137,7 +137,7 @@ export function ShadesPageView({
           {breadcrumbs.map((item, i) => (
             <span key={item.href} className="flex items-center gap-2">
               {i < breadcrumbs.length - 1 ? (
-                <Link href={item.href} className="transition hover:text-[#1c1712]/70">{item.title}</Link>
+                <Link prefetch={false} href={item.href} className="transition hover:text-[#1c1712]/70">{item.title}</Link>
               ) : (
                 <span className="text-[#1c1712]/60">{item.title}</span>
               )}
@@ -163,6 +163,7 @@ export function ShadesPageView({
         <nav aria-label="Color families" className="mt-8 flex flex-wrap gap-2">
           {families.map((f) => (
             <Link
+              prefetch={false}
               key={f.slug}
               href={f.href}
               aria-current={f.active ? "page" : undefined}
@@ -235,7 +236,7 @@ export function ShadesPageView({
                               <CopyIcon />
                             </button>
                             {s.colorSlug ? (
-                              <Link href={`/colors/${s.colorSlug}`} className="transition hover:text-[#1c1712]" aria-label={`View ${s.name}`} title={`View ${s.name}`}>
+                              <Link prefetch={false} href={`/colors/${s.colorSlug}`} className="transition hover:text-[#1c1712]" aria-label={`View ${s.name}`} title={`View ${s.name}`}>
                                 <EyeIcon />
                               </Link>
                             ) : (
@@ -300,6 +301,7 @@ export function ShadesPageView({
                     <p className="truncate text-[13px] text-[#1c1712]/60">{p.useCase}</p>
                   </div>
                   <Link
+                    prefetch={false}
                     href={`/generator?label=${encodeURIComponent(p.name)}&c=${p.colors.map((c) => c.slice(1).toUpperCase()).join("-")}`}
                     className="shrink-0 rounded-full border border-black/[0.12] px-3.5 py-1.5 text-[12px] font-semibold text-[#1c1712]/75 transition hover:border-[#e8531f] hover:bg-[#d04615] hover:text-white"
                   >
@@ -322,7 +324,7 @@ export function ShadesPageView({
             {related.length > 0 && (
               <div className="mt-8 flex flex-wrap gap-2">
                 {related.map((l) => (
-                  <Link key={l.href} href={l.href} className="rounded-full px-3.5 py-1.5 text-[13px] text-[#1c1712]/70 ring-1 ring-black/[0.08] transition hover:text-[#c2410c] hover:ring-[#e8531f]/40">
+                  <Link prefetch={false} key={l.href} href={l.href} className="rounded-full px-3.5 py-1.5 text-[13px] text-[#1c1712]/70 ring-1 ring-black/[0.08] transition hover:text-[#c2410c] hover:ring-[#e8531f]/40">
                     {l.title} →
                   </Link>
                 ))}
@@ -370,7 +372,7 @@ export function ShadesHubView({
       {/* ── Header (same pattern as /colors and the shades pages) ── */}
       <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-          <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+          <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">Shades</span>
         </nav>
@@ -394,7 +396,7 @@ export function ShadesHubView({
             <article key={f.slug} className="group overflow-hidden rounded-2xl ring-1 ring-black/[0.07] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-18px_rgba(28,23,18,0.35)]">
               {/* Every shade in the family; hover widens one, click copies it */}
               <SwatchStrip colors={f.strip} height="h-36" copied={copied} onCopy={copy} className="" />
-              <Link href={f.href} className="flex items-end justify-between gap-4 p-5">
+              <Link prefetch={false} href={f.href} className="flex items-end justify-between gap-4 p-5">
                 <div className="min-w-0">
                   <h2 className="text-[19px] font-semibold tracking-[-0.02em]">
                     Shades of <span style={{ color: f.accent }}>{f.name}</span>

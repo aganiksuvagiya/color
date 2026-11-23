@@ -147,9 +147,9 @@ export function ContrastChecker() {
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
-            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <Link prefetch={false} href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
             <span className="text-[#1c1712]/20">/</span>
             <span className="text-[#1c1712]/60">Contrast Checker</span>
           </nav>
@@ -271,7 +271,7 @@ export function ContrastChecker() {
                 <h2 className="text-[1.75rem] font-semibold tracking-[-0.03em]">Try a pair</h2>
                 <p className="mt-2 text-[15px] leading-7 text-[#1c1712]/60">Click any pair to load it into the checker. Six pass, two fail on purpose, so you can see the difference.</p>
               </div>
-              <Link href="/tools/contrast-fixer" className="rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
+              <Link prefetch={false} href="/tools/contrast-fixer" className="rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
                 Try the smart contrast fixer →
               </Link>
             </div>

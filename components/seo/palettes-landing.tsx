@@ -49,7 +49,7 @@ export function PalettesLanding({
       {/* ── Header ── */}
       <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-          <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+          <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">Palettes</span>
         </nav>
@@ -67,6 +67,7 @@ export function PalettesLanding({
         <nav aria-label="Browse palettes by style" className="mt-8 flex flex-wrap gap-2">
           {styleChips.map((c) => (
             <Link
+              prefetch={false}
               key={c.href}
               href={c.href}
               className="flex items-center gap-2 rounded-lg bg-[#1c1712]/[0.04] px-3 py-1.5 text-[13px] font-medium text-[#1c1712]/65 transition hover:bg-[#1c1712]/[0.08] hover:text-[#1c1712]"
@@ -110,14 +111,14 @@ export function PalettesLanding({
                 <div className="p-5">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#c2410c]">{p.industry}</p>
                   <h3 className="mt-1.5 text-[17px] font-semibold tracking-[-0.02em]">
-                    <Link href={p.href} className="transition hover:text-[#c2410c]">{p.title.replace(/ Palette$/, "")}</Link>
+                    <Link prefetch={false} href={p.href} className="transition hover:text-[#c2410c]">{p.title.replace(/ Palette$/, "")}</Link>
                   </h3>
                   <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{p.colors.map((c) => c.slice(1)).join(" · ")}</p>
                   <div className="mt-4 flex items-center gap-2">
-                    <Link href={p.href} className="rounded-full bg-[#1c1712] px-3.5 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
+                    <Link prefetch={false} href={p.href} className="rounded-full bg-[#1c1712] px-3.5 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
                       View palette →
                     </Link>
-                    <Link href={p.generatorHref} className="rounded-full px-3.5 py-1.5 text-[12px] font-semibold text-[#1c1712]/65 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
+                    <Link prefetch={false} href={p.generatorHref} className="rounded-full px-3.5 py-1.5 text-[12px] font-semibold text-[#1c1712]/65 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
                       Open in generator
                     </Link>
                   </div>
@@ -133,7 +134,7 @@ export function PalettesLanding({
         <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
           <div className="flex flex-wrap items-end justify-between gap-5">
             <SectionTitle eyebrow="Library" title="Popular palettes" body="Hand-picked from the palette library. Click a color to copy it, or copy the whole palette." />
-            <Link href="/color-palettes" className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+            <Link prefetch={false} href="/color-palettes" className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
               Browse all {libraryTotal} palettes →
             </Link>
           </div>
@@ -152,7 +153,7 @@ export function PalettesLanding({
                       <button onClick={() => copy(all)} className="rounded-full px-3 py-1.5 text-[12px] font-semibold text-[#1c1712]/65 ring-1 ring-black/[0.12] transition hover:text-[#1c1712]">
                         {copied === all ? "✓ Copied" : "Copy all"}
                       </button>
-                      <Link href={p.generatorHref} className="rounded-full bg-[#1c1712] px-3 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]" aria-label={`Open ${p.name} in the generator`}>
+                      <Link prefetch={false} href={p.generatorHref} className="rounded-full bg-[#1c1712] px-3 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]" aria-label={`Open ${p.name} in the generator`}>
                         Open →
                       </Link>
                     </div>
@@ -175,7 +176,7 @@ export function PalettesLanding({
               </h2>
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
                 {g.tags.map((t) => (
-                  <Link key={t.slug} href={t.href} className="group overflow-hidden rounded-xl ring-1 ring-black/[0.07] transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_rgba(28,23,18,0.35)]">
+                  <Link prefetch={false} key={t.slug} href={t.href} className="group overflow-hidden rounded-xl ring-1 ring-black/[0.07] transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_rgba(28,23,18,0.35)]">
                     <span className="flex h-14 w-full">
                       {t.strip.map((hex, i) => (
                         <span key={`${hex}-${i}`} className="flex-1" style={{ backgroundColor: hex }} />

@@ -9,8 +9,7 @@ import { awardPointsClient } from "@/lib/award-points-client";
 
 const MAIN_LINKS = [
   { href: "/colors", label: "Colors" },
-  // Desktop bar only from lg up: at md widths it pushed "Sign in" off-screen. Always in the mobile menu.
-  { href: "/shades", label: "Shades", desktopClass: "hidden lg:inline" },
+  { href: "/shades", label: "Shades" },
   { href: "/palettes", label: "Palettes" },
   { href: "/trends", label: "Trends" },
   { href: "/community", label: "Community" },
@@ -93,13 +92,15 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
             : "border-black/[0.06] bg-white/92 backdrop-blur-md"
         }`}
       >
-        <Link href="/" className="flex items-center" aria-label="HueFlow home">
+        <Link prefetch={false} href="/" className="flex shrink-0 items-center" aria-label="HueFlow home">
           <Image src="/hueflow.svg" alt="HueFlow" width={104} height={22} preload className="h-[22px] w-[104px] [filter:brightness(0)_saturate(100%)]" />
         </Link>
 
-        <nav className="hidden items-center gap-6 text-[15px] font-medium text-[#1c1712]/65 md:flex">
+        {/* The full bar needs about 1,100px (logo, 8 links, two buttons), so it starts at xl.
+            From md it showed at 768px, where the buttons broke onto two lines and squeezed the logo. */}
+        <nav className="hidden items-center gap-6 whitespace-nowrap text-[15px] font-medium text-[#1c1712]/65 xl:flex">
           {MAIN_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className={`transition-colors hover:text-[#1c1712] ${"desktopClass" in link ? link.desktopClass : ""}`}>
+            <Link prefetch={false} key={link.href} href={link.href} className="transition-colors hover:text-[#1c1712]">
               {link.label}
             </Link>
           ))}
@@ -124,6 +125,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                 >
                   {TOOL_LINKS.map((link) => (
                     <Link
+                      prefetch={false}
                       key={link.href}
                       href={link.href}
                       onClick={() => setToolsOpen(false)}
@@ -137,14 +139,15 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
             </AnimatePresence>
           </div>
 
-          <Link href="/blog" className="transition-colors hover:text-[#1c1712]">Resources</Link>
-          <Link href="/profile" className="transition-colors hover:text-[#1c1712]">Profile</Link>
+          <Link prefetch={false} href="/blog" className="transition-colors hover:text-[#1c1712]">Resources</Link>
+          <Link prefetch={false} href="/profile" className="transition-colors hover:text-[#1c1712]">Profile</Link>
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-3">
           <Link
+            prefetch={false}
             href="/generator"
-            className={`hidden items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_6px_18px_rgba(232,83,31,0.28)] transition-transform hover:scale-[1.02] active:scale-[0.98] sm:inline-flex ${
+            className={`hidden items-center gap-1.5 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_6px_18px_rgba(232,83,31,0.28)] transition-transform hover:scale-[1.02] active:scale-[0.98] sm:inline-flex ${
               isHome ? "" : ""
             }`}
             style={{ background: "linear-gradient(135deg, #d04615, #b93d12)" }}
@@ -153,7 +156,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
           </Link>
           {session ? (
             <>
-              <Link href="/profile" className="flex items-center gap-1 sm:hidden" aria-label="Profile">
+              <Link prefetch={false} href="/profile" className="flex items-center gap-1 sm:hidden" aria-label="Profile">
                 {session.user?.image ? (
                   <Image src={session.user.image} alt={session.user.name ?? "Your profile photo"} width={28} height={28} className="rounded-full" />
                 ) : (
@@ -189,6 +192,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                 {signOutConfirm && (
                   <div className="absolute right-0 top-full mt-2 w-44 rounded-xl border border-black/8 bg-white p-1.5 shadow-xl">
                     <Link
+                      prefetch={false}
                       href="/profile"
                       onClick={() => setSignOutConfirm(false)}
                       className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-[#1c1712]/70 transition-colors hover:bg-black/[0.04] hover:text-[#1c1712]"
@@ -215,7 +219,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
             <>
               <button
                 onClick={() => signIn("google")}
-                className="hidden rounded-full border border-black/8 px-4 py-2 text-sm font-medium text-[#1c1712]/70 transition-colors hover:bg-black/[0.03] sm:block"
+                className="hidden whitespace-nowrap rounded-full border border-black/8 px-4 py-2 text-sm font-medium text-[#1c1712]/70 transition-colors hover:bg-black/[0.03] sm:block"
               >
                 Sign in
               </button>
@@ -229,7 +233,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
           )}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-black/8 text-[#1c1712]/60 transition-colors hover:bg-black/[0.03] md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-black/8 text-[#1c1712]/60 transition-colors hover:bg-black/[0.03] xl:hidden"
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
           >
@@ -259,11 +263,12 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="mx-auto mt-2 max-h-[70vh] max-w-[1400px] overflow-y-auto rounded-2xl border border-black/8 bg-white/98 p-3 shadow-[0_20px_60px_rgba(28,23,18,0.12)] backdrop-blur-xl md:hidden"
+            className="mx-auto mt-2 max-h-[70vh] max-w-[1400px] overflow-y-auto rounded-2xl border border-black/8 bg-white/98 p-3 shadow-[0_20px_60px_rgba(28,23,18,0.12)] backdrop-blur-xl md:mr-0 md:max-w-sm xl:hidden"
           >
             <nav className="flex flex-col gap-0.5">
               {MAIN_LINKS.map((link) => (
                 <Link
+                  prefetch={false}
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
@@ -278,6 +283,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
 
               {TOOL_LINKS.map((link) => (
                 <Link
+                  prefetch={false}
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
@@ -289,6 +295,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
 
               <div className="my-1 border-t border-black/8" />
               <Link
+                prefetch={false}
                 href="/blog"
                 onClick={() => setMenuOpen(false)}
                 className="rounded-lg px-4 py-2.5 text-sm font-medium text-[#1c1712]/75 transition-colors hover:bg-black/[0.04] hover:text-[#1c1712]"
@@ -296,6 +303,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
                 Resources
               </Link>
               <Link
+                prefetch={false}
                 href="/profile"
                 onClick={() => setMenuOpen(false)}
                 className="rounded-lg px-4 py-2.5 text-sm font-medium text-[#1c1712]/75 transition-colors hover:bg-black/[0.04] hover:text-[#1c1712]"
@@ -304,6 +312,7 @@ export function Header({ isHome = false }: { isHome?: boolean } = {}) {
               </Link>
 
               <Link
+                prefetch={false}
                 href="/generator"
                 onClick={() => setMenuOpen(false)}
                 className="mt-1 rounded-lg px-4 py-2.5 text-center text-sm font-semibold text-white sm:hidden"

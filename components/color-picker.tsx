@@ -336,9 +336,9 @@ export function ColorPicker() {
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
-            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <Link prefetch={false} href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
             <span className="text-[#1c1712]/20">/</span>
             <span className="text-[#1c1712]/60">Color Picker</span>
           </nav>
@@ -570,6 +570,7 @@ export function ColorPicker() {
                         <p className="truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{colors.map((c) => c.slice(1)).join(" · ")}</p>
                       </div>
                       <Link
+                        prefetch={false}
                         href={`/generator?label=${encodeURIComponent(`${colorName} ${h.label}`)}&c=${colors.map((c) => c.slice(1)).join("-")}`}
                         className="shrink-0 rounded-full bg-[#1c1712] px-3 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]"
                       >
@@ -597,7 +598,7 @@ export function ColorPicker() {
               </div>
             ))}
             <div className="lg:col-span-2">
-              <Link href={generatorHref} className="inline-block rounded-full bg-[#1c1712] px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+              <Link prefetch={false} href={generatorHref} className="inline-block rounded-full bg-[#1c1712] px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
                 Open this color in the generator →
               </Link>
             </div>

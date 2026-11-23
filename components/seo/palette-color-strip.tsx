@@ -43,7 +43,7 @@ export function PaletteColorStrip({ colors, linkToColors }: { colors: string[]; 
 
         if (named) {
           return (
-            <Link key={`${hex}-${i}`} href={`/colors/${named.slug}`} className={base} style={{ backgroundColor: hex }} title={`${named.name} ${hex.toUpperCase()}`}>
+            <Link prefetch={false} key={`${hex}-${i}`} href={`/colors/${named.slug}`} className={base} style={{ backgroundColor: hex }} title={`${named.name} ${hex.toUpperCase()}`}>
               {pill}
             </Link>
           );

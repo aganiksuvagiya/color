@@ -15,6 +15,7 @@ function TagChips({ tags }: { tags: TagChip[] }) {
     <div className="flex flex-wrap gap-2">
       {tags.map((t) => (
         <Link
+          prefetch={false}
           key={t.slug}
           href={t.href}
           className="flex items-center gap-2 rounded-lg bg-[#1c1712]/[0.04] px-3 py-1.5 text-[13px] font-medium text-[#1c1712]/65 transition hover:bg-[#1c1712]/[0.08] hover:text-[#1c1712]"
@@ -42,7 +43,7 @@ function PaletteCard({ palette, copied, copy }: { palette: Palette; copied: stri
           <button onClick={() => copy(all)} className="rounded-full px-3 py-1.5 text-[12px] font-semibold text-[#1c1712]/65 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
             {copied === all ? "✓ Copied" : "Copy all"}
           </button>
-          <Link href={palette.href} className="rounded-full bg-[#1c1712] px-3 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]" aria-label={`Open ${palette.name} in the generator`}>
+          <Link prefetch={false} href={palette.href} className="rounded-full bg-[#1c1712] px-3 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]" aria-label={`Open ${palette.name} in the generator`}>
             Open →
           </Link>
         </div>
@@ -186,7 +187,7 @@ export function PaletteLibraryHubView({
               <SmallTitle>{g.label}</SmallTitle>
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
                 {g.tags.map((t) => (
-                  <Link key={t.slug} href={t.href} className="group overflow-hidden rounded-xl ring-1 ring-black/[0.07] transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_rgba(28,23,18,0.35)]">
+                  <Link prefetch={false} key={t.slug} href={t.href} className="group overflow-hidden rounded-xl ring-1 ring-black/[0.07] transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_rgba(28,23,18,0.35)]">
                     <span className="flex h-16 w-full">
                       {t.strip.map((hex, i) => (
                         <span key={`${hex}-${i}`} className="flex-1" style={{ backgroundColor: hex }} />

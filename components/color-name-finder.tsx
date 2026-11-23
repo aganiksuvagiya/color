@@ -52,9 +52,9 @@ export function ColorNameFinder() {
       <main>
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
-            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <Link prefetch={false} href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
             <span className="text-[#1c1712]/20">/</span>
             <span className="text-[#1c1712]/60">Color Name Finder</span>
           </nav>
@@ -130,7 +130,7 @@ export function ColorNameFinder() {
                       ) : (
                         <>{hex} is closest to {closest.name} ({closest.hex}), a difference of {diff} out of 441 in RGB distance. </>
                       )}
-                      <Link href={`/colors/${closest.slug}`} className="font-semibold text-[#c2410c] hover:underline">See the {closest.name} color page →</Link>
+                      <Link prefetch={false} href={`/colors/${closest.slug}`} className="font-semibold text-[#c2410c] hover:underline">See the {closest.name} color page →</Link>
                     </p>
                   </>
                 ) : (
@@ -165,7 +165,7 @@ export function ColorNameFinder() {
               <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#c2410c]">Similar named colors</p>
               <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {similar.map((c) => (
-                  <Link key={c.slug} href={`/colors/${c.slug}`} className="group overflow-hidden rounded-xl ring-1 ring-black/[0.07] transition hover:ring-black/30">
+                  <Link prefetch={false} key={c.slug} href={`/colors/${c.slug}`} className="group overflow-hidden rounded-xl ring-1 ring-black/[0.07] transition hover:ring-black/30">
                     <span className="block h-16" style={{ backgroundColor: c.hex }} />
                     <span className="block px-3 py-2.5">
                       <span className="block truncate text-[13px] font-semibold group-hover:text-[#c2410c]">{c.name}</span>

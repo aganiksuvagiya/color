@@ -65,7 +65,7 @@ function Empty({ strip, title, body, cta }: { strip: string[]; title: string; bo
       </div>
       <p className="mt-6 text-[18px] font-semibold tracking-[-0.02em]">{title}</p>
       <p className="mt-1.5 max-w-sm text-[14px] leading-6 text-[#1c1712]/60">{body}</p>
-      {cta && <Link href={cta.href} className={`mt-6 ${darkBtn}`}>{cta.label}</Link>}
+      {cta && <Link prefetch={false} href={cta.href} className={`mt-6 ${darkBtn}`}>{cta.label}</Link>}
     </div>
   );
 }
@@ -225,8 +225,8 @@ export function ProfilePage() {
               </div>
             </div>
             <div className="mt-6 flex flex-wrap items-center gap-2.5">
-              <Link href="/generator" className={darkBtn}>Generate palette</Link>
-              <Link href="/tools/daily-challenge" className={`${ringBtn} flex items-center gap-2 py-2.5 text-[14px]`}>
+              <Link prefetch={false} href="/generator" className={darkBtn}>Generate palette</Link>
+              <Link prefetch={false} href="/tools/daily-challenge" className={`${ringBtn} flex items-center gap-2 py-2.5 text-[14px]`}>
                 Daily challenge
                 {streak > 0 && <span className="rounded-full bg-[#c2410c]/10 px-1.5 py-0.5 text-[11px] font-bold text-[#c2410c]">🔥 {streak}</span>}
               </Link>
@@ -399,7 +399,7 @@ export function ProfilePage() {
                         </p>
                       </div>
                       <div className="mt-3 flex items-center gap-1.5">
-                        <Link href={`/generator${encodePalette(p)}`} className="rounded-full px-3.5 py-1.5 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
+                        <Link prefetch={false} href={`/generator${encodePalette(p)}`} className="rounded-full px-3.5 py-1.5 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
                           Open
                         </Link>
                         <button

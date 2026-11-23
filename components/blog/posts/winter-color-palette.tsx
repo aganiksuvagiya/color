@@ -50,7 +50,7 @@ export function WinterColorPalettePost() {
         ))}
       </PairingGrid>
       <p>
-        Add <strong>pure white #FFFFFF</strong>, <strong>black #000000</strong>, <Link href="/colors/navy">navy</Link> and <Link href="/colors/silver">silver</Link> and you have the basics of a Winter wardrobe.
+        Add <strong>pure white #FFFFFF</strong>, <strong>black #000000</strong>, <Link prefetch={false} href="/colors/navy">navy</Link> and <Link prefetch={false} href="/colors/silver">silver</Link> and you have the basics of a Winter wardrobe.
       </p>
 
       <h2 id="types">Deep, True and Bright Winter palettes</h2>
@@ -97,7 +97,7 @@ export function WinterColorPalettePost() {
 
       <h2 id="design">Winter color palettes for design</h2>
       <p>
-        If you came here for a seasonal palette for a website, a holiday card or a room, these four capture winter without leaning on Christmas red and green. Hover to see codes, click to copy, or open one in the <Link href="/generator">generator</Link>.
+        If you came here for a seasonal palette for a website, a holiday card or a room, these four capture winter without leaning on Christmas red and green. Hover to see codes, click to copy, or open one in the <Link prefetch={false} href="/generator">generator</Link>.
       </p>
       <PaletteGrid>
         <Palette name="Fresh snowfall" note="White and frosted blues to a deep slate" colors={["#FFFFFF", "#E3EDF5", "#A9C2D6", "#5B7A94", "#1E2B38"]} />
@@ -121,7 +121,7 @@ export function WinterColorPalettePost() {
         <li><strong>Charcoal #36454F on icy blue #D6ECF5:</strong> 8.0:1, a calm pair for a winter-themed page.</li>
       </ul>
       <p>
-        Check your own pairs in the <Link href="/tools/contrast">contrast checker</Link>, or browse more cool shades in <Link href="/shades-of-blue">shades of blue</Link> and <Link href="/shades-of-pink">shades of pink</Link>. Celebrating Hanukkah this December? See our <Link href="/blog/hanukkah-colors">Hanukkah colors</Link> guide.
+        Check your own pairs in the <Link prefetch={false} href="/tools/contrast">contrast checker</Link>, or browse more cool shades in <Link prefetch={false} href="/shades-of-blue">shades of blue</Link> and <Link prefetch={false} href="/shades-of-pink">shades of pink</Link>. Celebrating Hanukkah this December? See our <Link prefetch={false} href="/blog/hanukkah-colors">Hanukkah colors</Link> guide.
       </p>
     </>
   );

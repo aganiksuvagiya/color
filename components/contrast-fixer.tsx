@@ -178,9 +178,9 @@ export function ContrastFixer() {
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
-            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <Link prefetch={false} href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
             <span className="text-[#1c1712]/20">/</span>
             <span className="text-[#1c1712]/60">Contrast Fixer</span>
           </nav>

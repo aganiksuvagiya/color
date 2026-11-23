@@ -74,6 +74,7 @@ export function HubPageView({ hub, directory }: { hub: HubPage; directory?: HubD
             <div className="hidden flex-col gap-3 lg:flex">
               {preview.map((item) => (
                 <Link
+                  prefetch={false}
                   key={item.href}
                   href={item.href}
                   className="group flex h-14 w-full overflow-hidden rounded-xl ring-1 ring-black/[0.07] transition hover:shadow-[0_12px_28px_-16px_rgba(28,23,18,0.35)]"
@@ -100,6 +101,7 @@ export function HubPageView({ hub, directory }: { hub: HubPage; directory?: HubD
           <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {hub.featuredLinks.map((item) => (
               <Link
+                prefetch={false}
                 key={item.href}
                 href={item.href}
                 className="group overflow-hidden rounded-2xl ring-1 ring-black/[0.07] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-18px_rgba(28,23,18,0.35)]"
@@ -147,6 +149,7 @@ export function HubPageView({ hub, directory }: { hub: HubPage; directory?: HubD
               {directory.links.map((link) => (
                 <li key={link.href}>
                   <Link
+                    prefetch={false}
                     href={link.href}
                     className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[14px] text-[#1c1712]/70 transition hover:bg-[#1c1712]/[0.04] hover:text-[#c2410c]"
                   >

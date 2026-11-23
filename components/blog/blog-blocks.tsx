@@ -95,7 +95,7 @@ export function Palette({ name, colors, note }: { name: string; colors: string[]
           <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{colors.join(" · ")}</p>
         </div>
         {colors.length === 5 && (
-          <Link href={generatorHref({ name, colors })} className="shrink-0 rounded-full px-3 py-1 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
+          <Link prefetch={false} href={generatorHref({ name, colors })} className="shrink-0 rounded-full px-3 py-1 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
             Open
           </Link>
         )}

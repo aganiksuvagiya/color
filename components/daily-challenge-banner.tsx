@@ -35,6 +35,9 @@ export function DailyChallengeBanner() {
   const [data, setData] = useState<ChallengeData | null>(null);
 
   useEffect(() => {
+    // Wait until the session is known: fetching during "loading" and again once it settles
+    // called the API twice on every homepage view. The answer depends on sign-in (streak).
+    if (status === "loading") return;
     fetch("/api/daily-challenge")
       .then((r) => r.json())
       .then(setData)
@@ -115,6 +118,7 @@ export function DailyChallengeBanner() {
 
         {/* Right — CTA */}
         <Link
+          prefetch={false}
           href={`/generator?theme=${encodeURIComponent(data.theme)}`}
           onClick={handleTryClick}
           className="inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_6px_18px_rgba(232,83,31,0.25)] transition-transform hover:scale-[1.02] active:scale-[0.98]"

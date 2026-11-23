@@ -143,12 +143,13 @@ export function ConverterTool({
             Random color
           </button>
           {reverseHref && (
-            <Link href={reverseHref} className="rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
+            <Link prefetch={false} href={reverseHref} className="rounded-full px-4 py-2 text-[13px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
               Swap: {FORMAT_LABEL[to]} to {FORMAT_LABEL[from]} ⇄
             </Link>
           )}
           {rgb && (
             <Link
+              prefetch={false}
               href={`/generator?label=${encodeURIComponent(`${name ?? "Color"} palette`)}&c=${paletteParam(rgb)}`}
               className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]"
             >

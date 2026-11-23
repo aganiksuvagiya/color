@@ -78,9 +78,9 @@ export function ColorPsychologyExplorer() {
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
-            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <Link prefetch={false} href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
             <span className="text-[#1c1712]/20">/</span>
             <span className="text-[#1c1712]/60">Color Psychology</span>
           </nav>
@@ -222,12 +222,12 @@ export function ColorPsychologyExplorer() {
 
                 <div className="flex flex-wrap gap-2 p-5 sm:p-6">
                   {hasGuide && (
-                    <Link href={`/colors/${descriptor.canonicalSlug}`} className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+                    <Link prefetch={false} href={`/colors/${descriptor.canonicalSlug}`} className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
                       Full {descriptor.displayName} guide →
                     </Link>
                   )}
-                  <Link href={`/shades-of-${family}`} className={ghostBtn}>Shades of {familyName}</Link>
-                  <Link href={`/color-palettes/${family}`} className={ghostBtn}>{familyName} palettes</Link>
+                  <Link prefetch={false} href={`/shades-of-${family}`} className={ghostBtn}>Shades of {familyName}</Link>
+                  <Link prefetch={false} href={`/color-palettes/${family}`} className={ghostBtn}>{familyName} palettes</Link>
                 </div>
               </div>
             ) : (

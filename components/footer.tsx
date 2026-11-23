@@ -90,7 +90,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1400px] px-6 py-16 sm:px-8">
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-[minmax(0,1.5fr)_repeat(6,minmax(0,1fr))]">
           <div className="col-span-2 sm:col-span-3 lg:col-span-1 lg:pr-6">
-            <Link href="/" className="inline-flex items-center">
+            <Link prefetch={false} href="/" className="inline-flex items-center">
               <Image src="/hueflow.svg" alt="HueFlow" width={104} height={22} className="h-[22px] w-[104px] [filter:brightness(0)_saturate(100%)]" />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-6 text-[#1c1712]/60">
@@ -102,6 +102,7 @@ export function Footer() {
               ))}
             </div>
             <Link
+              prefetch={false}
               href="/generator"
               className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-[#d04615] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#b93d12]"
             >

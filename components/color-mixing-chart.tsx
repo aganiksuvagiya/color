@@ -194,6 +194,7 @@ export function ColorMixingChart({ faq, steps, tips }: Props) {
                   ))}
                 </dl>
                 <Link
+                  prefetch={false}
                   href={`/generator?label=${encodeURIComponent(`${name} palette`)}&c=${[0.55, 0.8, 1, 1.15, 1.35].map((f) => rgbToHex({ r: Math.min(255, Math.round(rgb.r * f)), g: Math.min(255, Math.round(rgb.g * f)), b: Math.min(255, Math.round(rgb.b * f)) }).slice(1)).join("-")}`}
                   className="mt-5 inline-block rounded-full bg-[#1c1712] px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]"
                 >
@@ -252,7 +253,7 @@ export function ColorMixingChart({ faq, steps, tips }: Props) {
               </div>
               <div className="rounded-xl p-5 ring-1 ring-black/[0.07]">
                 <h3 className="text-[15px] font-semibold">Tertiary colors</h3>
-                <p className="mt-2 text-[14px] leading-6 text-[#1c1712]/65">A primary plus its neighboring secondary: red-orange, yellow-orange, yellow-green, blue-green, blue-violet and red-violet. See them on the <Link href="/color-wheel" className="font-semibold text-[#c2410c] hover:underline">color wheel</Link>.</p>
+                <p className="mt-2 text-[14px] leading-6 text-[#1c1712]/65">A primary plus its neighboring secondary: red-orange, yellow-orange, yellow-green, blue-green, blue-violet and red-violet. See them on the <Link prefetch={false} href="/color-wheel" className="font-semibold text-[#c2410c] hover:underline">color wheel</Link>.</p>
               </div>
             </div>
 

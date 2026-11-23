@@ -230,9 +230,9 @@ export function BrandColorAnalyzer() {
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
-            <Link href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
+            <Link prefetch={false} href="/tools" className="transition hover:text-[#1c1712]/70">Tools</Link>
             <span className="text-[#1c1712]/20">/</span>
             <span className="text-[#1c1712]/60">Brand Color Analyzer</span>
           </nav>
@@ -318,7 +318,7 @@ export function BrandColorAnalyzer() {
                 <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-black/[0.07]">
                   <div className="h-full rounded-full bg-[#c2410c]" style={{ width: `${Math.min(100, Math.round((locked.points / locked.required) * 100))}%` }} />
                 </div>
-                <Link href="/" className="mt-3 inline-block text-[13px] font-semibold text-[#c2410c] hover:underline">
+                <Link prefetch={false} href="/" className="mt-3 inline-block text-[13px] font-semibold text-[#c2410c] hover:underline">
                   Go earn points →
                 </Link>
               </div>
@@ -419,6 +419,7 @@ export function BrandColorAnalyzer() {
                         {copiedHex === allHex ? "✓ Copied" : "Copy all HEX"}
                       </button>
                       <Link
+                        prefetch={false}
                         href={generatorHref}
                         className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]"
                       >

@@ -87,6 +87,7 @@ function ToolPageSectionsNew({ config }: { config: ToolPageSeoConfig }) {
             <div className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 sm:max-lg:[&>a:last-child:nth-child(odd)]:col-span-2 xl:[&>a:last-child:nth-child(odd)]:col-span-2">
               {config.relatedLinks.map((link) => (
                 <Link
+                  prefetch={false}
                   key={link.href}
                   href={link.href}
                   className="group flex items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold leading-5 text-[#1c1712]/85 ring-1 ring-black/[0.08] transition hover:bg-[#fafafa] hover:text-[#c2410c] hover:ring-black/25"
@@ -201,6 +202,7 @@ export function ToolPageSections({ config, variant }: { config: ToolPageSeoConfi
         <div className="mt-4 grid grid-cols-1 gap-2.5 md:grid-cols-2">
           {config.relatedLinks.map((link) => (
             <Link
+              prefetch={false}
               key={link.href}
               href={link.href}
               className="flex items-center justify-between rounded-xl border border-black/[0.08] bg-[#faf7f2] px-4 py-3 text-sm font-medium text-[#1c1712]/60 transition-all hover:border-black/14 hover:bg-[#f0ebe4] hover:text-[#1c1712]"

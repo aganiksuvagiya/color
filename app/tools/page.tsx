@@ -293,7 +293,7 @@ export default function ToolsPage() {
       {/* Header */}
       <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-          <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+          <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">Tools</span>
         </nav>
@@ -316,6 +316,7 @@ export default function ToolsPage() {
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {uniqueTools.map((tool) => (
               <Link
+                prefetch={false}
                 key={tool.href}
                 href={tool.href}
                 className="group relative flex flex-col rounded-2xl p-6 ring-1 ring-black/[0.07] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_16px_36px_-18px_rgba(28,23,18,0.35)] hover:ring-black/20"

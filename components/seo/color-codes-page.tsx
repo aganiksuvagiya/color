@@ -125,8 +125,8 @@ export function ColorCodesView({
                         <div className="flex flex-wrap items-center justify-between gap-3">
                           <h2 className="text-[1.05rem] font-semibold tracking-[-0.01em]">{f.name} color codes</h2>
                           <div className="flex flex-wrap gap-2 text-[12px] font-semibold">
-                            <Link href={`/shades-of-${f.slug}`} className="text-[#1c1712]/60 transition hover:text-[#c2410c]">Shades of {f.name.toLowerCase()} →</Link>
-                            <Link href={`/color-palettes/${f.slug}`} className="text-[#1c1712]/60 transition hover:text-[#c2410c]">{f.name} palettes →</Link>
+                            <Link prefetch={false} href={`/shades-of-${f.slug}`} className="text-[#1c1712]/60 transition hover:text-[#c2410c]">Shades of {f.name.toLowerCase()} →</Link>
+                            <Link prefetch={false} href={`/color-palettes/${f.slug}`} className="text-[#1c1712]/60 transition hover:text-[#c2410c]">{f.name} palettes →</Link>
                           </div>
                         </div>
                       </th>
@@ -134,7 +134,7 @@ export function ColorCodesView({
                     {f.colors.map((c) => (
                       <tr key={c.slug} className="border-b border-black/[0.05] last:border-0 hover:bg-[#fafafa]">
                         <td className="px-5 py-2.5">
-                          <Link href={`/colors/${c.slug}`} className="flex items-center gap-3 transition hover:text-[#c2410c]">
+                          <Link prefetch={false} href={`/colors/${c.slug}`} className="flex items-center gap-3 transition hover:text-[#c2410c]">
                             <span className="h-6 w-6 shrink-0 rounded-md ring-1 ring-black/10" style={{ backgroundColor: c.hex }} />
                             <span className="font-semibold">{c.name}</span>
                           </Link>
@@ -173,7 +173,7 @@ export function ColorCodesView({
             <SmallTitle>Color tools</SmallTitle>
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               {related.map((l) => (
-                <Link key={l.href} href={l.href} className="group flex items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold leading-5 text-[#1c1712]/85 ring-1 ring-black/[0.08] transition hover:bg-[#fafafa] hover:text-[#c2410c] hover:ring-black/25">
+                <Link prefetch={false} key={l.href} href={l.href} className="group flex items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-[14px] font-semibold leading-5 text-[#1c1712]/85 ring-1 ring-black/[0.08] transition hover:bg-[#fafafa] hover:text-[#c2410c] hover:ring-black/25">
                   {l.title}
                   <span className="shrink-0 text-[#1c1712]/60 transition group-hover:translate-x-0.5 group-hover:text-[#c2410c]" aria-hidden="true">→</span>
                 </Link>

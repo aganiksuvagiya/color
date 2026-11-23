@@ -65,6 +65,7 @@ export function IndustryPaletteCard({ palette, roles, copy = defaultCopy }: { pa
           <p className="text-[14px] text-[#1c1712]/60">{palette.useCase}</p>
         </div>
         <Link
+          prefetch={false}
           href={generatorHref(palette)}
           className="shrink-0 rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]"
         >

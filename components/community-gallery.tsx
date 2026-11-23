@@ -124,7 +124,7 @@ export function CommunityGallery() {
       {/* ── Header ── */}
       <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-          <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+          <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">Community</span>
         </nav>
@@ -138,7 +138,7 @@ export function CommunityGallery() {
           <p className="text-[16px] text-[#1c1712]/60">
             <span className="font-semibold text-[#1c1712]/80">{loading && palettes.length === 0 ? "Loading palettes…" : `${palettes.length} palettes shared by HueFlow users.`}</span>{" "}
             Copy a color, open one in the generator, or share yours from your{" "}
-            <Link href="/profile" className="font-semibold text-[#c2410c] hover:underline">profile</Link>.
+            <Link prefetch={false} href="/profile" className="font-semibold text-[#c2410c] hover:underline">profile</Link>.
           </p>
         </div>
         <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
@@ -161,6 +161,7 @@ export function CommunityGallery() {
             })}
           </div>
           <Link
+            prefetch={false}
             href="/profile"
             className="inline-flex items-center gap-1.5 rounded-full bg-[#1c1712] px-4 py-1.5 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]"
           >
@@ -176,7 +177,7 @@ export function CommunityGallery() {
             <div className="rounded-2xl py-24 text-center ring-1 ring-black/[0.07]">
               <p className="text-[16px] font-semibold">No public palettes yet</p>
               <p className="mx-auto mt-1 max-w-xs text-[14px] text-[#1c1712]/60">Be the first: make one of your saved palettes public from your profile.</p>
-              <Link href="/profile" className="mt-6 inline-block rounded-full bg-[#1c1712] px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+              <Link prefetch={false} href="/profile" className="mt-6 inline-block rounded-full bg-[#1c1712] px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
                 Go to profile
               </Link>
             </div>
@@ -216,7 +217,7 @@ export function CommunityGallery() {
                       <h3 className="mt-1.5 truncate text-[17px] font-semibold tracking-[-0.02em]">{palette.name}</h3>
                       <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{hexes.map((h) => h.slice(1)).join(" · ")}</p>
                       <div className="mt-4 flex items-center gap-2">
-                        <Link href={paletteUrl(palette)} className="rounded-full bg-[#1c1712] px-3.5 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
+                        <Link prefetch={false} href={paletteUrl(palette)} className="rounded-full bg-[#1c1712] px-3.5 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
                           Open in generator →
                         </Link>
                         <button onClick={() => copy(joined)} className="rounded-full px-3.5 py-1.5 text-[12px] font-semibold text-[#1c1712]/65 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">

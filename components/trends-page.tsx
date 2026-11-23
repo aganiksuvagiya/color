@@ -66,7 +66,7 @@ export function TrendsPage({ faq, explore }: { faq: Faq[]; explore: ExploreTile[
       {/* ── Header ── */}
       <section className="w-full px-6 pb-10 pt-28 sm:px-8 lg:px-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-          <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+          <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
           <span className="text-[#1c1712]/20">/</span>
           <span className="text-[#1c1712]/60">Trends</span>
         </nav>
@@ -129,7 +129,7 @@ export function TrendsPage({ faq, explore }: { faq: Faq[]; explore: ExploreTile[
                     <p className="mt-1 truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{hexes.map((h) => h.slice(1)).join(" · ")}</p>
                     <p className="mt-2 text-[13px] leading-5 text-[#1c1712]/60">{SUMMARY[p.category]}</p>
                     <div className="mt-4 flex items-center gap-2">
-                      <Link href={`/generator${encodePalette(p)}`} className="rounded-full bg-[#1c1712] px-3.5 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
+                      <Link prefetch={false} href={`/generator${encodePalette(p)}`} className="rounded-full bg-[#1c1712] px-3.5 py-1.5 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
                         Open in generator →
                       </Link>
                       <button onClick={() => copy(joined)} className="rounded-full px-3.5 py-1.5 text-[12px] font-semibold text-[#1c1712]/65 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
@@ -149,13 +149,13 @@ export function TrendsPage({ faq, explore }: { faq: Faq[]; explore: ExploreTile[
         <div className="w-full px-6 py-14 sm:px-8 lg:px-12">
           <div className="flex flex-wrap items-end justify-between gap-5">
             <SectionTitle eyebrow="Library" title="Explore more palettes" body="Hand-picked palettes by style, color and season from the HueFlow library." />
-            <Link href="/color-palettes" className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+            <Link prefetch={false} href="/color-palettes" className="rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
               Browse the library →
             </Link>
           </div>
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
             {explore.map((t) => (
-              <Link key={t.href} href={t.href} className="group overflow-hidden rounded-xl ring-1 ring-black/[0.07] transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_rgba(28,23,18,0.35)]">
+              <Link prefetch={false} key={t.href} href={t.href} className="group overflow-hidden rounded-xl ring-1 ring-black/[0.07] transition hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-16px_rgba(28,23,18,0.35)]">
                 <span className="flex h-14 w-full">
                   {t.strip.map((hex, i) => (
                     <span key={`${hex}-${i}`} className="flex-1" style={{ backgroundColor: hex }} />

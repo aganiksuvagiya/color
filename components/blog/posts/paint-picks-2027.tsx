@@ -253,15 +253,15 @@ function PaintPickPost({ pick }: { pick: PaintPick }) {
       </ul>
       {darker ? (
         <Callout title="For buttons and body text">
-          Neither dark nor white text reaches 4.5:1 on {pick.name}. Darken it by {darker.steps} points of HSL lightness to <strong>{darker.hex}</strong> and white text passes. You keep the mood of the color, and the original still works for backgrounds behind large type. Check any pair in the <Link href="/tools/contrast" className="font-semibold text-[#c2410c] underline underline-offset-2">contrast checker</Link>.
+          Neither dark nor white text reaches 4.5:1 on {pick.name}. Darken it by {darker.steps} points of HSL lightness to <strong>{darker.hex}</strong> and white text passes. You keep the mood of the color, and the original still works for backgrounds behind large type. Check any pair in the <Link prefetch={false} href="/tools/contrast" className="font-semibold text-[#c2410c] underline underline-offset-2">contrast checker</Link>.
         </Callout>
       ) : (
         <p>
-          Use {onInk >= onWhite ? "dark" : "white"} text on {pick.name}. You can check any other pair in the <Link href="/tools/contrast">contrast checker</Link>, or start a palette from {pick.hex} in the <Link href="/generator">palette generator</Link>.
+          Use {onInk >= onWhite ? "dark" : "white"} text on {pick.name}. You can check any other pair in the <Link prefetch={false} href="/tools/contrast">contrast checker</Link>, or start a palette from {pick.hex} in the <Link prefetch={false} href="/generator">palette generator</Link>.
         </p>
       )}
       <p>
-        Want the rest of the 2027 picks side by side? See <Link href="/blog/color-of-the-year-2027">every 2027 Color of the Year with hex codes</Link>.
+        Want the rest of the 2027 picks side by side? See <Link prefetch={false} href="/blog/color-of-the-year-2027">every 2027 Color of the Year with hex codes</Link>.
       </p>
     </>
   );

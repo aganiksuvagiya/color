@@ -73,7 +73,7 @@ export function BlogArticle({ post, children }: { post: BlogPost; children: Reac
               <div className="rounded-2xl p-5 ring-1 ring-black/[0.07]">
                 <p className="text-[14px] font-semibold">Try the colors</p>
                 <p className="mt-1 text-[13px] leading-5 text-[#1c1712]/60">Build a palette around any color in this post and export it.</p>
-                <Link href="/generator" className="mt-3 inline-block rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
+                <Link prefetch={false} href="/generator" className="mt-3 inline-block rounded-full bg-[#1c1712] px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]">
                   Open the generator
                 </Link>
               </div>

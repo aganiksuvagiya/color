@@ -343,6 +343,7 @@ export function HueFlowHomePage() {
               {/* CTAs */}
               <motion.div variants={fadeUp} className="mt-7 flex flex-wrap items-center gap-3">
                 <Link
+                  prefetch={false}
                   href="/generator"
                   className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(232,83,31,0.26)] transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_12px_32px_rgba(232,83,31,0.34)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e8531f] focus-visible:ring-offset-2"
                   style={{ background: "linear-gradient(135deg, #d04615, #b93d12)" }}
@@ -350,6 +351,7 @@ export function HueFlowHomePage() {
                   Create a palette
                 </Link>
                 <Link
+                  prefetch={false}
                   href="/explore"
                   className="inline-flex items-center gap-2 rounded-full border border-black/[0.10] bg-white px-6 py-3 text-sm font-semibold text-[#1c1712]/65 shadow-[0_1px_4px_rgba(28,23,18,0.06)] transition-all duration-200 hover:border-black/[0.18] hover:shadow-[0_4px_12px_rgba(28,23,18,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c1712]/25 focus-visible:ring-offset-2"
                 >
@@ -486,6 +488,7 @@ export function HueFlowHomePage() {
             {/* Generator — hero card, spans 2 cols */}
             <motion.div variants={fadeUp} className="col-span-2">
               <Link
+                prefetch={false}
                 href="/generator"
                 className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
               >
@@ -514,6 +517,7 @@ export function HueFlowHomePage() {
             {/* Color Picker — live color + formats */}
             <motion.div variants={fadeUp} className="col-span-1">
               <Link
+                prefetch={false}
                 href="/color-picker"
                 className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
               >
@@ -554,6 +558,7 @@ export function HueFlowHomePage() {
             {/* Color Converter — live values */}
             <motion.div variants={fadeUp} className="col-span-1">
               <Link
+                prefetch={false}
                 href="/color-converter"
                 className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
               >
@@ -588,6 +593,7 @@ export function HueFlowHomePage() {
             {/* Contrast Checker — live WCAG data */}
             <motion.div variants={fadeUp} className="col-span-1">
               <Link
+                prefetch={false}
                 href="/tools/contrast"
                 className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
               >
@@ -640,6 +646,7 @@ export function HueFlowHomePage() {
             {/* Color Shades — live shade scale */}
             <motion.div variants={fadeUp} className="col-span-1">
               <Link
+                prefetch={false}
                 href="/tools/tailwind-scale"
                 className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-black/8 bg-white shadow-[0_2px_16px_rgba(28,23,18,0.04)] transition-shadow hover:shadow-[0_12px_40px_rgba(28,23,18,0.09)]"
               >
@@ -674,7 +681,7 @@ export function HueFlowHomePage() {
               const colors = collection.label === "Trending" ? trendingPalette.colors.map((c) => c.hex) : collection.colors;
               return (
                 <motion.div key={collection.label} variants={fadeUp}>
-                  <Link href={collection.href} className="group block overflow-hidden rounded-[20px] border border-black/8 bg-white transition-shadow hover:shadow-[0_10px_30px_rgba(28,23,18,0.08)]">
+                  <Link prefetch={false} href={collection.href} className="group block overflow-hidden rounded-[20px] border border-black/8 bg-white transition-shadow hover:shadow-[0_10px_30px_rgba(28,23,18,0.08)]">
                     <div className="flex h-24">
                       {colors.map((hex, i) => (
                         <div key={`${hex}-${i}`} className="flex-1 transition-transform duration-300 group-hover:scale-105" style={{ backgroundColor: hex }} />
@@ -691,7 +698,7 @@ export function HueFlowHomePage() {
           </motion.div>
 
           <div className="mt-8 text-center">
-            <Link href="/palettes" className="text-sm font-medium text-[#1c1712]/60 underline-offset-4 hover:text-[#c2410c] hover:underline">
+            <Link prefetch={false} href="/palettes" className="text-sm font-medium text-[#1c1712]/60 underline-offset-4 hover:text-[#c2410c] hover:underline">
               Explore all palettes →
             </Link>
           </div>
@@ -701,6 +708,7 @@ export function HueFlowHomePage() {
             <span className="mr-1 text-[#1c1712]/60">Popular:</span>
             {POPULAR_LINKS.map((l) => (
               <Link
+                prefetch={false}
                 key={l.href}
                 href={l.href}
                 className="flex items-center gap-1.5 rounded-full border border-black/[0.08] bg-white py-1 pl-1 pr-3 text-[#1c1712]/65 transition hover:border-[#e8531f]/40 hover:text-[#c2410c]"
@@ -719,7 +727,7 @@ export function HueFlowHomePage() {
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={stagger} className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
             {DEEPER_ITEMS.map((item, i) => (
               <motion.div key={item.title} variants={fadeUp}>
-                <Link href={item.href} className="group flex h-full flex-col rounded-[24px] border border-black/8 bg-white p-6 transition-shadow hover:shadow-[0_10px_30px_rgba(28,23,18,0.07)]">
+                <Link prefetch={false} href={item.href} className="group flex h-full flex-col rounded-[24px] border border-black/8 bg-white p-6 transition-shadow hover:shadow-[0_10px_30px_rgba(28,23,18,0.07)]">
                   <div className="mb-5 h-20 overflow-hidden rounded-xl">
                     {i === 0 && <div className="flex h-full items-center justify-center gap-2" style={{ backgroundColor: "#F5EADB" }}>
                       {["#8FA6C4", "#E3A9A0", "#C2694A"].map((h) => <span key={h} className="h-8 w-8 rounded-full" style={{ backgroundColor: h }} />)}
@@ -817,6 +825,7 @@ export function HueFlowHomePage() {
                           ))}
                         </div>
                         <Link
+                          prefetch={false}
                           href={mood.href}
                           className="inline-flex shrink-0 items-center rounded-full px-4 py-2 text-xs font-semibold text-white shadow-[0_6px_18px_rgba(232,83,31,0.22)] transition-transform hover:scale-[1.02] sm:px-5 sm:py-2.5 sm:text-sm"
                           style={{ background: "linear-gradient(135deg, #d04615, #b93d12)" }}
@@ -852,7 +861,7 @@ export function HueFlowHomePage() {
                   <h3 className="text-2xl font-semibold tracking-[-0.03em] text-[#1c1712] sm:text-3xl">{item.title}</h3>
                   <p className="mt-2 max-w-xl text-base leading-7 text-[#1c1712]/60">{item.body}</p>
                 </div>
-                <Link href={item.href} className="inline-flex w-fit items-center gap-1.5 whitespace-nowrap text-sm font-semibold text-[#c2410c] hover:underline underline-offset-4">
+                <Link prefetch={false} href={item.href} className="inline-flex w-fit items-center gap-1.5 whitespace-nowrap text-sm font-semibold text-[#c2410c] hover:underline underline-offset-4">
                   {item.cta} →
                 </Link>
               </motion.div>
@@ -899,7 +908,7 @@ export function HueFlowHomePage() {
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.1 }} variants={stagger} className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {STORIES.map((story) => (
               <motion.div key={story.href} variants={fadeUp}>
-                <Link href={story.href} className="group flex items-center justify-between rounded-[18px] border border-black/8 bg-white px-5 py-4 transition-colors hover:border-black/16">
+                <Link prefetch={false} href={story.href} className="group flex items-center justify-between rounded-[18px] border border-black/8 bg-white px-5 py-4 transition-colors hover:border-black/16">
                   <span className="text-sm font-medium text-[#1c1712]/75 transition-colors group-hover:text-[#1c1712]">{story.title}</span>
                   <span className="text-[#1c1712]/25 transition-transform group-hover:translate-x-1 group-hover:text-[#c2410c]">→</span>
                 </Link>
@@ -1022,12 +1031,14 @@ export function HueFlowHomePage() {
               {/* CTA buttons */}
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Link
+                  prefetch={false}
                   href="/generator"
                   className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-[#C23A10] shadow-[0_6px_20px_rgba(0,0,0,0.2)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Create a palette
                 </Link>
                 <Link
+                  prefetch={false}
                   href="/explore"
                   className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/18"
                 >

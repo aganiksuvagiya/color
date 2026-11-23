@@ -174,7 +174,7 @@ export function ExploreColors() {
         {/* ── Header ── */}
         <section className="w-full px-6 pb-8 pt-28 sm:px-8 lg:px-12">
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-[12px] text-[#1c1712]/60">
-            <Link href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
+            <Link prefetch={false} href="/" className="transition hover:text-[#1c1712]/70">Home</Link>
             <span className="text-[#1c1712]/20">/</span>
             <span className="text-[#1c1712]/60">Explore</span>
           </nav>
@@ -658,6 +658,7 @@ function PaletteCard({ palette }: { palette: GeneratedPalette }) {
 
           {/* Open in Generator */}
           <Link
+            prefetch={false}
             href={paletteUrl(palette)}
             title="Open in Generator"
             className="flex h-8 w-8 items-center justify-center rounded-lg text-[#1c1712]/60 hover:text-[#1c1712] transition-colors"
@@ -687,6 +688,7 @@ function PaletteCard({ palette }: { palette: GeneratedPalette }) {
                 >
                   {/* Open in Generator */}
                   <Link
+                    prefetch={false}
                     href={paletteUrl(palette)}
                     className="flex items-center gap-2.5 px-3.5 py-2 text-sm text-[#1c1712]/70 hover:bg-black/3 hover:text-[#1c1712] transition-colors"
                     onClick={() => setMenuOpen(false)}
@@ -821,6 +823,7 @@ function PaletteCard({ palette }: { palette: GeneratedPalette }) {
             <div className="flex items-center gap-2">
               <ShareButton palette={palette} />
               <Link
+                prefetch={false}
                 href={paletteUrl(palette)}
                 onClick={(e) => e.stopPropagation()}
                 className="inline-flex items-center gap-2 rounded-full bg-[#1c1712] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#c2410c]"

@@ -199,14 +199,14 @@ export function PastelColorsPage({ palettes, faq }: Props) {
                       <p className="truncate text-[15px] font-semibold">{p.name}</p>
                       <p className="truncate font-mono text-[11px] uppercase text-[#1c1712]/60">{p.colors.join(" · ")}</p>
                     </div>
-                    <Link href={p.href} className="shrink-0 rounded-full px-3 py-1 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
+                    <Link prefetch={false} href={p.href} className="shrink-0 rounded-full px-3 py-1 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
                       Open
                     </Link>
                   </div>
                 </div>
               ))}
             </div>
-            <Link href="/color-palettes/pastel" className="mt-8 inline-block text-[14px] font-semibold text-[#c2410c] hover:underline">
+            <Link prefetch={false} href="/color-palettes/pastel" className="mt-8 inline-block text-[14px] font-semibold text-[#c2410c] hover:underline">
               See all pastel color palettes →
             </Link>
 
@@ -256,7 +256,7 @@ export function PastelColorsPage({ palettes, faq }: Props) {
                 </tbody>
               </table>
             </div>
-            <Link href="/tools/contrast" className="mt-5 inline-block text-[14px] font-semibold text-[#c2410c] hover:underline">Check your own pair with the contrast checker →</Link>
+            <Link prefetch={false} href="/tools/contrast" className="mt-5 inline-block text-[14px] font-semibold text-[#c2410c] hover:underline">Check your own pair with the contrast checker →</Link>
           </div>
         </section>
 

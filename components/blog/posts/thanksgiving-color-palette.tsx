@@ -39,7 +39,7 @@ export function ThanksgivingPalettePost() {
 
       <h2 id="palettes">8 Thanksgiving color palettes with hex codes</h2>
       <p>
-        Each palette has five colors: a light base, a dark for text and two or three harvest accents in between. Hover a color to see its code, click to copy it, or open the palette in the <Link href="/generator">generator</Link> to swap a shade.
+        Each palette has five colors: a light base, a dark for text and two or three harvest accents in between. Hover a color to see its code, click to copy it, or open the palette in the <Link prefetch={false} href="/generator">generator</Link> to swap a shade.
       </p>
       <PaletteGrid>
         <Palette name="Classic harvest" note="Cranberry, pumpkin, gold and brown on cream" colors={["#9B1B30", "#E07B39", "#DA9100", "#6F4E37", "#F5EBDC"]} />
@@ -52,7 +52,7 @@ export function ThanksgivingPalettePost() {
         <Palette name="Cranberry and evergreen" note="Bridges Thanksgiving into the Christmas season" colors={["#F6F1E9", "#9B1B30", "#2F4B3A", "#C9A15B", "#1E1E1E"]} />
       </PaletteGrid>
       <p>
-        A note on the last one: cranberry, deep green and gold are close to Christmas colors, so this palette is handy if you want one set of napkins, cards or social templates to carry you from late November into December. For the Christmas side, see our <Link href="/color-palettes/christmas">Christmas color palettes</Link>.
+        A note on the last one: cranberry, deep green and gold are close to Christmas colors, so this palette is handy if you want one set of napkins, cards or social templates to carry you from late November into December. For the Christmas side, see our <Link prefetch={false} href="/color-palettes/christmas">Christmas color palettes</Link>.
       </p>
 
       <h2 id="table">Thanksgiving colors on the table</h2>
@@ -62,7 +62,7 @@ export function ThanksgivingPalettePost() {
       <ul>
         <li><strong>Pick one star.</strong> Pumpkin, cranberry or sage. If all three are loud, the table looks busy; if one leads and the others support it, it looks planned.</li>
         <li><strong>Keep the base light.</strong> Cream, wheat or white linen makes the food and the accents stand out. A dark tablecloth looks dramatic, but it swallows brown dishes.</li>
-        <li><strong>Mix in something green.</strong> A runner of sage, eucalyptus or olive branches keeps all that orange from feeling flat. Green sits opposite red on the painter&apos;s <Link href="/color-wheel">color wheel</Link>, so a little of it also makes cranberry look deeper.</li>
+        <li><strong>Mix in something green.</strong> A runner of sage, eucalyptus or olive branches keeps all that orange from feeling flat. Green sits opposite red on the painter&apos;s <Link prefetch={false} href="/color-wheel">color wheel</Link>, so a little of it also makes cranberry look deeper.</li>
       </ul>
 
       <h2 id="print">Invitations, menus and place cards</h2>
@@ -87,7 +87,7 @@ export function ThanksgivingPalettePost() {
         For a Thanksgiving sale banner, an email header or a holiday landing page, the same rule applies: one strong harvest color, a light background and a dark text color. A safe web combination is cream #F5EBDC for the background, chestnut #6F4E37 for body text and cranberry #9B1B30 for buttons with white labels (8.0:1). Pumpkin works well for illustrations and badges, but put dark text on it, not white.
       </p>
       <p>
-        You can check any pair in the <Link href="/tools/contrast">contrast checker</Link>, or paste a palette into the <Link href="/generator">generator</Link> and press Preview to see it as a small website with each pair measured.
+        You can check any pair in the <Link prefetch={false} href="/tools/contrast">contrast checker</Link>, or paste a palette into the <Link prefetch={false} href="/generator">generator</Link> and press Preview to see it as a small website with each pair measured.
       </p>
 
       <h2 id="friendsgiving">Friendsgiving and modern palettes</h2>
@@ -100,7 +100,7 @@ export function ThanksgivingPalettePost() {
         <li><strong>Earthy minimal:</strong> terracotta, clay and olive (Terracotta table), with plain stoneware and no patterns.</li>
       </ul>
       <p>
-        Some of 2027&apos;s paint colors fit right in, too. Behr&apos;s Grounded is a deep olive and Dutch Boy&apos;s Deep Rooted is a muted terracotta; see every pick in our <Link href="/blog/color-of-the-year-2027">Color of the Year 2027</Link> roundup.
+        Some of 2027&apos;s paint colors fit right in, too. Behr&apos;s Grounded is a deep olive and Dutch Boy&apos;s Deep Rooted is a muted terracotta; see every pick in our <Link prefetch={false} href="/blog/color-of-the-year-2027">Color of the Year 2027</Link> roundup.
       </p>
 
       <h2 id="avoid">Colors to be careful with</h2>
@@ -111,7 +111,7 @@ export function ThanksgivingPalettePost() {
         <li><strong>Halloween orange and black.</strong> Bright orange with black still says Halloween. Swap the black for brown and the orange for pumpkin or burnt orange.</li>
       </ul>
       <p>
-        Want a palette of your own? Start from one HEX code, such as pumpkin #E07B39, in the <Link href="/color-wheel">color wheel</Link> to find the colors around it, or press the space bar in the <Link href="/generator">generator</Link> with that color locked.
+        Want a palette of your own? Start from one HEX code, such as pumpkin #E07B39, in the <Link prefetch={false} href="/color-wheel">color wheel</Link> to find the colors around it, or press the space bar in the <Link prefetch={false} href="/generator">generator</Link> with that color locked.
       </p>
     </>
   );

@@ -276,6 +276,7 @@ export function ColorWheelPage({ faq, steps }: Props) {
                   })}
                 </ul>
                 <Link
+                  prefetch={false}
                   href={`/generator?label=${encodeURIComponent(`${schemeInfo.label} scheme`)}&c=${[...members.map((i) => wheel[i].hex.slice(1)), ...["FFFFFF", "1C1712", "F5F5F5", "1C1712"]].slice(0, 5).join("-")}`}
                   className="mt-5 inline-block rounded-full bg-[#1c1712] px-5 py-2 text-[13px] font-semibold text-white transition hover:bg-[#c2410c]"
                 >
@@ -369,7 +370,7 @@ export function ColorWheelPage({ faq, steps }: Props) {
                         <button onClick={() => copy(row.colors.join(", "))} className="rounded-full px-3 py-1 text-[12px] font-semibold text-[#1c1712]/70 ring-1 ring-black/[0.12] transition hover:text-[#1c1712] hover:ring-black/25">
                           {copied === row.colors.join(", ") ? "Copied" : "Copy all"}
                         </button>
-                        <Link href={generatorLink(row.label, row.colors)} className="rounded-full bg-[#1c1712] px-3 py-1 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
+                        <Link prefetch={false} href={generatorLink(row.label, row.colors)} className="rounded-full bg-[#1c1712] px-3 py-1 text-[12px] font-semibold text-white transition hover:bg-[#c2410c]">
                           Open
                         </Link>
                       </div>
@@ -398,7 +399,7 @@ export function ColorWheelPage({ faq, steps }: Props) {
               </div>
               <div className="rounded-xl p-5 ring-1 ring-black/[0.07]">
                 <h3 className="text-[15px] font-semibold">Tertiary colors</h3>
-                <p className="mt-2 text-[14px] leading-6 text-[#1c1712]/65">A primary mixed with its neighboring secondary: red-orange, yellow-orange, yellow-green, blue-green, blue-violet and red-violet. See <Link href="/color-mixing-chart" className="font-semibold text-[#c2410c] hover:underline">how to mix them</Link>.</p>
+                <p className="mt-2 text-[14px] leading-6 text-[#1c1712]/65">A primary mixed with its neighboring secondary: red-orange, yellow-orange, yellow-green, blue-green, blue-violet and red-violet. See <Link prefetch={false} href="/color-mixing-chart" className="font-semibold text-[#c2410c] hover:underline">how to mix them</Link>.</p>
               </div>
             </div>
 
