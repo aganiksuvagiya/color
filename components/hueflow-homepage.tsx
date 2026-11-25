@@ -153,6 +153,23 @@ const COLOR_MOODS: { label: string; emoji: string; description: string; colors: 
   },
 ];
 
+// Direct links to the rewritten palette pages. The homepage is the page Google crawls most,
+// and before this block it only linked their hubs, leaving them two or three clicks deep.
+const GUIDE_LINKS: { href: string; title: string; meta: string; colors: string[] }[] = [
+  { href: "/best-colors-for/healthcare-websites", title: "Healthcare website colors", meta: "8 palettes", colors: ["#1D4ED8", "#0D9488", "#BAE6FD", "#F8FAFC", "#F1F5F9"] },
+  { href: "/best-colors-for/finance-websites", title: "Finance & banking palettes", meta: "6 palettes", colors: ["#0B2545", "#1E40AF", "#14532D", "#B08D57", "#FBF8F1"] },
+  { href: "/best-colors-for/ecommerce-conversions", title: "Ecommerce store palettes", meta: "6 palettes", colors: ["#C2410C", "#1E293B", "#B91C1C", "#15803D", "#FFFFFF"] },
+  { href: "/best-colors-for/fitness-websites", title: "Gym & fitness palettes", meta: "6 palettes", colors: ["#1A1A1A", "#F97316", "#DC2626", "#84A98C", "#F5F0E8"] },
+  { href: "/best-colors-for/portfolio-websites", title: "Portfolio website palettes", meta: "6 palettes", colors: ["#111111", "#E4572E", "#0E1116", "#6D4AFF", "#F6F3EE"] },
+  { href: "/best-colors-for/law-firm-websites", title: "Law firm website colors", meta: "6 palettes", colors: ["#1E3A5F", "#B8860B", "#F3EFE6", "#FFFFFF", "#111827"] },
+  { href: "/guides/ai-website-color-strategy", title: "AI app & chatbot palettes", meta: "6 palettes", colors: ["#4F46E5", "#7C3AED", "#0D1117", "#115E59", "#D9F99D"] },
+  { href: "/guides/dark-mode-color-guide", title: "Dark mode palettes", meta: "6 palettes", colors: ["#121212", "#1E1E1E", "#BB86FC", "#60A5FA", "#E0E0E0"] },
+  { href: "/color-combinations/green-and-purple", title: "Green and purple", meta: "4 palettes", colors: ["#F7F5EF", "#C9B8E8", "#7D6B9E", "#A8B89A", "#3F4A3A"] },
+  { href: "/color-combinations/blue-and-orange", title: "Blue and orange", meta: "4 palettes", colors: ["#0B1F3A", "#1F4E8C", "#F28C28", "#FFD8B0", "#F7F7F5"] },
+  { href: "/color-combinations/red-and-black", title: "Red and black", meta: "4 palettes", colors: ["#0D0D0D", "#1F1F1F", "#C8102E", "#F2F2F2", "#FFFFFF"] },
+  { href: "/tailwind-colors", title: "Tailwind color codes", meta: "Hex for every shade", colors: ["#EF4444", "#F59E0B", "#10B981", "#3B82F6", "#8B5CF6"] },
+];
+
 const STORIES: { href: string; title: string }[] = [
   { href: "/guides/conversion-color-strategy", title: "Building a conversion-focused color strategy" },
   { href: "/guides/luxury-brand-color-strategy", title: "Luxury brand color strategy, explained" },
@@ -718,6 +735,32 @@ export function HueFlowHomePage() {
               </Link>
             ))}
           </div>
+        </section>
+
+        {/* ============ PALETTE GUIDES ============ */}
+        <section className="mt-28" id="guides">
+          <SectionHeading eyebrow="Guides" title="Palettes for real websites." body="Ready-to-use palettes with hex codes, by industry, topic and color pair." />
+
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.05 }} variants={stagger} className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
+            {GUIDE_LINKS.map((guide) => (
+              <motion.div key={guide.href} variants={fadeUp}>
+                <Link prefetch={false} href={guide.href} className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-black/8 bg-white transition-shadow hover:shadow-[0_10px_30px_rgba(28,23,18,0.08)]">
+                  <div className="flex h-10 sm:h-12">
+                    {guide.colors.map((hex, i) => (
+                      <div key={`${hex}-${i}`} className="flex-1" style={{ backgroundColor: hex }} />
+                    ))}
+                  </div>
+                  <div className="flex flex-1 items-center justify-between gap-3 px-3.5 py-3 sm:px-4 sm:py-3.5">
+                    <div className="min-w-0">
+                      <p className="text-[13px] font-semibold leading-5 text-[#1c1712] sm:text-sm">{guide.title}</p>
+                      <p className="mt-0.5 text-[12px] text-[#1c1712]/60 sm:text-[13px]">{guide.meta}</p>
+                    </div>
+                    <span aria-hidden className="hidden text-[#1c1712]/60 transition-transform group-hover:translate-x-1 group-hover:text-[#c2410c] sm:inline">→</span>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
         </section>
 
         {/* ============ GO DEEPER ============ */}

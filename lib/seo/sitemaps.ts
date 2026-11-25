@@ -71,6 +71,20 @@ const contentUpdatedOn: Record<string, string> = {
   "/best-colors-for/finance-websites": "2026-11-23",
   "/guides/ai-website-color-strategy": "2026-11-23",
   "/guides/dark-mode-color-guide": "2026-11-24",
+  "/best-colors-for/saas-websites": "2026-11-25",
+  "/best-colors-for/travel-websites": "2026-11-25",
+  "/best-colors-for/automotive-websites": "2026-11-25",
+  "/best-colors-for/pet-websites": "2026-11-25",
+  "/best-colors-for/beauty-salon-websites": "2026-11-25",
+  "/best-colors-for/photography-websites": "2026-11-25",
+  "/best-colors-for/wedding-websites": "2026-11-25",
+  "/best-colors-for/yoga-and-wellness-studio-websites": "2026-11-25",
+  "/best-colors-for/construction-websites": "2026-11-25",
+  "/best-colors-for/moving-company-websites": "2026-11-25",
+  "/best-colors-for/daycare-websites": "2026-11-25",
+  "/best-colors-for/insurance-websites": "2026-11-25",
+  "/best-colors-for/nonprofit-websites": "2026-11-25",
+  "/best-colors-for/fintech-brands": "2026-11-25",
 };
 
 type SitemapEntry = {
