@@ -79,10 +79,13 @@ Where it shows:
   > Hi Product Hunt! I built HueFlow because I kept picking palettes that looked great as five swatches and fell apart on an actual page: unreadable buttons, links that disappeared, text that failed contrast. So every palette in HueFlow can be previewed on a sample website, with the WCAG contrast of text, buttons and links computed for you, plus a color-blindness check. When it works, export it to Tailwind, CSS, SCSS, JSON or Swift. It's free and there's no account needed. I'd love to hear what you'd want in the preview next.
 - **Rules:** don't ask for upvotes or trade votes (that breaks Product Hunt's rules and Google's link-spam policy). Answer every comment on launch day.
 
-### Show HN (Wed Nov 18, around 8–10 am ET)
-- Show HN needs something people can try without signing up. HueFlow qualifies.
-- **Title:** Show HN: HueFlow – preview color palettes on a sample website with WCAG contrast
-- **Text:**
+### Show HN (moved to Tue Nov 24, around 8–10 am ET)
+- **The owner writes the title, text and every comment by hand.** The HN guidelines (checked 2026-11-20) say "Please don't put generated text in HN posts. Write your text yourself" and, for comments, "Don't post generated text or AI-edited text." So the text below is a list of facts to write from, not something to paste, and no session should draft or polish HN text.
+- Show HN needs something people can try without signing up. HueFlow qualifies. Its guidelines also ask makers to "Explain how and why", so post a first comment right after submitting.
+- Link `/generator` rather than the homepage, so readers land on the thing they can try.
+- Readers will notice that the site loads AdSense and GA4. Say so plainly if asked.
+- **Title idea:** Show HN: HueFlow – preview color palettes on a sample website with WCAG contrast. The preview is a small dashboard (nav, stat cards, badges, a link, three buttons), so "sample UI" is more accurate than "website".
+- **Facts the old draft used (notes only):**
   > I kept choosing palettes that looked good as swatches and failed on a real page. HueFlow shows each palette on a sample UI and computes WCAG contrast for text, buttons and links (plus a color-blindness simulation using the Machado 2009 model) before you export to Tailwind/CSS/Swift. Industry pages (healthcare, law firm, restaurant...) show ready palettes the same way. Built with Next.js on Cloudflare Workers. Free, no account. Feedback welcome, especially on how the contrast and preview should work.
 - Stay in the thread for the first 2–3 hours and answer technical questions plainly.
 
