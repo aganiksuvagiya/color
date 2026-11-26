@@ -2,12 +2,15 @@ import Link from "next/link";
 
 import { Callout, ColorFeature, PairingCard, PairingGrid, Palette, PaletteGrid, type Pairing } from "@/components/blog/blog-blocks";
 import { formatCmyk, formatHex, formatHsl, formatRgb, hslToRgb, parseHex, rgbToHsl } from "@/lib/color-convert";
+import { PANTONE_2027, hasPantoneGuide } from "@/lib/blog/color-of-the-year-2027";
 import { contrastRatio } from "@/lib/pastel-colors";
 
 // One page per 2027 paint Color of the Year pick (Sherwin-Williams, Benjamin Moore, Behr,
 // Valspar), built from the same template. The brand facts (codes, LRV, dates, the brand's own
 // suggested pairings) are the ones checked for the main 2027 post; palettes and pairings are
 // HueFlow suggestions, and every color value and contrast ratio is computed from the HEX.
+// Pantone's 2027 pick reuses the same template once PANTONE_2027 is filled in
+// (lib/blog/color-of-the-year-2027.ts).
 
 type PaintPick = {
   name: string;
@@ -16,7 +19,10 @@ type PaintPick = {
   hex: string;
   /** Where the HEX comes from, shown next to it. */
   hexSource: string;
-  lrv: string;
+  /** Paint only; Pantone doesn't publish an LRV. */
+  lrv?: string;
+  /** Replaces the paint-sample note under the codes table. */
+  hexNote?: string;
   featureFacts: string;
   look: string[];
   where: string[];
@@ -192,7 +198,7 @@ function PaintPickPost({ pick }: { pick: PaintPick }) {
     ["RGB", formatRgb(rgb)],
     ["HSL", formatHsl(rgb)],
     ["CMYK", formatCmyk(rgb)],
-    ["LRV", pick.lrv],
+    ...(pick.lrv ? ([["LRV", pick.lrv]] as [string, string][]) : []),
   ];
 
   return (
@@ -212,7 +218,8 @@ function PaintPickPost({ pick }: { pick: PaintPick }) {
         </table>
       </div>
       <p>
-        HEX source: {pick.hexSource}. A HEX code is a screen approximation of a physical paint, and sheen, lighting and screens all change how it looks, so test a real sample before you buy. RGB, HSL and CMYK are converted from the HEX.
+        HEX source: {pick.hexSource}.{" "}
+        {pick.hexNote ?? "A HEX code is a screen approximation of a physical paint, and sheen, lighting and screens all change how it looks, so test a real sample before you buy."} RGB, HSL and CMYK are converted from the HEX.
       </p>
 
       <h2 id="look">What {pick.name} looks like</h2>
@@ -271,3 +278,26 @@ export const CeleryPost = () => <PaintPickPost pick={PICKS.celery} />;
 export const WebsterGreenPost = () => <PaintPickPost pick={PICKS["webster-green"]} />;
 export const GroundedPost = () => <PaintPickPost pick={PICKS.grounded} />;
 export const CottageDoorPost = () => <PaintPickPost pick={PICKS["cottage-door"]} />;
+
+/** Pantone's 2027 pick. Only routed once PANTONE_2027 has a HEX and guide content (see lib/blog/posts.ts). */
+export function PantonePost() {
+  const p = PANTONE_2027;
+  if (!hasPantoneGuide(p)) return null;
+  return (
+    <PaintPickPost
+      pick={{
+        name: p.name,
+        brand: "Pantone",
+        code: p.code,
+        hex: p.hex,
+        hexSource: p.hexSource ?? "Pantone",
+        hexNote: p.hexNote,
+        featureFacts: `Pantone's Color of the Year 2027, announced ${p.announced}.`,
+        look: p.guide.lookParagraphs,
+        where: p.guide.where,
+        palettes: p.guide.palettes,
+        pairings: p.guide.pairings,
+      }}
+    />
+  );
+}

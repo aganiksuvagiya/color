@@ -2,6 +2,18 @@
 // components/blog/posts/<slug>.tsx; everything that also feeds metadata, structured data,
 // the blog index, the sitemap and /llms.txt lives here so it stays in one place.
 
+import {
+  COTY_AS_OF,
+  PANTONE_2027,
+  PANTONE_GUIDE_SLUG,
+  PANTONE_HISTORY,
+  allCoty2027Picks,
+  hasPantoneGuide,
+  type PantonePick,
+} from "@/lib/blog/color-of-the-year-2027";
+import { parseHex } from "@/lib/color-convert";
+import { contrastRatio } from "@/lib/pastel-colors";
+
 export type BlogFaq = { question: string; answer: string };
 export type BlogSource = { title: string; url: string };
 
@@ -28,6 +40,218 @@ export type BlogPost = {
   sources: BlogSource[];
   related: { title: string; href: string }[];
 };
+
+const listOf = (items: string[]) =>
+  items.length <= 1 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+const ratioText = (a: string, b: string) => {
+  const r = contrastRatio(parseHex(a)!, parseHex(b)!);
+  let shown = Math.round(r * 10) / 10;
+  for (const t of [3, 4.5, 7]) if (r < t && shown >= t) shown = t - 0.1;
+  return { r, text: `${shown.toFixed(1)}:1` };
+};
+
+const COTY_SOURCES: BlogSource[] = [
+  { title: "Pantone: Color of the Year (2027 events and past colors)", url: "https://www.pantone.com/color-of-the-year" },
+  { title: "Sherwin-Williams: Color of the Year 2027 (Celery)", url: "https://www.sherwin-williams.com/en-us/color/color-of-the-year/2027" },
+  { title: "Sherwin-Williams: SW 6421 Celery color page", url: "https://www.sherwin-williams.com/sherwinwilliams/SW6421-celery" },
+  { title: "Benjamin Moore press release: Webster Green HC-130", url: "https://www.benjaminmoore.com/en-ca/press/benjamin-moore-announces-colour-of-the-year-2027" },
+  { title: "Behr: 2027 Color of the Year announcement (Grounded)", url: "https://www.behr.com/colorfullybehr/behr-announces-2027-color-of-the-year-grounded/" },
+  { title: "Behr Canada: Grounded T27-01 color page", url: "https://www.behr.ca/consumer/colors/2027-color-of-the-year" },
+  { title: "Valspar: Color of the Year 2027 (Cottage Door)", url: "https://www.valspar.com/en/colors/color-of-the-year-2027" },
+  { title: "Apartment Therapy: Glidden's 2027 Color of the Year (Artifact)", url: "https://www.apartmenttherapy.com/glidden-color-of-the-year-2027-37690420" },
+  { title: "HGTV: Dutch Boy's 2027 Color of the Year (Deep Rooted)", url: "https://www.hgtv.com/decorating/color/dutch-boy-paints-color-of-the-year" },
+  { title: "Dulux Canada: 2027 Color of the Year (Birthday Cake DLX1059-2)", url: "https://www.dulux.ca/colour/2027-colour-of-the-year" },
+  { title: "Rust-Oleum: Mauve Classic is its 2027 Wall Paint Color of the Year (Oct 29, 2026)", url: "https://www.rustoleum.com/newsroom/2026/rust-oleum-names-mauve-classic-its-2027-wall-paint-color-of-the-year" },
+  { title: "PPG: Color of the Year, Country Soil", url: "https://www.ppg.com/en-US/industrialcoatings/color/COTY" },
+  { title: "Design Milk: 2027 Colors of the Year (Clark+Kensington, California Paints)", url: "https://design-milk.com/2027-colors-of-the-year/" },
+  { title: "Dezeen: Sage green is the Dulux Colour of the Year 2027", url: "https://dezeen.com/2026/09/08/sage-green-colour-year-2027-dulux" },
+  { title: "Graham & Brown: Design and Colour of the Year 2027", url: "https://www.grahambrown.com/uk/inspiration/introducing-design-and-colour-of-the-year-2027/" },
+  { title: "WGSN: Colour of the Year 2027, Luminous Blue", url: "https://www.wgsn.com/en/wgsn/press/press-releases/wgsn-and-coloro-reveal-colour-year-2027-luminous-blue-and-s-s-27-key" },
+  { title: "James Hardie: 2027 Color of the Year, Midnight Black", url: "https://www.jameshardie.com/color-of-the-year-midnight-black" },
+  { title: "Business Wire via Morningstar: James Hardie names Midnight Black (Nov 12, 2026)", url: "https://www.morningstar.com/news/business-wire/20261112762343/james-hardie-names-midnight-black-its-2027-color-of-the-year" },
+  { title: "Hardware Retailing: Minwax names Pickled Oak (MW260)", url: "https://hardwareretailing.com/mixwax-names-2027-color-of-the-year" },
+  { title: "Homes & Gardens: Little Greene's Marle", url: "https://www.homesandgardens.com/decor/paint/little-greene-color-of-the-year-2027" },
+  { title: "Young House Love: every 2027 Color of the Year (Dunn-Edwards, C2)", url: "https://www.younghouselove.com/2027-color-of-the-year/" },
+  { title: "HEX reference: Webster Green HC-130 (Match My Paint Color)", url: "https://www.matchmypaintcolor.com/benjamin-moore/webster-green-hc-130" },
+  { title: "HEX reference: Deep Rooted 311-7DB (Match My Paint Color)", url: "https://www.matchmypaintcolor.com/dutch-boy/deep-rooted-311-7db" },
+  { title: "HEX reference: Artifact PPG10-16 (Match My Paint Color)", url: "https://www.matchmypaintcolor.com/ppg/artifact-ppg10-16" },
+  { title: "HEX reference: Valspar Cottage Door (Composite Paint)", url: "https://compositepaint.com/colors/valspar-cottage-door/" },
+];
+
+/** The 2027 roundup. Title, answer, FAQ and dates follow PANTONE_2027, so the Pantone update is a data edit. */
+function colorOfTheYear2027Post(pantone: PantonePick | null): BlogPost {
+  const picks = allCoty2027Picks(pantone);
+  const asOf = formatDate(COTY_AS_OF);
+  const pastPantone = PANTONE_HISTORY.slice(0, 5)
+    .map((y) => `${y.year}: ${y.colors.map((c) => c.name).join(" and ")}`)
+    .join("; ");
+  const otherPicks =
+    "Celery (Sherwin-Williams), Webster Green (Benjamin Moore), Grounded (Behr), Cottage Door (Valspar), Artifact (Glidden), Deep Rooted (Dutch Boy), Birthday Cake (Dulux Canada), Mauve Classic (Rust-Oleum), Vantage Point (Clark+Kensington), Quiet Peace (California Paints) and Country Soil (PPG). WGSN and Coloro picked Luminous Blue, Dulux Soulful Sage, Graham & Brown Rose Earth, Dunn-Edwards French Press Coffee, C2 Pueblo, Little Greene Marle, Minwax Pickled Oak and James Hardie Midnight Black.";
+  const pantoneHex = pantone?.hex ? `, with the screen value ${pantone.hex}` : "";
+
+  return {
+    slug: "color-of-the-year-2027",
+    title: pantone ? `Color of the Year 2027: Pantone's ${pantone.name} and Every Other Pick` : "Color of the Year 2027: Every Pick So Far, With Hex Codes",
+    h1: pantone ? `Color of the Year 2027: Pantone's ${pantone.name} and every other pick, side by side` : "Color of the Year 2027: every pick so far, side by side",
+    crumb: "Color of the Year 2027",
+    description: pantone
+      ? `Pantone's 2027 Color of the Year is ${pantone.name} (${pantone.code}). See it next to all ${picks.length - 1} other 2027 picks with HEX codes: Celery, Webster Green, Grounded and more.`
+      : `All ${picks.length} Colors of the Year 2027 so far, with HEX codes: Sherwin-Williams Celery, Benjamin Moore Webster Green, Behr Grounded and more. Pantone is next.`,
+    answer: pantone
+      ? `There is no single Color of the Year for 2027, because every brand picks its own. Pantone, the one most people mean, chose ${pantone.name} (${pantone.code})${pantoneHex}, announced ${pantone.announced}. Among paint brands, Sherwin-Williams chose Celery (SW 6421), Benjamin Moore chose Webster Green (HC-130), Behr chose Grounded (T27-01) and Valspar chose Cottage Door (8004-38E).`
+      : "There is no single Color of the Year for 2027, because every paint brand and forecaster picks its own. So far Sherwin-Williams chose Celery (SW 6421), Benjamin Moore chose Webster Green (HC-130), Behr chose Grounded (T27-01), Valspar chose Cottage Door (8004-38E), Glidden chose Artifact (PPG10-16) and Dutch Boy chose Deep Rooted (311-7DB). Pantone usually names its pick in early December.",
+    dek: "Paint brands and trend forecasters have named their 2027 colors. Here is every pick announced so far, what they have in common, and the codes you need to use them on a screen.",
+    category: "Trends",
+    published: "2026-10-23",
+    updated: pantone ? pantone.announcedIso : COTY_AS_OF,
+    readMinutes: 11,
+    cover: pantone?.hex ? [pantone.hex, "#E0DDBD", "#64806C", "#7A8F97", "#A6613C"] : ["#E0DDBD", "#64806C", "#615E50", "#7A8F97", "#A6613C"],
+    keywords: [
+      "color of the year 2027",
+      "2027 color of the year",
+      "pantone color of the year 2027",
+      ...(pantone ? [`pantone ${pantone.name.toLowerCase()}`, `${pantone.name.toLowerCase()} hex code`] : []),
+      "sherwin williams color of the year 2027",
+      "benjamin moore color of the year 2027",
+      "behr color of the year 2027",
+      "valspar color of the year 2027",
+      "2027 color trends",
+      "pantone color of the year history",
+      "celery sw 6421 hex",
+      "webster green hc-130",
+      "rust-oleum mauve classic",
+      "dulux birthday cake",
+    ],
+    toc: [
+      { id: "all-picks", title: "All the 2027 picks at a glance" },
+      { id: "patterns", title: "What the 2027 colors have in common" },
+      { id: "each-color", title: "Each color, and how to use it" },
+      { id: "pinks", title: "Dulux Canada and Rust-Oleum: two pinks" },
+      { id: "pantone", title: pantone ? `Pantone's 2027 color: ${pantone.name}` : "What about Pantone's 2027 color?" },
+      { id: "pantone-history", title: "Every Pantone Color of the Year since 2000" },
+      { id: "screens", title: "Using the 2027 colors on screens" },
+      { id: "faq", title: "FAQ" },
+    ],
+    faq: [
+      {
+        question: "What is the Color of the Year 2027?",
+        answer: pantone
+          ? `There isn't just one. Pantone chose ${pantone.name} (${pantone.code}). The other picks are ${otherPicks}`
+          : `There isn't just one. Each brand names its own. Pantone hasn't announced yet. The picks so far are ${otherPicks}`,
+      },
+      pantone
+        ? {
+            question: "What is Pantone's Color of the Year 2027?",
+            answer: `${pantone.name} (${pantone.code}), announced ${pantone.announced}. ${pantone.look}${pantone.hex ? ` Its screen value is ${pantone.hex}.` : ""} It follows 2026's Cloud Dancer (PANTONE 11-4201).`,
+          }
+        : {
+            question: "Has Pantone announced its 2027 Color of the Year?",
+            answer: `Not as of ${asOf}. Pantone usually reveals its Color of the Year in early December, and its Color of the Year page lists a 2027 event in Miami on December 3, 2026. Its 2026 pick was Cloud Dancer (PANTONE 11-4201), a soft off-white with the screen value #F0EEE9.`,
+          },
+      {
+        question: "What were Pantone's last five Colors of the Year?",
+        answer: `${pastPantone}. Pantone has named a color every year since 2000, and named two in 2016 and 2021.`,
+      },
+      {
+        question: "What is Sherwin-Williams' Color of the Year 2027?",
+        answer:
+          "Celery, SW 6421, announced on September 15, 2026 together with HGTV Home by Sherwin-Williams. It is a soft, muted green with yellow undertones. Sherwin-Williams lists its HEX value as #E0DDBD and its LRV as about 71.",
+      },
+      {
+        question: "What is Benjamin Moore's Color of the Year 2027?",
+        answer:
+          "Webster Green, HC-130, announced on October 14, 2026. It is a deep, classic green. Paint-matching databases list it at about #64806C with an LRV of 20.",
+      },
+      {
+        question: "Is pink a 2027 color trend?",
+        answer:
+          "Yes, a muted one. Four 2027 picks are pinks or mauves: Graham & Brown's Rose Earth, C2's Pueblo, Rust-Oleum's Mauve Classic and Dulux Canada's Birthday Cake (#E9D2CC). None is a bright pink; they're dusty, smoky or pale.",
+      },
+      {
+        question: "Are the HEX codes for paint colors exact?",
+        answer:
+          "No. A HEX code is a screen approximation of a physical paint, and screens, lighting and sheen all change how paint looks. Use the HEX codes for mood boards and digital design, and always test a real sample on your wall before you buy.",
+      },
+      {
+        question: "Which 2027 color is easiest to live with?",
+        answer:
+          "Celery and Cottage Door are the gentlest: Celery is light and reads almost like a warm neutral, and Cottage Door is a soft gray-blue. Webster Green, Grounded and Deep Rooted are deeper and work best on a single wall, cabinets, a front door or a small room.",
+      },
+    ],
+    sources: pantone ? [pantone.source, ...COTY_SOURCES] : COTY_SOURCES,
+    related: [
+      ...(hasPantoneGuide(pantone) ? [{ title: `Pantone ${pantone.name}`, href: `/blog/${PANTONE_GUIDE_SLUG}` }] : []),
+      { title: "Color wheel", href: "/color-wheel" },
+      { title: "Color palette generator", href: "/generator" },
+      { title: "Trending color palettes", href: "/trends" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Shades of green", href: "/shades-of-green" },
+      { title: "Shades of blue", href: "/shades-of-blue" },
+    ],
+  };
+}
+
+/** Pantone's 2027 guide, built from PANTONE_2027. Only listed (and routed) once it has a HEX and guide content. */
+function pantoneGuidePost(p: PantonePick & { hex: string; guide: NonNullable<PantonePick["guide"]> }): BlogPost {
+  const rgb = parseHex(p.hex)!;
+  const dark = ratioText(p.hex, "#1C1712");
+  const white = ratioText(p.hex, "#FFFFFF");
+  const best = dark.r >= white.r ? { label: "dark text", ...dark } : { label: "white text", ...white };
+  const textAdvice =
+    best.r >= 4.5
+      ? `Use ${best.label}: it measures ${best.text}, which passes WCAG AA for body text.`
+      : `Neither dark text (${dark.text}) nor white text (${white.text}) reaches the 4.5:1 WCAG bar for body text, so use it for large type, backgrounds and accents, or darken it for buttons.`;
+  return {
+    slug: PANTONE_GUIDE_SLUG,
+    title: `Pantone Color of the Year 2027: ${p.name} Hex Code & Palettes`,
+    h1: `Pantone Color of the Year 2027: ${p.name} (${p.code}), hex code and palettes`,
+    crumb: `Pantone ${p.name}`,
+    description: `Pantone ${p.name} (${p.code}), the Color of the Year 2027: hex ${p.hex}, RGB, HSL and CMYK, four palettes, six colors that go with it, and how to use it on screens.`,
+    answer: `${p.name} (${p.code}) is Pantone's Color of the Year 2027, announced ${p.announced}. ${p.look} Its screen value is ${p.hex} (RGB ${rgb.r}, ${rgb.g}, ${rgb.b}). On a website, ${textAdvice.charAt(0).toLowerCase()}${textAdvice.slice(1)}`,
+    dek: `Pantone's pick for 2027. Here are its codes, palettes built around it, and the colors that go with it.`,
+    category: "Trends",
+    published: p.announcedIso,
+    updated: p.announcedIso,
+    readMinutes: 5,
+    cover: p.guide.cover,
+    keywords: [
+      "pantone color of the year 2027",
+      `pantone ${p.name.toLowerCase()}`,
+      `${p.name.toLowerCase()} hex code`,
+      `${p.code.toLowerCase()} hex`,
+      `${p.name.toLowerCase()} color palette`,
+      `colors that go with ${p.name.toLowerCase()}`,
+    ],
+    toc: [
+      { id: "codes", title: `${p.name} color codes` },
+      { id: "look", title: `What ${p.name} looks like` },
+      { id: "palettes", title: `${p.name} color palettes` },
+      { id: "pairings", title: `Colors that go with ${p.name}` },
+      { id: "where", title: `Where to use ${p.name}` },
+      { id: "screens", title: `${p.name} on screens` },
+      { id: "faq", title: "FAQ" },
+    ],
+    faq: [
+      { question: "What is Pantone's Color of the Year 2027?", answer: `${p.name} (${p.code}), announced ${p.announced}. ${p.look}` },
+      {
+        question: `What is the hex code for Pantone ${p.name}?`,
+        answer: `${p.hex} (RGB ${rgb.r}, ${rgb.g}, ${rgb.b}), from ${p.hexSource ?? "Pantone"}. A HEX code is a screen value, so check a physical Pantone swatch for print or fabric.`,
+      },
+      { question: `What colors go with ${p.name}?`, answer: `${listOf(p.guide.pairings.map((x) => `${x.name} (${x.hex})`))}. The pairings above show the contrast between each pair.` },
+      { question: `Can I use ${p.name} for text or buttons on a website?`, answer: textAdvice },
+      { question: "What was Pantone's 2026 Color of the Year?", answer: "Cloud Dancer (PANTONE 11-4201), a soft off-white with the screen value #F0EEE9." },
+    ],
+    sources: [p.source, { title: "Pantone: Color of the Year", url: "https://www.pantone.com/color-of-the-year" }],
+    related: [
+      { title: "Every 2027 Color of the Year", href: "/blog/color-of-the-year-2027" },
+      { title: "Sherwin-Williams Celery", href: "/blog/sherwin-williams-celery" },
+      { title: "Benjamin Moore Webster Green", href: "/blog/benjamin-moore-webster-green" },
+      { title: "Color wheel", href: "/color-wheel" },
+      { title: "Contrast checker", href: "/tools/contrast" },
+      { title: "Color palette generator", href: "/generator" },
+    ],
+  };
+}
 
 export const blogPosts: BlogPost[] = [
   {
@@ -308,111 +532,7 @@ export const blogPosts: BlogPost[] = [
       { title: "HEX to RGB converter", href: "/hex-to-rgb" },
     ],
   },
-  {
-    slug: "color-of-the-year-2027",
-    title: "Color of the Year 2027: Every Pick So Far, With Hex Codes",
-    h1: "Color of the Year 2027: every pick so far, side by side",
-    crumb: "Color of the Year 2027",
-    description:
-      "All 14 Colors of the Year 2027 so far, side by side with HEX codes: Sherwin-Williams Celery, Benjamin Moore Webster Green, James Hardie Midnight Black and more.",
-    answer:
-      "There is no single Color of the Year for 2027, because every paint brand and forecaster picks its own. So far Sherwin-Williams chose Celery (SW 6421), Benjamin Moore chose Webster Green (HC-130), Behr chose Grounded (T27-01), Valspar chose Cottage Door (8004-38E), Glidden chose Artifact (PPG10-16), Dutch Boy chose Deep Rooted (311-7DB) and James Hardie chose Midnight Black. Pantone usually names its pick in early December.",
-    dek: "Paint brands and trend forecasters have started naming their 2027 colors. Here is every pick announced so far, what they have in common, and the codes you need to use them on a screen.",
-    category: "Trends",
-    published: "2026-10-23",
-    updated: "2026-11-14",
-    readMinutes: 10,
-    cover: ["#E0DDBD", "#64806C", "#615E50", "#7A8F97", "#A6613C"],
-    keywords: [
-      "color of the year 2027",
-      "2027 color of the year",
-      "sherwin williams color of the year 2027",
-      "benjamin moore color of the year 2027",
-      "behr color of the year 2027",
-      "valspar color of the year 2027",
-      "pantone color of the year 2027",
-      "2027 color trends",
-      "celery sw 6421 hex",
-      "webster green hc-130",
-      "james hardie midnight black",
-    ],
-    toc: [
-      { id: "all-picks", title: "All the 2027 picks at a glance" },
-      { id: "patterns", title: "What the 2027 colors have in common" },
-      { id: "each-color", title: "Each color, and how to use it" },
-      { id: "midnight-black", title: "James Hardie: Midnight Black" },
-      { id: "pantone", title: "What about Pantone's 2027 color?" },
-      { id: "screens", title: "Using the 2027 colors on screens" },
-      { id: "faq", title: "FAQ" },
-    ],
-    faq: [
-      {
-        question: "What is the Color of the Year 2027?",
-        answer:
-          "There isn't just one. Each brand names its own. The main US paint picks are Celery (Sherwin-Williams), Webster Green (Benjamin Moore), Grounded (Behr), Cottage Door (Valspar), Artifact (Glidden) and Deep Rooted (Dutch Boy). WGSN and Coloro picked Luminous Blue, Dulux Soulful Sage, Graham & Brown Rose Earth, Dunn-Edwards French Press Coffee, C2 Pueblo, Little Greene Marle, Minwax Pickled Oak and James Hardie Midnight Black.",
-      },
-      {
-        question: "Has Pantone announced its 2027 Color of the Year?",
-        answer:
-          "Not as of November 14, 2026. Pantone usually reveals its Color of the Year in early December. Its 2026 pick was Cloud Dancer (PANTONE 11-4201), a soft off-white with the screen value #F0EEE9.",
-      },
-      {
-        question: "What is Sherwin-Williams' Color of the Year 2027?",
-        answer:
-          "Celery, SW 6421, announced on September 15, 2026 together with HGTV Home by Sherwin-Williams. It is a soft, muted green with yellow undertones. Sherwin-Williams lists its HEX value as #E0DDBD and its LRV as about 71.",
-      },
-      {
-        question: "What is Benjamin Moore's Color of the Year 2027?",
-        answer:
-          "Webster Green, HC-130, announced on October 14, 2026. It is a deep, classic green. Paint-matching databases list it at about #64806C with an LRV of 20.",
-      },
-      {
-        question: "What is James Hardie's 2027 Color of the Year?",
-        answer:
-          "Midnight Black, announced on November 12, 2026, for Hardie fiber cement siding with its ColorPlus factory finish. James Hardie doesn't publish a HEX value, so order a physical sample to judge it.",
-      },
-      {
-        question: "Are the HEX codes for paint colors exact?",
-        answer:
-          "No. A HEX code is a screen approximation of a physical paint, and screens, lighting and sheen all change how paint looks. Use the HEX codes for mood boards and digital design, and always test a real sample on your wall before you buy.",
-      },
-      {
-        question: "Which 2027 color is easiest to live with?",
-        answer:
-          "Celery and Cottage Door are the gentlest: Celery is light and reads almost like a warm neutral, and Cottage Door is a soft gray-blue. Webster Green, Grounded and Deep Rooted are deeper and work best on a single wall, cabinets, a front door or a small room.",
-      },
-    ],
-    sources: [
-      { title: "Sherwin-Williams: Color of the Year 2027 (Celery)", url: "https://www.sherwin-williams.com/en-us/color/color-of-the-year/2027" },
-      { title: "Sherwin-Williams: SW 6421 Celery color page", url: "https://www.sherwin-williams.com/sherwinwilliams/SW6421-celery" },
-      { title: "Benjamin Moore press release: Webster Green HC-130", url: "https://www.benjaminmoore.com/en-ca/press/benjamin-moore-announces-colour-of-the-year-2027" },
-      { title: "Behr: 2027 Color of the Year announcement (Grounded)", url: "https://www.behr.com/colorfullybehr/behr-announces-2027-color-of-the-year-grounded/" },
-      { title: "Behr Canada: Grounded T27-01 color page", url: "https://www.behr.ca/consumer/colors/2027-color-of-the-year" },
-      { title: "Valspar: Color of the Year 2027 (Cottage Door)", url: "https://www.valspar.com/en/colors/color-of-the-year-2027" },
-      { title: "Apartment Therapy: Glidden's 2027 Color of the Year (Artifact)", url: "https://www.apartmenttherapy.com/glidden-color-of-the-year-2027-37690420" },
-      { title: "HGTV: Dutch Boy's 2027 Color of the Year (Deep Rooted)", url: "https://www.hgtv.com/decorating/color/dutch-boy-paints-color-of-the-year" },
-      { title: "Dezeen: Sage green is the Dulux Colour of the Year 2027", url: "https://dezeen.com/2026/09/08/sage-green-colour-year-2027-dulux" },
-      { title: "Graham & Brown: Design and Colour of the Year 2027", url: "https://www.grahambrown.com/uk/inspiration/introducing-design-and-colour-of-the-year-2027/" },
-      { title: "WGSN: Colour of the Year 2027, Luminous Blue", url: "https://www.wgsn.com/en/wgsn/press/press-releases/wgsn-and-coloro-reveal-colour-year-2027-luminous-blue-and-s-s-27-key" },
-      { title: "James Hardie: 2027 Color of the Year, Midnight Black", url: "https://www.jameshardie.com/color-of-the-year-midnight-black" },
-      { title: "Business Wire via Morningstar: James Hardie names Midnight Black (Nov 12, 2026)", url: "https://www.morningstar.com/news/business-wire/20261112762343/james-hardie-names-midnight-black-its-2027-color-of-the-year" },
-      { title: "Hardware Retailing: Minwax names Pickled Oak (MW260)", url: "https://hardwareretailing.com/mixwax-names-2027-color-of-the-year" },
-      { title: "Homes & Gardens: Little Greene's Marle", url: "https://www.homesandgardens.com/decor/paint/little-greene-color-of-the-year-2027" },
-      { title: "Young House Love: every 2027 Color of the Year (Dunn-Edwards, C2)", url: "https://www.younghouselove.com/2027-color-of-the-year/" },
-      { title: "HEX reference: Webster Green HC-130 (Match My Paint Color)", url: "https://www.matchmypaintcolor.com/benjamin-moore/webster-green-hc-130" },
-      { title: "HEX reference: Deep Rooted 311-7DB (Match My Paint Color)", url: "https://www.matchmypaintcolor.com/dutch-boy/deep-rooted-311-7db" },
-      { title: "HEX reference: Artifact PPG10-16 (Match My Paint Color)", url: "https://www.matchmypaintcolor.com/ppg/artifact-ppg10-16" },
-      { title: "HEX reference: Valspar Cottage Door (Composite Paint)", url: "https://compositepaint.com/colors/valspar-cottage-door/" },
-    ],
-    related: [
-      { title: "Color wheel", href: "/color-wheel" },
-      { title: "Color palette generator", href: "/generator" },
-      { title: "Trending color palettes", href: "/trends" },
-      { title: "Contrast checker", href: "/tools/contrast" },
-      { title: "Shades of green", href: "/shades-of-green" },
-      { title: "Shades of blue", href: "/shades-of-blue" },
-    ],
-  },
+  colorOfTheYear2027Post(PANTONE_2027),
   {
     slug: "colors-that-go-with-navy-blue",
     title: "What Colors Go With Navy Blue? 18 Pairings With Hex Codes",
@@ -668,6 +788,7 @@ export const blogPosts: BlogPost[] = [
       { title: "Color palette generator", href: "/generator" },
     ],
   },
+  ...(hasPantoneGuide(PANTONE_2027) ? [pantoneGuidePost(PANTONE_2027)] : []),
 ];
 
 export function getBlogPost(slug: string) {

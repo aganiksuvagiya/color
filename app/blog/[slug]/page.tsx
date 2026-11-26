@@ -9,8 +9,9 @@ import { PalettesOnARealWebsitePost } from "@/components/blog/posts/palettes-on-
 import { HanukkahColorsPost } from "@/components/blog/posts/hanukkah-colors";
 import { ThanksgivingPalettePost } from "@/components/blog/posts/thanksgiving-color-palette";
 import { WinterColorPalettePost } from "@/components/blog/posts/winter-color-palette";
-import { CeleryPost, CottageDoorPost, GroundedPost, WebsterGreenPost } from "@/components/blog/posts/paint-picks-2027";
+import { CeleryPost, CottageDoorPost, GroundedPost, PantonePost, WebsterGreenPost } from "@/components/blog/posts/paint-picks-2027";
 import { StructuredData } from "@/components/seo/structured-data";
+import { PANTONE_GUIDE_SLUG } from "@/lib/blog/color-of-the-year-2027";
 import { blogPath, blogPosts, getBlogPost } from "@/lib/blog/posts";
 import { buildPageMetadata } from "@/lib/seo/page-utils";
 import { buildArticleSchema, buildBreadcrumbSchema, buildFaqSchema, buildSpeakableSchema } from "@/lib/seo/schema";
@@ -27,6 +28,8 @@ const BODIES: Record<string, ComponentType> = {
   "thanksgiving-color-palette": ThanksgivingPalettePost,
   "hanukkah-colors": HanukkahColorsPost,
   "winter-color-palette": WinterColorPalettePost,
+  // Only reachable once lib/blog/posts.ts lists it (when PANTONE_2027 is filled in).
+  [PANTONE_GUIDE_SLUG]: PantonePost,
 };
 
 export const dynamicParams = false;

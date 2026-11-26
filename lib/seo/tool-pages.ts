@@ -1315,9 +1315,9 @@ export const blogPageContent = {
     },
     {
       title: "Color of the Year 2027: Every Pick So Far",
-      excerpt: "All 14 picks so far, from Sherwin-Williams Celery and Benjamin Moore Webster Green to James Hardie Midnight Black, side by side with HEX codes.",
+      excerpt: "Every pick so far, from Sherwin-Williams Celery and Benjamin Moore Webster Green to Rust-Oleum Mauve Classic, side by side with HEX codes, plus Pantone's past colors.",
       category: "Trends",
-      readTime: "9 min",
+      readTime: "11 min",
       href: "/blog/color-of-the-year-2027",
       cover: ["#E0DDBD", "#64806C", "#615E50", "#7A8F97", "#A6613C"],
     },
