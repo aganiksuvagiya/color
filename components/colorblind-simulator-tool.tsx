@@ -7,7 +7,7 @@ import { SwatchStrip, useCopy } from "@/components/seo/swatch-strip";
 import { ToolPageSections } from "@/components/seo/tool-page-sections";
 import { generateRandomPalette, getContrastText, isValidHex } from "@/lib/color-utils";
 import { findClosestColorName } from "@/lib/color-names";
-import { simulateColorBlind, type ColorBlindType } from "@/lib/colorblind";
+import { SIMILAR_BELOW, colorBlindTypes, deltaE, simulateColorBlind, type ColorBlindType } from "@/lib/colorblind";
 import { toolPageContent } from "@/lib/seo/tool-pages";
 import type { Palette } from "@/lib/types";
 
@@ -23,33 +23,9 @@ const DEFAULT_PALETTE: Palette = {
 };
 
 const TYPES: { key: ColorBlindType | "normal"; label: string; desc: string }[] = [
-  { key: "normal",       label: "Normal vision", desc: "Full color vision" },
-  { key: "protanopia",   label: "Protanopia",    desc: "Red-blind · about 1% of males" },
-  { key: "deuteranopia", label: "Deuteranopia",  desc: "Green-blind · about 1% of males" },
-  { key: "tritanopia",   label: "Tritanopia",    desc: "Blue-blind · very rare" },
+  { key: "normal", label: "Normal vision", desc: "Full color vision" },
+  ...colorBlindTypes,
 ];
-
-/** Colors closer than this (CIE76 ΔE) are hard to tell apart in a chart or legend. */
-const SIMILAR_BELOW = 20;
-
-function hexToLab(hex: string): [number, number, number] {
-  const lin = [1, 3, 5].map((i) => {
-    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
-    return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-  });
-  const [r, g, b] = lin;
-  const x = (0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / 0.95047;
-  const y = 0.2126729 * r + 0.7151522 * g + 0.072175 * b;
-  const z = (0.0193339 * r + 0.119192 * g + 0.9503041 * b) / 1.08883;
-  const f = (t: number) => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116);
-  return [116 * f(y) - 16, 500 * (f(x) - f(y)), 200 * (f(y) - f(z))];
-}
-
-function deltaE(a: string, b: string) {
-  const [l1, a1, b1] = hexToLab(a);
-  const [l2, a2, b2] = hexToLab(b);
-  return Math.sqrt((l1 - l2) ** 2 + (a1 - a2) ** 2 + (b1 - b2) ** 2);
-}
 
 const label = "text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1c1712]/60";
 

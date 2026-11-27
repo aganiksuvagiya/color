@@ -4,10 +4,12 @@ import { getContrastRatio } from "@/lib/accessibility";
 import { getClosestNamedColors } from "@/lib/color-names";
 import { formatCmyk, formatHsl, formatRgb, parseHex } from "@/lib/color-convert";
 import type { HexVariant, ResolvedContentEntry } from "@/lib/seo/content";
+import type { PairColorBlindCheck } from "@/lib/seo/pair-colorblind";
 import { ColorVariations } from "@/components/seo/color-variations";
 import { CopyHexButton } from "@/components/seo/copy-hex-button";
 import { IndustryPaletteCard } from "@/components/seo/industry-palette-card";
 import { PaletteColorStrip } from "@/components/seo/palette-color-strip";
+import { PairColorBlindSection } from "@/components/seo/pair-colorblind-section";
 import { Breadcrumbs, Faq, SmallTitle, eyebrow } from "@/components/seo/page-ui";
 import { Header } from "@/components/header";
 
@@ -126,6 +128,7 @@ export function ContentPageView({
   answerLabel = "Direct answer",
   updated,
   paletteSheet,
+  colorBlindCheck,
 }: {
   entry: ResolvedContentEntry;
   breadcrumbs: Breadcrumb[];
@@ -134,6 +137,8 @@ export function ContentPageView({
   updated?: string;
   /** The prerendered PNG of this page's palettes (industry and combination pages). */
   paletteSheet?: { src: string; alt: string; count: number };
+  /** Color-combination pages: how the pair and its palettes look with color blindness. */
+  colorBlindCheck?: PairColorBlindCheck;
 }) {
   const hexFact      = entry.quickFacts.find((f) => f.label === "Hex");
   const originalHex  = hexFact?.value ?? null;
@@ -297,6 +302,12 @@ export function ContentPageView({
                     </figcaption>
                   </figure>
                 )}
+              </div>
+            )}
+
+            {colorBlindCheck && (
+              <div className={block}>
+                <PairColorBlindSection check={colorBlindCheck} headingClassName={h2} />
               </div>
             )}
 

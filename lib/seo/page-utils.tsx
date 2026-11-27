@@ -6,6 +6,7 @@ import { ContentPageView } from "@/components/seo/content-page";
 import { HubPageView, type HubDirectory } from "@/components/seo/hub-page";
 import { StructuredData } from "@/components/seo/structured-data";
 import { getContentUpdatedOn } from "@/lib/seo/content-dates";
+import { getPairColorBlindCheck } from "@/lib/seo/pair-colorblind";
 import { getPaletteSheetSource, paletteSheetPath, type PaletteSheetKind } from "@/lib/seo/palette-sheets";
 import { findEntry, findResolvedEntry, getCollection, getColorMeaningOverride, getHubByPath, isColorMeaningAuthored, isColorMeaningIndexable, isColorPageIndexable, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
 import { richColorPages } from "@/lib/seo/color-pages-rich";
@@ -493,6 +494,7 @@ export function renderEntryPage({
     sheetKind && sheet
       ? { src: paletteSheetPath(sheetKind, entry.slug), alt: `${sheet.title}, with hex codes: ${sheet.palettes.slice(0, 6).map((p) => p.name).join(", ")}`, count: Math.min(sheet.palettes.length, 6) }
       : undefined;
+  const colorBlindCheck = pathPrefix === "/color-combinations" ? getPairColorBlindCheck(entry.slug, entry.palettes) : undefined;
   const breadcrumbs = [
     { name: "Home", href: "/" },
     { name: hubName, href: hubHref },
@@ -511,7 +513,7 @@ export function renderEntryPage({
           { name: entry.title, item: url },
         ])}
       />
-      <ContentPageView entry={entry} breadcrumbs={breadcrumbs} answerLabel={answerLabel} updated={updated} paletteSheet={paletteSheet} />
+      <ContentPageView entry={entry} breadcrumbs={breadcrumbs} answerLabel={answerLabel} updated={updated} paletteSheet={paletteSheet} colorBlindCheck={colorBlindCheck} />
     </>
   );
 }

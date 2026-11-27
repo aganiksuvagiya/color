@@ -806,7 +806,7 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
       2. With a HEX: write `guide` (2 look paragraphs, 4 where-to-use lines, 4 palettes, 6 pairings, cover) like the paint picks. Without one, leave `guide` out: the roundup still updates and the guide page stays off.
       3. Set `COTY_AS_OF` to the day, add any other new brand picks, `npx tsc --noEmit`, check both pages locally.
       4. Ask the owner, then commit, deploy from develop, IndexNow for `/blog/color-of-the-year-2027`, `/blog/pantone-color-of-the-year-2027` and `/blog`, and request indexing for both (Test live URL first).
-  - **Page trust fixes from the competitor research, 2026-11-27 (owner: "Ha, sharu karo"; uncommitted, not deployed).** Research in docs/COMPETITOR-RESEARCH-2026-11.md, items 5–7.
+  - **Page trust fixes from the competitor research, 2026-11-27 (owner: "Ha, sharu karo"; live 2026-11-27 after "Ha, deploy karo", commit `d32d71a`, worker `b88eee3a`).** Research in docs/COMPETITOR-RESEARCH-2026-11.md, items 5–7.
     - **Visible dates:**
       - The per-page date map moved from `lib/seo/sitemaps.ts` to `lib/seo/content-dates.ts`.
       - That one date now feeds the sitemap `<lastmod>`, the Article schema's `dateModified` and an "Updated Nov 25, 2026" line under the page description.
@@ -825,9 +825,28 @@ The full research (6 parts: keywords, palette tools, color reference sites, conv
       - `next build` passes and every image route shows as prerendered (●).
       - On `next start`: images serve in about 10 ms, unknown slugs 404, and dates, `dateModified`, og:image and the new links are correct on travel, purple-and-gold, camel, purple, blue meaning, lime-green, orchid and ffa500.
       - tsc and eslint are clean.
+      - Live after the deploy: all 119 changed pages (27 industry, 17 combination, 50 colors, 25 meanings) return 200; 41 palette sheets return 200 and the 3 combination pages without palettes 404 as intended; unknown slugs 404; dates, og:image and links match the local check. IndexNow 200 for those 119 URLs.
     - **Not done:**
       - A person as author, which waits on the owner's name and bio.
       - Blog share images.
+  - **Color-blind check on combination pages, 2026-11-27 (owner: "Ha, sharu karo"; uncommitted, not deployed).** Gap from docs/COMPETITOR-RESEARCH-2026-11.md: the color-blind view is HueFlow's own hook, so the pairing pages now show it too.
+    - New section "How <A> and <B> Look with Color Blindness" on all 17 /color-combinations pages, after the palettes:
+      - The CSS named pair (for example purple #800080 and gold #FFD700) as seen with normal vision, protanopia, deuteranopia and tritanopia, with the ΔE between the two colors and a verdict: easy to tell apart (40+), closer but still distinct (20–39), hard to tell apart (under 20).
+      - A one-paragraph summary built from those numbers. Example: green-and-red, where protanopia brings green #008000 and red #FF0000 to ΔE 10.
+      - A check of the page's palettes. A pair is flagged only when it looks clearly different with normal vision (ΔE 40+) but drops under ΔE 20 in a simulation; shades of one hue are close for everyone and aren't flagged.
+      - Results: 9 pages pass every palette; green-and-red 1 of 4; green-and-orange, green-and-purple and purple-and-gold 2 of 4; green-and-black and purple-and-orange 3 of 4. blue-and-green, blue-and-black and blue-and-red have no palettes.
+      - A method note (Machado, Oliveira and Fernandes 2009, CIE76 ΔE) and a link to /tools/colorblind-simulator.
+    - Code:
+      - `lib/colorblind.ts` now holds `deltaE`, `SIMILAR_BELOW` (20) and the type labels, shared by the simulator tool and the pages.
+      - `lib/seo/pair-colorblind.ts` computes the check.
+      - `components/seo/pair-colorblind-section.tsx` renders it.
+      - `renderEntryPage` passes it only for /color-combinations.
+    - All computed at build time; no extra client JS and no Worker CPU per visit.
+    - Checks:
+      - tsc and eslint are clean, and `next build` passes.
+      - On `next start`, all 17 pages return 200 with the section, and other page types don't get it.
+      - Layout is fine at desktop and 375px width, with no horizontal scroll.
+      - The simulator tool still works, and gives the same answer as the page for green #008000 with red #FF0000 (protanopia: run together; deuteranopia: clear).
   - **Launch-day risk found 2026-11-21: the free plan's daily request cap.**
     - Workers Free allows 100,000 requests a day (reset at midnight UTC). Above that the site returns error 1027. Static assets are free and don't count, but HTML, RSC prefetches and /api calls all run the Worker.
     - Measured on the live site with the browser's resource list: homepage visit with a scroll 57 Worker requests (about 50 are `?_rsc=` link prefetches, plus /api/auth/session x2 and /api/daily-challenge x2), /generator 20 (17 prefetches, session x2), /best-colors-for/healthcare-websites with a scroll 36 (33 prefetches, session x2).
