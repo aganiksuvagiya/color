@@ -83,6 +83,8 @@ const relatedGroups = [
   { label: "Palette library",            match: "/color-palettes/" },
   { label: "Related colors",             match: "/colors/" },
   { label: "Related color meanings",     match: "/color-meanings/" },
+  // Without this group, related links to pairing pages were silently dropped from the sidebar.
+  { label: "Color combinations",         match: "/color-combinations/" },
   { label: "Related color psychology",   match: "/color-psychology/" },
   { label: "Related palettes",           match: "/palettes/" },
   { label: "Related gradients",          match: "/gradients/" },
@@ -113,14 +115,25 @@ function Bullets({ items }: { items: string[] }) {
   );
 }
 
+// "2026-11-25" -> "Nov 25, 2026", read as a calendar date so no time zone can shift the day.
+function formatUpdated(iso: string) {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", { timeZone: "UTC", month: "short", day: "numeric", year: "numeric" });
+}
+
 export function ContentPageView({
   entry,
   breadcrumbs,
   answerLabel = "Direct answer",
+  updated,
+  paletteSheet,
 }: {
   entry: ResolvedContentEntry;
   breadcrumbs: Breadcrumb[];
   answerLabel?: string;
+  /** YYYY-MM-DD of the last real content change; shown only when known. */
+  updated?: string;
+  /** The prerendered PNG of this page's palettes (industry and combination pages). */
+  paletteSheet?: { src: string; alt: string; count: number };
 }) {
   const hexFact      = entry.quickFacts.find((f) => f.label === "Hex");
   const originalHex  = hexFact?.value ?? null;
@@ -132,7 +145,9 @@ export function ContentPageView({
     ? getSimilarColors(variants[0].hex)
     : originalHex
     ? [
-        { hex: originalHex, slug: originalHex.slice(1).toLowerCase(), name: entry.quickFacts.find(f => f.label === "Closest named color")?.value ?? originalHex },
+        // The page's own color leads the strip. It isn't a link: /colors/<its hex> is only an
+        // alias of this page (or a 404 for unnamed hex codes).
+        { hex: originalHex, slug: null, name: entry.quickFacts.find(f => f.label === "Closest named color")?.value ?? originalHex },
         ...getSimilarColors(originalHex),
       ]
     : [];
@@ -186,6 +201,11 @@ export function ContentPageView({
 
         <h1 className="mt-8 max-w-5xl text-[2.6rem] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem]">{entry.title}</h1>
         <p className="mt-5 max-w-4xl text-[16px] leading-7 text-[#1c1712]/60">{entry.description}</p>
+        {updated && (
+          <p className="mt-3 text-[14px] text-[#1c1712]/60">
+            Updated <time dateTime={updated}>{formatUpdated(updated)}</time>
+          </p>
+        )}
 
         {variants && (
           <div className="mt-10">
@@ -207,22 +227,25 @@ export function ContentPageView({
           <div className="mt-10">
             <SmallTitle>Similar colors</SmallTitle>
             <div className="flex h-24 w-full overflow-hidden rounded-2xl ring-1 ring-black/[0.07]">
-              {similarColors.map((c) => (
-                <Link
-                  prefetch={false}
-                  key={c.hex}
-                  href={`/colors/${c.slug}`}
-                  className="group/swatch relative min-w-0 flex-1 transition-[flex] duration-300 hover:z-10 hover:flex-[2.4]"
-                  style={{ backgroundColor: c.hex }}
-                  title={`${c.name} ${c.hex.toUpperCase()}`}
-                >
+              {similarColors.map((c) => {
+                const pill = (
                   <span className="absolute inset-x-0 bottom-2.5 flex justify-center px-1">
                     <span className="max-w-full truncate whitespace-nowrap rounded-full bg-black/55 px-2.5 py-1 font-mono text-[10px] text-white opacity-0 transition-opacity duration-200 group-hover/swatch:opacity-100">
                       {c.hex.toUpperCase()} · {c.name}
                     </span>
                   </span>
-                </Link>
-              ))}
+                );
+                const swatch = "group/swatch relative min-w-0 flex-1 transition-[flex] duration-300 hover:z-10 hover:flex-[2.4]";
+                return c.slug ? (
+                  <Link prefetch={false} key={c.hex} href={`/colors/${c.slug}`} className={swatch} style={{ backgroundColor: c.hex }} title={`${c.name} ${c.hex.toUpperCase()}`}>
+                    {pill}
+                  </Link>
+                ) : (
+                  <div key={c.hex} className={swatch} style={{ backgroundColor: c.hex }} title={`${c.name} ${c.hex.toUpperCase()}`}>
+                    {pill}
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
@@ -259,6 +282,21 @@ export function ContentPageView({
                     </div>
                   ))}
                 </div>
+                {paletteSheet && (
+                  <figure className="mt-8 flex items-center gap-5 rounded-2xl p-4 ring-1 ring-black/[0.07] sm:gap-6 sm:p-5">
+                    <a href={paletteSheet.src} className="shrink-0">
+                      {/* A prerendered PNG; next/image would only resize it on the Worker. */}
+                      <img src={paletteSheet.src} alt={paletteSheet.alt} width={1000} height={1500} loading="lazy" decoding="async" className="h-auto w-24 rounded-lg ring-1 ring-black/[0.07] sm:w-32" />
+                    </a>
+                    <figcaption className="min-w-0">
+                      <p className="text-[15px] font-semibold">{paletteSheet.count === 1 ? "This palette" : `All ${paletteSheet.count} palettes`} in one image</p>
+                      <p className="mt-1 text-[14px] leading-6 text-[#1c1712]/60">Every swatch is labeled with its hex code, so you can save it, pin it or drop it into a mood board.</p>
+                      <a href={paletteSheet.src} download={`hueflow-${entry.slug}-palettes.png`} className="mt-2 inline-block text-[14px] font-semibold text-[#c2410c] underline-offset-4 hover:underline">
+                        Download PNG
+                      </a>
+                    </figcaption>
+                  </figure>
+                )}
               </div>
             )}
 

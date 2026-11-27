@@ -1,72 +1,64 @@
 import { ImageResponse } from "next/og";
 
+import { OgFrame, loadOgFonts, ogInk, ogSize } from "@/components/seo/og-frame";
+import { getContrastRatio } from "@/lib/accessibility";
+import { formatHsl, formatRgb, parseHex } from "@/lib/color-convert";
+import { getIndexableColorPageSlugs } from "@/lib/seo/content";
 import { getProgrammaticColorDescriptor } from "@/lib/seo/programmatic";
-import { getContrastText } from "@/lib/color-utils";
-import { siteConfig } from "@/lib/seo/site-config";
 
-// export const runtime = "edge";
-export const size = { width: 1200, height: 630 };
+export const alt = "Color codes on HueFlow";
+export const size = ogSize;
 export const contentType = "image/png";
+
+// One image per indexable color page (its meaning page shares it), prerendered at build time.
+// Other slugs 404 instead of being drawn on the Worker; their pages use the site image.
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return getIndexableColorPageSlugs()
+    .filter((slug) => getProgrammaticColorDescriptor(slug))
+    .map((slug) => ({ slug }));
+}
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const descriptor = getProgrammaticColorDescriptor(slug);
-  const hex = descriptor?.hex ?? "#4F46E5";
+  const hex = (descriptor?.hex ?? "#C2410C").toUpperCase();
   const name = descriptor?.displayName ?? "Color";
-  const textColor = getContrastText(hex) === "light" ? "#ffffff" : "#111111";
+  const rgb = parseHex(hex);
+  const onWhite = getContrastRatio(hex, "#FFFFFF");
+  const onBlack = getContrastRatio(hex, "#000000");
+  const ink = onWhite >= getContrastRatio(hex, ogInk) ? "#FFFFFF" : ogInk;
+  const rows = [
+    ["HEX", hex],
+    ["RGB", rgb ? formatRgb(rgb) : ""],
+    ["HSL", rgb ? formatHsl(rgb) : ""],
+    ["Contrast", `${onWhite}:1 on white · ${onBlack}:1 on black`],
+  ];
 
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          fontFamily: "sans-serif",
-        }}
-      >
-        <div
-          style={{
-            width: 420,
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: hex,
-            color: textColor,
-          }}
-        >
-          <div style={{ display: "flex", fontSize: 48, fontWeight: 700 }}>{name}</div>
-          <div style={{ display: "flex", fontSize: 32, opacity: 0.85, marginTop: 12 }}>{hex.toUpperCase()}</div>
-        </div>
-        <div
-          style={{
-            flex: 1,
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            padding: "72px",
-            backgroundColor: "#160b05",
-            backgroundImage:
-              "radial-gradient(circle at 90% 0%, rgba(255,106,44,0.35), transparent 45%)",
-          }}
-        >
-          <div style={{ display: "flex", fontSize: 36, fontWeight: 700, color: "#ffffff" }}>
-            {siteConfig.name}
+      <OgFrame eyebrow="Color codes">
+        <div style={{ display: "flex", marginTop: 28, gap: 44, flex: 1 }}>
+          <div
+            style={{ display: "flex", width: 380, borderRadius: 24, alignItems: "flex-end", padding: 28, backgroundColor: hex, color: ink, border: "1px solid rgba(28,23,18,0.08)", fontSize: 34, fontWeight: 700 }}
+          >
+            {hex}
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <div style={{ display: "flex", fontSize: 52, fontWeight: 700, color: "#ffffff", lineHeight: 1.15 }}>
-              {name} Color Guide
-            </div>
-            <div style={{ display: "flex", fontSize: 26, color: "rgba(255,255,255,0.6)" }}>
-              Meaning, hex codes, contrast, and pairing ideas
+          <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            <div style={{ display: "flex", fontSize: 64, fontWeight: 700, letterSpacing: -2, lineHeight: 1.05 }}>{name}</div>
+            <div style={{ display: "flex", flexDirection: "column", marginTop: "auto", gap: 14 }}>
+              {rows.map(([label, value]) => (
+                <div key={label} style={{ display: "flex", fontSize: 26 }}>
+                  <div style={{ display: "flex", width: 150, fontWeight: 700 }}>{label}</div>
+                  <div style={{ display: "flex", color: "rgba(28,23,18,0.7)" }}>{value}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
+      </OgFrame>
     ),
-    { ...size },
+    { ...size, fonts: await loadOgFonts() },
   );
 }

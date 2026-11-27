@@ -3059,6 +3059,11 @@ export function isColorPageIndexable(slug: string): boolean {
   return indexableColorPageSlugs.has(slug);
 }
 
+/** Every indexable /colors slug: these are the pages that get their own prerendered share image. */
+export function getIndexableColorPageSlugs(): string[] {
+  return [...indexableColorPageSlugs];
+}
+
 export function isColorMeaningAuthored(slug: string): boolean {
   return Object.prototype.hasOwnProperty.call(colorMeaningOverrides, slug);
 }

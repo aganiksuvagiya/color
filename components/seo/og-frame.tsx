@@ -18,17 +18,17 @@ async function loadInter(weight: 400 | 700) {
   return { name: "Inter", data: await (await fetch(url)).arrayBuffer(), weight, style: "normal" as const };
 }
 
+let fontsPromise: Promise<Awaited<ReturnType<typeof loadInter>>[]> | undefined;
+
 /**
  * Inter regular + bold (the site's fallback font; its first choice, Avenir Next, is a system
  * font). The images are prerendered, so this runs at build time; if the fetch fails they fall
  * back to the default next/og font instead of failing the build.
  */
-export async function loadOgFonts() {
-  try {
-    return await Promise.all([loadInter(400), loadInter(700)]);
-  } catch {
-    return [];
-  }
+export function loadOgFonts() {
+  // One download per build process: about 130 images are prerendered, each needing the fonts.
+  fontsPromise ??= Promise.all([loadInter(400), loadInter(700)]).catch(() => []);
+  return fontsPromise;
 }
 
 export function OgFrame({ eyebrow, children }: { eyebrow: string; children: ReactNode }) {

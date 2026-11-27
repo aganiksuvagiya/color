@@ -5,6 +5,8 @@ import type { Metadata } from "next";
 import { ContentPageView } from "@/components/seo/content-page";
 import { HubPageView, type HubDirectory } from "@/components/seo/hub-page";
 import { StructuredData } from "@/components/seo/structured-data";
+import { getContentUpdatedOn } from "@/lib/seo/content-dates";
+import { getPaletteSheetSource, paletteSheetPath, type PaletteSheetKind } from "@/lib/seo/palette-sheets";
 import { findEntry, findResolvedEntry, getCollection, getColorMeaningOverride, getHubByPath, isColorMeaningAuthored, isColorMeaningIndexable, isColorPageIndexable, resolveContentEntry, type ResolvedContentEntry } from "@/lib/seo/content";
 import { richColorPages } from "@/lib/seo/color-pages-rich";
 import { richColorCombinations } from "@/lib/seo/color-combinations-rich";
@@ -269,8 +271,14 @@ export function buildCollectionMetadata<
         : `${pathPrefix}/${duplicateOfSlug}`
       : undefined,
     noindex,
-    // Industry pages have a prerendered share image with their own title and palettes.
-    imagePath: key === "bestColorsFor" ? `${pathPrefix}/${entry.slug}/opengraph-image` : undefined,
+    // Prerendered share images: industry and combination pages show their palettes, and an
+    // indexable color page (and its meaning page) shows the color with its codes.
+    imagePath:
+      key === "bestColorsFor" || key === "colorCombinations"
+        ? `${pathPrefix}/${entry.slug}/opengraph-image`
+        : (key === "colors" || key === "colorMeanings") && !noindex && !duplicateOfSlug && isColorPageIndexable(entry.slug)
+          ? `/colors/${entry.slug}/opengraph-image`
+          : undefined,
   });
 }
 
@@ -400,6 +408,36 @@ const findCollectionEntry = cache(function findCollectionEntry<K extends keyof R
   return findResolvedEntry(key, slug);
 });
 
+const titleCase = (slug: string) => slug.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+const colorName = (slug: string) => getProgrammaticColorDescriptor(slug)?.displayName ?? titleCase(slug);
+
+// A color's codes page, its meaning page and the pairings that use it should all link to each
+// other. The hand-written related links rarely cover all three, and with almost no outside
+// links these internal ones are how Google finds and weighs the pages. Only indexable pages
+// get a link, so crawls aren't spent on noindexed or redirected URLs.
+function colorCrossLinks(key: string, slug: string): { title: string; href: string }[] {
+  const colorPage = (s: string) => (isColorPageIndexable(s) ? [{ title: `${colorName(s)} color codes and palettes`, href: `/colors/${s}` }] : []);
+  const meaningPage = (s: string) =>
+    isColorMeaningIndexable(s) && !isRedirectedColorMeaning(s) ? [{ title: `${colorName(s)} color meaning`, href: `/color-meanings/${s}` }] : [];
+  const pairingsWith = (s: string) =>
+    getCollection("colorCombinations")
+      .filter((combo) => combo.slug.split("-and-").includes(s))
+      .map((combo) => ({ title: combo.slug.split("-and-").map(colorName).join(" and "), href: `/color-combinations/${combo.slug}` }));
+
+  if (key === "colors") return [...meaningPage(slug), ...pairingsWith(slug)];
+  if (key === "colorMeanings") return [...colorPage(slug), ...pairingsWith(slug)];
+  if (key === "colorCombinations") return slug.split("-and-").flatMap((part) => [...colorPage(part), ...meaningPage(part)]);
+  return [];
+}
+
+function withColorCrossLinks(key: string, entry: ResolvedContentEntry): ResolvedContentEntry {
+  const self = { colors: "/colors/", colorMeanings: "/color-meanings/", colorCombinations: "/color-combinations/" }[key];
+  if (!self) return entry;
+  const known = new Set([...entry.relatedLinks.map((link) => link.href), `${self}${entry.slug}`]);
+  const extra = colorCrossLinks(key, entry.slug).filter((link) => !known.has(link.href));
+  return extra.length ? { ...entry, relatedLinks: [...entry.relatedLinks, ...extra] } : entry;
+}
+
 export function renderCollectionPage<
   K extends keyof ReturnType<typeof getAllCollections>,
 >({
@@ -424,7 +462,7 @@ export function renderCollectionPage<
   }
 
   return renderEntryPage({
-    entry,
+    entry: withColorCrossLinks(keyName, entry),
     hubName,
     hubHref,
     pathPrefix,
@@ -445,7 +483,16 @@ export function renderEntryPage({
   pathPrefix: string;
   answerLabel?: string;
 }) {
-  const url = `${siteConfig.domain}${pathPrefix}/${entry.slug}`;
+  const path = `${pathPrefix}/${entry.slug}`;
+  const url = `${siteConfig.domain}${path}`;
+  const updated = getContentUpdatedOn(path);
+  const sheetKind: PaletteSheetKind | undefined =
+    pathPrefix === "/best-colors-for" ? "bestColorsFor" : pathPrefix === "/color-combinations" ? "colorCombinations" : undefined;
+  const sheet = sheetKind && getPaletteSheetSource(sheetKind, entry.slug);
+  const paletteSheet =
+    sheetKind && sheet
+      ? { src: paletteSheetPath(sheetKind, entry.slug), alt: `${sheet.title}, with hex codes: ${sheet.palettes.slice(0, 6).map((p) => p.name).join(", ")}`, count: Math.min(sheet.palettes.length, 6) }
+      : undefined;
   const breadcrumbs = [
     { name: "Home", href: "/" },
     { name: hubName, href: hubHref },
@@ -455,7 +502,7 @@ export function renderEntryPage({
   return (
     <>
       <StructuredData data={buildWebPageSchema({ title: entry.title, description: entry.description, url })} />
-      <StructuredData data={buildArticleSchema({ title: entry.title, description: entry.description, url })} />
+      <StructuredData data={buildArticleSchema({ title: entry.title, description: entry.description, url, dateModified: updated })} />
       <StructuredData data={buildFaqSchema(entry.faq)} />
       <StructuredData
         data={buildBreadcrumbSchema([
@@ -464,7 +511,7 @@ export function renderEntryPage({
           { name: entry.title, item: url },
         ])}
       />
-      <ContentPageView entry={entry} breadcrumbs={breadcrumbs} answerLabel={answerLabel} />
+      <ContentPageView entry={entry} breadcrumbs={breadcrumbs} answerLabel={answerLabel} updated={updated} paletteSheet={paletteSheet} />
     </>
   );
 }
